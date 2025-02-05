@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -8,6 +9,7 @@ using UnityEngine.Events;
 public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
 {
     //필드와 연관되어있는 변수들
+    public bool isReflect;
     public Field field;
     public Tile curTile { get; private set; }
     public intVector2 curPos
@@ -39,7 +41,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
         }
     }
     public int power;
-
+    public Action<Entity> OnDestroyed;
     //전투와 관련된 변수들
     public enum ActionType
     {
@@ -90,6 +92,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
 
     public void Dead()
     {
+        OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }
     public virtual void SetAction()
@@ -101,7 +104,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
             //빈곳일 때
             if (tile.entityTeam == -1) 
             {
-                //Debug.Log(cell.x + ", " + cell.y + ": " + "is Empty");
+                Debug.Log(tilePos.x + ", " + tilePos.y + ": " + "is Empty");
             }
             //엔티티가 중립 또는 적일 때
             else if (tile.entityTeam == 0 || tile.entityTeam !=teamNum)
@@ -138,7 +141,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
     public void MoveToTile(Tile tile)
     {
         var scale = transform.localScale;
-        if (tile.isAttackable)
+        if (tile.isOccupied)
         {
             return;
         }
@@ -161,7 +164,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
         List<intVector2> absArea = new List<intVector2>();
         foreach (intVector2 pos in area)
         {
-            var absPos = pos + curPos;
+            var absPos = curPos + pos * (isReflect ? -1 : 1);
             if (field.IsValidCellPos(absPos))
             {
                 absArea.Add(absPos);

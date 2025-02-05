@@ -5,23 +5,30 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public EntityController controller;
+    public EntityController[] controllers;
     public Field field;
     private void Awake()
     {
         field.CreateField();
-        var data = PartyData.LoadPartyData();
-        controller.SetEntities(1, data);
+        var data = PartyData.LoadPartyData("Text");
+        for(int i = 0; i < controllers.Length; i++)
+        {
+            controllers[i].SetEntities(i+1, data);
+        }
+        
     }
     public void TurnStart()
     {
-        controller.StartMovePhase();
+        //controller.StartMovePhase();
     }
 
     public void TurnEnd()
     {
         //이동 행동
-        controller.OperActivate();
+        foreach (EntityController controller in controllers)
+        {
+            controller.OperActivate();
+        }
         //공격 행동
         field.FieldAction();
     }
@@ -43,6 +50,6 @@ public class GameManager : Singleton<GameManager>
         }
         PartyData data = new PartyData();
         data.Entities = list.ToArray();
-        data.SavePartyData();
+        data.SavePartyData("CurrentPlayerParty");
     }
 }

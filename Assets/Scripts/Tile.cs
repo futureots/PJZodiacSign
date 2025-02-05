@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour
             return entityObj.GetComponent<IDamageable>();
         }
     }
-    public bool isAttackable => entityBody != null;
+    public bool isOccupied => entityBody != null;
     //0번은 중립 -1은 빈칸
     public int entityTeam
     {
@@ -46,7 +46,7 @@ public class Tile : MonoBehaviour
 
     public Entity GetEntity()
     {
-        if (!isAttackable) return null;
+        if (!isOccupied) return null;
         Entity entity = entityObj.GetComponent<Entity>();
         return entity;
     }
@@ -64,7 +64,7 @@ public class Tile : MonoBehaviour
     //셀의 지역 효과 발동
     public void CellActivate(Entity.ActionType type)
     {
-        if (isAttackable)
+        if (isOccupied)
         {
             switch (type)
             {
@@ -88,7 +88,7 @@ public class Tile : MonoBehaviour
     //셀에 있는 오브젝트 사망 확인후 제거
     public void CheckCell()
     {
-        if (isAttackable)
+        if (isOccupied)
         {
             if (entityBody.isZero())
             {
@@ -100,7 +100,7 @@ public class Tile : MonoBehaviour
     //한턴 종료 후 원래 공격력으로 되돌리기
     public void SetOriginStat()
     {
-        if (isAttackable)
+        if (isOccupied)
         {
             var entity = GetEntity();
             if (entity == null) return;

@@ -539,6 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f853d1a66450d744e8dc65fb2664fd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReflect: 0
   currentField: {fileID: 1983822019}
   teamNum: 1
   entities: []
@@ -602,7 +603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5388102083c247a4c957507e4582bf93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1190022356}
+  controllers:
+  - {fileID: 1190022356}
+  - {fileID: 1985931036}
   field: {fileID: 1983822019}
 --- !u!1 &1629037773
 GameObject:
@@ -847,6 +850,54 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6e1c1930f147bc24e81d13a661f2bcbe, type: 2}
   - {fileID: 2100000, guid: 9e31628e5511e964b8b076cdeb075a91, type: 2}
   activateTiles: []
+--- !u!1 &1985931035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985931037}
+  - component: {fileID: 1985931036}
+  m_Layer: 0
+  m_Name: EnemyController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1985931036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985931035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f853d1a66450d744e8dc65fb2664fd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isReflect: 1
+  currentField: {fileID: 1983822019}
+  teamNum: 2
+  entities: []
+--- !u!4 &1985931037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985931035}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.168762, y: 11.256908, z: -3.1609154}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1990980262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,3 +1077,4 @@ SceneRoots:
   - {fileID: 457791118}
   - {fileID: 1643993156}
   - {fileID: 1190022357}
+  - {fileID: 1985931037}

@@ -1,0 +1,45 @@
+{
+  
+  "$type": "PartyData, Assembly-CSharp",
+  "Entities": {
+    "$type": "PartyEntity[], Assembly-CSharp",
+    "$values": [
+      {
+        "$type": "PartyEntity, Assembly-CSharp",
+        "pos": {
+          "$type": "intVector2, Assembly-CSharp",
+          "x": 2,
+          "y": 1
+        },
+        "entityId": "Piece(Clone)"
+      },
+      {
+        "$type": "PartyEntity, Assembly-CSharp",
+        "pos": {
+          "$type": "intVector2, Assembly-CSharp",
+          "x": 3,
+          "y": 1
+        },
+        "entityId": "Piece(Clone)"
+      },
+      {
+        "$type": "PartyEntity, Assembly-CSharp",
+        "pos": {
+          "$type": "intVector2, Assembly-CSharp",
+          "x": 4,
+          "y": 1
+        },
+        "entityId": "Piece(Clone)"
+      },
+      {
+        "$type": "PartyEntity, Assembly-CSharp",
+        "pos": {
+          "$type": "intVector2, Assembly-CSharp",
+          "x": 2,
+          "y": 2
+        },
+        "entityId": "Piece(Clone)"
+      }
+    ]
+  }
+}

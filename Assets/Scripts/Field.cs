@@ -44,7 +44,12 @@ public class Field : MonoBehaviour
         }
         return true;
     }
-
+    public bool IsMovable(intVector2 pos)
+    {
+        if (!IsValidCellPos(pos)) return false;
+        var tile = GetTile(pos);
+        return !tile.isOccupied;
+    }
     //해당 위치의 셀을 반환
     public Tile GetTile(intVector2 pos)
     {
@@ -59,7 +64,7 @@ public class Field : MonoBehaviour
         {
             foreach (var cell in cells)
             {
-                if (cell.isAttackable)
+                if (cell.isOccupied)
                 {
                     //계산이 필요한 셀 추가
                     entityTile.Add(cell);
@@ -80,7 +85,7 @@ public class Field : MonoBehaviour
         foreach (var cell in entityTile)
         {
             cell.CheckCell();
-            if (cell.isAttackable)
+            if (cell.isOccupied)
             {
                 cell.SetOriginStat();
             }

@@ -43,6 +43,10 @@ public struct intVector2
     {
         return left.x != right.x || left.y != right.y;
     }
+    public static intVector2 operator *(intVector2 left, int right)
+    {
+        return new intVector2(left.x*right, left.y*right);
+    }
 }
 public enum ColorType
 {
