@@ -7,26 +7,8 @@
         "$type": "PartyEntity, Assembly-CSharp",
         "pos": {
           "$type": "intVector2, Assembly-CSharp",
-          "x": 1,
-          "y": 1
-        },
-        "entityId": "piece"
-      },
-      {
-        "$type": "PartyEntity, Assembly-CSharp",
-        "pos": {
-          "$type": "intVector2, Assembly-CSharp",
-          "x": 2,
-          "y": 1
-        },
-        "entityId": "piece"
-      },
-      {
-        "$type": "PartyEntity, Assembly-CSharp",
-        "pos": {
-          "$type": "intVector2, Assembly-CSharp",
           "x": 3,
-          "y": 1
+          "y": 0
         },
         "entityId": "piece"
       },

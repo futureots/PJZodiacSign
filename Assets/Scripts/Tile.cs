@@ -55,6 +55,10 @@ public class Tile : MonoBehaviour
         entityObj = e.gameObject;
         e.transform.SetParent(transform);
     }
+    private void OnMouseUp()
+    {
+        Debug.Log("Mouse Up");
+    }
     public void CellSetting()
     {
         var entity = GetEntity();
@@ -110,6 +114,5 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        InputManager.Instance.TileInput(this);
     }
 }

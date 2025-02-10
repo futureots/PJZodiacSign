@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Field : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Field : MonoBehaviour
             for (int j = 0; j < column; j++)
             {
                 int materialNum = (i + j) % materials.Length;
-                Vector3 pos = new Vector3(j * 10, 0, i * 10);
+                Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
                 var tileObj = Instantiate(tilePrefab, transform);
                 tileObj.transform.localPosition = pos;
                 //흑백 색 바꾸기(디버그용)
@@ -56,6 +57,23 @@ public class Field : MonoBehaviour
         if (!IsValidCellPos(pos)) return null;
         return tiles[pos.y][pos.x];
     }
+    public List<Tile> GetHalfTiles(bool isReflect)
+    {
+        List<Tile> list = new List<Tile>();
+        var start = 0;
+        int end = row / 2;
+        if (isReflect)
+        {
+            start = end;
+            end = row;
+        }
+        for (int i = start; i < end; i++) 
+        {
+            list.AddRange(tiles[i]);
+        }
+        return list;
+    }
+
     //필드 공격 행동
     public void FieldAction()
     {

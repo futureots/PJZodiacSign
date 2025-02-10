@@ -10,8 +10,10 @@ public class Utils
     {
         get
         {
-            Vector3 result = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            result.z = -10;
+            var originPos = Input.mousePosition;
+            originPos.z = Mathf.Abs(Camera.main.transform.position.y-0);
+            Vector3 result = Camera.main.ScreenToWorldPoint(originPos);
+            result.y = 0;
             return result;
         }
     }
@@ -48,12 +50,29 @@ public struct intVector2
         return new intVector2(left.x*right, left.y*right);
     }
 }
-public enum ColorType
+public enum Element
 {
-    Red,
-    Green,
-    Blue,
-    White,
-    Black,
-    Empty
+    //상성 없음(항상 최상위? 최하위?)
+    Empty = 0,
+    Tree=1,
+    Fire = 2,
+    Dirt = 3,
+    Metal = 4,
+    Water =5,
+}
+public enum Jodiac
+{
+    None =0,
+    Mouse =1,
+    Cow=2,
+    Tiger=3,
+    Rabbit=4,
+    Dragon=5,
+    Snake=6,
+    Horse=7,
+    Sheep=8,
+    Monkey=9,
+    Chicken=10,
+    Dog=11,
+    Pig=12
 }

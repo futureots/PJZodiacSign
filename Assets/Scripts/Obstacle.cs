@@ -20,7 +20,7 @@ public class Obstacle : MonoBehaviour,IDamageable
     }
     
     public int hp;
-    public void Damaged(int damage, ColorType type = ColorType.Empty)
+    public void Damaged(int damage, Element type = Element.Empty)
     {
         hp -= 1;
         Debug.Log(name + " Damaged ! : " + hp);

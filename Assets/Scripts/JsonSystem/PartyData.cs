@@ -25,6 +25,7 @@ public class PartyData
         string data = SerializePartyData(this);
         string path = Path.Combine(Application.dataPath+"/Data", fileName + ".Json");
         File.WriteAllText(path, data);
+        Debug.Log(data);
         Debug.Log("Save");
     }
     public static PartyData LoadPartyData(string fileName)
@@ -44,11 +45,11 @@ public class PartyData
 }
 public struct PartyEntity
 {
-    public PartyEntity(intVector2 pos, string name)
+    public PartyEntity(string name, int entityLevel = 1)
     {
-        this.pos = pos;
         this.entityId = name;
+        this.entityLevel = entityLevel;
     }
-    public intVector2 pos;
     public string entityId;
+    public int entityLevel;
 }

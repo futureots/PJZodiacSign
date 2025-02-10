@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
 {
     //필드와 연관되어있는 변수들
     public bool isReflect;
+    bool isAllocated;
     public Field field;
     public Tile curTile { get; private set; }
     public intVector2 curPos
@@ -23,7 +24,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
 
     //엔티티 라이프 사이클에 필요한 변수들
     public EntityDataSO data;
-    public ColorType type;
+    public Element elementType;
+    public Jodiac jodiacType;
     public int maxHp
     {
         get
@@ -69,19 +71,23 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
     {
         power = originPower;
     }
-    
-    
-
     private void Start()
     {
         hp = maxHp;
         SetOriginPower();
-        //MoveToTile(field.GetTile(new intVector2(0, 0)));
     }
 
     private void OnMouseDown()
     {
-        InputManager.Instance.EntityInput(this);
+        InputManager.Instance.OnEntityDown(this);
+    }
+    private void OnMouseDrag()
+    {
+        InputManager.Instance.OnEntityDrag(this);
+    }
+    private void OnMouseUp()
+    {
+        InputManager.Instance.OnEntityUp(this);
     }
 
     public bool isZero()
@@ -141,15 +147,18 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
     public void MoveToTile(Tile tile)
     {
         var scale = transform.localScale;
+        //원래 있던 위치 연결 제거
+        if (field != null)
+        {
+            if (field.IsValidCellPos(curPos))
+            {
+                var preCell = field.GetTile(curPos);
+                preCell.entityObj = null;
+            }
+        }
         if (tile.isOccupied)
         {
             return;
-        }
-        //원래 있던 위치 연결 제거
-        if (field.IsValidCellPos(curPos))
-        {
-            var preCell = field.GetTile(curPos);
-            preCell.entityObj = null;
         }
         tile.SetEntity(gameObject);
         curTile = tile;
@@ -157,10 +166,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
         entityPos.y = 0.25f;
         transform.localScale = scale;
         transform.DOMove(entityPos, 1f);
+        field = tile.field;
     }
     //엔티티 공격범위
     public List<intVector2> GetEntityArea()
     {
+        if (field == null) return new List<intVector2>();
         List<intVector2> absArea = new List<intVector2>();
         foreach (intVector2 pos in area)
         {
@@ -186,9 +197,9 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
         if (target == null) return;
         var body = target.GetComponent<IDamageable>();
         if (body == null) return;
-        body.Damaged(power, type);
+        body.Damaged(power, elementType);
     }
-    public void Damaged(int damage, ColorType type = ColorType.Empty)
+    public void Damaged(int damage, Element type = Element.Empty)
     {
         hp -= damage;
         Debug.Log(name + " Damaged ! : " + hp);

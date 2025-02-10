@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1054759446070586868}
   - component: {fileID: 5048811441260812294}
   - component: {fileID: 1937033463458795209}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7fe6b8f312dd3a4abf0c7b2f7068507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReflect: 0
   field: {fileID: 0}
   data: {fileID: 11400000, guid: 9cfaf4d8c27be334e8b1a31b8682c141, type: 2}
   type: 0

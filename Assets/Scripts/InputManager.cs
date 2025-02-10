@@ -6,7 +6,16 @@ using static EntityController;
 public class InputManager : Singleton<InputManager>
 {
     public EntityController playerController;
-    
+    public enum InputMode
+    {
+        //명령 없음(행동 X)
+        None,
+        //초기 기물 세팅용
+        Set,
+        //기물 이동(기물 범위 내 타일만 선택가능)
+        Move
+    }
+    public InputMode inputMode;
     public bool isEntitySelect
     {
         get
@@ -25,13 +34,53 @@ public class InputManager : Singleton<InputManager>
     }
     public GameObject entitySelecter;
     public GameObject tileSelecter;
-    public void EntityInput(Entity entity)
+    public void OnEntityDown(Entity entity)
     {
-        playerController.OnClickEntity(entity);
+        switch (inputMode)
+        {
+            case InputMode.None:
+                break;
+            case InputMode.Move:
+            case InputMode.Set:
+                playerController.EntitySelect(entity);
+                break;
+            default:
+                break;
+        }
+        
     }
-    public void TileInput(Tile tile)
+    public void OnEntityDrag(Entity entity)
     {
-        playerController.OnClickTile(tile);
+        
+        switch (inputMode)
+        {
+            case InputMode.None:
+                break;
+            case InputMode.Set:
+                playerController.EntitySetDrag(entity);
+                break;
+            case InputMode.Move:
+                playerController.EntityMoveDrag(entity);
+                break;
+            default:
+                break;
+        }
+    }
+    public void OnEntityUp(Entity entity)
+    {
+        switch (inputMode)
+        {
+            case InputMode.None:
+                break;
+            case InputMode.Set:
+                playerController.EntitySetUp(entity);
+                break; 
+            case InputMode.Move:
+                playerController.EntityMoveUp();
+                break;
+            default:
+                break;
+        }
     }
     private void Start()
     {
