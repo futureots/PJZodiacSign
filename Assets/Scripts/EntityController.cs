@@ -93,7 +93,6 @@ public class EntityController : MonoBehaviour
                     tempList.Remove(tempEntity);
                     Debug.Log("tempList.Count : " + tempList.Count);
                 }
-
             }
         }
         //지정한 기물과 칸이 있으면 실행
@@ -111,10 +110,12 @@ public class EntityController : MonoBehaviour
     public void EntitySelect(Entity entity)
     {
         if (!entities.Contains(entity)) return;
+        Debug.Log("EntitySelect");
         selectedEntity = entity;
     }
-    public void EntityMoveUp()
+    public void EntityMoveUp(Entity entity)
     {
+        if (!entities.Contains(entity)) return;
         Debug.Log(selectedEntity.curTile);
         selectedEntity.transform.position = selectedEntity.curTile.transform.position;
         if (selectedTile == selectedEntity.curTile)
@@ -141,8 +142,6 @@ public class EntityController : MonoBehaviour
     }
     void EntityDrag(Entity entity)
     {
-        //팀이 아니면 이동 권한 없음
-        if (!entities.Contains(entity)) return;
         if (selectedEntity != entity) selectedEntity = entity;
         //기물 마우스 위치로 이동
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -156,6 +155,8 @@ public class EntityController : MonoBehaviour
     }
     public void EntitySetDrag(Entity entity)
     {
+        //팀이 아니면 이동 권한 없음
+        if (!entities.Contains(entity)) return;
         EntityDrag(entity);
         //가장 가까운 타일 선택
         List<Tile> movableTile = GameManager.Instance.field.GetHalfTiles(isReflect);
@@ -165,6 +166,8 @@ public class EntityController : MonoBehaviour
     }
     public void EntityMoveDrag(Entity entity)
     {
+        //팀이 아니면 이동 권한 없음
+        if (!entities.Contains(entity)) return;
         EntityDrag(entity);
         List<Tile> movableTile = new List<Tile>();
         movableTile.Add(entity.curTile);

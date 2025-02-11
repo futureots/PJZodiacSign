@@ -51,7 +51,6 @@ public class InputManager : Singleton<InputManager>
     }
     public void OnEntityDrag(Entity entity)
     {
-        
         switch (inputMode)
         {
             case InputMode.None:
@@ -76,7 +75,7 @@ public class InputManager : Singleton<InputManager>
                 playerController.EntitySetUp(entity);
                 break; 
             case InputMode.Move:
-                playerController.EntityMoveUp();
+                playerController.EntityMoveUp(entity);
                 break;
             default:
                 break;
