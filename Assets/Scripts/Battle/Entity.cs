@@ -6,7 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
+public class Entity : MonoBehaviour, IAttackable, ITeam
 {
     //필드와 연관되어있는 변수들
     public bool isReflect;
@@ -26,15 +26,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
     public EntityDataSO data;
     public Element elementType;
     public Jodiac jodiacType;
-    public int maxHp
-    {
-        get
-        {
-            if (data == null) return 0;
-            return data.hp;
-        }
-    }
-    public int hp;
+
+    public Health health;
+
+    public Action<Entity> OnDestroyed;
     public int originPower
     {
         get
@@ -43,7 +38,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
         }
     }
     public int power;
-    public Action<Entity> OnDestroyed;
     //전투와 관련된 변수들
     public enum ActionType
     {
@@ -66,14 +60,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
             return data.area.ToArray();
         }
     }
-
     public void SetOriginPower()
     {
         power = originPower;
     }
     private void Start()
     {
-        hp = maxHp;
+        //hp = maxHp;
         SetOriginPower();
     }
 
@@ -90,60 +83,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
         InputManager.Instance.OnEntityUp(this);
     }
 
-    public bool isZero()
-    {
-        if (hp <= 0) return true;
-        else return false;
-    }
 
     public void Dead()
     {
         OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }
-    public virtual void SetAction()
-    {
-        var tiles = GetEntityArea();
-        foreach(var tilePos in tiles)
-        {
-            Tile tile = field.GetTile(tilePos);
-            //빈곳일 때
-            if (tile.entityTeam == -1) 
-            {
-                Debug.Log(tilePos.x + ", " + tilePos.y + ": " + "is Empty");
-            }
-            //엔티티가 중립 또는 적일 때
-            else if (tile.entityTeam == 0 || tile.entityTeam !=teamNum)
-            {
-                Debug.Log(tilePos.x + ", " + tilePos.y + ": " + "is Enemy :" + teamNum + " TN: " + tile.entityTeam);
-                SetEntityAction(tile, actionToEnemy);
-            }
-            //아군일 때
-            else if(tile.entityTeam == teamNum)
-            {
-                Debug.Log(tilePos.x + ", " + tilePos.y + ": " + "is Ally :" + teamNum + " TN : " + tile.entityTeam);
-                SetEntityAction(tile, actionToAlly);
-            }
-        }
-    }
-    //셀에 액션 집어넣기
-    public void SetEntityAction(Tile tile, ActionType type)
-    {
-        switch (type)
-        {
-            case ActionType.Attack:
-                tile.cellAttack += Attack;
-                break;
-            case ActionType.Heal:
-                tile.cellHeal += Heal;
-                break;
-            case ActionType.Enhance:
-                tile.cellEnhance += Enhance;
-                break;
-            default:
-                break;
-        }
-    }
+
     public void MoveToTile(Tile tile)
     {
         var scale = transform.localScale;
@@ -199,11 +145,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
         if (body == null) return;
         body.Damaged(power, elementType);
     }
-    public void Damaged(int damage, Element type = Element.Empty)
-    {
-        hp -= damage;
-        Debug.Log(name + " Damaged ! : " + hp);
-    }
     public void Enhance(GameObject target = null)
     {
         if (target == null) return;
@@ -215,14 +156,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, ITeam
     public void Heal(GameObject target = null)
     {
         if(target == null) return;
-        var body = target.GetComponent<Entity>();
+        var body = target.GetComponent<IDamageable>();
         if (body == null) return;
         body.Healed(power);
-        Debug.Log(target.name + " Healed : " + body.hp);
-    }
-
-    public void Healed(int amount)
-    {
-        hp = hp + amount < maxHp ? hp + amount : maxHp;
     }
 }

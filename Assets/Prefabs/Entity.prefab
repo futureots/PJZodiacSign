@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3064770730904923578}
   - component: {fileID: 5946878163036180025}
   - component: {fileID: 2301994455668857205}
+  - component: {fileID: 7591605998417088148}
   m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
@@ -137,4 +138,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7fe6b8f312dd3a4abf0c7b2f7068507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReflect: 0
+  field: {fileID: 0}
   data: {fileID: 11400000, guid: 9cfaf4d8c27be334e8b1a31b8682c141, type: 2}
+  elementType: 0
+  jodiacType: 1
+  health: {fileID: 7591605998417088148}
+  power: 0
+  actionToEnemy: 0
+  actionToAlly: 0
+  teamNum: 0
+--- !u!114 &7591605998417088148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9049726812094284787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e175f787718fd4384f4e519f42467f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

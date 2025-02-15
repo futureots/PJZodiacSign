@@ -74,39 +74,4 @@ public class Field : MonoBehaviour
         return list;
     }
 
-    //필드 공격 행동
-    public void FieldAction()
-    {
-        List<Tile> entityTile = new List<Tile>();
-        foreach (var cells in tiles)
-        {
-            foreach (var cell in cells)
-            {
-                if (cell.isOccupied)
-                {
-                    //계산이 필요한 셀 추가
-                    entityTile.Add(cell);
-                    //셀 세팅(공격, 강화, 힐)
-                    cell.CellSetting();
-                }
-            }
-        }
-        //순서대로 강화, 힐, 공격 순
-        Entity.ActionType[] triggers = {Entity.ActionType.Enhance, Entity.ActionType.Heal, Entity.ActionType.Attack };
-        foreach (var trigger in triggers)
-        {
-            foreach (var cell in entityTile)
-            {
-                cell.CellActivate(trigger);
-            }
-        }
-        foreach (var cell in entityTile)
-        {
-            cell.CheckCell();
-            if (cell.isOccupied)
-            {
-                cell.SetOriginStat();
-            }
-        }
-    }
 }

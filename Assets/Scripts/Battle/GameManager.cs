@@ -65,8 +65,7 @@ public class GameManager : Singleton<GameManager>
             }
         }
         yield return new WaitForSeconds(1f);
-        //공격 행동
-        field.FieldAction();
+       
         TurnStart();
     }
     public void TurnEnd()

@@ -14,7 +14,6 @@ public class EntityController : MonoBehaviour
     public bool isTileSelected => selectedTile != null;
     public Field currentField;
     public int teamNum;
-    //private로 변경 시 리스트 할당 필요
     public List<Entity> entities;
     
     //처음 한번만 실행되는 함수(여야함)
@@ -39,6 +38,7 @@ public class EntityController : MonoBehaviour
             {
                 entities.Remove(entity);
             };
+            HpPanelManager.Instance.CreateHpBar(obj);
             var reflectVariable = isReflect ? -1 : 1;
             entity.transform.position = new Vector3(-45*reflectVariable, 0, x*reflectVariable);
             x += 10;
