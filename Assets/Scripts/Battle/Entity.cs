@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEditor.PlayerSettings;
 
-public class Entity : MonoBehaviour, IAttackable, ITeam
+public class Entity : MonoBehaviour
 {
     //필드와 연관되어있는 변수들
     public bool isReflect;
@@ -28,7 +29,6 @@ public class Entity : MonoBehaviour, IAttackable, ITeam
     public Jodiac jodiacType;
 
     public Health health;
-
     public Action<Entity> OnDestroyed;
     public int originPower
     {
@@ -38,16 +38,6 @@ public class Entity : MonoBehaviour, IAttackable, ITeam
         }
     }
     public int power;
-    //전투와 관련된 변수들
-    public enum ActionType
-    {
-        Attack,
-        Heal,
-        Enhance
-    }
-    //이거 나중에 리스트로 만들면 한번에 복수 행동 가능할듯(타수증가나 동시에 힐이랑 강화)
-    public ActionType actionToEnemy;
-    public ActionType actionToAlly;
     public int teamNum;
     public int TeamNum { get => teamNum; set => teamNum = value; }
     
@@ -67,6 +57,7 @@ public class Entity : MonoBehaviour, IAttackable, ITeam
     private void Start()
     {
         //hp = maxHp;
+        health.Dead += Dead;
         SetOriginPower();
     }
 
@@ -114,50 +105,49 @@ public class Entity : MonoBehaviour, IAttackable, ITeam
         transform.DOMove(entityPos, 1f);
         field = tile.field;
     }
-    //엔티티 공격범위
-    public List<intVector2> GetEntityArea()
+    /// <summary>
+    /// 타일 위치를 기준으로 엔티티의 공격(이동)범위 리스트로 반환
+    /// </summary>
+    /// <param name="entityPos"></param>
+    /// <param name="hasOriginTile">엔티티 기존 위치 반환 여부</param>
+    /// <returns></returns>
+    public List<intVector2> GetArea(intVector2 entityPos, bool hasOriginTile = false)
     {
         if (field == null) return new List<intVector2>();
         List<intVector2> absArea = new List<intVector2>();
         foreach (intVector2 pos in area)
         {
-            var absPos = curPos + pos * (isReflect ? -1 : 1);
+            var absPos = entityPos + pos * (isReflect ? -1 : 1);
             if (field.IsValidCellPos(absPos))
             {
                 absArea.Add(absPos);
             }
         }
+        if (hasOriginTile) absArea.Add(entityPos);
         return absArea;
     }
-    public bool IsInArea(intVector2 pos)
+    public List<intVector2> GetArea(bool hasOriginTile = false)
     {
-        var absArea = GetEntityArea();
-        foreach (intVector2 pos2 in absArea)
+        return GetArea(curPos, hasOriginTile);
+    }
+    public void Attack()
+    {
+        var targets = new List<IDamageable>();
+        foreach (var pos in GetArea())
         {
-            if (pos == pos2) return true;
+            var tile = field.GetTile(pos);
+            if (tile == null) continue;
+            if (tile.isOccupied)
+            {
+                if (tile.entityObj.tag == tag) continue; 
+                var damageable = tile.entityObj.GetComponent<IDamageable>();
+                if (damageable == null) continue;
+                targets.Add(damageable);
+            }
         }
-        return false;
-    }
-    public void Attack(GameObject target = null)
-    {
-        if (target == null) return;
-        var body = target.GetComponent<IDamageable>();
-        if (body == null) return;
-        body.Damaged(power, elementType);
-    }
-    public void Enhance(GameObject target = null)
-    {
-        if (target == null) return;
-        var body = target.GetComponent<Entity>();
-        if (body == null) return;
-        body.power += originPower;
-        Debug.Log(target.name + " Enhanced : " + body.power);
-    }
-    public void Heal(GameObject target = null)
-    {
-        if(target == null) return;
-        var body = target.GetComponent<IDamageable>();
-        if (body == null) return;
-        body.Healed(power);
+        foreach (var target in targets)
+        {
+            target.Damaged(power, elementType);
+        }
     }
 }

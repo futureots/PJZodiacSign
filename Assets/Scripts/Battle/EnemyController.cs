@@ -10,6 +10,7 @@ public class EnemyController : EntityController
         var tiles = currentField.GetHalfTiles(isReflect);
         foreach (var entity in entities)
         {
+            entity.tag = "Enemy";
             var tile = tiles[Random.Range(0, tiles.Count)];
             tiles.Remove(tile);
             entity.MoveToTile(tile);

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -57,6 +59,15 @@ public class Field : MonoBehaviour
         if (!IsValidCellPos(pos)) return null;
         return tiles[pos.y][pos.x];
     }
+    public List<Tile> GetTiles(List<intVector2> positions)
+    {
+        var list = new List<Tile>();
+        foreach (var pos in positions)
+        {
+            list.Add(GetTile(pos));
+        }
+        return list;
+    }
     public List<Tile> GetHalfTiles(bool isReflect)
     {
         List<Tile> list = new List<Tile>();
@@ -74,4 +85,46 @@ public class Field : MonoBehaviour
         return list;
     }
 
+
+    public void AddFieldColor(Material material, params Tile[] tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            if(tile != null)
+            {
+                List<Material> materials = tile.renderer.sharedMaterials.ToList();
+                materials.Add(material);
+                tile.renderer.materials = materials.ToArray(); 
+            }
+        }
+    }
+    public void RemoveFieldColor(Material material,params Tile[] tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            if (tile != null)
+            {
+                List<Material> materials = tile.renderer.sharedMaterials.ToList();
+                materials.Remove(material);
+                tile.renderer.materials = materials.ToArray();
+            }
+        }
+    }
+
+    public void CleanField()
+    {
+        foreach (var tileList in tiles)
+        {
+            foreach(var tile in tileList)
+            {
+                if (!tile.isOccupied) continue;
+                var health = tile.entityObj.GetComponent<Health>();
+                Debug.Log("health : " + health.hp);
+                if (health.isZero())
+                {
+                    health.Dead?.Invoke();
+                }
+            }
+        }
+    }
 }

@@ -10,6 +10,8 @@ public class EntityController : MonoBehaviour
     public bool isReflect;
     public Entity selectedEntity { get; private set; }
     public Tile selectedTile {  get; private set; }
+    public Material expectAttackMaterial;
+    public Material expectMoveMaterial;
     public bool isEntitySelected => selectedEntity != null;
     public bool isTileSelected => selectedTile != null;
     public Field currentField;
@@ -30,6 +32,7 @@ public class EntityController : MonoBehaviour
                 continue;
             }
             var obj = Instantiate(prefab);
+            obj.tag = "Player";
             Entity entity = obj.GetComponent<Entity>();
             entities.Add(entity);
             entity.teamNum = num;
@@ -63,7 +66,7 @@ public class EntityController : MonoBehaviour
                 }
                 var tempEntity = tempList[Random.Range(0, tempList.Count)];
                 //해당 기물이 이동가능한 칸이 있는지 확인
-                var area = tempEntity.GetEntityArea();
+                var area = tempEntity.GetArea();
                 bool movable = false;
                 while (true)
                 {
@@ -106,12 +109,28 @@ public class EntityController : MonoBehaviour
         return result;
     }
     #region EntitySelectInput
+    List<Tile> movableTile;
+    List<Tile> attackableTile;
     //엔티티 선택
-    public void EntitySelect(Entity entity)
+    public void EntitySelect(Entity entity, int mode)
     {
         if (!entities.Contains(entity)) return;
-        Debug.Log("EntitySelect");
+        entity.field = currentField;
         selectedEntity = entity;
+        if(movableTile == null) movableTile = new List<Tile>();
+        if(attackableTile == null) attackableTile = new List<Tile>();
+        switch (mode)
+        {
+            case 0:
+                movableTile.AddRange(currentField.GetHalfTiles(isReflect));
+                break;
+            case 1:
+                movableTile.AddRange(currentField.GetTiles(entity.GetArea(true)));
+                break;
+            default:
+                break;
+        }
+        currentField.AddFieldColor(expectMoveMaterial, movableTile.ToArray());
     }
     public void EntityMoveUp(Entity entity)
     {
@@ -123,6 +142,10 @@ public class EntityController : MonoBehaviour
             selectedEntity = null;
             selectedTile = null;
         }
+        currentField.RemoveFieldColor(expectAttackMaterial, attackableTile.ToArray());
+        attackableTile.Clear();
+        currentField.RemoveFieldColor(expectMoveMaterial,movableTile.ToArray());
+        movableTile.Clear();
     }
     //이동 실행
     public void EntitySetUp(Entity entity)
@@ -139,9 +162,15 @@ public class EntityController : MonoBehaviour
             selectedTile = null;
             selectedEntity = null;
         }
+        currentField.RemoveFieldColor(expectAttackMaterial, attackableTile.ToArray());
+        attackableTile.Clear();
+        currentField.RemoveFieldColor(expectMoveMaterial, movableTile.ToArray());
+        movableTile.Clear();
     }
-    void EntityDrag(Entity entity)
+    public void EntityMouseDrag(Entity entity)
     {
+        //팀이 아니면 이동 권한 없음
+        if (!entities.Contains(entity)) return;
         if (selectedEntity != entity) selectedEntity = entity;
         //기물 마우스 위치로 이동
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -152,34 +181,21 @@ public class EntityController : MonoBehaviour
             Vector3 pos = ray.GetPoint(rayDistance);
             entity.transform.position = pos;
         }
-    }
-    public void EntitySetDrag(Entity entity)
-    {
-        //팀이 아니면 이동 권한 없음
-        if (!entities.Contains(entity)) return;
-        EntityDrag(entity);
-        //가장 가까운 타일 선택
-        List<Tile> movableTile = GameManager.Instance.field.GetHalfTiles(isReflect);
-        //범위 내 타일 중에 이동 가능한 가장 가까운 타일을 가져온다.
         Tile closestTile = GetClosestTile(entity.transform.position, movableTile);
-        if (closestTile != null) selectedTile = closestTile;
-    }
-    public void EntityMoveDrag(Entity entity)
-    {
-        //팀이 아니면 이동 권한 없음
-        if (!entities.Contains(entity)) return;
-        EntityDrag(entity);
-        List<Tile> movableTile = new List<Tile>();
-        movableTile.Add(entity.curTile);
-        foreach (var tilePos in entity.GetEntityArea())
+        if (selectedTile != closestTile && closestTile !=null)
         {
-            var tile = currentField.GetTile(tilePos);
-            if (tile != null) movableTile.Add(tile);
+            List<intVector2> area;
+            if (selectedTile != null)
+            {
+                currentField.RemoveFieldColor(expectAttackMaterial,attackableTile.ToArray());
+                attackableTile.Clear();
+            }
+            selectedTile = closestTile;
+            area = entity.GetArea(selectedTile.fieldPos);
+            attackableTile.AddRange(currentField.GetTiles(area));
+            currentField.AddFieldColor(expectAttackMaterial,attackableTile.ToArray());
         }
-        Tile closestTile = GetClosestTile(entity.transform.position, movableTile);
-        if (closestTile != null) selectedTile = closestTile;
     }
-
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {
         if (tiles == null) return null;

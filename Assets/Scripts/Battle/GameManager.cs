@@ -65,7 +65,16 @@ public class GameManager : Singleton<GameManager>
             }
         }
         yield return new WaitForSeconds(1f);
-       
+        //공격 행동
+       foreach (var controller in controllers)
+        {
+            foreach (var entity in controller.entities)
+            {
+                entity.Attack();
+            }
+        }
+        //죽은 기물 제거
+        field.CleanField();
         TurnStart();
     }
     public void TurnEnd()

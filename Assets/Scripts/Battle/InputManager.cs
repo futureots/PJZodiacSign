@@ -9,11 +9,11 @@ public class InputManager : Singleton<InputManager>
     public enum InputMode
     {
         //명령 없음(행동 X)
-        None,
+        None=-1,
         //초기 기물 세팅용
-        Set,
+        Set=0,
         //기물 이동(기물 범위 내 타일만 선택가능)
-        Move
+        Move=1
     }
     public InputMode inputMode;
     public bool isEntitySelect
@@ -42,7 +42,7 @@ public class InputManager : Singleton<InputManager>
                 break;
             case InputMode.Move:
             case InputMode.Set:
-                playerController.EntitySelect(entity);
+                playerController.EntitySelect(entity,(int)inputMode);
                 break;
             default:
                 break;
@@ -56,10 +56,10 @@ public class InputManager : Singleton<InputManager>
             case InputMode.None:
                 break;
             case InputMode.Set:
-                playerController.EntitySetDrag(entity);
+                playerController.EntityMouseDrag(entity);
                 break;
             case InputMode.Move:
-                playerController.EntityMoveDrag(entity);
+                playerController.EntityMouseDrag(entity);
                 break;
             default:
                 break;
