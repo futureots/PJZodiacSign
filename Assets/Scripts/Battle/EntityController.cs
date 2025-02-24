@@ -27,7 +27,7 @@ public class EntityController : MonoBehaviour
         foreach (var member in party.Entities)
         {
             var prefab = jodiacList.GetJodiac(member.entityId);
-            Debug.Log(member.entityId +" : "+ member.entityElement);
+            //Debug.Log(member.entityId +" : "+ member.entityElement);
             if(prefab == null)
             {
                 Debug.Log("NO ENTITY!!!");
@@ -67,7 +67,7 @@ public class EntityController : MonoBehaviour
                 }
                 var tempEntity = tempList[Random.Range(0, tempList.Count)];
                 //해당 기물이 이동가능한 칸이 있는지 확인
-                var area = tempEntity.GetMoveArea();
+                var area = tempEntity.GetMoveArea(tempEntity.curPos,false);
                 bool movable = false;
                 while (true)
                 {
@@ -129,12 +129,41 @@ public class EntityController : MonoBehaviour
                 movableTile.AddRange(currentField.GetHalfTiles(isReflect));
                 break;
             case 1:
-                movableTile.AddRange(currentField.GetTiles(entity.GetMoveArea(true)));
+                movableTile.AddRange(currentField.GetTiles(entity.GetMoveArea(entity.curPos)));
                 break;
             default:
                 break;
         }
         currentField.AddFieldColor(expectMoveMaterial, movableTile.ToArray());
+    }
+    public void EntityMouseDrag(Entity entity)
+    {
+        //팀이 아니면 이동 권한 없음
+        if (!entities.Contains(entity)) return;
+        if (selectedEntity != entity) selectedEntity = entity;
+        //기물 마우스 위치로 이동
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
+        float rayDistance;
+        if (plane.Raycast(ray, out rayDistance))
+        {
+            Vector3 pos = ray.GetPoint(rayDistance);
+            entity.transform.position = pos;
+        }
+        Tile closestTile = GetClosestTile(entity.transform.position, movableTile);
+        if (selectedTile != closestTile && closestTile != null)
+        {
+            List<intVector2> area;
+            if (selectedTile != null)
+            {
+                currentField.RemoveFieldColor(expectAttackMaterial, attackableTile.ToArray());
+                attackableTile.Clear();
+            }
+            selectedTile = closestTile;
+            area = entity.GetAttackArea(selectedTile.fieldPos);
+            attackableTile.AddRange(currentField.GetTiles(area));
+            currentField.AddFieldColor(expectAttackMaterial, attackableTile.ToArray());
+        }
     }
     public void EntityMoveUp(Entity entity)
     {
@@ -170,35 +199,6 @@ public class EntityController : MonoBehaviour
         attackableTile.Clear();
         currentField.RemoveFieldColor(expectMoveMaterial, movableTile.ToArray());
         movableTile.Clear();
-    }
-    public void EntityMouseDrag(Entity entity)
-    {
-        //팀이 아니면 이동 권한 없음
-        if (!entities.Contains(entity)) return;
-        if (selectedEntity != entity) selectedEntity = entity;
-        //기물 마우스 위치로 이동
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
-        float rayDistance;
-        if (plane.Raycast(ray, out rayDistance))
-        {
-            Vector3 pos = ray.GetPoint(rayDistance);
-            entity.transform.position = pos;
-        }
-        Tile closestTile = GetClosestTile(entity.transform.position, movableTile);
-        if (selectedTile != closestTile && closestTile !=null)
-        {
-            List<intVector2> area;
-            if (selectedTile != null)
-            {
-                currentField.RemoveFieldColor(expectAttackMaterial,attackableTile.ToArray());
-                attackableTile.Clear();
-            }
-            selectedTile = closestTile;
-            area = entity.GetAttackArea(selectedTile.fieldPos);
-            attackableTile.AddRange(currentField.GetTiles(area));
-            currentField.AddFieldColor(expectAttackMaterial,attackableTile.ToArray());
-        }
     }
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {

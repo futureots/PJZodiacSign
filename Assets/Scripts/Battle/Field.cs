@@ -64,7 +64,9 @@ public class Field : MonoBehaviour
         var list = new List<Tile>();
         foreach (var pos in positions)
         {
-            list.Add(GetTile(pos));
+            var tile = GetTile(pos);
+            if (tile == null) continue;
+            list.Add(tile);
         }
         return list;
     }

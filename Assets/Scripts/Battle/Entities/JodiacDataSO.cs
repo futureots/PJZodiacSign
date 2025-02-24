@@ -10,6 +10,5 @@ public class JodiacDataSO : ScriptableObject
     public int power;
     public int powerIncrease;
     public Skill skill;
-    [SerializeField] public List<intVector2> area;
     
 }

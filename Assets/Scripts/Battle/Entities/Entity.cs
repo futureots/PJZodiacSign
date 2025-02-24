@@ -41,7 +41,6 @@ public class Entity : MonoBehaviour
     protected bool isAllocated;
 
     //public float properHeight => transform.lossyScale.y;
-    protected intVector2[] area;
 
 
 
@@ -86,10 +85,6 @@ public class Entity : MonoBehaviour
     public void MoveToTile(Tile tile)
     {
         var scale = transform.localScale;
-        if (tile.isOccupied)
-        {
-            return;
-        }
         //원래 있던 위치 연결 제거
         if (field != null)
         {
@@ -98,6 +93,10 @@ public class Entity : MonoBehaviour
                 var preCell = field.GetTile(curPos);
                 preCell.entityObj = null;
             }
+        }
+        if (tile.isOccupied)
+        {
+            return;
         }
         tile.SetEntity(gameObject);
         curTile = tile;
@@ -111,39 +110,27 @@ public class Entity : MonoBehaviour
 
     public virtual List<intVector2> GetAttackArea(intVector2 entityPos)
     {
-        if (field == null) return new List<intVector2>();
-        List<intVector2> absArea = new List<intVector2>();
-        foreach (intVector2 pos in area)
-        {
-            var absPos = entityPos + pos * (isReflect ? -1 : 1);
-            if (field.IsValidCellPos(absPos))
-            {
-                absArea.Add(absPos);
-            }
-        }
-        return absArea;
+        return new List<intVector2>();
     }
 
-    public virtual List<intVector2> GetMoveArea(intVector2 entityPos, bool hasOriginTile = false)
+    public List<intVector2> GetMoveArea(intVector2 entityPos, bool hasOriginTile = true)
     {
-        if (field == null) return new List<intVector2>();
-        List<intVector2> absArea = new List<intVector2>();
-        foreach (intVector2 pos in area)
+        var area = GetAttackArea(entityPos);
+
+        for (int i = 0; i < area.Count; i++)
         {
-            var absPos = entityPos + pos * (isReflect ? -1 : 1);
-            if (field.IsValidCellPos(absPos))
+            if (field.GetTile(area[i]) == null) continue;
+            if (field.GetTile(area[i]).isOccupied)
             {
-                absArea.Add(absPos);
+                area.RemoveAt(i);
+                i--;
             }
         }
-        if (hasOriginTile) absArea.Add(entityPos);
-        return absArea;
+        area.Add(curPos);
+
+        return area;
     }
 
-    public virtual List<intVector2> GetMoveArea(bool hasOriginTile = false)
-    {
-        return GetMoveArea(curPos, hasOriginTile);
-    }
     public void Attack()
     {
         var targets = new List<IDamageable>();
