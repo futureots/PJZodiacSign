@@ -93,7 +93,8 @@ public class GameManager : Singleton<GameManager>
                 if (entity != null)
                 {
                     if (entity.TeamNum != team) continue;
-                    PartyEntity temp = new PartyEntity(entity.name);
+                    PartyEntity temp = new PartyEntity(entity.jodiacType,entity.elementType);
+                    Debug.Log(entity.jodiacType + " : " + entity.elementType);
                     list.Add(temp);
                 }
             }

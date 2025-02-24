@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EntityData",menuName = "EntityData")]
-public class EntityDataSO : ScriptableObject
+public class JodiacDataSO : ScriptableObject
 {
     public int hp;
+    public int hpIncrease;
     public int power;
+    public int powerIncrease;
+    public Skill skill;
     [SerializeField] public List<intVector2> area;
     
 }

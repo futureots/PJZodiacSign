@@ -608,6 +608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f853d1a66450d744e8dc65fb2664fd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jodiacList: {fileID: 11400000, guid: aaacab08c8dd78e46a5b0d447af795cd, type: 2}
   isReflect: 0
   expectAttackMaterial: {fileID: -876546973899608171, guid: 766bbd0bfcca5ed489650688c819a2c3, type: 3}
   expectMoveMaterial: {fileID: 2100000, guid: 088d884df31c96e4fa90f21e5173a155, type: 2}
@@ -1081,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5a3464a7978ee4aa4a7962debb9e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jodiacList: {fileID: 11400000, guid: aaacab08c8dd78e46a5b0d447af795cd, type: 2}
   isReflect: 1
   expectAttackMaterial: {fileID: 0}
   expectMoveMaterial: {fileID: 0}

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    public int power;
 
     //스킬 발동
-    public void Activate(List<Entity> targets)
+    public void Activate(List<Entity> targets, int power)
     {
         
     }

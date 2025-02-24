@@ -7,6 +7,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityController : MonoBehaviour
 {
+    [SerializeField] JodiacSO jodiacList;
     public bool isReflect;
     public Entity selectedEntity { get; private set; }
     public Tile selectedTile {  get; private set; }
@@ -25,7 +26,8 @@ public class EntityController : MonoBehaviour
         int x = -35;
         foreach (var member in party.Entities)
         {
-            var prefab = Resources.Load<GameObject>("Pieces/"+ member.entityId);
+            var prefab = jodiacList.GetJodiac(member.entityId);
+            Debug.Log(member.entityId +" : "+ member.entityElement);
             if(prefab == null)
             {
                 Debug.Log("NO ENTITY!!!");
@@ -35,8 +37,7 @@ public class EntityController : MonoBehaviour
             obj.tag = "Player";
             Entity entity = obj.GetComponent<Entity>();
             entities.Add(entity);
-            entity.teamNum = num;
-            entity.isReflect = isReflect;
+            entity.SetEntity(teamNum, member.entityLevel, isReflect, member.entityElement);
             entity.OnDestroyed += (entity) =>
             {
                 entities.Remove(entity);
@@ -66,7 +67,7 @@ public class EntityController : MonoBehaviour
                 }
                 var tempEntity = tempList[Random.Range(0, tempList.Count)];
                 //해당 기물이 이동가능한 칸이 있는지 확인
-                var area = tempEntity.GetArea();
+                var area = tempEntity.GetMoveArea();
                 bool movable = false;
                 while (true)
                 {
@@ -109,8 +110,11 @@ public class EntityController : MonoBehaviour
         return result;
     }
     #region EntitySelectInput
+
     List<Tile> movableTile;
     List<Tile> attackableTile;
+
+
     //엔티티 선택
     public void EntitySelect(Entity entity, int mode)
     {
@@ -125,7 +129,7 @@ public class EntityController : MonoBehaviour
                 movableTile.AddRange(currentField.GetHalfTiles(isReflect));
                 break;
             case 1:
-                movableTile.AddRange(currentField.GetTiles(entity.GetArea(true)));
+                movableTile.AddRange(currentField.GetTiles(entity.GetMoveArea(true)));
                 break;
             default:
                 break;
@@ -191,7 +195,7 @@ public class EntityController : MonoBehaviour
                 attackableTile.Clear();
             }
             selectedTile = closestTile;
-            area = entity.GetArea(selectedTile.fieldPos);
+            area = entity.GetAttackArea(selectedTile.fieldPos);
             attackableTile.AddRange(currentField.GetTiles(area));
             currentField.AddFieldColor(expectAttackMaterial,attackableTile.ToArray());
         }

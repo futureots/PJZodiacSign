@@ -45,11 +45,15 @@ public class PartyData
 }
 public struct PartyEntity
 {
-    public PartyEntity(string name, int entityLevel = 1)
+    public PartyEntity(Jodiac id, Element element,int entityLevel = 0)
     {
-        this.entityId = name;
+        this.entityId = id;
+        this.entityElement = element;
         this.entityLevel = entityLevel;
     }
-    public string entityId;
+    //기물 종류
+    public Jodiac entityId;
+    public Element entityElement;
+    //기물 레벨(성장 스탯 추가)
     public int entityLevel;
 }

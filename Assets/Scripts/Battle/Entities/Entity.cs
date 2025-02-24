@@ -3,15 +3,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using static UnityEditor.PlayerSettings;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Entity : MonoBehaviour
 {
-    //필드와 연관되어있는 변수들
+    //공격범위 반전 여부
     public bool isReflect;
-    bool isAllocated;
+    
     public Field field;
     public Tile curTile { get; private set; }
     public intVector2 curPos
@@ -24,52 +26,49 @@ public class Entity : MonoBehaviour
     }
 
     //엔티티 라이프 사이클에 필요한 변수들
-    public EntityDataSO data;
+    public JodiacDataSO data;
     public Element elementType;
+    [SerializeField] ElementSO material;
     public Jodiac jodiacType;
+    public int level;
 
     public Health health;
     public Action<Entity> OnDestroyed;
-    public int originPower
-    {
-        get
-        {
-            return data.power;
-        }
-    }
     public int power;
     public int teamNum;
     public int TeamNum { get => teamNum; set => teamNum = value; }
-    
-    
+
+    protected bool isAllocated;
+
     //public float properHeight => transform.lossyScale.y;
-    public intVector2[] area
+    protected intVector2[] area;
+
+
+
+    public void SetEntity(int teamNum, int level, bool isReflect, Element type)
     {
-        get
-        {
-            return data.area.ToArray();
-        }
+        this.TeamNum = teamNum;
+        this.isReflect = isReflect;
+        this.level = level;
+        this.elementType = type;
+        GetComponent<Renderer>().SetMaterials(new List<Material>() { material.GetMaterial(type)});
+        health.originHp = data.hp + data.hpIncrease * level;
+        power = data.power + data.powerIncrease * level;
     }
-    public void SetOriginPower()
+    protected void Start()
     {
-        power = originPower;
-    }
-    private void Start()
-    {
-        //hp = maxHp;
         health.Dead += Dead;
-        SetOriginPower();
     }
 
-    private void OnMouseDown()
+    protected void OnMouseDown()
     {
         InputManager.Instance.OnEntityDown(this);
     }
-    private void OnMouseDrag()
+    protected void OnMouseDrag()
     {
         InputManager.Instance.OnEntityDrag(this);
     }
-    private void OnMouseUp()
+    protected void OnMouseUp()
     {
         InputManager.Instance.OnEntityUp(this);
     }
@@ -80,10 +79,17 @@ public class Entity : MonoBehaviour
         OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }
-
+    /// <summary>
+    /// entity's position move to tile's position
+    /// </summary>
+    /// <param name="tile"></param>
     public void MoveToTile(Tile tile)
     {
         var scale = transform.localScale;
+        if (tile.isOccupied)
+        {
+            return;
+        }
         //원래 있던 위치 연결 제거
         if (field != null)
         {
@@ -93,10 +99,6 @@ public class Entity : MonoBehaviour
                 preCell.entityObj = null;
             }
         }
-        if (tile.isOccupied)
-        {
-            return;
-        }
         tile.SetEntity(gameObject);
         curTile = tile;
         Vector3 entityPos = tile.transform.position;
@@ -105,13 +107,24 @@ public class Entity : MonoBehaviour
         transform.DOMove(entityPos, 1f);
         field = tile.field;
     }
-    /// <summary>
-    /// 타일 위치를 기준으로 엔티티의 공격(이동)범위 리스트로 반환
-    /// </summary>
-    /// <param name="entityPos"></param>
-    /// <param name="hasOriginTile">엔티티 기존 위치 반환 여부</param>
-    /// <returns></returns>
-    public List<intVector2> GetArea(intVector2 entityPos, bool hasOriginTile = false)
+
+
+    public virtual List<intVector2> GetAttackArea(intVector2 entityPos)
+    {
+        if (field == null) return new List<intVector2>();
+        List<intVector2> absArea = new List<intVector2>();
+        foreach (intVector2 pos in area)
+        {
+            var absPos = entityPos + pos * (isReflect ? -1 : 1);
+            if (field.IsValidCellPos(absPos))
+            {
+                absArea.Add(absPos);
+            }
+        }
+        return absArea;
+    }
+
+    public virtual List<intVector2> GetMoveArea(intVector2 entityPos, bool hasOriginTile = false)
     {
         if (field == null) return new List<intVector2>();
         List<intVector2> absArea = new List<intVector2>();
@@ -126,14 +139,15 @@ public class Entity : MonoBehaviour
         if (hasOriginTile) absArea.Add(entityPos);
         return absArea;
     }
-    public List<intVector2> GetArea(bool hasOriginTile = false)
+
+    public virtual List<intVector2> GetMoveArea(bool hasOriginTile = false)
     {
-        return GetArea(curPos, hasOriginTile);
+        return GetMoveArea(curPos, hasOriginTile);
     }
     public void Attack()
     {
         var targets = new List<IDamageable>();
-        foreach (var pos in GetArea())
+        foreach (var pos in GetAttackArea(curPos))
         {
             var tile = field.GetTile(pos);
             if (tile == null) continue;

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1937033463458795209}
   - component: {fileID: -7869756602773132126}
   m_Layer: 6
-  m_Name: Piece
+  m_Name: Chicken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 58f5c67bfcfcd5e498d72526bf1d3fce, type: 2}
+  - {fileID: 2100000, guid: c7ce952d0cc5177468ed091a0ffcd4fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,12 +100,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReflect: 0
   field: {fileID: 0}
-  data: {fileID: 11400000, guid: 9cfaf4d8c27be334e8b1a31b8682c141, type: 2}
+  data: {fileID: 11400000, guid: 77db6b0280e1f1a4e87ae4ad099e0c11, type: 2}
   elementType: 0
-  jodiacType: 0
+  material: {fileID: 11400000, guid: ec5e006bb5a102e49b5e18bb741d5e24, type: 2}
+  jodiacType: 10
+  level: 0
   health: {fileID: -7869756602773132126}
   power: 0
-  teamNum: 1
+  teamNum: 0
 --- !u!65 &1937033463458795209
 BoxCollider:
   m_ObjectHideFlags: 0
