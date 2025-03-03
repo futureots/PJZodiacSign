@@ -679,6 +679,7 @@ MonoBehaviour:
   - {fileID: 1190022356}
   - {fileID: 1985931038}
   field: {fileID: 1983822019}
+  attackMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
 --- !u!1 &1629037773
 GameObject:
   m_ObjectHideFlags: 0

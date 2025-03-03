@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EntityData",menuName = "EntityData")]
+[CreateAssetMenu(fileName = "JodiacData",menuName = "JodiacData")]
 public class JodiacDataSO : ScriptableObject
 {
     public int hp;

@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
 {
     public EntityController[] controllers;
     public Field field;
+    [SerializeField] Material attackMaterial;
     private void Awake()
     {
         field.CreateField();
@@ -135,5 +136,29 @@ public class GameManager : Singleton<GameManager>
         }
         return false;
     }
-
+    List<Tile> enemyAttackArea = new List<Tile>();
+    public void ViewAttackArea(int teamNum)
+    {
+        List<EntityController> enemy = new List<EntityController>();
+        foreach (var item in controllers)
+        {
+            if(item.teamNum != teamNum)
+            {
+                enemy.Add(item);
+            }
+        }
+        foreach (var controller  in enemy)
+        {
+            foreach (var item in controller.entities)
+            {
+                var area = item.GetAttackArea(item.curPos);
+                enemyAttackArea.AddRange(area);
+                field.AddFieldColor(attackMaterial, area.ToArray());
+            }
+        }
+    }
+    public void ClearAttackArea()
+    {
+        field.RemoveFieldColor(attackMaterial,enemyAttackArea.ToArray());
+    }
 }

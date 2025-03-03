@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 691125769844049855}
   - component: {fileID: 5491607095503399969}
   - component: {fileID: 1054759446070586868}
-  - component: {fileID: 5048811441260812294}
   - component: {fileID: 1937033463458795209}
   - component: {fileID: -7869756602773132126}
+  - component: {fileID: -6014883518189717293}
   m_Layer: 6
   m_Name: Mouse
   m_TagString: Untagged
@@ -86,28 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5048811441260812294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1455179597510633406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7fe6b8f312dd3a4abf0c7b2f7068507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isReflect: 0
-  field: {fileID: 0}
-  data: {fileID: 11400000, guid: 77db6b0280e1f1a4e87ae4ad099e0c11, type: 2}
-  elementType: 0
-  material: {fileID: 11400000, guid: ec5e006bb5a102e49b5e18bb741d5e24, type: 2}
-  jodiacType: 1
-  level: 0
-  health: {fileID: -7869756602773132126}
-  power: 0
-  teamNum: 0
 --- !u!65 &1937033463458795209
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -142,3 +120,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originHp: 50
+--- !u!114 &-6014883518189717293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455179597510633406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7f332b2a51e6ba49a0944a281f3bb7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isReflect: 0
+  field: {fileID: 0}
+  data: {fileID: 11400000, guid: 5093dc0d48f84704ea416f92ee3f8cec, type: 2}
+  elementType: 0
+  material: {fileID: 11400000, guid: ec5e006bb5a102e49b5e18bb741d5e24, type: 2}
+  jodiacType: 1
+  level: 0
+  health: {fileID: -7869756602773132126}
+  power: 0
+  teamNum: 0
+  area:
+  - x: 2
+    y: 0
+  - x: 2
+    y: 2
+  - x: 0
+    y: 2
+  - x: -2
+    y: 2
+  - x: -2
+    y: 0
+  - x: -2
+    y: -2
+  - x: 0
+    y: -2
+  - x: 2
+    y: -2

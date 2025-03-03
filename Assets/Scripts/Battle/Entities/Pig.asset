@@ -12,24 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db6085e42c4a894497ce8388f209d9a, type: 3}
   m_Name: Pig
   m_EditorClassIdentifier: 
-  jodiac: 12
-  hp: 35
+  hp: 30
   hpIncrease: 4
   power: 5
   powerIncrease: 1
   skill: {fileID: 0}
-  area:
-  - x: 0
-    y: 1
-  - x: 0
-    y: 2
-  - x: 0
-    y: 3
-  - x: 1
-    y: 0
-  - x: 1
-    y: 1
-  - x: -1
-    y: 0
-  - x: -1
-    y: 1

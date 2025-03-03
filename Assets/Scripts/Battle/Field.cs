@@ -47,12 +47,6 @@ public class Field : MonoBehaviour
         }
         return true;
     }
-    public bool IsMovable(intVector2 pos)
-    {
-        if (!IsValidCellPos(pos)) return false;
-        var tile = GetTile(pos);
-        return !tile.isOccupied;
-    }
     //해당 위치의 셀을 반환
     public Tile GetTile(intVector2 pos)
     {

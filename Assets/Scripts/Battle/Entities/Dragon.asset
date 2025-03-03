@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db6085e42c4a894497ce8388f209d9a, type: 3}
   m_Name: Dragon
   m_EditorClassIdentifier: 
-  hp: 30
+  hp: 25
   hpIncrease: 0
   power: 3
   powerIncrease: 3

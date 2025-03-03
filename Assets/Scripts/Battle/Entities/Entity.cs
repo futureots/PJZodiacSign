@@ -13,6 +13,7 @@ public class Entity : MonoBehaviour
 {
     //공격범위 반전 여부
     public bool isReflect;
+    protected int negative => isReflect ? -1 : 1;
     
     public Field field;
     public Tile curTile { get; private set; }
@@ -78,10 +79,7 @@ public class Entity : MonoBehaviour
         OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }
-    /// <summary>
-    /// entity's position move to tile's position
-    /// </summary>
-    /// <param name="tile"></param>
+
     public void MoveToTile(Tile tile)
     {
         var scale = transform.localScale;
@@ -108,25 +106,25 @@ public class Entity : MonoBehaviour
     }
 
 
-    public virtual List<intVector2> GetAttackArea(intVector2 entityPos)
+    public virtual List<Tile> GetAttackArea(intVector2 entityPos)
     {
-        return new List<intVector2>();
+        return new List<Tile>();
     }
 
-    public List<intVector2> GetMoveArea(intVector2 entityPos, bool hasOriginTile = true)
+    public List<Tile> GetMoveArea(intVector2 entityPos, bool hasOriginTile = true)
     {
         var area = GetAttackArea(entityPos);
 
         for (int i = 0; i < area.Count; i++)
         {
-            if (field.GetTile(area[i]) == null) continue;
-            if (field.GetTile(area[i]).isOccupied)
+            if (area[i] == null) continue;
+            if (area[i].isOccupied)
             {
                 area.RemoveAt(i);
                 i--;
             }
         }
-        area.Add(curPos);
+        area.Add(curTile);
 
         return area;
     }
@@ -134,9 +132,9 @@ public class Entity : MonoBehaviour
     public void Attack()
     {
         var targets = new List<IDamageable>();
-        foreach (var pos in GetAttackArea(curPos))
+        if (field == null) return;
+        foreach (var tile in GetAttackArea(curPos))
         {
-            var tile = field.GetTile(pos);
             if (tile == null) continue;
             if (tile.isOccupied)
             {

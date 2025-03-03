@@ -18,7 +18,30 @@ public class EntityController : MonoBehaviour
     public Field currentField;
     public int teamNum;
     public List<Entity> entities;
-    
+    #region COST
+    public int cost;
+    public List<Command> commands;
+    public void refillCost()
+    {
+        cost = 2;
+        commands.Clear();
+    }
+    public void InputCommand(Command command)
+    {
+        if (cost <= 0) return;
+        cost -= 1;
+        commands.Add(command);
+    }
+    public void EraseCommand(int i)
+    {
+        if (i < commands.Count)
+        {
+            commands.RemoveAt(i);
+            cost += 1;
+        }
+        else return;
+    }
+    #endregion
     //처음 한번만 실행되는 함수(여야함)
     public virtual void SetEntities(int num, PartyData party)//+ 지점, 엔티티를 가진 구조체 리스트를 가진 클래스 받아오기 => 해당 지점에 해당 엔티티 소환 후 팀 넘버 설정
     {
@@ -73,11 +96,11 @@ public class EntityController : MonoBehaviour
                 {
                     if (area.Count <= 0) break;
                     var tempTile = area[Random.Range(0, area.Count)];
-                    if (currentField.IsMovable(tempTile))
+                    if (!tempTile.isOccupied)
                     {
                         movable = true;
-                        selectedTile = currentField.GetTile(tempTile);
-                        Debug.Log("POS : " + tempTile.x + tempTile.y);
+                        selectedTile = tempTile;
+                        //Debug.Log("POS : " + tempTile.x + tempTile.y);
                         break;
                     }
                     else
@@ -129,12 +152,13 @@ public class EntityController : MonoBehaviour
                 movableTile.AddRange(currentField.GetHalfTiles(isReflect));
                 break;
             case 1:
-                movableTile.AddRange(currentField.GetTiles(entity.GetMoveArea(entity.curPos)));
+                movableTile.AddRange(entity.GetMoveArea(entity.curPos));
                 break;
             default:
                 break;
         }
         currentField.AddFieldColor(expectMoveMaterial, movableTile.ToArray());
+        GameManager.Instance.ViewAttackArea(entity.teamNum);
     }
     public void EntityMouseDrag(Entity entity)
     {
@@ -153,15 +177,14 @@ public class EntityController : MonoBehaviour
         Tile closestTile = GetClosestTile(entity.transform.position, movableTile);
         if (selectedTile != closestTile && closestTile != null)
         {
-            List<intVector2> area;
             if (selectedTile != null)
             {
                 currentField.RemoveFieldColor(expectAttackMaterial, attackableTile.ToArray());
                 attackableTile.Clear();
             }
             selectedTile = closestTile;
-            area = entity.GetAttackArea(selectedTile.fieldPos);
-            attackableTile.AddRange(currentField.GetTiles(area));
+            var area = entity.GetAttackArea(selectedTile.fieldPos);
+            attackableTile.AddRange(area);
             currentField.AddFieldColor(expectAttackMaterial, attackableTile.ToArray());
         }
     }
@@ -179,6 +202,7 @@ public class EntityController : MonoBehaviour
         attackableTile.Clear();
         currentField.RemoveFieldColor(expectMoveMaterial,movableTile.ToArray());
         movableTile.Clear();
+        GameManager.Instance.ClearAttackArea();
     }
     //이동 실행
     public void EntitySetUp(Entity entity)
@@ -199,6 +223,7 @@ public class EntityController : MonoBehaviour
         attackableTile.Clear();
         currentField.RemoveFieldColor(expectMoveMaterial, movableTile.ToArray());
         movableTile.Clear();
+        GameManager.Instance.ClearAttackArea();
     }
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {
