@@ -44,8 +44,9 @@ public class Entity_Sheep : Entity
 
         return list;
     }
-    List<intVector2> GetBlockedArea(intVector2 blockPos)
+    protected List<intVector2> GetBlockedArea(intVector2 blockPos)
     {
+
         int mul = blockPos.x * blockPos.y;
         var pos = new intVector2(blockPos.x, blockPos.y) * 2;
         List<intVector2> list = new List<intVector2>();
@@ -60,5 +61,11 @@ public class Entity_Sheep : Entity
                 break;
         }
         return list;
+    }
+    bool IsBlocked(intVector2 distance)
+    {
+        //원점부터 distance까지의 거리 사이에 기물이 있는지 없는지 확인, 또는 사이에 필요한 타일 벡터값 리스트 반환
+        return true;
+        
     }
 }

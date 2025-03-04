@@ -37,11 +37,7 @@ public class Field : MonoBehaviour
     //해당 위치가 필드내에 존재하는 위치인지 확인
     public bool IsValidCellPos(intVector2 pos)
     {
-        if(pos.x>=column || pos.x < 0)
-        {
-            return false;
-        }
-        if (pos.y >= row || pos.y < 0)
+        if(pos.x>=column || pos.x < 0 || pos.y >= row || pos.y < 0 || tiles[pos.y][pos.x] == null)
         {
             return false;
         }
