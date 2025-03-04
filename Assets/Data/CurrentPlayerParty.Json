@@ -6,8 +6,8 @@
     "$values": [
       {
         "$type": "PartyEntity, Assembly-CSharp",
-        "entityId": 1,
-        "entityElement": 5,
+        "entityId": 9,
+        "entityElement": 2,
         "entityLevel": 0
       },
       {
@@ -18,13 +18,13 @@
       },
       {
         "$type": "PartyEntity, Assembly-CSharp",
-        "entityId": 7,
+        "entityId": 10,
         "entityElement": 4,
         "entityLevel": 0
       },
       {
         "$type": "PartyEntity, Assembly-CSharp",
-        "entityId": 4,
+        "entityId": 11,
         "entityElement": 5,
         "entityLevel": 0
       }
