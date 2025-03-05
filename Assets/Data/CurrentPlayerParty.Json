@@ -6,11 +6,7 @@
     "$values": [
       {
         "$type": "PartyEntity, Assembly-CSharp",
-<<<<<<< Updated upstream
-        "entityId": 9,
-=======
         "entityId": 2,
->>>>>>> Stashed changes
         "entityElement": 2,
         "entityLevel": 0
       },
