@@ -34,6 +34,26 @@ public class Field : MonoBehaviour
             }
         }
     }
+
+    public int[,] GetField(int teamNum = 0)
+    {
+        var field = new int[row,column];
+        for(int i = 0; i < row; i++)
+        {
+            for(int j = 0;j < column; j++)
+            {
+                if (tiles[i][j].isOccupied)
+                {
+                    field[i, j] = 1;
+                }
+                else
+                {
+                    field[i, j] = 0;
+                }
+            }
+        }
+        return field;
+    }
     //해당 위치가 필드내에 존재하는 위치인지 확인
     public bool IsValidCellPos(intVector2 pos)
     {
