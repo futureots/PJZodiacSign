@@ -86,18 +86,15 @@ public class GameManager : Singleton<GameManager>
     public void SaveCurrentState(int team)
     {
         List<PartyEntity> list = new List<PartyEntity>();
-        foreach (var i in field.tiles)
+        foreach (var tile in field.tiles)
         {
-            foreach (var j in i)
+            var entity = tile.GetEntity();
+            if (entity != null)
             {
-                var entity = j.GetEntity();
-                if (entity != null)
-                {
-                    if (entity.TeamNum != team) continue;
-                    PartyEntity temp = new PartyEntity(entity.jodiacType,entity.elementType);
-                    Debug.Log(entity.jodiacType + " : " + entity.elementType);
-                    list.Add(temp);
-                }
+                if (entity.TeamNum != team) continue;
+                PartyEntity temp = new PartyEntity(entity.jodiacType,entity.elementType);
+                Debug.Log(entity.jodiacType + " : " + entity.elementType);
+                list.Add(temp);
             }
         }
         PartyData data = new PartyData();

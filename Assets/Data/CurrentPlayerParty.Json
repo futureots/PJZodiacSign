@@ -9,6 +9,12 @@
         "entityId": 3,
         "entityElement": 2,
         "entityLevel": 0
+      },
+      {
+        "$type": "PartyEntity, Assembly-CSharp",
+        "entityId": 9,
+        "entityElement": 3,
+        "entityLevel": 0
       }
     ]
   }

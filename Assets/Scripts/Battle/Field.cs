@@ -9,28 +9,23 @@ public class Field : MonoBehaviour
 {
     public int row, column;
     public GameObject tilePrefab;
-    public Material[] materials;
-    public List<List<Tile>> tiles = new List<List<Tile>>();
-    public List<Tile> activateTiles = new List<Tile>();
+    public Tile[,] tiles = null;
     
     public void CreateField()
     {
         //행열의 길이 만큼 체스판 생성
+        tiles = new Tile[row, column];
         for (int i = 0; i < row; i++)
         {
-            tiles.Add(new List<Tile>());
             for (int j = 0; j < column; j++)
             {
-                int materialNum = (i + j) % materials.Length;
                 Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
                 var tileObj = Instantiate(tilePrefab, transform);
                 tileObj.transform.localPosition = pos;
                 //흑백 색 바꾸기(디버그용)
                 var tile = tileObj.GetComponent<Tile>();
-                tileObj.GetComponent<MeshRenderer>().material = materials[materialNum];
                 tile.SetField(this, j, i);
-                tiles[i].Add(tile);
-                activateTiles.Add(tile);
+                tiles[i, j] = tile;
             }
         }
     }
@@ -42,7 +37,7 @@ public class Field : MonoBehaviour
         {
             for(int j = 0;j < column; j++)
             {
-                if (tiles[i][j].isOccupied)
+                if (tiles[i, j].isOccupied)
                 {
                     field[i, j] = 1;
                 }
@@ -57,7 +52,7 @@ public class Field : MonoBehaviour
     //해당 위치가 필드내에 존재하는 위치인지 확인
     public bool IsValidCellPos(intVector2 pos)
     {
-        if(pos.x>=column || pos.x < 0 || pos.y >= row || pos.y < 0 || tiles[pos.y][pos.x] == null)
+        if(pos.x>=column || pos.x < 0 || pos.y >= row || pos.y < 0 || tiles[pos.y,pos.x] == null)
         {
             return false;
         }
@@ -67,7 +62,7 @@ public class Field : MonoBehaviour
     public Tile GetTile(intVector2 pos)
     {
         if (!IsValidCellPos(pos)) return null;
-        return tiles[pos.y][pos.x];
+        return tiles[pos.y, pos.x];
     }
     public List<Tile> GetTiles(List<intVector2> positions)
     {
@@ -92,7 +87,10 @@ public class Field : MonoBehaviour
         }
         for (int i = start; i < end; i++) 
         {
-            list.AddRange(tiles[i]);
+            for(int j = 0; j< column; j++)
+            {
+                list.Add(tiles[i,j]);
+            }
         }
         return list;
     }
@@ -125,17 +123,14 @@ public class Field : MonoBehaviour
 
     public void CleanField()
     {
-        foreach (var tileList in tiles)
+        foreach (var tile in tiles)
         {
-            foreach(var tile in tileList)
+            if (!tile.isOccupied) continue;
+            var health = tile.entityObj.GetComponent<Health>();
+            Debug.Log("health : " + health.hp);
+            if (health.isZero())
             {
-                if (!tile.isOccupied) continue;
-                var health = tile.entityObj.GetComponent<Health>();
-                Debug.Log("health : " + health.hp);
-                if (health.isZero())
-                {
-                    health.Dead?.Invoke();
-                }
+                health.Dead?.Invoke();
             }
         }
     }
