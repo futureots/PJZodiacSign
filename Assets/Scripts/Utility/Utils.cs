@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Utils
@@ -48,6 +50,18 @@ public struct intVector2
     public static intVector2 operator *(intVector2 left, int right)
     {
         return new intVector2(left.x*right, left.y*right);
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is intVector2 vector &&
+               x == vector.x &&
+               y == vector.y;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(x, y);
     }
 }
 

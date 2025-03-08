@@ -18,24 +18,39 @@ public class Entity_Tiger : Entity
                 if(tile != null)
                 {
                     list.Add(tile);
-                    int k = 1;
-                    while (true)
-                    {
-                        var entityTile = field.GetTile(vec * k + entityPos);
-                        k++;
-                        if (entityTile == null) break;
-                        if (!entityTile.isOccupied) continue;
-                        var backTile = field.GetTile(vec * k + entityPos);
-                        if(backTile != null)
-                        {
-                            if(!backTile.isOccupied) list.Add(backTile);
-                        }
-                    }
                 }
             }
         }
+        return list;
+    }
 
+    public override List<Tile> GetMoveArea(intVector2 entityPos, bool hasOriginTile = true)
+    {
+        var list = GetAttackArea(entityPos);
+        for(int i= -1;i <= 1; i++)
+        {
+            for (int j= -1; j <= 1; j++)
+            {
+                if (i == 0 && j == 0) continue;
+                var vec = new intVector2(i, j);
+                int k = 1;
+                while (true)
+                {
+                    var entityTile = field.GetTile(vec * k + entityPos);
+                    if (entityTile == null) break;
+                    k++;
+                    if (entityTile.isOccupied)
+                    {
+                        list.Remove(entityTile);
+                        var backTile = field.GetTile(vec * k + entityPos);
+                        if (backTile == null) break;
+                        if (backTile.isOccupied) break;
+                        list.Add(backTile);
+                    }
+                }
 
+            }
+        }
         return list;
     }
 }

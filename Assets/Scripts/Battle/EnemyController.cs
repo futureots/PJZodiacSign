@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : EntityController
@@ -13,7 +14,7 @@ public class EnemyController : EntityController
             entity.tag = "Enemy";
             var tile = tiles[Random.Range(0, tiles.Count)];
             tiles.Remove(tile);
-            entity.MoveToTile(tile);
+            entity.MoveToTile(tile,false);
         }
     }
 }

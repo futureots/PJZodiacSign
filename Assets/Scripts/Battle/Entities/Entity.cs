@@ -12,7 +12,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class Entity : MonoBehaviour
 {
     //공격범위 반전 여부
-    public bool isReflect;
+    bool isReflect;
     protected int negative => isReflect ? -1 : 1;
     
     public Field field;
@@ -28,47 +28,53 @@ public class Entity : MonoBehaviour
 
     //엔티티 라이프 사이클에 필요한 변수들
     public JodiacDataSO data;
-    public Element elementType;
+    Element element;
+    public Element elementType
+    {
+        get
+        {
+            return element;
+        }
+        set
+        {
+            element = value;
+            GetComponent<Renderer>().SetMaterials(new List<Material>() { material.GetMaterial(value) });
+        }
+    }
     [SerializeField] ElementSO material;
     public Jodiac jodiacType;
     public int level;
 
     public Health health;
+    
     public Action<Entity> OnDestroyed;
     public int power;
-    public int teamNum;
+    int teamNum;
     public int TeamNum { get => teamNum; set => teamNum = value; }
 
-    protected bool isAllocated;
 
-    //public float properHeight => transform.lossyScale.y;
-
-
-
-    public void SetEntity(int teamNum, int level, bool isReflect, Element type)
+    public void SetEntity(int teamNum, int level, bool isReflect)
     {
         this.TeamNum = teamNum;
         this.isReflect = isReflect;
         this.level = level;
-        this.elementType = type;
-        GetComponent<Renderer>().SetMaterials(new List<Material>() { material.GetMaterial(type)});
         health.originHp = data.hp + data.hpIncrease * level;
         power = data.power + data.powerIncrease * level;
     }
-    protected void Start()
+    void Start()
     {
         health.Dead += Dead;
     }
 
-    protected void OnMouseDown()
+    void OnMouseDown()
     {
         InputManager.Instance.OnEntityDown(this);
     }
-    protected void OnMouseDrag()
+    void OnMouseDrag()
     {
         InputManager.Instance.OnEntityDrag(this);
     }
-    protected void OnMouseUp()
+    void OnMouseUp()
     {
         InputManager.Instance.OnEntityUp(this);
     }
@@ -80,38 +86,47 @@ public class Entity : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void MoveToTile(Tile tile)
+    public void MoveToTile(Tile tile, bool isMovable = true)
     {
+        //이동 가능여부 확인
+        if (tile == null) return;
+        if (isMovable)
+        {
+            var list = GetMoveArea();
+            if (!list.Contains(tile)) return;
+        }
+        //이동 세팅
+        StartCoroutine(EntityMoveCo(tile));
+    }
+    IEnumerator EntityMoveCo(Tile tile)
+    {
+        SetClickable(false);
         var scale = transform.localScale;
-        //원래 있던 위치 연결 제거
-        if (field != null)
-        {
-            if (field.IsValidCellPos(curPos))
-            {
-                var preCell = field.GetTile(curPos);
-                preCell.entityObj = null;
-            }
-        }
-        if (tile.isOccupied)
-        {
-            return;
-        }
         tile.SetEntity(gameObject);
-        curTile = tile;
+        SetTile(tile);
         Vector3 entityPos = tile.transform.position;
         entityPos.y = 0.25f;
         transform.localScale = scale;
         transform.DOMove(entityPos, 1f);
         field = tile.field;
+        yield return new WaitForSeconds(1f);
+        SetClickable(true);
     }
-
+    void SetTile(Tile tile)
+    {
+        //원래 있던 위치 연결 제거
+        if (curTile != null)
+        {
+            curTile.entityObj = null;
+        }
+        curTile = tile;
+    }
 
     public virtual List<Tile> GetAttackArea(intVector2 entityPos)
     {
         return new List<Tile>();
     }
-
-    public List<Tile> GetMoveArea(intVector2 entityPos, bool hasOriginTile = true)
+    public virtual List<Tile> GetMoveArea(intVector2 entityPos, bool hasOriginTile = true)
     {
         var area = GetAttackArea(entityPos);
 
@@ -128,8 +143,13 @@ public class Entity : MonoBehaviour
 
         return area;
     }
+    protected List<Tile> GetMoveArea()
+    {
+        if(field == null) return new List<Tile>();
+        return GetMoveArea(curPos);
+    }
 
-    public void Attack()
+    public void Active()
     {
         var targets = new List<IDamageable>();
         if (field == null) return;
@@ -146,7 +166,16 @@ public class Entity : MonoBehaviour
         }
         foreach (var target in targets)
         {
-            target.Damaged(power, elementType);
+            target.Damaged(power);
         }
+    }
+    public void Attack(IDamageable enemyHp)
+    {
+        enemyHp.Damaged(power);
+    }
+    public void SetClickable(bool enable = true)
+    {
+        var collider = GetComponent<Collider>();
+        collider.enabled = enable;
     }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using DG.Tweening;
 
 public class Command
 {
@@ -31,4 +33,16 @@ public class Command
         this.skill = skill;
         this.tile = tile;
     }
+
+    /// <summary>
+    /// 실행 시 Tile위치로 Entity를 이동가능한지 확인 후 이동
+    /// </summary>
+    public void Execute()
+    {
+        if (entity == null) return;
+        if(tile == null) return;
+
+    }
+
+
 }

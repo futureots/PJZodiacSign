@@ -9,7 +9,7 @@ using UnityEngine.Events;
 
 public class Tile : MonoBehaviour
 {
-    public Renderer renderer
+    public new Renderer renderer
     {
         get
         {
@@ -27,21 +27,19 @@ public class Tile : MonoBehaviour
     }
     //이 칸에 있는 엔티티(적 또는 아군 또는 장애물)
     public GameObject entityObj;
-    public bool isOccupied => entityObj != null;
-    public Entity GetEntity()
+    public Entity OccupiedEntity
     {
-        if (!isOccupied) return null;
-        Entity entity = entityObj.GetComponent<Entity>();
-        return entity;
+        get
+        {
+            if (!isOccupied) return null;
+            return entityObj.GetComponent<Entity>();
+        }
     }
+    public bool isOccupied => entityObj != null;
     public void SetEntity(GameObject e)
     {
         entityObj = e.gameObject;
         e.transform.SetParent(transform);
-    }
-    private void OnMouseUp()
-    {
-        Debug.Log("Mouse Up");
     }
 
 }

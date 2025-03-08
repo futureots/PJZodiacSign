@@ -18,30 +18,7 @@ public class EntityController : MonoBehaviour
     public Field currentField;
     public int teamNum;
     public List<Entity> entities;
-    #region COST
-    public int cost;
-    public List<Command> commands;
-    public void refillCost()
-    {
-        cost = 2;
-        commands.Clear();
-    }
-    public void InputCommand(Command command)
-    {
-        if (cost <= 0) return;
-        cost -= 1;
-        commands.Add(command);
-    }
-    public void EraseCommand(int i)
-    {
-        if (i < commands.Count)
-        {
-            commands.RemoveAt(i);
-            cost += 1;
-        }
-        else return;
-    }
-    #endregion
+
     //처음 한번만 실행되는 함수(여야함)
     public virtual void SetEntities(int num, PartyData party)//+ 지점, 엔티티를 가진 구조체 리스트를 가진 클래스 받아오기 => 해당 지점에 해당 엔티티 소환 후 팀 넘버 설정
     {
@@ -49,29 +26,29 @@ public class EntityController : MonoBehaviour
         int x = -35;
         foreach (var member in party.Entities)
         {
-            var prefab = jodiacList.GetJodiac(member.entityId);
-            //Debug.Log(member.entityId +" : "+ member.entityElement);
-            if(prefab == null)
-            {
-                Debug.Log("NO ENTITY!!!");
-                continue;
-            }
-            var obj = Instantiate(prefab);
-            obj.tag = "Player";
-            Entity entity = obj.GetComponent<Entity>();
+            var entity = CreateEntity(member.entityId, member.entityElement);
+            entity.tag = "Player";
             entities.Add(entity);
-            entity.SetEntity(teamNum, member.entityLevel, isReflect, member.entityElement);
+            entity.SetEntity(teamNum, member.entityLevel, isReflect);
             entity.OnDestroyed += (entity) =>
             {
                 entities.Remove(entity);
             };
-            HpPanelManager.Instance.CreateHpBar(obj);
+            HpPanelManager.Instance.CreateHpBar(entity.gameObject);
             var reflectVariable = isReflect ? -1 : 1;
             entity.transform.position = new Vector3(-45*reflectVariable, 0, x*reflectVariable);
             x += 10;
         }
     }
-    
+    Entity CreateEntity(Jodiac jodiac, Element element)
+    {
+        var entityData = jodiacList.GetJodiac(jodiac);
+        var entityObj = Instantiate(entityData);
+        var entity = entityObj.GetComponent<Entity>();
+        entity.elementType = element;
+        entity.field = currentField;
+        return entity;
+    }
 
     public Dictionary<Entity,Tile> OperActivate()
     {
@@ -158,7 +135,7 @@ public class EntityController : MonoBehaviour
                 break;
         }
         currentField.AddFieldColor(expectMoveMaterial, movableTile.ToArray());
-        GameManager.Instance.ViewAttackArea(entity.teamNum);
+        GameManager.Instance.ViewAttackArea(entity.TeamNum);
     }
     public void EntityMouseDrag(Entity entity)
     {
@@ -215,7 +192,7 @@ public class EntityController : MonoBehaviour
             {
                 Debug.Log("Not Move");
             }
-            entity.MoveToTile(selectedTile);
+            entity.MoveToTile(selectedTile, false);
             selectedTile = null;
             selectedEntity = null;
         }
@@ -232,7 +209,7 @@ public class EntityController : MonoBehaviour
         Tile closestTile = null;
         foreach (Tile tile in tiles)
         {
-            if (tile.isOccupied && tile.GetEntity() != selectedEntity) continue;
+            if (tile.isOccupied && tile.OccupiedEntity != selectedEntity) continue;
             var distance = (tile.transform.position - pos).magnitude;
             if (closestTile == null || minDistance > distance)
             {

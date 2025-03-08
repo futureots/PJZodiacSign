@@ -9,6 +9,12 @@ public class JodiacDataSO : ScriptableObject
     public int hpIncrease;
     public int power;
     public int powerIncrease;
-    public Skill skill;
+    public List<SkillData> skills;
     
+}
+[System.Serializable]
+public struct SkillData
+{
+    public int demandEnergy;
+    public Skill skill;
 }

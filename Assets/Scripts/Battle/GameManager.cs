@@ -71,7 +71,7 @@ public class GameManager : Singleton<GameManager>
         {
             foreach (var entity in controller.entities)
             {
-                entity.Attack();
+                entity.Active();
             }
         }
         //죽은 기물 제거
@@ -88,7 +88,7 @@ public class GameManager : Singleton<GameManager>
         List<PartyEntity> list = new List<PartyEntity>();
         foreach (var tile in field.tiles)
         {
-            var entity = tile.GetEntity();
+            var entity = tile.OccupiedEntity;
             if (entity != null)
             {
                 if (entity.TeamNum != team) continue;

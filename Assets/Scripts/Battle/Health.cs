@@ -16,7 +16,7 @@ public class Health : MonoBehaviour, IDamageable
         hp = originHp;
         healthChanged?.Invoke(hp);
     }
-    public void Damaged(int damage, Element type = Element.Empty)
+    public void Damaged(int damage)
     {
         hp -= damage;
         healthChanged?.Invoke(-damage);
