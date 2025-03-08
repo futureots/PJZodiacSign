@@ -18,7 +18,7 @@ public class Entity_Tiger : Entity
                 if(tile != null)
                 {
                     list.Add(tile);
-                    int k = 2;
+                    int k = 1;
                     while (true)
                     {
                         var entityTile = field.GetTile(vec * k + entityPos);

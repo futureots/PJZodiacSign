@@ -22,7 +22,6 @@ public class Field : MonoBehaviour
                 Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
                 var tileObj = Instantiate(tilePrefab, transform);
                 tileObj.transform.localPosition = pos;
-                //흑백 색 바꾸기(디버그용)
                 var tile = tileObj.GetComponent<Tile>();
                 tile.SetField(this, j, i);
                 tiles[i, j] = tile;
