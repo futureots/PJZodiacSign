@@ -9,7 +9,9 @@ public class GameManager : Singleton<GameManager>
 {
     public EntityController[] controllers;
     public Field field;
-    [SerializeField] Material attackMaterial;
+
+    int turnCount;
+
     private void Awake()
     {
         field.CreateField();
@@ -23,116 +25,60 @@ public class GameManager : Singleton<GameManager>
     public void GameStart()
     {
         InputManager.Instance.inputMode = InputManager.InputMode.Set;
+        turnCount = 0;
     }
     public void TurnStart()
     {
         InputManager.Instance.inputMode = InputManager.InputMode.Move;
     }
-    public IEnumerator TurnEndCo()
-    {
-        bool isFirstTurnEnd = false;
-        if (InputManager.Instance.inputMode == InputManager.InputMode.Set) isFirstTurnEnd = true;  
-        InputManager.Instance.inputMode = InputManager.InputMode.None;
-        if (!isFirstTurnEnd)
-        {
-            //이동 행동
-            Dictionary<Entity, Tile> operations = new Dictionary<Entity, Tile>();
-            foreach (EntityController controller in controllers)
-            {
-                operations.AddRange(controller.OperActivate());
-            }
-            //해당 값으로 구성된 그룹을 생성
-            var groupedMoves = operations.GroupBy(x => x.Value);
-            foreach (var group in groupedMoves)
-            {
-                //그룹에 속해있는 엔티티 반환
-                var pieces = group.Select(x => x.Key).ToList();
-                //기물 순서로 정렬 후 첫번째 반환
-                Entity highestPiece = pieces.OrderBy(p => p.jodiacType).First();
-                //이기는 속성으로 정렬
-                if (ElementInList(pieces) ==2)
-                {
-                    Element dominant = Element.Empty;
-                    foreach (var piece in pieces)
-                    {
-                        if(dominant == Element.Empty || IsDominantType(piece.elementType, dominant))
-                        {
-                            dominant = piece.elementType;
-                            highestPiece = piece;
-                        }
-                    }
-                }
-                highestPiece.MoveToTile(group.Key);
-            }
-        }
-        yield return new WaitForSeconds(1f);
-        //공격 행동
-       foreach (var controller in controllers)
-        {
-            foreach (var entity in controller.entities)
-            {
-                entity.Active();
-            }
-        }
-        //죽은 기물 제거
-        field.CleanField();
-        TurnStart();
-    }
     public void TurnEnd()
     {
         StartCoroutine(TurnEndCo());
-        
     }
-    public void SaveCurrentState(int team)
+    public IEnumerator TurnEndCo()
     {
-        List<PartyEntity> list = new List<PartyEntity>();
-        foreach (var tile in field.tiles)
+        InputManager.Instance.inputMode = InputManager.InputMode.None;
+        //이동, 스킬 사용
+        if (turnCount !=0)
         {
-            var entity = tile.OccupiedEntity;
-            if (entity != null)
+            List<Command> commands = new List<Command>();
+            foreach (EntityController controller in controllers)
             {
-                if (entity.TeamNum != team) continue;
-                PartyEntity temp = new PartyEntity(entity.jodiacType,entity.elementType);
-                Debug.Log(entity.jodiacType + " : " + entity.elementType);
-                list.Add(temp);
+                var cmd = controller.GetCommand();
+                if (cmd == null) cmd = controller.GetRandomCommand();
+                commands.Add(cmd);
+            }
+            foreach(var cmd in commands)
+            {
+                cmd.Execute();
+                yield return new WaitForSeconds(1f);
             }
         }
-        PartyData data = new PartyData();
-        data.Entities = list.ToArray();
-        data.SavePartyData("CurrentPlayerParty");
-    }
-    public static int ElementInList(List<Entity> list)
-    {
-        List<Element> element = new List<Element>();
+        //공격
+        if (turnCount >= 2)
+        {
 
-        foreach(var entity in list)
-        {
-            if (!element.Contains(entity.elementType))
+            foreach (var controller in controllers)
             {
-                element.Add(entity.elementType);
+                foreach (var entity in controller.entities)
+                {
+                    entity.Active();
+                }
             }
+            turnCount = 0;
         }
-        return element.Count;
+        turnCount++;
+
+        // 죽은 기물 제거
+        field.CleanField();
+
+        //한쪽 기물 전부 사망 시 게임 종료
+        
+        TurnStart();
     }
-    public static bool IsDominantType(Element element, Element compare)
-    {
-        if (element == Element.Empty) return false;
-        if (compare == Element.Empty) return true;
-        /*
-         * 목1
-         * 화2
-         * 토3
-         * 금4
-         * 수5
-         * 승 1 또는 -2
-         */
-        var gap = (element - compare +5)%5;
-        if (gap == 1 || gap == 3)
-        {
-            return true;
-        }
-        return false;
-    }
+
+    #region Viewer
+    [SerializeField] Material attackMaterial;
     List<Tile> enemyAttackArea = new List<Tile>();
     public void ViewAttackArea(int teamNum)
     {
@@ -158,4 +104,26 @@ public class GameManager : Singleton<GameManager>
     {
         field.RemoveFieldColor(attackMaterial,enemyAttackArea.ToArray());
     }
+    #endregion
+
+    #region Save
+    public void SaveCurrentState(int team)
+    {
+        List<PartyEntity> list = new List<PartyEntity>();
+        foreach (var tile in field.tiles)
+        {
+            var entity = tile.OccupiedEntity;
+            if (entity != null)
+            {
+                if (entity.TeamNum != team) continue;
+                PartyEntity temp = new PartyEntity(entity.jodiacType, entity.elementType);
+                Debug.Log(entity.jodiacType + " : " + entity.elementType);
+                list.Add(temp);
+            }
+        }
+        PartyData data = new PartyData();
+        data.Entities = list.ToArray();
+        data.SavePartyData("CurrentPlayerParty");
+    }
+    #endregion
 }

@@ -50,64 +50,35 @@ public class EntityController : MonoBehaviour
         return entity;
     }
 
-    public Dictionary<Entity,Tile> OperActivate()
+    public Command GetCommand()
     {
-        //시간내로 입력하지 않아서 정보값이 부족할 경우 이동 가능한 랜덤 기물 1개가 이동가능한 무작위 타일로 이동
-        if(selectedEntity == null || selectedTile == null)
-        {
-            //컨트롤러가 가지고 있는 엔티티 복사
-            var tempList = new List<Entity>(entities);
-            while (true)
-            {
-                //움직일 수 있는 기물이 없을 경우 종료
-                if (tempList.Count <= 0)
-                {
-                    Debug.Log("Cant Move");
-                    break;
-                }
-                var tempEntity = tempList[Random.Range(0, tempList.Count)];
-                //해당 기물이 이동가능한 칸이 있는지 확인
-                var area = tempEntity.GetMoveArea(tempEntity.curPos,false);
-                bool movable = false;
-                while (true)
-                {
-                    if (area.Count <= 0) break;
-                    var tempTile = area[Random.Range(0, area.Count)];
-                    if (!tempTile.isOccupied)
-                    {
-                        movable = true;
-                        selectedTile = tempTile;
-                        //Debug.Log("POS : " + tempTile.x + tempTile.y);
-                        break;
-                    }
-                    else
-                    {
-                        area.Remove(tempTile);
-                    }
-                }
-                //이동가능하면 기물 지정
-                if (movable)
-                {
-                    selectedEntity = tempEntity;
-                    break;
-                }
-                //이동 불가능 시 해당 기물 빼고 재시도
-                else
-                {
-                    tempList.Remove(tempEntity);
-                    Debug.Log("tempList.Count : " + tempList.Count);
-                }
-            }
-        }
+        if (selectedEntity == null || selectedTile == null) return null; 
         //지정한 기물과 칸이 있으면 실행
-        var result = new Dictionary<Entity, Tile>();
-        if (selectedEntity != null && selectedTile != null)
-        {
-            result.Add(selectedEntity, selectedTile);
-        }
+        var result = new MoveCommand(selectedEntity, selectedTile);
         selectedTile = null;
         selectedEntity = null;
         return result;
+    }
+    public Command GetRandomCommand()
+    {   
+        var entityList = new List<Entity>(entities);
+        while (entityList.Count > 0) 
+        {
+            var owner = entityList[Random.Range(0, entityList.Count)];
+            var area = owner.GetMoveArea(owner.curPos, false);
+            if(area.Count > 0)
+            {
+                Tile destination = area[Random.Range(0,area.Count)];
+                MoveCommand cmd = new MoveCommand(owner, destination);
+                return cmd;
+            }
+            else
+            {
+                entityList.Remove(owner);
+            }
+        }
+        // 이동 가능한 영물 없음
+        return null;
     }
     #region EntitySelectInput
 
@@ -164,6 +135,7 @@ public class EntityController : MonoBehaviour
             attackableTile.AddRange(area);
             currentField.AddFieldColor(expectAttackMaterial, attackableTile.ToArray());
         }
+
     }
     public void EntityMoveUp(Entity entity)
     {

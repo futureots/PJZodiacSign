@@ -86,11 +86,11 @@ public class Entity : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void MoveToTile(Tile tile, bool isMovable = true)
+    public void MoveToTile(Tile tile, bool isInArea = true)
     {
         //이동 가능여부 확인
         if (tile == null) return;
-        if (isMovable)
+        if (isInArea)
         {
             var list = GetMoveArea();
             if (!list.Contains(tile)) return;
