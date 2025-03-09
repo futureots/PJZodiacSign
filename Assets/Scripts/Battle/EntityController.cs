@@ -19,15 +19,14 @@ public class EntityController : MonoBehaviour
     public int teamNum;
     public List<Entity> entities;
 
-    //처음 한번만 실행되는 함수(여야함)
-    public virtual void SetEntities(int num, PartyData party)//+ 지점, 엔티티를 가진 구조체 리스트를 가진 클래스 받아오기 => 해당 지점에 해당 엔티티 소환 후 팀 넘버 설정
+    //데이터 기반 엔티티 설정 및 세팅
+    public virtual void SetEntities(int num, PartyData party)
     {
         teamNum = num;
         int x = -35;
         foreach (var member in party.Entities)
         {
             var entity = CreateEntity(member.entityId, member.entityElement);
-            entity.tag = "Player";
             entities.Add(entity);
             entity.SetEntity(teamNum, member.entityLevel, isReflect);
             entity.OnDestroyed += (entity) =>
@@ -45,6 +44,7 @@ public class EntityController : MonoBehaviour
         var entityData = jodiacList.GetJodiac(jodiac);
         var entityObj = Instantiate(entityData);
         var entity = entityObj.GetComponent<Entity>();
+        entity.tag = tag;
         entity.elementType = element;
         entity.field = currentField;
         return entity;
