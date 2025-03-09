@@ -51,6 +51,7 @@ public class Entity_Tiger : Entity
 
             }
         }
+        list.Add(curTile);
         return list;
     }
 }
