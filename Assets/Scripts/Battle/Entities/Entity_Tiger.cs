@@ -46,6 +46,7 @@ public class Entity_Tiger : Entity
                         if (backTile == null) break;
                         if (backTile.isOccupied) break;
                         list.Add(backTile);
+                        break;
                     }
                 }
 

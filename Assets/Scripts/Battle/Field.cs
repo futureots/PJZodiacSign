@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Outline;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class Field : MonoBehaviour
@@ -75,34 +76,7 @@ public class Field : MonoBehaviour
         }
         return list;
     }
-
-
-    public void AddFieldColor(Material material, params Tile[] tiles)
-    {
-        foreach (var tile in tiles)
-        {
-            if(tile != null)
-            {
-                List<Material> materials = tile.renderer.sharedMaterials.ToList();
-                materials.Add(material);
-                tile.renderer.materials = materials.ToArray(); 
-            }
-        }
-    }
-    public void RemoveFieldColor(Material material,params Tile[] tiles)
-    {
-        foreach (var tile in tiles)
-        {
-            if (tile != null)
-            {
-                List<Material> materials = tile.renderer.sharedMaterials.ToList();
-                materials.Remove(material);
-                tile.renderer.materials = materials.ToArray();
-            }
-        }
-    }
-
-    public void CleanField()
+    public void CleanEntity()
     {
         foreach (var tile in tiles)
         {
@@ -115,4 +89,95 @@ public class Field : MonoBehaviour
             }
         }
     }
+
+
+    /// <summary>
+    /// 예상 적 공격 범위 표시 메테리얼
+    /// </summary>
+    public Material dangerTileMaterial;
+
+    /// <summary>
+    /// 선택한 엔티티 예상 공격범위 표시 메테리얼
+    /// </summary>
+    public Material expectAttackMaterial;
+
+    /// <summary>
+    /// 선택한 엔티티 이동 가능범위 표시 메테리얼
+    /// </summary>
+    public Material expectMoveMaterial;
+
+    List<Tile> entityMovableArea = new List<Tile>();
+    List<Tile> entityAttackArea = new List<Tile>();
+    List<Tile> enemiesAttackArea = new List<Tile>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mode">0 : 이동 범위, 1 : 공격 범위, 2 : 피격범위</param>
+    /// <param name="tiles"></param>
+    public void AddFieldColor(int mode, params Tile[] tiles)
+    {
+        List<Tile> list;
+        Material material;
+        switch (mode)
+        {
+            case 0:
+                list = entityMovableArea;
+                material = expectMoveMaterial;
+                break;
+            case 1:
+                list = entityAttackArea;
+                material = expectAttackMaterial;
+                break;
+            case 2:
+                list = enemiesAttackArea;
+                material = dangerTileMaterial;
+                break;
+            default:
+                return;
+        }
+        list.AddRange(tiles);
+        foreach (var tile in tiles)
+        {
+            if(tile != null)
+            {
+                List<Material> materials = tile.renderer.sharedMaterials.ToList();
+                materials.Add(material);
+                tile.renderer.materials = materials.ToArray(); 
+            }
+        }
+    }
+    public void RemoveFieldColor(int mode,params Tile[] tiles)
+    {
+        List<Tile> list;
+        Material material;
+        switch (mode)
+        {
+            case 0:
+                list = entityMovableArea;
+                material = expectMoveMaterial;
+                break;
+            case 1:
+                list = entityAttackArea;
+                material = expectAttackMaterial;
+                break;
+            case 2:
+                list = enemiesAttackArea;
+                material = dangerTileMaterial;
+                break;
+            default:
+                return;
+        }
+        foreach (var tile in tiles)
+        {
+            if (tile != null)
+            {
+                List<Material> materials = tile.renderer.sharedMaterials.ToList();
+                materials.Remove(material);
+                list.Remove(tile);
+                tile.renderer.materials = materials.ToArray();
+            }
+        }
+    }
+
 }

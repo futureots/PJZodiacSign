@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+
 
 public class GameManager : Singleton<GameManager>
 {
@@ -11,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     public Field field;
 
     int turnCount;
-
+    public Action endTurn;
     private void Awake()
     {
         field.CreateField();
@@ -33,6 +34,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void TurnEnd()
     {
+        endTurn?.Invoke();
         StartCoroutine(TurnEndCo());
     }
     public IEnumerator TurnEndCo()
@@ -66,11 +68,13 @@ public class GameManager : Singleton<GameManager>
                 }
             }
             turnCount = 0;
+            controllers = controllers.Reverse().ToArray();
+            endTurn?.Invoke();
         }
         turnCount++;
 
         // 죽은 기물 제거
-        field.CleanField();
+        field.CleanEntity();
 
         //한쪽 기물 전부 사망 시 게임 종료
         
@@ -96,13 +100,13 @@ public class GameManager : Singleton<GameManager>
             {
                 var area = item.GetAttackArea(item.curPos);
                 enemyAttackArea.AddRange(area);
-                field.AddFieldColor(attackMaterial, area.ToArray());
+                field.AddFieldColor(2, area.ToArray());
             }
         }
     }
     public void ClearAttackArea()
     {
-        field.RemoveFieldColor(attackMaterial,enemyAttackArea.ToArray());
+        field.RemoveFieldColor(2,enemyAttackArea.ToArray());
     }
     #endregion
 

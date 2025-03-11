@@ -82,9 +82,8 @@ public class EntityController : MonoBehaviour
     }
     #region EntitySelectInput
 
-    List<Tile> movableTile;
-    List<Tile> attackableTile;
-
+    List<Tile> movableTile = new List<Tile>();
+    List<Tile> attackableTile = new List<Tile>();
 
     //엔티티 선택
     public void EntitySelect(Entity entity, int mode)
@@ -92,8 +91,6 @@ public class EntityController : MonoBehaviour
         if (!entities.Contains(entity)) return;
         entity.field = currentField;
         selectedEntity = entity;
-        if(movableTile == null) movableTile = new List<Tile>();
-        if(attackableTile == null) attackableTile = new List<Tile>();
         switch (mode)
         {
             case 0:
@@ -105,7 +102,7 @@ public class EntityController : MonoBehaviour
             default:
                 break;
         }
-        currentField.AddFieldColor(expectMoveMaterial, movableTile.ToArray());
+        currentField.AddFieldColor(0, movableTile.ToArray());
         GameManager.Instance.ViewAttackArea(entity.TeamNum);
     }
     public void EntityMouseDrag(Entity entity)
@@ -127,13 +124,13 @@ public class EntityController : MonoBehaviour
         {
             if (selectedTile != null)
             {
-                currentField.RemoveFieldColor(expectAttackMaterial, attackableTile.ToArray());
+                currentField.RemoveFieldColor(1, attackableTile.ToArray());
                 attackableTile.Clear();
             }
             selectedTile = closestTile;
             var area = entity.GetAttackArea(selectedTile.fieldPos);
             attackableTile.AddRange(area);
-            currentField.AddFieldColor(expectAttackMaterial, attackableTile.ToArray());
+            currentField.AddFieldColor(1, attackableTile.ToArray());
         }
 
     }
@@ -147,9 +144,9 @@ public class EntityController : MonoBehaviour
             selectedEntity = null;
             selectedTile = null;
         }
-        currentField.RemoveFieldColor(expectAttackMaterial, attackableTile.ToArray());
+        currentField.RemoveFieldColor(1, attackableTile.ToArray());
         attackableTile.Clear();
-        currentField.RemoveFieldColor(expectMoveMaterial,movableTile.ToArray());
+        currentField.RemoveFieldColor(0,movableTile.ToArray());
         movableTile.Clear();
         GameManager.Instance.ClearAttackArea();
     }
@@ -168,9 +165,9 @@ public class EntityController : MonoBehaviour
             selectedTile = null;
             selectedEntity = null;
         }
-        currentField.RemoveFieldColor(expectAttackMaterial, attackableTile.ToArray());
+        currentField.RemoveFieldColor(1, attackableTile.ToArray());
         attackableTile.Clear();
-        currentField.RemoveFieldColor(expectMoveMaterial, movableTile.ToArray());
+        currentField.RemoveFieldColor(1, movableTile.ToArray());
         movableTile.Clear();
         GameManager.Instance.ClearAttackArea();
     }

@@ -143,7 +143,7 @@ public class Entity : MonoBehaviour
 
         return area;
     }
-    protected List<Tile> GetMoveArea()
+    public List<Tile> GetMoveArea()
     {
         if(field == null) return new List<Tile>();
         return GetMoveArea(curPos);
