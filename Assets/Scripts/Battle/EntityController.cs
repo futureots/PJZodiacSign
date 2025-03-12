@@ -28,7 +28,7 @@ public class EntityController : MonoBehaviour
         {
             var entity = CreateEntity(member.entityId, member.entityElement);
             entities.Add(entity);
-            entity.SetEntity(teamNum, member.entityLevel, isReflect);
+            entity.SetEntityData(teamNum, member.entityLevel, isReflect);
             entity.OnDestroyed += (entity) =>
             {
                 entities.Remove(entity);
@@ -85,8 +85,8 @@ public class EntityController : MonoBehaviour
     List<Tile> movableTile = new List<Tile>();
     List<Tile> attackableTile = new List<Tile>();
 
-    //엔티티 선택
-    public void EntitySelect(Entity entity, int mode)
+    // 엔티티 선택
+    public void SelectEntity(Entity entity, int mode)
     {
         if (!entities.Contains(entity)) return;
         entity.field = currentField;
@@ -105,7 +105,7 @@ public class EntityController : MonoBehaviour
         currentField.AddFieldColor(0, movableTile.ToArray());
         GameManager.Instance.ViewAttackArea(entity.TeamNum);
     }
-    public void EntityMouseDrag(Entity entity)
+    public void DragEntity(Entity entity)
     {
         //팀이 아니면 이동 권한 없음
         if (!entities.Contains(entity)) return;
@@ -124,7 +124,7 @@ public class EntityController : MonoBehaviour
         {
             if (selectedTile != null)
             {
-                currentField.RemoveFieldColor(1, attackableTile.ToArray());
+                currentField.RemoveFieldColor(1);
                 attackableTile.Clear();
             }
             selectedTile = closestTile;
@@ -134,40 +134,36 @@ public class EntityController : MonoBehaviour
         }
 
     }
-    public void EntityMoveUp(Entity entity)
+    public void MouseUpEntity(Entity entity, bool isSet = false)
     {
         if (!entities.Contains(entity)) return;
-        Debug.Log(selectedEntity.curTile);
-        selectedEntity.transform.position = selectedEntity.curTile.transform.position;
-        if (selectedTile == selectedEntity.curTile)
+        //Debug.Log(selectedEntity.curTile);
+        if (isSet)
         {
-            selectedEntity = null;
-            selectedTile = null;
-        }
-        currentField.RemoveFieldColor(1, attackableTile.ToArray());
-        attackableTile.Clear();
-        currentField.RemoveFieldColor(0,movableTile.ToArray());
-        movableTile.Clear();
-        GameManager.Instance.ClearAttackArea();
-    }
-    //이동 실행
-    public void EntitySetUp(Entity entity)
-    {
-        //팀이 아니면 이동 권한 없음
-        if (!entities.Contains(entity)) return;
-        if (selectedTile != null)
-        {
-            if (selectedTile == entity.curTile)
+            if (selectedTile != null)
             {
-                Debug.Log("Not Move");
+                if (selectedTile == entity.curTile)
+                {
+                    Debug.Log("Not Move");
+                }
+                entity.MoveToTile(selectedTile, false);
+                selectedTile = null;
+                selectedEntity = null;
             }
-            entity.MoveToTile(selectedTile, false);
-            selectedTile = null;
-            selectedEntity = null;
         }
-        currentField.RemoveFieldColor(1, attackableTile.ToArray());
+        else
+        {
+            selectedEntity.transform.position = selectedEntity.curTile.transform.position;
+            if (selectedTile == selectedEntity.curTile)
+            {
+                selectedEntity = null;
+                selectedTile = null;
+            }
+        }
+
+        currentField.RemoveFieldColor(1);
         attackableTile.Clear();
-        currentField.RemoveFieldColor(1, movableTile.ToArray());
+        currentField.RemoveFieldColor(0);
         movableTile.Clear();
         GameManager.Instance.ClearAttackArea();
     }

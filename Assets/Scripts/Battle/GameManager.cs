@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     public Field field;
 
     int turnCount;
-    public Action endTurn;
+    public Action turnEnd;
     private void Awake()
     {
         field.CreateField();
@@ -21,23 +21,24 @@ public class GameManager : Singleton<GameManager>
         {
             controllers[i].SetEntities(i+1, data);
         }
-        GameStart();
+        StartGame();
     }
-    public void GameStart()
+    public void StartGame()
     {
         InputManager.Instance.inputMode = InputManager.InputMode.Set;
         turnCount = 0;
     }
-    public void TurnStart()
+    public void StartTurn()
     {
         InputManager.Instance.inputMode = InputManager.InputMode.Move;
     }
-    public void TurnEnd()
+    public void EndTurn()
     {
-        endTurn?.Invoke();
-        StartCoroutine(TurnEndCo());
+        turnEnd?.Invoke();
+        StartCoroutine(EndTurnCoroutine());
     }
-    public IEnumerator TurnEndCo()
+
+    private IEnumerator EndTurnCoroutine()
     {
         InputManager.Instance.inputMode = InputManager.InputMode.None;
         //이동, 스킬 사용
@@ -64,13 +65,14 @@ public class GameManager : Singleton<GameManager>
             {
                 foreach (var entity in controller.entities)
                 {
-                    entity.Active();
+                    entity.Activate();
                 }
             }
             turnCount = 0;
             controllers = controllers.Reverse().ToArray();
-            endTurn?.Invoke();
+            turnEnd?.Invoke();
         }
+        
         turnCount++;
 
         // 죽은 기물 제거
@@ -78,12 +80,11 @@ public class GameManager : Singleton<GameManager>
 
         //한쪽 기물 전부 사망 시 게임 종료
         
-        TurnStart();
+        StartTurn();
     }
 
     #region Viewer
     [SerializeField] Material attackMaterial;
-    List<Tile> enemyAttackArea = new List<Tile>();
     public void ViewAttackArea(int teamNum)
     {
         List<EntityController> enemy = new List<EntityController>();
@@ -99,14 +100,13 @@ public class GameManager : Singleton<GameManager>
             foreach (var item in controller.entities)
             {
                 var area = item.GetAttackArea(item.curPos);
-                enemyAttackArea.AddRange(area);
                 field.AddFieldColor(2, area.ToArray());
             }
         }
     }
     public void ClearAttackArea()
     {
-        field.RemoveFieldColor(2,enemyAttackArea.ToArray());
+        field.RemoveFieldColor(2);
     }
     #endregion
 

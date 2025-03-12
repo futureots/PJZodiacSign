@@ -147,7 +147,7 @@ public class Field : MonoBehaviour
             }
         }
     }
-    public void RemoveFieldColor(int mode,params Tile[] tiles)
+    public void RemoveFieldColor(int mode)
     {
         List<Tile> list;
         Material material;
@@ -168,16 +168,16 @@ public class Field : MonoBehaviour
             default:
                 return;
         }
-        foreach (var tile in tiles)
+        foreach (var tile in list)
         {
             if (tile != null)
             {
                 List<Material> materials = tile.renderer.sharedMaterials.ToList();
                 materials.Remove(material);
-                list.Remove(tile);
                 tile.renderer.materials = materials.ToArray();
             }
         }
+        list.Clear();
     }
 
 }

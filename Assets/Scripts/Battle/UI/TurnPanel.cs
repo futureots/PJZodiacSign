@@ -10,23 +10,15 @@ public class TurnPanel : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.endTurn += DeQueue;
+        GameManager.Instance.turnEnd += DeQueue;
         turn = new Queue<TurnIndicator>();
         latterTurn = new Queue<int>();
-        for(int i = 0; i <= 2; i++)
+        for(int i = 0; i <= 3; i++)
         {
             EnQueue(i);
         }
     }
 
-    // 디버그용
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            DeQueue();
-        }
-    }
 
     public void EnQueue(int num)
     {
@@ -43,15 +35,15 @@ public class TurnPanel : MonoBehaviour
         var indicator = obj.GetComponent<TurnIndicator>();
         indicator.Constructor(num);
         turn.Enqueue(indicator);
-        if (num == 2)
-        {
-            EnQueue(3);
-        }
     }
     public void DeQueue()
     {
         if (turn.Count <= 0) return;
         var obj = turn.Dequeue();
+        if(obj.turn != 0)
+        {
+            EnQueue(obj.turn);
+        }
         Destroy(obj.gameObject);
         if (latterTurn.Count <= 0) return;
         int next = latterTurn.Dequeue();

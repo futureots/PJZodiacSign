@@ -42,7 +42,7 @@ public class InputManager : Singleton<InputManager>
                 break;
             case InputMode.Move:
             case InputMode.Set:
-                playerController.EntitySelect(entity,(int)inputMode);
+                playerController.SelectEntity(entity,(int)inputMode);
                 break;
             default:
                 break;
@@ -56,10 +56,10 @@ public class InputManager : Singleton<InputManager>
             case InputMode.None:
                 break;
             case InputMode.Set:
-                playerController.EntityMouseDrag(entity);
+                playerController.DragEntity(entity);
                 break;
             case InputMode.Move:
-                playerController.EntityMouseDrag(entity);
+                playerController.DragEntity(entity);
                 break;
             default:
                 break;
@@ -72,10 +72,10 @@ public class InputManager : Singleton<InputManager>
             case InputMode.None:
                 break;
             case InputMode.Set:
-                playerController.EntitySetUp(entity);
+                playerController.MouseUpEntity(entity,true);
                 break; 
             case InputMode.Move:
-                playerController.EntityMoveUp(entity);
+                playerController.MouseUpEntity(entity);
                 break;
             default:
                 break;

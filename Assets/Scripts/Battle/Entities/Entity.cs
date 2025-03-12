@@ -53,7 +53,7 @@ public class Entity : MonoBehaviour
     public int TeamNum { get => teamNum; set => teamNum = value; }
 
 
-    public void SetEntity(int teamNum, int level, bool isReflect)
+    public void SetEntityData(int teamNum, int level, bool isReflect)
     {
         this.TeamNum = teamNum;
         this.isReflect = isReflect;
@@ -96,9 +96,9 @@ public class Entity : MonoBehaviour
             if (!list.Contains(tile)) return;
         }
         //이동 세팅
-        StartCoroutine(EntityMoveCo(tile));
+        StartCoroutine(MoveEntityCoroutine(tile));
     }
-    IEnumerator EntityMoveCo(Tile tile)
+    IEnumerator MoveEntityCoroutine(Tile tile)
     {
         SetClickable(false);
         var scale = transform.localScale;
@@ -149,7 +149,7 @@ public class Entity : MonoBehaviour
         return GetMoveArea(curPos);
     }
 
-    public void Active()
+    public void Activate()
     {
         var targets = new List<IDamageable>();
         if (field == null) return;

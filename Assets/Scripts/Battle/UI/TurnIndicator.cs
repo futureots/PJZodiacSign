@@ -8,9 +8,10 @@ public class TurnIndicator : MonoBehaviour
 {
     string text;
     TextMeshProUGUI indicator;
-
+    public int turn {  get; private set; }
     public void Constructor(int mode)
     {
+        turn = mode;
         indicator = GetComponentInChildren<TextMeshProUGUI>();
         switch (mode)
         {
