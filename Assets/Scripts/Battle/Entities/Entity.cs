@@ -139,7 +139,7 @@ public class Entity : MonoBehaviour
                 i--;
             }
         }
-        area.Add(curTile);
+        if(hasOriginTile)area.Add(curTile);
 
         return area;
     }

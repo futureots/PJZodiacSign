@@ -52,7 +52,7 @@ public class Entity_Tiger : Entity
 
             }
         }
-        list.Add(curTile);
+        if (hasOriginTile) list.Add(curTile);
         return list;
     }
 }

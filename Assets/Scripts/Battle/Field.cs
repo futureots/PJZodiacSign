@@ -113,13 +113,13 @@ public class Field : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="mode">0 : 이동 범위, 1 : 공격 범위, 2 : 피격범위</param>
+    /// <param name="type">0 : 이동 범위, 1 : 공격 범위, 2 : 피격범위</param>
     /// <param name="tiles"></param>
-    public void AddFieldColor(int mode, params Tile[] tiles)
+    public void AddFieldColor(int type, params Tile[] tiles)
     {
         List<Tile> list;
         Material material;
-        switch (mode)
+        switch (type)
         {
             case 0:
                 list = entityMovableArea;
@@ -147,11 +147,11 @@ public class Field : MonoBehaviour
             }
         }
     }
-    public void RemoveFieldColor(int mode)
+    public void RemoveFieldColor(int type)
     {
         List<Tile> list;
         Material material;
-        switch (mode)
+        switch (type)
         {
             case 0:
                 list = entityMovableArea;
