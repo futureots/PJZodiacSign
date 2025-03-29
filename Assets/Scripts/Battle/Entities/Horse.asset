@@ -16,6 +16,4 @@ MonoBehaviour:
   hpIncrease: 2
   power: 3
   powerIncrease: 2
-  skills:
-  - demandEnergy: 0
-    skill: {fileID: 0}
+  skills: []

@@ -132,13 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2e31c72f419e841b1ae3d527b8181f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isReflect: 0
   field: {fileID: 0}
   data: {fileID: 11400000, guid: 1b74a30682cd507418958492ef526e4b, type: 2}
-  elementType: 0
   material: {fileID: 11400000, guid: ec5e006bb5a102e49b5e18bb741d5e24, type: 2}
   jodiacType: 7
   level: 0
   health: {fileID: -7869756602773132126}
   power: 0
-  teamNum: 0

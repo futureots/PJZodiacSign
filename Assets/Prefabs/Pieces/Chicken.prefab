@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455179597510633406}
-  m_Mesh: {fileID: 4300000, guid: 66ad00b166b914e47acce78daea25aa6, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 639050e749c3ce444a196d84e803b067, type: 3}
 --- !u!23 &1054759446070586868
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -132,14 +132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb00be73d7154c40887032803de7f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isReflect: 0
   field: {fileID: 0}
   data: {fileID: 11400000, guid: 8db9c3f02eb996a4998ff6cea6b3c8e9, type: 2}
-  elementType: 0
   material: {fileID: 11400000, guid: ec5e006bb5a102e49b5e18bb741d5e24, type: 2}
   jodiacType: 10
   level: 0
   health: {fileID: -7869756602773132126}
   power: 0
-  teamNum: 0
   isOddTile: 1
