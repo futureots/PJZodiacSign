@@ -6,6 +6,8 @@ using UnityEngine;
 using static Outline;
 using static UnityEngine.EventSystems.EventTrigger;
 
+
+
 public class Field : MonoBehaviour
 {
     public int row, column;
@@ -14,7 +16,7 @@ public class Field : MonoBehaviour
     
     public void CreateField()
     {
-        //행열의 길이 만큼 체스판 생성
+        //행,열의 길이 만큼 체스판 생성
         tiles = new Tile[row, column];
         for (int i = 0; i < row; i++)
         {
@@ -31,7 +33,7 @@ public class Field : MonoBehaviour
     }
 
 
-    //해당 위치가 필드내에 존재하는 위치인지 확인
+    // 해당 위치가 필드내에 존재하는 위치인지 확인
     public bool IsValidCellPos(intVector2 pos)
     {
         if(pos.x>=column || pos.x < 0 || pos.y >= row || pos.y < 0 || tiles[pos.y,pos.x] == null)
@@ -40,11 +42,18 @@ public class Field : MonoBehaviour
         }
         return true;
     }
-    //해당 위치의 셀을 반환
+    // 해당 위치의 셀을 반환
     public Tile GetTile(intVector2 pos)
     {
         if (!IsValidCellPos(pos)) return null;
         return tiles[pos.y, pos.x];
+    }
+
+    public Tile GetTile(int x, int y)
+    {
+        var pos = new intVector2(x, y);
+        return GetTile(pos);
+
     }
     public List<Tile> GetTiles(List<intVector2> positions)
     {
@@ -76,7 +85,8 @@ public class Field : MonoBehaviour
         }
         return list;
     }
-    public void CleanEntity()
+    // 사망한 엔티티 제거(장애물 포함)
+    public void CleanField()
     {
         foreach (var tile in tiles)
         {
@@ -89,7 +99,7 @@ public class Field : MonoBehaviour
             }
         }
     }
-
+    #region Visualize
 
     /// <summary>
     /// 예상 적 공격 범위 표시 메테리얼
@@ -179,5 +189,5 @@ public class Field : MonoBehaviour
         }
         list.Clear();
     }
-
+    #endregion
 }

@@ -6,25 +6,31 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SocialPlatforms;
 
 public class Tile : MonoBehaviour
 {
+    
     public new Renderer renderer
     {
         get
         {
-            return GetComponent<Renderer>();
+            return GetComponentInChildren<Renderer>();
         }
     }
-    //이 타일이 있는 필드 리스트
+    //이 타일이 있는 필드
     public Field field { get; private set; }
     public intVector2 fieldPos;
+
+
     public void SetField(Field f,int column, int row)
     {
         field = f;
         fieldPos.x = column;
         fieldPos.y = row;
     }
+
+
     //이 칸에 있는 엔티티(적 또는 아군 또는 장애물)
     public GameObject entityObj;
     public Entity OccupiedEntity
@@ -42,4 +48,10 @@ public class Tile : MonoBehaviour
         e.transform.SetParent(transform);
     }
 
+    public bool isMovable(Entity entity)
+    {
+        if (!isOccupied) return true;
+        if (entityObj.Equals(entity)) return true;
+        return false;
+    }
 }

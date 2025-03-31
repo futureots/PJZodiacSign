@@ -11,6 +11,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Entity : MonoBehaviour
 {
+    
     //공격범위 반전 여부
     bool isReflect;
     protected int negative => isReflect ? -1 : 1;
@@ -48,6 +49,7 @@ public class Entity : MonoBehaviour
     public Health health;
     
     public Action<Entity> OnDestroyed;
+    
     public int power;
     int teamNum;
     public int TeamNum { get => teamNum; set => teamNum = value; }
@@ -83,6 +85,7 @@ public class Entity : MonoBehaviour
     public void Dead()
     {
         OnDestroyed?.Invoke(this);
+        
         Destroy(gameObject);
     }
 
@@ -101,12 +104,9 @@ public class Entity : MonoBehaviour
     IEnumerator MoveEntityCoroutine(Tile tile)
     {
         SetClickable(false);
-        var scale = transform.localScale;
         tile.SetEntity(gameObject);
         SetTile(tile);
         Vector3 entityPos = tile.transform.position;
-        entityPos.y = 0.25f;
-        transform.localScale = scale;
         transform.DOMove(entityPos, 1f);
         field = tile.field;
         yield return new WaitForSeconds(1f);

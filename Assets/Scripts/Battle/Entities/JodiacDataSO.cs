@@ -15,7 +15,11 @@ public class JodiacDataSO : ScriptableObject
     public int powerIncrease;
     public List<SkillData> skills;
 
-    public List<Tile> GetAttackArea(Field field) { return null; }
+    public List<Tile> GetAttackArea(Field field) 
+    {
+        
+        return null; 
+    }
 }
 
 [System.Serializable]

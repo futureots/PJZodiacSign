@@ -23,6 +23,10 @@ public class GameManager : Singleton<GameManager>
         }
         StartGame();
     }
+    IEnumerator Start()
+    {
+        yield return null;
+    }
     public void StartGame()
     {
         InputManager.Instance.inputMode = InputManager.InputMode.Set;
@@ -76,7 +80,7 @@ public class GameManager : Singleton<GameManager>
         turnCount++;
 
         // 죽은 기물 제거
-        field.CleanEntity();
+        field.CleanField();
 
         //한쪽 기물 전부 사망 시 게임 종료
         
