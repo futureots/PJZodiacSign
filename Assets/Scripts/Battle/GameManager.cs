@@ -16,7 +16,12 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         field.CreateField();
-        var data = PartyData.LoadPartyData("CurrentPlayerParty");
+        var data = new PlayerData();//PartyData.LoadPartyData("CurrentPlayerParty");
+        data.entities.Add(new EntityData(Jodiac.Mouse, Element.Water, 1));
+        data.location.Add("Elite", 1);
+        data.location["Elite"] += 1;
+        data.SavePlayerData("Test");
+
         for(int i = 0; i < controllers.Length; i++)
         {
             controllers[i].SetEntities(i+1, data);
@@ -114,24 +119,4 @@ public class GameManager : Singleton<GameManager>
     }
     #endregion
 
-    #region Save
-    public void SaveCurrentState(int team)
-    {
-        List<PartyEntity> list = new List<PartyEntity>();
-        foreach (var tile in field.tiles)
-        {
-            var entity = tile.OccupiedEntity;
-            if (entity != null)
-            {
-                if (entity.TeamNum != team) continue;
-                PartyEntity temp = new PartyEntity(entity.jodiacType, entity.elementType);
-                Debug.Log(entity.jodiacType + " : " + entity.elementType);
-                list.Add(temp);
-            }
-        }
-        PartyData data = new PartyData();
-        data.Entities = list.ToArray();
-        data.SavePartyData("CurrentPlayerParty");
-    }
-    #endregion
 }

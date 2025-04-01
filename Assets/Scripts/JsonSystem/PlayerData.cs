@@ -4,23 +4,35 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 
-public class PartyData
+/// <summary>
+/// 플레이어의 데이터 저장 클래스 json 저장 및 불러오기 가능
+/// </summary>
+public class PlayerData
 {
-    public PartyEntity[] Entities;
+    // 현재 보유중인 기물 정보
+    public List<EntityData> entities =new List<EntityData>();
+    // 보유중인 유물 정보
+    // 보유중인 재화
+    // 클리어한 지역 종류 및 개수
+    public Dictionary<string,int> location = new Dictionary<string,int>();
+    // 현재 보유중인 기운 개수
+    // 보유중인 일회용 아이템 종류와 개수
+
+
 
     static JsonSerializerSettings serializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-    public static string SerializePartyData(PartyData data)
+    public static string SerializePartyData(PlayerData data)
     {
         if (data == null) return null;
         return JsonConvert.SerializeObject(data, serializerSettings);
     }
-    public static PartyData DeserializePartyData(string json)
+    public static PlayerData DeserializePartyData(string json)
     {
         if(json == null) return null;
-        return JsonConvert.DeserializeObject<PartyData>(json,serializerSettings);
+        return JsonConvert.DeserializeObject<PlayerData>(json,serializerSettings);
     }
     
-    public void SavePartyData(string fileName)
+    public void SavePlayerData(string fileName)
     {
         string data = SerializePartyData(this);
         string path = Path.Combine(Application.dataPath+"/Data", fileName + ".Json");
@@ -28,7 +40,7 @@ public class PartyData
         Debug.Log(data);
         Debug.Log("Save");
     }
-    public static PartyData LoadPartyData(string fileName)
+    public static PlayerData LoadPlayerData(string fileName)
     {
         string path = Path.Combine(Application.dataPath+"/Data", fileName + ".Json");
         string data = null;
@@ -38,14 +50,14 @@ public class PartyData
         }
         if(data == null)
         {
-            return new PartyData();
+            return new PlayerData();
         }
         return DeserializePartyData(data);
     }
 }
-public struct PartyEntity
+public struct EntityData
 {
-    public PartyEntity(Jodiac id, Element element,int entityLevel = 0)
+    public EntityData(Jodiac id, Element element,int entityLevel = 0)
     {
         this.entityId = id;
         this.entityElement = element;

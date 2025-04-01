@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyController : EntityController
 {
-    public override void SetEntities(int num, PartyData party)
+    public override void SetEntities(int num, PlayerData party)
     {
         base.SetEntities(num, party);
         var tiles = currentField.GetHalfTiles(isReflect);

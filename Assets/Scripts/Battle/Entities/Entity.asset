@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2db6085e42c4a894497ce8388f209d9a, type: 3}
-  m_Name: Rabbit
+  m_Name: Entity
   m_EditorClassIdentifier: 
   entityPrefab: {fileID: 1455179597510633406, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
-  mesh: {fileID: 0}
-  elementMaterial: []
-  hp: 25
-  hpIncrease: 4
+  mesh: {fileID: 4300000, guid: 639050e749c3ce444a196d84e803b067, type: 3}
+  elementMaterial:
+  - {fileID: 2100000, guid: ffb2a3efa55492a4b8db33ccaf344656, type: 2}
+  - {fileID: 2100000, guid: c5cc88eeaf6c4af468baf3cc810a2040, type: 2}
+  - {fileID: 2100000, guid: c7ce952d0cc5177468ed091a0ffcd4fd, type: 2}
+  - {fileID: 2100000, guid: 64bf1046951b2b641a98e7f3c3437eb6, type: 2}
+  - {fileID: 2100000, guid: 9a41487d638bd59469ec1be6945c17e0, type: 2}
+  hp: 30
+  hpIncrease: 1
   power: 5
   powerIncrease: 1
   skills: []

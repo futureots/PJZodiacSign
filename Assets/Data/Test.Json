@@ -1,0 +1,1 @@
+{"$type":"PlayerData, Assembly-CSharp","entities":{"$type":"System.Collections.Generic.List`1[[EntityData, Assembly-CSharp]], mscorlib","$values":[{"$type":"EntityData, Assembly-CSharp","entityId":1,"entityElement":5,"entityLevel":1}]},"location":{"$type":"System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], mscorlib","Elite":2}}

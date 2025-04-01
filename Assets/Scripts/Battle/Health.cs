@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
@@ -31,5 +32,9 @@ public class Health : MonoBehaviour, IDamageable
     public bool isZero()
     {
         return hp <= 0;   
+    }
+    public void Deade()
+    {
+        Destroy(gameObject);
     }
 }

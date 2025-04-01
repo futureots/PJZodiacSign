@@ -92,10 +92,6 @@ public class InputManager : Singleton<InputManager>
     {
         ShowEntitySelecter();
         ShowCellSelecter();
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GameManager.Instance.SaveCurrentState(playerController.teamNum);
-        }
     }
     void ShowEntitySelecter()
     {

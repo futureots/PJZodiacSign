@@ -42,8 +42,9 @@ public class Entity : MonoBehaviour
             GetComponent<Renderer>().SetMaterials(new List<Material>() { material.GetMaterial(value) });
         }
     }
+    // 속성별 메테리얼
     [SerializeField] ElementSO material;
-    public Jodiac jodiacType;
+
     public int level;
 
     public Health health;
@@ -65,6 +66,7 @@ public class Entity : MonoBehaviour
     }
     void Start()
     {
+        var temp = GetComponent<IDamageable>();
         health.Dead += Dead;
     }
 

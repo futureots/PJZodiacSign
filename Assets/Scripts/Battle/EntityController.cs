@@ -19,12 +19,12 @@ public class EntityController : MonoBehaviour
     public int teamNum;
     public List<Entity> entities;
 
-    //데이터 기반 엔티티 설정 및 세팅
-    public virtual void SetEntities(int num, PartyData party)
+    // 데이터 기반 엔티티 설정 및 세팅
+    public virtual void SetEntities(int num, PlayerData party)
     {
         teamNum = num;
         int x = -35;
-        foreach (var member in party.Entities)
+        foreach (var member in party.entities)
         {
             var entity = CreateEntity(member.entityId, member.entityElement);
             entities.Add(entity);
@@ -45,7 +45,7 @@ public class EntityController : MonoBehaviour
         var entityObj = Instantiate(entityData);
         var entity = entityObj.GetComponent<Entity>();
         entity.tag = tag;
-        entity.elementType = element;
+        //entity.elementType = element;
         entity.field = currentField;
         return entity;
     }
