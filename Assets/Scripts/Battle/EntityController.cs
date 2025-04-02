@@ -174,7 +174,7 @@ public class EntityController : MonoBehaviour
         Tile closestTile = null;
         foreach (Tile tile in tiles)
         {
-            if (tile.isOccupied && tile.OccupiedEntity != selectedEntity) continue;
+            if (tile.isOccupied) continue;
             var distance = (tile.transform.position - pos).magnitude;
             if (closestTile == null || minDistance > distance)
             {

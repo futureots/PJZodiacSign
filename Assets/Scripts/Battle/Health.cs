@@ -10,7 +10,7 @@ public class Health : MonoBehaviour, IDamageable
     public int maxHp {  get; private set; }
     public int hp {  get; private set; }
     public Action<int> healthChanged;
-    public Action Dead;
+    public Action OnDead;
     private void Start()
     {
         maxHp = originHp;
@@ -33,8 +33,9 @@ public class Health : MonoBehaviour, IDamageable
     {
         return hp <= 0;   
     }
-    public void Deade()
+    public void Dead()
     {
+        OnDead?.Invoke();
         Destroy(gameObject);
     }
 }

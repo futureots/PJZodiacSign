@@ -67,7 +67,7 @@ public class Entity : MonoBehaviour
     void Start()
     {
         var temp = GetComponent<IDamageable>();
-        health.Dead += Dead;
+        health.OnDead += Dead;
     }
 
     void OnMouseDown()
@@ -106,22 +106,13 @@ public class Entity : MonoBehaviour
     IEnumerator MoveEntityCoroutine(Tile tile)
     {
         SetClickable(false);
-        tile.SetEntity(gameObject);
-        SetTile(tile);
+        tile.OccupyObject(gameObject);
+        curTile.OccupyObject();
         Vector3 entityPos = tile.transform.position;
         transform.DOMove(entityPos, 1f);
         field = tile.field;
         yield return new WaitForSeconds(1f);
         SetClickable(true);
-    }
-    void SetTile(Tile tile)
-    {
-        //원래 있던 위치 연결 제거
-        if (curTile != null)
-        {
-            curTile.entityObj = null;
-        }
-        curTile = tile;
     }
 
     public virtual List<Tile> GetAttackArea(intVector2 entityPos)
@@ -160,8 +151,8 @@ public class Entity : MonoBehaviour
             if (tile == null) continue;
             if (tile.isOccupied)
             {
-                if (tile.entityObj.tag == tag) continue; 
-                var damageable = tile.entityObj.GetComponent<IDamageable>();
+                if (tile.occupiedObject.tag == tag) continue; 
+                var damageable = tile.occupiedObject.GetComponent<IDamageable>();
                 if (damageable == null) continue;
                 targets.Add(damageable);
             }

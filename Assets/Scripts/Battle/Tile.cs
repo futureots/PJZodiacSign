@@ -1,12 +1,4 @@
-using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SocialPlatforms;
 
 public class Tile : MonoBehaviour
 {
@@ -21,37 +13,29 @@ public class Tile : MonoBehaviour
     //이 타일이 있는 필드
     public Field field { get; private set; }
     public intVector2 fieldPos;
+    public GameObject occupiedObject { get; private set; }
+    public bool isOccupied => occupiedObject != null;
 
-
-    public void SetField(Field f,int column, int row)
+    public void SetField(Field f,int x, int y)
     {
         field = f;
-        fieldPos.x = column;
-        fieldPos.y = row;
+        fieldPos.x = x;
+        fieldPos.y = y;
     }
-
-
-    //이 칸에 있는 엔티티(적 또는 아군 또는 장애물)
-    public GameObject entityObj;
-    public Entity OccupiedEntity
+    
+    public void OccupyObject(GameObject e = null)
     {
-        get
+        occupiedObject = e;
+        if(e != null)
         {
-            if (!isOccupied) return null;
-            return entityObj.GetComponent<Entity>();
+            e.transform.SetParent(transform);
         }
-    }
-    public bool isOccupied => entityObj != null;
-    public void SetEntity(GameObject e)
-    {
-        entityObj = e.gameObject;
-        e.transform.SetParent(transform);
     }
 
     public bool isMovable(Entity entity)
     {
         if (!isOccupied) return true;
-        if (entityObj.Equals(entity)) return true;
+        if (occupiedObject.Equals(entity)) return true;
         return false;
     }
 }

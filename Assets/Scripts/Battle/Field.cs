@@ -93,11 +93,11 @@ public class Field : MonoBehaviour
         foreach (var tile in tiles)
         {
             if (!tile.isOccupied) continue;
-            var health = tile.entityObj.GetComponent<Health>();
+            var health = tile.occupiedObject.GetComponent<Health>();
             Debug.Log("health : " + health.hp);
             if (health.isZero())
             {
-                health.Dead?.Invoke();
+                health.OnDead?.Invoke();
             }
         }
     }

@@ -14,7 +14,7 @@ public class HpBar : MonoBehaviour
         target = obj.transform;
         hpComponent = obj.GetComponent<Health>();
         hpComponent.healthChanged += UpdateHpBar;
-        hpComponent.Dead += () => Destroy(gameObject);
+        hpComponent.OnDead += () => Destroy(gameObject);
         UpdateHpBar();
     }
     // Update is called once per frame
