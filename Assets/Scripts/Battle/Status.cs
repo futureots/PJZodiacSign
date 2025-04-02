@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Status : MonoBehaviour,IDamageable
 {
+
     public void Damaged(int damage)
     {
         

@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
     public Action turnEnd;
     private void Awake()
     {
-        field.CreateField();
+        //field.CreateField();
         var data = new PlayerData();//PartyData.LoadPartyData("CurrentPlayerParty");
         data.entities.Add(new EntityData(Jodiac.Mouse, Element.Water, 1));
         data.location.Add("Elite", 1);
@@ -24,9 +24,9 @@ public class GameManager : Singleton<GameManager>
 
         for(int i = 0; i < controllers.Length; i++)
         {
-            controllers[i].SetEntities(i+1, data);
+            //controllers[i].SetEntities(i+1, data);
         }
-        StartGame();
+        //StartGame();
     }
     IEnumerator Start()
     {

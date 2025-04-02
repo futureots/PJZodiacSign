@@ -13,7 +13,8 @@ public class Field : MonoBehaviour
     public int row, column;
     public GameObject tilePrefab;
     public Tile[,] tiles = null;
-    
+
+    [ContextMenu("CreateField")]
     public void CreateField()
     {
         //행,열의 길이 만큼 체스판 생성
@@ -30,6 +31,7 @@ public class Field : MonoBehaviour
                 tiles[i, j] = tile;
             }
         }
+        Debug.Log(tiles.Length);
     }
 
 

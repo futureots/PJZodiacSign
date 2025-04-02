@@ -6,6 +6,9 @@ using static EntityController;
 public class InputManager : Singleton<InputManager>
 {
     public EntityController playerController;
+
+    
+
     public enum InputMode
     {
         //명령 없음(행동 X)
