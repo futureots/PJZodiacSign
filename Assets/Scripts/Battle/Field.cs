@@ -12,8 +12,12 @@ public class Field : MonoBehaviour
 {
     public int row, column;
     public GameObject tilePrefab;
-    public Tile[,] tiles = null;
+    public Tile[,] tiles;
 
+    private void Start()
+    {
+        CreateField();
+    }
     [ContextMenu("CreateField")]
     public void CreateField()
     {

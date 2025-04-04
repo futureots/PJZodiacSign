@@ -8,9 +8,19 @@ namespace Battle
     public class Entity : MonoBehaviour, IDamageable
     {
         public Tile curTile;
+
+        #region status
+        public int level;
+        public int maxHp;
+        public int curHp;
+        public int energy;
+        public int power;
+
+
+
         public void Damaged(int damage)
         {
-            throw new System.NotImplementedException();
+            curHp -= damage;
         }
 
         public void Dead()
@@ -20,13 +30,15 @@ namespace Battle
 
         public void Healed(int amount)
         {
-            throw new System.NotImplementedException();
+            curHp += amount;
         }
 
         public bool isZero()
         {
-            return false;
+            if (curHp > 0) return false;
+            return true;
         }
+        #endregion
         public void MoveTo(Tile tile)
         {
             if (curTile != null)
@@ -35,6 +47,18 @@ namespace Battle
             }
             tile.OccupyObject(gameObject);
             curTile = tile;
+            transform.position = tile.transform.position;
+        }
+
+        private void OnMouseDown()
+        {
+            Debug.Log("Mounse DOWN");
+            InputManager.Instance.OnGameObjectDown(gameObject);
+        }
+        private void OnMouseUp()
+        {
+            Debug.Log("Mounse UP");
+            InputManager.Instance.OnGameObjectUp();
         }
     }
 }

@@ -44,7 +44,7 @@ public class CameraFocus : MonoBehaviour
         var mouseY = Input.GetAxis("Mouse Y");
         //Debug.Log(mouseX);
         var rot = targetTransform.rotation.eulerAngles;
-        rot.x += mouseY * rotateSpeed * 100 * Time.deltaTime;
+        rot.x -= mouseY * rotateSpeed * 100 * Time.deltaTime;
         //Debug.Log(rot.x);
         targetTransform.rotation = Quaternion.Euler(rot);
     }

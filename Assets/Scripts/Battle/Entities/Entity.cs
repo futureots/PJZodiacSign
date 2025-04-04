@@ -72,15 +72,15 @@ public class Entity : MonoBehaviour
 
     void OnMouseDown()
     {
-        InputManager.Instance.OnEntityDown(this);
+        //InputManager.Instance.OnGameObjectDown(this);
     }
     void OnMouseDrag()
     {
-        InputManager.Instance.OnEntityDrag(this);
+        //InputManager.Instance.OnEntityDrag(this);
     }
     void OnMouseUp()
     {
-        InputManager.Instance.OnEntityUp(this);
+        //InputManager.Instance.OnGameObjectUp(this);
     }
 
 

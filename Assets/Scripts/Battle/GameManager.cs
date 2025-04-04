@@ -11,11 +11,12 @@ public class GameManager : Singleton<GameManager>
     public EntityController[] controllers;
     public Field field;
 
+    public Battle.Entity obj;
     int turnCount;
     public Action turnEnd;
     private void Awake()
     {
-        //field.CreateField();
+        /*//field.CreateField();
         var data = new PlayerData();//PartyData.LoadPartyData("CurrentPlayerParty");
         data.entities.Add(new EntityData(Jodiac.Mouse, Element.Water, 1));
         data.location.Add("Elite", 1);
@@ -26,11 +27,13 @@ public class GameManager : Singleton<GameManager>
         {
             //controllers[i].SetEntities(i+1, data);
         }
-        //StartGame();
+        //StartGame();*/
     }
     IEnumerator Start()
     {
-        yield return null;
+        obj.MoveTo(field.GetTile(0, 0));
+        yield return new WaitForSeconds(1);
+        obj.MoveTo(field.GetTile(5, 5));
     }
     public void StartGame()
     {
@@ -56,7 +59,7 @@ public class GameManager : Singleton<GameManager>
             List<Command> commands = new List<Command>();
             foreach (EntityController controller in controllers)
             {
-                var cmd = controller.GetCommand();
+                var cmd = controller.curCmd;
                 if (cmd == null) cmd = controller.GetRandomCommand();
                 commands.Add(cmd);
             }

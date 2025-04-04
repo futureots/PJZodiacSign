@@ -15,9 +15,11 @@ public class EntityController : MonoBehaviour
     public Material expectMoveMaterial;
     public bool isEntitySelected => selectedEntity != null;
     public bool isTileSelected => selectedTile != null;
-    public Field currentField;
+    //public Field currentField;
     public int teamNum;
     public List<Entity> entities;
+
+    public Command curCmd;
 
     // 데이터 기반 엔티티 설정 및 세팅
     public virtual void SetEntities(int num, PlayerData party)
@@ -46,18 +48,14 @@ public class EntityController : MonoBehaviour
         var entity = entityObj.GetComponent<Entity>();
         entity.tag = tag;
         //entity.elementType = element;
-        entity.field = currentField;
+        //entity.field = currentField;
         return entity;
     }
-
-    public Command GetCommand()
+    public Command CreateCommand(Entity entity, Tile tile)
     {
-        if (selectedEntity == null || selectedTile == null) return null; 
-        //지정한 기물과 칸이 있으면 실행
-        var result = new MoveCommand(selectedEntity, selectedTile);
-        selectedTile = null;
-        selectedEntity = null;
-        return result;
+        Command cmd = new MoveCommand(entity, tile);
+        curCmd = cmd;
+        return cmd;
     }
     public Command GetRandomCommand()
     {   
@@ -82,11 +80,28 @@ public class EntityController : MonoBehaviour
     }
     #region EntitySelectInput
 
+    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    {
+        if (tiles == null) return null;
+        float minDistance = 0;
+        Tile closestTile = null;
+        foreach (Tile tile in tiles)
+        {
+            //if (tile.isOccupied) continue;
+            var distance = (tile.transform.position - pos).magnitude;
+            if (closestTile == null || minDistance > distance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
+
     List<Tile> movableTile = new List<Tile>();
     List<Tile> attackableTile = new List<Tile>();
-
     // 엔티티 선택
-    public void SelectEntity(Entity entity, int mode)
+    /*public void SelectEntity(Entity entity, int mode)
     {
         if (!entities.Contains(entity)) return;
         entity.field = currentField;
@@ -104,8 +119,8 @@ public class EntityController : MonoBehaviour
         }
         currentField.AddFieldColor(0, movableTile.ToArray());
         GameManager.Instance.ViewAttackArea(entity.TeamNum);
-    }
-    public void DragEntity(Entity entity)
+    }*/
+    /*public void DragEntity(Entity entity)
     {
         //팀이 아니면 이동 권한 없음
         if (!entities.Contains(entity)) return;
@@ -133,8 +148,8 @@ public class EntityController : MonoBehaviour
             currentField.AddFieldColor(1, attackableTile.ToArray());
         }
 
-    }
-    public void MouseUpEntity(Entity entity, bool isSet = false)
+    }*/
+    /*public void MouseUpEntity(Entity entity, bool isSet = false)
     {
         if (!entities.Contains(entity)) return;
         //Debug.Log(selectedEntity.curTile);
@@ -166,23 +181,7 @@ public class EntityController : MonoBehaviour
         currentField.RemoveFieldColor(0);
         movableTile.Clear();
         GameManager.Instance.ClearAttackArea();
-    }
-    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
-    {
-        if (tiles == null) return null;
-        float minDistance = 0;
-        Tile closestTile = null;
-        foreach (Tile tile in tiles)
-        {
-            if (tile.isOccupied) continue;
-            var distance = (tile.transform.position - pos).magnitude;
-            if (closestTile == null || minDistance > distance)
-            {
-                minDistance = distance;
-                closestTile = tile;
-            }
-        }
-        return closestTile;
-    }
+    }*/
+
     #endregion
 }
