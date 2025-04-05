@@ -9,7 +9,7 @@ using UnityEngine.Events;
 using static UnityEditor.PlayerSettings;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Entity : MonoBehaviour
+public class Oldity : MonoBehaviour
 {
     
     //공격범위 반전 여부
@@ -49,7 +49,7 @@ public class Entity : MonoBehaviour
 
     public Health health;
     
-    public Action<Entity> OnDestroyed;
+    public Action<Oldity> OnDestroyed;
     
     public int power;
     int teamNum;

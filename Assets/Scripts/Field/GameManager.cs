@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     public Action turnEnd;
     private void Awake()
     {
+        StartTurn();
         /*//field.CreateField();
         var data = new PlayerData();//PartyData.LoadPartyData("CurrentPlayerParty");
         data.entities.Add(new EntityData(Jodiac.Mouse, Element.Water, 1));
@@ -33,16 +34,11 @@ public class GameManager : Singleton<GameManager>
     {
         obj.MoveTo(field.GetTile(0, 0));
         yield return new WaitForSeconds(1);
-        obj.MoveTo(field.GetTile(5, 5));
-    }
-    public void StartGame()
-    {
-        InputManager.Instance.inputMode = InputManager.InputMode.Set;
-        turnCount = 0;
+        //obj.MoveTo(field.GetTile(5, 5));
     }
     public void StartTurn()
     {
-        InputManager.Instance.inputMode = InputManager.InputMode.Move;
+        InputManager.Instance.AllocateMoveCommand();
     }
     public void EndTurn()
     {
@@ -52,23 +48,24 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator EndTurnCoroutine()
     {
-        InputManager.Instance.inputMode = InputManager.InputMode.None;
-        //이동, 스킬 사용
-        if (turnCount !=0)
+        // 입력 금지
+        InputManager.Instance.isInputStop = true;
+
+        // 각 컨트롤러의 입력한 커맨드 가져오기
+        List<Command> commands = new List<Command>();
+        foreach (EntityController controller in controllers)
         {
-            List<Command> commands = new List<Command>();
-            foreach (EntityController controller in controllers)
-            {
-                var cmd = controller.curCmd;
-                if (cmd == null) cmd = controller.GetRandomCommand();
-                commands.Add(cmd);
-            }
-            foreach(var cmd in commands)
-            {
-                cmd.Execute();
-                yield return new WaitForSeconds(1f);
-            }
+            var cmd = controller.curCmd;
+            //if (cmd == null) cmd = controller.GetRandomCommand();
+            commands.Add(cmd);
         }
+        // 커맨드 실행
+        foreach(var cmd in commands)
+        {
+            cmd.Execute();
+            yield return new WaitForSeconds(1f);
+        }
+        /*
         //공격
         if (turnCount >= 2)
         {
@@ -86,12 +83,12 @@ public class GameManager : Singleton<GameManager>
         }
         
         turnCount++;
-
+        */
         // 죽은 기물 제거
         field.CleanField();
 
-        //한쪽 기물 전부 사망 시 게임 종료
-        
+        // 입력 재개
+        InputManager.Instance.isInputStop = false;
         StartTurn();
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity_OddEven : Entity
+public class Entity_OddEven : Oldity
 {
     public bool isOddTile;
 

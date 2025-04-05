@@ -31,11 +31,4 @@ public class Tile : MonoBehaviour
             e.transform.SetParent(transform);
         }
     }
-
-    public bool isMovable(Entity entity)
-    {
-        if (!isOccupied) return true;
-        if (occupiedObject.Equals(entity)) return true;
-        return false;
-    }
 }

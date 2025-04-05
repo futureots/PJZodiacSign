@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Battle;
 public class MoveCommand : Command
 {
-    Entity entity;
+    Battle.Entity entity;
     Tile tile;
-    public MoveCommand(Entity entity, Tile tile)
+    public MoveCommand(Battle.Entity entity, Tile tile)
     {
         this.entity = entity;
         this.tile = tile;
@@ -14,6 +14,6 @@ public class MoveCommand : Command
 
     public override void Execute()
     {
-        entity.MoveToTile(tile);
+        entity.MoveTo(tile);
     }
 }

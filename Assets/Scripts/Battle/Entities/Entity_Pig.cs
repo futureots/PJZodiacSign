@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity_Pig : Entity
+public class Entity_Pig : Oldity
 {
     public override List<Tile> GetAttackArea(intVector2 entityPos)
     {

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 using static UnityEngine.EventSystems.EventTrigger;
+using Battle;
 
 public class EntityController : MonoBehaviour
 {
@@ -17,12 +18,12 @@ public class EntityController : MonoBehaviour
     public bool isTileSelected => selectedTile != null;
     //public Field currentField;
     public int teamNum;
-    public List<Entity> entities;
+    public List<Oldity> entities;
 
     public Command curCmd;
 
     // 데이터 기반 엔티티 설정 및 세팅
-    public virtual void SetEntities(int num, PlayerData party)
+    /*public virtual void SetEntities(int num, PlayerData party)
     {
         teamNum = num;
         int x = -35;
@@ -50,14 +51,14 @@ public class EntityController : MonoBehaviour
         //entity.elementType = element;
         //entity.field = currentField;
         return entity;
-    }
+    }*/
     public Command CreateCommand(Entity entity, Tile tile)
     {
         Command cmd = new MoveCommand(entity, tile);
         curCmd = cmd;
         return cmd;
     }
-    public Command GetRandomCommand()
+    /*public Command GetRandomCommand()
     {   
         var entityList = new List<Entity>(entities);
         while (entityList.Count > 0) 
@@ -77,7 +78,7 @@ public class EntityController : MonoBehaviour
         }
         // 이동 가능한 영물 없음
         return null;
-    }
+    }*/
     #region EntitySelectInput
 
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)

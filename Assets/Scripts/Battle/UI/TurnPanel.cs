@@ -10,7 +10,7 @@ public class TurnPanel : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.turnEnd += DeQueue;
+        //GameManager.Instance.turnEnd += DeQueue;
         turn = new Queue<TurnIndicator>();
         latterTurn = new Queue<int>();
         for(int i = 0; i <= 3; i++)

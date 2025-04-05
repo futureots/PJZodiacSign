@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Entity_Monkey : Entity
+public class Entity_Monkey : Oldity
 {
     public override List<Tile> GetAttackArea(intVector2 entityPos)
     {
