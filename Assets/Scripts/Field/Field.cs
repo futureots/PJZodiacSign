@@ -61,6 +61,18 @@ public class Field : MonoBehaviour
         return GetTile(pos);
 
     }
+    public List<Tile> GetTiles()
+    {
+        var list = new List<Tile>();
+        for(int i = 0; i < row; i++)
+        {
+            for(int j = 0; j < column; j++)
+            {
+                list.Add(tiles[i, j]);
+            }
+        }
+        return list;
+    }
     public List<Tile> GetTiles(List<intVector2> positions)
     {
         var list = new List<Tile>();

@@ -10,12 +10,11 @@ public class EntityController : MonoBehaviour
 {
     [SerializeField] JodiacSO jodiacList;
     public bool isReflect;
-    public Entity selectedEntity { get; private set; }
-    public Tile selectedTile {  get; private set; }
+
     public Material expectAttackMaterial;
+    
     public Material expectMoveMaterial;
-    public bool isEntitySelected => selectedEntity != null;
-    public bool isTileSelected => selectedTile != null;
+
     //public Field currentField;
     public int teamNum;
     public List<Oldity> entities;
@@ -81,12 +80,12 @@ public class EntityController : MonoBehaviour
     }*/
     #region EntitySelectInput
 
-    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    public Tile GetClosestTile(Vector3 pos,Field field)
     {
-        if (tiles == null) return null;
+        if (field == null) return null;
         float minDistance = 0;
         Tile closestTile = null;
-        foreach (Tile tile in tiles)
+        foreach (Tile tile in field.GetTiles())
         {
             //if (tile.isOccupied) continue;
             var distance = (tile.transform.position - pos).magnitude;

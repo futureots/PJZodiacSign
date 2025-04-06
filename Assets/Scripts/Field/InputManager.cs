@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Battle;
+using System.Reflection;
 
 public class InputManager : Singleton<InputManager>
 {
@@ -9,7 +10,7 @@ public class InputManager : Singleton<InputManager>
     //false일때 입력을 받고 true이면 입력을 받지 않음
     public bool isInputStop;
     public Battle.Entity selectedEntity;
-    public Tile selectedTile;
+    public Skill selectedSkill;
 
     public static event Action<GameObject> OnObjectMouseDown;
     public static event Action OnObjectMouseUp;
@@ -113,12 +114,31 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     void ReleaseEntity()
     {
-        Command cmd = new MoveCommand(selectedEntity, GameManager.Instance.field.GetTile(0, 0));
+        Tile tile = controller.GetClosestTile(selectedEntity.transform.position, GameManager.Instance.field);
+        controller.CreateCommand(selectedEntity, tile);
         //해당 입력에 대한 컨트롤러 커맨드 작성
+        
+
         selectedEntity.transform.position = selectedEntity.curTile.transform.position;
         selectedEntity = null;
     }
     #endregion
+    #region SkillCommand 관련
+    public void AllocateSkillCommand(Skill skill)
+    {
+        OnObjectMouseDown = null;
+        OnObjectMouseUp = null;
+    }
+
+    void SetFieldValue(Skill skill, FieldInfo field, GameObject obj)
+    {
+        var component = obj.GetComponent(field.FieldType);
+        field.SetValue(skill, component);
+    }
+    #endregion
+
+
+    /*
     void ShowEntitySelecter()
     {
         if (!entitySelecter.activeSelf)
@@ -138,5 +158,5 @@ public class InputManager : Singleton<InputManager>
         }
         tileSelecter.transform.position = new Vector3(controller.selectedTile.transform.position.x, 0.1f, controller.selectedTile.transform.position.z);
     }
-    
+    */
 }
