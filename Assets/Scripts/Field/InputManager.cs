@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using Battle;
 using System.Reflection;
+using Unity.VisualScripting;
+using System.Collections;
 
 public class InputManager : Singleton<InputManager>
 {
@@ -128,8 +130,39 @@ public class InputManager : Singleton<InputManager>
     {
         OnObjectMouseDown = null;
         OnObjectMouseUp = null;
+        StartCoroutine(SkillProcessCoroutine(skill));
     }
+    
+    IEnumerator SkillProcessCoroutine(Skill skill)
+    {
+        Type type = skill.GetType();
+        FieldInfo[] fieldInfo = type.GetFields();
 
+
+        foreach (var field in fieldInfo)
+        {
+            var attr = (SkillTargetAttribute)field.GetCustomAttribute(typeof(SkillTargetAttribute));
+            if (attr != null)
+            {
+                var fieldType = field.FieldType;
+                Action<GameObject> bindAction = (x) => SetFieldValue(skill, field, x);
+                OnObjectMouseDown = bindAction;
+                //do{
+                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill == selectedSkill);
+                    
+
+                //} while (!skill.IsActivable());
+
+                OnObjectMouseDown = null;
+                //InputManager.CleanAction(fieldType);
+                Debug.Log($"field name : {field.Name} , field value : {field.GetValue(skill)}");
+            }
+
+
+        }
+        skill.Activate();
+        yield return null;
+    }
     void SetFieldValue(Skill skill, FieldInfo field, GameObject obj)
     {
         var component = obj.GetComponent(field.FieldType);

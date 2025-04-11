@@ -11,6 +11,6 @@ public class Skill : MonoBehaviour
     //스킬 발동
     public void Activate()
     {
-
+        Debug.Log(target.name + " Skill Active");
     }
 }
