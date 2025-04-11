@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SkillTargetAttribute : Attribute
 {
-    string text;
+    public string text {  get; private set; }
     
     public SkillTargetAttribute(string text = "")
     {

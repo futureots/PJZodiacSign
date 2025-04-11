@@ -137,20 +137,21 @@ public class InputManager : Singleton<InputManager>
     {
         Type type = skill.GetType();
         FieldInfo[] fieldInfo = type.GetFields();
-
+        Debug.Log(fieldInfo.Length);
 
         foreach (var field in fieldInfo)
         {
             var attr = (SkillTargetAttribute)field.GetCustomAttribute(typeof(SkillTargetAttribute));
             if (attr != null)
             {
+                Debug.Log(attr.text);
                 var fieldType = field.FieldType;
                 Action<GameObject> bindAction = (x) => SetFieldValue(skill, field, x);
                 OnObjectMouseDown = bindAction;
                 //do{
-                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill == selectedSkill);
-                    
+                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
 
+                Debug.Log("skill all allocated");
                 //} while (!skill.IsActivable());
 
                 OnObjectMouseDown = null;
@@ -160,8 +161,10 @@ public class InputManager : Singleton<InputManager>
 
 
         }
-        skill.Activate();
-        yield return null;
+        controller.CreateCommand(skill);
+        //스킬 입력 완료
+        yield return new WaitForSeconds(1);
+        AllocateMoveCommand();
     }
     void SetFieldValue(Skill skill, FieldInfo field, GameObject obj)
     {

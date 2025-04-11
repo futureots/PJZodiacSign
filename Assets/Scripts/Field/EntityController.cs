@@ -57,6 +57,12 @@ public class EntityController : MonoBehaviour
         curCmd = cmd;
         return cmd;
     }
+    public Command CreateCommand(Skill skill)
+    {
+        Command cmd = new SkillCommand(skill);
+        curCmd = cmd;
+        return cmd;
+    }
     /*public Command GetRandomCommand()
     {   
         var entityList = new List<Entity>(entities);
