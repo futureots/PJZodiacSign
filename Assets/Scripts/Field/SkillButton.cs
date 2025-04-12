@@ -9,31 +9,15 @@ public class SkillButton : MonoBehaviour, IPointerClickHandler
     Skill skillInstance;
     public void OnPointerClick(PointerEventData eventData)
     {
-        ref var curSkill = ref InputManager.Instance.selectedSkill;
-        if (curSkill == skill)
+        if (InputManager.Instance.selectedSkill == skillInstance && skillInstance != null)
         {
-            curSkill = null;
-            skillInstance = null;
+            InputManager.Instance.SetSkill(null);
         }
         else
         {
             skillInstance = Instantiate(skill) as Skill;
-            curSkill = skillInstance;
             InputManager.Instance.AllocateSkillCommand(skillInstance);
         }
-            
-
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

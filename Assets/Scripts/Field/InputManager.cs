@@ -12,7 +12,16 @@ public class InputManager : Singleton<InputManager>
     //false일때 입력을 받고 true이면 입력을 받지 않음
     public bool isInputStop;
     public Battle.Entity selectedEntity;
-    public Skill selectedSkill;
+    public Skill selectedSkill { get; private set; }
+    public void SetSkill(Skill skill = null)
+    {
+        if (selectedSkill != null)
+        {
+            Destroy(selectedSkill.gameObject);
+        }
+        selectedSkill = skill;
+    }
+
 
     public static event Action<GameObject> OnObjectMouseDown;
     public static event Action OnObjectMouseUp;
@@ -20,18 +29,18 @@ public class InputManager : Singleton<InputManager>
     public enum InputMode
     {
         //명령 없음(행동 X)
-        None=-1,
+        None = -1,
         //초기 기물 세팅용
-        Set=0,
+        Set = 0,
         //기물 이동(기물 범위 내 타일만 선택가능)
-        Move=1
+        Move = 1
     }
     public InputMode inputMode;
     #endregion
 
     public GameObject entitySelecter;
     public GameObject tileSelecter;
-    
+
     private void Start()
     {
         entitySelecter = Instantiate(entitySelecter, transform);
@@ -41,7 +50,7 @@ public class InputManager : Singleton<InputManager>
     }
     private void Update()
     {
-        if(selectedEntity != null)
+        if (selectedEntity != null)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
@@ -97,6 +106,7 @@ public class InputManager : Singleton<InputManager>
     #region MoveCommand관련
     public void AllocateMoveCommand()
     {
+        SetSkill(null);
         OnObjectMouseDown = SelectEntity;
         OnObjectMouseUp = ReleaseEntity;
     }
@@ -116,18 +126,21 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     void ReleaseEntity()
     {
-        Tile tile = controller.GetClosestTile(selectedEntity.transform.position, GameManager.Instance.field);
-        controller.CreateCommand(selectedEntity, tile);
-        //해당 입력에 대한 컨트롤러 커맨드 작성
-        
+        if (selectedEntity != null)
+        {
+            var tile = controller.GetClosestTile(selectedEntity.transform.position, GameManager.Instance.field);
+            controller.CreateCommand(selectedEntity, tile);
+            selectedEntity.transform.position = selectedEntity.curTile.transform.position;
 
-        selectedEntity.transform.position = selectedEntity.curTile.transform.position;
-        selectedEntity = null;
+            selectedEntity = null;
+        }
     }
+
     #endregion
     #region SkillCommand 관련
     public void AllocateSkillCommand(Skill skill)
     {
+        SetSkill(skill);
         OnObjectMouseDown = null;
         OnObjectMouseUp = null;
         StartCoroutine(SkillProcessCoroutine(skill));
@@ -150,11 +163,16 @@ public class InputManager : Singleton<InputManager>
                 OnObjectMouseDown = bindAction;
                 //do{
                     yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
-
+                
                 Debug.Log("skill all allocated");
                 //} while (!skill.IsActivable());
 
                 OnObjectMouseDown = null;
+                if (skill != selectedSkill)
+                {
+                    Debug.Log("break");
+                    yield break;
+                }
                 //InputManager.CleanAction(fieldType);
                 Debug.Log($"field name : {field.Name} , field value : {field.GetValue(skill)}");
             }
@@ -163,8 +181,8 @@ public class InputManager : Singleton<InputManager>
         }
         controller.CreateCommand(skill);
         //스킬 입력 완료
-        yield return new WaitForSeconds(1);
-        AllocateMoveCommand();
+        //yield return new WaitForSeconds(1);
+        //AllocateMoveCommand();
     }
     void SetFieldValue(Skill skill, FieldInfo field, GameObject obj)
     {

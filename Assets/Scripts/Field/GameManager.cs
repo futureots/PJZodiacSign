@@ -30,11 +30,9 @@ public class GameManager : Singleton<GameManager>
         }
         //StartGame();*/
     }
-    IEnumerator Start()
+    void Start()
     {
         obj.MoveTo(field.GetTile(0, 0));
-        yield return new WaitForSeconds(1);
-        //obj.MoveTo(field.GetTile(5, 5));
     }
     public void StartTurn()
     {

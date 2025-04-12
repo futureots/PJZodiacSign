@@ -52,12 +52,12 @@ namespace Battle
 
         private void OnMouseDown()
         {
-            Debug.Log("Mounse DOWN");
+            Debug.Log("Mouse DOWN");
             InputManager.Instance.OnGameObjectDown(gameObject);
         }
         private void OnMouseUp()
         {
-            Debug.Log("Mounse UP");
+            Debug.Log("Mouse UP");
             InputManager.Instance.OnGameObjectUp();
         }
     }

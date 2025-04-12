@@ -7,13 +7,13 @@ using UnityEngine;
 public class Skill : MonoBehaviour
 {
     [SkillTarget("대상 기물을 선택하세요.")]
-    public Entity target;
+    public Entity entity;
+    [SkillTarget("대상 타일을 선택하세요.")]
+    public Tile tile;
     //스킬 발동
     public void Activate()
     {
-        Debug.Log(target.name + " Skill Active");
-
-        
-        Destroy(gameObject);
+        entity.MoveTo(tile);
+        Debug.Log(tile.name + " Skill Active");
     }
 }

@@ -31,4 +31,14 @@ public class Tile : MonoBehaviour
             e.transform.SetParent(transform);
         }
     }
+    private void OnMouseDown()
+    {
+        Debug.Log("Tile Mouse DOWN");
+        InputManager.Instance.OnGameObjectDown(gameObject);
+    }
+    private void OnMouseUp()
+    {
+        Debug.Log("Tile Mouse UP");
+        InputManager.Instance.OnGameObjectUp();
+    }
 }
