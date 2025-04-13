@@ -12,13 +12,9 @@ public class InputManager : Singleton<InputManager>
     //false일때 입력을 받고 true이면 입력을 받지 않음
     public bool isInputStop;
     public Battle.Entity selectedEntity;
-    public Skill selectedSkill { get; private set; }
-    public void SetSkill(Skill skill = null)
+    public ISkill selectedSkill { get; private set; }
+    public void SetSkill(ISkill skill = null)
     {
-        if (selectedSkill != null)
-        {
-            Destroy(selectedSkill.gameObject);
-        }
         selectedSkill = skill;
     }
 
@@ -138,7 +134,7 @@ public class InputManager : Singleton<InputManager>
 
     #endregion
     #region SkillCommand 관련
-    public void AllocateSkillCommand(Skill skill)
+    public void AllocateSkillCommand(ISkill skill)
     {
         SetSkill(skill);
         OnObjectMouseDown = null;
@@ -146,7 +142,7 @@ public class InputManager : Singleton<InputManager>
         StartCoroutine(SkillProcessCoroutine(skill));
     }
     
-    IEnumerator SkillProcessCoroutine(Skill skill)
+    IEnumerator SkillProcessCoroutine(ISkill skill)
     {
         Type type = skill.GetType();
         FieldInfo[] fieldInfo = type.GetFields();
@@ -164,7 +160,7 @@ public class InputManager : Singleton<InputManager>
                 //do{
                     yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
                 
-                Debug.Log("skill all allocated");
+
                 //} while (!skill.IsActivable());
 
                 OnObjectMouseDown = null;
@@ -176,15 +172,17 @@ public class InputManager : Singleton<InputManager>
                 //InputManager.CleanAction(fieldType);
                 Debug.Log($"field name : {field.Name} , field value : {field.GetValue(skill)}");
             }
-
+            
 
         }
+        Debug.Log("skill all allocated");
         controller.CreateCommand(skill);
+        SetSkill(null);
         //스킬 입력 완료
         //yield return new WaitForSeconds(1);
         //AllocateMoveCommand();
     }
-    void SetFieldValue(Skill skill, FieldInfo field, GameObject obj)
+    void SetFieldValue(ISkill skill, FieldInfo field, GameObject obj)
     {
         var component = obj.GetComponent(field.FieldType);
         field.SetValue(skill, component);

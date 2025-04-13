@@ -57,7 +57,7 @@ public class EntityController : MonoBehaviour
         curCmd = cmd;
         return cmd;
     }
-    public Command CreateCommand(Skill skill)
+    public Command CreateCommand(ISkill skill)
     {
         Command cmd = new SkillCommand(skill);
         curCmd = cmd;

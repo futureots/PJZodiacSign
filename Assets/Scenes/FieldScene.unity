@@ -693,7 +693,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Entity
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1455179597510633406, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -7869756602773132126, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -804,7 +809,6 @@ GameObject:
   - component: {fileID: 1385955991}
   - component: {fileID: 1385955990}
   - component: {fileID: 1385955994}
-  - component: {fileID: 1385955993}
   m_Layer: 5
   m_Name: Skill1
   m_TagString: Untagged
@@ -914,19 +918,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385955988}
   m_CullTransparentMesh: 1
---- !u!114 &1385955993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385955988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 718b7ed0a905cad4ca6442466eed06e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!114 &1385955994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,7 +930,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09bf31a2a65a4943a84a31e8fb48307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 1385955993}
 --- !u!1 &1432661701
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,7 +962,6 @@ MonoBehaviour:
   controller: {fileID: 43863447}
   isInputStop: 0
   selectedEntity: {fileID: 0}
-  selectedTile: {fileID: 0}
   inputMode: 1
   entitySelecter: {fileID: 1107157273978836427, guid: 22eaf003a2d998c4791a821ea4b6dd40, type: 3}
   tileSelecter: {fileID: 6044037666520248651, guid: ea166b9c63ec28c4a9cae543eddd6f03, type: 3}

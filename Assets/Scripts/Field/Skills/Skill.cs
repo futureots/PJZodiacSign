@@ -1,10 +1,9 @@
 using Battle;
 
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Skill : MonoBehaviour
+public class Skill : ISkill
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity entity;
@@ -13,7 +12,21 @@ public class Skill : MonoBehaviour
     //스킬 발동
     public void Activate()
     {
-        entity.MoveTo(tile);
-        Debug.Log(tile.name + " Skill Active");
+        try
+        {
+            entity.MoveTo(tile);
+            Debug.Log(tile.name + " Skill Active");
+        }
+        catch 
+        {
+            throw new Exception("Skill values arenot completed");
+        }
+        
+    }
+
+    public bool IsActable()
+    {
+        if(entity == null || tile == null) return false;
+        return true;
     }
 }

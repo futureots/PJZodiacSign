@@ -21,6 +21,7 @@ namespace Battle
         public void Damaged(int damage)
         {
             curHp -= damage;
+            Debug.Log($"Damaged : {damage} , CurrentHp : {curHp}");
         }
 
         public void Dead()

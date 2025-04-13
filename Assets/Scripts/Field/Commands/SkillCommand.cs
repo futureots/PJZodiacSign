@@ -5,9 +5,9 @@ using UnityEngine;
 public class SkillCommand : Command
 {
     //입력값이 모두 입력된 스킬
-    public Skill skill;
+    public ISkill skill;
 
-    public SkillCommand(Skill skill)
+    public SkillCommand(ISkill skill)
     {
         this.skill = skill;
     }

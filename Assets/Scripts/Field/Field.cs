@@ -61,6 +61,9 @@ public class Field : MonoBehaviour
         return GetTile(pos);
 
     }
+    /// <summary>
+    /// 필드에 있는 모든 타일 가져오기
+    /// </summary>
     public List<Tile> GetTiles()
     {
         var list = new List<Tile>();
@@ -73,6 +76,8 @@ public class Field : MonoBehaviour
         }
         return list;
     }
+
+    //해당 위치 타일들 가져오기
     public List<Tile> GetTiles(List<intVector2> positions)
     {
         var list = new List<Tile>();
@@ -84,6 +89,12 @@ public class Field : MonoBehaviour
         }
         return list;
     }
+
+    /// <summary>
+    /// 맨 절반의 타일을 가져오기
+    /// </summary>
+    /// <param name="isReflect">true = 적 측, false = 플레이어 측</param>
+    /// <returns></returns>
     public List<Tile> GetHalfTiles(bool isReflect)
     {
         List<Tile> list = new List<Tile>();
@@ -103,18 +114,18 @@ public class Field : MonoBehaviour
         }
         return list;
     }
-    // 사망한 엔티티 제거(장애물 포함)
+
+
+    /// <summary>
+    /// 사망한 오브젝트 제거(장애물 포함)
+    /// </summary>
     public void CleanField()
     {
         foreach (var tile in tiles)
         {
             if (!tile.isOccupied) continue;
-            var health = tile.occupiedObject.GetComponent<Health>();
-            Debug.Log("health : " + health.hp);
-            if (health.isZero())
-            {
-                health.OnDead?.Invoke();
-            }
+
+            // 체력이 0인 오브젝트(기물,장애물 제거)
         }
     }
     #region Visualize
