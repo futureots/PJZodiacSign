@@ -40,6 +40,16 @@ namespace Battle
             return true;
         }
         #endregion
+
+        public bool MoveSequence(Tile tile)
+        {
+            var isMovable = GetMoveArea().Contains(tile) && !tile.isEmpty;
+            if (isMovable)
+            {
+                MoveTo(tile);
+            }
+            return true;
+        }
         public void MoveTo(Tile tile)
         {
             if (curTile != null)
@@ -51,6 +61,29 @@ namespace Battle
             transform.position = tile.transform.position;
         }
 
+        public List<Tile> GetMoveArea()
+        {
+            var list = GetComponents<IMoveArea>();
+            var tiles = new List<Tile>();
+            foreach (var area in list)
+            {
+                tiles.AddRange(area.GetMoveArea(curTile));
+            }
+            return tiles;
+        }
+        public List<Tile> GetAttackArea()
+        {
+            var list = GetComponents<IAttackArea>();
+            var tiles = new List<Tile>();
+            foreach (var area in list)
+            {
+                tiles.AddRange(area.GetAttackArea(curTile));
+            }
+            return tiles;
+        }
+
+
+        #region Input
         private void OnMouseDown()
         {
             Debug.Log("Mouse DOWN");
@@ -61,5 +94,6 @@ namespace Battle
             Debug.Log("Mouse UP");
             InputManager.Instance.OnGameObjectUp();
         }
+        #endregion
     }
 }

@@ -10,7 +10,7 @@ public class SkillButton : MonoBehaviour, IPointerClickHandler
     #region Debugging
     private void Start()
     {
-        
+        skill = GetComponent<Skill>();
     }
     #endregion
     public void OnPointerClick(PointerEventData eventData)
@@ -19,6 +19,7 @@ public class SkillButton : MonoBehaviour, IPointerClickHandler
             && skill != null)
         {
             InputManager.Instance.SetSkill(null);
+            skill.Reinitialize();
         }
         else
         {

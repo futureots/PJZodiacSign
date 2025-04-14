@@ -27,7 +27,7 @@ public class Entity_Pig : Oldity
             var temp = field.GetTile(new intVector2(0, i) * negative + entityPos);
             if (temp == null) break;
             area.Add(temp);
-            if (temp.isOccupied) break;
+            if (temp.isEmpty) break;
         }
         return area;
     }

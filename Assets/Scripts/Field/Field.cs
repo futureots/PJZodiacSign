@@ -123,7 +123,7 @@ public class Field : MonoBehaviour
     {
         foreach (var tile in tiles)
         {
-            if (!tile.isOccupied) continue;
+            if (!tile.isEmpty) continue;
 
             // 체력이 0인 오브젝트(기물,장애물 제거)
         }

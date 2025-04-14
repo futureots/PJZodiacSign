@@ -89,6 +89,7 @@ public class InputManager : Singleton<InputManager>
         if (entity == null) return;
 
         selectedEntity = entity;
+        GameManager.Instance.field.AddFieldColor(0, entity.GetMoveArea().ToArray());
     }
     /// <summary>
     /// 선택한 Entity 제거 및 명령 전달
