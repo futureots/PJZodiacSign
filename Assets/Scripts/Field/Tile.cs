@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -49,4 +51,18 @@ public class Tile : MonoBehaviour
         Debug.Log("Tile Mouse UP");
         InputManager.Instance.OnGameObjectUp();
     }
+
+    public void AddColor(Material material)
+    {
+        List<Material> materials = renderer.materials.ToList();
+        materials.Add(material);
+        renderer.materials = materials.ToArray();
+    }
+    public void RemoveColor(Material material)
+    {
+        List<Material> materials = renderer.materials.ToList();
+        materials.Remove(material);
+        renderer.materials = materials.ToArray();
+    }
+
 }

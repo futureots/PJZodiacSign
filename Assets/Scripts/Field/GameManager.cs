@@ -9,7 +9,13 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public EntityController[] controllers;
-    public Field field;
+    public Field field
+    {
+        get
+        {
+            return Field.Instance;
+        }
+    }
 
     public Battle.Entity obj;
     int turnCount;
@@ -89,32 +95,5 @@ public class GameManager : Singleton<GameManager>
         InputManager.Instance.isInputStop = false;
         StartTurn();
     }
-
-    #region Viewer
-    [SerializeField] Material attackMaterial;
-    public void ViewAttackArea(int teamNum)
-    {
-        List<EntityController> enemy = new List<EntityController>();
-        foreach (var item in controllers)
-        {
-            if(item.teamNum != teamNum)
-            {
-                enemy.Add(item);
-            }
-        }
-        foreach (var controller  in enemy)
-        {
-            foreach (var item in controller.entities)
-            {
-                var area = item.GetAttackArea(item.curPos);
-                field.AddFieldColor(2, area.ToArray());
-            }
-        }
-    }
-    public void ClearAttackArea()
-    {
-        field.RemoveFieldColor(2);
-    }
-    #endregion
 
 }

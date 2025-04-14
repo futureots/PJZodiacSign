@@ -17,22 +17,10 @@ public class InputManager : Singleton<InputManager>
     {
         selectedSkill = skill;
     }
-
+    public AreaVisualizer areaVisualizer;
 
     public static event Action<GameObject> OnObjectMouseDown;
     public static event Action OnObjectMouseUp;
-    #region inputMode
-    public enum InputMode
-    {
-        //명령 없음(행동 X)
-        None = -1,
-        //초기 기물 세팅용
-        Set = 0,
-        //기물 이동(기물 범위 내 타일만 선택가능)
-        Move = 1
-    }
-    public InputMode inputMode;
-    #endregion
 
     public GameObject entitySelecter;
     public GameObject tileSelecter;
@@ -89,7 +77,6 @@ public class InputManager : Singleton<InputManager>
         if (entity == null) return;
 
         selectedEntity = entity;
-        GameManager.Instance.field.AddFieldColor(0, entity.GetMoveArea().ToArray());
     }
     /// <summary>
     /// 선택한 Entity 제거 및 명령 전달

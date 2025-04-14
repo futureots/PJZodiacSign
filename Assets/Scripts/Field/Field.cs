@@ -8,7 +8,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 
 
-public class Field : MonoBehaviour
+public class Field : Singleton<Field>
 {
     public int row, column;
     public GameObject tilePrefab;

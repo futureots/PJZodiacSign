@@ -151,12 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f853d1a66450d744e8dc65fb2664fd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jodiacList: {fileID: 0}
   isReflect: 0
-  expectAttackMaterial: {fileID: 0}
-  expectMoveMaterial: {fileID: 0}
   teamNum: 0
-  entities: []
 --- !u!4 &43863448
 Transform:
   m_ObjectHideFlags: 0
@@ -978,7 +974,7 @@ MonoBehaviour:
   controller: {fileID: 43863447}
   isInputStop: 0
   selectedEntity: {fileID: 0}
-  inputMode: 1
+  areaVisualizer: {fileID: 0}
   entitySelecter: {fileID: 1107157273978836427, guid: 22eaf003a2d998c4791a821ea4b6dd40, type: 3}
   tileSelecter: {fileID: 6044037666520248651, guid: ea166b9c63ec28c4a9cae543eddd6f03, type: 3}
 --- !u!4 &1432661703
@@ -1535,9 +1531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllers:
   - {fileID: 43863447}
-  field: {fileID: 1259859472}
   obj: {fileID: 828903860}
-  attackMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
 --- !u!4 &2018355401
 Transform:
   m_ObjectHideFlags: 0
