@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour
             return GetComponentInChildren<Renderer>();
         }
     }
+    List<Material> originMaterials;
+    List<Material> currentMaterials;
     //이 타일이 있는 필드
     public Field field { get; private set; }
     public intVector2 fieldPos;
@@ -19,7 +21,11 @@ public class Tile : MonoBehaviour
     // 타일로 이동가능한지 
     public bool isEmpty;
 
-
+    private void Start()
+    {
+        originMaterials = renderer.materials.ToList();
+        currentMaterials = originMaterials;
+    }
     public void SetField(Field f,int x, int y)
     {
         isEmpty = true;
@@ -54,15 +60,13 @@ public class Tile : MonoBehaviour
 
     public void AddColor(Material material)
     {
-        List<Material> materials = renderer.materials.ToList();
-        materials.Add(material);
-        renderer.materials = materials.ToArray();
+        currentMaterials.Add(material);
+        renderer.materials = currentMaterials.ToArray();
     }
     public void RemoveColor(Material material)
     {
-        List<Material> materials = renderer.materials.ToList();
-        materials.Remove(material);
-        renderer.materials = materials.ToArray();
+        currentMaterials.Remove(material);
+        renderer.materials = currentMaterials.ToArray();
     }
 
 }

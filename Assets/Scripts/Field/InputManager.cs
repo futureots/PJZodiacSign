@@ -77,6 +77,7 @@ public class InputManager : Singleton<InputManager>
         if (entity == null) return;
 
         selectedEntity = entity;
+        areaVisualizer.ShowMoveArea(entity.GetMoveArea());
     }
     /// <summary>
     /// 선택한 Entity 제거 및 명령 전달
@@ -89,6 +90,7 @@ public class InputManager : Singleton<InputManager>
             controller.CreateCommand(selectedEntity, tile);
             selectedEntity.transform.position = selectedEntity.curTile.transform.position;
 
+            areaVisualizer.RemoveMoveArea(selectedEntity.GetMoveArea());
             selectedEntity = null;
         }
     }

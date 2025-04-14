@@ -369,6 +369,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &158678043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 158678045}
+  - component: {fileID: 158678044}
+  m_Layer: 0
+  m_Name: AreaVisualizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &158678044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158678043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d7cf55629998642b3355120968f595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAttackMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
+  attackMaterial: {fileID: -876546973899608171, guid: 766bbd0bfcca5ed489650688c819a2c3, type: 3}
+  moveMaterial: {fileID: 2100000, guid: 088d884df31c96e4fa90f21e5173a155, type: 2}
+--- !u!4 &158678045
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158678043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.107811, y: 28.800766, z: 4.624214}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &304500120
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +1021,7 @@ MonoBehaviour:
   controller: {fileID: 43863447}
   isInputStop: 0
   selectedEntity: {fileID: 0}
-  areaVisualizer: {fileID: 0}
+  areaVisualizer: {fileID: 158678044}
   entitySelecter: {fileID: 1107157273978836427, guid: 22eaf003a2d998c4791a821ea4b6dd40, type: 3}
   tileSelecter: {fileID: 6044037666520248651, guid: ea166b9c63ec28c4a9cae543eddd6f03, type: 3}
 --- !u!4 &1432661703
@@ -1694,3 +1741,4 @@ SceneRoots:
   - {fileID: 508436242}
   - {fileID: 1432661703}
   - {fileID: 43863448}
+  - {fileID: 158678045}
