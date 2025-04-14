@@ -3,14 +3,15 @@ using Battle;
 using System;
 using UnityEngine;
 
-public class Skill : ISkill
+public class Skill : MonoBehaviour,ISkill
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity entity;
     [SkillTarget("대상 타일을 선택하세요.")]
     public Tile tile;
+
     //스킬 발동
-    public void Activate()
+    public virtual void Activate()
     {
         try
         {
@@ -28,5 +29,11 @@ public class Skill : ISkill
     {
         if(entity == null || tile == null) return false;
         return true;
+    }
+
+    public void Reinitialize()
+    {
+        entity = null;
+        tile = null;
     }
 }

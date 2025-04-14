@@ -13,6 +13,6 @@ public class SkillCommand : Command
     }
     public override void Execute()
     {
-        skill.Activate();
+        skill.ExecuteSkillSequence();
     }
 }

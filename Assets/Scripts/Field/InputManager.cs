@@ -63,19 +63,7 @@ public class InputManager : Singleton<InputManager>
     {
         if (isInputStop) return;
         OnObjectMouseDown?.Invoke(selectObj);
-        //SelectEntity(selectObj);
-        /*
-        switch (inputMode)
-        {
-            case InputMode.None:
-                break;
-            case InputMode.Move:
-            case InputMode.Set:
-                playerController.SelectEntity(entity,(int)inputMode);
-                break;
-            default:
-                break;
-        }*/
+
     }
 
 
@@ -83,21 +71,6 @@ public class InputManager : Singleton<InputManager>
     {
         if (isInputStop) return;
         OnObjectMouseUp?.Invoke();
-        //ReleaseEntity();
-        /*
-        switch (inputMode)
-        {
-            case InputMode.None:
-                break;
-            case InputMode.Set:
-                playerController.MouseUpEntity(entity,true);
-                break; 
-            case InputMode.Move:
-                playerController.MouseUpEntity(entity);
-                break;
-            default:
-                break;
-        }*/
     }
     #region MoveCommand°ü·Ã
     public void AllocateMoveCommand()
