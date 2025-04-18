@@ -18,7 +18,6 @@ public class Field : Singleton<Field>
     {
         CreateField();
     }
-    [ContextMenu("CreateField")]
     public void CreateField()
     {
         //행,열의 길이 만큼 체스판 생성
@@ -37,7 +36,6 @@ public class Field : Singleton<Field>
         }
         Debug.Log(tiles.Length);
     }
-
 
     // 해당 위치가 필드내에 존재하는 위치인지 확인
     public bool IsValidCellPos(intVector2 pos)

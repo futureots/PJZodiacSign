@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public interface ISkill
@@ -23,7 +24,13 @@ public interface ISkill
     /// </summary>
     /// <returns></returns>
     public bool IsActable();
-    
+    /// <summary>
+    /// field의 변수가 제한된 범위 내 값을 가지고 있는지 확인하는 함수
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns></returns>
+    public bool IsValidInput(FieldInfo field);
+
     /// <summary>
     /// 스킬 대상들을 null로 바꾸는 함수(유지할 경우 넣을 필요 없음)
     /// </summary>

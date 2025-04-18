@@ -121,10 +121,9 @@ public class InputManager : Singleton<InputManager>
                 Action<GameObject> bindAction = (x) => SetFieldValue(skill, field, x);
                 OnObjectMouseDown = bindAction;
                 //do{
-                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
-                
-
-                //} while (!skill.IsActivable());
+                yield return new WaitUntil(() => skill.IsValidInput(field) || skill != selectedSkill);
+                //} while (!skill.IsValidInput(field));
+                Debug.Log($"field name : {field.Name} , field value : {field.GetValue(skill)}");
 
                 OnObjectMouseDown = null;
                 if (skill != selectedSkill)

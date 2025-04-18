@@ -54,6 +54,7 @@ public class EntityController : MonoBehaviour
     {
         Command cmd = new SkillCommand(skill);
         curCmd = cmd;
+        Debug.Log("Command Created");
         return cmd;
     }
 
