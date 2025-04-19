@@ -80,7 +80,6 @@ public class InputManager : Singleton<InputManager>
     {
         while (true) {
             yield return new WaitUntil(() => selectedEntity != null);
-            Debug.Log(targetTileSelecter.transform.position);
             var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
             targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
 
