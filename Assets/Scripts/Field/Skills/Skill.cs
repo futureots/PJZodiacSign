@@ -5,14 +5,11 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour,ISkill
 {
-    [SkillTarget("대상 기물을 선택하세요.")]
-    public Entity entity;
-    [SkillTarget("대상 타일을 선택하세요.")]
-    public Tile tile;
 
     //스킬 발동
     public virtual void Activate()
     {
+<<<<<<< Updated upstream
         try
         {
             entity.MoveTo(tile);
@@ -24,16 +21,13 @@ public class Skill : MonoBehaviour,ISkill
         }
         
     }
+=======
+>>>>>>> Stashed changes
 
-    public bool IsActable()
-    {
-        if(entity == null || tile == null) return false;
-        return true;
+        Debug.Log( " Skill Active");
     }
 
     public void Reinitialize()
     {
-        entity = null;
-        tile = null;
     }
 }

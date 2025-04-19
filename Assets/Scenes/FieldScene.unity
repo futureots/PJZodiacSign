@@ -987,8 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718b7ed0a905cad4ca6442466eed06e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 0}
-  tile: {fileID: 0}
 --- !u!1 &1432661701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,10 +1018,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 43863447}
   isInputStop: 0
-  selectedEntity: {fileID: 0}
   areaVisualizer: {fileID: 158678044}
-  entitySelecter: {fileID: 1107157273978836427, guid: 22eaf003a2d998c4791a821ea4b6dd40, type: 3}
-  tileSelecter: {fileID: 6044037666520248651, guid: ea166b9c63ec28c4a9cae543eddd6f03, type: 3}
+  entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
+  tileSelecter: {fileID: 6044037666520248651, guid: ac29f7d983f2bf44ab4f57429e81251a, type: 3}
+  selectedEntity: {fileID: 0}
 --- !u!4 &1432661703
 Transform:
   m_ObjectHideFlags: 0

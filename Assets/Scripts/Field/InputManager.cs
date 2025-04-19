@@ -4,6 +4,7 @@ using Battle;
 using System.Reflection;
 using Unity.VisualScripting;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InputManager : Singleton<InputManager>
 {
@@ -11,12 +12,7 @@ public class InputManager : Singleton<InputManager>
 
     //false일때 입력을 받고 true이면 입력을 받지 않음
     public bool isInputStop;
-    public Battle.Entity selectedEntity;
-    public ISkill selectedSkill { get; private set; }
-    public void SetSkill(ISkill skill = null)
-    {
-        selectedSkill = skill;
-    }
+
     public AreaVisualizer areaVisualizer;
 
     public static event Action<GameObject> OnObjectMouseDown;
@@ -24,13 +20,9 @@ public class InputManager : Singleton<InputManager>
 
     public GameObject entitySelecter;
     public GameObject tileSelecter;
-
     private void Start()
     {
-        entitySelecter = Instantiate(entitySelecter, transform);
-        entitySelecter.SetActive(false);
-        tileSelecter = Instantiate(tileSelecter, transform);
-        tileSelecter.SetActive(false);
+        StartCoroutine(SelecterUpdate());
     }
     private void Update()
     {
@@ -51,7 +43,6 @@ public class InputManager : Singleton<InputManager>
     {
         if (isInputStop) return;
         OnObjectMouseDown?.Invoke(selectObj);
-
     }
 
 
@@ -61,6 +52,10 @@ public class InputManager : Singleton<InputManager>
         OnObjectMouseUp?.Invoke();
     }
     #region MoveCommand관련
+    public Battle.Entity selectedEntity;
+
+    GameObject targetSelecter;
+    GameObject targetTileSelecter;
     public void AllocateMoveCommand()
     {
         SetSkill(null);
@@ -77,7 +72,24 @@ public class InputManager : Singleton<InputManager>
         if (entity == null) return;
 
         selectedEntity = entity;
+        targetSelecter = Instantiate(entitySelecter, selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+        targetTileSelecter = Instantiate(tileSelecter, selectedEntity.transform.position, Quaternion.identity);
         areaVisualizer.ShowMoveArea(entity.GetMoveArea());
+    }
+    IEnumerator SelecterUpdate()
+    {
+        while (true) {
+            yield return new WaitUntil(() => selectedEntity != null);
+            Debug.Log(targetTileSelecter.transform.position);
+            var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
+            targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
+
+            List<Tile> list = selectedEntity.GetAttackArea(closeTile);
+            areaVisualizer.ShowAttackArea(list);
+            yield return new WaitForFixedUpdate();
+            areaVisualizer.RemoveAttackArea(list);
+
+        }
     }
     /// <summary>
     /// 선택한 Entity 제거 및 명령 전달
@@ -86,17 +98,40 @@ public class InputManager : Singleton<InputManager>
     {
         if (selectedEntity != null)
         {
-            var tile = controller.GetClosestTile(selectedEntity.transform.position, GameManager.Instance.field);
+            var tile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
             controller.CreateCommand(selectedEntity, tile);
             selectedEntity.transform.position = selectedEntity.curTile.transform.position;
 
             areaVisualizer.RemoveMoveArea(selectedEntity.GetMoveArea());
+            
+            Destroy(targetSelecter);
+            Destroy(targetTileSelecter);
+
             selectedEntity = null;
         }
     }
-
+    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    {
+        float minDistance = 0;
+        Tile closestTile = null;
+        foreach (Tile tile in tiles)
+        {
+            var distance = (tile.transform.position - pos).magnitude;
+            if (closestTile == null || minDistance > distance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
     #endregion
     #region SkillCommand 관련
+    public ISkill selectedSkill { get; private set; }
+    public void SetSkill(ISkill skill = null)
+    {
+        selectedSkill = skill;
+    }
     public void AllocateSkillCommand(ISkill skill)
     {
         SetSkill(skill);

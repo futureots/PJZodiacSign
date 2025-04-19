@@ -71,15 +71,19 @@ namespace Battle
             }
             return tiles;
         }
-        public List<Tile> GetAttackArea()
+        public List<Tile> GetAttackArea(Tile tile)
         {
             var list = GetComponents<IAttackArea>();
             var tiles = new List<Tile>();
             foreach (var area in list)
             {
-                tiles.AddRange(area.GetAttackArea(curTile));
+                tiles.AddRange(area.GetAttackArea(tile));
             }
             return tiles;
+        }
+        public List<Tile> GetAttackArea()
+        {
+            return GetAttackArea(curTile);
         }
 
 

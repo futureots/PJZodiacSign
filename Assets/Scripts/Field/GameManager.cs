@@ -60,7 +60,6 @@ public class GameManager : Singleton<GameManager>
         foreach (EntityController controller in controllers)
         {
             var cmd = controller.curCmd;
-            //if (cmd == null) cmd = controller.GetRandomCommand();
             commands.Add(cmd);
         }
         // 커맨드 실행

@@ -14,7 +14,11 @@ public class ObjectArea : MonoBehaviour,IMoveArea, IAttackArea
         List<Tile> tiles = new List<Tile>();
         foreach (var item in area)
         {
-            tiles.Add(curTile.field.GetTile(item + curTile.fieldPos));
+            Tile tile = curTile.field.GetTile(item + curTile.fieldPos);
+            if (tile != null)
+            {
+                tiles.Add(tile);
+            }
         }
         return tiles;
     }
@@ -31,7 +35,6 @@ public class ObjectArea : MonoBehaviour,IMoveArea, IAttackArea
             }
             
         }
-        Debug.Log(tiles.Count);
         return tiles;
     }
 }
