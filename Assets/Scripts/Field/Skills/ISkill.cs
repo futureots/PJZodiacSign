@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public interface ISkill
@@ -22,10 +23,7 @@ public interface ISkill
     /// 스킬이 사용가능한지 확인하는 함수
     /// </summary>
     /// <returns></returns>
-<<<<<<< Updated upstream
-    public bool IsActable();
     
-=======
     public bool IsActable()
     {
         return true;
@@ -40,7 +38,6 @@ public interface ISkill
         return true;
     }
 
->>>>>>> Stashed changes
     /// <summary>
     /// 스킬 대상들을 null로 바꾸는 함수(유지할 경우 넣을 필요 없음)
     /// </summary>
