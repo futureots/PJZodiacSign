@@ -52,8 +52,8 @@ public class InputManager : Singleton<InputManager>
         OnObjectMouseUp?.Invoke();
     }
     #region MoveCommand°ü·Ã
-    public Battle.Entity selectedEntity;
 
+    public Battle.Entity selectedEntity;
     GameObject targetSelecter;
     GameObject targetTileSelecter;
     public void AllocateMoveCommand()
@@ -80,14 +80,16 @@ public class InputManager : Singleton<InputManager>
     {
         while (true) {
             yield return new WaitUntil(() => selectedEntity != null);
-            var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
-            targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
+            if(selectedEntity != null)
+            {
+                var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
+                targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
 
-            List<Tile> list = selectedEntity.GetAttackArea(closeTile);
-            areaVisualizer.ShowAttackArea(list);
-            yield return new WaitForFixedUpdate();
-            areaVisualizer.RemoveAttackArea(list);
-
+                List<Tile> list = selectedEntity.GetAttackArea(closeTile);
+                areaVisualizer.ShowAttackArea(list);
+                yield return new WaitForFixedUpdate();
+                areaVisualizer.RemoveAttackArea(list);
+            }
         }
     }
     /// <summary>
