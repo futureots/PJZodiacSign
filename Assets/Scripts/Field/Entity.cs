@@ -21,6 +21,7 @@ namespace Battle
         public void Damaged(int damage)
         {
             curHp -= damage;
+            Debug.Log($"Damaged : {damage} , CurrentHp : {curHp}");
         }
 
         public void Dead()
@@ -39,6 +40,16 @@ namespace Battle
             return true;
         }
         #endregion
+
+        public bool MoveSequence(Tile tile)
+        {
+            var isMovable = GetMoveArea().Contains(tile) && !tile.isEmpty;
+            if (isMovable)
+            {
+                MoveTo(tile);
+            }
+            return true;
+        }
         public void MoveTo(Tile tile)
         {
             if (curTile != null)
@@ -50,6 +61,33 @@ namespace Battle
             transform.position = tile.transform.position;
         }
 
+        public List<Tile> GetMoveArea()
+        {
+            var list = GetComponents<IMoveArea>();
+            var tiles = new List<Tile>();
+            foreach (var area in list)
+            {
+                tiles.AddRange(area.GetMoveArea(curTile));
+            }
+            return tiles;
+        }
+        public List<Tile> GetAttackArea(Tile tile)
+        {
+            var list = GetComponents<IAttackArea>();
+            var tiles = new List<Tile>();
+            foreach (var area in list)
+            {
+                tiles.AddRange(area.GetAttackArea(tile));
+            }
+            return tiles;
+        }
+        public List<Tile> GetAttackArea()
+        {
+            return GetAttackArea(curTile);
+        }
+
+
+        #region Input
         private void OnMouseDown()
         {
             Debug.Log("Mouse DOWN");
@@ -60,5 +98,6 @@ namespace Battle
             Debug.Log("Mouse UP");
             InputManager.Instance.OnGameObjectUp();
         }
+        #endregion
     }
 }

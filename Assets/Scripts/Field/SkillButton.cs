@@ -5,18 +5,25 @@ using UnityEngine.EventSystems;
 
 public class SkillButton : MonoBehaviour, IPointerClickHandler
 {
-    public Skill skill;
-    Skill skillInstance;
+    public ISkill skill;
+
+    #region Debugging
+    private void Start()
+    {
+        skill = GetComponent<ISkill>();
+    }
+    #endregion
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (InputManager.Instance.selectedSkill == skillInstance && skillInstance != null)
+        if (InputManager.Instance.selectedSkill == skill
+            && skill != null)
         {
             InputManager.Instance.SetSkill(null);
+            skill.Reinitialize();
         }
         else
         {
-            skillInstance = Instantiate(skill) as Skill;
-            InputManager.Instance.AllocateSkillCommand(skillInstance);
+            InputManager.Instance.AllocateSkillCommand(skill);
         }
     }
 

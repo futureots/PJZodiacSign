@@ -30,7 +30,7 @@ public class Entity_Cow : Entity_Sheep
                 var vec = new intVector2(i, j);
                 var tile = field.GetTile(vec + entityPos);
                 if(tile == null) continue;
-                if (tile.isOccupied)
+                if (tile.isEmpty)
                 {
                     foreach(var item in GetBlockedArea(vec))
                     {

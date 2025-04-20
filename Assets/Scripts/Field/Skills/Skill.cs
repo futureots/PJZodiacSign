@@ -1,19 +1,25 @@
 using Battle;
 
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Reflection;
 using UnityEngine;
 
-public class Skill : MonoBehaviour
+public class Skill : MonoBehaviour,ISkill
 {
-    [SkillTarget("대상 기물을 선택하세요.")]
-    public Entity entity;
-    [SkillTarget("대상 타일을 선택하세요.")]
-    public Tile tile;
+
     //스킬 발동
-    public void Activate()
+    public virtual void Activate()
     {
-        entity.MoveTo(tile);
-        Debug.Log(tile.name + " Skill Active");
+        Debug.Log( " Skill Active");
+    }
+    
+
+    public bool IsValidInput(FieldInfo field)
+    {
+        return true;
+    }
+
+    public void Reinitialize()
+    {
     }
 }

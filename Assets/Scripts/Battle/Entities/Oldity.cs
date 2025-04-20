@@ -126,7 +126,7 @@ public class Oldity : MonoBehaviour
         for (int i = 0; i < area.Count; i++)
         {
             if (area[i] == null) continue;
-            if (area[i].isOccupied)
+            if (area[i].isEmpty)
             {
                 area.RemoveAt(i);
                 i--;
@@ -149,7 +149,7 @@ public class Oldity : MonoBehaviour
         foreach (var tile in GetAttackArea(curPos))
         {
             if (tile == null) continue;
-            if (tile.isOccupied)
+            if (tile.isEmpty)
             {
                 if (tile.occupiedObject.tag == tag) continue; 
                 var damageable = tile.occupiedObject.GetComponent<IDamageable>();

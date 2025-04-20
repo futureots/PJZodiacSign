@@ -8,6 +8,7 @@ public class MoveCommand : Command
     Tile tile;
     public MoveCommand(Battle.Entity entity, Tile tile)
     {
+        selecterObjects = new();
         this.entity = entity;
         this.tile = tile;
     }
@@ -16,4 +17,6 @@ public class MoveCommand : Command
     {
         entity.MoveTo(tile);
     }
+
+
 }
