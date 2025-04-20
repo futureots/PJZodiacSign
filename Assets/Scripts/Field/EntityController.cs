@@ -11,8 +11,19 @@ public class EntityController : MonoBehaviour
     public bool isReflect;
     //public Field currentField;
     public int teamNum;
-    public Command curCmd;
-
+    public Command CurCmd
+    {
+        get
+        {
+            return curCmd;
+        }
+        set
+        {
+            curCmd?.Delete();
+            curCmd = value;
+        }
+    }
+    Command curCmd;
 
     // 데이터 기반 엔티티 설정 및 세팅
     /*public virtual void SetEntities(int num, PlayerData party)
@@ -44,17 +55,18 @@ public class EntityController : MonoBehaviour
         //entity.field = currentField;
         return entity;
     }*/
-    public Command CreateCommand(Entity entity, Tile tile)
+    public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)
     {
         Command cmd = new MoveCommand(entity, tile);
-        curCmd = cmd;
+        CurCmd = cmd;
+        cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
-    public Command CreateCommand(ISkill skill)
+    public Command CreateCommand(ISkill skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
-        curCmd = cmd;
-        Debug.Log("Command Created");
+        CurCmd = cmd;
+        cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
 

@@ -46,5 +46,22 @@ public class AreaVisualizer : MonoBehaviour
             highlightedTiles.Remove(tile);
         }
     }
+    public void ShowAttackArea(List<Tile> tiles)
+    {
+        foreach (Tile tile in tiles)
+        {
+            tile.AddColor(attackMaterial);
+            highlightedTiles.Add(tile);
+        }
+    }
+    public void RemoveAttackArea(List<Tile> tiles)
+    {
+        foreach (Tile tile in tiles)
+        {
+            tile.RemoveColor(attackMaterial);
+            highlightedTiles.Remove(tile);
+        }
+    }
 
 }
+

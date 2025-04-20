@@ -23,9 +23,13 @@ public interface ISkill
     /// 스킬이 사용가능한지 확인하는 함수
     /// </summary>
     /// <returns></returns>
-    public bool IsActable();
+    
+    public bool IsActable()
+    {
+        return true;
+    }
     /// <summary>
-    /// field의 변수가 제한된 범위 내 값을 가지고 있는지 확인하는 함수
+    /// field의 변수가 필요한 값을 가지고 있는지 확인하는 함수 내부적으로 각 변수에 대한 제한 추가
     /// </summary>
     /// <param name="field"></param>
     /// <returns></returns>
