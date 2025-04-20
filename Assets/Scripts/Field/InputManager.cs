@@ -61,6 +61,7 @@ public class InputManager : Singleton<InputManager>
         SetSkill(null);
         OnObjectMouseDown = SelectEntity;
         OnObjectMouseUp = ReleaseEntity;
+        
     }
     /// <summary>
     /// Entity를 선택하는 함수
@@ -100,14 +101,10 @@ public class InputManager : Singleton<InputManager>
         if (selectedEntity != null)
         {
             var tile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
-            controller.CreateCommand(selectedEntity, tile);
+            controller.CreateCommand(selectedEntity, tile, targetSelecter, targetTileSelecter);
             selectedEntity.transform.position = selectedEntity.curTile.transform.position;
 
             areaVisualizer.RemoveMoveArea(selectedEntity.GetMoveArea());
-            
-            Destroy(targetSelecter);
-            Destroy(targetTileSelecter);
-
             selectedEntity = null;
         }
     }
@@ -146,7 +143,7 @@ public class InputManager : Singleton<InputManager>
         Type type = skill.GetType();
         FieldInfo[] fieldInfo = type.GetFields();
         Debug.Log(fieldInfo.Length);
-
+        List<GameObject> selecters = new();
         foreach (var field in fieldInfo)
         {
             var attr = (SkillTargetAttribute)field.GetCustomAttribute(typeof(SkillTargetAttribute));
@@ -154,13 +151,25 @@ public class InputManager : Singleton<InputManager>
             {
                 Debug.Log(attr.text);
                 var fieldType = field.FieldType;
-                Action<GameObject> bindAction = (x) => SetFieldValue(skill, field, x);
-                OnObjectMouseDown = bindAction;
-                //do{
-                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
-                
 
-                //} while (!skill.IsActivable());
+                GameObject selecter = Instantiate(entitySelecter);
+                selecters.Add(selecter);
+                selecter.SetActive(false);
+
+                Action<GameObject> bindAction = (x) => SetFieldValue(skill, field, x);
+
+                bindAction += (x) =>
+                {
+                    selecter.transform.position = x.transform.position + Vector3.up *0.1f;
+                };
+
+                OnObjectMouseDown = bindAction;
+                
+                do{
+                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
+                } while (!skill.IsValidInput(field));
+
+                selecter.SetActive(true);
 
                 OnObjectMouseDown = null;
                 if (skill != selectedSkill)
@@ -175,7 +184,7 @@ public class InputManager : Singleton<InputManager>
 
         }
         Debug.Log("skill all allocated");
-        controller.CreateCommand(skill);
+        controller.CreateCommand(skill,selecters.ToArray());
         SetSkill(null);
         //스킬 입력 완료
         //yield return new WaitForSeconds(1);

@@ -59,7 +59,8 @@ public class GameManager : Singleton<GameManager>
         List<Command> commands = new List<Command>();
         foreach (EntityController controller in controllers)
         {
-            var cmd = controller.curCmd;
+            var cmd = controller.CurCmd;
+            controller.CurCmd = null;
             commands.Add(cmd);
         }
         // 커맨드 실행
@@ -68,6 +69,7 @@ public class GameManager : Singleton<GameManager>
             cmd.Execute();
             yield return new WaitForSeconds(1f);
         }
+        commands.Clear();
         /*
         //공격
         if (turnCount >= 2)

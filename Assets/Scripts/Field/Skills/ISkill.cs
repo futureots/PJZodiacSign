@@ -33,10 +33,7 @@ public interface ISkill
     /// </summary>
     /// <param name="field"></param>
     /// <returns></returns>
-    public bool IsValidInput(FieldInfo field)
-    {
-        return true;
-    }
+    public bool IsValidInput(FieldInfo field);
 
     /// <summary>
     /// 스킬 대상들을 null로 바꾸는 함수(유지할 경우 넣을 필요 없음)

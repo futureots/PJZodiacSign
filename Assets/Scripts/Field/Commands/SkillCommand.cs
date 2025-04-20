@@ -9,10 +9,12 @@ public class SkillCommand : Command
 
     public SkillCommand(ISkill skill)
     {
+        selecterObjects = new();
         this.skill = skill;
     }
     public override void Execute()
     {
         skill.ExecuteSkillSequence();
     }
+
 }
