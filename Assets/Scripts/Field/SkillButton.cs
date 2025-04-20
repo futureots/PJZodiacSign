@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 
 public class SkillButton : MonoBehaviour, IPointerClickHandler
 {
-    public Skill skill;
+    public ISkill skill;
 
     #region Debugging
     private void Start()
     {
-        
+        skill = GetComponent<ISkill>();
     }
     #endregion
     public void OnPointerClick(PointerEventData eventData)
@@ -19,6 +19,7 @@ public class SkillButton : MonoBehaviour, IPointerClickHandler
             && skill != null)
         {
             InputManager.Instance.SetSkill(null);
+            skill.Reinitialize();
         }
         else
         {

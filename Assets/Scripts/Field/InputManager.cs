@@ -4,6 +4,7 @@ using Battle;
 using System.Reflection;
 using Unity.VisualScripting;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InputManager : Singleton<InputManager>
 {
@@ -11,38 +12,17 @@ public class InputManager : Singleton<InputManager>
 
     //false일때 입력을 받고 true이면 입력을 받지 않음
     public bool isInputStop;
-    public Battle.Entity selectedEntity;
-    public ISkill selectedSkill { get; private set; }
-    public void SetSkill(ISkill skill = null)
-    {
-        selectedSkill = skill;
-    }
 
+    public AreaVisualizer areaVisualizer;
 
     public static event Action<GameObject> OnObjectMouseDown;
     public static event Action OnObjectMouseUp;
-    #region inputMode
-    public enum InputMode
-    {
-        //명령 없음(행동 X)
-        None = -1,
-        //초기 기물 세팅용
-        Set = 0,
-        //기물 이동(기물 범위 내 타일만 선택가능)
-        Move = 1
-    }
-    public InputMode inputMode;
-    #endregion
 
     public GameObject entitySelecter;
     public GameObject tileSelecter;
-
     private void Start()
     {
-        entitySelecter = Instantiate(entitySelecter, transform);
-        entitySelecter.SetActive(false);
-        tileSelecter = Instantiate(tileSelecter, transform);
-        tileSelecter.SetActive(false);
+        StartCoroutine(SelecterUpdate());
     }
     private void Update()
     {
@@ -63,7 +43,6 @@ public class InputManager : Singleton<InputManager>
     {
         if (isInputStop) return;
         OnObjectMouseDown?.Invoke(selectObj);
-
     }
 
 
@@ -73,11 +52,16 @@ public class InputManager : Singleton<InputManager>
         OnObjectMouseUp?.Invoke();
     }
     #region MoveCommand관련
+
+    public Battle.Entity selectedEntity;
+    GameObject targetSelecter;
+    GameObject targetTileSelecter;
     public void AllocateMoveCommand()
     {
         SetSkill(null);
         OnObjectMouseDown = SelectEntity;
         OnObjectMouseUp = ReleaseEntity;
+        
     }
     /// <summary>
     /// Entity를 선택하는 함수
@@ -89,6 +73,25 @@ public class InputManager : Singleton<InputManager>
         if (entity == null) return;
 
         selectedEntity = entity;
+        targetSelecter = Instantiate(entitySelecter, selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+        targetTileSelecter = Instantiate(tileSelecter, selectedEntity.transform.position, Quaternion.identity);
+        areaVisualizer.ShowMoveArea(entity.GetMoveArea());
+    }
+    IEnumerator SelecterUpdate()
+    {
+        while (true) {
+            yield return new WaitUntil(() => selectedEntity != null);
+            if(selectedEntity != null)
+            {
+                var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
+                targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
+
+                List<Tile> list = selectedEntity.GetAttackArea(closeTile);
+                areaVisualizer.ShowAttackArea(list);
+                yield return new WaitForFixedUpdate();
+                areaVisualizer.RemoveAttackArea(list);
+            }
+        }
     }
     /// <summary>
     /// 선택한 Entity 제거 및 명령 전달
@@ -97,16 +100,36 @@ public class InputManager : Singleton<InputManager>
     {
         if (selectedEntity != null)
         {
-            var tile = controller.GetClosestTile(selectedEntity.transform.position, GameManager.Instance.field);
-            controller.CreateCommand(selectedEntity, tile);
+            var tile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
+            controller.CreateCommand(selectedEntity, tile, targetSelecter, targetTileSelecter);
             selectedEntity.transform.position = selectedEntity.curTile.transform.position;
 
+            areaVisualizer.RemoveMoveArea(selectedEntity.GetMoveArea());
             selectedEntity = null;
         }
     }
-
+    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    {
+        float minDistance = 0;
+        Tile closestTile = null;
+        foreach (Tile tile in tiles)
+        {
+            var distance = (tile.transform.position - pos).magnitude;
+            if (closestTile == null || minDistance > distance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
     #endregion
     #region SkillCommand 관련
+    public ISkill selectedSkill { get; private set; }
+    public void SetSkill(ISkill skill = null)
+    {
+        selectedSkill = skill;
+    }
     public void AllocateSkillCommand(ISkill skill)
     {
         SetSkill(skill);
@@ -120,7 +143,7 @@ public class InputManager : Singleton<InputManager>
         Type type = skill.GetType();
         FieldInfo[] fieldInfo = type.GetFields();
         Debug.Log(fieldInfo.Length);
-
+        List<GameObject> selecters = new();
         foreach (var field in fieldInfo)
         {
             var attr = (SkillTargetAttribute)field.GetCustomAttribute(typeof(SkillTargetAttribute));
@@ -128,13 +151,25 @@ public class InputManager : Singleton<InputManager>
             {
                 Debug.Log(attr.text);
                 var fieldType = field.FieldType;
-                Action<GameObject> bindAction = (x) => SetFieldValue(skill, field, x);
-                OnObjectMouseDown = bindAction;
-                //do{
-                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
-                
 
-                //} while (!skill.IsActivable());
+                GameObject selecter = Instantiate(entitySelecter);
+                selecters.Add(selecter);
+                selecter.SetActive(false);
+
+                Action<GameObject> bindAction = (x) => SetFieldValue(skill, field, x);
+
+                bindAction += (x) =>
+                {
+                    selecter.transform.position = x.transform.position + Vector3.up *0.1f;
+                };
+
+                OnObjectMouseDown = bindAction;
+                
+                do{
+                    yield return new WaitUntil(() => field.GetValue(skill) != null || skill != selectedSkill);
+                } while (!skill.IsValidInput(field));
+
+                selecter.SetActive(true);
 
                 OnObjectMouseDown = null;
                 if (skill != selectedSkill)
@@ -149,7 +184,7 @@ public class InputManager : Singleton<InputManager>
 
         }
         Debug.Log("skill all allocated");
-        controller.CreateCommand(skill);
+        controller.CreateCommand(skill,selecters.ToArray());
         SetSkill(null);
         //스킬 입력 완료
         //yield return new WaitForSeconds(1);

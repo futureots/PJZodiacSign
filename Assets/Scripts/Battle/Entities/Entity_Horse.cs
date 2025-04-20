@@ -15,7 +15,7 @@ public class Entity_Horse : Oldity
                 var tile = field.GetTile(item * i+entityPos);
                 if (tile == null) break;
                 list.Add(tile);
-                if (tile.isOccupied) break;
+                if (tile.isEmpty) break;
             }
         }
         return list;

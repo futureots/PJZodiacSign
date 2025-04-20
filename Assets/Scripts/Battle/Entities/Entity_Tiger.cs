@@ -39,12 +39,12 @@ public class Entity_Tiger : Oldity
                     var entityTile = field.GetTile(vec * k + entityPos);
                     if (entityTile == null) break;
                     k++;
-                    if (entityTile.isOccupied)
+                    if (entityTile.isEmpty)
                     {
                         list.Remove(entityTile);
                         var backTile = field.GetTile(vec * k + entityPos);
                         if (backTile == null) break;
-                        if (backTile.isOccupied) break;
+                        if (backTile.isEmpty) break;
                         list.Add(backTile);
                         break;
                     }

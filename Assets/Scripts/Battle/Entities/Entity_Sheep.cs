@@ -26,7 +26,7 @@ public class Entity_Sheep : Oldity
                 var t = new intVector2(i, j);
                 var tile = field.GetTile(entityPos + t);
                 if (tile == null) continue;
-                if (tile.isOccupied)
+                if (tile.isEmpty)
                 {
                     foreach (var item in GetBlockedArea(t))
                     {

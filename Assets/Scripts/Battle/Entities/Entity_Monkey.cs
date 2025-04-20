@@ -15,7 +15,7 @@ public class Entity_Monkey : Oldity
                 if (i == 0 && j == 0) continue;
                 var tile = field.GetTile(new intVector2(i, j)+entityPos);
                 if (tile == null) continue;
-                if (tile.isOccupied)
+                if (tile.isEmpty)
                 {
                     list.AddRange(GetSurroundTiles(tile));
                 }

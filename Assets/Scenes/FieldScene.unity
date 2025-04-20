@@ -151,12 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f853d1a66450d744e8dc65fb2664fd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jodiacList: {fileID: 0}
   isReflect: 0
-  expectAttackMaterial: {fileID: 0}
-  expectMoveMaterial: {fileID: 0}
   teamNum: 0
-  entities: []
 --- !u!4 &43863448
 Transform:
   m_ObjectHideFlags: 0
@@ -368,6 +364,53 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &158678043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 158678045}
+  - component: {fileID: 158678044}
+  m_Layer: 0
+  m_Name: AreaVisualizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &158678044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158678043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d7cf55629998642b3355120968f595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAttackMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
+  attackMaterial: {fileID: -876546973899608171, guid: 766bbd0bfcca5ed489650688c819a2c3, type: 3}
+  moveMaterial: {fileID: 2100000, guid: 088d884df31c96e4fa90f21e5173a155, type: 2}
+--- !u!4 &158678045
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158678043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.107811, y: 28.800766, z: 4.624214}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -698,7 +741,7 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: -7869756602773132126, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -809,6 +852,7 @@ GameObject:
   - component: {fileID: 1385955991}
   - component: {fileID: 1385955990}
   - component: {fileID: 1385955994}
+  - component: {fileID: 1385955995}
   m_Layer: 5
   m_Name: Skill1
   m_TagString: Untagged
@@ -930,6 +974,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09bf31a2a65a4943a84a31e8fb48307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1385955995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385955988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a72ae5ec24a30e44b1f9bbffe94ff7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 0}
+  tile: {fileID: 0}
 --- !u!1 &1432661701
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,10 +1019,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 43863447}
   isInputStop: 0
+  areaVisualizer: {fileID: 158678044}
+  entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
+  tileSelecter: {fileID: 6044037666520248651, guid: ac29f7d983f2bf44ab4f57429e81251a, type: 3}
   selectedEntity: {fileID: 0}
-  inputMode: 1
-  entitySelecter: {fileID: 1107157273978836427, guid: 22eaf003a2d998c4791a821ea4b6dd40, type: 3}
-  tileSelecter: {fileID: 6044037666520248651, guid: ea166b9c63ec28c4a9cae543eddd6f03, type: 3}
 --- !u!4 &1432661703
 Transform:
   m_ObjectHideFlags: 0
@@ -1519,9 +1577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllers:
   - {fileID: 43863447}
-  field: {fileID: 1259859472}
   obj: {fileID: 828903860}
-  attackMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
 --- !u!4 &2018355401
 Transform:
   m_ObjectHideFlags: 0
@@ -1684,3 +1740,4 @@ SceneRoots:
   - {fileID: 508436242}
   - {fileID: 1432661703}
   - {fileID: 43863448}
+  - {fileID: 158678045}
