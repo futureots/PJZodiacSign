@@ -974,7 +974,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09bf31a2a65a4943a84a31e8fb48307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 1385955995}
 --- !u!114 &1385955995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -984,9 +983,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1385955988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 718b7ed0a905cad4ca6442466eed06e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a72ae5ec24a30e44b1f9bbffe94ff7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity: {fileID: 0}
+  tile: {fileID: 0}
 --- !u!1 &1432661701
 GameObject:
   m_ObjectHideFlags: 0
