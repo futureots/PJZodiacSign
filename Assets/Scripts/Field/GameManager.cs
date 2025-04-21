@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class GameManager : Singleton<GameManager>
@@ -19,7 +17,7 @@ public class GameManager : Singleton<GameManager>
 
     public Entity obj;
     int turnCount;
-    public Action turnEnd;
+    public Action onTurnEnd;
     private void Awake()
     {
         
@@ -39,20 +37,25 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         obj.MoveTo(field.GetTile(0, 0));
-        StartTurn();
+        turnManager = this.AddComponent<TurnManager>();
+        //StartTurn();
     }
 
     #region Turn
-    
-    public void StartTurn()
+
+    public TurnManager turnManager;
+    public Button turnEndButton;
+
+    /*public void StartTurn()
     {
         InputManager.Instance.AllocateMoveCommand();
     }
     public void EndTurn()
     {
-        turnEnd?.Invoke();
+        onTurnEnd?.Invoke();
         StartCoroutine(EndTurnCoroutine());
     }
+    
 
     private IEnumerator EndTurnCoroutine()
     {
@@ -67,7 +70,7 @@ public class GameManager : Singleton<GameManager>
             controller.curCmd = null;
             yield return new WaitForSeconds(1f);
         }
-        /*
+        
         //공격
         if (turnCount >= 2)
         {
@@ -85,13 +88,13 @@ public class GameManager : Singleton<GameManager>
         }
         
         turnCount++;
-        */
+        
         // 죽은 기물 제거
         field.CleanField();
 
         // 입력 재개
         InputManager.Instance.isInputStop = false;
         StartTurn();
-    }
+    }*/
     #endregion
 }

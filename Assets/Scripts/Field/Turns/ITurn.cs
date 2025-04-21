@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public interface ITurn
 {
-    public void StartTurn();
-    public void EndTurn();
+    void Execute(Action onTurnEnd);
 }

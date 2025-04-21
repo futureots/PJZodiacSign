@@ -1,17 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionTurn : ITurn
 {
-    public void EndTurn()
+    public void Execute(Action onTurnEnd)
     {
-        throw new System.NotImplementedException();
-    }
-
-
-    public void StartTurn()
-    {
-        throw new System.NotImplementedException();
+        Debug.Log("행동 턴 시작");
+        GameManager.Instance.turnEndButton.onClick.RemoveAllListeners();
+        GameManager.Instance.turnEndButton.onClick.AddListener(() =>
+        {
+            onTurnEnd?.Invoke();
+        });
+        
     }
 }
