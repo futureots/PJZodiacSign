@@ -4,26 +4,25 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 using static UnityEngine.EventSystems.EventTrigger;
-using Battle;
 
 public class EntityController : MonoBehaviour
 {
     public bool isReflect;
     //public Field currentField;
     public int teamNum;
-    public Command CurCmd
+    public Command curCmd
     {
         get
         {
-            return curCmd;
+            return _curCmd;
         }
         set
         {
-            curCmd?.Delete();
-            curCmd = value;
+            _curCmd?.Delete();
+            _curCmd = value;
         }
     }
-    Command curCmd;
+    Command _curCmd;
 
     // 데이터 기반 엔티티 설정 및 세팅
     /*public virtual void SetEntities(int num, PlayerData party)
@@ -58,14 +57,14 @@ public class EntityController : MonoBehaviour
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)
     {
         Command cmd = new MoveCommand(entity, tile);
-        CurCmd = cmd;
+        curCmd = cmd;
         cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
     public Command CreateCommand(ISkill skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
-        CurCmd = cmd;
+        curCmd = cmd;
         cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }

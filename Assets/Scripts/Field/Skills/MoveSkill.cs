@@ -1,4 +1,3 @@
-using Battle;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +27,7 @@ public class MoveSkill : MonoBehaviour,ISkill
 
     public bool IsActable()
     {
+        Debug.Log(entity + "  " + tile);
         if (entity == null || tile == null) return false;
         return true;
     }
@@ -66,6 +66,7 @@ public class MoveSkill : MonoBehaviour,ISkill
     }
     public void Reinitialize()
     {
+        Debug.Log("Reinitialize");
         entity = null;
         tile = null;
     }

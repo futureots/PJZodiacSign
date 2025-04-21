@@ -17,12 +17,12 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public Battle.Entity obj;
+    public Entity obj;
     int turnCount;
     public Action turnEnd;
     private void Awake()
     {
-        StartTurn();
+        
         /*//field.CreateField();
         var data = new PlayerData();//PartyData.LoadPartyData("CurrentPlayerParty");
         data.entities.Add(new EntityData(Jodiac.Mouse, Element.Water, 1));
@@ -39,7 +39,11 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         obj.MoveTo(field.GetTile(0, 0));
+        StartTurn();
     }
+
+    #region Turn
+    
     public void StartTurn()
     {
         InputManager.Instance.AllocateMoveCommand();
@@ -59,17 +63,11 @@ public class GameManager : Singleton<GameManager>
         List<Command> commands = new List<Command>();
         foreach (EntityController controller in controllers)
         {
-            var cmd = controller.CurCmd;
-            controller.CurCmd = null;
-            commands.Add(cmd);
-        }
-        // 커맨드 실행
-        foreach(var cmd in commands)
-        {
+            var cmd = controller.curCmd;
             cmd.Execute();
+            controller.curCmd = null;
             yield return new WaitForSeconds(1f);
         }
-        commands.Clear();
         /*
         //공격
         if (turnCount >= 2)
@@ -96,5 +94,5 @@ public class GameManager : Singleton<GameManager>
         InputManager.Instance.isInputStop = false;
         StartTurn();
     }
-
+    #endregion
 }

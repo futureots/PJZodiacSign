@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Battle;
 using System.Reflection;
 using Unity.VisualScripting;
 using System.Collections;
@@ -20,24 +19,7 @@ public class InputManager : Singleton<InputManager>
 
     public GameObject entitySelecter;
     public GameObject tileSelecter;
-    private void Start()
-    {
-        StartCoroutine(SelecterUpdate());
-    }
-    private void Update()
-    {
-        if (selectedEntity != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
-            float rayDistance;
-            if (plane.Raycast(ray, out rayDistance))
-            {
-                Vector3 pos = ray.GetPoint(rayDistance);
-                selectedEntity.transform.position = pos;
-            }
-        }
-    }
+    public GameObject skillSelecter;
 
     public void OnGameObjectDown(GameObject selectObj)
     {
@@ -53,7 +35,7 @@ public class InputManager : Singleton<InputManager>
     }
     #region MoveCommand관련
 
-    public Battle.Entity selectedEntity;
+    public Entity selectedEntity;
     GameObject targetSelecter;
     GameObject targetTileSelecter;
     public void AllocateMoveCommand()
@@ -69,7 +51,7 @@ public class InputManager : Singleton<InputManager>
     /// <param name="selectObj"></param>
     void SelectEntity(GameObject selectObj)
     {
-        var entity = selectObj.GetComponent<Battle.Entity>();
+        var entity = selectObj.GetComponent<Entity>();
         if (entity == null) return;
 
         selectedEntity = entity;
@@ -77,20 +59,26 @@ public class InputManager : Singleton<InputManager>
         targetTileSelecter = Instantiate(tileSelecter, selectedEntity.transform.position, Quaternion.identity);
         areaVisualizer.ShowMoveArea(entity.GetMoveArea());
     }
-    IEnumerator SelecterUpdate()
+    List<Tile> list = new List<Tile>();
+    private void Update()
     {
-        while (true) {
-            yield return new WaitUntil(() => selectedEntity != null);
-            if(selectedEntity != null)
+        if (selectedEntity != null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
+            float rayDistance;
+            if (plane.Raycast(ray, out rayDistance))
             {
-                var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
-                targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
-
-                List<Tile> list = selectedEntity.GetAttackArea(closeTile);
-                areaVisualizer.ShowAttackArea(list);
-                yield return new WaitForFixedUpdate();
-                areaVisualizer.RemoveAttackArea(list);
+                Vector3 pos = ray.GetPoint(rayDistance);
+                selectedEntity.transform.position = pos;
             }
+            // 공격 범위 표시
+            var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
+            targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
+            areaVisualizer.RemoveAttackArea(list);
+            list = selectedEntity.GetAttackArea(closeTile);
+            areaVisualizer.ShowAttackArea(list);
+            
         }
     }
     /// <summary>
@@ -103,7 +91,7 @@ public class InputManager : Singleton<InputManager>
             var tile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
             controller.CreateCommand(selectedEntity, tile, targetSelecter, targetTileSelecter);
             selectedEntity.transform.position = selectedEntity.curTile.transform.position;
-
+            areaVisualizer.RemoveAttackArea(list);
             areaVisualizer.RemoveMoveArea(selectedEntity.GetMoveArea());
             selectedEntity = null;
         }
@@ -152,7 +140,7 @@ public class InputManager : Singleton<InputManager>
                 Debug.Log(attr.text);
                 var fieldType = field.FieldType;
 
-                GameObject selecter = Instantiate(entitySelecter);
+                GameObject selecter = Instantiate(skillSelecter);
                 selecters.Add(selecter);
                 selecter.SetActive(false);
 

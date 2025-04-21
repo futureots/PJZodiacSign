@@ -10,7 +10,7 @@ public abstract class Command
     /// </summary>
     public abstract void Execute();
 
-    public void Delete()
+    public virtual void Delete()
     {
         for (int i = selecterObjects.Count - 1; i >= 0; i--)
         {

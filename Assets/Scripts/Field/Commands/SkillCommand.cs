@@ -14,7 +14,12 @@ public class SkillCommand : Command
     }
     public override void Execute()
     {
-        skill.ExecuteSkillSequence();
+        var boolean = skill.ExecuteSkillSequence();
+        Debug.Log(boolean);
     }
-
+    public override void Delete()
+    {
+        base.Delete();
+        skill.Reinitialize();
+    }
 }
