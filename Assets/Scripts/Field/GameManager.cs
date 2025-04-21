@@ -59,8 +59,7 @@ public class GameManager : Singleton<GameManager>
         // 입력 금지
         InputManager.Instance.isInputStop = true;
 
-        // 각 컨트롤러의 입력한 커맨드 가져오기
-        List<Command> commands = new List<Command>();
+        // 각 컨트롤러의 입력한 커맨드 실행
         foreach (EntityController controller in controllers)
         {
             var cmd = controller.curCmd;

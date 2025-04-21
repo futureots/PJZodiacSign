@@ -6,5 +6,4 @@ public interface ITurn
 {
     public void StartTurn();
     public void EndTurn();
-    public ITurn GetNextTurn();
 }
