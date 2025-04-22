@@ -42,9 +42,9 @@ public class CameraFocus : MonoBehaviour
     void SetCameraVertical()
     {
         var mouseY = Input.GetAxis("Mouse Y");
-        //Debug.Log(mouseX);
         var rot = targetTransform.rotation.eulerAngles;
         rot.x -= mouseY * rotateSpeed * 100 * Time.deltaTime;
+        rot.x = Mathf.Clamp(rot.x, 10, 80);
         //Debug.Log(rot.x);
         targetTransform.rotation = Quaternion.Euler(rot);
     }
