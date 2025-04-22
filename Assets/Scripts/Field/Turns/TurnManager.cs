@@ -5,21 +5,34 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     
-    public Queue<ITurn> turns;
+    Queue<ITurn> turns;
     bool isTurnEnd;
 
-    private void Start()
+    public void AddTurn(ITurn turn)
+    {
+        turns.Enqueue(turn);
+    }
+    private void Awake()
     {
         turns = new Queue<ITurn>();
+    }
+    private void Start()
+    {
         turns.Enqueue(new ActionTurn());
         turns.Enqueue(new ActionTurn());
-        turns.Enqueue(new ActionTurn());
+        turns.Enqueue(new AttackTurn());
         StartTurn();
     }
     void StartTurn()
     {
         var curTurn = turns.Dequeue();
-        Debug.Log($"CurTurnCount : {turns.Count}");
+        if (turns.Count < 4)
+        {
+            turns.Enqueue(new ActionTurn());
+            turns.Enqueue(new ActionTurn());
+            turns.Enqueue(new AttackTurn());
+        }
+        Debug.Log($"Current TurnCount : {turns.Count}");
         curTurn.Execute(OnTurnComplete);
     }
 

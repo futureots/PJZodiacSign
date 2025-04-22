@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,12 +17,15 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public Entity obj;
-    int turnCount;
-    public Action onTurnEnd;
+    public List<Entity> objects;
+
+    #region Turn
+    public TurnManager turnManager;
+    public Button turnEndButton;
+    #endregion
     private void Awake()
     {
-        
+        //데이터 기반 엔티티 불러오기 및 필드 생성
         /*//field.CreateField();
         var data = new PlayerData();//PartyData.LoadPartyData("CurrentPlayerParty");
         data.entities.Add(new EntityData(Jodiac.Mouse, Element.Water, 1));
@@ -36,65 +41,16 @@ public class GameManager : Singleton<GameManager>
     }
     void Start()
     {
-        obj.MoveTo(field.GetTile(0, 0));
+        int i = 0;
+        foreach (var item in objects)
+        {
+            item.MoveTo(field.GetTile(i,i));
+            i += 2;
+        }
+        
         turnManager = this.AddComponent<TurnManager>();
-        //StartTurn();
     }
 
-    #region Turn
 
-    public TurnManager turnManager;
-    public Button turnEndButton;
 
-    /*public void StartTurn()
-    {
-        InputManager.Instance.AllocateMoveCommand();
-    }
-    public void EndTurn()
-    {
-        onTurnEnd?.Invoke();
-        StartCoroutine(EndTurnCoroutine());
-    }
-    
-
-    private IEnumerator EndTurnCoroutine()
-    {
-        // 입력 금지
-        InputManager.Instance.isInputStop = true;
-
-        // 각 컨트롤러의 입력한 커맨드 실행
-        foreach (EntityController controller in controllers)
-        {
-            var cmd = controller.curCmd;
-            cmd.Execute();
-            controller.curCmd = null;
-            yield return new WaitForSeconds(1f);
-        }
-        
-        //공격
-        if (turnCount >= 2)
-        {
-
-            foreach (var controller in controllers)
-            {
-                foreach (var entity in controller.entities)
-                {
-                    entity.Activate();
-                }
-            }
-            turnCount = 0;
-            controllers = controllers.Reverse().ToArray();
-            turnEnd?.Invoke();
-        }
-        
-        turnCount++;
-        
-        // 죽은 기물 제거
-        field.CleanField();
-
-        // 입력 재개
-        InputManager.Instance.isInputStop = false;
-        StartTurn();
-    }*/
-    #endregion
 }

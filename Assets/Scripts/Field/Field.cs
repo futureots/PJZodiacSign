@@ -37,6 +37,7 @@ public class Field : Singleton<Field>
         Debug.Log(tiles.Length);
     }
 
+    #region Tile
     // 해당 위치가 필드내에 존재하는 위치인지 확인
     public bool IsValidCellPos(intVector2 pos)
     {
@@ -112,8 +113,23 @@ public class Field : Singleton<Field>
         }
         return list;
     }
+    #endregion
 
-
+    //공격 가능한 오브젝트 가져오기
+    public List<IAttackable> GetAllAttackableObject()
+    {
+        List<IAttackable> list = new();
+        foreach(var tile in tiles)
+        {
+            if (tile.isEmpty) continue;
+            var attackable = tile.occupiedObject.GetComponent<IAttackable>();
+            if (attackable != null)
+            {
+                list.Add(attackable);
+            }
+        }
+        return list;
+    }
     /// <summary>
     /// 사망한 오브젝트 제거(장애물 포함)
     /// </summary>

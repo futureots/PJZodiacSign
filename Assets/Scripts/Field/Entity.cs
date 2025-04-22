@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Entity : MonoBehaviour, IDamageable
+public class Entity : MonoBehaviour, IDamageable,IAttackable
 {
     public Tile curTile;
 
@@ -16,6 +16,21 @@ public class Entity : MonoBehaviour, IDamageable
 
 
 
+    public void Attack()
+    {
+        Debug.Log($"{name}ÀÌ °ø°Ý");
+        var list = GetAttackArea();
+        foreach (var item in list)
+        {
+            if (item.isEmpty) continue;
+            var target = item.occupiedObject.GetComponent<IDamageable>();
+            try
+            {
+                target.Damaged(power);
+            }
+            catch { }
+        }
+    }
     public void Damaged(int damage)
     {
         curHp -= damage;
@@ -38,6 +53,7 @@ public class Entity : MonoBehaviour, IDamageable
         return true;
     }
     #endregion
+
 
     public bool MoveSequence(Tile tile)
     {
@@ -97,5 +113,6 @@ public class Entity : MonoBehaviour, IDamageable
         Debug.Log("Mouse UP");
         InputManager.Instance.OnGameObjectUp();
     }
+
     #endregion
 }

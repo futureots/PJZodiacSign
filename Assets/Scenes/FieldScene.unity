@@ -680,6 +680,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6632449480483758421, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
+      propertyPath: power
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 691125769844049855, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -745,50 +749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688cd81ed79862a46b77a84fa4364bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1120179678
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1120179680}
-  - component: {fileID: 1120179679}
-  m_Layer: 0
-  m_Name: TurnMananger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1120179679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120179678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68ab0c7106654704197805c4a2f294a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1120179680
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120179678}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.38769, y: 4.436795, z: -32.558277}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1182249134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1205,6 +1165,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545611144}
   m_CullTransparentMesh: 1
+--- !u!114 &1590415063 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -6632449480483758421, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
+  m_PrefabInstance: {fileID: 1877543032}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688cd81ed79862a46b77a84fa4364bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1783809836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,6 +1406,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6632449480483758421, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
+      propertyPath: power
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 691125769844049855, guid: db2d1b008fca6ed4f8facdbe6ea62432, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1673,8 +1648,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controllers:
   - {fileID: 43863447}
-  obj: {fileID: 828903860}
-  turnManager: {fileID: 1120179679}
+  objects:
+  - {fileID: 828903860}
+  - {fileID: 1590415063}
+  turnManager: {fileID: 0}
   turnEndButton: {fileID: 104265736}
 --- !u!4 &2018355401
 Transform:
@@ -1839,4 +1816,3 @@ SceneRoots:
   - {fileID: 1877543032}
   - {fileID: 1432661703}
   - {fileID: 43863448}
-  - {fileID: 1120179680}
