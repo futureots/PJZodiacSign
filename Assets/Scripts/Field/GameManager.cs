@@ -51,6 +51,56 @@ public class GameManager : Singleton<GameManager>
         turnManager = this.AddComponent<TurnManager>();
     }
 
-
+    #region GameEnd
+    public bool CheckGameEnd()
+    {
+        bool isWin;
+        if (!IsGameEnd(out isWin)) return false;
+        if (isWin)
+        {
+            Debug.Log("½Â¸®");
+        }
+        else
+        {
+            Debug.Log("ÆÐ¹è...");
+        }
+        return true;
+    }
+    public bool IsGameEnd(out bool isWin)
+    {
+        var tiles = field.GetTiles();
+        bool isPlayerAlive = false;
+        bool isEnemyAlive = false;
+        foreach (var tile in tiles)
+        {
+            if (tile.isEmpty) continue;
+            var entityTag = tile.occupiedObject.tag;
+            if (entityTag == "Player")
+            {
+                isPlayerAlive = true;
+                Debug.Log($"{tile.occupiedObject} player is Alive");
+            }
+            else if (entityTag == "Enemy") {
+                isEnemyAlive = true;
+                Debug.Log($"{tile.occupiedObject} enemy is Alive");
+            }
+            if (isPlayerAlive && isEnemyAlive) break;
+        }
+        if (!isEnemyAlive)
+        {
+            isWin = true;
+        }
+        else
+        {
+            isWin = false;
+        }
+        return !(isPlayerAlive && isEnemyAlive);
+    }
+    public bool IsGameEnd()
+    {
+        bool dummy;
+        return IsGameEnd(out dummy);
+    }
+    #endregion
 
 }

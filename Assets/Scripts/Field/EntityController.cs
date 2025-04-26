@@ -9,21 +9,34 @@ public class EntityController : MonoBehaviour
 {
     public bool isReflect;
     //public Field currentField;
-    public int teamNum;
-    public Command curCmd
-    {
-        get
-        {
-            return _curCmd;
-        }
-        set
-        {
-            _curCmd?.Delete();
-            _curCmd = value;
-        }
-    }
-    Command _curCmd;
 
+
+
+    private void Start()
+    {
+        entities = new List<Entity>();
+        // Debug
+        var myEntity = Instantiate(entityObj);
+        myEntity.tag = this.tag;
+        entities.Add(myEntity);
+        myEntity.MoveTo(Field.Instance.GetTile(entityPos));
+        
+    }
+
+    #region EntityManaging
+
+    // 컨트롤러가 조종 가능한 엔티티
+    List<Entity> entities;
+    // 디버그용 엔티티 스폰 위치(나중에 데이터에서 불러와 위치 지정 기능 추가)
+    public Entity entityObj;
+    public intVector2 entityPos;
+    public bool IsContainEntity(Entity entity)
+    {
+        return entities.Contains(entity);
+    }
+
+
+    #endregion
     // 데이터 기반 엔티티 설정 및 세팅
     /*public virtual void SetEntities(int num, PlayerData party)
     {
@@ -54,6 +67,23 @@ public class EntityController : MonoBehaviour
         //entity.field = currentField;
         return entity;
     }*/
+
+    #region Command
+
+    public Command curCmd
+    {
+        get
+        {
+            return _curCmd;
+        }
+        set
+        {
+            _curCmd?.Delete();
+            _curCmd = value;
+        }
+    }
+    Command _curCmd;
+
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)
     {
         Command cmd = new MoveCommand(entity, tile);
@@ -61,6 +91,7 @@ public class EntityController : MonoBehaviour
         cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
+
     public Command CreateCommand(ISkill skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
@@ -69,6 +100,7 @@ public class EntityController : MonoBehaviour
         return cmd;
     }
 
+    #endregion
     public Tile GetClosestTile(Vector3 pos,Field field)
     {
         if (field == null) return null;

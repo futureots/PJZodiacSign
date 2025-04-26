@@ -53,6 +53,8 @@ public class InputManager : Singleton<InputManager>
     {
         var entity = selectObj.GetComponent<Entity>();
         if (entity == null) return;
+        if (!controller.IsContainEntity(entity)) return;
+
 
         selectedEntity = entity;
         targetSelecter = Instantiate(entitySelecter, selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);

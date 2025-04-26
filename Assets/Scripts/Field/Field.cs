@@ -14,7 +14,7 @@ public class Field : Singleton<Field>
     public GameObject tilePrefab;
     public Tile[,] tiles;
 
-    private void Start()
+    private void Awake()
     {
         CreateField();
     }
@@ -137,8 +137,14 @@ public class Field : Singleton<Field>
     {
         foreach (var tile in tiles)
         {
-            if (!tile.isEmpty) continue;
-
+            if (tile.isEmpty) continue;
+            var obj = tile.occupiedObject.GetComponent<IDamageable>();
+            if (obj == null) continue;
+            if (obj.isZero())
+            {
+                tile.OccupyObject(null);
+                obj.Dead();
+            }
             // 체력이 0인 오브젝트(기물,장애물 제거)
         }
     }

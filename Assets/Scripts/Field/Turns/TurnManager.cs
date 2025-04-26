@@ -32,13 +32,25 @@ public class TurnManager : MonoBehaviour
             turns.Enqueue(new ActionTurn());
             turns.Enqueue(new AttackTurn());
         }
-        Debug.Log($"Current TurnCount : {turns.Count}");
+        //Debug.Log($"Current TurnCount : {turns.Count}");
         curTurn.Execute(OnTurnComplete);
     }
 
     void OnTurnComplete()
     {
-        Debug.Log("Turn End");
-        StartTurn();
+        Field.Instance.CleanField();
+        bool isEnd = GameManager.Instance.CheckGameEnd();
+        if (isEnd)
+        {
+            turns.Clear();
+            //모든 턴 정리 및 상호작용 제거
+        }
+        else
+        {
+            Debug.Log("Turn End");
+            StartTurn();
+        }
+
+        
     }
 }

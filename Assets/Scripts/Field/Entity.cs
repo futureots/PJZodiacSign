@@ -23,12 +23,11 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
         foreach (var item in list)
         {
             if (item.isEmpty) continue;
-            var target = item.occupiedObject.GetComponent<IDamageable>();
-            try
+            var target = item.occupiedObject;
+            if(target.tag != tag || target.tag == "Obstacle")
             {
-                target.Damaged(power);
+                target.GetComponent<IDamageable>()?.Damaged(power);
             }
-            catch { }
         }
     }
     public void Damaged(int damage)
@@ -39,6 +38,7 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
 
     public void Dead()
     {
+        Debug.Log(gameObject+"Dead");
         Destroy(gameObject);
     }
 
