@@ -7,11 +7,11 @@ public interface IStatusEffect
     /// <summary>
     /// 상태이상 적용
     /// </summary>
-    public void ApplyEffect();
+    public void ApplyEffect(Entity entity);
     /// <summary>
     /// 턴 종료시 상태이상 적용 및 업데이트
     /// </summary>
-    public void OnTurnEnd();
+    public void OnTurnEnd(Entity entity);
     /// <summary>
     /// 상태이상 지속시간 만료 
     /// </summary>
