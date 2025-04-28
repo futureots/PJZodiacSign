@@ -8,11 +8,19 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
     public Tile curTile;
 
     #region status
+    public EntityStatus status;
     public int level;
-    public int maxHp;
+    public int Power
+    {
+        get { return status.power.GetStatus(); }
+    }
+    public int maxHp
+    {
+        get { return status.maxHp.GetStatus(); }
+    }
     public int curHp;
-    public int energy;
-    public int power;
+    public int curEnergy;
+
 
 
 
@@ -26,7 +34,7 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
             var target = item.occupiedObject;
             if(target.tag != tag || target.tag == "Obstacle")
             {
-                target.GetComponent<IDamageable>()?.Damaged(power);
+                target.GetComponent<IDamageable>()?.Damaged(Power);
             }
         }
     }
