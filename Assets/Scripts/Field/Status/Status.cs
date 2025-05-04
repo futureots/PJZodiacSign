@@ -1,28 +1,26 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Status
 {
-    public int baseValue;
-    public int modifier;
-
-    public Status(int value)
+    private int _baseValue;
+    List<int> modifiers;
+    public void Addmodifiers(ref int a)
     {
-        baseValue = value;
-        modifier = 0;
+        modifiers.Add(a);
     }
-
-    public int GetStatus()
+    public int currentValue
     {
-        return Mathf.Max(0, baseValue + modifier);
-    }
-
-    public void AddStatus(int value)
-    {
-        modifier += value;
-    }
-    public void RemoveStatus(int value)
-    {
-        modifier -= value;
+        get
+        {
+            int value = _baseValue;
+            foreach (int modifier in modifiers)
+            {
+                value += modifier;
+            }
+            return value;
+        }
     }
 
 }

@@ -8,39 +8,44 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
     public Tile curTile;
 
     #region status
-    public EntityStatus status;
-    public int level;
-    public int Power
-    {
-        get { return status.power.GetStatus(); }
-    }
-    public int maxHp
-    {
-        get { return status.maxHp.GetStatus(); }
-    }
+    
+    public int level { get; private set; }
+    public int power;
+    public int maxHp;
     public int curHp;
     public int curEnergy;
-
-
-
+    public List<BuffInstance> buffs;
+    bool isSlienced => slienceCount > 0;
+    public int slienceCount;
+    bool isRooted => rootCount > 0;
+    public int rootCount;
+    bool isProtected => protectCount > 0;
+    public int protectCount;
 
     public void Attack()
     {
+        if (isSlienced) return;
         Debug.Log($"{name}이 공격");
         var list = GetAttackArea();
+        int damage = power;
+        
         foreach (var item in list)
         {
             if (item.isEmpty) continue;
             var target = item.occupiedObject;
             if(target.tag != tag || target.tag == "Obstacle")
             {
-                target.GetComponent<IDamageable>()?.Damaged(Power);
+                target.GetComponent<IDamageable>()?.Damaged(power);
             }
         }
     }
     public void Damaged(int damage)
     {
-        curHp -= damage;
+        var value = damage;
+        // 데미지 경감
+        if (isProtected) value /= 2;
+
+        curHp -= value;
         Debug.Log($"Damaged : {damage} , CurrentHp : {curHp}");
     }
 
@@ -65,6 +70,7 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
 
     public bool MoveSequence(Tile tile)
     {
+        if(isRooted) return false;
         var isMovable = GetMoveArea().Contains(tile) && !tile.isEmpty;
         if (isMovable)
         {
