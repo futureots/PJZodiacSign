@@ -24,7 +24,7 @@ public class BuffInstance
     /// </summary>
     public void UpdateBuff(Entity entity)
     {
-        buffData.UpdateBuff(entity,turnCount);
+        buffData.UpdateBuff(entity,ref turnCount);
     }
     /// <summary>
     /// 버프 제거
@@ -34,5 +34,8 @@ public class BuffInstance
     {
         buffData.RemoveBuff(entity,turnCount);
     }
-
+    public bool IsExpired()
+    {
+        return turnCount == 0;
+    }
 }

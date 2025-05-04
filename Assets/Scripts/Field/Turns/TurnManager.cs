@@ -38,6 +38,16 @@ public class TurnManager : MonoBehaviour
 
     void OnTurnComplete()
     {
+        // 모든 캐릭터 버프 업데이트
+        foreach (var tile in Field.Instance.GetTiles())
+        {
+            if (tile.isEmpty) continue;
+            var entity = tile.occupiedObject.GetComponent<Entity>();
+            if (entity == null) continue;
+            entity.UpdateBuff();
+            entity.RemoveBuff();
+        }
+
         Field.Instance.CleanField();
         bool isEnd = GameManager.Instance.CheckGameEnd();
         if (isEnd)

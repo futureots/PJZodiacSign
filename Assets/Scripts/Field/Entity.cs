@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -14,13 +15,11 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
     public int maxHp;
     public int curHp;
     public int curEnergy;
-    public List<BuffInstance> buffs;
     bool isSlienced => slienceCount > 0;
     public int slienceCount;
     bool isRooted => rootCount > 0;
     public int rootCount;
-    bool isProtected => protectCount > 0;
-    public int protectCount;
+    bool isProtected;
 
     public void Attack()
     {
@@ -64,6 +63,36 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
     {
         if (curHp > 0) return false;
         return true;
+    }
+
+    List<BuffInstance> buffList;
+    public void AddBuff(BuffData buff, int count)
+    {
+        if (buffList == null)
+        {
+            buffList = new List<BuffInstance>();
+        }
+        var instance = new BuffInstance(count, buff);
+        buffList.Add(instance);
+        instance.ApplyBuff(this);
+    }
+    public void UpdateBuff()
+    {
+        if (buffList == null) return;
+        foreach (var buff in buffList)
+        {
+            buff.UpdateBuff(this);
+        }
+    }
+    public void RemoveBuff()
+    {
+        if(buffList == null) return;
+        var list = buffList.Where((buff) => buff.IsExpired()).ToList();
+        foreach (var buff in list)
+        {
+            buff.RemoveBuff(this);
+            buffList.Remove(buff);
+        }
     }
     #endregion
 
