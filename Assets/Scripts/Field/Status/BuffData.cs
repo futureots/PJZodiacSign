@@ -18,4 +18,6 @@ public abstract class BuffData
     /// </summary>
     /// <param name="entity"></param>
     public abstract void RemoveBuff(Entity entity, int count);
+
+    public abstract void ExtendBuff(Entity entity, ref int currentCount, int count);
 }

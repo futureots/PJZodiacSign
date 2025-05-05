@@ -4,22 +4,85 @@ using System.Linq;
 using UnityEngine;
 
 
-public class Entity : MonoBehaviour, IDamageable,IAttackable
+public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile;
 
-    #region status
-    
+    #region Status
     public int level { get; private set; }
     public int power;
     public int maxHp;
     public int curHp;
     public int curEnergy;
-    bool isSlienced => slienceCount > 0;
-    public int slienceCount;
-    bool isRooted => rootCount > 0;
-    public int rootCount;
-    bool isProtected;
+
+    #region Buff
+    bool isSlienced
+    {
+        get
+        {
+            if (buffList == null) return false;
+            return buffList.Exists((buff) => buff.buffData is Silence);
+        }
+    }
+    bool isRooted
+    {
+        get
+        {
+            if (buffList == null) return false;
+            return buffList.Exists((buff) => buff.buffData is Root);
+        }
+    }
+    bool isProtected 
+    {
+        get
+        {
+            if (buffList == null) return false;
+            return buffList.Exists((buff) => buff.buffData is Protect);
+        }
+    }
+
+
+    List<BuffInstance> buffList;
+    public void AddBuff(BuffData buff, int count)
+    {
+        if (buffList == null)
+        {
+            buffList = new List<BuffInstance>();
+        }
+        var existBuff = buffList.Find((x) => x.buffData.GetType() == buff.GetType());
+        if (existBuff != null)
+        {
+            existBuff.ExtendBuff(this, count);
+        }
+        else
+        {
+            var instance = new BuffInstance(count, buff);
+            buffList.Add(instance);
+            instance.ApplyBuff(this);
+        }
+        Debug.Log(buffList.Count);
+        
+    }
+    public void UpdateBuff()
+    {
+        if (buffList == null) return;
+        foreach (var buff in buffList)
+        {
+            buff.UpdateBuff(this);
+        }
+    }
+    public void RemoveBuff()
+    {
+        if (buffList == null) return;
+        var list = buffList.Where((buff) => buff.IsExpired()).ToList();
+        foreach (var buff in list)
+        {
+            buff.RemoveBuff(this);
+            buffList.Remove(buff);
+        }
+    }
+
+    #endregion
 
     public void Attack()
     {
@@ -65,37 +128,7 @@ public class Entity : MonoBehaviour, IDamageable,IAttackable
         return true;
     }
 
-    List<BuffInstance> buffList;
-    public void AddBuff(BuffData buff, int count)
-    {
-        if (buffList == null)
-        {
-            buffList = new List<BuffInstance>();
-        }
-        var instance = new BuffInstance(count, buff);
-        buffList.Add(instance);
-        instance.ApplyBuff(this);
-    }
-    public void UpdateBuff()
-    {
-        if (buffList == null) return;
-        foreach (var buff in buffList)
-        {
-            buff.UpdateBuff(this);
-        }
-    }
-    public void RemoveBuff()
-    {
-        if(buffList == null) return;
-        var list = buffList.Where((buff) => buff.IsExpired()).ToList();
-        foreach (var buff in list)
-        {
-            buff.RemoveBuff(this);
-            buffList.Remove(buff);
-        }
-    }
     #endregion
-
 
     public bool MoveSequence(Tile tile)
     {

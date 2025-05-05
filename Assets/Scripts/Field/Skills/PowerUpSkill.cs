@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class SilenceSkill : MonoBehaviour,ISkill
+public class PowerUpSkill : MonoBehaviour,ISkill
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity target;
     public void Activate()
     {
-        target.AddBuff(new Silence(), 3);
+        target.AddBuff(new PowerModifier(), 3);
     }
 
     public bool IsValidInput(FieldInfo field)

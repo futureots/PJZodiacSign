@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Silence : BuffData
+public class Root : BuffData
 {
     public override void ApplyBuff(Entity entity, int count)
     {
@@ -15,12 +15,13 @@ public class Silence : BuffData
             currentCount = count;
         }
     }
-    public override void RemoveBuff(Entity entity,int count)
-    {
+    public override void RemoveBuff(Entity entity, int count)
+    { 
     }
 
-    public override void UpdateBuff(Entity entity,ref int count)
+    public override void UpdateBuff(Entity entity, ref int count)
     {
         count = Mathf.Max(count - 1, 0);
+        Debug.Log("Buff Update Root" + count);
     }
 }
