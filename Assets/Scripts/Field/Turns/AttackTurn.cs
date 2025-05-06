@@ -23,6 +23,16 @@ public class AttackTurn : ITurn
         // 대기시간
         yield return new WaitForSeconds(1f);
 
+        // 모든 캐릭터 버프 업데이트
+        foreach (var tile in Field.Instance.GetTiles())
+        {
+            if (tile.isEmpty) continue;
+            var entity = tile.occupiedObject.GetComponent<Entity>();
+            if (entity == null) continue;
+            entity.UpdateBuff();
+            entity.RemoveBuff();
+        }
+
         Field.Instance.CleanField();
         InputManager.Instance.isInputStop = false;
         Debug.Log("CanInput");
