@@ -8,6 +8,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile;
 
+    public ISkill entitySkill;
+    private void Start()
+    {
+        entitySkill = GetComponentInChildren<ISkill>();
+    }
+
     #region Status
     public int level { get; private set; }
     public int power;
@@ -176,6 +182,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         return GetAttackArea(curTile);
     }
+
 
 
     #region Input
