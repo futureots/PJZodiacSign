@@ -80,8 +80,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f81e885b-4104-4261-ab24-5e395780affe"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""id"": ""0fee5538-a9f1-48d0-977f-ce07682f14f5"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

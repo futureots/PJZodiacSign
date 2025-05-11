@@ -4,6 +4,7 @@ using System.Reflection;
 using Unity.VisualScripting;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 
 public class InputManager : Singleton<InputManager>
@@ -23,6 +24,16 @@ public class InputManager : Singleton<InputManager>
     {
         _inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
         _inputActions.Gameplay.Click.performed += value => HandleClick();
+        _inputActions.Gameplay.Click.started += _ =>
+        {
+            Debug.Log("Started");
+            _inputActions.Gameplay.Point.performed += SetDragEntity;
+        };
+        _inputActions.Gameplay.Click.canceled += value =>
+        {
+            Debug.Log("Canceled");
+            _inputActions.Gameplay.Point.performed -= SetDragEntity;
+        };
     }
 
     private void HandleClick()
@@ -37,15 +48,37 @@ public class InputManager : Singleton<InputManager>
                 Debug.Log($"Show {entity.name}'s Info");
                 //UI 표시
                 UIManager.Instance.entityInfoPanel.ShowPanel(entity);
-                
-                
             }
         }
-        if(TurnManager.Instance.currentState == GameInputState.Planning)
+    }
+    void SetDragEntity(InputAction.CallbackContext context)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
+        // 부딪힌 기물, (타일) UI 표시 
+        if (Physics.Raycast(ray, out var hit))
         {
-            //드래그&드롭 실행, 스킬이면 스킬 선택 실행
-                
+            var entity = hit.collider.GetComponent<Entity>();
+            if (entity != null)
+            {
+                DragEntity(entity, ray);
+            }
         }
+    }
+    void DragEntity(Entity entity, Ray ray)
+    {
+        Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
+        float rayDistance;
+        if (plane.Raycast(ray, out rayDistance))
+        {
+            Vector3 pos = ray.GetPoint(rayDistance);
+            entity.transform.position = pos;
+        }
+        // 공격 범위 표시
+        var closeTile = GetClosestTile(entity.transform.position, entity.GetMoveArea());
+        targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
+        areaVisualizer.RemoveAttackArea(list);
+        list = entity.GetAttackArea(closeTile);
+        areaVisualizer.ShowAttackArea(list);
     }
 
     #region Old
@@ -104,9 +137,10 @@ public class InputManager : Singleton<InputManager>
         areaVisualizer.ShowMoveArea(entity.GetMoveArea());
     }
     List<Tile> list = new List<Tile>();
+
     private void Update()
     {
-        if (selectedEntity != null)
+        /*if (selectedEntity != null)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
@@ -123,7 +157,7 @@ public class InputManager : Singleton<InputManager>
             list = selectedEntity.GetAttackArea(closeTile);
             areaVisualizer.ShowAttackArea(list);
 
-        }
+        }*/
     }
     /// <summary>
     /// 선택한 Entity 제거 및 명령 전달
