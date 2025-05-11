@@ -101,6 +101,7 @@ public class GameManager : Singleton<GameManager>
         bool dummy;
         return IsGameEnd(out dummy);
     }
+    
     #endregion
 
 }

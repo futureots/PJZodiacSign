@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +39,7 @@ public class TurnManager : MonoBehaviour
 
     void OnTurnComplete()
     {
+
         Field.Instance.CleanField();
         bool isEnd = GameManager.Instance.CheckGameEnd();
         if (isEnd)

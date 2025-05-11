@@ -14,15 +14,7 @@ public class MoveSkill : MonoBehaviour,ISkill
     //스킬 발동
     public void Activate()
     {
-        try
-        {
-            entity.MoveTo(tile);
-        }
-        catch
-        {
-            throw new Exception("Skill values arenot completed");
-        }
-
+        entity.MoveTo(tile);
     }
 
     public bool IsActable()

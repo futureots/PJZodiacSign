@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1937033463458795209}
   - component: {fileID: 9010483742102598349}
   - component: {fileID: -6632449480483758421}
+  - component: {fileID: 5162697636728817351}
   m_Layer: 6
   m_Name: Entity
   m_TagString: Untagged
@@ -149,8 +150,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curTile: {fileID: 0}
-  level: 0
+  power: 0
   maxHp: 30
   curHp: 30
-  energy: 0
-  power: 0
+  curEnergy: 0
+--- !u!114 &5162697636728817351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455179597510633406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74542eb753e632a4d866fa1ca331ae35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
