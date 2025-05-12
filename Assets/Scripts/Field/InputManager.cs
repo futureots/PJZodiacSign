@@ -13,6 +13,44 @@ public class InputManager : Singleton<InputManager>
 
     GameInputActions _inputActions;
 
+    public enum Mode
+    {
+        Move,//이동 입력(드래그&드롭)
+        Skill,//스킬 입력(클릭)
+        None // 입력 X, 정보만 표시
+    }
+    Mode _currentMode;
+    public Mode currentMode {
+        get
+        {
+            return _currentMode;
+        }
+        set
+        {
+            //기존 모드 액션 제거
+            _currentMode = value;
+            SetInputMode();
+        }
+    }
+    /// <summary>
+    /// 모드에 맞는 액션 추가
+    /// </summary>
+    public void SetInputMode()
+    {
+        switch (currentMode)
+        {
+            case Mode.Move:
+                SetDragInput();
+                break;
+            case Mode.Skill:
+                break;
+            case Mode.None:
+                break;
+            default:
+                break;
+        }
+    }
+
     private void Awake()
     {
         _inputActions = new GameInputActions();
@@ -22,20 +60,15 @@ public class InputManager : Singleton<InputManager>
 
     private void Start()
     {
+        //기물 선택 정보 표시
         _inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
         _inputActions.Gameplay.Click.performed += value => HandleClick();
-        _inputActions.Gameplay.Click.started += _ =>
-        {
-            Debug.Log("Started");
-            _inputActions.Gameplay.Point.performed += SetDragEntity;
-        };
-        _inputActions.Gameplay.Click.canceled += value =>
-        {
-            Debug.Log("Canceled");
-            _inputActions.Gameplay.Point.performed -= SetDragEntity;
-        };
+        SetDragInput();
     }
-
+    #region ClickInfo
+    /// <summary>
+    /// 클릭 시 Ray로 부딪힌 기물의 정보 UI 표시하기
+    /// </summary>
     private void HandleClick()
     {
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
@@ -51,19 +84,49 @@ public class InputManager : Singleton<InputManager>
             }
         }
     }
-    void SetDragEntity(InputAction.CallbackContext context)
+    #endregion
+
+    #region Drag
+    /// <summary>
+    /// 마우스 드래그 드롭 기능 추가
+    /// </summary>
+    public void SetDragInput()
     {
-        Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
-        // 부딪힌 기물, (타일) UI 표시 
-        if (Physics.Raycast(ray, out var hit))
+        Action<InputAction.CallbackContext> bindAction = null;
+        _inputActions.Gameplay.Click.started += _ =>
         {
-            var entity = hit.collider.GetComponent<Entity>();
-            if (entity != null)
+            //선택한 엔티티 저장
+            Entity _selectedEntity;
+            Debug.Log("Started");
+            Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
+            if (Physics.Raycast(ray, out var hit))
             {
-                DragEntity(entity, ray);
+                var entity = hit.collider.GetComponent<Entity>();
+                if (entity != null)
+                {
+                    // 적인지 아닌지 구분
+                    if (!entity.CompareTag("Player")) return;
+                    _selectedEntity = entity;
+                    //값이 변경될 때마다 선택한 엔티티의 위치 이동
+                    bindAction = value =>
+                    {
+                        Ray ray2 = Camera.main.ScreenPointToRay(value.ReadValue<Vector2>());
+                        DragEntity(_selectedEntity, ray2);
+                    };
+                    _inputActions.Gameplay.Point.performed += bindAction;
+                }
             }
-        }
+        };
+        _inputActions.Gameplay.Click.canceled += _ =>
+        {
+            _inputActions.Gameplay.Point.performed -= bindAction;
+        };
     }
+    /// <summary>
+    /// 선택한 유닛의 위치 조정하기
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="ray"></param>
     void DragEntity(Entity entity, Ray ray)
     {
         Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
@@ -80,6 +143,7 @@ public class InputManager : Singleton<InputManager>
         list = entity.GetAttackArea(closeTile);
         areaVisualizer.ShowAttackArea(list);
     }
+    #endregion
 
     #region Old
     public EntityController controller;
