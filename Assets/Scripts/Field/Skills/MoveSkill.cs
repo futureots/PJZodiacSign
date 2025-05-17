@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class MoveSkill : MonoBehaviour,ISkill
+public class MoveSkill : Skill
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity entity;
@@ -12,7 +12,7 @@ public class MoveSkill : MonoBehaviour,ISkill
     public Tile tile;
 
     //스킬 발동
-    public void Activate()
+    public override void Activate()
     {
         entity.MoveTo(tile);
     }
@@ -23,7 +23,7 @@ public class MoveSkill : MonoBehaviour,ISkill
         if (entity == null || tile == null) return false;
         return true;
     }
-    public bool IsValidInput(FieldInfo field)
+    public override bool IsValidInput(FieldInfo field)
     {
         Debug.Log(field.Name);
         switch (field.Name)
@@ -56,7 +56,7 @@ public class MoveSkill : MonoBehaviour,ISkill
         }
         return false;
     }
-    public void Reinitialize()
+    public override void Reinitialize()
     {
         Debug.Log("Reinitialize");
         entity = null;

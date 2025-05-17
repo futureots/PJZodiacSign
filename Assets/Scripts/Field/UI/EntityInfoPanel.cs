@@ -19,6 +19,14 @@ public class EntityInfoPanel : MonoBehaviour
     {
         GetComponentInChildren<TextMeshProUGUI>().text = entity.name;
         entitytSkillButton.SetSkill(entity.entitySkill);
+        if (entity.CompareTag("Player"))
+        {
+            entitytSkillButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            entitytSkillButton.gameObject.SetActive(false);
+        }
         Debug.Log(entity.name);
     }
 }

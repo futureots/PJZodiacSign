@@ -62,7 +62,7 @@ public class AreaVisualizer : MonoBehaviour
             highlightedTiles.Remove(tile);
         }
     }
-    public void ResetArea()
+    public void RemoveAllArea()
     {
         var tiles = highlightedTiles.Distinct().ToList();
         foreach (Tile tile in tiles)

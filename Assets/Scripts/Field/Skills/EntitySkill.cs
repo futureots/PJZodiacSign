@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class EntitySkill : MonoBehaviour, ISkill
+public class EntitySkill : Skill
 {
     
     public Entity owner
@@ -15,18 +15,14 @@ public class EntitySkill : MonoBehaviour, ISkill
     }
 
     
-    public void Activate()
+    public override void Activate()
     {
         owner.AddBuff(new Protect(), 3);
     }
 
-    public bool IsValidInput(FieldInfo field)
+    public override bool IsValidInput(FieldInfo field)
     {
         return true;
     }
 
-    public void Reinitialize()
-    {
-        
-    }
 }

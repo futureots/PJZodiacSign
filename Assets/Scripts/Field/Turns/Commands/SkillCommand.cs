@@ -15,7 +15,7 @@ public class SkillCommand : Command
     public override void Execute()
     {
         var boolean = skill.ExecuteSkillSequence();
-        Debug.Log(boolean);
+        //Debug.Log(boolean);
     }
     public override void Delete()
     {

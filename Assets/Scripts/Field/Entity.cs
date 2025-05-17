@@ -8,10 +8,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile;
 
-    public ISkill entitySkill;
+    public Skill entitySkill;
     private void Start()
     {
-        entitySkill = GetComponentInChildren<ISkill>();
+        entitySkill = GetComponentInChildren<Skill>();
     }
 
     #region Status
@@ -66,7 +66,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             buffList.Add(instance);
             instance.ApplyBuff(this);
         }
-        Debug.Log(buffList.Count);
+        //Debug.Log(buffList.Count);
         
     }
     public void UpdateBuff()
@@ -184,18 +184,4 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
 
 
-
-    #region Input
-    private void OnMouseDown()
-    {
-        Debug.Log("Mouse DOWN");
-        InputManager.Instance.OnGameObjectDown(gameObject);
-    }
-    private void OnMouseUp()
-    {
-        Debug.Log("Mouse UP");
-        InputManager.Instance.OnGameObjectUp();
-    }
-
-    #endregion
 }

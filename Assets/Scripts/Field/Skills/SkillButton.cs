@@ -9,19 +9,18 @@ using UnityEngine.UI;
 
 public class SkillButton : Button
 {
-    public ISkill skill;
     
-    public void SetSkill(ISkill skill)
+    public Skill skill;
+    
+    public void SetSkill(Skill skill)
     {
         this.skill = skill;
-        
     }
     protected override void Start()
     {
         base.Start();
-        skill = GetComponent<ISkill>();
+        SetSkill(GetComponent<Skill>());
         onClick.AddListener(OnPointerClick);
-        
     }
 
     private void Update()
@@ -30,19 +29,14 @@ public class SkillButton : Button
         {
             interactable = false;
         }
+        else
+        {
+            interactable = true;
+        }
     }
     public void OnPointerClick()
     {
-        if (InputManager.Instance.selectedSkill == skill
-            && skill != null)
-        {
-            InputManager.Instance.SetSkill(null);
-            skill.Reinitialize();
-        }
-        else
-        {
-            InputManager.Instance.AllocateSkillCommand(skill);
-        }
+        InputManager.Instance.SetInputMode(skill);
     }
 
 }

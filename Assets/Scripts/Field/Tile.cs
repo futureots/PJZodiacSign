@@ -47,16 +47,6 @@ public class Tile : MonoBehaviour
             isEmpty = true;
         }
     }
-    private void OnMouseDown()
-    {
-        Debug.Log("Tile Mouse DOWN");
-        InputManager.Instance.OnGameObjectDown(gameObject);
-    }
-    private void OnMouseUp()
-    {
-        Debug.Log("Tile Mouse UP");
-        InputManager.Instance.OnGameObjectUp();
-    }
 
     public void AddColor(Material material)
     {
