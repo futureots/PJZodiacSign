@@ -27,7 +27,6 @@ public class InputManager : Singleton<InputManager>
         }
         set
         {
-            //기존 모드 액션 제거
             _currentMode = value;
             SetInputMode();
         }
@@ -37,9 +36,13 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     public void SetInputMode()
     {
+        Debug.Log("SetInputMode");
+        _inputActions.Gameplay.Click.Reset();
+        _inputActions.Gameplay.Click.performed += value => HandleClick();
         switch (currentMode)
         {
             case Mode.Move:
+                SetSkill(null);
                 SetDragInput();
                 break;
             case Mode.Skill:
@@ -62,9 +65,11 @@ public class InputManager : Singleton<InputManager>
     {
         //기물 선택 정보 표시
         _inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
-        _inputActions.Gameplay.Click.performed += value => HandleClick();
-        SetDragInput();
     }
+    
+
+    List<Tile> list = new List<Tile>();
+
     #region ClickInfo
     /// <summary>
     /// 클릭 시 Ray로 부딪힌 기물의 정보 UI 표시하기
@@ -92,11 +97,14 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     public void SetDragInput()
     {
+        //선택한 엔티티 저장
+        Entity _selectedEntity = null;
+        GameObject targetSelecter = null;
+        GameObject targetTileSelecter = null;
         Action<InputAction.CallbackContext> bindAction = null;
         _inputActions.Gameplay.Click.started += _ =>
         {
-            //선택한 엔티티 저장
-            Entity _selectedEntity;
+            
             Debug.Log("Started");
             Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
             if (Physics.Raycast(ray, out var hit))
@@ -111,14 +119,29 @@ public class InputManager : Singleton<InputManager>
                     bindAction = value =>
                     {
                         Ray ray2 = Camera.main.ScreenPointToRay(value.ReadValue<Vector2>());
-                        DragEntity(_selectedEntity, ray2);
+                        DragEntity(_selectedEntity, ray2,targetTileSelecter);
                     };
+                    // 기물 이동범위 표시
+                    targetSelecter = Instantiate(entitySelecter, entity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+                    targetTileSelecter = Instantiate(tileSelecter, entity.transform.position, Quaternion.identity);
+                    areaVisualizer.ShowMoveArea(entity.GetMoveArea());
+
                     _inputActions.Gameplay.Point.performed += bindAction;
                 }
             }
         };
         _inputActions.Gameplay.Click.canceled += _ =>
         {
+            // 엔티티 클리어
+            if (_selectedEntity != null)
+            {
+                var tile = GetClosestTile(_selectedEntity.transform.position, _selectedEntity.GetMoveArea());
+                controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
+                _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                areaVisualizer.RemoveAttackArea(list);
+                areaVisualizer.RemoveMoveArea(_selectedEntity.GetMoveArea());
+                _selectedEntity = null;
+            }
             _inputActions.Gameplay.Point.performed -= bindAction;
         };
     }
@@ -127,7 +150,7 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="ray"></param>
-    void DragEntity(Entity entity, Ray ray)
+    void DragEntity(Entity entity, Ray ray,GameObject selecter)
     {
         Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
         float rayDistance;
@@ -138,7 +161,7 @@ public class InputManager : Singleton<InputManager>
         }
         // 공격 범위 표시
         var closeTile = GetClosestTile(entity.transform.position, entity.GetMoveArea());
-        targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
+        selecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
         areaVisualizer.RemoveAttackArea(list);
         list = entity.GetAttackArea(closeTile);
         areaVisualizer.ShowAttackArea(list);
@@ -174,70 +197,6 @@ public class InputManager : Singleton<InputManager>
     }
     #region MoveCommand관련
 
-    public Entity selectedEntity;
-    GameObject targetSelecter;
-    GameObject targetTileSelecter;
-    public void AllocateMoveCommand()
-    {
-        SetSkill(null);
-        OnObjectMouseDown = SelectEntity;
-        OnObjectMouseUp = ReleaseEntity;
-
-    }
-    /// <summary>
-    /// Entity를 선택하는 함수
-    /// </summary>
-    /// <param name="selectObj"></param>
-    void SelectEntity(GameObject selectObj)
-    {
-        var entity = selectObj.GetComponent<Entity>();
-        if (entity == null) return;
-        if (!controller.IsContainEntity(entity)) return;
-
-
-        selectedEntity = entity;
-        targetSelecter = Instantiate(entitySelecter, selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
-        targetTileSelecter = Instantiate(tileSelecter, selectedEntity.transform.position, Quaternion.identity);
-        areaVisualizer.ShowMoveArea(entity.GetMoveArea());
-    }
-    List<Tile> list = new List<Tile>();
-
-    private void Update()
-    {
-        /*if (selectedEntity != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
-            float rayDistance;
-            if (plane.Raycast(ray, out rayDistance))
-            {
-                Vector3 pos = ray.GetPoint(rayDistance);
-                selectedEntity.transform.position = pos;
-            }
-            // 공격 범위 표시
-            var closeTile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
-            targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
-            areaVisualizer.RemoveAttackArea(list);
-            list = selectedEntity.GetAttackArea(closeTile);
-            areaVisualizer.ShowAttackArea(list);
-
-        }*/
-    }
-    /// <summary>
-    /// 선택한 Entity 제거 및 명령 전달
-    /// </summary>
-    void ReleaseEntity()
-    {
-        if (selectedEntity != null)
-        {
-            var tile = GetClosestTile(selectedEntity.transform.position, selectedEntity.GetMoveArea());
-            controller.CreateCommand(selectedEntity, tile, targetSelecter, targetTileSelecter);
-            selectedEntity.transform.position = selectedEntity.curTile.transform.position;
-            areaVisualizer.RemoveAttackArea(list);
-            areaVisualizer.RemoveMoveArea(selectedEntity.GetMoveArea());
-            selectedEntity = null;
-        }
-    }
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {
         float minDistance = 0;

@@ -8,7 +8,7 @@ public class ActionTurn : ITurn
     public void Execute(Action onTurnEnd)
     {
         Debug.Log("행동 턴 시작");
-        InputManager.Instance.AllocateMoveCommand();
+        InputManager.Instance.currentMode = InputManager.Mode.Move;
         GameManager.Instance.turnEndButton.onClick.RemoveAllListeners();
         GameManager.Instance.turnEndButton.onClick.AddListener(() =>
         {
