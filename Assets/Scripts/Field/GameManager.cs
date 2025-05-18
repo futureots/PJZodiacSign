@@ -19,10 +19,10 @@ public class GameManager : Singleton<GameManager>
 
     public List<Entity> objects;
 
-    #region Turn
+    // 턴 조작
     public TurnManager turnManager;
     public Button turnEndButton;
-    #endregion
+
     private void Awake()
     {
         //데이터 기반 엔티티 불러오기 및 필드 생성

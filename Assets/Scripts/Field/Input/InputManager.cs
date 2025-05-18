@@ -78,12 +78,13 @@ public class InputManager : Singleton<InputManager>
                 Debug.Log($"Show {entity.name}'s Info");
                 //UI Ç¥½Ã
                 UIManager.Instance.entityInfoPanel.ShowPanel(entity);
-            }   
+            }
+            else
+            {
+                //UIManager.Instance.entityInfoPanel.HidePanel();
+            }
         }
-        else
-        {
-            UIManager.Instance.entityInfoPanel.HidePanel();
-        }
+
     }
     #endregion
 
@@ -98,7 +99,7 @@ public class InputManager : Singleton<InputManager>
     private void Start()
     {
         _inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
-        _inputActions.Gameplay.Click.started += _ => HandleClick();
+        _inputActions.Gameplay.Click.canceled += _ => HandleClick();
     }
 
     List<Tile> list = new List<Tile>();
