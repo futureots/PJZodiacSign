@@ -78,7 +78,11 @@ public class InputManager : Singleton<InputManager>
                 Debug.Log($"Show {entity.name}'s Info");
                 //UI Ç¥½Ã
                 UIManager.Instance.entityInfoPanel.ShowPanel(entity);
-            }
+            }   
+        }
+        else
+        {
+            UIManager.Instance.entityInfoPanel.HidePanel();
         }
     }
     #endregion

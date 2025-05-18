@@ -11,12 +11,13 @@ public class EntityInfoPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        //entitytSkillButton.gameObject.SetActive(false);
+        entitytSkillButton.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void ShowPanel(Entity entity)
     {
+        gameObject.SetActive(true);
         GetComponentInChildren<TextMeshProUGUI>().text = entity.name;
         entitytSkillButton.SetSkill(entity.entitySkill);
         if (entity.CompareTag("Player"))
@@ -28,5 +29,9 @@ public class EntityInfoPanel : MonoBehaviour
             entitytSkillButton.gameObject.SetActive(false);
         }
         Debug.Log(entity.name);
+    }
+    public void HidePanel()
+    {
+        gameObject.SetActive(false);
     }
 }
