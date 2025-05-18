@@ -1,30 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+
+using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class SkillButton : MonoBehaviour, IPointerClickHandler
+public class SkillButton : Button
 {
-    public ISkill skill;
-
-    #region Debugging
-    private void Start()
+    
+    public Skill skill;
+    
+    public void SetSkill(Skill skill)
     {
-        skill = GetComponent<ISkill>();
+        this.skill = skill;
     }
-    #endregion
-    public void OnPointerClick(PointerEventData eventData)
+    protected override void Start()
     {
-        if (InputManager.Instance.selectedSkill == skill
-            && skill != null)
+        base.Start();
+        SetSkill(GetComponent<Skill>());
+        onClick.AddListener(OnPointerClick);
+    }
+
+    private void Update()
+    {
+        if(skill == null || InputManager.Instance.currentMode == InputManager.Mode.None)
         {
-            InputManager.Instance.SetSkill(null);
-            skill.Reinitialize();
+            interactable = false;
         }
         else
         {
-            InputManager.Instance.AllocateSkillCommand(skill);
+            interactable = true;
         }
+    }
+    public void OnPointerClick()
+    {
+        InputManager.Instance.SetInputMode(skill);
     }
 
 }

@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class PowerUpSkill : MonoBehaviour,ISkill
+public class PowerUpSkill : Skill
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity target;
-    public void Activate()
+    public override void Activate()
     {
         target.AddBuff(new PowerModifier(), 3);
     }
 
-    public bool IsValidInput(FieldInfo field)
+    public override bool IsValidInput(FieldInfo field)
     {
         return true;
     }
 
-    public void Reinitialize()
+    public override void Reinitialize()
     {
         target = null;
     }

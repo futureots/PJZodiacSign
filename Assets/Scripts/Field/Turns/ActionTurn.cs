@@ -8,7 +8,7 @@ public class ActionTurn : ITurn
     public void Execute(Action onTurnEnd)
     {
         Debug.Log("행동 턴 시작");
-        InputManager.Instance.AllocateMoveCommand();
+        InputManager.Instance.SetInputMode(InputManager.Mode.Move);
         GameManager.Instance.turnEndButton.onClick.RemoveAllListeners();
         GameManager.Instance.turnEndButton.onClick.AddListener(() =>
         {
@@ -18,7 +18,7 @@ public class ActionTurn : ITurn
     }
     public IEnumerator ActionCoroutine()
     {
-        InputManager.Instance.isInputStop = true;
+        InputManager.Instance.SetInputMode(InputManager.Mode.None);
         foreach (EntityController controller in GameManager.Instance.controllers)
         {
             var cmd = controller.curCmd;
@@ -26,6 +26,6 @@ public class ActionTurn : ITurn
             controller.curCmd = null;
             yield return new WaitForSeconds(1f);
         }
-        InputManager.Instance.isInputStop = false;
+        //InputManager.Instance.isInputStop = false;
     }
 }
