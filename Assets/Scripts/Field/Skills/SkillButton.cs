@@ -33,7 +33,10 @@ public class SkillButton : Button
 
     public void OnPointerClick()
     {
-        InputManager.Instance.SetInputMode(skill);
+        if (!InputManager.isInputStop)
+        {
+            InputManager.Instance.SetInputMode(skill);
+        }
     }
 
 }

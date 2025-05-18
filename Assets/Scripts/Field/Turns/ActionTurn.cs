@@ -18,6 +18,7 @@ public class ActionTurn : ITurn
     }
     public IEnumerator ActionCoroutine()
     {
+        InputManager.isInputStop = true;
         InputManager.Instance.SetInputMode(InputManager.Mode.None);
         foreach (EntityController controller in GameManager.Instance.controllers)
         {
@@ -26,6 +27,6 @@ public class ActionTurn : ITurn
             controller.curCmd = null;
             yield return new WaitForSeconds(1f);
         }
-        //InputManager.Instance.isInputStop = false;
+        InputManager.isInputStop = false;
     }
 }

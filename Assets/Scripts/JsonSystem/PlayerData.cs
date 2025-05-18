@@ -10,11 +10,19 @@ using System.IO;
 public class PlayerData
 {
     // 현재 보유중인 기물 정보
-    public List<EntityData> entities =new List<EntityData>();
+    public List<EntityData> entities;
+
+    public PlayerData()
+    {
+        entities = new List<EntityData>();
+        entities.Add(new EntityData("chicken",0));
+    }
+
+
     // 보유중인 유물 정보
     // 보유중인 재화
     // 클리어한 지역 종류 및 개수
-    public Dictionary<string,int> location = new Dictionary<string,int>();
+    //public Dictionary<string,int> location = new Dictionary<string,int>();
     // 현재 보유중인 기운 개수
     // 보유중인 일회용 아이템 종류와 개수
 
@@ -28,7 +36,7 @@ public class PlayerData
     }
     public static PlayerData DeserializePartyData(string json)
     {
-        if(json == null) return null;
+        if(json == null) return new PlayerData();
         return JsonConvert.DeserializeObject<PlayerData>(json,serializerSettings);
     }
     
@@ -57,15 +65,14 @@ public class PlayerData
 }
 public struct EntityData
 {
-    public EntityData(Jodiac id, Element element,int entityLevel = 0)
+    public EntityData(string _name, int _level = 0)
     {
-        this.entityId = id;
-        this.entityElement = element;
-        this.entityLevel = entityLevel;
+        name = _name;
+        level = _level;
     }
-    //기물 종류
-    public Jodiac entityId;
-    public Element entityElement;
-    //기물 레벨(성장 스탯 추가)
-    public int entityLevel;
+    // 기물 이름
+    public string name;
+    // 기물 레벨(스탯 초기값 설정에 필요)
+    public int level;
+
 }

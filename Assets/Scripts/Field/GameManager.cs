@@ -25,13 +25,18 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
-        //데이터 기반 엔티티 불러오기 및 필드 생성
-        /*//field.CreateField();
-        var data = new PlayerData();//PartyData.LoadPartyData("CurrentPlayerParty");
-        data.entities.Add(new EntityData(Jodiac.Mouse, Element.Water, 1));
-        data.location.Add("Elite", 1);
-        data.location["Elite"] += 1;
-        data.SavePlayerData("Test");
+        
+        // 플레이어 데이터 불러오기
+        var data = PlayerData.LoadPlayerData("Data");
+        foreach (var item in data.entities)
+        {
+            var resource = ResourceManager.GetEntityResource(item.name);
+            var instance = Instantiate(resource);
+            var entity = instance.GetComponent<Entity>();
+            controllers[0].SetEntity(entity);
+        }
+        
+        // 적 데이터 불러오기
 
         for(int i = 0; i < controllers.Length; i++)
         {

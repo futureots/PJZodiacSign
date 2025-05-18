@@ -13,7 +13,7 @@ public class AttackTurn : ITurn
     }
     public IEnumerator AttackCoroutine()
     {
-        InputManager.Instance.isInputStop = true;
+        InputManager.isInputStop = true;
         // 모든 기물 공격
         foreach (var attackable in Field.Instance.GetAllAttackableObject())
         {
@@ -34,7 +34,7 @@ public class AttackTurn : ITurn
         }
 
         Field.Instance.CleanField();
-        InputManager.Instance.isInputStop = false;
+        InputManager.isInputStop = false;
         Debug.Log("CanInput");
     }
 }

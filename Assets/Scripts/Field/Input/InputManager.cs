@@ -10,6 +10,8 @@ using UnityEngine.InputSystem;
 
 public class InputManager : Singleton<InputManager>
 {
+    //false일때 입력을 받고 true이면 입력을 받지 않음
+    public static bool isInputStop;
     public Vector2 PointerPosition { get; private set; }
 
     GameInputActions _inputActions;
@@ -39,6 +41,7 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     public void SetInputMode(Mode mode)
     {
+        if (isInputStop) return;
         curModeState?.RemoveMode();
         currentMode = mode;
         switch (mode)
@@ -104,8 +107,7 @@ public class InputManager : Singleton<InputManager>
 
     List<Tile> list = new List<Tile>();
 
-    //false일때 입력을 받고 true이면 입력을 받지 않음
-    public bool isInputStop;
+
     public static event Action<GameObject> OnObjectMouseDown;
     public static event Action OnObjectMouseUp;
 

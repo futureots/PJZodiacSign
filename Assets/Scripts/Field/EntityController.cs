@@ -10,23 +10,35 @@ public class EntityController : MonoBehaviour
     public bool isReflect;
     //public Field currentField;
 
+    // 컨트롤러가 조종 가능한 엔티티
+    List<Entity> entities;
 
-
-    private void Start()
+    private void Awake()
     {
         entities = new List<Entity>();
-        // Debug
-        var myEntity = Instantiate(entityObj);
-        myEntity.tag = this.tag;
-        entities.Add(myEntity);
-        myEntity.MoveTo(Field.Instance.GetTile(entityPos));
         
     }
 
     #region EntityManaging
 
-    // 컨트롤러가 조종 가능한 엔티티
-    List<Entity> entities;
+    public void SetEntity(Entity entityInstance)
+    {
+        entityInstance.tag = this.tag;
+        entities.Add(entityInstance);
+        var tiles = Field.Instance.GetHalfTiles(isReflect);
+        while (true)
+        {
+            var rand = Random.Range(0, tiles.Count);
+            if (tiles[rand].isEmpty)
+            {
+                entityInstance.MoveTo(tiles[rand]);
+                break;
+            }
+        }
+        
+    }
+
+    
     // 디버그용 엔티티 스폰 위치(나중에 데이터에서 불러와 위치 지정 기능 추가)
     public Entity entityObj;
     public intVector2 entityPos;
@@ -57,16 +69,7 @@ public class EntityController : MonoBehaviour
             x += 10;
         }
     }
-    Entity CreateEntity(Jodiac jodiac, Element element)
-    {
-        var entityData = jodiacList.GetJodiac(jodiac);
-        var entityObj = Instantiate(entityData);
-        var entity = entityObj.GetComponent<Entity>();
-        entity.tag = tag;
-        //entity.elementType = element;
-        //entity.field = currentField;
-        return entity;
-    }*/
+    */
 
     #region Command
 
