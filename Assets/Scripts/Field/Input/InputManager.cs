@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 
 
@@ -71,6 +72,11 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     private void HandleClick()
     {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            UIManager.Instance.entityInfoPanel.HidePanel();
+            return;
+        }
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 부딪힌 기물, (타일) UI 표시 
         if (Physics.Raycast(ray, out var hit))
@@ -82,11 +88,9 @@ public class InputManager : Singleton<InputManager>
                 //UI 표시
                 UIManager.Instance.entityInfoPanel.ShowPanel(entity);
             }
-            else
-            {
-                UIManager.Instance.entityInfoPanel.HidePanel();
-            }
+
         }
+
 
     }
     #endregion

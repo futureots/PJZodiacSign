@@ -20,6 +20,20 @@
         ]
       },
       "id": 1
+    },
+    "2": {
+      "$type": "Location, Assembly-CSharp",
+      "enemyList": {
+        "$type": "EntityData[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "EntityData, Assembly-CSharp",
+            "name": "chicken",
+            "level": 0
+          }
+        ]
+      },
+      "id": 1
     }
   }
 }
