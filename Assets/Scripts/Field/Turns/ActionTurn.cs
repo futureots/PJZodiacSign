@@ -23,7 +23,7 @@ public class ActionTurn : ITurn
         foreach (EntityController controller in GameManager.Instance.controllers)
         {
             var cmd = controller.curCmd;
-            cmd.Execute();
+            cmd?.Execute();
             controller.curCmd = null;
             yield return new WaitForSeconds(1f);
         }

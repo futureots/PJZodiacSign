@@ -7,6 +7,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityController : MonoBehaviour
 {
+    // 필드를 바라보는 방향
     public bool isReflect;
     //public Field currentField;
 
@@ -21,10 +22,16 @@ public class EntityController : MonoBehaviour
 
     #region EntityManaging
 
+    /// <summary>
+    /// 해당 엔티티를 자신의 소유 및 자신의 필드에 랜덤 스폰
+    /// </summary>
+    /// <param name="entityInstance"></param>
     public void SetEntity(Entity entityInstance)
     {
         entityInstance.tag = this.tag;
         entities.Add(entityInstance);
+
+        // 필드의 랜덤 위치로 이동
         var tiles = Field.Instance.GetHalfTiles(isReflect);
         while (true)
         {
@@ -38,10 +45,6 @@ public class EntityController : MonoBehaviour
         
     }
 
-    
-    // 디버그용 엔티티 스폰 위치(나중에 데이터에서 불러와 위치 지정 기능 추가)
-    public Entity entityObj;
-    public intVector2 entityPos;
     public bool IsContainEntity(Entity entity)
     {
         return entities.Contains(entity);
@@ -72,7 +75,7 @@ public class EntityController : MonoBehaviour
     */
 
     #region Command
-
+    // 현재 저장된 명령
     public Command curCmd
     {
         get
@@ -87,6 +90,7 @@ public class EntityController : MonoBehaviour
     }
     Command _curCmd;
 
+    // 이동 명령 생성
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)
     {
         Command cmd = new MoveCommand(entity, tile);
@@ -94,7 +98,7 @@ public class EntityController : MonoBehaviour
         cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
-
+    // 스킬 명령 생성
     public Command CreateCommand(ISkill skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
@@ -104,6 +108,7 @@ public class EntityController : MonoBehaviour
     }
 
     #endregion
+    // 해당 위치에서 가장 가까운 타일을 반환한다.
     public Tile GetClosestTile(Vector3 pos,Field field)
     {
         if (field == null) return null;

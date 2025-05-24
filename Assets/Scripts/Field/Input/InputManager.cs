@@ -107,10 +107,6 @@ public class InputManager : Singleton<InputManager>
 
     List<Tile> list = new List<Tile>();
 
-
-    public static event Action<GameObject> OnObjectMouseDown;
-    public static event Action OnObjectMouseUp;
-
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {
         float minDistance = 0;

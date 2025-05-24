@@ -1,0 +1,25 @@
+{
+  "$type": "MapData, Assembly-CSharp",
+  "map": {
+    "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Location, Assembly-CSharp]], mscorlib",
+    "1": {
+      "$type": "Location, Assembly-CSharp",
+      "enemyList": {
+        "$type": "EntityData[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "EntityData, Assembly-CSharp",
+            "name": "chicken",
+            "level": 0
+          },
+          {
+            "$type": "EntityData, Assembly-CSharp",
+            "name": "chicken",
+            "level": 0
+          }
+        ]
+      },
+      "id": 1
+    }
+  }
+}

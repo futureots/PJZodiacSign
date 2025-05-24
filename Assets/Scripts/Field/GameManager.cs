@@ -17,7 +17,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public List<Entity> objects;
 
     // 턴 조작
     public TurnManager turnManager;
@@ -27,31 +26,31 @@ public class GameManager : Singleton<GameManager>
     {
         
         // 플레이어 데이터 불러오기
-        var data = PlayerData.LoadPlayerData("Data");
-        foreach (var item in data.entities)
+        var playerData = DataManager.Instance.playerData;
+
+        Debug.Log(playerData.entities.Count);
+        foreach (var item in playerData.entities)
         {
             var resource = ResourceManager.GetEntityResource(item.name);
             var instance = Instantiate(resource);
             var entity = instance.GetComponent<Entity>();
             controllers[0].SetEntity(entity);
         }
-        
-        // 적 데이터 불러오기
 
-        for(int i = 0; i < controllers.Length; i++)
+        // 적 데이터 불러오기
+        var enemyData = DataManager.Instance.curLocation;
+
+        foreach (var item in enemyData.enemyList)
         {
-            //controllers[i].SetEntities(i+1, data);
+            var resource = ResourceManager.GetEntityResource(item.name);
+            var instance = Instantiate(resource);
+            var entity = instance.GetComponent<Entity>();
+            controllers[1].SetEntity(entity);
         }
-        //StartGame();*/
+        
     }
     void Start()
     {
-        int i = 0;
-        foreach (var item in objects)
-        {
-            item.MoveTo(field.GetTile(i,i));
-            i += 2;
-        }
         
         turnManager = this.AddComponent<TurnManager>();
     }
