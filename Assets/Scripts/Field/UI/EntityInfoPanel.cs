@@ -6,23 +6,24 @@ using UnityEngine.UI;
 
 public class EntityInfoPanel : MonoBehaviour
 {
+    public GameObject InfoPanel;
     
     public SkillButton entitytSkillButton;
     // Start is called before the first frame update
     void Start()
     {
         entitytSkillButton.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        InfoPanel.SetActive(false);
     }
 
     public void ShowPanel(Entity entity)
     {
-        gameObject.SetActive(true);
+        InfoPanel.SetActive(true);
         GetComponentInChildren<TextMeshProUGUI>().text = entity.name;
-        entitytSkillButton.SetSkill(entity.entitySkill);
         if (entity.CompareTag("Player"))
         {
             entitytSkillButton.gameObject.SetActive(true);
+            entitytSkillButton.SetSkill(entity.entitySkill);
         }
         else
         {
@@ -32,6 +33,6 @@ public class EntityInfoPanel : MonoBehaviour
     }
     public void HidePanel()
     {
-        gameObject.SetActive(false);
+        InfoPanel.SetActive(false);
     }
 }

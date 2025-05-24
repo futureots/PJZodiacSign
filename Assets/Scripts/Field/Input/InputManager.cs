@@ -5,11 +5,14 @@ using Unity.VisualScripting;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 
 
 public class InputManager : Singleton<InputManager>
 {
+    //false일때 입력을 받고 true이면 입력을 받지 않음
+    public static bool isInputStop;
     public Vector2 PointerPosition { get; private set; }
 
     GameInputActions _inputActions;
@@ -39,6 +42,7 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     public void SetInputMode(Mode mode)
     {
+        if (isInputStop) return;
         curModeState?.RemoveMode();
         currentMode = mode;
         switch (mode)
@@ -68,6 +72,11 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     private void HandleClick()
     {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            UIManager.Instance.entityInfoPanel.HidePanel();
+            return;
+        }
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 부딪힌 기물, (타일) UI 표시 
         if (Physics.Raycast(ray, out var hit))
@@ -78,12 +87,11 @@ public class InputManager : Singleton<InputManager>
                 Debug.Log($"Show {entity.name}'s Info");
                 //UI 표시
                 UIManager.Instance.entityInfoPanel.ShowPanel(entity);
-            }   
+            }
+
         }
-        else
-        {
-            UIManager.Instance.entityInfoPanel.HidePanel();
-        }
+
+
     }
     #endregion
 
@@ -102,11 +110,6 @@ public class InputManager : Singleton<InputManager>
     }
 
     List<Tile> list = new List<Tile>();
-
-    //false일때 입력을 받고 true이면 입력을 받지 않음
-    public bool isInputStop;
-    public static event Action<GameObject> OnObjectMouseDown;
-    public static event Action OnObjectMouseUp;
 
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {

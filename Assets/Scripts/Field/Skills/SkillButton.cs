@@ -14,29 +14,29 @@ public class SkillButton : Button
     
     public void SetSkill(Skill skill)
     {
+        Debug.Log($"SetSkill + {skill}");
         this.skill = skill;
+        if (skill != null)
+        {
+            interactable = true;
+        }
+        else
+        {
+            interactable = false;
+        }
     }
     protected override void Start()
     {
         base.Start();
-        SetSkill(GetComponent<Skill>());
         onClick.AddListener(OnPointerClick);
     }
 
-    private void Update()
-    {
-        if(skill == null || InputManager.Instance.currentMode == InputManager.Mode.None)
-        {
-            interactable = false;
-        }
-        else
-        {
-            interactable = true;
-        }
-    }
     public void OnPointerClick()
     {
-        InputManager.Instance.SetInputMode(skill);
+        if (!InputManager.isInputStop)
+        {
+            InputManager.Instance.SetInputMode(skill);
+        }
     }
 
 }

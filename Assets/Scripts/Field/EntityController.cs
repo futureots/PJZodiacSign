@@ -7,29 +7,44 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityController : MonoBehaviour
 {
+    // 필드를 바라보는 방향
     public bool isReflect;
     //public Field currentField;
 
+    // 컨트롤러가 조종 가능한 엔티티
+    List<Entity> entities;
 
-
-    private void Start()
+    private void Awake()
     {
         entities = new List<Entity>();
-        // Debug
-        var myEntity = Instantiate(entityObj);
-        myEntity.tag = this.tag;
-        entities.Add(myEntity);
-        myEntity.MoveTo(Field.Instance.GetTile(entityPos));
         
     }
 
     #region EntityManaging
 
-    // 컨트롤러가 조종 가능한 엔티티
-    List<Entity> entities;
-    // 디버그용 엔티티 스폰 위치(나중에 데이터에서 불러와 위치 지정 기능 추가)
-    public Entity entityObj;
-    public intVector2 entityPos;
+    /// <summary>
+    /// 해당 엔티티를 자신의 소유 및 자신의 필드에 랜덤 스폰
+    /// </summary>
+    /// <param name="entityInstance"></param>
+    public void SetEntity(Entity entityInstance)
+    {
+        entityInstance.tag = this.tag;
+        entities.Add(entityInstance);
+
+        // 필드의 랜덤 위치로 이동
+        var tiles = Field.Instance.GetHalfTiles(isReflect);
+        while (true)
+        {
+            var rand = Random.Range(0, tiles.Count);
+            if (tiles[rand].isEmpty)
+            {
+                entityInstance.MoveTo(tiles[rand]);
+                break;
+            }
+        }
+        
+    }
+
     public bool IsContainEntity(Entity entity)
     {
         return entities.Contains(entity);
@@ -57,19 +72,10 @@ public class EntityController : MonoBehaviour
             x += 10;
         }
     }
-    Entity CreateEntity(Jodiac jodiac, Element element)
-    {
-        var entityData = jodiacList.GetJodiac(jodiac);
-        var entityObj = Instantiate(entityData);
-        var entity = entityObj.GetComponent<Entity>();
-        entity.tag = tag;
-        //entity.elementType = element;
-        //entity.field = currentField;
-        return entity;
-    }*/
+    */
 
     #region Command
-
+    // 현재 저장된 명령
     public Command curCmd
     {
         get
@@ -84,6 +90,7 @@ public class EntityController : MonoBehaviour
     }
     Command _curCmd;
 
+    // 이동 명령 생성
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)
     {
         Command cmd = new MoveCommand(entity, tile);
@@ -91,7 +98,7 @@ public class EntityController : MonoBehaviour
         cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
-
+    // 스킬 명령 생성
     public Command CreateCommand(ISkill skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
@@ -101,6 +108,7 @@ public class EntityController : MonoBehaviour
     }
 
     #endregion
+    // 해당 위치에서 가장 가까운 타일을 반환한다.
     public Tile GetClosestTile(Vector3 pos,Field field)
     {
         if (field == null) return null;

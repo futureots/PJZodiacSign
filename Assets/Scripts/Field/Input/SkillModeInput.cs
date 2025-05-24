@@ -36,19 +36,21 @@ public class SkillModeInput : IModeInput
                 skillFields.Enqueue(field);
             }
         }
-        // 첫번째 스킬 입력값 설정
 
-        SetNextField();
     }
 
     public void RemoveMode()
     {
+        Debug.Log("RemoveSkillMode");
         _inputAction.Gameplay.Click.started -= SetClick;
     }
 
     public void SetMode()
     {
         _inputAction.Gameplay.Click.started += SetClick;
+
+        // 첫번째 스킬 입력값 설정
+        SetNextField();
     }
 
     Queue<FieldInfo> skillFields;
@@ -75,6 +77,7 @@ public class SkillModeInput : IModeInput
     }
     bool IsFieldEmpty()
     {
+        Debug.Log($"SkillField Count : {skillFields.Count}");
         if(skillFields.Count <= 0)
         {
             return true;
