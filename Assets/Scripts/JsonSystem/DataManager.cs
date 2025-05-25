@@ -22,6 +22,8 @@ public class DataManager : Singleton<DataManager>
         // null 확인 필요 할수도 있음
         curLocation = mapData.map[playerData.locationId];
     }
+
+    //데이터 저장 어떻게 할지는 아직 모르겠음
     public void SaveAllData(string fileName)
     {
         playerData.SavePlayerData(fileName);

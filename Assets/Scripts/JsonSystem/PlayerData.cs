@@ -29,7 +29,7 @@ public class PlayerData
         locationId = 1;
     }
 
-    // 보유중인 일회용 아이템 종류와 개수
+    // 보유중인 일회용 아이템 종류(지금은 따로 정렬 없이 리스트로 저장 => 나중에 아이템, 개수 딕셔너리 사용)
     public List<string> items;
 
     // 보유중인 유물 정보
