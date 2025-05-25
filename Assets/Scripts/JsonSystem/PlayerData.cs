@@ -24,18 +24,20 @@ public class PlayerData
     {
         Debug.Log("Player Data Init");
         entities = new List<EntityData>();
+        items = new();
         //entities.Add(new EntityData("chicken",0));
         locationId = 1;
     }
 
-
+    // 보유중인 일회용 아이템 종류와 개수
+    public List<string> items;
 
     // 보유중인 유물 정보
     // 보유중인 재화
     // 클리어한 지역 종류 및 개수
     //public Dictionary<string,int> location = new Dictionary<string,int>();
     // 현재 보유중인 기운 개수
-    // 보유중인 일회용 아이템 종류와 개수
+
 
 
 

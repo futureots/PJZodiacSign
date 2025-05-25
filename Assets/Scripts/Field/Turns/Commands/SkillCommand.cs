@@ -5,16 +5,16 @@ using UnityEngine;
 public class SkillCommand : Command
 {
     //입력값이 모두 입력된 스킬
-    public ISkill skill;
+    public Skill skill;
 
-    public SkillCommand(ISkill skill)
+    public SkillCommand(Skill skill)
     {
         selecterObjects = new();
         this.skill = skill;
     }
     public override void Execute()
     {
-        var boolean = skill.ExecuteSkillSequence();
+        var result = skill.ExecuteSkillSequence();
         //Debug.Log(boolean);
     }
     public override void Delete()

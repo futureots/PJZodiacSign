@@ -24,6 +24,7 @@ public class SkillButton : Button
         {
             interactable = false;
         }
+        //skill.callback += 
     }
     protected override void Start()
     {

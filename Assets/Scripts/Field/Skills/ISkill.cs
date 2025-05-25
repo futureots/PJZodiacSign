@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -5,16 +6,7 @@ using UnityEngine;
 
 public interface ISkill
 {
-    public bool ExecuteSkillSequence()
-    {
-        var isActable = IsActable();
-        if (isActable)
-        {
-            Activate();
-            Reinitialize();
-        }
-        return isActable;
-    }
+
     /// <summary>
     /// 스킬을 사용하는 함수
     /// </summary>

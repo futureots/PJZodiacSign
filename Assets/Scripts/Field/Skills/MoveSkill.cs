@@ -14,10 +14,10 @@ public class MoveSkill : Skill
     //스킬 발동
     public override void Activate()
     {
-        entity.MoveTo(tile);
+        entity.MoveSequence(tile);
     }
 
-    public bool IsActable()
+    public override bool IsActable()
     {
         Debug.Log(entity + "  " + tile);
         if (entity == null || tile == null) return false;

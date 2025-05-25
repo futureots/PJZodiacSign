@@ -6,7 +6,6 @@ using UnityEngine;
 public class TurnManager : Singleton<TurnManager>
 {
 
-    public GameInputState currentState { get; private set; } = GameInputState.Planning;
 
     Queue<ITurn> turns;
     bool isTurnEnd;
@@ -57,10 +56,4 @@ public class TurnManager : Singleton<TurnManager>
 
         
     }
-}
-public enum GameInputState
-{
-    Planning,//명령 입력
-    Executing,//입력 무시
-    Inspecting//명령 무시, 유닛 정보 표시만 가능
 }
