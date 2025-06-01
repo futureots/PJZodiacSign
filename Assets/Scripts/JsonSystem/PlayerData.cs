@@ -19,6 +19,7 @@ public class PlayerData
     // 현재 위치한 지역 아이디
     public int locationId;
 
+    
     //파일에서 읽어올 때 호출됨
     public PlayerData()
     {

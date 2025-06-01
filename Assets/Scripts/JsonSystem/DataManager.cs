@@ -18,7 +18,7 @@ public class DataManager : Singleton<DataManager>
     {
         playerData = PlayerData.LoadPlayerData(fileName);
         mapData = MapData.LoadMapData(fileName);
-        Debug.Log(playerData.entities.Count);
+        //Debug.Log(playerData.entities.Count);
         // null 확인 필요 할수도 있음
         curLocation = mapData.map[playerData.locationId];
     }
