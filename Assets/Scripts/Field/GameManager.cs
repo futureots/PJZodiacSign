@@ -47,7 +47,7 @@ public class GameManager : Singleton<GameManager>
             var entity = instance.GetComponent<Entity>();
             controllers[1].SetEntity(entity);
         }
-        
+        DataManager.Instance.SaveAllData("Data");
     }
     void Start()
     {

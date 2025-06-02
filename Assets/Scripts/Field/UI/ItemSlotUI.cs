@@ -1,10 +1,14 @@
+using System;
+
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlotUI : MonoBehaviour
+public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerMoveHandler
 {
-    public Item item;
+    public Item item { get; private set; }
+
     Image image;
     public Image Image
     {
@@ -17,6 +21,8 @@ public class ItemSlotUI : MonoBehaviour
             return image;
         }
     }
+
+    public Action<Item> OnClick;
     public void SetSlot(Item item)
     {
         if (item == null) return;
@@ -31,5 +37,16 @@ public class ItemSlotUI : MonoBehaviour
         item = null;
         Image.sprite = null;
         Image.color = Color.clear;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        //Debug.Log($"Click : {(item != null ? item.itemData.name:null)} ");
+        OnClick?.Invoke(item);
+    }
+
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        //정보 표시 UI 마우스 위치에 표시
     }
 }

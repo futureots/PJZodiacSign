@@ -18,10 +18,11 @@ public class ItemTable : ScriptableObject
     public ItemData GetRandomItem()
     {
         float sum = itemTable.Sum(x => x.weight);
+        float rand = Random.Range(0, sum);
         foreach (var item in itemTable)
         {
-            sum -= item.weight;
-            if (sum < 0)
+            rand -= item.weight;
+            if (rand <= 0)
             {
                 return item.itemData;
             }

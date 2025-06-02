@@ -19,19 +19,22 @@ public class PlayerData
     // 현재 위치한 지역 아이디
     public int locationId;
 
-    
+    // 현재 보유중인 (아이템 정보,개수)
+    public List<string> items;
+
     //파일에서 읽어올 때 호출됨
     public PlayerData()
     {
         Debug.Log("Player Data Init");
         entities = new List<EntityData>();
         items = new();
+        #region DebugData
+        //items.Add("Scroll");
         //entities.Add(new EntityData("chicken",0));
+        #endregion
         locationId = 1;
+        
     }
-
-    // 보유중인 일회용 아이템 종류(지금은 따로 정렬 없이 리스트로 저장 => 나중에 아이템, 개수 딕셔너리 사용)
-    public List<string> items;
 
     // 보유중인 유물 정보
     // 보유중인 재화

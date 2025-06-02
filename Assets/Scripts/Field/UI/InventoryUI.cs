@@ -1,18 +1,16 @@
 using DG.Tweening;
-using NUnit.Framework;
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using static UnityEditor.Progress;
+
 public class InventoryUI : MonoBehaviour
 {
-
+    /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
-    [ContextMenuItem("SetClosePos", "SetClosedPosition")]
-    public Vector3 closedPosition;
-    [ContextMenuItem("SetOpenPos", "SetOpenedPosition")]
-    public Vector3 openedPosition;
+    
     #region Debugging
     public void SetClosedPosition()
     {
@@ -22,12 +20,70 @@ public class InventoryUI : MonoBehaviour
     {
         openedPosition = transform.localPosition;
     }
+    public void SetInventorySlot()
+    {
+        itemSlots = new();
+        var slots = GetComponentsInChildren<ItemSlotUI>();
+        itemSlots.AddRange(slots);
+    }
     #endregion
+
+    /// <summary>닫을 때 이동하는 포지션</summary>
+    [ContextMenuItem("SetClosePos", "SetClosedPosition")]
+    public Vector3 closedPosition;
+    /// <summary>열 때 이동하는 포지션</summary>
+    [ContextMenuItem("SetOpenPos", "SetOpenedPosition")]
+    public Vector3 openedPosition;
+
+
+    [Header("오브젝트")]
+    public GameObject panel;
+
+    /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
     public Button popBtn;
+    
+    /// <summary> 아이템 데이터를 인스턴스로 전환 </summary>
+    [SerializeField] ItemTable itemTable;
+    [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
+    [SerializeField] List<ItemSlotUI> itemSlots;
     
     private void Start()
     {
         PopInventory(false);
+
+        //인벤토리 데이터 불러와서 표시
+        SetInventory();
+        //DataManager.Instance.get
+
+    }
+    /// <summary>
+    /// 보유 아이템 데이터를 인벤토리에 세팅
+    /// </summary>
+    public void SetInventory()
+    {
+        // 아이템 데이터 가져오기
+        var list = DataManager.Instance.playerData.items;
+        Debug.Log($"{list.Count} + {itemSlots.Count}");
+        for (int i = 0; i < itemSlots.Count; i++)
+        {
+            if (list.Count <= i)
+            {
+                itemSlots[i].ClearSlot();
+                continue;
+            }
+            // 테이블에서 아이템 서치(없으면 다음)
+            var data = itemTable.SearchItem(list[i]);
+            if (data == null)
+            {
+                itemSlots[i].ClearSlot();
+                continue;
+            }
+            Item instance = new Item(data);
+            //인벤토리 한 칸에 세팅
+            itemSlots[i].SetSlot(instance);
+            itemSlots[i].OnClick += OpenItemUI;
+        }
+
     }
     /// <summary>
     /// Show/Hide InventoryUI
@@ -38,6 +94,10 @@ public class InventoryUI : MonoBehaviour
         PopInventory(isOpen);
     }
 
+    /// <summary>
+    /// Show/Hide InventoryUI
+    /// </summary>
+    /// <param name="isOpen">true : Open, false : Close</param>
     void PopInventory(bool isOpen)
     {
         var panel = GetComponent<RectTransform>();
@@ -45,5 +105,10 @@ public class InventoryUI : MonoBehaviour
         var scaleX = isOpen ? 1 : -1;
         popBtn.transform.localScale = new Vector3(scaleX, 1, 1);
         panel.DOLocalMove(pos, 0.5f);
+    }
+
+    void OpenItemUI(Item item)
+    {
+        Debug.Log("OpenItemUI");
     }
 }

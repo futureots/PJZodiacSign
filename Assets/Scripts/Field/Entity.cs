@@ -139,7 +139,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public bool MoveSequence(Tile tile)
     {
         if(isRooted) return false;
-        var isMovable = GetMoveArea().Contains(tile) && !tile.isEmpty;
+        var isMovable = GetMoveArea().Contains(tile) && tile.isEmpty;
         if (isMovable)
         {
             MoveTo(tile);
