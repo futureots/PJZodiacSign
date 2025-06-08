@@ -31,8 +31,8 @@ public class ItemTable : ScriptableObject
     }
     public ItemData SearchItem(string name)
     {
-        var item = itemTable.Find(x => x.itemData.name.Equals(name));
-        Debug.Log(item.itemData.name);
+        var item = itemTable.Find(x => x.itemData.itemName.Equals(name));
+        Debug.Log(item.itemData.itemName);
         if (item == null) return null;
         return item.itemData;
     }
@@ -42,7 +42,19 @@ public struct ItemSetData
 {
     public ItemData itemData;
     public float weight;
-    
+
+    public override bool Equals(object obj)
+    {
+        return obj is ItemSetData data &&
+               EqualityComparer<ItemData>.Default.Equals(itemData, data.itemData) &&
+               weight == data.weight;
+    }
+
+    public override int GetHashCode()
+    {
+        return System.HashCode.Combine(itemData, weight);
+    }
+
     public static bool operator==(ItemSetData a, ItemSetData b)
     {
         return a.itemData.Equals(b.itemData);

@@ -37,7 +37,8 @@ public class InventoryUI : MonoBehaviour
 
 
     [Header("오브젝트")]
-    public GameObject panel;
+    public GameObject infoPanel;
+    public ActionMenu actPanel;
 
     /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
     public Button popBtn;
@@ -53,13 +54,12 @@ public class InventoryUI : MonoBehaviour
 
         //인벤토리 데이터 불러와서 표시
         SetInventory();
-        //DataManager.Instance.get
 
     }
     /// <summary>
     /// 보유 아이템 데이터를 인벤토리에 세팅
     /// </summary>
-    public void SetInventory()
+    void SetInventory()
     {
         // 아이템 데이터 가져오기
         var list = DataManager.Instance.playerData.items;
@@ -81,10 +81,44 @@ public class InventoryUI : MonoBehaviour
             Item instance = new Item(data);
             //인벤토리 한 칸에 세팅
             itemSlots[i].SetSlot(instance);
-            itemSlots[i].OnClick += OpenItemUI;
+            itemSlots[i].OnClick += OpenItemAction;
+            itemSlots[i].OnMouseOver += (item, pos) =>
+            {
+                if (item == null)
+                {
+                    infoPanel.SetActive(false);
+                }
+                else
+                {
+                    if(!infoPanel.activeSelf) infoPanel.SetActive(true);
+                    infoPanel.transform.position = pos;
+                }
+            };
         }
 
     }
+
+    /// <summary>
+    /// 인벤토리 빈 자리에 아이템 추가(없으면 false 반환)
+    /// </summary>
+    /// <param name="item"></param>
+    public bool AddItem(Item item)
+    {
+        var slot = GetEmptySlot();
+        if (slot == null) return false;
+        slot.SetSlot(item);
+        return true;
+    }
+
+    ItemSlotUI GetEmptySlot()
+    {
+        foreach(var slot in itemSlots)
+        {
+            if (slot.item == null) return slot;
+        }
+        return null;
+    }
+
     /// <summary>
     /// Show/Hide InventoryUI
     /// </summary>
@@ -105,10 +139,19 @@ public class InventoryUI : MonoBehaviour
         var scaleX = isOpen ? 1 : -1;
         popBtn.transform.localScale = new Vector3(scaleX, 1, 1);
         panel.DOLocalMove(pos, 0.5f);
+        if (!isOpen)
+        {
+            infoPanel.SetActive(false);
+            actPanel.gameObject.SetActive(false);
+        }
+
     }
 
-    void OpenItemUI(Item item)
+    void OpenItemAction(ItemSlotUI slot)
     {
+        actPanel.gameObject.SetActive(true);
+        actPanel.transform.position = slot.transform.position;
+        
         Debug.Log("OpenItemUI");
     }
 }

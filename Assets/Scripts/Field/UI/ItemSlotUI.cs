@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerMoveHandler
+public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
 {
     public Item item { get; private set; }
 
@@ -22,7 +22,8 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerMoveHandl
         }
     }
 
-    public Action<Item> OnClick;
+    public Action<ItemSlotUI> OnClick;
+    public Action<Item, Vector2> OnMouseOver;
     public void SetSlot(Item item)
     {
         if (item == null) return;
@@ -42,11 +43,28 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerMoveHandl
     public void OnPointerClick(PointerEventData eventData)
     {
         //Debug.Log($"Click : {(item != null ? item.itemData.name:null)} ");
-        OnClick?.Invoke(item);
+        if(item != null)
+        {
+            OnClick?.Invoke(this);
+        }
+        
     }
 
-    public void OnPointerMove(PointerEventData eventData)
+
+
+    public void OnPointerExit(PointerEventData eventData)
     {
-        //정보 표시 UI 마우스 위치에 표시
+        // null 입력 시 해당 패널 비활성화
+        OnMouseOver?.Invoke(null, eventData.position);
+        Debug.Log("Out");
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item != null)
+        {
+            OnMouseOver?.Invoke(item, eventData.position);
+            Debug.Log("enter");
+        }
     }
 }
