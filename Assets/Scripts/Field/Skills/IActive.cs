@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public interface ISkill
+public interface IActive
 {
-
+    public bool ExecuteSequence();
     /// <summary>
     /// 스킬을 사용하는 함수
     /// </summary>

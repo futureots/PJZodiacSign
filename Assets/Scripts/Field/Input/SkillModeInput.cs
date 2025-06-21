@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class SkillModeInput : IModeInput
 {
-    Skill skill;
+    IActive skill;
     GameInputActions _inputAction;
     Action<InputAction.CallbackContext> bindAction;
     InputManager _inputManager
@@ -18,7 +18,7 @@ public class SkillModeInput : IModeInput
         }
     }
 
-    public SkillModeInput(GameInputActions inputAction,Skill skill)
+    public SkillModeInput(GameInputActions inputAction,IActive skill)
     {
         this.skill = skill;
         _inputAction = inputAction;

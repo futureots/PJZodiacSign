@@ -20,7 +20,7 @@ public class ItemInfoUI : MonoBehaviour
     {
         transform.position = Input.mousePosition;
     }
-    public void SetInfo(Item item)
+    public void SetInfo(ItemInstance item)
     {
         Text.text = item.itemData.description;
     }

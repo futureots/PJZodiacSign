@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
 {
-    public Item item { get; private set; }
+    public ItemInstance item { get; private set; }
 
     Image image;
     public Image Image
@@ -23,14 +23,18 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
     }
 
     public Action<ItemSlotUI> OnClick;
-    public Action<Item, Vector2> OnMouseOver;
-    public void SetSlot(Item item)
+    /// <summary>
+    /// 마우스가 들어올 때, 나갈 때 호출되는 함수
+    /// </summary>
+    public Action<ItemInstance, Vector2> OnMouseInOut;
+    public void SetSlot(ItemInstance item)
     {
         if (item == null) return;
         
         this.item = item;
         Image.sprite = item.itemData.icon;
         Image.color = Color.white;
+
     }
 
     public void ClearSlot()
@@ -38,6 +42,20 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
         item = null;
         Image.sprite = null;
         Image.color = Color.clear;
+    }
+
+    public void UseSlot()
+    {
+        // 사용 등록(바로 삭제 X, 해당 명령 실행 시 삭제)
+        if(item is ActiveItemInstance)
+        {
+            var active = (ActiveItemInstance)item;
+            InputManager.Instance.SetInputMode(active);
+        }
+        else
+        {
+            Debug.Log("Not Active Item");
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -55,7 +73,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
     public void OnPointerExit(PointerEventData eventData)
     {
         // null 입력 시 해당 패널 비활성화
-        OnMouseOver?.Invoke(null, eventData.position);
+        OnMouseInOut?.Invoke(null, eventData.position);
         Debug.Log("Out");
     }
 
@@ -63,7 +81,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
     {
         if (item != null)
         {
-            OnMouseOver?.Invoke(item, eventData.position);
+            OnMouseInOut?.Invoke(item, eventData.position);
             Debug.Log("enter");
         }
     }

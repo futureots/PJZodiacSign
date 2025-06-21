@@ -2,10 +2,10 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-public abstract class Skill : MonoBehaviour,ISkill
+public abstract class Skill : MonoBehaviour,IActive
 {
     public Action<bool> callback;
-    public bool ExecuteSkillSequence()
+    public bool ExecuteSequence()
     {
         var isActable = IsActable();
         if (isActable)
@@ -15,6 +15,7 @@ public abstract class Skill : MonoBehaviour,ISkill
         }
         callback?.Invoke(isActable);
         return isActable;
+        
     }
     //스킬 발동
     public abstract void Activate();

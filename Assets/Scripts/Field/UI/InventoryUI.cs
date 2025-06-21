@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 using static UnityEditor.Progress;
 
 public class InventoryUI : MonoBehaviour
@@ -37,7 +36,7 @@ public class InventoryUI : MonoBehaviour
 
 
     [Header("오브젝트")]
-    public GameObject infoPanel;
+    public ItemInfoUI infoPanel;
     public ActionMenu actPanel;
 
     /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
@@ -78,22 +77,11 @@ public class InventoryUI : MonoBehaviour
                 itemSlots[i].ClearSlot();
                 continue;
             }
-            Item instance = new Item(data);
-            //인벤토리 한 칸에 세팅
+            ItemInstance instance = new ItemInstance(data);
+            // 인벤토리 한 칸에 세팅
             itemSlots[i].SetSlot(instance);
             itemSlots[i].OnClick += OpenItemAction;
-            itemSlots[i].OnMouseOver += (item, pos) =>
-            {
-                if (item == null)
-                {
-                    infoPanel.SetActive(false);
-                }
-                else
-                {
-                    if(!infoPanel.activeSelf) infoPanel.SetActive(true);
-                    infoPanel.transform.position = pos;
-                }
-            };
+            itemSlots[i].OnMouseInOut += SetInfoUI;
         }
 
     }
@@ -102,7 +90,7 @@ public class InventoryUI : MonoBehaviour
     /// 인벤토리 빈 자리에 아이템 추가(없으면 false 반환)
     /// </summary>
     /// <param name="item"></param>
-    public bool AddItem(Item item)
+    public bool AddItem(ItemInstance item)
     {
         var slot = GetEmptySlot();
         if (slot == null) return false;
@@ -141,7 +129,7 @@ public class InventoryUI : MonoBehaviour
         panel.DOLocalMove(pos, 0.5f);
         if (!isOpen)
         {
-            infoPanel.SetActive(false);
+            infoPanel.gameObject.SetActive(false);
             actPanel.gameObject.SetActive(false);
         }
 
@@ -151,7 +139,24 @@ public class InventoryUI : MonoBehaviour
     {
         actPanel.gameObject.SetActive(true);
         actPanel.transform.position = slot.transform.position;
-        
+        actPanel.SetItemAction(slot);
+
         Debug.Log("OpenItemUI");
+    }
+    void SetInfoUI(ItemInstance item, Vector2 pos)
+    {
+        if (item == null)
+        {
+            infoPanel.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (!infoPanel.gameObject.activeSelf)
+            {
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.SetInfo(item);
+            }
+            infoPanel.transform.position = pos;
+        }
     }
 }

@@ -28,7 +28,7 @@ public class InputManager : Singleton<InputManager>
     public enum Mode
     {
         Move,//이동 입력(드래그&드롭)
-        Skill,//스킬 입력(클릭)
+        Active,//스킬 입력(클릭)
         None // 입력 X, 정보만 표시
     }
     public Mode currentMode;
@@ -53,11 +53,11 @@ public class InputManager : Singleton<InputManager>
         curModeState.SetMode();
     }
     public void SetInputMode() => SetInputMode(Mode.Move);
-    public void SetInputMode(Skill skill)
+    public void SetInputMode(IActive active)
     {
         curModeState?.RemoveMode();
-        currentMode = Mode.Skill;
-        curModeState = new SkillModeInput(_inputActions, skill);
+        currentMode = Mode.Active;
+        curModeState = new SkillModeInput(_inputActions, active);
         curModeState.SetMode();
     }
     #endregion
