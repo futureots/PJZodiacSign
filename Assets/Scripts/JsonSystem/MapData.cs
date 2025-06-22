@@ -40,6 +40,7 @@ public class MapData
     public void SaveMapData(string fileName)
     {
         string data = SerializeMapData(this);
+        //string data = JsonUtility.ToJson(this);
         string path = Path.Combine(Application.dataPath + "/Data", fileName + defaultPath+ ".Json");
         File.WriteAllText(path, data);
         Debug.Log(data);
@@ -57,6 +58,7 @@ public class MapData
         {
             return new MapData();
         }
+        //return JsonUtility.FromJson<MapData>(data);
         return DeserializeMapData(data);
     }
 

@@ -8,7 +8,7 @@ public class ActiveItemData : ItemData
     public override ItemInstance CreateInstance()
     {
         var instance = new ActiveItemInstance(this);
-        //instance.effect = effect.CreateInstance();
+        instance.effect = effect.CreateInstance();
         return instance;
         
     }

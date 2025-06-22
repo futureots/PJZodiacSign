@@ -59,7 +59,8 @@ public class PlayerData
     
     public void SavePlayerData(string fileName)
     {
-        string data = SerializePlayerData(this);
+        //string data = SerializePlayerData(this);
+        string data = JsonUtility.ToJson(this);
         string path = Path.Combine(Application.dataPath+"/Data", fileName + defaultPath + ".Json");
         File.WriteAllText(path, data);
         Debug.Log(data);
@@ -77,9 +78,11 @@ public class PlayerData
         {
             return new PlayerData();
         }
-        return DeserializePlayerData(data);
+        return JsonUtility.FromJson<PlayerData>(data);
+        //return DeserializePlayerData(data);
     }
 }
+[Serializable]
 public struct EntityData
 {
     public EntityData(string _name, int _level = 0)

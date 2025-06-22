@@ -1,1 +1,1 @@
-{"$type":"PlayerData, Assembly-CSharp","entities":{"$type":"System.Collections.Generic.List`1[[EntityData, Assembly-CSharp]], mscorlib","$values":[{"$type":"EntityData, Assembly-CSharp","name":"chicken","level":0},{"$type":"EntityData, Assembly-CSharp","name":"chicken","level":0}]},"locationId":2,"items":{"$type":"System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib","$values":["Scroll","Bomb","Scroll"]}}
+{"entities":[{"name":"chicken","level":0},{"name":"chicken","level":0}],"locationId":2,"items":["Scroll","Bomb","Scroll"]}
