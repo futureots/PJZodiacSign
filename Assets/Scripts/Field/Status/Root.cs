@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[CreateAssetMenu(fileName = "Root", menuName = "Scriptable Objects/Buff/Root")]
 public class Root : BuffData
 {
     public override void ApplyBuff(Entity entity, int count)

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillButton : Button
+public class SkillButton : MonoBehaviour, IPointerClickHandler
 {
     
     public Skill skill;
@@ -18,26 +18,21 @@ public class SkillButton : Button
         this.skill = skill;
         if (skill != null)
         {
-            interactable = true;
+            //interactable = true;
         }
         else
         {
-            interactable = false;
+            //interactable = false;
         }
         //skill.callback += 
     }
-    protected override void Start()
-    {
-        base.Start();
-        onClick.AddListener(OnPointerClick);
-    }
 
-    public void OnPointerClick()
+
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (!InputManager.isInputStop)
         {
             InputManager.Instance.SetInputMode(skill);
         }
     }
-
 }

@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class S_PowerUp : BaseSkill<SD_PowerUp>
+public class S_SingleBuff : BaseSkillInstance<SD_SingleBuff>
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity target;
 
-    public S_PowerUp(SD_PowerUp data) : base(data)  {}
+    public S_SingleBuff() : base() { }
+    public S_SingleBuff(SD_SingleBuff data) : base(data) { }
 
     public override void Activate()
     {
-        target.AddBuff(new PowerModifier(), 3);
+        Debug.Log(data);
+        target.AddBuff(data.buffData, data.count);
     }
 
     public override bool IsValidInput(FieldInfo field)

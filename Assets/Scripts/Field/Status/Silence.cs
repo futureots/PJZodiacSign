@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Silence", menuName = "Scriptable Objects/Buff/Silence")]
 public class Silence : BuffData
 {
     public override void ApplyBuff(Entity entity, int count)

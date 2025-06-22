@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public abstract class BuffData
+//[CreateAssetMenu(fileName = "BuffData", menuName = "Scriptable Objects/Buff/BuffData")]
+public abstract class BuffData : ScriptableObject
 {
     /// <summary>
     /// 상태이상 적용

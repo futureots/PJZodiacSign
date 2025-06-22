@@ -77,7 +77,8 @@ public class InventoryUI : MonoBehaviour
                 itemSlots[i].ClearSlot();
                 continue;
             }
-            ItemInstance instance = new ItemInstance(data);
+
+            ItemInstance instance = data.CreateInstance();
             // 인벤토리 한 칸에 세팅
             itemSlots[i].SetSlot(instance);
             itemSlots[i].OnClick += OpenItemAction;

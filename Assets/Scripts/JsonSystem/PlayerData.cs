@@ -25,7 +25,7 @@ public class PlayerData
     //파일에서 읽어올 때 호출됨
     public PlayerData()
     {
-        Debug.Log("Player Data Init");
+        //Debug.Log("Player Data Init");
         entities = new List<EntityData>();
         items = new();
         #region DebugData

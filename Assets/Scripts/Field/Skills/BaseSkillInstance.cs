@@ -2,14 +2,16 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-public abstract class BaseSkill<T> : AbstractSkill where T : AbstractSkillData
+public abstract class BaseSkillInstance<T> : AbstractSkillInstance where T : AbstractSkillData
 {
     public Action<bool> callback;
     protected T data;
 
-    public BaseSkill(T data)
+    public BaseSkillInstance() { }
+    public BaseSkillInstance(T data)
     {
         this.data = data;
+        Debug.Log(data);
     }
     public override bool ExecuteSequence()
     {
@@ -25,7 +27,7 @@ public abstract class BaseSkill<T> : AbstractSkill where T : AbstractSkillData
 
 }
 
-public abstract class AbstractSkill : IActive
+public abstract class AbstractSkillInstance : IActive
 {
     public string skillName;
     public string skillDescription;
