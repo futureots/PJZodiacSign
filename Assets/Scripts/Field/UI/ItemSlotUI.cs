@@ -50,6 +50,10 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
         if(item is ActiveItemInstance)
         {
             var active = (ActiveItemInstance)item;
+            active.effect.AddCallback( x=>
+            {
+                if (x) ClearSlot();
+            });
             InputManager.Instance.SetInputMode(active.effect);
         }
         else

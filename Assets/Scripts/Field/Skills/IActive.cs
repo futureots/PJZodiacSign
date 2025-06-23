@@ -6,6 +6,9 @@ using UnityEngine;
 
 public interface IActive
 {
+    
+    public void AddCallback(Action<bool> func);
+    public void ClearCallback();
     public bool ExecuteSequence();
     /// <summary>
     /// 스킬을 사용하는 함수

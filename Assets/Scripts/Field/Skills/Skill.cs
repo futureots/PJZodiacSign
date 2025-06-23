@@ -32,4 +32,14 @@ public abstract class Skill : MonoBehaviour,IActive
     public virtual void Reinitialize()
     {
     }
+
+    public void AddCallback(Action<bool> func)
+    {
+        callback += func;
+    }
+
+    public void ClearCallback()
+    {
+        callback = null;
+    }
 }

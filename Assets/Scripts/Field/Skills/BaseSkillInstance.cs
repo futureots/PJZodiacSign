@@ -2,9 +2,9 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-public abstract class BaseSkillInstance<T> : AbstractSkillInstance where T : AbstractSkillData
+public abstract class BaseSkillInstance<T> : AbstractSkillInstance where T : BaseSkillData
 {
-    public Action<bool> callback;
+    
     protected T data;
 
     public BaseSkillInstance() { }
@@ -13,7 +13,18 @@ public abstract class BaseSkillInstance<T> : AbstractSkillInstance where T : Abs
         this.data = data;
         Debug.Log(data);
     }
-    public override bool ExecuteSequence()
+    
+
+}
+
+public abstract class AbstractSkillInstance : IActive
+{
+    public string skillName;
+    public string skillDescription;
+
+    public abstract void Activate();
+    protected Action<bool> callback;
+    public bool ExecuteSequence()
     {
         var isActable = IsActable();
         if (isActable)
@@ -24,17 +35,6 @@ public abstract class BaseSkillInstance<T> : AbstractSkillInstance where T : Abs
         callback?.Invoke(isActable);
         return isActable;
     }
-
-}
-
-public abstract class AbstractSkillInstance : IActive
-{
-    public string skillName;
-    public string skillDescription;
-
-    public abstract void Activate();
-
-    public abstract bool ExecuteSequence();
 
     public virtual bool IsValidInput(FieldInfo field)
     {
@@ -47,4 +47,14 @@ public abstract class AbstractSkillInstance : IActive
     }
 
     public abstract void Reinitialize();
+
+    public void AddCallback(Action<bool> func)
+    {
+        callback += func;
+    }
+
+    public void ClearCallback()
+    {
+        callback = null;
+    }
 }
