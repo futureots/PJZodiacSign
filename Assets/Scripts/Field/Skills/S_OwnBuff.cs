@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class EntitySkill : Skill
+public class S_OwnBuff : Skill
 {
     
     public Entity owner

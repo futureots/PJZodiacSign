@@ -9,10 +9,10 @@ using UnityEngine.UI;
 
 public class SkillButton : MonoBehaviour, IPointerClickHandler
 {
+
+    IActive skill;
     
-    public Skill skill;
-    
-    public void SetSkill(Skill skill)
+    public void SetSkill(IActive skill)
     {
         Debug.Log($"SetSkill + {skill}");
         this.skill = skill;

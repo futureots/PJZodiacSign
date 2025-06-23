@@ -7,11 +7,16 @@ using UnityEngine;
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile;
+    
+    
+    [SerializeField] BaseSkillData skillData;
+    public IActive skillInstance { get; private set; }
 
-    public Skill entitySkill;
+    //public Skill entitySkill;
     private void Start()
     {
-        entitySkill = GetComponentInChildren<Skill>();
+        //entitySkill = GetComponentInChildren<Skill>();
+        skillInstance = skillData.CreateInstance();
     }
 
     #region Status
@@ -20,6 +25,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public int maxHp;
     public int curHp;
     public int curEnergy;
+    
 
     #region Buff
     bool isSlienced
@@ -90,6 +96,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #endregion
 
+    
     public void Attack()
     {
         if (isSlienced) return;
