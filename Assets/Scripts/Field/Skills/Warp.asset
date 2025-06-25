@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa11b07814b36a9419718979be61b8e5, type: 3}
-  m_Name: SingleBuff
+  m_Script: {fileID: 11500000, guid: 85d5c26893e2eca468ef1016e24ff5f2, type: 3}
+  m_Name: Warp
   m_EditorClassIdentifier: 
-  skillName: "\uBCF4\uD638"
-  skillDescription: "\uBCF4\uD638\uD55C\uB2E4."
-  buffData: {fileID: 11400000, guid: 6ca4eef08234904419d9c7e4f8ca28ca, type: 2}
-  count: 3
+  skillName: "\uC6CC\uD504"
+  skillDescription: "\uB300\uC0C1\uC744 \uC6D0\uD558\uB294 \uC704\uCE58\uB85C \uC774\uB3D9\uC2DC\uD0A8\uB2E4."
+  skillKey: 5

@@ -78,7 +78,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
     {
         // null 입력 시 해당 패널 비활성화
         OnMouseInOut?.Invoke(null, eventData.position);
-        Debug.Log("Out");
+        //Debug.Log("Out");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -86,7 +86,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
         if (item != null)
         {
             OnMouseInOut?.Invoke(item, eventData.position);
-            Debug.Log("enter");
+            //Debug.Log("enter");
         }
     }
 }

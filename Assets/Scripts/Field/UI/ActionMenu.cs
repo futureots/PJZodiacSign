@@ -16,7 +16,6 @@ public class ActionMenu : MonoBehaviour
         if(slot.item is ActiveItemInstance)
         {
             useBtn.gameObject.SetActive(true);
-            Debug.Log("is Active");
 
             useBtn.onClick.RemoveAllListeners();
             useBtn.onClick.AddListener(slot.UseSlot);

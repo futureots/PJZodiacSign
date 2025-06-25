@@ -33,6 +33,7 @@ public class SkillModeInput : IModeInput
             var attr = (SkillTargetAttribute)field.GetCustomAttribute(typeof(SkillTargetAttribute));
             if (attr != null)
             {
+                Debug.Log(attr.text);
                 skillFields.Enqueue(field);
             }
         }

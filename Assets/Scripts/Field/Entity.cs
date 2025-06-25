@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,13 +9,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     
     
     [SerializeField] BaseSkillData skillData;
-    public IActive skillInstance { get; private set; }
+    public S_BaseEntity skillInstance { get; private set; }
 
-    //public Skill entitySkill;
     private void Start()
     {
         //entitySkill = GetComponentInChildren<Skill>();
-        skillInstance = skillData.CreateInstance();
+        skillInstance = (S_BaseEntity)skillData.CreateInstance();
     }
 
     #region Status

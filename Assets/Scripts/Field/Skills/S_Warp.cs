@@ -4,17 +4,21 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class MoveSkill : Skill
+public class S_Warp : BaseSkillInstance
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity entity;
     [SkillTarget("대상 타일을 선택하세요.")]
     public Tile tile;
 
+    public S_Warp(BaseSkillData data) : base(data)
+    {
+    }
+
     //스킬 발동
     public override void Activate()
     {
-        entity.MoveSequence(tile);
+        entity.MoveTo(tile);
     }
 
     public override bool IsActable()
@@ -40,21 +44,12 @@ public class MoveSkill : Skill
     bool IsValidEntity()
     {
         if (entity == null) return false;
-        if (entity.CompareTag("Player"))
-        {
-            return true;
-        }
-        return false;
+        return true;
     }
     bool IsValidTile()
     {
         if (!tile.isEmpty) return false;
-        var list = entity.GetMoveArea();
-        if (list.Contains(tile))
-        {
-            return true;
-        }
-        return false;
+        return true;
     }
     public override void Reinitialize()
     {

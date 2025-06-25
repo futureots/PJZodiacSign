@@ -142,7 +142,7 @@ public class InventoryUI : MonoBehaviour
         actPanel.transform.position = slot.transform.position;
         actPanel.SetItemAction(slot);
 
-        Debug.Log("OpenItemUI");
+        //Debug.Log("OpenItemUI");
     }
     void SetInfoUI(ItemInstance item, Vector2 pos)
     {
