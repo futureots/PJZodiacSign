@@ -82,11 +82,11 @@ public class GameManager : Singleton<GameManager>
             if (entityTag == "Player")
             {
                 isPlayerAlive = true;
-                Debug.Log($"{tile.occupiedObject} player is Alive");
+                //Debug.Log($"{tile.occupiedObject} player is Alive");
             }
             else if (entityTag == "Enemy") {
                 isEnemyAlive = true;
-                Debug.Log($"{tile.occupiedObject} enemy is Alive");
+                //Debug.Log($"{tile.occupiedObject} enemy is Alive");
             }
             if (isPlayerAlive && isEnemyAlive) break;
         }

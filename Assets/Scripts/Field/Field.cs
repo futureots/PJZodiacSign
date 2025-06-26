@@ -138,14 +138,28 @@ public class Field : Singleton<Field>
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
+            // 타일에 존재하는 기물의 수가 1개 이상이면 마지막에 들어온 객체 제외하고 전부 삭제
             var obj = tile.occupiedObject.GetComponent<IDamageable>();
-            if (obj == null) continue;
             if (obj.isZero())
             {
                 tile.OccupyObject(null);
                 obj.Dead();
             }
-            // 체력이 0인 오브젝트(기물,장애물 제거)
+            Debug.Log(tile.occupiedObjects.Count);
+            // 밀려난 오브젝트(파괴 예정 기물, 장애물 등) 삭제
+            foreach (var item in tile.occupiedObjects)
+            {
+                var component = item.GetComponent<IDamageable>();
+                if(component != null)
+                {
+                    component.Dead();
+                }
+                else
+                {
+                    Destroy(item);
+                }
+            }
+            tile.occupiedObjects.Clear();
         }
     }
     #region Visualize

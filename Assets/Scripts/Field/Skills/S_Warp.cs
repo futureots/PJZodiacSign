@@ -18,7 +18,7 @@ public class S_Warp : BaseSkillInstance
     //스킬 발동
     public override void Activate()
     {
-        entity.MoveTo(tile);
+        entity.MoveSequence(tile,true,true);
     }
 
     public override bool IsActable()
@@ -48,7 +48,8 @@ public class S_Warp : BaseSkillInstance
     }
     bool IsValidTile()
     {
-        if (!tile.isEmpty) return false;
+        if (tile == null) return false;
+        //if (!tile.isEmpty) return false;
         return true;
     }
     public override void Reinitialize()

@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3004ecc487afaf843955bcf1fd14c26b, type: 3}
-  m_Name: DummyActive
+  m_Name: Warp
   m_EditorClassIdentifier: 
-  id: Active1
-  itemName: Bomb
-  description: "\uD3ED\uD0C4\uC774\uB2E4"
-  icon: {fileID: 21300000, guid: bb22a3ee8ce32a140a724d2eb5228c19, type: 3}
+  id: 2
+  itemName: Warp
+  description: "\uAE30\uBB3C 1\uAC1C\uB97C \uC6D0\uD558\uB294 \uC704\uCE58\uB85C
+    \uC774\uB3D9\uC2DC\uD0A8\uB2E4."
+  icon: {fileID: 21300000, guid: bc4a2c6bdce59a94eb0d6bb7a135043e, type: 3}
   effect: {fileID: 11400000, guid: 81caa596f29ece04681c6dd8ae3ced41, type: 2}
