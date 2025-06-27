@@ -45,7 +45,7 @@ public class MoveModeInput : IModeInput
     // 드래그 시작
     void DragStart(InputAction.CallbackContext context)
     { 
-        Debug.Log("Started");
+        //Debug.Log("Started");
         Ray ray = Camera.main.ScreenPointToRay(_inputManager.PointerPosition);
         if (Physics.Raycast(ray, out var hit))
         {

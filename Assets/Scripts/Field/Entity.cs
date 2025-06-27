@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,11 +6,15 @@ using UnityEngine;
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile;
+    
+    
+    [SerializeField] BaseSkillData skillData;
+    public S_BaseEntity skillInstance { get; private set; }
 
-    public Skill entitySkill;
     private void Start()
     {
-        entitySkill = GetComponentInChildren<Skill>();
+        //entitySkill = GetComponentInChildren<Skill>();
+        skillInstance = (S_BaseEntity)skillData.CreateInstance();
     }
 
     #region Status
@@ -20,6 +23,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public int maxHp;
     public int curHp;
     public int curEnergy;
+    
 
     #region Buff
     bool isSlienced
@@ -90,6 +94,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #endregion
 
+    
     public void Attack()
     {
         if (isSlienced) return;
@@ -136,16 +141,34 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #endregion
 
-    public bool MoveSequence(Tile tile)
+    /// <summary>
+    /// 기물 이동(속박 적용 시 이동 X)
+    /// </summary>
+    /// <param name="tile">이동할 지점</param>
+    /// <param name="ignoreArea">false : 이동 범위 내 지점만 이동, true : 범위 상관 없이 이동</param>
+    /// <param name="ignoreOccupy">false : 도착 지점이 비었을 경우에만 이동, true : 이동 및 점거중인 객체 파괴</param>
+    /// <returns></returns>
+    public bool MoveSequence(Tile tile , bool ignoreArea = false, bool ignoreOccupy = false)
     {
         if(isRooted) return false;
-        var isMovable = GetMoveArea().Contains(tile) && !tile.isEmpty;
-        if (isMovable)
+        if (!ignoreArea)
         {
-            MoveTo(tile);
+            var isInArea = GetMoveArea().Contains(tile);
+            if (!isInArea) return false;
         }
+        if (!ignoreOccupy)
+        {
+            var isOccupied = tile.isEmpty;
+            if (isOccupied) return false;
+        }
+        MoveTo(tile);
         return true;
     }
+
+    /// <summary>
+    /// 해당 타일로 이동(해당 타일의 점령 여부, 기물의 이동 범위 고려 X)
+    /// </summary>
+    /// <param name="tile">이동할 지점</param>
     public void MoveTo(Tile tile)
     {
         if (curTile != null)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Protect", menuName = "Scriptable Objects/Buff/Protect")]
 public class Protect : BuffData
 {
     public override void ApplyBuff(Entity entity, int count)

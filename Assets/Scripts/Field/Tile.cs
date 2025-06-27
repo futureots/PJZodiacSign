@@ -17,7 +17,8 @@ public class Tile : MonoBehaviour
     //이 타일이 있는 필드
     public Field field { get; private set; }
     public intVector2 fieldPos;
-    public GameObject occupiedObject { get; private set; }
+    public GameObject occupiedObject;
+    public Queue<GameObject> occupiedObjects;
     // 타일로 이동가능한지 
     public bool isEmpty;
 
@@ -25,6 +26,7 @@ public class Tile : MonoBehaviour
     {
         originMaterials = renderer.materials.ToList();
         currentMaterials = originMaterials;
+        occupiedObjects = new Queue<GameObject>();
     }
     public void SetField(Field f,int x, int y)
     {
@@ -36,15 +38,21 @@ public class Tile : MonoBehaviour
     
     public void OccupyObject(GameObject e = null)
     {
-        occupiedObject = e;
         if(e != null)
         {
+            if (!isEmpty)
+            {
+                occupiedObjects.Enqueue(occupiedObject);
+                occupiedObject.SetActive(false);
+            }
+            occupiedObject = e;
             e.transform.SetParent(transform);
             isEmpty = false;
         }
         else
         {
             isEmpty = true;
+            occupiedObject = null;
         }
     }
 

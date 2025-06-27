@@ -19,23 +19,29 @@ public class PlayerData
     // 현재 위치한 지역 아이디
     public int locationId;
 
+    // 현재 보유중인 (아이템 정보,개수)
+    public List<string> items;
+
     //파일에서 읽어올 때 호출됨
     public PlayerData()
     {
-        Debug.Log("Player Data Init");
+        //Debug.Log("Player Data Init");
         entities = new List<EntityData>();
+        items = new();
+        #region DebugData
+        //items.Add("Scroll");
         //entities.Add(new EntityData("chicken",0));
+        #endregion
         locationId = 1;
+        
     }
-
-
 
     // 보유중인 유물 정보
     // 보유중인 재화
     // 클리어한 지역 종류 및 개수
     //public Dictionary<string,int> location = new Dictionary<string,int>();
     // 현재 보유중인 기운 개수
-    // 보유중인 일회용 아이템 종류와 개수
+
 
 
 
@@ -53,7 +59,8 @@ public class PlayerData
     
     public void SavePlayerData(string fileName)
     {
-        string data = SerializePlayerData(this);
+        //string data = SerializePlayerData(this);
+        string data = JsonUtility.ToJson(this);
         string path = Path.Combine(Application.dataPath+"/Data", fileName + defaultPath + ".Json");
         File.WriteAllText(path, data);
         Debug.Log(data);
@@ -71,9 +78,11 @@ public class PlayerData
         {
             return new PlayerData();
         }
-        return DeserializePlayerData(data);
+        return JsonUtility.FromJson<PlayerData>(data);
+        //return DeserializePlayerData(data);
     }
 }
+[Serializable]
 public struct EntityData
 {
     public EntityData(string _name, int _level = 0)

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[CreateAssetMenu(fileName = "PowerModifier", menuName = "Scriptable Objects/Buff/PowerModifier")]
 public class PowerModifier : BuffData
 {
     public override void ApplyBuff(Entity entity, int count)

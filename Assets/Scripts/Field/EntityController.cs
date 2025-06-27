@@ -99,7 +99,7 @@ public class EntityController : MonoBehaviour
         return cmd;
     }
     // 스킬 명령 생성
-    public Command CreateCommand(ISkill skill, params GameObject[] selecter)
+    public Command CreateCommand(IActive skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
         curCmd = cmd;

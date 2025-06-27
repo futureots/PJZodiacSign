@@ -1,8 +1,4 @@
-using System;
 using UnityEngine;
-using System.Reflection;
-using Unity.VisualScripting;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
@@ -32,7 +28,7 @@ public class InputManager : Singleton<InputManager>
     public enum Mode
     {
         Move,//이동 입력(드래그&드롭)
-        Skill,//스킬 입력(클릭)
+        Active,//스킬 입력(클릭)
         None // 입력 X, 정보만 표시
     }
     public Mode currentMode;
@@ -57,11 +53,11 @@ public class InputManager : Singleton<InputManager>
         curModeState.SetMode();
     }
     public void SetInputMode() => SetInputMode(Mode.Move);
-    public void SetInputMode(Skill skill)
+    public void SetInputMode(IActive active)
     {
         curModeState?.RemoveMode();
-        currentMode = Mode.Skill;
-        curModeState = new SkillModeInput(_inputActions, skill);
+        currentMode = Mode.Active;
+        curModeState = new SkillModeInput(_inputActions, active);
         curModeState.SetMode();
     }
     #endregion
@@ -72,11 +68,7 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     private void HandleClick()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            UIManager.Instance.entityInfoPanel.HidePanel();
-            return;
-        }
+
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 부딪힌 기물, (타일) UI 표시 
         if (Physics.Raycast(ray, out var hit))
@@ -85,12 +77,16 @@ public class InputManager : Singleton<InputManager>
             if (entity != null)
             {
                 Debug.Log($"Show {entity.name}'s Info");
-                //UI 표시
+                // UI 표시
                 UIManager.Instance.entityInfoPanel.ShowPanel(entity);
             }
-
+            // 다른 클릭 가능한 오브젝트 확인
         }
-
+        else if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("Hide");
+            UIManager.Instance.entityInfoPanel.HidePanel();
+        }
 
     }
     #endregion

@@ -23,7 +23,7 @@ public class EntityInfoPanel : MonoBehaviour
         if (entity.CompareTag("Player"))
         {
             entitytSkillButton.gameObject.SetActive(true);
-            entitytSkillButton.SetSkill(entity.entitySkill);
+            entitytSkillButton.SetSkill(entity.skillInstance);
         }
         else
         {
