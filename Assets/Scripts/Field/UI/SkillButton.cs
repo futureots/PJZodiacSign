@@ -14,7 +14,7 @@ public class SkillButton : MonoBehaviour, IPointerClickHandler
     
     public void SetSkill(IActive skill)
     {
-        Debug.Log($"SetSkill + {skill}");
+        //Debug.Log($"SetSkill + {skill}");
         this.skill = skill;
         if (skill != null)
         {

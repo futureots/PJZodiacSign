@@ -84,7 +84,8 @@ public class MoveModeInput : IModeInput
             
             //커맨드 생성
             _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
-
+            // 제자리 이동 불가능
+            if (_selectedEntity.curTile.Equals(tile)) _inputManager.controller.ClearCommand();
             _selectedEntity = null;
         }
         _inputAction.Gameplay.Point.performed -= bindAction;

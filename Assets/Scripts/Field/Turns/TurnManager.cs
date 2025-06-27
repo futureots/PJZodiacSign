@@ -10,19 +10,19 @@ public class TurnManager : Singleton<TurnManager>
     Queue<ITurn> turns;
     bool isTurnEnd;
 
-    public void AddTurn(ITurn turn)
-    {
-        turns.Enqueue(turn);
-    }
     private void Awake()
     {
         turns = new Queue<ITurn>();
     }
     private void Start()
     {
-        turns.Enqueue(new ActionTurn());
-        turns.Enqueue(new ActionTurn());
-        turns.Enqueue(new AttackTurn());
+        // 턴 추가하기
+        foreach (var ctrler in GameManager.Instance.controllers)
+        {
+            AddTeamTurn(ctrler);
+        }
+        //첫 번째 공격턴은 제거
+        turns.Dequeue();
         StartTurn();
     }
     void StartTurn()
@@ -30,9 +30,10 @@ public class TurnManager : Singleton<TurnManager>
         var curTurn = turns.Dequeue();
         if (turns.Count < 4)
         {
-            turns.Enqueue(new ActionTurn());
-            turns.Enqueue(new ActionTurn());
-            turns.Enqueue(new AttackTurn());
+            foreach (var ctrler in GameManager.Instance.controllers)
+            {
+                AddTeamTurn(ctrler);
+            }
         }
         //Debug.Log($"Current TurnCount : {turns.Count}");
         curTurn.Execute(OnTurnComplete);
@@ -53,7 +54,10 @@ public class TurnManager : Singleton<TurnManager>
             Debug.Log("Turn End");
             StartTurn();
         }
-
-        
+    }
+    public void AddTeamTurn(EntityController controller)
+    {
+        turns.Enqueue(new AttackTurn(controller));
+        turns.Enqueue(new ActionTurn(controller));
     }
 }

@@ -116,16 +116,16 @@ public class Field : Singleton<Field>
     #endregion
 
     //공격 가능한 오브젝트 가져오기
-    public List<IAttackable> GetAllAttackableObject()
+    public List<GameObject> GetOccupiedObjects()
     {
-        List<IAttackable> list = new();
+        List<GameObject> list = new();
         foreach(var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            var attackable = tile.occupiedObject.GetComponent<IAttackable>();
-            if (attackable != null)
+            var occupiedObj = tile.occupiedObject;
+            if (occupiedObj != null)
             {
-                list.Add(attackable);
+                list.Add(occupiedObj);
             }
         }
         return list;
@@ -145,7 +145,6 @@ public class Field : Singleton<Field>
                 tile.OccupyObject(null);
                 obj.Dead();
             }
-            Debug.Log(tile.occupiedObjects.Count);
             // 밀려난 오브젝트(파괴 예정 기물, 장애물 등) 삭제
             foreach (var item in tile.occupiedObjects)
             {
@@ -153,10 +152,6 @@ public class Field : Singleton<Field>
                 if(component != null)
                 {
                     component.Dead();
-                }
-                else
-                {
-                    Destroy(item);
                 }
             }
             tile.occupiedObjects.Clear();

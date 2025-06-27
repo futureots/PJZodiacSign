@@ -98,7 +98,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Attack()
     {
         if (isSlienced) return;
-        Debug.Log($"{name}이 공격");
+        ///Debug.Log($"{name}이 공격");
         var list = GetAttackArea();
         int damage = power;
         
@@ -158,7 +158,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         }
         if (!ignoreOccupy)
         {
-            var isOccupied = tile.isEmpty;
+            var isOccupied = !tile.isEmpty;
             if (isOccupied) return false;
         }
         MoveTo(tile);

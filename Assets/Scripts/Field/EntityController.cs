@@ -106,6 +106,10 @@ public class EntityController : MonoBehaviour
         cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
+    public void ClearCommand()
+    {
+        curCmd = null;
+    }
 
     #endregion
     // 해당 위치에서 가장 가까운 타일을 반환한다.

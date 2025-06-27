@@ -18,18 +18,12 @@ public class S_Warp : BaseSkillInstance
     //스킬 발동
     public override void Activate()
     {
-        entity.MoveSequence(tile,true,true);
+        entity.MoveSequence(tile,true);
     }
 
-    public override bool IsActable()
-    {
-        Debug.Log(entity + "  " + tile);
-        if (entity == null || tile == null) return false;
-        return true;
-    }
     public override bool IsValidInput(FieldInfo field)
     {
-        Debug.Log(field.Name);
+        //Debug.Log(field.Name);
         switch (field.Name)
         {
             case nameof(entity):
@@ -49,7 +43,8 @@ public class S_Warp : BaseSkillInstance
     bool IsValidTile()
     {
         if (tile == null) return false;
-        //if (!tile.isEmpty) return false;
+        // 점령 확인
+        if (!tile.isEmpty) return false;
         return true;
     }
     public override void Reinitialize()

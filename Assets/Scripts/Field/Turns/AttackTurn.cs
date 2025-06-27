@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class AttackTurn : ITurn
 {
+    EntityController entityController;
+    public AttackTurn(EntityController controller)
+    {
+        entityController = controller;
+    }
+
     public void Execute(Action onTurnEnd)
     {
         Debug.Log("공격 턴 시작");
@@ -14,10 +20,17 @@ public class AttackTurn : ITurn
     public IEnumerator AttackCoroutine()
     {
         InputManager.isInputStop = true;
-        // 모든 기물 공격
-        foreach (var attackable in Field.Instance.GetAllAttackableObject())
+        // 해당 팀 기물만 공격
+        foreach (var obj in Field.Instance.GetOccupiedObjects())
         {
-            attackable.Attack();
+            if(obj.tag == entityController.tag)
+            {
+                var attackable = obj.GetComponent<IAttackable>();
+                if(attackable != null)
+                {
+                    attackable.Attack();
+                }
+            }
         }
 
         // 대기시간
@@ -35,7 +48,7 @@ public class AttackTurn : ITurn
 
         Field.Instance.CleanField();
         InputManager.isInputStop = false;
-        Debug.Log("CanInput");
+        //Debug.Log("CanInput");
     }
 }
 

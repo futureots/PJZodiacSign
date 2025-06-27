@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 using static UnityEngine.EventSystems.EventTrigger;
@@ -18,16 +19,6 @@ public class S_StaleMate : S_BaseEntity
     {
         Debug.Log(data);
         target.AddBuff(new Root(), 1);
-    }
-
-    public override bool IsActable()
-    {
-        var fields = this.GetType().GetFields();
-        foreach (var field in fields)
-        {
-            if (!IsValidInput(field)) return false;
-        }
-        return true;
     }
 
     public override bool IsValidInput(FieldInfo field)

@@ -18,6 +18,6 @@ public abstract class Command
         {
             UnityEngine.Object.Destroy(selecterObjects[i]);
         }
-        Debug.Log("Command Delete");
+        //Debug.Log("Command Delete");
     }
 }

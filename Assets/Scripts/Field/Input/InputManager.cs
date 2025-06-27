@@ -52,7 +52,6 @@ public class InputManager : Singleton<InputManager>
         }
         curModeState.SetMode();
     }
-    public void SetInputMode() => SetInputMode(Mode.Move);
     public void SetInputMode(IActive active)
     {
         curModeState?.RemoveMode();
