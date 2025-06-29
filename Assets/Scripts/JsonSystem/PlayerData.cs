@@ -16,6 +16,8 @@ public class PlayerData
     // 현재 보유중인 기물 정보
     public List<EntityData> entities;
 
+    public List<EntityData> handEntities;
+
     // 현재 위치한 지역 아이디
     public int locationId;
 

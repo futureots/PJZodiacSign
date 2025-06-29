@@ -12602,6 +12602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa59aea847f183c45a1bc758870af2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMode: 0
   areaVisualizer: {fileID: 1432661704}
   controller: {fileID: 43863447}
   entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
@@ -12609,7 +12610,6 @@ MonoBehaviour:
   skillSelecter: {fileID: 1953117145152640339, guid: d1e1357b679ff334b8e0a4f74a79f809, type: 3}
   entityInfoPanel: {fileID: 697413048}
   turnEndButton: {fileID: 104265736}
-  currentMode: 0
 --- !u!4 &1432661703
 Transform:
   m_ObjectHideFlags: 0
@@ -14738,7 +14738,6 @@ GameObject:
   - component: {fileID: 1839077412}
   - component: {fileID: 1839077411}
   - component: {fileID: 1839077410}
-  - component: {fileID: 1839077414}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -14831,18 +14830,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1839077414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1839077409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1bc5ddebc19edc4d8840b5fbce2a69c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1845306254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16047,6 +16034,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2018355401}
   - component: {fileID: 2018355400}
+  - component: {fileID: 2018355402}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -16070,7 +16058,8 @@ MonoBehaviour:
   - {fileID: 43863447}
   - {fileID: 829814208}
   _field: {fileID: 1259859472}
-  turnManager: {fileID: 0}
+  turnManager: {fileID: 2018355402}
+  instantField: {fileID: 1817594083}
 --- !u!4 &2018355401
 Transform:
   m_ObjectHideFlags: 0
@@ -16088,6 +16077,18 @@ Transform:
   - {fileID: 1817594082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2018355402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018355399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68ab0c7106654704197805c4a2f294a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2022496308
 GameObject:
   m_ObjectHideFlags: 0
@@ -17318,11 +17319,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1783809838}
+  - {fileID: 1432661703}
   - {fileID: 1839077413}
   - {fileID: 2018355401}
   - {fileID: 137535993}
   - {fileID: 1182249135}
-  - {fileID: 1432661703}
   - {fileID: 43863448}
   - {fileID: 829814209}
   - {fileID: 911920862}

@@ -20,6 +20,8 @@ public class GameManager : Singleton<GameManager>
     // ≈œ ¡∂¿€
     public TurnManager turnManager;
     //public Button turnEndButton;
+    public Field instantField;
+
 
     private void Awake()
     {
@@ -49,11 +51,6 @@ public class GameManager : Singleton<GameManager>
             controllers[1].SetEntity(entity);
         }
         DataManager.Instance.SaveAllData("Data");
-    }
-    void Start()
-    {
-        
-        turnManager = this.AddComponent<TurnManager>();
     }
 
     #region GameEnd

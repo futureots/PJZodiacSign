@@ -37,7 +37,7 @@ public class InputManager : Singleton<InputManager>
     [Header("UI Element")]
     public EntityInfoPanel entityInfoPanel;
     public Button turnEndButton;
-
+    //public GameObject cam;
     #region InputMode
     
     /// <summary>
@@ -87,14 +87,14 @@ public class InputManager : Singleton<InputManager>
             {
                 Debug.Log($"Show {entity.name}'s Info");
                 // UI 표시
-                InputManager.Instance.entityInfoPanel.ShowPanel(entity);
+                entityInfoPanel.ShowPanel(entity);
             }
             // 다른 클릭 가능한 오브젝트 확인
         }
         else if (!EventSystem.current.IsPointerOverGameObject())
         {
             Debug.Log("Hide");
-            InputManager.Instance.entityInfoPanel.HidePanel();
+            entityInfoPanel.HidePanel();
         }
 
     }
