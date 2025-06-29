@@ -13,14 +13,15 @@ public class ActionTurn : ITurn
     public void Execute(Action onTurnEnd)
     {
         Debug.Log(entityController.tag + "행동 턴 시작");
-        GameManager.Instance.turnEndButton.onClick.RemoveAllListeners();
+        InputManager.Instance.turnEndButton.onClick.RemoveAllListeners();
         // 현재 플레이어의 행동 턴 일 경우
         if (entityController == InputManager.Instance.controller)
         {
             InputManager.Instance.SetInputMode(InputManager.Mode.Move);
-            GameManager.Instance.turnEndButton.onClick.AddListener(() =>
+            InputManager.Instance.turnEndButton.onClick.AddListener(() =>
             {
                 GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd);
+                InputManager.Instance.turnEndButton.onClick.RemoveAllListeners();
             });
         }
         else

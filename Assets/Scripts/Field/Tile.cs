@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour
     List<Material> originMaterials;
     List<Material> currentMaterials;
     //이 타일이 있는 필드
-    public Field field { get; private set; }
+    public Field field;
     public intVector2 fieldPos;
     public GameObject occupiedObject;
     public Queue<GameObject> occupiedObjects;

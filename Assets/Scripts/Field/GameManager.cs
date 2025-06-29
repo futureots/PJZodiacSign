@@ -9,22 +9,23 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     public EntityController[] controllers;
+
+    [SerializeField] Field _field;
     public Field field
     {
-        get
-        {
-            return Field.Instance;
-        }
+        get { return _field; }
     }
 
 
     // 턴 조작
     public TurnManager turnManager;
-    public Button turnEndButton;
+    //public Button turnEndButton;
 
     private void Awake()
     {
-        
+        // 필드 생성
+        //field.CreateField();
+
         // 플레이어 데이터 불러오기
         var playerData = DataManager.Instance.playerData;
 
@@ -72,7 +73,7 @@ public class GameManager : Singleton<GameManager>
     }
     public bool IsGameEnd(out bool isWin)
     {
-        var tiles = field.GetTiles();
+        var tiles = _field.GetTiles();
         bool isPlayerAlive = false;
         bool isEnemyAlive = false;
         foreach (var tile in tiles)

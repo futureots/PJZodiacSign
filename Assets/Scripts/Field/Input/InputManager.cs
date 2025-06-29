@@ -2,8 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-
-
+using UnityEngine.UI;
 
 public class InputManager : Singleton<InputManager>
 {
@@ -12,6 +11,16 @@ public class InputManager : Singleton<InputManager>
     public Vector2 PointerPosition { get; private set; }
 
     GameInputActions _inputActions;
+
+    public enum Mode
+    {
+        Repair,//정비 입력(상점창 오픈, 정비용 카메라 무브, 보유 기물 인스턴트 필드)
+        Move,//이동 입력(드래그&드롭)
+        Active,//스킬 입력(클릭)
+        None // 입력 X, 정보만 표시
+    }
+    public Mode currentMode;
+    IModeInput curModeState;
 
     // 입력 표시자
     public AreaVisualizer areaVisualizer;
@@ -24,27 +33,28 @@ public class InputManager : Singleton<InputManager>
     public GameObject tileSelecter;
     public GameObject skillSelecter;
 
+    // UI 패널
+    [Header("UI Element")]
+    public EntityInfoPanel entityInfoPanel;
+    public Button turnEndButton;
+
     #region InputMode
-    public enum Mode
-    {
-        Move,//이동 입력(드래그&드롭)
-        Active,//스킬 입력(클릭)
-        None // 입력 X, 정보만 표시
-    }
-    public Mode currentMode;
-    IModeInput curModeState;
+    
     /// <summary>
     /// 모드 변경 및 입력 세팅(스킬 입력은 제외)
     /// </summary>
     public void SetInputMode(Mode mode)
     {
-        if (isInputStop) return;
+        
         curModeState?.RemoveMode();
         currentMode = mode;
         switch (mode)
         {
             case Mode.Move:
                 curModeState = new MoveModeInput(_inputActions);
+                break;
+            case Mode.Repair:
+                curModeState = new RepairModeInput(_inputActions);
                 break;
             case Mode.None:
                 curModeState = new EmptyModeInput();
@@ -77,14 +87,14 @@ public class InputManager : Singleton<InputManager>
             {
                 Debug.Log($"Show {entity.name}'s Info");
                 // UI 표시
-                UIManager.Instance.entityInfoPanel.ShowPanel(entity);
+                InputManager.Instance.entityInfoPanel.ShowPanel(entity);
             }
             // 다른 클릭 가능한 오브젝트 확인
         }
         else if (!EventSystem.current.IsPointerOverGameObject())
         {
             Debug.Log("Hide");
-            UIManager.Instance.entityInfoPanel.HidePanel();
+            InputManager.Instance.entityInfoPanel.HidePanel();
         }
 
     }

@@ -32,7 +32,7 @@ public class EntityController : MonoBehaviour
         entities.Add(entityInstance);
 
         // 필드의 랜덤 위치로 이동
-        var tiles = Field.Instance.GetHalfTiles(isReflect);
+        var tiles = GameManager.Instance.field.GetHalfTiles(isReflect);
         while (true)
         {
             var rand = Random.Range(0, tiles.Count);

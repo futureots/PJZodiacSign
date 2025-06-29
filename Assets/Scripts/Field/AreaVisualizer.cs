@@ -1,18 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AreaVisualizer : MonoBehaviour
 {
-    Field field
-    {
-        get
-        {
-            return Field.Instance;
-        }
-    }
     /// <summary>
     /// 예상 적 공격 범위 표시 메테리얼
     /// </summary>

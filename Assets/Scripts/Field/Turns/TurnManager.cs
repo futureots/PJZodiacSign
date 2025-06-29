@@ -41,8 +41,7 @@ public class TurnManager : Singleton<TurnManager>
 
     void OnTurnComplete()
     {
-
-        Field.Instance.CleanField();
+        GameManager.Instance.field.CleanField();
         bool isEnd = GameManager.Instance.CheckGameEnd();
         if (isEnd)
         {

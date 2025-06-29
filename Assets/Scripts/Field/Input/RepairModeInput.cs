@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 
-public class MoveModeInput : IModeInput
+public class RepairModeInput : IModeInput
 {
-    
+    List<Tile> list;
     GameInputActions _inputAction;
     Action<InputAction.CallbackContext> bindAction;
     InputManager _inputManager
@@ -17,23 +15,22 @@ public class MoveModeInput : IModeInput
             return InputManager.Instance;
         }
     }
-    public MoveModeInput(GameInputActions inputAction)
+    public RepairModeInput(GameInputActions inputAction)
     {
         _inputAction = inputAction;
-        attackArea = new List<Tile>();
+        list = new List<Tile>();
         bindAction = null;
     }
-    
     public void RemoveMode()
     {
-        Debug.Log("RemoveMoveMode");
+        Debug.Log("RemoveRepairMode");
         _inputAction.Gameplay.Click.started -= DragStart;
         _inputAction.Gameplay.Click.canceled -= DragEnd;
     }
 
     public void SetMode()
     {
-        Debug.Log("SetMoveMode");
+        Debug.Log("SetRepairMode");
         _inputAction.Gameplay.Click.started += DragStart;
         _inputAction.Gameplay.Click.canceled += DragEnd;
     }
@@ -44,12 +41,12 @@ public class MoveModeInput : IModeInput
     GameObject targetTileSelecter = null;
     List<Tile> moveArea;
     List<Tile> attackArea;
-    
+
 
 
     // 드래그 시작
     void DragStart(InputAction.CallbackContext context)
-    { 
+    {
         Debug.Log("Started");
         Ray ray = Camera.main.ScreenPointToRay(_inputManager.PointerPosition);
         if (Physics.Raycast(ray, out var hit))
@@ -66,11 +63,11 @@ public class MoveModeInput : IModeInput
                     Ray ray2 = Camera.main.ScreenPointToRay(value.ReadValue<Vector2>());
                     DragEntity(_selectedEntity, ray2, targetTileSelecter);
                 };
-                
+
                 targetSelecter = UnityEngine.Object.Instantiate(_inputManager.entitySelecter, entity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
                 targetTileSelecter = UnityEngine.Object.Instantiate(_inputManager.tileSelecter, entity.transform.position, Quaternion.identity);
                 // 기물 이동범위 표시
-                moveArea = entity.GetMoveArea();
+                moveArea = GameManager.Instance.field.GetHalfTiles(false);
                 _inputManager.areaVisualizer.ShowMoveArea(moveArea);
 
                 _inputAction.Gameplay.Point.performed += bindAction;
@@ -88,7 +85,7 @@ public class MoveModeInput : IModeInput
             _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
             _areaVisualizer.RemoveAttackArea(attackArea);
             _areaVisualizer.RemoveMoveArea(moveArea);
-            
+
             //커맨드 생성
             _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
             // 제자리 이동 불가능

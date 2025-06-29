@@ -19,9 +19,11 @@ public class AttackTurn : ITurn
     }
     public IEnumerator AttackCoroutine()
     {
+        // 현재 전투 중인 필드;
+        Field curField = GameManager.Instance.field;
         InputManager.isInputStop = true;
         // 해당 팀 기물만 공격
-        foreach (var obj in Field.Instance.GetOccupiedObjects())
+        foreach (var obj in curField.GetOccupiedObjects())
         {
             if(obj.tag == entityController.tag)
             {
@@ -37,7 +39,7 @@ public class AttackTurn : ITurn
         yield return new WaitForSeconds(1f);
 
         // 모든 캐릭터 버프 업데이트
-        foreach (var tile in Field.Instance.GetTiles())
+        foreach (var tile in curField.GetTiles())
         {
             if (tile.isEmpty) continue;
             var entity = tile.occupiedObject.GetComponent<Entity>();
@@ -46,7 +48,7 @@ public class AttackTurn : ITurn
             entity.RemoveBuff();
         }
 
-        Field.Instance.CleanField();
+        curField.CleanField();
         InputManager.isInputStop = false;
         //Debug.Log("CanInput");
     }

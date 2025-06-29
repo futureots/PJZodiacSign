@@ -1,29 +1,43 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Outline;
-using static UnityEngine.EventSystems.EventTrigger;
 
 
 
-public class Field : Singleton<Field>
+public class Field : MonoBehaviour
 {
     public int row, column;
     public GameObject tilePrefab;
-    public Tile[,] tiles;
-
-    private void Awake()
+    public Tile[,] tiles
     {
-        CreateField();
+        get
+        {
+            if(_tiles != null) return _tiles;
+            _tiles = new Tile[row, column];
+            for(int i = 0; i < row; i++)
+            {
+                for(int j=0;j< column; j++)
+                {
+                    _tiles[i, j] = tileList[i].list[j];
+                }
+            }
+            return tiles;
+        }
     }
+    Tile[,] _tiles;
+    [ContextMenuItem("CreateField","CreateField")]
+    [ContextMenuItem("ClearField", "EraseField")]
+    public List<Row<Tile>> tileList;
+
     public void CreateField()
     {
+        tileList = new List<Row<Tile>>();
         //행,열의 길이 만큼 체스판 생성
-        tiles = new Tile[row, column];
+        //tiles = new Tile[row, column];
         for (int i = 0; i < row; i++)
         {
+            var temp = new Row<Tile>();
+            tileList.Add(temp);
             for (int j = 0; j < column; j++)
             {
                 Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
@@ -31,10 +45,22 @@ public class Field : Singleton<Field>
                 tileObj.transform.localPosition = pos;
                 var tile = tileObj.GetComponent<Tile>();
                 tile.SetField(this, j, i);
-                tiles[i, j] = tile;
+                temp.list.Add(tile);
             }
         }
         Debug.Log(tiles.Length);
+    }
+    public void EraseField()
+    {
+        foreach (Row<Tile> tile in tileList)
+        {
+            foreach (var item in tile.list)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+            tile.list.Clear();
+        }
+        tileList.Clear();
     }
 
     #region Tile
@@ -248,4 +274,13 @@ public class Field : Singleton<Field>
         list.Clear();
     }
     #endregion
+}
+[System.Serializable]
+public class Row<T>
+{
+    public Row()
+    {
+        list = new List<T>();
+    }
+    public List<T> list;
 }
