@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityController : MonoBehaviour
 {
     // 필드를 바라보는 방향
     public bool isReflect;
-    //public Field currentField;
+    
+    // 현재 보유 기물 필드(설치 X)
+    public Field instantField;
 
     // 컨트롤러가 조종 가능한 엔티티
     List<Entity> entities;
@@ -42,7 +40,34 @@ public class EntityController : MonoBehaviour
                 break;
             }
         }
-        
+    }
+
+    public bool PushEntity(Entity instance, Field field)
+    {
+        for (int i = field.row - 1; i >= 0; i--) 
+        {
+            for(int j = 0; j < field.column; j++)
+            {
+                var pos = new intVector2(j, i);
+                var tile = field.GetTile(pos);
+                if (tile.isEmpty)
+                {
+                    SetEntity(instance, field, pos);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public bool SetEntity(Entity instance, Field field, intVector2 pos)
+    {
+        var movable = instance.MoveSequence(field.GetTile(pos), true);
+        if (movable)
+        {
+            instance.tag = this.tag;
+            entities.Add(instance);
+        }
+        return movable;
     }
 
     public bool IsContainEntity(Entity entity)
@@ -52,27 +77,6 @@ public class EntityController : MonoBehaviour
 
 
     #endregion
-    // 데이터 기반 엔티티 설정 및 세팅
-    /*public virtual void SetEntities(int num, PlayerData party)
-    {
-        teamNum = num;
-        int x = -35;
-        foreach (var member in party.entities)
-        {
-            var entity = CreateEntity(member.entityId, member.entityElement);
-            entities.Add(entity);
-            entity.SetEntityData(teamNum, member.entityLevel, isReflect);
-            entity.OnDestroyed += (entity) =>
-            {
-                entities.Remove(entity);
-            };
-            HpPanelManager.Instance.CreateHpBar(entity.gameObject);
-            var reflectVariable = isReflect ? -1 : 1;
-            entity.transform.position = new Vector3(-45*reflectVariable, 0, x*reflectVariable);
-            x += 10;
-        }
-    }
-    */
 
     #region Command
     // 현재 저장된 명령

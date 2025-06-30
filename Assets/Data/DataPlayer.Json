@@ -1,14 +1,1 @@
-{
-  "entities": [
-    {
-      "name": "chicken",
-      "level": 0
-    },
-    {
-      "name": "chicken",
-      "level": 0
-    }
-  ],
-  "locationId": 2,
-  "items": [ "Scroll", "Warp", "Scroll" ]
-}
+{"entities":[{"name":"chicken","level":0},{"name":"chicken","level":0}],"handEntities":[],"locationId":2,"items":["Scroll","Warp","Scroll"]}

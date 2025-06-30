@@ -18,7 +18,7 @@ public class Field : MonoBehaviour
             {
                 for(int j=0;j< column; j++)
                 {
-                    _tiles[i, j] = tileList[i].list[j];
+                    _tiles[i, j] = _tileList[i].list[j];
                 }
             }
             return tiles;
@@ -27,17 +27,17 @@ public class Field : MonoBehaviour
     Tile[,] _tiles;
     [ContextMenuItem("CreateField","CreateField")]
     [ContextMenuItem("ClearField", "EraseField")]
-    public List<Row<Tile>> tileList;
+    public List<Row<Tile>> _tileList;
 
     public void CreateField()
     {
-        tileList = new List<Row<Tile>>();
+        _tileList = new List<Row<Tile>>();
         //행,열의 길이 만큼 체스판 생성
         //tiles = new Tile[row, column];
         for (int i = 0; i < row; i++)
         {
             var temp = new Row<Tile>();
-            tileList.Add(temp);
+            _tileList.Add(temp);
             for (int j = 0; j < column; j++)
             {
                 Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
@@ -52,7 +52,7 @@ public class Field : MonoBehaviour
     }
     public void EraseField()
     {
-        foreach (Row<Tile> tile in tileList)
+        foreach (Row<Tile> tile in _tileList)
         {
             foreach (var item in tile.list)
             {
@@ -60,7 +60,7 @@ public class Field : MonoBehaviour
             }
             tile.list.Clear();
         }
-        tileList.Clear();
+        _tileList.Clear();
     }
 
     #region Tile

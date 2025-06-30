@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
             var resource = ResourceManager.GetEntityResource(item.name);
             var instance = Instantiate(resource);
             var entity = instance.GetComponent<Entity>();
-            controllers[0].SetEntity(entity);
+            controllers[0].PushEntity(entity, controllers[0].instantField);
         }
 
         // 적 데이터 불러오기
@@ -48,7 +48,7 @@ public class GameManager : Singleton<GameManager>
             var resource = ResourceManager.GetEntityResource(item.name);
             var instance = Instantiate(resource);
             var entity = instance.GetComponent<Entity>();
-            controllers[1].SetEntity(entity);
+            controllers[1].PushEntity(entity, controllers[1].instantField);
         }
         DataManager.Instance.SaveAllData("Data");
     }
