@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,13 +15,10 @@ public class TurnManager : Singleton<TurnManager>
     }
     private void Start()
     {
-        // 턴 추가하기
-        foreach (var ctrler in GameManager.Instance.controllers)
-        {
-            AddTeamTurn(ctrler);
-        }
-        //첫 번째 공격턴은 제거
-        turns.Dequeue();
+
+        turns.Enqueue(new RepairTurn());
+        AddTurnCycle();
+        
         StartTurn();
     }
     void StartTurn()
@@ -30,10 +26,7 @@ public class TurnManager : Singleton<TurnManager>
         var curTurn = turns.Dequeue();
         if (turns.Count < 4)
         {
-            foreach (var ctrler in GameManager.Instance.controllers)
-            {
-                AddTeamTurn(ctrler);
-            }
+            AddTurnCycle();
         }
         //Debug.Log($"Current TurnCount : {turns.Count}");
         curTurn.Execute(OnTurnComplete);
@@ -54,9 +47,22 @@ public class TurnManager : Singleton<TurnManager>
             StartTurn();
         }
     }
-    public void AddTeamTurn(EntityController controller)
+    void AddTurnCycle()
     {
-        turns.Enqueue(new AttackTurn(controller));
-        turns.Enqueue(new ActionTurn(controller));
+        var list = new Queue<ITurn>();
+        foreach (var ctrler in GameManager.Instance.controllers)
+        {
+            AddTeamTurn(ctrler,list);
+        }
+        list.Enqueue(list.Dequeue());
+        while (list.Count > 0)
+        {
+            turns.Enqueue(list.Dequeue());
+        }
+    }
+    public void AddTeamTurn(EntityController controller, Queue<ITurn> queue)
+    {
+        queue.Enqueue(new AttackTurn(controller));
+        queue.Enqueue(new ActionTurn(controller));
     }
 }
