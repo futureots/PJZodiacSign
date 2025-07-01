@@ -1,29 +1,31 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class TurnManager : Singleton<TurnManager>
 {
 
 
-    Queue<ITurn> turns;
-    bool isTurnEnd;
+    public LinkedList<ITurn> turns;
 
     private void Awake()
     {
-        turns = new Queue<ITurn>();
+        turns = new LinkedList<ITurn>();
     }
     private void Start()
     {
 
-        turns.Enqueue(new RepairTurn());
+        turns.AddLast(new RepairTurn());
         AddTurnCycle();
         
         StartTurn();
     }
     void StartTurn()
     {
-        var curTurn = turns.Dequeue();
+        var curTurn = turns.First.Value;
+        turns.RemoveFirst();
         if (turns.Count < 4)
         {
             AddTurnCycle();
@@ -49,20 +51,12 @@ public class TurnManager : Singleton<TurnManager>
     }
     void AddTurnCycle()
     {
-        var list = new Queue<ITurn>();
         foreach (var ctrler in GameManager.Instance.controllers)
         {
-            AddTeamTurn(ctrler,list);
-        }
-        list.Enqueue(list.Dequeue());
-        while (list.Count > 0)
-        {
-            turns.Enqueue(list.Dequeue());
+            // 플레이어 행동 후 플레이어 팀 외 기물 공격
+            turns.AddLast(new ActionTurn(ctrler));
+            turns.AddLast(new AttackTurn(ctrler));
         }
     }
-    public void AddTeamTurn(EntityController controller, Queue<ITurn> queue)
-    {
-        queue.Enqueue(new AttackTurn(controller));
-        queue.Enqueue(new ActionTurn(controller));
-    }
+
 }

@@ -20,6 +20,8 @@ public class RepairModeInput : IModeInput
         _inputAction = inputAction;
         list = new List<Tile>();
         bindAction = null;
+        moveArea = new();
+        attackArea = new();
     }
     public void RemoveMode()
     {
@@ -33,6 +35,13 @@ public class RepairModeInput : IModeInput
         Debug.Log("SetRepairMode");
         _inputAction.Gameplay.Click.started += DragStart;
         _inputAction.Gameplay.Click.canceled += DragEnd;
+
+        // 표시자 생성 삭제 => 활성화 비활성화
+        targetSelecter = UnityEngine.Object.Instantiate(_inputManager.entitySelecter);
+        targetTileSelecter = UnityEngine.Object.Instantiate(_inputManager.tileSelecter);
+        targetSelecter.SetActive(false);
+        targetTileSelecter.SetActive(false);
+
     }
 
     //선택한 엔티티 저장
@@ -64,12 +73,14 @@ public class RepairModeInput : IModeInput
                     DragEntity(_selectedEntity, ray2, targetTileSelecter);
                 };
 
-                targetSelecter = UnityEngine.Object.Instantiate(_inputManager.entitySelecter, entity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
-                targetTileSelecter = UnityEngine.Object.Instantiate(_inputManager.tileSelecter, entity.transform.position, Quaternion.identity);
+                targetSelecter.SetActive(true);
+                targetSelecter.transform.position = _selectedEntity.transform.position + Vector3.up * 0.1f;
+                targetTileSelecter.SetActive(true);
                 // 기물 이동범위 표시
                 moveArea = GameManager.Instance.field.GetHalfTiles(false);
-                _inputManager.areaVisualizer.ShowMoveArea(moveArea);
+                moveArea.AddRange(_inputManager.controller.instantField.GetTiles());
 
+                _inputManager.areaVisualizer.ShowMoveArea(moveArea);
                 _inputAction.Gameplay.Point.performed += bindAction;
             }
         }
@@ -82,16 +93,24 @@ public class RepairModeInput : IModeInput
         if (_selectedEntity != null)
         {
             var tile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
-            _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+            
             _areaVisualizer.RemoveAttackArea(attackArea);
             _areaVisualizer.RemoveMoveArea(moveArea);
 
-            //커맨드 생성
-            _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
-            // 제자리 이동 불가능
-            if (_selectedEntity.curTile.Equals(tile)) _inputManager.controller.ClearCommand();
+            // 해당 타일로 이동
+            if(!_selectedEntity.MoveSequence(tile, true))
+            {
+                // 실패하면 전 타일로 이동
+                _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+            }
+            
+
             _selectedEntity = null;
         }
+        // 표시자 제거
+        targetSelecter.SetActive(false);
+        targetTileSelecter.SetActive(false);
+
         _inputAction.Gameplay.Point.performed -= bindAction;
         Debug.Log("DragEnd");
     }

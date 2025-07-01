@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Tile : MonoBehaviour
 {
@@ -18,15 +19,15 @@ public class Tile : MonoBehaviour
     public Field field;
     public intVector2 fieldPos;
     public GameObject occupiedObject;
-    public Queue<GameObject> occupiedObjects;
+    public Queue<GameObject> bufferedObjects;
     // 타일로 이동가능한지 
     public bool isEmpty;
 
-    private void Start()
+    private void Awake()
     {
         originMaterials = renderer.materials.ToList();
         currentMaterials = originMaterials;
-        occupiedObjects = new Queue<GameObject>();
+        bufferedObjects = new Queue<GameObject>();
     }
     public void SetField(Field f,int x, int y)
     {
@@ -42,7 +43,7 @@ public class Tile : MonoBehaviour
         {
             if (!isEmpty)
             {
-                occupiedObjects.Enqueue(occupiedObject);
+                bufferedObjects.Enqueue(occupiedObject);
                 occupiedObject.SetActive(false);
             }
             occupiedObject = e;
@@ -53,6 +54,37 @@ public class Tile : MonoBehaviour
         {
             isEmpty = true;
             occupiedObject = null;
+        }
+
+    }
+
+    public void ClearBufferedObjects()
+    {
+        // 밀려난 오브젝트(파괴 예정 기물, 장애물 등) 삭제
+        foreach (var item in bufferedObjects)
+        {
+            var component = item.GetComponent<IDamageable>();
+            if (component != null)
+            {
+                component.Dead();
+            }
+            else
+            {
+                Destroy(item);
+            }
+        }
+        bufferedObjects.Clear();
+    }
+    public void DestroyOccupiedObject()
+    {
+        var component = occupiedObject.GetComponent<IDamageable>();
+        if (component != null)
+        {
+            component.Dead();
+        }
+        else
+        {
+            Destroy(occupiedObject);
         }
     }
 

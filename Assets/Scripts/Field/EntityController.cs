@@ -15,7 +15,6 @@ public class EntityController : MonoBehaviour
     private void Awake()
     {
         entities = new List<Entity>();
-        
     }
 
     #region EntityManaging
@@ -41,7 +40,6 @@ public class EntityController : MonoBehaviour
             }
         }
     }
-
     public bool PushEntity(Entity instance, Field field)
     {
         for (int i = field.row - 1; i >= 0; i--) 
@@ -70,11 +68,11 @@ public class EntityController : MonoBehaviour
         return movable;
     }
 
-    public bool IsContainEntity(Entity entity)
+    public virtual void DisposeInstantField()
     {
-        return entities.Contains(entity);
+        instantField.EraseField();
+        instantField.gameObject.SetActive(false);
     }
-
 
     #endregion
 
@@ -116,22 +114,5 @@ public class EntityController : MonoBehaviour
     }
 
     #endregion
-    // 해당 위치에서 가장 가까운 타일을 반환한다.
-    public Tile GetClosestTile(Vector3 pos,Field field)
-    {
-        if (field == null) return null;
-        float minDistance = 0;
-        Tile closestTile = null;
-        foreach (Tile tile in field.GetTiles())
-        {
-            //if (tile.isOccupied) continue;
-            var distance = (tile.transform.position - pos).magnitude;
-            if (closestTile == null || minDistance > distance)
-            {
-                minDistance = distance;
-                closestTile = tile;
-            }
-        }
-        return closestTile;
-    }
+
 }

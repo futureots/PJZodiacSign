@@ -26,9 +26,13 @@ public class Field : MonoBehaviour
     }
     Tile[,] _tiles;
     [ContextMenuItem("CreateField","CreateField")]
-    [ContextMenuItem("ClearField", "EraseField")]
+    [ContextMenuItem("DestroyField", "DestroyField")]
     public List<Row<Tile>> _tileList;
 
+    #region Field
+    /// <summary>
+    /// 필드 생성
+    /// </summary>
     public void CreateField()
     {
         _tileList = new List<Row<Tile>>();
@@ -50,7 +54,11 @@ public class Field : MonoBehaviour
         }
         Debug.Log(tiles.Length);
     }
-    public void EraseField()
+
+    /// <summary>
+    /// 필드 제거
+    /// </summary>
+    public void DestroyField()
     {
         foreach (Row<Tile> tile in _tileList)
         {
@@ -62,6 +70,38 @@ public class Field : MonoBehaviour
         }
         _tileList.Clear();
     }
+    /// <summary>
+    /// 필드위의 모든 기물 제거(장애물 포함)
+    /// </summary>
+    public void EraseField()
+    {
+        foreach (var tile in tiles)
+        {
+            if (tile.isEmpty) continue;
+            tile.ClearBufferedObjects();
+            tile.DestroyOccupiedObject();
+        }
+    }
+    /// <summary>
+    /// 사망한 오브젝트 제거(장애물 포함)
+    /// </summary>
+    public void CleanField()
+    {
+        foreach (var tile in tiles)
+        {
+            if (tile.isEmpty) continue;
+            // 타일에 존재하는 기물의 수가 1개 이상이면 마지막에 들어온 객체 제외하고 전부 삭제
+            var obj = tile.occupiedObject.GetComponent<IDamageable>();
+            if (obj.isZero())
+            {
+                tile.OccupyObject(null);
+                obj.Dead();
+            }
+            tile.ClearBufferedObjects();
+        }
+    }
+
+    #endregion
 
     #region Tile
     // 해당 위치가 필드내에 존재하는 위치인지 확인
@@ -74,10 +114,16 @@ public class Field : MonoBehaviour
         return true;
     }
     // 해당 위치의 셀을 반환
-    public Tile GetTile(intVector2 pos)
+    public Tile GetTile(intVector2 pos, bool isReflect = false)
     {
-        if (!IsValidCellPos(pos)) return null;
-        return tiles[pos.y, pos.x];
+        var fieldPos = pos;
+        if (isReflect)
+        {
+            fieldPos = new intVector2(row - pos.x - 1, column - pos.y - 1);
+        }
+        
+        if (!IsValidCellPos(fieldPos)) return null;
+        return tiles[fieldPos.y, fieldPos.x];
     }
 
     public Tile GetTile(int x, int y)
@@ -156,33 +202,8 @@ public class Field : MonoBehaviour
         }
         return list;
     }
-    /// <summary>
-    /// 사망한 오브젝트 제거(장애물 포함)
-    /// </summary>
-    public void CleanField()
-    {
-        foreach (var tile in tiles)
-        {
-            if (tile.isEmpty) continue;
-            // 타일에 존재하는 기물의 수가 1개 이상이면 마지막에 들어온 객체 제외하고 전부 삭제
-            var obj = tile.occupiedObject.GetComponent<IDamageable>();
-            if (obj.isZero())
-            {
-                tile.OccupyObject(null);
-                obj.Dead();
-            }
-            // 밀려난 오브젝트(파괴 예정 기물, 장애물 등) 삭제
-            foreach (var item in tile.occupiedObjects)
-            {
-                var component = item.GetComponent<IDamageable>();
-                if(component != null)
-                {
-                    component.Dead();
-                }
-            }
-            tile.occupiedObjects.Clear();
-        }
-    }
+
+
     #region Visualize
 
     /// <summary>

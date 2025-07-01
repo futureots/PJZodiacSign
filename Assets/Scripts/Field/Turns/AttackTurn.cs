@@ -25,7 +25,7 @@ public class AttackTurn : ITurn
         // 해당 팀 기물만 공격
         foreach (var obj in curField.GetOccupiedObjects())
         {
-            if(obj.tag == entityController.tag)
+            if(obj.tag != entityController.tag)
             {
                 var attackable = obj.GetComponent<IAttackable>();
                 if(attackable != null)
