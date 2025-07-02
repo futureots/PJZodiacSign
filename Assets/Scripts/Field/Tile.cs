@@ -86,6 +86,8 @@ public class Tile : MonoBehaviour
         {
             Destroy(occupiedObject);
         }
+        occupiedObject = null;
+        isEmpty = true;
     }
 
     public void AddColor(Material material)

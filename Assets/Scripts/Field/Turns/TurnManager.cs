@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
-public class TurnManager : Singleton<TurnManager>
+public class TurnManager : MonoBehaviour
 {
 
 
@@ -18,7 +18,7 @@ public class TurnManager : Singleton<TurnManager>
     {
 
         turns.AddLast(new RepairTurn());
-        AddTurnCycle();
+        //AddTurnCycle();
         
         StartTurn();
     }
@@ -42,12 +42,15 @@ public class TurnManager : Singleton<TurnManager>
         {
             turns.Clear();
             //모든 턴 정리 및 상호작용 제거
+            turns.AddFirst(new RepairTurn());
+
         }
         else
         {
             Debug.Log("Turn End");
-            StartTurn();
+            //StartTurn();
         }
+        StartTurn();
     }
     void AddTurnCycle()
     {
