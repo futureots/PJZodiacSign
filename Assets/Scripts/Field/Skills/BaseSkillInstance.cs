@@ -11,7 +11,6 @@ public abstract class BaseSkillInstance : AbstractSkillInstance
     public BaseSkillInstance(BaseSkillData data)
     {
         this.data = data;
-        Debug.Log(data);
     }
     
 

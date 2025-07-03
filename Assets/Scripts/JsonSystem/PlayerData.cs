@@ -14,12 +14,12 @@ public class PlayerData
     static string defaultPath = "Player";
 
     // 현재 보유중인 기물 정보
-    public List<EntityData> entities;
+    public Dictionary<int,EntityData> fieldEntities;
 
     public List<EntityData> handEntities;
 
     // 현재 위치한 지역 아이디
-    public int locationId;
+    public int stageLevel;
 
     // 현재 보유중인 (아이템 정보,개수)
     public List<string> items;
@@ -28,13 +28,15 @@ public class PlayerData
     public PlayerData()
     {
         //Debug.Log("Player Data Init");
-        entities = new List<EntityData>();
+        fieldEntities = new Dictionary<int, EntityData>();
+        // 인코딩으로 int 값으로 변환
+        handEntities = new List<EntityData>();
         items = new();
         #region DebugData
         //items.Add("Scroll");
         //entities.Add(new EntityData("chicken",0));
         #endregion
-        locationId = 1;
+        stageLevel = 1;
         
     }
 
@@ -61,8 +63,8 @@ public class PlayerData
     
     public void SavePlayerData(string fileName)
     {
-        //string data = SerializePlayerData(this);
-        string data = JsonUtility.ToJson(this);
+        string data = SerializePlayerData(this);
+        //string data = JsonUtility.ToJson(this);
         string path = Path.Combine(Application.dataPath+"/Data", fileName + defaultPath + ".Json");
         File.WriteAllText(path, data);
         Debug.Log(data);
@@ -80,8 +82,8 @@ public class PlayerData
         {
             return new PlayerData();
         }
-        return JsonUtility.FromJson<PlayerData>(data);
-        //return DeserializePlayerData(data);
+        //return JsonUtility.FromJson<PlayerData>(data);
+        return DeserializePlayerData(data);
     }
 }
 [Serializable]
@@ -96,5 +98,4 @@ public struct EntityData
     public string name;
     // 기물 레벨(스탯 초기값 설정에 필요)
     public int level;
-
 }

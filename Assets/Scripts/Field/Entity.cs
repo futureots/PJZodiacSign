@@ -9,12 +9,23 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     
     
     [SerializeField] BaseSkillData skillData;
-    public S_BaseEntity skillInstance { get; private set; }
+
+    S_BaseEntity _skillInstance;
+    public S_BaseEntity skillInstance
+    {
+        get
+        {
+            if(_skillInstance == null)
+            {
+                _skillInstance = (S_BaseEntity)skillData.CreateInstance();
+            }
+            return _skillInstance;
+        }
+    }
 
     private void Start()
     {
-        //entitySkill = GetComponentInChildren<Skill>();
-        skillInstance = (S_BaseEntity)skillData.CreateInstance();
+        
     }
 
     #region Status

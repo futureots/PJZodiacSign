@@ -25,20 +25,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
-        // 필드 생성
-        //field.CreateField();
 
         // 플레이어 데이터 불러오기
         var playerData = DataManager.Instance.playerData;
 
-        Debug.Log(playerData.entities.Count);
-        foreach (var item in playerData.entities)
-        {
-            var resource = ResourceManager.GetEntityResource(item.name);
-            var instance = Instantiate(resource);
-            var entity = instance.GetComponent<Entity>();
-            controllers[0].PushEntity(entity, controllers[0].instantField);
-        }
+        Debug.Log(playerData.fieldEntities.Count);
+
 
         // 적 데이터 불러오기
         var enemyData = DataManager.Instance.curLocation;
@@ -61,10 +53,13 @@ public class GameManager : Singleton<GameManager>
         if (isWin)
         {
             Debug.Log("승리");
+            // 데이터 저장
+            DataManager.Instance.SaveAllData("Data");
         }
         else
         {
             Debug.Log("패배...");
+            
         }
         return true;
     }

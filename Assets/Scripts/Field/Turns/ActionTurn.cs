@@ -13,7 +13,6 @@ public class ActionTurn : ITurn
     public void Execute(Action onTurnEnd)
     {
         Debug.Log(entityController.tag + "행동 턴 시작");
-        InputManager.Instance.turnEndButton.onClick.RemoveAllListeners();
         // 현재 플레이어의 행동 턴 일 경우
         if (entityController == InputManager.Instance.controller)
         {

@@ -7,7 +7,7 @@ public class DataManager : Singleton<DataManager>
 
     public PlayerData playerData {  get; private set; }
 
-    public MapData mapData { get; private set; }
+    //public MapData mapData { get; private set; }
     
     /// <summary>현재 플레이어 위치한 지역 정보(적 리스트, 맵 종류)</summary>
     public Location curLocation;
@@ -17,17 +17,16 @@ public class DataManager : Singleton<DataManager>
     public void LoadAllData(string fileName)
     {
         playerData = PlayerData.LoadPlayerData(fileName);
-        mapData = MapData.LoadMapData(fileName);
+        //mapData = MapData.LoadMapData(fileName);
         //Debug.Log(playerData.entities.Count);
-        // null 확인 필요 할수도 있음
-        curLocation = mapData.map[playerData.locationId];
+        //curLocation = mapData.map[playerData.stageLevel];
     }
 
 
     public void SaveAllData(string fileName)
     {
         playerData.SavePlayerData(fileName);
-        mapData.SaveMapData(fileName);
+        //mapData.SaveMapData(fileName);
     }
     public override void Init()
     {
