@@ -94,6 +94,11 @@ public struct EntityData
         name = _name;
         level = _level;
     }
+    public EntityData(Entity entity)
+    {
+        name = entity.id;
+        level = entity.level;
+    }
     // 기물 이름
     public string name;
     // 기물 레벨(스탯 초기값 설정에 필요)

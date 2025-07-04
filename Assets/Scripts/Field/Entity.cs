@@ -27,6 +27,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         
     }
+    // 엔티티 데이터 로 전환 예정
+    public string id;
 
     #region Status
     public int level { get; private set; }
@@ -135,7 +137,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Dead()
     {
-        Debug.Log(gameObject+"Dead");
+        //Debug.Log(gameObject+"Dead");
         Destroy(gameObject);
     }
 
