@@ -9019,8 +9019,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5385823771d42264696fc8021d4c9bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curLocation:
-    enemyList: []
 --- !u!4 &911920862
 Transform:
   m_ObjectHideFlags: 0
@@ -18790,7 +18788,8 @@ MonoBehaviour:
   - {fileID: 829814210}
   _field: {fileID: 1259859472}
   turnManager: {fileID: 2018355402}
-  instantField: {fileID: 1817594083}
+  enemyTable: {fileID: 11400000, guid: 6a125ee6e184b9d41bd5997d8a5d6eef, type: 2}
+  stageData: {fileID: 11400000, guid: c0a77e6d335e8fa4eaaaa4435465e508, type: 2}
 --- !u!4 &2018355401
 Transform:
   m_ObjectHideFlags: 0

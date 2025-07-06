@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
-    public Tile curTile;
+    public Tile curTile { get; private set; }
     
     
     [SerializeField] BaseSkillData skillData;

@@ -7,10 +7,13 @@ public class DataManager : Singleton<DataManager>
 
     public PlayerData playerData {  get; private set; }
 
-    //public MapData mapData { get; private set; }
+    /// <summary>
+    /// 적 엔티티 데이터
+    /// </summary>
     
-    /// <summary>현재 플레이어 위치한 지역 정보(적 리스트, 맵 종류)</summary>
-    public Location curLocation;
+    
+    
+    
 
 
 

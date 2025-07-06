@@ -19,30 +19,22 @@ public class GameManager : Singleton<GameManager>
 
     // 턴 조작
     public TurnManager turnManager;
-    //public Button turnEndButton;
-    public Field instantField;
+
+    public EntityTable enemyTable;
+    public StageCostData stageData;
 
 
-    private void Awake()
+    private void Start()
     {
-
-        // 플레이어 데이터 불러오기
-        var playerData = DataManager.Instance.playerData;
-
-        Debug.Log(playerData.fieldEntities.Count);
-
-
-        // 적 데이터 불러오기
-        var enemyData = DataManager.Instance.curLocation;
-
-        foreach (var item in enemyData.enemyList)
+        /*var playerData = DataManager.Instance.playerData;
+        var enemyData = stageData.GetStageCost(playerData.stageLevel);
+        var enemylist = new List<string>();
+        while(enemyData.cost1 > 0)
         {
-            var resource = ResourceManager.GetEntityResource(item.name);
-            var instance = Instantiate(resource);
-            var entity = instance.GetComponent<Entity>();
-            controllers[1].PushEntity(entity, controllers[1].instantField);
-        }
-        DataManager.Instance.SaveAllData("Data");
+            enemyTable.GetEntityData(0, ref enemyData.cost1);
+            Debug.Log(enemyData.cost1);
+        }*/
+
     }
 
     #region GameEnd

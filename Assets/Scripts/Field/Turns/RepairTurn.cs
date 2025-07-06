@@ -35,9 +35,21 @@ public class RepairTurn : ITurn
             controller.SetEntity(entity, GameManager.Instance.field, vec);
         }
 
+
+        // 적 임시 데이터 넣기
+        GameManager.Instance.controllers[1].instantField.gameObject.SetActive(true);
+        foreach (var item in DataManager.Instance.playerData.handEntities)
+        {
+            var resource = ResourceManager.GetEntityResource(item.name);
+            var instance = GameObject.Instantiate(resource);
+            var entity = instance.GetComponent<Entity>();
+            GameManager.Instance.controllers[1].PushEntity(entity, GameManager.Instance.controllers[1].instantField);
+        }
+
+        // 종료 버튼 선택 시 기물 위치 확정 카메라 위치 조정, 인스턴트 필드 제거, UI 버튼 비활성화
         InputManager.Instance.turnEndButton.onClick.AddListener(() =>
         {
-            // 종료 버튼 선택 시 기물 위치 확정 카메라 위치 조정, 인스턴트 필드 제거, UI 버튼 비활성화
+            
             InputManager.Instance.SetInputMode(InputManager.Mode.None);
 
             // 추가로 배치한 기물을 데이터에 업데이트
@@ -64,6 +76,7 @@ public class RepairTurn : ITurn
                 handDatas.Add(entityData);
             }
             DataManager.Instance.playerData.handEntities = handDatas;
+
 
 
             // 적 필드의 기물 설치(멀티는 양쪽의 턴종료 버튼 입력 시 다음 턴으로 이동)
