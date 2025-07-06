@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class EntityController : MonoBehaviour
 {
@@ -67,7 +68,14 @@ public class EntityController : MonoBehaviour
         }
         return movable;
     }
+    public virtual void SetInstantField()
+    {
+        instantField.gameObject.SetActive(true);
+    }
+    public virtual void SetMainField()
+    {
 
+    }
     public virtual void DisposeInstantField()
     {
         instantField.EraseField();

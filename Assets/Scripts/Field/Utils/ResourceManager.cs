@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using UnityEngine;
 
 public class ResourceManager
@@ -7,5 +8,13 @@ public class ResourceManager
     {
         var obj = Resources.Load<Entity>(EntityPath + entityName);
         return obj;
+    }
+
+    public static Entity CreateEntity(string entityName)
+    {
+        var resource = GetEntityResource(entityName);
+        var instance = GameObject.Instantiate(resource);
+        var entity = instance.GetComponent<Entity>();
+        return entity;
     }
 }
