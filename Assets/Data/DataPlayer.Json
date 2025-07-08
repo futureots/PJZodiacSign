@@ -1,1 +1,31 @@
-{"$type":"PlayerData, Assembly-CSharp","fieldEntities":{"$type":"System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityData, Assembly-CSharp]], mscorlib","2050":{"$type":"EntityData, Assembly-CSharp","name":"chicken","level":0},"2052":{"$type":"EntityData, Assembly-CSharp","name":"chicken","level":0}},"handEntities":{"$type":"System.Collections.Generic.List`1[[EntityData, Assembly-CSharp]], mscorlib","$values":[{"$type":"EntityData, Assembly-CSharp","name":"chicken","level":0}]},"stageLevel":1,"items":{"$type":"System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib","$values":[]}}
+{
+  "$type": "PlayerData, Assembly-CSharp",
+  "fieldEntities": {
+    "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityData, Assembly-CSharp]], mscorlib",
+    "2050": {
+      "$type": "EntityData, Assembly-CSharp",
+      "name": "chicken",
+      "level": 0
+    },
+    "2052": {
+      "$type": "EntityData, Assembly-CSharp",
+      "name": "chicken",
+      "level": 0
+    }
+  },
+  "handEntities": {
+    "$type": "System.Collections.Generic.List`1[[EntityData, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "EntityData, Assembly-CSharp",
+        "name": "chicken",
+        "level": 0
+      }
+    ]
+  },
+  "stageLevel": 1,
+  "items": {
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": [ "Warp", "Warp" ]
+  }
+}

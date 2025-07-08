@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 583ba86ab72ea0640a524ca2d1de0ae6, type: 3}
-  m_Name: StageCostData
+  m_Script: {fileID: 11500000, guid: 9585a46119c0f204bb4e78c98f42f911, type: 3}
+  m_Name: EntityBasicShopTable
   m_EditorClassIdentifier: 
-  stageCosts:
-  - cost1: 5
-    cost2: 6
-    cost3: 0
-  - cost1: 5
-    cost2: 6
-    cost3: 0
+  table:
+  - entityName: chicken
+    cost: 1

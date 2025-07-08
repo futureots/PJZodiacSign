@@ -20,8 +20,6 @@ public class GameManager : Singleton<GameManager>
     // ÅÏ Á¶ÀÛ
     public TurnManager turnManager;
 
-    public EntityTable enemyTable;
-    public StageCostData stageData;
 
 
     private void Start()

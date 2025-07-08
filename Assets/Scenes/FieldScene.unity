@@ -8632,6 +8632,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReflect: 1
   instantField: {fileID: 125616120}
+  enemyTable: {fileID: 11400000, guid: 6a125ee6e184b9d41bd5997d8a5d6eef, type: 2}
+  stageData: {fileID: 11400000, guid: b3e50dfec647c064b985463785f60bd3, type: 2}
 --- !u!1 &863644698
 GameObject:
   m_ObjectHideFlags: 0
@@ -18788,8 +18790,6 @@ MonoBehaviour:
   - {fileID: 829814210}
   _field: {fileID: 1259859472}
   turnManager: {fileID: 2018355402}
-  enemyTable: {fileID: 11400000, guid: 6a125ee6e184b9d41bd5997d8a5d6eef, type: 2}
-  stageData: {fileID: 11400000, guid: c0a77e6d335e8fa4eaaaa4435465e508, type: 2}
 --- !u!4 &2018355401
 Transform:
   m_ObjectHideFlags: 0
