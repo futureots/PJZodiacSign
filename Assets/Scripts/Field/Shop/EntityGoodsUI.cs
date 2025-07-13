@@ -1,0 +1,31 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class EntityGoodsUI : MonoBehaviour
+{
+
+    [SerializeField] EntityUIData data;
+
+    [SerializeField] protected Button buyBtn;
+    [SerializeField] protected TextMeshProUGUI goodsName;
+    [SerializeField] protected TextMeshProUGUI price;
+    [SerializeField] protected Image icon;
+
+    private void Start()
+    {
+        SetGoods(data);
+    }
+
+    public void SetGoods(EntityUIData data)
+    {
+        goodsName.text = data.name;
+        price.text = data.normalPrice.ToString();
+        icon.sprite = data.icon;
+        buyBtn.onClick.AddListener(() =>
+        {
+            var entity = ResourceManager.CreateEntity(data.id);
+            InputManager.Instance.controller.PushEntity(entity, InputManager.Instance.controller.instantField);
+        });
+    }
+}

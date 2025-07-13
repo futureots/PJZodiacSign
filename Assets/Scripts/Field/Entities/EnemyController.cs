@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyController : EntityController
 {
 
-    public StageEntityTable stageData;
+    
 
     public override void SetInstantField()
     {
