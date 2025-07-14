@@ -9,6 +9,7 @@ public class ItemData : ScriptableObject
     public string description;
     public Sprite icon;
 
+    public int cost;
     public virtual ItemInstance CreateInstance()
     {
         return new ItemInstance(this);

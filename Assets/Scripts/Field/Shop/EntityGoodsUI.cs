@@ -24,8 +24,13 @@ public class EntityGoodsUI : MonoBehaviour
         icon.sprite = data.icon;
         buyBtn.onClick.AddListener(() =>
         {
-            var entity = ResourceManager.CreateEntity(data.id);
-            InputManager.Instance.controller.PushEntity(entity, InputManager.Instance.controller.instantField);
+            if(DataManager.Instance.playerData.credit >= data.normalPrice)
+            {
+                DataManager.Instance.playerData.credit -= data.normalPrice;
+                var entity = ResourceManager.CreateEntity(data.id);
+                InputManager.Instance.controller.PushEntity(entity, InputManager.Instance.controller.instantField);
+            }
+            
         });
     }
 }

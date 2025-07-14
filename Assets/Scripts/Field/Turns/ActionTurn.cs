@@ -43,7 +43,7 @@ public class ActionTurn : ITurn
         cmd?.Execute();
         entityController.curCmd = null;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         InputManager.isInputStop = false;
     }
 }

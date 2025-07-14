@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Scroll
   description: "\uC2A4\uD06C\uB864\uC774\uB2E4."
   icon: {fileID: 21300000, guid: cbdc230c22f89f245a4cdafd5a9e1701, type: 3}
+  cost: 1

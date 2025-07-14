@@ -24,6 +24,8 @@ public class PlayerData
     // 현재 보유중인 (아이템 정보,개수)
     public List<string> items;
 
+    public int credit;
+
     //파일에서 읽어올 때 호출됨
     public PlayerData()
     {
@@ -32,12 +34,13 @@ public class PlayerData
         // 인코딩으로 int 값으로 변환
         handEntities = new List<EntityData>();
         items = new();
+        stageLevel = 1;
+        credit = 0;
+
         #region DebugData
         //items.Add("Scroll");
         //entities.Add(new EntityData("chicken",0));
         #endregion
-        stageLevel = 1;
-        
     }
 
     // 보유중인 유물 정보
