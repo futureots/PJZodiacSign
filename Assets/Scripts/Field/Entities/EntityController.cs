@@ -13,6 +13,7 @@ public class EntityController : MonoBehaviour
 
     // 컨트롤러가 조종 가능한 엔티티
     List<Entity> entities;
+    // 컨트롤러 팀
     [SerializeField]Team team;
     private void Awake()
     {

@@ -54,7 +54,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
             {
                 if (x) ClearSlot();
             });
-            InputManager.Instance.SetInputMode(active.effect);
+            transform.root.GetComponent<InputManager>().SetInputMode(active.effect);
         }
         else
         {

@@ -28,7 +28,8 @@ public class EntityGoodsUI : MonoBehaviour
             {
                 DataManager.Instance.playerData.credit -= data.normalPrice;
                 var entity = ResourceManager.CreateEntity(data.id);
-                InputManager.Instance.controller.PushEntity(entity, InputManager.Instance.controller.instantField);
+                var input = transform.root.GetComponent<InputManager>();
+                input.controller.PushEntity(entity, input.controller.instantField);
             }
             
         });

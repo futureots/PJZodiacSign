@@ -32,7 +32,7 @@ public class ItemTable : ScriptableObject
     public ItemData SearchItem(string name)
     {
         var item = itemTable.Find(x => x.itemData.itemName.Equals(name));
-        Debug.Log(item.itemData.itemName);
+        //Debug.Log(item.itemData.itemName);
         if (item == null) return null;
         return item.itemData;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Agent : MonoBehaviour 
 {
     public bool isInputStop;
-    public Team team;
+    public Team team { get; protected set; }
     public abstract void SetMode(Mode mode, Action call = null);
     /// <summary>
     /// 현재 controller가 보유중인 커맨드 반환 및 초기화

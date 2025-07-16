@@ -673,6 +673,7 @@ GameObject:
   - component: {fileID: 43863451}
   - component: {fileID: 43863450}
   - component: {fileID: 43863449}
+  - component: {fileID: 43863452}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -712,6 +713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReflect: 0
   instantField: {fileID: 1817594083}
+  team: {fileID: 0}
 --- !u!114 &43863450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa59aea847f183c45a1bc758870af2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInputStop: 0
   currentMode: 0
   areaVisualizer: {fileID: 43863450}
   controller: {fileID: 43863449}
@@ -748,6 +751,19 @@ MonoBehaviour:
   entityInfoPanel: {fileID: 697413048}
   turnEndButton: {fileID: 104265736}
   UI: {fileID: 1959549465}
+--- !u!114 &43863452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43863446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b101d185fc2444a4a93ad47e31d0d617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamNumber: 0
 --- !u!1 &66234169
 GameObject:
   m_ObjectHideFlags: 0
@@ -7450,7 +7466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InfoPanel: {fileID: 402521475}
-  entitytSkillButton: {fileID: 0}
+  entitytSkillButton: {fileID: 2118047401}
 --- !u!1 &719789457
 GameObject:
   m_ObjectHideFlags: 0
@@ -8646,6 +8662,8 @@ GameObject:
   m_Component:
   - component: {fileID: 829814209}
   - component: {fileID: 829814210}
+  - component: {fileID: 829814211}
+  - component: {fileID: 829814212}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -8683,6 +8701,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReflect: 1
   instantField: {fileID: 125616120}
+  team: {fileID: 0}
+--- !u!114 &829814211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829814207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b101d185fc2444a4a93ad47e31d0d617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teamNumber: 1
+--- !u!114 &829814212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829814207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbfae69d9bdc56d41a5693269fe0440d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInputStop: 0
+  controller: {fileID: 829814210}
 --- !u!1 &863644698
 GameObject:
   m_ObjectHideFlags: 0
@@ -11740,7 +11786,7 @@ Transform:
   m_GameObject: {fileID: 1182249134}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18827,9 +18873,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5388102083c247a4c957507e4582bf93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllers:
-  - {fileID: 43863449}
-  - {fileID: 829814210}
+  teams:
+  - {fileID: 43863451}
+  - {fileID: 829814212}
   _field: {fileID: 1259859472}
   turnManager: {fileID: 2018355402}
 --- !u!4 &2018355401
