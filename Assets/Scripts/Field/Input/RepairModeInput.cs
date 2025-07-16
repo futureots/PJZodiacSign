@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace InputManage
+namespace PlayerInput
 {
     public class RepairModeInput : IModeInput
     {

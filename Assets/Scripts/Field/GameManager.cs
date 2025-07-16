@@ -8,7 +8,24 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-    public EntityController[] controllers;
+    public Agent[] teams;
+
+    public EntityController[] controllers
+    {
+        get
+        {
+            var list = new List<EntityController>();
+            foreach (var team in teams)
+            {
+                var controller = team.GetComponent<EntityController>();
+                if (controller != null)
+                {
+                    list.Add(controller);
+                }
+            }
+            return list.ToArray();
+        }
+    }
 
     [SerializeField] Field _field;
     public Field field
@@ -22,18 +39,6 @@ public class GameManager : Singleton<GameManager>
 
 
 
-    private void Start()
-    {
-        /*var playerData = DataManager.Instance.playerData;
-        var enemyData = stageData.GetStageCost(playerData.stageLevel);
-        var enemylist = new List<string>();
-        while(enemyData.cost1 > 0)
-        {
-            enemyTable.GetEntityData(0, ref enemyData.cost1);
-            Debug.Log(enemyData.cost1);
-        }*/
-
-    }
 
     #region GameEnd
     public bool CheckGameEnd()

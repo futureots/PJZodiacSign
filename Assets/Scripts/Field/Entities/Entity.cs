@@ -25,12 +25,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     private void Start()
     {
-        
     }
     // 엔티티 데이터 로 전환 예정
     public string id;
 
     #region Status
+    public Team team;
     public int level { get; private set; }
     public int power;
     public int maxHp;

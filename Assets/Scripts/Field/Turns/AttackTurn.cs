@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
-
 using UnityEngine;
 
 public class AttackTurn : ITurn
 {
-    EntityController entityController;
-    public AttackTurn(EntityController controller)
+    Agent agent;
+    public AttackTurn(Agent agent)
     {
-        entityController = controller;
+        this.agent = agent;
     }
 
     public void Execute(Action onTurnEnd)
@@ -21,17 +20,19 @@ public class AttackTurn : ITurn
     {
         // 현재 전투 중인 필드;
         Field curField = GameManager.Instance.field;
-        InputManager.isInputStop = true;
+        agent.isInputStop = true;
         // 해당 팀 기물만 공격
         foreach (var obj in curField.GetOccupiedObjects())
         {
-            if(obj.tag != entityController.tag)
+            var team = obj.GetComponent<Team>();
+            if(team != null)
             {
-                var attackable = obj.GetComponent<IAttackable>();
-                if(attackable != null)
-                {
-                    attackable.Attack();
-                }
+                if(team.isAlly(agent.team)) continue;
+            }
+            var attackable = obj.GetComponent<IAttackable>();
+            if (attackable != null)
+            {
+                attackable.Attack();
             }
         }
 
@@ -49,7 +50,7 @@ public class AttackTurn : ITurn
         }
 
         curField.CleanField();
-        InputManager.isInputStop = false;
+        agent.isInputStop = false;
         //Debug.Log("CanInput");
     }
 }

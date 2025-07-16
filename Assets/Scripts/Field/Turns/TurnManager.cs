@@ -54,7 +54,7 @@ public class TurnManager : MonoBehaviour
     }
     void AddTurnCycle()
     {
-        foreach (var ctrler in GameManager.Instance.controllers)
+        foreach (var ctrler in GameManager.Instance.teams)
         {
             // 플레이어 행동 후 플레이어 팀 외 기물 공격
             turns.AddLast(new ActionTurn(ctrler));

@@ -6,23 +6,17 @@ using UnityEngine.UI;
 using System;
 
 
-namespace InputManage
+namespace PlayerInput
 {
-    public class InputManager : MonoBehaviour
+    public class InputManager : Agent
     {
         //false일때 입력을 받고 true이면 입력을 받지 않음
-        public static bool isInputStop;
+        
         public Vector2 PointerPosition { get; private set; }
 
         public GameInputActions inputActions { get; private set; }
 
-        public enum Mode
-        {
-            Repair,//정비 입력(상점창 오픈, 정비용 카메라 무브, 보유 기물 인스턴트 필드)
-            Move,//이동 입력(드래그&드롭)
-            Active,//스킬 입력(클릭)
-            None // 입력 X, 정보만 표시
-        }
+
         public Mode currentMode;
         IModeInput curModeState;
 
@@ -31,7 +25,12 @@ namespace InputManage
 
         // 플레이어 컨트롤러
         public EntityController controller;
-
+        public override Command GetCommand()
+        {
+            var cmd = controller.curCmd;
+            controller.curCmd = null;
+            return cmd;
+        }
         // 표시 이펙트
         public GameObject entitySelecter;
         public GameObject tileSelecter;
@@ -73,6 +72,15 @@ namespace InputManage
             currentMode = Mode.Active;
             curModeState = new SkillModeInput(this, active);
             curModeState.SetMode();
+        }
+        public override void SetMode(Mode mode, Action call)
+        {
+            SetInputMode(mode);
+            turnEndButton.onClick.AddListener(() =>
+            {
+                turnEndButton.onClick.RemoveAllListeners();
+                call?.Invoke();
+            });
         }
         #endregion
 

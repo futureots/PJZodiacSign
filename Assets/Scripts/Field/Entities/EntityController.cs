@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
@@ -12,10 +13,11 @@ public class EntityController : MonoBehaviour
 
     // 컨트롤러가 조종 가능한 엔티티
     List<Entity> entities;
-
+    [SerializeField]Team team;
     private void Awake()
     {
         entities = new List<Entity>();
+        team = GetComponent<Team>();
     }
 
     #region EntityManaging
@@ -63,7 +65,7 @@ public class EntityController : MonoBehaviour
         var movable = instance.MoveSequence(field.GetTile(pos), true);
         if (movable)
         {
-            instance.tag = this.tag;
+            instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
             entities.Add(instance);
         }
         return movable;

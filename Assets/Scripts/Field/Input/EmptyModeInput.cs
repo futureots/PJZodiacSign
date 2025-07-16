@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InputManage
+namespace PlayerInput
 {
     public class EmptyModeInput : IModeInput
     {

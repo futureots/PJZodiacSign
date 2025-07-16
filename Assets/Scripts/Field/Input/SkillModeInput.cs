@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-namespace InputManage
+namespace PlayerInput
 {
     public class SkillModeInput : IModeInput
     {
@@ -92,7 +92,7 @@ namespace InputManage
             else
             {
                 _inputManager.controller.CreateCommand(skill, selecters.ToArray());
-                _inputManager.SetInputMode(InputManager.Mode.None);
+                _inputManager.SetInputMode(Mode.Move);
             }
         }
     }
