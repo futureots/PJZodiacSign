@@ -27,7 +27,7 @@ public class ItemGoodsUI : MonoBehaviour
             if (DataManager.Instance.playerData.credit >= data.cost)
             {
                 DataManager.Instance.playerData.credit -= data.cost;
-                
+                InputManager.Instance.UI.inventory.AddItem(data.CreateInstance());
             }
 
         });

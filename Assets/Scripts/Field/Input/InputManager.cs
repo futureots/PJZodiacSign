@@ -37,6 +37,7 @@ public class InputManager : Singleton<InputManager>
     [Header("UI Element")]
     public EntityInfoPanel entityInfoPanel;
     public Button turnEndButton;
+    public UIContainer UI;
     //public GameObject cam;
     #region InputMode
     
@@ -77,7 +78,6 @@ public class InputManager : Singleton<InputManager>
     /// </summary>
     private void HandleClick()
     {
-
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 부딪힌 기물, (타일) UI 표시 
         if (Physics.Raycast(ray, out var hit))
@@ -91,7 +91,7 @@ public class InputManager : Singleton<InputManager>
             }
             // 다른 클릭 가능한 오브젝트 확인
         }
-        else if (!EventSystem.current.IsPointerOverGameObject())
+        else
         {
             Debug.Log("Hide");
             entityInfoPanel.HidePanel();
