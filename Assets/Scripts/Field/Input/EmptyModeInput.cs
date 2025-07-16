@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EmptyModeInput : IModeInput
+namespace InputManage
 {
-    public void RemoveMode()
+    public class EmptyModeInput : IModeInput
     {
-        
-    }
+        public void RemoveMode()
+        {
 
-    public void SetMode()
-    {
-        Debug.Log("SetEmptyMode");
+        }
+
+        public void SetMode()
+        {
+            Debug.Log("SetEmptyMode");
+        }
     }
 }

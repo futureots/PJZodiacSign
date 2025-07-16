@@ -8,7 +8,7 @@ public class EntityInfoPanel : MonoBehaviour
 {
     public GameObject InfoPanel;
     
-    public SkillButton entitytSkillButton;
+    public MonoBehaviour entitytSkillButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +23,7 @@ public class EntityInfoPanel : MonoBehaviour
         if (entity.CompareTag("Player"))
         {
             entitytSkillButton.gameObject.SetActive(true);
-            entitytSkillButton.SetSkill(entity.skillInstance);
+            //entitytSkillButton.SetSkill(entity.skillInstance);
         }
         else
         {
