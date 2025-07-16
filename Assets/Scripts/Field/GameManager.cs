@@ -9,50 +9,30 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     public EntityController[] controllers;
+
+    [SerializeField] Field _field;
     public Field field
     {
-        get
-        {
-            return Field.Instance;
-        }
+        get { return _field; }
     }
 
 
     // 턴 조작
     public TurnManager turnManager;
-    public Button turnEndButton;
 
-    private void Awake()
+
+
+    private void Start()
     {
-        
-        // 플레이어 데이터 불러오기
-        var playerData = DataManager.Instance.playerData;
-
-        Debug.Log(playerData.entities.Count);
-        foreach (var item in playerData.entities)
+        /*var playerData = DataManager.Instance.playerData;
+        var enemyData = stageData.GetStageCost(playerData.stageLevel);
+        var enemylist = new List<string>();
+        while(enemyData.cost1 > 0)
         {
-            var resource = ResourceManager.GetEntityResource(item.name);
-            var instance = Instantiate(resource);
-            var entity = instance.GetComponent<Entity>();
-            controllers[0].SetEntity(entity);
-        }
+            enemyTable.GetEntityData(0, ref enemyData.cost1);
+            Debug.Log(enemyData.cost1);
+        }*/
 
-        // 적 데이터 불러오기
-        var enemyData = DataManager.Instance.curLocation;
-
-        foreach (var item in enemyData.enemyList)
-        {
-            var resource = ResourceManager.GetEntityResource(item.name);
-            var instance = Instantiate(resource);
-            var entity = instance.GetComponent<Entity>();
-            controllers[1].SetEntity(entity);
-        }
-        DataManager.Instance.SaveAllData("Data");
-    }
-    void Start()
-    {
-        
-        turnManager = this.AddComponent<TurnManager>();
     }
 
     #region GameEnd
@@ -63,16 +43,19 @@ public class GameManager : Singleton<GameManager>
         if (isWin)
         {
             Debug.Log("승리");
+            // 데이터 저장
+            DataManager.Instance.SaveAllData("Data");
         }
         else
         {
             Debug.Log("패배...");
+            
         }
         return true;
     }
     public bool IsGameEnd(out bool isWin)
     {
-        var tiles = field.GetTiles();
+        var tiles = _field.GetTiles();
         bool isPlayerAlive = false;
         bool isEnemyAlive = false;
         foreach (var tile in tiles)

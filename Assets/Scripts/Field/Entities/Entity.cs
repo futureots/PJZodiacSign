@@ -5,17 +5,30 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
-    public Tile curTile;
+    public Tile curTile { get; private set; }
     
     
     [SerializeField] BaseSkillData skillData;
-    public S_BaseEntity skillInstance { get; private set; }
+
+    S_BaseEntity _skillInstance;
+    public S_BaseEntity skillInstance
+    {
+        get
+        {
+            if(_skillInstance == null)
+            {
+                _skillInstance = (S_BaseEntity)skillData.CreateInstance();
+            }
+            return _skillInstance;
+        }
+    }
 
     private void Start()
     {
-        //entitySkill = GetComponentInChildren<Skill>();
-        skillInstance = (S_BaseEntity)skillData.CreateInstance();
+        
     }
+    // 엔티티 데이터 로 전환 예정
+    public string id;
 
     #region Status
     public int level { get; private set; }
@@ -98,7 +111,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Attack()
     {
         if (isSlienced) return;
-        Debug.Log($"{name}이 공격");
+        ///Debug.Log($"{name}이 공격");
         var list = GetAttackArea();
         int damage = power;
         
@@ -124,7 +137,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Dead()
     {
-        Debug.Log(gameObject+"Dead");
+        //Debug.Log(gameObject+"Dead");
         Destroy(gameObject);
     }
 
@@ -158,7 +171,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         }
         if (!ignoreOccupy)
         {
-            var isOccupied = tile.isEmpty;
+            var isOccupied = !tile.isEmpty;
             if (isOccupied) return false;
         }
         MoveTo(tile);

@@ -12,10 +12,6 @@ public class S_Enpassant : S_BaseEntity
         throw new System.NotImplementedException();
     }
 
-    public override bool IsActable()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public override bool IsValidInput(FieldInfo field)
     {

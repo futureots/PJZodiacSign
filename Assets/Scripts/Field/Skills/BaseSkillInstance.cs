@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class BaseSkillInstance : AbstractSkillInstance 
 {
@@ -10,7 +11,6 @@ public abstract class BaseSkillInstance : AbstractSkillInstance
     public BaseSkillInstance(BaseSkillData data)
     {
         this.data = data;
-        Debug.Log(data);
     }
     
 
@@ -38,7 +38,21 @@ public abstract class AbstractSkillInstance : IActive
     public abstract void Activate();
     public abstract bool IsValidInput(FieldInfo field);
 
-    public abstract bool IsActable();
+    public bool IsActable()
+    {
+        foreach (var item in GetType().GetFields())
+        {
+            var attr = item.GetCustomAttribute(typeof(SkillTargetAttribute));
+            if (attr != null)
+            {
+                if (!IsValidInput(item))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public abstract void Reinitialize();
 

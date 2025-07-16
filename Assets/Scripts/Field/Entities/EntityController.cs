@@ -1,15 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine.InputSystem.XR;
 
 public class EntityController : MonoBehaviour
 {
     // 필드를 바라보는 방향
     public bool isReflect;
-    //public Field currentField;
+    
+    // 현재 보유 기물 필드(설치 X)
+    public Field instantField;
 
     // 컨트롤러가 조종 가능한 엔티티
     List<Entity> entities;
@@ -17,7 +16,6 @@ public class EntityController : MonoBehaviour
     private void Awake()
     {
         entities = new List<Entity>();
-        
     }
 
     #region EntityManaging
@@ -32,7 +30,7 @@ public class EntityController : MonoBehaviour
         entities.Add(entityInstance);
 
         // 필드의 랜덤 위치로 이동
-        var tiles = Field.Instance.GetHalfTiles(isReflect);
+        var tiles = GameManager.Instance.field.GetHalfTiles(isReflect);
         while (true)
         {
             var rand = Random.Range(0, tiles.Count);
@@ -42,37 +40,49 @@ public class EntityController : MonoBehaviour
                 break;
             }
         }
-        
     }
-
-    public bool IsContainEntity(Entity entity)
+    public bool PushEntity(Entity instance, Field field)
     {
-        return entities.Contains(entity);
+        for (int i = field.row - 1; i >= 0; i--) 
+        {
+            for(int j = 0; j < field.column; j++)
+            {
+                var pos = new intVector2(j, i);
+                var tile = field.GetTile(pos);
+                if (tile.isEmpty)
+                {
+                    SetEntity(instance, field, pos);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+    public bool SetEntity(Entity instance, Field field, intVector2 pos)
+    {
+        var movable = instance.MoveSequence(field.GetTile(pos), true);
+        if (movable)
+        {
+            instance.tag = this.tag;
+            entities.Add(instance);
+        }
+        return movable;
+    }
+    public virtual void SetInstantField()
+    {
+        instantField.gameObject.SetActive(true);
+    }
+    public virtual void SetMainField()
+    {
 
+    }
+    public virtual void DisposeInstantField()
+    {
+        instantField.EraseField();
+        instantField.gameObject.SetActive(false);
+    }
 
     #endregion
-    // 데이터 기반 엔티티 설정 및 세팅
-    /*public virtual void SetEntities(int num, PlayerData party)
-    {
-        teamNum = num;
-        int x = -35;
-        foreach (var member in party.entities)
-        {
-            var entity = CreateEntity(member.entityId, member.entityElement);
-            entities.Add(entity);
-            entity.SetEntityData(teamNum, member.entityLevel, isReflect);
-            entity.OnDestroyed += (entity) =>
-            {
-                entities.Remove(entity);
-            };
-            HpPanelManager.Instance.CreateHpBar(entity.gameObject);
-            var reflectVariable = isReflect ? -1 : 1;
-            entity.transform.position = new Vector3(-45*reflectVariable, 0, x*reflectVariable);
-            x += 10;
-        }
-    }
-    */
 
     #region Command
     // 현재 저장된 명령
@@ -106,24 +116,11 @@ public class EntityController : MonoBehaviour
         cmd.selecterObjects.AddRange(selecter);
         return cmd;
     }
+    public void ClearCommand()
+    {
+        curCmd = null;
+    }
 
     #endregion
-    // 해당 위치에서 가장 가까운 타일을 반환한다.
-    public Tile GetClosestTile(Vector3 pos,Field field)
-    {
-        if (field == null) return null;
-        float minDistance = 0;
-        Tile closestTile = null;
-        foreach (Tile tile in field.GetTiles())
-        {
-            //if (tile.isOccupied) continue;
-            var distance = (tile.transform.position - pos).magnitude;
-            if (closestTile == null || minDistance > distance)
-            {
-                minDistance = distance;
-                closestTile = tile;
-            }
-        }
-        return closestTile;
-    }
+
 }

@@ -1,29 +1,47 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Outline;
-using static UnityEngine.EventSystems.EventTrigger;
 
 
 
-public class Field : Singleton<Field>
+public class Field : MonoBehaviour
 {
     public int row, column;
     public GameObject tilePrefab;
-    public Tile[,] tiles;
-
-    private void Awake()
+    public Tile[,] tiles
     {
-        CreateField();
+        get
+        {
+            if(_tiles != null) return _tiles;
+            _tiles = new Tile[row, column];
+            for(int i = 0; i < row; i++)
+            {
+                for(int j=0;j< column; j++)
+                {
+                    _tiles[i, j] = _tileList[i].list[j];
+                }
+            }
+            return tiles;
+        }
     }
+    Tile[,] _tiles;
+    [ContextMenuItem("CreateField","CreateField")]
+    [ContextMenuItem("DestroyField", "DestroyField")]
+    public List<Row<Tile>> _tileList;
+
+    #region Field
+    /// <summary>
+    /// 필드 생성
+    /// </summary>
     public void CreateField()
     {
+        _tileList = new List<Row<Tile>>();
         //행,열의 길이 만큼 체스판 생성
-        tiles = new Tile[row, column];
+        //tiles = new Tile[row, column];
         for (int i = 0; i < row; i++)
         {
+            var temp = new Row<Tile>();
+            _tileList.Add(temp);
             for (int j = 0; j < column; j++)
             {
                 Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
@@ -31,11 +49,59 @@ public class Field : Singleton<Field>
                 tileObj.transform.localPosition = pos;
                 var tile = tileObj.GetComponent<Tile>();
                 tile.SetField(this, j, i);
-                tiles[i, j] = tile;
+                temp.list.Add(tile);
             }
         }
         Debug.Log(tiles.Length);
     }
+
+    /// <summary>
+    /// 필드 제거
+    /// </summary>
+    public void DestroyField()
+    {
+        foreach (Row<Tile> tile in _tileList)
+        {
+            foreach (var item in tile.list)
+            {
+                DestroyImmediate(item.gameObject);
+            }
+            tile.list.Clear();
+        }
+        _tileList.Clear();
+    }
+    /// <summary>
+    /// 필드위의 모든 기물 제거(장애물 포함)
+    /// </summary>
+    public void EraseField()
+    {
+        foreach (var tile in tiles)
+        {
+            if (tile.isEmpty) continue;
+            tile.ClearBufferedObjects();
+            tile.DestroyOccupiedObject();
+        }
+    }
+    /// <summary>
+    /// 사망한 오브젝트 제거(장애물 포함)
+    /// </summary>
+    public void CleanField()
+    {
+        foreach (var tile in tiles)
+        {
+            if (tile.isEmpty) continue;
+            // 타일에 존재하는 기물의 수가 1개 이상이면 마지막에 들어온 객체 제외하고 전부 삭제
+            var obj = tile.occupiedObject.GetComponent<IDamageable>();
+            if (obj.isZero())
+            {
+                tile.OccupyObject(null);
+                obj.Dead();
+            }
+            tile.ClearBufferedObjects();
+        }
+    }
+
+    #endregion
 
     #region Tile
     // 해당 위치가 필드내에 존재하는 위치인지 확인
@@ -48,10 +114,16 @@ public class Field : Singleton<Field>
         return true;
     }
     // 해당 위치의 셀을 반환
-    public Tile GetTile(intVector2 pos)
+    public Tile GetTile(intVector2 pos, bool isReflect = false)
     {
-        if (!IsValidCellPos(pos)) return null;
-        return tiles[pos.y, pos.x];
+        var fieldPos = pos;
+        if (isReflect)
+        {
+            fieldPos = new intVector2(row - pos.x - 1, column - pos.y - 1);
+        }
+        
+        if (!IsValidCellPos(fieldPos)) return null;
+        return tiles[fieldPos.y, fieldPos.x];
     }
 
     public Tile GetTile(int x, int y)
@@ -116,52 +188,22 @@ public class Field : Singleton<Field>
     #endregion
 
     //공격 가능한 오브젝트 가져오기
-    public List<IAttackable> GetAllAttackableObject()
+    public List<GameObject> GetOccupiedObjects()
     {
-        List<IAttackable> list = new();
+        List<GameObject> list = new();
         foreach(var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            var attackable = tile.occupiedObject.GetComponent<IAttackable>();
-            if (attackable != null)
+            var occupiedObj = tile.occupiedObject;
+            if (occupiedObj != null)
             {
-                list.Add(attackable);
+                list.Add(occupiedObj);
             }
         }
         return list;
     }
-    /// <summary>
-    /// 사망한 오브젝트 제거(장애물 포함)
-    /// </summary>
-    public void CleanField()
-    {
-        foreach (var tile in tiles)
-        {
-            if (tile.isEmpty) continue;
-            // 타일에 존재하는 기물의 수가 1개 이상이면 마지막에 들어온 객체 제외하고 전부 삭제
-            var obj = tile.occupiedObject.GetComponent<IDamageable>();
-            if (obj.isZero())
-            {
-                tile.OccupyObject(null);
-                obj.Dead();
-            }
-            Debug.Log(tile.occupiedObjects.Count);
-            // 밀려난 오브젝트(파괴 예정 기물, 장애물 등) 삭제
-            foreach (var item in tile.occupiedObjects)
-            {
-                var component = item.GetComponent<IDamageable>();
-                if(component != null)
-                {
-                    component.Dead();
-                }
-                else
-                {
-                    Destroy(item);
-                }
-            }
-            tile.occupiedObjects.Clear();
-        }
-    }
+
+
     #region Visualize
 
     /// <summary>
@@ -253,4 +295,13 @@ public class Field : Singleton<Field>
         list.Clear();
     }
     #endregion
+}
+[System.Serializable]
+public class Row<T>
+{
+    public Row()
+    {
+        list = new List<T>();
+    }
+    public List<T> list;
 }
