@@ -21,13 +21,12 @@ public class AttackTurn : ITurn
         // 현재 전투 중인 필드;
         Field curField = GameManager.Instance.field;
         agent.isInputStop = true;
-        // 해당 팀 기물만 공격
+        // 해당 팀 반대 기물만 공격
         foreach (var obj in curField.GetOccupiedObjects())
         {
-            var team = obj.GetComponent<Team>();
-            if(team != null)
+            if (agent.team.isAlly(obj.GetComponent<Team>()))
             {
-                if(team.isAlly(agent.team)) continue;
+                continue;
             }
             var attackable = obj.GetComponent<IAttackable>();
             if (attackable != null)

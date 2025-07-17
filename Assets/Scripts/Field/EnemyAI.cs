@@ -15,4 +15,8 @@ public class EnemyAI : Agent
     {
         call?.Invoke();
     }
+    private void Start()
+    {
+        team = GetComponent<Team>();
+    }
 }

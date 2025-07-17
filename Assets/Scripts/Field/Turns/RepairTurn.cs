@@ -1,6 +1,7 @@
 using PlayerInput;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,20 +25,25 @@ public class RepairTurn : ITurn
             controller.SetMainField();
         }
 
+        int completeUsers = 0;
         foreach (var agent in GameManager.Instance.teams)
         {
             agent.SetMode(Mode.Repair, () =>
             {
                 agent.SetMode(Mode.None);
-                // 각 컨트롤러 별 제거 및 플레이어 수에 따라 턴 넘기기로 변경 필요
-                foreach (var controller in GameManager.Instance.controllers)
+                completeUsers++;
+                // 모든 유저가 준비 완료 시
+                if (completeUsers >= GameManager.Instance.teams.Length)
                 {
-                    controller.DisposeInstantField();
+                    // 각 컨트롤러 별 제거 및 플레이어 수에 따라 턴 넘기기로 변경 필요
+                    foreach (var controller in GameManager.Instance.controllers)
+                    {
+                        controller.DisposeInstantField();
+                    }
+                    onTurnEnd?.Invoke();
                 }
-                onTurnEnd?.Invoke();
             });
 
         }
-
     }
 }

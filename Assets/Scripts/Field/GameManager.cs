@@ -75,6 +75,7 @@ public class GameManager : Singleton<GameManager>
         if (teams.Count == 1)
         {
             winner = teams[0];
+            isEnd = true;
         }
         else
         {

@@ -713,7 +713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReflect: 0
   instantField: {fileID: 1817594083}
-  team: {fileID: 0}
+  team: {fileID: 43863452}
 --- !u!114 &43863450
 MonoBehaviour:
   m_ObjectHideFlags: 0
