@@ -669,9 +669,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688cd81ed79862a46b77a84fa4364bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curTile: {fileID: 0}
   skillData: {fileID: 11400000, guid: 4442f64d40b70aa47960590571fe7e36, type: 2}
   id: chicken
+  team: {fileID: 0}
   power: 10
   maxHp: 30
   curHp: 30

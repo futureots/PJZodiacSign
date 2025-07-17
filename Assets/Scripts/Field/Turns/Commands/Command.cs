@@ -10,7 +10,10 @@ public abstract class Command
     /// <summary>
     /// 커맨드 실행
     /// </summary>
-    public abstract void Execute();
+    public virtual void Execute()
+    {
+        Delete();
+    }
 
     public virtual void Delete()
     {

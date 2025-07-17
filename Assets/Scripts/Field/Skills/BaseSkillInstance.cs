@@ -28,6 +28,7 @@ public abstract class AbstractSkillInstance : IActive
         var isActable = IsActable();
         if (isActable)
         {
+            Debug.Log("SKILL 사용");
             Activate();
             Reinitialize();
         }
@@ -42,14 +43,17 @@ public abstract class AbstractSkillInstance : IActive
     {
         foreach (var item in GetType().GetFields())
         {
-            var attr = item.GetCustomAttribute(typeof(SkillTargetAttribute));
+            var attr = item.GetCustomAttribute<SkillTargetAttribute>();
             if (attr != null)
             {
-                if (!IsValidInput(item))
+                var check = IsValidInput(item);
+                Debug.Log("실행 가능 여부 : " + check);
+                if (!check)
                 {
                     return false;
                 }
             }
+            else continue;
         }
         return true;
     }

@@ -15,6 +15,7 @@ public class MoveCommand : Command
     public override void Execute()
     {
         var result = entity.MoveSequence(tile);
+        base.Execute();
     }
 
 

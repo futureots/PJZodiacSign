@@ -66,7 +66,8 @@ namespace PlayerInput
                 if (entity != null)
                 {
                     // 적인지 아닌지 구분
-                    if (!entity.CompareTag("Player")) return;
+                    var team = _inputManager.team;
+                    if (!team.isAlly(entity.team)) return;
                     _selectedEntity = entity;
                     //값이 변경될 때마다 선택한 엔티티의 위치 이동
                     bindAction = value =>

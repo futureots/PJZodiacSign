@@ -37,11 +37,13 @@ public class S_Warp : BaseSkillInstance
 
     bool IsValidEntity()
     {
+        Debug.Log("입력값 entity : " + entity);
         if (entity == null) return false;
         return true;
     }
     bool IsValidTile()
     {
+        Debug.Log("입력값 tile : " + tile);
         if (tile == null) return false;
         // 점령 확인
         if (!tile.isEmpty) return false;

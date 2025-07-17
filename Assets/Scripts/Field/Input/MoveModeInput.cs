@@ -16,6 +16,7 @@ namespace PlayerInput
         public MoveModeInput(InputManager input)
         {
             _inputManager = input;
+            visualizer = input.areaVisualizer;
             clickEvents = _inputManager.inputActions.Gameplay.Click;
             pointEvents = _inputManager.inputActions.Gameplay.Point;
 
@@ -44,21 +45,24 @@ namespace PlayerInput
         GameObject targetTileSelecter = null;
         List<Tile> moveArea;
         List<Tile> attackArea;
-
+        AreaVisualizer visualizer;
 
 
         // 드래그 시작
         void DragStart(InputAction.CallbackContext context)
         {
             Debug.Log("Started");
+            // 마우스 위치에 ray 캐스트로 부딪힌 오브젝트 찾기
             Ray ray = Camera.main.ScreenPointToRay(_inputManager.PointerPosition);
             if (Physics.Raycast(ray, out var hit))
             {
+                // 해당 오브젝트가 조작가능한 기물인지 확인
                 var entity = hit.collider.GetComponent<Entity>();
                 if (entity != null)
                 {
                     // 적인지 아닌지 구분
-                    if (!entity.CompareTag("Player")) return;
+                    var team = _inputManager.team;
+                    if (!team.isAlly(entity.team)) return;
                     _selectedEntity = entity;
                     //값이 변경될 때마다 선택한 엔티티의 위치 이동
                     bindAction = value =>
@@ -80,19 +84,25 @@ namespace PlayerInput
         // 드래그 종료
         void DragEnd(InputAction.CallbackContext context)
         {
-            var _areaVisualizer = _inputManager.areaVisualizer;
             // 엔티티 클리어
             if (_selectedEntity != null)
             {
                 var tile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
                 _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
-                _areaVisualizer.RemoveAttackArea(attackArea);
-                _areaVisualizer.RemoveMoveArea(moveArea);
+                visualizer.RemoveAttackArea(attackArea);
+                visualizer.RemoveMoveArea(moveArea);
 
-                //커맨드 생성
-                _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
                 // 제자리 이동 불가능
-                if (_selectedEntity.curTile.Equals(tile)) _inputManager.controller.ClearCommand();
+                if (!_selectedEntity.curTile.Equals(tile))
+                {
+                    //커맨드 생성
+                    _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
+                }
+                else
+                {
+                    GameObject.Destroy(targetSelecter);
+                    GameObject.Destroy(targetTileSelecter);
+                }
                 _selectedEntity = null;
             }
             pointEvents.performed -= bindAction;

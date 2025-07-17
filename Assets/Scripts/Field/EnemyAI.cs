@@ -8,12 +8,11 @@ public class EnemyAI : Agent
     public override Command GetCommand()
     {
         var cmd = controller.curCmd;
-        controller.curCmd = null;
         return cmd;
     }
 
     public override void SetMode(Mode mode, Action call = null)
     {
-        
+        call?.Invoke();
     }
 }

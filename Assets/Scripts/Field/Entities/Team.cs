@@ -9,6 +9,7 @@ public class Team : MonoBehaviour
     }
     public bool isAlly(Team team)
     {
-        return teamNumber == team.teamNumber;
+        if (team == null) return false;
+         return teamNumber == team.teamNumber;
     }
 }

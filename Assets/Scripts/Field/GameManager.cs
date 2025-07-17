@@ -43,9 +43,9 @@ public class GameManager : Singleton<GameManager>
     #region GameEnd
     public bool CheckGameEnd()
     {
-        bool isWin;
-        if (!IsGameEnd(out isWin)) return false;
-        if (isWin)
+        int winner;
+        if (!IsGameEnd(out winner)) return false;
+        if (teams[winner] is InputManager)
         {
             Debug.Log("승리");
             // 데이터 저장
@@ -54,43 +54,37 @@ public class GameManager : Singleton<GameManager>
         else
         {
             Debug.Log("패배...");
-            
         }
         return true;
     }
-    public bool IsGameEnd(out bool isWin)
+    public bool IsGameEnd(out int winner)
     {
         var tiles = _field.GetTiles();
-        bool isPlayerAlive = false;
-        bool isEnemyAlive = false;
+        bool isEnd = false;
+        List<int> teams = new List<int>();
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            var entityTag = tile.occupiedObject.tag;
-            if (entityTag == "Player")
+            var entityTeam = tile.occupiedObject.GetComponent<Team>();
+            if (entityTeam == null) continue;
+            if (!teams.Contains(entityTeam.teamNumber))
             {
-                isPlayerAlive = true;
-                //Debug.Log($"{tile.occupiedObject} player is Alive");
+                teams.Add(entityTeam.teamNumber);
             }
-            else if (entityTag == "Enemy") {
-                isEnemyAlive = true;
-                //Debug.Log($"{tile.occupiedObject} enemy is Alive");
-            }
-            if (isPlayerAlive && isEnemyAlive) break;
         }
-        if (!isEnemyAlive)
+        if (teams.Count == 1)
         {
-            isWin = true;
+            winner = teams[0];
         }
         else
         {
-            isWin = false;
+            winner = -1;
         }
-        return !(isPlayerAlive && isEnemyAlive);
+        return isEnd;
     }
     public bool IsGameEnd()
     {
-        bool dummy;
+        int dummy;
         return IsGameEnd(out dummy);
     }
     

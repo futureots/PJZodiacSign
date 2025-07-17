@@ -26,10 +26,10 @@ namespace PlayerInput
             FieldInfo[] fieldInfo = type.GetFields();
             foreach (var field in fieldInfo)
             {
-                var attr = (SkillTargetAttribute)field.GetCustomAttribute(typeof(SkillTargetAttribute));
+                var attr = field.GetCustomAttribute<SkillTargetAttribute>();
                 if (attr != null)
                 {
-                    Debug.Log(attr.text);
+                    
                     skillFields.Enqueue(field);
                 }
             }
@@ -88,6 +88,11 @@ namespace PlayerInput
             if (!IsFieldEmpty())
             {
                 currentField = skillFields.Dequeue();
+                var attr = currentField.GetCustomAttribute<SkillTargetAttribute>();
+                if (attr != null)
+                {
+                    Debug.Log(attr.text);
+                }
             }
             else
             {

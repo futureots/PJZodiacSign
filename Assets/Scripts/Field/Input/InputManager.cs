@@ -27,7 +27,6 @@ public class InputManager : Agent
     public override Command GetCommand()
     {
         var cmd = controller.curCmd;
-        controller.curCmd = null;
         return cmd;
     }
     // «•Ω√ ¿Ã∆Â∆Æ

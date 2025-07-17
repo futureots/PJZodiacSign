@@ -30,7 +30,18 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public string id;
 
     #region Status
-    public Team team;
+    Team _team;
+    public Team team
+    {
+        get
+        {
+            if( _team == null)
+            {
+                _team = GetComponent<Team>();
+            }
+            return _team;
+        }
+    }
     public int level { get; private set; }
     public int power;
     public int maxHp;
