@@ -7,8 +7,7 @@ using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
 {
-    public ItemInstance item { get; private set; }
-
+    int index;
     Image image;
     public Image Image
     {
@@ -22,16 +21,20 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
         }
     }
 
-    public Action<ItemSlotUI> OnClick;
+    public Action<int> OnClick;
     /// <summary>
     /// 마우스가 들어올 때, 나갈 때 호출되는 함수
     /// </summary>
-    public Action<ItemInstance, Vector2> OnMouseInOut;
+    public Action<int, Vector2> OnMouseInOut;
+    public void SetSlotIndex(int index) => this.index = index;
     public void SetSlot(ItemInstance item)
     {
-        if (item == null) return;
+        if (item == null)
+        {
+            ClearSlot();
+            return;
+        }
         
-        this.item = item;
         Image.sprite = item.itemData.icon;
         Image.color = Color.white;
 
@@ -39,37 +42,14 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
 
     public void ClearSlot()
     {
-        item = null;
         Image.sprite = null;
         Image.color = Color.clear;
     }
 
-    public void UseSlot()
-    {
-        // 사용 등록(바로 삭제 X, 해당 명령 실행 시 삭제)
-        if(item is ActiveItemInstance)
-        {
-            var active = (ActiveItemInstance)item;
-            active.effect.AddCallback( x=>
-            {
-                if (x) ClearSlot();
-            });
-            transform.root.GetComponent<InputManager>().SetInputMode(active.effect);
-        }
-        else
-        {
-            Debug.Log("Not Active Item");
-        }
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //Debug.Log($"Click : {(item != null ? item.itemData.name:null)} ");
-        if(item != null)
-        {
-            OnClick?.Invoke(this);
-        }
-        
+        OnClick?.Invoke(index);
     }
 
 
@@ -77,16 +57,12 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
     public void OnPointerExit(PointerEventData eventData)
     {
         // null 입력 시 해당 패널 비활성화
-        OnMouseInOut?.Invoke(null, eventData.position);
-        //Debug.Log("Out");
+        OnMouseInOut?.Invoke(index, eventData.position);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (item != null)
-        {
-            OnMouseInOut?.Invoke(item, eventData.position);
-            //Debug.Log("enter");
-        }
+        Debug.Log(eventData.position);
+        OnMouseInOut?.Invoke(index,eventData.position);
     }
 }

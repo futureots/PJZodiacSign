@@ -1,4 +1,4 @@
-using System.Reflection;
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,8 +11,11 @@ public class ItemInstance
         this.itemData = itemData;
     }
 
-
-    
+    public Action OnDiscard;
+    public void Discard()
+    {
+        OnDiscard?.Invoke();
+    }
 
 
 

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,8 @@ public class ItemGoodsUI : MonoBehaviour
             if (DataManager.Instance.playerData.credit >= data.cost)
             {
                 DataManager.Instance.playerData.credit -= data.cost;
-                transform.root.GetComponent<InputManager>().UI.inventory.AddItem(data.CreateInstance());
+                var result = transform.root.GetComponent<Inventory>().AddItem(data.CreateInstance());
+                Debug.Log("AddItem : " + result);
             }
 
         });
