@@ -27,7 +27,6 @@ public class ItemGoodsUI : MonoBehaviour
             {
                 DataManager.Instance.playerData.credit -= data.cost;
                 var result = transform.root.GetComponent<Inventory>().AddItem(data.CreateInstance());
-                Debug.Log("AddItem : " + result);
             }
 
         });

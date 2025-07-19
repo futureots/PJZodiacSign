@@ -124,7 +124,6 @@ public class InputManager : Agent
             var entity = hit.collider.GetComponent<Entity>();
             if (entity != null)
             {
-                Debug.Log($"Show {entity.name}'s Info");
                 // UI Ç¥½Ã
                 entityInfoPanel.ShowPanel(entity);
             }
@@ -132,7 +131,7 @@ public class InputManager : Agent
         }
         else
         {
-            Debug.Log("Hide");
+            
             entityInfoPanel.HidePanel();
         }
 

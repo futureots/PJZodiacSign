@@ -62,7 +62,6 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log(eventData.position);
         OnMouseInOut?.Invoke(index,eventData.position);
     }
 }
