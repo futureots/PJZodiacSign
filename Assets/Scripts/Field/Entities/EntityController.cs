@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class EntityController : MonoBehaviour
 {
@@ -22,29 +21,7 @@ public class EntityController : MonoBehaviour
     }
 
     #region EntityManaging
-
-    /// <summary>
-    /// 해당 엔티티를 자신의 소유 및 자신의 필드에 랜덤 스폰
-    /// </summary>
-    /// <param name="entityInstance"></param>
-    public void SetEntity(Entity entityInstance)
-    {
-        entityInstance.tag = this.tag;
-        entities.Add(entityInstance);
-
-        // 필드의 랜덤 위치로 이동
-        var tiles = GameManager.Instance.field.GetHalfTiles(isReflect);
-        while (true)
-        {
-            var rand = Random.Range(0, tiles.Count);
-            if (tiles[rand].isEmpty)
-            {
-                entityInstance.MoveTo(tiles[rand]);
-                break;
-            }
-        }
-    }
-    public bool PushEntity(Entity instance, Field field)
+    public bool PlaceEntity(Entity instance, Field field)
     {
         for (int i = field.row - 1; i >= 0; i--) 
         {
@@ -54,14 +31,14 @@ public class EntityController : MonoBehaviour
                 var tile = field.GetTile(pos);
                 if (tile.isEmpty)
                 {
-                    SetEntity(instance, field, pos);
+                    PlaceEntity(instance, field, pos);
                     return true;
                 }
             }
         }
         return false;
     }
-    public bool SetEntity(Entity instance, Field field, intVector2 pos)
+    public bool PlaceEntity(Entity instance, Field field, intVector2 pos)
     {
         var movable = instance.MoveSequence(field.GetTile(pos), true);
         if (movable)

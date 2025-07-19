@@ -676,7 +676,6 @@ GameObject:
   - component: {fileID: 43863449}
   - component: {fileID: 43863452}
   - component: {fileID: 43863453}
-  - component: {fileID: 43863454}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -784,44 +783,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capacity: 10
---- !u!114 &43863454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43863446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 1ca1c995b39ba414f89261cbefbc2aaf, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 137535994}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f47469ec-5649-4c55-97fe-67ac43920f2b
-    m_ActionName: 'Gameplay/Point[/Mouse/position]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 33c8b64b-b552-4912-81fb-0befddd27f0c
-    m_ActionName: 'Gameplay/Click[/Mouse/leftButton]'
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 2007245452}
 --- !u!1 &66234169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,9 +1596,6 @@ MonoBehaviour:
     - {fileID: 693895693}
     - {fileID: 1205666149}
     - {fileID: 916241174}
-  dangerTileMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
-  expectAttackMaterial: {fileID: -876546973899608171, guid: 766bbd0bfcca5ed489650688c819a2c3, type: 3}
-  expectMoveMaterial: {fileID: 2100000, guid: 088d884df31c96e4fa90f21e5173a155, type: 2}
 --- !u!1 &131717353
 GameObject:
   m_ObjectHideFlags: 0
@@ -12073,9 +12031,6 @@ MonoBehaviour:
     - {fileID: 77824545}
     - {fileID: 212221834}
     - {fileID: 1430610356}
-  dangerTileMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
-  expectAttackMaterial: {fileID: -876546973899608171, guid: 766bbd0bfcca5ed489650688c819a2c3, type: 3}
-  expectMoveMaterial: {fileID: 2100000, guid: 088d884df31c96e4fa90f21e5173a155, type: 2}
 --- !u!4 &1259859473
 Transform:
   m_ObjectHideFlags: 0
@@ -16294,9 +16249,6 @@ MonoBehaviour:
     - {fileID: 2007271749}
     - {fileID: 967222284}
     - {fileID: 691543770}
-  dangerTileMaterial: {fileID: 2100000, guid: 0c2bdbf3ae3c232468131706adcf0e43, type: 2}
-  expectAttackMaterial: {fileID: -876546973899608171, guid: 766bbd0bfcca5ed489650688c819a2c3, type: 3}
-  expectMoveMaterial: {fileID: 2100000, guid: 088d884df31c96e4fa90f21e5173a155, type: 2}
 --- !u!1 &1839077409
 GameObject:
   m_ObjectHideFlags: 0
@@ -18048,7 +18000,6 @@ MonoBehaviour:
   - {fileID: 43863451}
   - {fileID: 829814212}
   _field: {fileID: 1259859472}
-  turnManager: {fileID: 2018355402}
 --- !u!4 &2018355401
 Transform:
   m_ObjectHideFlags: 0

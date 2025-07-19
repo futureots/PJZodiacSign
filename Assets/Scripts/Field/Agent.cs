@@ -2,16 +2,28 @@ using System;
 using UnityEngine;
 
 
-public abstract class Agent : MonoBehaviour 
+public abstract class Agent : MonoBehaviour
 {
     public bool isInputStop;
     public Team team { get; protected set; }
     public abstract void SetMode(Mode mode, Action call = null);
+
     /// <summary>
     /// 현재 controller가 보유중인 커맨드 반환 및 초기화
     /// </summary>
     /// <returns>입력한 커맨드</returns>
-    public abstract Command GetCommand();
+    public Command GetCommand()
+    {
+        var cmd = controller.curCmd;
+        return cmd;
+    }
+
+    // 컨트롤러
+    public EntityController controller;
+
+    public AgentData data;
+
+
 }
 public enum Mode
 {

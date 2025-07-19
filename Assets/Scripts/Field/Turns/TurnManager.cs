@@ -14,15 +14,8 @@ public class TurnManager : MonoBehaviour
     {
         turns = new LinkedList<ITurn>();
     }
-    private void Start()
-    {
 
-        turns.AddLast(new RepairTurn());
-        //AddTurnCycle();
-        
-        StartTurn();
-    }
-    void StartTurn()
+    public void StartTurn()
     {
         var curTurn = turns.First.Value;
         turns.RemoveFirst();

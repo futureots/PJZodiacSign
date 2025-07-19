@@ -33,14 +33,43 @@ public class GameManager : Singleton<GameManager>
         get { return _field; }
     }
 
+    DataManager dataManager;
 
-    // 턴 조작
-    public TurnManager turnManager;
+    private void Awake()
+    {
+        dataManager = this.GetOrAddComponent<DataManager>();
+    }
+
+    #region GameStart
+
+    /// <summary>
+    /// 게임 시작 또는 재개하기(데이터 불러오기)
+    /// </summary>
+    public void GameStart()
+    {
+        // 게임에 필요한 데이터 가져오거나 생성
+        dataManager.LoadAllData("data");
+        var list = dataManager.GetData();
 
 
+        // 게임 시작용 턴 생성
+        var turnManager = GetComponent<TurnManager>();
+        if (turnManager == null) return;
+        turnManager.turns.AddLast(new RepairTurn());
+        turnManager.StartTurn();
+    }
 
+    #endregion
 
     #region GameEnd
+    /// <summary>
+    /// 게임 종료 및 메인화면으로 이동
+    /// </summary>
+    void GameEnd()
+    {
+
+    }
+
     public bool CheckGameEnd()
     {
         int winner;
@@ -49,11 +78,12 @@ public class GameManager : Singleton<GameManager>
         {
             Debug.Log("승리");
             // 데이터 저장
-            DataManager.Instance.SaveAllData("Data");
+            dataManager.SaveAllData("Data");
         }
         else
         {
             Debug.Log("패배...");
+            GameEnd();
         }
         return true;
     }

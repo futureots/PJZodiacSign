@@ -9,7 +9,6 @@ using PlayerInput;
 
 public class InputManager : Agent
 {
-    //false일때 입력을 받고 true이면 입력을 받지 않음
         
     public Vector2 PointerPosition { get; private set; }
 
@@ -22,13 +21,6 @@ public class InputManager : Agent
     // 입력 표시자
     public AreaVisualizer areaVisualizer;
 
-    // 플레이어 컨트롤러
-    public EntityController controller;
-    public override Command GetCommand()
-    {
-        var cmd = controller.curCmd;
-        return cmd;
-    }
     // 표시 이펙트
     public GameObject entitySelecter;
     public GameObject tileSelecter;
@@ -40,6 +32,42 @@ public class InputManager : Agent
     public Button turnEndButton;
     public UIContainer UI;
     //public GameObject cam;
+
+
+
+    private void Awake()
+    {
+        inputActions = new GameInputActions();
+        team = GetComponent<Team>();
+    }
+    private void Start()
+    {
+        inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
+        inputActions.Gameplay.Click.started += _ => HandleClick();
+
+    }
+    private void OnEnable() => inputActions.Enable();
+    private void OnDisable() => inputActions.Disable();
+
+
+    List<Tile> list = new List<Tile>();
+
+    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    {
+        float minDistance = 0;
+        Tile closestTile = null;
+        foreach (Tile tile in tiles)
+        {
+            var distance = (tile.transform.position - pos).magnitude;
+            if (closestTile == null || minDistance > distance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
+
     #region InputMode
 
     /// <summary>
@@ -113,39 +141,4 @@ public class InputManager : Agent
 
 
     #endregion
-
-
-    private void Awake()
-    {
-        inputActions = new GameInputActions();
-        team = GetComponent<Team>();
-    }
-    private void OnEnable() => inputActions.Enable();
-    private void OnDisable() => inputActions.Disable();
-
-    private void Start()
-    {
-        inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
-        inputActions.Gameplay.Click.started += _ => HandleClick();
-            
-    }
-    
-
-List<Tile> list = new List<Tile>();
-
-    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
-    {
-        float minDistance = 0;
-        Tile closestTile = null;
-        foreach (Tile tile in tiles)
-        {
-            var distance = (tile.transform.position - pos).magnitude;
-            if (closestTile == null || minDistance > distance)
-            {
-                minDistance = distance;
-                closestTile = tile;
-            }
-        }
-        return closestTile;
-    }
 }

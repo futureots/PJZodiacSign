@@ -28,7 +28,7 @@ public class EnemyController : EntityController
         foreach (var item in DataManager.Instance.playerData.handEntities)
         {
             var entity = ResourceManager.CreateEntity(item.name);
-            PushEntity(entity, instantField);
+            PlaceEntity(entity, instantField);
         }
     }
     public override void SetMainField()

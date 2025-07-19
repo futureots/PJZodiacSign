@@ -4,15 +4,9 @@ using UnityEngine;
 public class EnemyAI : Agent
 {
 
-    public EntityController controller;
-    public override Command GetCommand()
-    {
-        var cmd = controller.curCmd;
-        return cmd;
-    }
-
     public override void SetMode(Mode mode, Action call = null)
     {
+        // AI로 계산 해서 명령 제작 후 콜백
         call?.Invoke();
     }
     private void Start()

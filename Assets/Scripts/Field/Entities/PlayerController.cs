@@ -10,7 +10,7 @@ public class PlayerController : EntityController
         foreach (var item in DataManager.Instance.playerData.handEntities)
         {
             var entity = ResourceManager.CreateEntity(item.name);
-            PushEntity(entity, instantField);
+            PlaceEntity(entity, instantField);
         }
     }
     public override void SetMainField()
@@ -22,7 +22,7 @@ public class PlayerController : EntityController
 
             // key를 좌표 값으로 전환
             intVector2 vec = intVector2.Decode(item.Key);
-            SetEntity(entity, GameManager.Instance.field, vec);
+            PlaceEntity(entity, GameManager.Instance.field, vec);
         }
     }
 
