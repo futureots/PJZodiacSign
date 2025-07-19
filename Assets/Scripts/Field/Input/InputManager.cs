@@ -88,6 +88,7 @@ public class InputManager : Agent
     /// </summary>
     private void HandleClick()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // ºÎµúÈù ±â¹°, (Å¸ÀÏ) UI Ç¥½Ã 
         if (Physics.Raycast(ray, out var hit))

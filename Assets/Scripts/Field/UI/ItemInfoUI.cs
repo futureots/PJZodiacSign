@@ -15,10 +15,22 @@ public class ItemInfoUI : MonoBehaviour
             return _text;
         }
     }
+    RectTransform _rectTransform;
+    RectTransform RectTransform
+    {
+        get
+        {
+            if (_rectTransform == null)
+            {
+                _rectTransform = GetComponent<RectTransform>();
+            }
+            return _rectTransform;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        transform.position = Input.mousePosition;
+        RectTransform.anchoredPosition = Input.mousePosition;
     }
     public void SetInfo(ItemInstance item)
     {

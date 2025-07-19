@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace PlayerInput
@@ -27,7 +28,6 @@ namespace PlayerInput
         public void RemoveMode()
         {
             Debug.Log("RemoveMoveMode");
-            
             clickEvents.started -= DragStart;
             clickEvents.canceled -= DragEnd;
         }
@@ -52,6 +52,7 @@ namespace PlayerInput
         void DragStart(InputAction.CallbackContext context)
         {
             Debug.Log("Started");
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             // 마우스 위치에 ray 캐스트로 부딪힌 오브젝트 찾기
             Ray ray = Camera.main.ScreenPointToRay(_inputManager.PointerPosition);
             if (Physics.Raycast(ray, out var hit))

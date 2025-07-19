@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 
@@ -56,6 +57,7 @@ namespace PlayerInput
         List<GameObject> selecters;
         void SetClick(InputAction.CallbackContext context)
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             Ray ray = Camera.main.ScreenPointToRay(_inputManager.PointerPosition);
             // ºÎµúÈù ±â¹°, (Å¸ÀÏ) UI Ç¥½Ã 
             if (Physics.Raycast(ray, out var hit))

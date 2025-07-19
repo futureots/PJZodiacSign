@@ -1,7 +1,7 @@
 using DG.Tweening;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
@@ -163,19 +163,21 @@ public class InventoryUI : MonoBehaviour
     void SetInfoUI(int index, Vector2 pos)
     {
         if (inventory.items.Count <= index) return;
-        var item = inventory.items[index];
-        if (item == null)
+        if (index == -1)
         {
             infoPanel.gameObject.SetActive(false);
         }
         else
         {
+            var item = inventory.items[index];
+            if (item == null) return;
             if (!infoPanel.gameObject.activeSelf)
             {
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.SetInfo(item);
             }
             infoPanel.transform.localPosition = pos;
+            Debug.Log(pos);
         }
     }
 
