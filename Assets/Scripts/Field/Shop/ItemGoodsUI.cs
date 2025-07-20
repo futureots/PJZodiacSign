@@ -21,8 +21,10 @@ public class ItemGoodsUI : MonoBehaviour
         goodsName.text = data.name;
         price.text = data.cost.ToString();
         icon.sprite = data.icon;
+        var inventory = transform.root.GetComponent<Inventory>();
         buyBtn.onClick.AddListener(() =>
         {
+            
             if (DataManager.Instance.playerData.credit >= data.cost)
             {
                 DataManager.Instance.playerData.credit -= data.cost;

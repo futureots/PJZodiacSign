@@ -35,10 +35,11 @@ public class InputManager : Agent
 
 
 
-    private void Awake()
+    protected new void Awake()
     {
+        base.Awake();
         inputActions = new GameInputActions();
-        team = GetComponent<Team>();
+
     }
     private void Start()
     {

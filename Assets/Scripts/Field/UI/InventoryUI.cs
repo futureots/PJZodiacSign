@@ -177,7 +177,7 @@ public class InventoryUI : MonoBehaviour
                 infoPanel.SetInfo(item);
             }
             infoPanel.transform.localPosition = pos;
-            Debug.Log(pos);
+            //Debug.Log(pos);
         }
     }
 

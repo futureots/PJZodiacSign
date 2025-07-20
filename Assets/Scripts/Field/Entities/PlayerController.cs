@@ -4,19 +4,11 @@ using UnityEngine.InputSystem.XR;
 
 public class PlayerController : EntityController
 {
-    public override void SetInstantField()
+
+    public override void SetMainField(Dictionary<int,EntityData> fieldEntities)
     {
-        base.SetInstantField();
-        foreach (var item in DataManager.Instance.playerData.handEntities)
-        {
-            var entity = ResourceManager.CreateEntity(item.name);
-            PlaceEntity(entity, instantField);
-        }
-    }
-    public override void SetMainField()
-    {
-        base.SetMainField();
-        foreach (var item in DataManager.Instance.playerData.fieldEntities)
+        base.SetMainField(fieldEntities);
+        foreach (var item in fieldEntities)
         {
             var entity = ResourceManager.CreateEntity(item.Value.name);
 
@@ -26,7 +18,7 @@ public class PlayerController : EntityController
         }
     }
 
-    public override void DisposeInstantField()
+    public override void DisposeInstantField(ref Dictionary<int,EntityData> fields, ref List<EntityData> hands)
     {
 
         // 추가로 배치한 기물을 데이터에 업데이트
@@ -41,7 +33,7 @@ public class PlayerController : EntityController
             fieldData.Add(pos, entityData);
             Debug.Log($"data {entityData.name} : pos {pos}");
         }
-        DataManager.Instance.playerData.fieldEntities = fieldData;
+        fields = fieldData;
 
         // 인스턴트 필드에 남은 기물을 데이터에 업데이트
         List<EntityData> handData = new List<EntityData>();
@@ -52,7 +44,7 @@ public class PlayerController : EntityController
             var entityData = new EntityData(entity);
             handData.Add(entityData);
         }
-        DataManager.Instance.playerData.handEntities = handData;
-        base.DisposeInstantField();
+        hands = handData;
+        base.DisposeInstantField(ref fields, ref hands);
     }
 }

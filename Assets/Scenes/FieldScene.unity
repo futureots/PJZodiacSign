@@ -748,7 +748,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInputStop: 0
-  controller: {fileID: 43863449}
   currentMode: 0
   areaVisualizer: {fileID: 43863450}
   entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
@@ -8441,6 +8440,7 @@ GameObject:
   - component: {fileID: 829814210}
   - component: {fileID: 829814211}
   - component: {fileID: 829814212}
+  - component: {fileID: 829814213}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -8505,7 +8505,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInputStop: 0
-  controller: {fileID: 829814210}
+--- !u!114 &829814213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829814207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78687a5923fde14dba8afe9b5f3c81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capacity: 3
 --- !u!1 &863644698
 GameObject:
   m_ObjectHideFlags: 0
@@ -17953,7 +17965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5388102083c247a4c957507e4582bf93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teams:
+  agents:
   - {fileID: 43863451}
   - {fileID: 829814212}
   _field: {fileID: 1259859472}
@@ -17997,6 +18009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5385823771d42264696fc8021d4c9bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemTable: {fileID: 11400000, guid: 8df71ece2ab6ad1438e45221bebbdb78, type: 2}
 --- !u!1 &2054713323
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,16 +9,16 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-    public Agent[] teams;
+    public Agent[] agents;
 
     public EntityController[] controllers
     {
         get
         {
             var list = new List<EntityController>();
-            foreach (var team in teams)
+            foreach (var agent in agents)
             {
-                var controller = team.GetComponent<EntityController>();
+                var controller = agent.GetComponent<EntityController>();
                 if (controller != null)
                 {
                     list.Add(controller);
@@ -39,7 +40,10 @@ public class GameManager : Singleton<GameManager>
     {
         dataManager = this.GetOrAddComponent<DataManager>();
     }
-
+    private void Start()
+    {
+        GameStart();
+    }
     #region GameStart
 
     /// <summary>
@@ -50,7 +54,11 @@ public class GameManager : Singleton<GameManager>
         // 게임에 필요한 데이터 가져오거나 생성
         dataManager.LoadAllData("data");
         var list = dataManager.GetData();
-
+        Debug.Log(list.Length);
+        for(int i = 0; i < list.Length; i++)
+        {
+            agents[i].SetData(list[i]);
+        }
 
         // 게임 시작용 턴 생성
         var turnManager = GetComponent<TurnManager>();
@@ -74,7 +82,7 @@ public class GameManager : Singleton<GameManager>
     {
         int winner;
         if (!IsGameEnd(out winner)) return false;
-        if (teams[winner] is InputManager)
+        if (agents[winner] is InputManager)
         {
             Debug.Log("승리");
             // 데이터 저장

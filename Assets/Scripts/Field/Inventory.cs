@@ -43,5 +43,17 @@ public class Inventory : MonoBehaviour
         items[index] = null;
         OnItemChanged?.Invoke(index, null);
     }
-
+    public void SetItem(List<ItemData> list)
+    {
+        for(int i = 0; i < list.Count; i++)
+        {
+            var instance = list[i].CreateInstance();
+            if (items.Count > i)
+            {
+                items[i] = instance;
+                OnItemChanged?.Invoke(i, instance);
+            }
+            else AddItem(instance);
+        }
+    }
 }

@@ -48,24 +48,29 @@ public class EntityController : MonoBehaviour
         }
         return movable;
     }
-    public virtual void SetInstantField()
+    public void SetInstantField(List<EntityData> handEntities)
     {
         instantField.gameObject.SetActive(true);
+        foreach (var item in handEntities)
+        {
+            var entity = ResourceManager.CreateEntity(item.name);
+            PlaceEntity(entity, instantField);
+        }
     }
-    public virtual void SetMainField()
+    public virtual void SetMainField(Dictionary<int,EntityData> fieldEntities)
     {
 
     }
-    public virtual void DisposeInstantField()
+    public virtual void DisposeInstantField(ref Dictionary<int, EntityData> fields, ref List<EntityData> hands)
     {
-        instantField.EraseField();
+        //instantField.EraseField();
         instantField.gameObject.SetActive(false);
     }
 
     #endregion
 
     #region Command
-    // 현재 저장된 명령
+    // 현재 저장된 명령 
     public Command curCmd
     {
         get
