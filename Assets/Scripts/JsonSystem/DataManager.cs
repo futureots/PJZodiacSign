@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class DataManager : Singleton<DataManager>
+public class DataManager : MonoBehaviour
 {
 
     public PlayerData playerData {  get; private set; }
@@ -31,7 +31,22 @@ public class DataManager : Singleton<DataManager>
         data.Add(enemy);
         return data.ToArray();
     }
+    public void SetData(AgentData data, int stageLevel)
+    {
+        List<string> itemName = new List<string>();
+        foreach (var item in data.items) 
+        {
+            itemName.Add(item.itemName);
+        }
+        playerData.items = itemName;
 
+        playerData.handEntities = data.handEntities;
+        playerData.fieldEntities = data.fieldEntities;
+        playerData.credit = data.credit;
+
+        playerData.stageLevel = stageLevel;
+
+    }
 
 
     public void LoadAllData(string fileName)
@@ -44,22 +59,10 @@ public class DataManager : Singleton<DataManager>
     {
         playerData.SavePlayerData(fileName);
     }
-    public override void Init()
-    {
-        if (transform.parent != null || transform.root != null)                                                             //싱글톤 오브젝트가 파괴되지 않도록 처리
-        {
-            DontDestroyOnLoad(this.transform.root.gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
-        LoadAllData("Data");
-    }
 }
 public struct AgentData
 {
-    public AgentData(int credit =0, List<EntityData> hands= null, Dictionary<int, EntityData> fields = null, List<ItemData> items = null)
+    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<int, EntityLevelData> fields = null, List<ItemData> items = null)
     {
         this.credit = credit;
 
@@ -74,8 +77,8 @@ public struct AgentData
     }
 
     public int credit;
-    public List<EntityData> handEntities;
-    public Dictionary<int, EntityData> fieldEntities;
+    public List<EntityLevelData> handEntities;
+    public Dictionary<int, EntityLevelData> fieldEntities;
     public List<ItemData> items;
 }
 

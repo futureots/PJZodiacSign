@@ -3,7 +3,16 @@ using UnityEngine;
 
 public class EnemyController : EntityController
 {
-    public override void SetMainField(Dictionary<int, EntityData> fieldEntities)
+    public override void SetInstantField(List<EntityLevelData> handEntities)
+    {
+        base.SetInstantField(handEntities);
+        foreach (var item in handEntities)
+        {
+            var entity = ResourceManager.CreateEntity(item.entity);
+            PlaceEntity(entity, instantField);
+        }
+    }
+    public override void SetMainField(Dictionary<int, EntityLevelData> fieldEntities)
     {
         base.SetMainField(fieldEntities);
         foreach (var tile in instantField.tiles)
@@ -16,7 +25,7 @@ public class EnemyController : EntityController
         }
         
     }
-    public override void DisposeInstantField(ref Dictionary<int, EntityData> fields, ref List<EntityData> hands)
+    public override void DisposeInstantField(ref Dictionary<int, EntityLevelData> fields, ref List<EntityLevelData> hands)
     {
         base.DisposeInstantField(ref fields, ref hands);
     }

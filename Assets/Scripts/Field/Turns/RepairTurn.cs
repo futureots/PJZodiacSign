@@ -32,7 +32,7 @@ public class RepairTurn : ITurn
                 // 모든 유저가 준비 완료 시
                 if (completeUsers >= GameManager.Instance.agents.Length)
                 {
-                    agent.UpdateData();
+                    agent.UpdateEntities();
                     // 각 컨트롤러 별 제거 및 플레이어 수에 따라 턴 넘기기로 변경 필요
                     /*foreach (var controller in GameManager.Instance.controllers)
                     {

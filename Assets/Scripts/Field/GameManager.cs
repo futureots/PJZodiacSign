@@ -11,22 +11,7 @@ public class GameManager : Singleton<GameManager>
 {
     public Agent[] agents;
 
-    public EntityController[] controllers
-    {
-        get
-        {
-            var list = new List<EntityController>();
-            foreach (var agent in agents)
-            {
-                var controller = agent.GetComponent<EntityController>();
-                if (controller != null)
-                {
-                    list.Add(controller);
-                }
-            }
-            return list.ToArray();
-        }
-    }
+    public int level {  get; private set; }
 
     [SerializeField] Field _field;
     public Field field
@@ -59,7 +44,7 @@ public class GameManager : Singleton<GameManager>
         {
             agents[i].SetData(list[i]);
         }
-
+        level = dataManager.playerData.stageLevel;
         // 게임 시작용 턴 생성
         var turnManager = GetComponent<TurnManager>();
         if (turnManager == null) return;
@@ -80,18 +65,20 @@ public class GameManager : Singleton<GameManager>
 
     public bool CheckGameEnd()
     {
-        int winner;
-        if (!IsGameEnd(out winner)) return false;
-        if (agents[winner] is InputManager)
+        if (IsGameEnd(out int winner))
         {
-            Debug.Log("승리");
-            // 데이터 저장
-            dataManager.SaveAllData("Data");
-        }
-        else
-        {
-            Debug.Log("패배...");
-            GameEnd();
+            if (agents[winner] is InputManager)
+            {
+                Debug.Log("승리");
+                // 데이터 저장
+                dataManager.SetData(agents[winner].agentData, level);
+                dataManager.SaveAllData("Data");
+            }
+            else
+            {
+                Debug.Log("패배...");
+                GameEnd();
+            }
         }
         return true;
     }

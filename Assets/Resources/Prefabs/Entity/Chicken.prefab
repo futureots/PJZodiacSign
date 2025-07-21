@@ -671,7 +671,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillData: {fileID: 11400000, guid: 4442f64d40b70aa47960590571fe7e36, type: 2}
   id: chicken
-  team: {fileID: 0}
   power: 10
   maxHp: 30
   curHp: 30

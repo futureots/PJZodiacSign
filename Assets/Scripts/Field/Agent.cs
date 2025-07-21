@@ -28,25 +28,52 @@ public abstract class Agent : MonoBehaviour
     public Inventory inventory { get; protected set; }
 
     #region AgentData
-    AgentData data;
+    AgentData _agentData;
+    public AgentData agentData
+    {
+        get {  return _agentData; }
+    }
     public void SetData(AgentData dataSet)
     {
-        this.data = dataSet;
-        Debug.Log(data);
+        this._agentData = dataSet;
+        Debug.Log(_agentData);
         SetData();
     }
     // 초기 데이터 세팅
     public void SetData()
     {
-        controller.SetInstantField(data.handEntities);
-        controller.SetMainField(data.fieldEntities);
-        inventory.SetItem(data.items);
+        controller.SetInstantField(_agentData.handEntities);
+        controller.SetMainField(_agentData.fieldEntities);
+        inventory.SetItem(_agentData.items);
     }
 
-    // 데이터 갱신(reparturn끝나면 갱신, 게임 클리어 시 해당 데이터 저장)
-    public virtual void UpdateData()
+    // 데이터 갱신(기물 갱신, 게임 클리어 시 해당 데이터 저장. 아이템은 게임 클리어 시 갱신 및 저장)
+    public void UpdateEntities()
     {
-        controller.DisposeInstantField(ref data.fieldEntities, ref data.handEntities);
+        controller.DisposeInstantField(ref _agentData.fieldEntities, ref _agentData.handEntities);
+    }
+    /// <summary>
+    /// 아이템을 구매할 수 있으면 구매하고 true반환, 없으면 false 반환
+    /// </summary>
+    /// <param name="itemData">구매하려는 아이템 데이터</param>
+    /// <returns></returns>
+    public bool BuyItem(ItemData itemData)
+    {
+        if (itemData.cost > _agentData.credit) return false;
+        _agentData.credit -= itemData.cost;
+        _agentData.items.Add(itemData);
+        inventory.AddItem(itemData);
+        return true;
+    }
+    public bool BuyEntity(EntityUIData entityData)
+    {
+        if (_agentData.credit < entityData.normalPrice) return false;
+        _agentData.credit -= entityData.normalPrice;
+        
+        var entity = ResourceManager.CreateEntity(entityData.id);
+        
+        controller.PlaceEntity(entity, controller.instantField);
+        return true;
     }
     #endregion
 

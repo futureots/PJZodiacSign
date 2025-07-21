@@ -19189,18 +19189,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 312015343}
     m_Modifications:
-    - target: {fileID: 4160440031545629594, guid: 139fc4b6bff98134aa32c155b9ab1ba5, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4160440031545629594, guid: 139fc4b6bff98134aa32c155b9ab1ba5, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: cbdc230c22f89f245a4cdafd5a9e1701, type: 3}
-    - target: {fileID: 4160440031545629594, guid: 139fc4b6bff98134aa32c155b9ab1ba5, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7863696851159406440, guid: 139fc4b6bff98134aa32c155b9ab1ba5, type: 3}
       propertyPath: m_Name
       value: ItemSlot

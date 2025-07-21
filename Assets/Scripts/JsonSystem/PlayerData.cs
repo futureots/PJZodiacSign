@@ -14,9 +14,9 @@ public class PlayerData
     static string defaultPath = "Player";
 
     // 현재 보유중인 기물 정보
-    public Dictionary<int,EntityData> fieldEntities;
+    public Dictionary<int,EntityLevelData> fieldEntities;
 
-    public List<EntityData> handEntities;
+    public List<EntityLevelData> handEntities;
 
     // 현재 위치한 지역 아이디
     public int stageLevel;
@@ -30,9 +30,9 @@ public class PlayerData
     public PlayerData()
     {
         //Debug.Log("Player Data Init");
-        fieldEntities = new Dictionary<int, EntityData>();
+        fieldEntities = new Dictionary<int, EntityLevelData>();
         // 인코딩으로 int 값으로 변환
-        handEntities = new List<EntityData>();
+        handEntities = new List<EntityLevelData>();
         items = new();
         stageLevel = 1;
         credit = 0;
@@ -90,20 +90,20 @@ public class PlayerData
     }
 }
 [Serializable]
-public struct EntityData
+public struct EntityLevelData
 {
-    public EntityData(string _name, int _level = 0)
+    public EntityLevelData(string _name, int _level = 0)
     {
-        name = _name;
+        entity = _name;
         level = _level;
     }
-    public EntityData(Entity entity)
+    public EntityLevelData(Entity entity)
     {
-        name = entity.id;
+        this.entity = entity.id;
         level = entity.level;
     }
     // 기물 이름
-    public string name;
+    public string entity;
     // 기물 레벨(스탯 초기값 설정에 필요)
     public int level;
 }

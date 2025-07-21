@@ -48,20 +48,15 @@ public class EntityController : MonoBehaviour
         }
         return movable;
     }
-    public void SetInstantField(List<EntityData> handEntities)
+    public virtual void SetInstantField(List<EntityLevelData> handEntities)
     {
         instantField.gameObject.SetActive(true);
-        foreach (var item in handEntities)
-        {
-            var entity = ResourceManager.CreateEntity(item.name);
-            PlaceEntity(entity, instantField);
-        }
     }
-    public virtual void SetMainField(Dictionary<int,EntityData> fieldEntities)
+    public virtual void SetMainField(Dictionary<int,EntityLevelData> fieldEntities)
     {
 
     }
-    public virtual void DisposeInstantField(ref Dictionary<int, EntityData> fields, ref List<EntityData> hands)
+    public virtual void DisposeInstantField(ref Dictionary<int, EntityLevelData> fields, ref List<EntityLevelData> hands)
     {
         //instantField.EraseField();
         instantField.gameObject.SetActive(false);

@@ -2,33 +2,39 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile { get; private set; }
-    
-    
-    [SerializeField] BaseSkillData skillData;
 
-    S_BaseEntity _skillInstance;
-    public S_BaseEntity skillInstance
+    EntityData data;
+    public void SetEntity(EntityData data)
     {
-        get
-        {
-            if(_skillInstance == null)
-            {
-                _skillInstance = (S_BaseEntity)skillData.CreateInstance();
-            }
-            return _skillInstance;
-        }
+        this.data = data;
+        id = data.id;
     }
-
-    private void Start()
-    {
-    }
-    // 엔티티 데이터 로 전환 예정
     public string id;
+
+    #region Skill
+
+    public BaseSkillData skillData;
+    public IActive skillInstance;
+    public void SetSkill(BaseSkillData skillData)
+    {
+        this.skillData = skillData;
+        skillInstance = skillData.CreateInstance();
+        if(skillInstance is S_BaseEntity entitySkill)
+        {
+            entitySkill.Owner = this;
+        }
+
+    }
+
+    #endregion
+    // 엔티티 데이터 로 전환 예정
+    
 
     #region Status
     Team _team;
