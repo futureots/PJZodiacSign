@@ -31,6 +31,8 @@ namespace PlayerInput
             Debug.Log("RemoveRepairMode");
             clickEvents.started -= DragStart;
             clickEvents.canceled -= DragEnd;
+            GameObject.Destroy(targetSelecter);
+            GameObject.Destroy(targetTileSelecter);
         }
 
         public void SetMode()
@@ -40,8 +42,8 @@ namespace PlayerInput
             clickEvents.canceled += DragEnd;
 
             // 표시자 생성 삭제 => 활성화 비활성화
-            targetSelecter = UnityEngine.Object.Instantiate(_inputManager.entitySelecter);
-            targetTileSelecter = UnityEngine.Object.Instantiate(_inputManager.tileSelecter);
+            targetSelecter = GameObject.Instantiate(_inputManager.entitySelecter);
+            targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter);
             targetSelecter.SetActive(false);
             targetTileSelecter.SetActive(false);
 

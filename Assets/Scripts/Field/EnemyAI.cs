@@ -9,8 +9,4 @@ public class EnemyAI : Agent
         // AI로 계산 해서 명령 제작 후 콜백
         call?.Invoke();
     }
-    private void Start()
-    {
-        team = GetComponent<Team>();
-    }
 }

@@ -37,7 +37,7 @@ public abstract class Agent : MonoBehaviour
     {
         this._agentData = dataSet;
         Debug.Log(_agentData);
-        SetData();
+        //SetData();
     }
     // 초기 데이터 세팅
     public void SetData()
@@ -62,6 +62,7 @@ public abstract class Agent : MonoBehaviour
         if (itemData.cost > _agentData.credit) return false;
         _agentData.credit -= itemData.cost;
         _agentData.items.Add(itemData);
+        Debug.Log("Buy Item");
         inventory.AddItem(itemData);
         return true;
     }
@@ -71,8 +72,10 @@ public abstract class Agent : MonoBehaviour
         _agentData.credit -= entityData.normalPrice;
         
         var entity = ResourceManager.CreateEntity(entityData.id);
-        
+
+        Debug.Log("Buy Entity");
         controller.PlaceEntity(entity, controller.instantField);
+
         return true;
     }
     #endregion

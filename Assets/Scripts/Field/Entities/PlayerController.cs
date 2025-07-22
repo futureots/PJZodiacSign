@@ -1,13 +1,27 @@
 using System.Collections.Generic;
+
+using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
 public class PlayerController : EntityController
 {
+    public override void SetInstantField(List<EntityLevelData> handEntities)
+    {
+        base.SetInstantField(handEntities);
+        foreach (EntityLevelData handEntity in handEntities)
+        {
+            var entity = ResourceManager.CreateEntity(handEntity.entity);
 
+            PlaceEntity(entity, instantField);
+        }
+
+    }
     public override void SetMainField(Dictionary<int,EntityLevelData> fieldEntities)
     {
         base.SetMainField(fieldEntities);
+        
         foreach (var item in fieldEntities)
         {
             var entity = ResourceManager.CreateEntity(item.Value.entity);
@@ -20,7 +34,6 @@ public class PlayerController : EntityController
 
     public override void DisposeInstantField(ref Dictionary<int,EntityLevelData> fields, ref List<EntityLevelData> hands)
     {
-
         // 추가로 배치한 기물을 데이터에 업데이트
         var tiles = GameManager.Instance.field.GetHalfTiles(isReflect);
         Dictionary<int, EntityLevelData> fieldData = new Dictionary<int, EntityLevelData>();
@@ -31,7 +44,6 @@ public class PlayerController : EntityController
             var entityData = new EntityLevelData(entity);
             int pos = tile.fieldPos.Encode();
             fieldData.Add(pos, entityData);
-            Debug.Log($"data {entityData.entity} : pos {pos}");
         }
         fields = fieldData;
 

@@ -7,7 +7,12 @@ using UnityEngine;
 
 public class RepairTurn : ITurn
 {
-    public void Execute(Action onTurnEnd)
+    public void EndTurn()
+    {
+
+    }
+
+    public void StartTurn(Action onTurnEnd)
     {
 
         // 상점 UI 표시하기
@@ -32,12 +37,13 @@ public class RepairTurn : ITurn
                 // 모든 유저가 준비 완료 시
                 if (completeUsers >= GameManager.Instance.agents.Length)
                 {
-                    agent.UpdateEntities();
-                    // 각 컨트롤러 별 제거 및 플레이어 수에 따라 턴 넘기기로 변경 필요
-                    /*foreach (var controller in GameManager.Instance.controllers)
+                    Debug.Log("정비 턴 End");
+                    //Agent[] agents = GameManager.Instance.agents;
+                    foreach (Agent agent in GameManager.Instance.agents)
                     {
-                        controller.DisposeInstantField();
-                    }*/
+                        Debug.Log(agent.name + " update Entities");
+                        agent.UpdateEntities();
+                    }
                     onTurnEnd?.Invoke();
                 }
             });

@@ -24,7 +24,7 @@ public class TurnManager : MonoBehaviour
             AddTurnCycle();
         }
         //Debug.Log($"Current TurnCount : {turns.Count}");
-        curTurn.Execute(OnTurnComplete);
+        curTurn.StartTurn(OnTurnComplete);
     }
 
     void OnTurnComplete()
@@ -33,15 +33,15 @@ public class TurnManager : MonoBehaviour
         bool isEnd = GameManager.Instance.CheckGameEnd();
         if (isEnd)
         {
+            
             turns.Clear();
             //모든 턴 정리 및 상호작용 제거
             turns.AddFirst(new RepairTurn());
-
+            
         }
         else
         {
             Debug.Log("Turn End");
-            //StartTurn();
         }
         StartTurn();
     }

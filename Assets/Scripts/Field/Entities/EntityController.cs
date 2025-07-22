@@ -58,7 +58,8 @@ public class EntityController : MonoBehaviour
     }
     public virtual void DisposeInstantField(ref Dictionary<int, EntityLevelData> fields, ref List<EntityLevelData> hands)
     {
-        //instantField.EraseField();
+        Debug.Log("DIsposeInstantField");
+        instantField.EraseField();
         instantField.gameObject.SetActive(false);
     }
 

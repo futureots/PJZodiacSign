@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using UnityEditor.UIElements;
+
 using UnityEngine;
 
 public class AttackTurn : ITurn
@@ -10,7 +12,7 @@ public class AttackTurn : ITurn
         this.agent = agent;
     }
 
-    public void Execute(Action onTurnEnd)
+    public void StartTurn(Action onTurnEnd)
     {
         Debug.Log("공격 턴 시작");
 
@@ -38,6 +40,8 @@ public class AttackTurn : ITurn
         // 대기시간
         yield return new WaitForSeconds(0.1f);
 
+        curField.CleanField();
+
         // 모든 캐릭터 버프 업데이트
         foreach (var tile in curField.GetTiles())
         {
@@ -48,10 +52,12 @@ public class AttackTurn : ITurn
             entity.RemoveBuff();
         }
 
-        curField.CleanField();
+
         agent.isInputStop = false;
+
         //Debug.Log("CanInput");
     }
+
 }
 
 

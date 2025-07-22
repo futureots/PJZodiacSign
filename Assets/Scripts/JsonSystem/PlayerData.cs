@@ -35,11 +35,16 @@ public class PlayerData
         handEntities = new List<EntityLevelData>();
         items = new();
         stageLevel = 1;
-        credit = 0;
+        credit = 100;
 
         #region DebugData
-        //items.Add("Scroll");
-        //entities.Add(new EntityData("chicken",0));
+        /*
+        items.Add("Warp");
+        items.Add("Warp");
+        items.Add("Warp");
+        fieldEntities.Add(2050,new EntityLevelData("chicken",1));
+        handEntities.Add(new EntityLevelData("chicken", 0));
+        */
         #endregion
     }
 
@@ -80,6 +85,7 @@ public class PlayerData
         if (File.Exists(path))
         {
             data = File.ReadAllText(path);
+            Debug.Log(data);
         }
         if(data == null)
         {

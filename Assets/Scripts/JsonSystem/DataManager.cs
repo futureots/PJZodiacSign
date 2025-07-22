@@ -27,7 +27,8 @@ public class DataManager : MonoBehaviour
         AgentData player = new AgentData(playerData.credit, playerData.handEntities, playerData.fieldEntities, items);
         data.Add(player);
 
-        AgentData enemy = new AgentData(playerData.stageLevel * 3);
+        AgentData enemy = new AgentData(playerData.stageLevel * 3,playerData.handEntities, playerData.fieldEntities);
+
         data.Add(enemy);
         return data.ToArray();
     }

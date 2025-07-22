@@ -39,7 +39,6 @@ public class GameManager : Singleton<GameManager>
         // 게임에 필요한 데이터 가져오거나 생성
         dataManager.LoadAllData("data");
         var list = dataManager.GetData();
-        Debug.Log(list.Length);
         for(int i = 0; i < list.Length; i++)
         {
             agents[i].SetData(list[i]);
@@ -79,8 +78,9 @@ public class GameManager : Singleton<GameManager>
                 Debug.Log("패배...");
                 GameEnd();
             }
+            return true;
         }
-        return true;
+        return false;
     }
     public bool IsGameEnd(out int winner)
     {
@@ -92,8 +92,10 @@ public class GameManager : Singleton<GameManager>
             if (tile.isEmpty) continue;
             var entityTeam = tile.occupiedObject.GetComponent<Team>();
             if (entityTeam == null) continue;
+            Debug.Log(entityTeam.teamNumber);
             if (!teams.Contains(entityTeam.teamNumber))
             {
+                Debug.Log("count : " + teams.Count);
                 teams.Add(entityTeam.teamNumber);
             }
         }

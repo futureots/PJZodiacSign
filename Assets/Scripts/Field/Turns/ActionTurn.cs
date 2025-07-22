@@ -10,7 +10,7 @@ public class ActionTurn : ITurn
     {
         this.agent = agent;
     }
-    public void Execute(Action onTurnEnd)
+    public void StartTurn(Action onTurnEnd)
     {
         Debug.Log(agent.tag + "행동 턴 시작");
         // 현재 플레이어의 행동 턴 일 경우
