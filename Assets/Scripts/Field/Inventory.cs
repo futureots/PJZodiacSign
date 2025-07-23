@@ -47,6 +47,7 @@ public class Inventory : MonoBehaviour
     {
         for(int i = 0; i < list.Count; i++)
         {
+            if (list[i] == null) continue;
             var instance = list[i].CreateInstance();
             if (items.Count > i)
             {

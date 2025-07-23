@@ -4,17 +4,17 @@
     "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityLevelData, Assembly-CSharp]], mscorlib",
     "2050": {
       "$type": "EntityLevelData, Assembly-CSharp",
-      "entity": "chicken",
+      "entity": "WhiteKing",
       "level": 5
     },
     "3072": {
       "$type": "EntityLevelData, Assembly-CSharp",
-      "entity": "chicken",
+      "entity": "WhiteKing",
       "level": 5
     },
     "3073": {
       "$type": "EntityLevelData, Assembly-CSharp",
-      "entity": "chicken",
+      "entity": "WhiteKing",
       "level": 10
     }
   },
@@ -23,12 +23,12 @@
     "$values": [
       {
         "$type": "EntityLevelData, Assembly-CSharp",
-        "entity": "chicken",
+        "entity": "WhiteKing",
         "level": 0
       },
       {
         "$type": "EntityLevelData, Assembly-CSharp",
-        "entity": "chicken",
+        "entity": "WhiteKing",
         "level": 0
       }
     ]
@@ -36,7 +36,7 @@
   "stageLevel": 1,
   "items": {
     "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
-    "$values": [ "Warp", "Warp", "Warp", "Warp" ]
+    "$values": [ "Warp", null, "Warp", "Warp" ]
   },
   "credit": 8924
 }

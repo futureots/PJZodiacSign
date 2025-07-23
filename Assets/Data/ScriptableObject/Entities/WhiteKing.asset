@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
-  m_Name: chicken
+  m_Name: WhiteKing
   m_EditorClassIdentifier: 
   baseEntityPrefab: {fileID: 119820, guid: 9e4e635002b6a524ca896adb28e8e388, type: 3}
-  id: chicken
+  id: WhiteKing
   maxHp: 50
   power: 10
   bonusHp: 1

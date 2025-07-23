@@ -45,7 +45,6 @@ public abstract class Agent : MonoBehaviour
     public void SetData(AgentData agentData)
     {
         data = agentData;
-        SetField();
         inventory.SetItem(agentData.items);
     }
     

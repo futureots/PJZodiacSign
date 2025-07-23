@@ -19,7 +19,7 @@ public class EntityInfoPanel : MonoBehaviour
     public void ShowPanel(Entity entity)
     {
         InfoPanel.SetActive(true);
-        GetComponentInChildren<TextMeshProUGUI>().text = entity.name;
+        GetComponentInChildren<TextMeshProUGUI>().text = entity.id;
         if (entity.CompareTag("Player"))
         {
             entitytSkillButton.gameObject.SetActive(true);
