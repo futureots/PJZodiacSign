@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
   m_Name: chicken
   m_EditorClassIdentifier: 
-  baseEntityPrefab: {fileID: 3114376001945480301, guid: baefd50abeab36248b96d56f33bc3b55, type: 3}
+  baseEntityPrefab: {fileID: 119820, guid: 9e4e635002b6a524ca896adb28e8e388, type: 3}
   id: chicken
   maxHp: 50
   power: 10

@@ -33,10 +33,15 @@ namespace PlayerInput
             clickEvents.canceled -= DragEnd;
             GameObject.Destroy(targetSelecter);
             GameObject.Destroy(targetTileSelecter);
+
+            _inputManager.UI.shop.ToggleUI(false);
+            _inputManager.UI.shop.gameObject.SetActive(false);
+            
         }
 
         public void SetMode()
         {
+            _inputManager.UI.shop.gameObject.SetActive(true);
             Debug.Log("SetRepairMode");
             clickEvents.started += DragStart;
             clickEvents.canceled += DragEnd;

@@ -3,6 +3,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Events;
 using static UnityEngine.EventSystems.EventTrigger;
 
 
@@ -62,7 +63,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         SetSkill(data.skill);
         skillCost = data.skillCost;
     }
-
+    public UnityEvent OnDead;
     #region Status
 
     public int level { get; private set; }
@@ -175,6 +176,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Dead()
     {
         //Debug.Log(gameObject+"Dead");
+        OnDead?.Invoke();
         Destroy(gameObject);
     }
 
