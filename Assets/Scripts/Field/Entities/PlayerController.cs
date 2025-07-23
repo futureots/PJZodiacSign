@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-
 using Unity.VisualScripting;
-
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class PlayerController : EntityController
 {
