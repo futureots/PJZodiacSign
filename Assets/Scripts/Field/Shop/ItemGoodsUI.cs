@@ -11,10 +11,6 @@ public class ItemGoodsUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI price;
     [SerializeField] protected Image icon;
 
-    private void Start()
-    {
-        SetGoods(data);
-    }
 
     public void SetGoods(ItemData data)
     {

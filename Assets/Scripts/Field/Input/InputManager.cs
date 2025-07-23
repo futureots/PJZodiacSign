@@ -69,6 +69,12 @@ public class InputManager : Agent
         return closestTile;
     }
 
+    public override void SetRepairField(int level)
+    {
+        base.SetRepairField(level);
+        UI.shop.SetShop(level);
+    }
+
     #region InputMode
 
     /// <summary>
@@ -112,12 +118,16 @@ public class InputManager : Agent
     #endregion
 
     #region ClickInfo
+    Action<bool> OnUIClicked;
     /// <summary>
     /// 클릭 시 Ray로 부딪힌 기물의 정보 UI 표시하기
     /// </summary>
     private void HandleClick()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 부딪힌 기물, (타일) UI 표시 
         if (Physics.Raycast(ray, out var hit))

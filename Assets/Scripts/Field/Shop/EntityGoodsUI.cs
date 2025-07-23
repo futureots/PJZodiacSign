@@ -12,10 +12,6 @@ public class EntityGoodsUI : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI price;
     [SerializeField] protected Image icon;
 
-    private void Start()
-    {
-        SetGoods(data);
-    }
 
     public void SetGoods(EntityUIData data)
     {

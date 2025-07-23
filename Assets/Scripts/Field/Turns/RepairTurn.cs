@@ -7,20 +7,24 @@ using UnityEngine;
 
 public class RepairTurn : ITurn
 {
-
+    int level;
+    public RepairTurn(int level)
+    {
+        this.level = level;
+    }
     public void StartTurn(Action onTurnEnd)
     {
-
+        
         // 상점 UI 표시하기
         //정비 시작
-        Debug.Log("정비 시작");
+        Debug.Log($"level {level} : 정비 시작");
 
 
 
         GameManager.Instance.field.EraseField();
         foreach (var agent in GameManager.Instance.agents)
         {
-            agent.SetField();
+            agent.SetRepairField(level);
         }
 
         int completeUsers = 0;

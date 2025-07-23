@@ -48,7 +48,7 @@ public class GameManager : Singleton<GameManager>
         // 게임 시작용 턴 생성
         var turnManager = GetComponent<TurnManager>();
         if (turnManager == null) return;
-        turnManager.turns.AddLast(new RepairTurn());
+        turnManager.turns.AddLast(new RepairTurn(level));
         turnManager.StartTurn();
     }
 
@@ -62,7 +62,7 @@ public class GameManager : Singleton<GameManager>
     {
 
     }
-
+    public static Action<int> OnNextLevel;
     public bool CheckGameEnd()
     {
         if (IsGameEnd(out int winner))
@@ -73,6 +73,8 @@ public class GameManager : Singleton<GameManager>
                 // 데이터 저장
                 dataManager.SetData(agents[winner].GetAgentData(), level);
                 dataManager.SaveAllData("Data");
+                level += 1;
+                OnNextLevel?.Invoke(level);
             }
             else
             {

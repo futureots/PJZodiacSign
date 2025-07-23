@@ -1,8 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class ShopUI : MonoBehaviour
 {
+    [SerializeField] EntityGoodsUI entityUI;
+    [SerializeField] ItemGoodsUI itemUI;
+    [SerializeField] Transform entityShop;
+    [SerializeField] Transform itemShop;
 
+    [SerializeField] ShopTable table;
+    
     bool isOpen;
     public void ToggleUI()
     {
@@ -24,16 +32,50 @@ public class ShopUI : MonoBehaviour
     {
         ToggleUI(false);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    void SetShop(List<EntityUIData> entityList, List<ItemData> itemList)
     {
-        
-        //데이터 리스트를 순회해서 각각의 데이터로 프리팹 세팅 및 표시
+        foreach (EntityUIData entity in entityList)
+        {
+            
+            var instance = Instantiate(entityUI, entityShop);
+            Debug.Log(entityUI + " : ");
+            var goodsUI = instance.GetComponent<EntityGoodsUI>();
+            if(goodsUI != null)
+            {
+                goodsUI.SetGoods(entity);
+            }
+            
+        }
+        foreach (ItemData item in itemList)
+        {
+            var instance = Instantiate(itemUI, itemShop);
+            var goodsUI = instance.GetComponent<ItemGoodsUI>();
+            if (goodsUI != null)
+            {
+                goodsUI.SetGoods(item);
+            }
+        }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void SetPremiumShop()
     {
-        
+
+    }
+    public void SetNormalShop()
+    {
+        var items = table.GetRandomItem(2);
+        var entities = table.GetRandomEntity(3);
+        SetShop(entities, items);
+    }
+    public void SetShop(int level)
+    {
+        if(level %5 == 0)
+        {
+            SetPremiumShop();
+        }
+        else
+        {
+            SetNormalShop();
+        }
     }
 }

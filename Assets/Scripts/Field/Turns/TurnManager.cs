@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +12,7 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         turns = new LinkedList<ITurn>();
+        GameManager.OnNextLevel += NextLevel;
     }
 
     public void StartTurn()
@@ -30,21 +30,16 @@ public class TurnManager : MonoBehaviour
     void OnTurnComplete()
     {
         GameManager.Instance.field.CleanField();
-        bool isEnd = GameManager.Instance.CheckGameEnd();
-        if (isEnd)
-        {
-            
-            turns.Clear();
-            //모든 턴 정리 및 상호작용 제거
-            turns.AddFirst(new RepairTurn());
-            
-        }
-        else
-        {
-            Debug.Log("Turn End");
-        }
+        GameManager.Instance.CheckGameEnd();
         StartTurn();
     }
+
+    public void NextLevel(int level)
+    {
+        turns.Clear();
+        turns.AddFirst(new RepairTurn(level));
+    }
+
     void AddTurnCycle()
     {
         foreach (var ctrler in GameManager.Instance.agents)
