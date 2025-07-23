@@ -5,21 +5,12 @@ using static UnityEditor.Progress;
 
 public class EnemyController : EntityController
 {
-    public override void SetInstantField(List<EntityLevelData> handEntities)
-    {
-        base.SetInstantField(handEntities);
-        foreach (var item in handEntities)
-        {
-            var entity = ResourceManager.CreateEntity(item.entity);
-            PlaceEntity(entity, instantField);
-        }
-    }
     public override void SetMainField(Dictionary<int, EntityLevelData> fieldEntities)
     {
         base.SetMainField(fieldEntities);
         foreach (var datum in fieldEntities)
         {
-            var entity = ResourceManager.CreateEntity(datum.Value.entity);
+            var entity = ResourceManager.CreateEntity(datum.Value.entity,datum.Value.level);
 
             // key를 좌표 값으로 전환
             intVector2 vec = intVector2.Decode(datum.Key);
@@ -28,7 +19,7 @@ public class EnemyController : EntityController
         }
         
     }
-    public override void DisposeInstantField(ref Dictionary<int, EntityLevelData> fields, ref List<EntityLevelData> hands)
+    public override void DisposeInstantField()
     {
         Debug.Log(name + " DisposeInstantField");
         foreach (var tile in instantField.GetTiles())
@@ -39,7 +30,7 @@ public class EnemyController : EntityController
             PlaceEntity(entity, GameManager.Instance.field);
         }
         
-        base.DisposeInstantField(ref fields, ref hands);
+        base.DisposeInstantField();
         
     }
 }

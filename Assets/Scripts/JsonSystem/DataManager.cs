@@ -35,12 +35,16 @@ public class DataManager : MonoBehaviour
     public void SetData(AgentData data, int stageLevel)
     {
         List<string> itemName = new List<string>();
-        foreach (var item in data.items) 
+        foreach (var item in data.items)
         {
+            if (item == null)
+            {
+                itemName.Add(null);
+                continue;
+            }
             itemName.Add(item.itemName);
         }
         playerData.items = itemName;
-
         playerData.handEntities = data.handEntities;
         playerData.fieldEntities = data.fieldEntities;
         playerData.credit = data.credit;

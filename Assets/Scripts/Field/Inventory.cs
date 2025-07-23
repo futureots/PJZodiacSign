@@ -56,4 +56,22 @@ public class Inventory : MonoBehaviour
             else AddItem(instance);
         }
     }
+
+    /// <summary>
+    /// ItemData ¹è¿­ ¹ÝÈ¯ ºóÄ­Àº null »ðÀÔ
+    /// </summary>
+    /// <returns></returns>
+    public List<ItemData> GetInventoryData()
+    {
+        List<ItemData> list = new List<ItemData>();
+        foreach(var item in items)
+        {
+            if (item != null)
+            {
+                list.Add(item.itemData);
+            }
+            else list.Add(null);
+        }
+        return list;
+    }
 }

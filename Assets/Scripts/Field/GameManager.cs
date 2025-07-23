@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     public Agent[] agents;
 
     public int level {  get; private set; }
-
+    
     [SerializeField] Field _field;
     public Field field
     {
@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     DataManager dataManager;
+    
 
     private void Awake()
     {
@@ -70,7 +71,7 @@ public class GameManager : Singleton<GameManager>
             {
                 Debug.Log("승리");
                 // 데이터 저장
-                dataManager.SetData(agents[winner].agentData, level);
+                dataManager.SetData(agents[winner].GetAgentData(), level);
                 dataManager.SaveAllData("Data");
             }
             else
@@ -92,10 +93,8 @@ public class GameManager : Singleton<GameManager>
             if (tile.isEmpty) continue;
             var entityTeam = tile.occupiedObject.GetComponent<Team>();
             if (entityTeam == null) continue;
-            Debug.Log(entityTeam.teamNumber);
             if (!teams.Contains(entityTeam.teamNumber))
             {
-                Debug.Log("count : " + teams.Count);
                 teams.Add(entityTeam.teamNumber);
             }
         }

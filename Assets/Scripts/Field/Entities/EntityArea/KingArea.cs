@@ -1,9 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectArea : MonoBehaviour,IMoveArea, IAttackArea
+public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
 {
-    public List<intVector2> area;
+    List<intVector2> area;
+
+    private void Start()
+    {
+        area = new List<intVector2>();
+        for(int i = -1; i < 2; i++)
+        {
+            for(int j = -1; j < 2; j++)
+            {
+                if (i == j && j == 0) continue;
+                area.Add(new intVector2(i, j));
+            }
+        }
+    }
 
     public List<Tile> GetAttackArea(Tile curTile)
     {

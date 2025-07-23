@@ -50,6 +50,7 @@ public class AttackTurn : ITurn
             if (entity == null) continue;
             entity.UpdateBuff();
             entity.RemoveBuff();
+            
         }
 
 

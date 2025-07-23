@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -9,12 +10,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile { get; private set; }
 
-    EntityData data;
-    public void SetEntity(EntityData data)
-    {
-        this.data = data;
-        id = data.id;
-    }
+    
+
     public string id;
 
     #region Skill
@@ -33,27 +30,47 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
 
     #endregion
-    // 엔티티 데이터 로 전환 예정
-    
 
-    #region Status
     Team _team;
     public Team team
     {
         get
         {
-            if( _team == null)
+            if (_team == null)
             {
                 _team = GetComponent<Team>();
             }
             return _team;
         }
     }
+
+    EntityData data;
+    public void SetEntity(EntityData data, int level =0)
+    {
+        this.data = data;
+        id = data.id;
+        this.level = level;
+
+        // 기물 스탯 세팅
+        power = data.power + data.bonusPower * level;
+        maxHp = data.maxHp + data.bonusHp * level;
+        curHp = maxHp;
+        curEnergy = 0;
+
+
+        // 기물 스킬 세팅(스킬이 엔티티 전용 스킬이면 시전자 할당, 아니면 할당X)
+        SetSkill(data.skill);
+        skillCost = data.skillCost;
+    }
+
+    #region Status
+
     public int level { get; private set; }
     public int power;
     public int maxHp;
     public int curHp;
     public int curEnergy;
+    public int skillCost;
     
 
     #region Buff
@@ -129,7 +146,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Attack()
     {
         if (isSlienced) return;
-        ///Debug.Log($"{name}이 공격");
+        //Debug.Log($"{name}이 공격");
+        curEnergy += 1;
         var list = GetAttackArea();
         int damage = power;
         

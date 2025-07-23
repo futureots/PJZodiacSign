@@ -7,10 +7,6 @@ using UnityEngine;
 
 public class RepairTurn : ITurn
 {
-    public void EndTurn()
-    {
-
-    }
 
     public void StartTurn(Action onTurnEnd)
     {
@@ -24,7 +20,7 @@ public class RepairTurn : ITurn
         GameManager.Instance.field.EraseField();
         foreach (var agent in GameManager.Instance.agents)
         {
-            agent.SetData();
+            agent.SetField();
         }
 
         int completeUsers = 0;
@@ -37,12 +33,9 @@ public class RepairTurn : ITurn
                 // 모든 유저가 준비 완료 시
                 if (completeUsers >= GameManager.Instance.agents.Length)
                 {
-                    Debug.Log("정비 턴 End");
-                    //Agent[] agents = GameManager.Instance.agents;
                     foreach (Agent agent in GameManager.Instance.agents)
                     {
-                        Debug.Log(agent.name + " update Entities");
-                        agent.UpdateEntities();
+                        agent.EndRepair();
                     }
                     onTurnEnd?.Invoke();
                 }
