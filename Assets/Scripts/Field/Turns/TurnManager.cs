@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,16 +12,10 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         turns = new LinkedList<ITurn>();
+        GameManager.OnNextLevel += NextLevel;
     }
-    private void Start()
-    {
 
-        turns.AddLast(new RepairTurn());
-        //AddTurnCycle();
-        
-        StartTurn();
-    }
-    void StartTurn()
+    public void StartTurn()
     {
         var curTurn = turns.First.Value;
         turns.RemoveFirst();
@@ -31,30 +24,27 @@ public class TurnManager : MonoBehaviour
             AddTurnCycle();
         }
         //Debug.Log($"Current TurnCount : {turns.Count}");
-        curTurn.Execute(OnTurnComplete);
+        curTurn.StartTurn(OnTurnComplete);
     }
 
     void OnTurnComplete()
     {
         GameManager.Instance.field.CleanField();
         bool isEnd = GameManager.Instance.CheckGameEnd();
-        if (isEnd)
-        {
-            turns.Clear();
-            //모든 턴 정리 및 상호작용 제거
-            turns.AddFirst(new RepairTurn());
 
-        }
-        else
-        {
-            Debug.Log("Turn End");
-            //StartTurn();
-        }
+        if (!isEnd) StartTurn();
+    }
+
+    public void NextLevel(int level)
+    {
+        turns.Clear();
+        turns.AddFirst(new RepairTurn(level));
         StartTurn();
     }
+
     void AddTurnCycle()
     {
-        foreach (var ctrler in GameManager.Instance.controllers)
+        foreach (var ctrler in GameManager.Instance.agents)
         {
             // 플레이어 행동 후 플레이어 팀 외 기물 공격
             turns.AddLast(new ActionTurn(ctrler));

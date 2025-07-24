@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,85 +9,114 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-    public EntityController[] controllers;
+    public Agent[] agents;
 
+    public int level {  get; private set; }
+    
     [SerializeField] Field _field;
     public Field field
     {
         get { return _field; }
     }
 
+    DataManager dataManager;
+    
 
-    // 턴 조작
-    public TurnManager turnManager;
-
-
-
+    private void Awake()
+    {
+        dataManager = this.GetOrAddComponent<DataManager>();
+    }
     private void Start()
     {
-        /*var playerData = DataManager.Instance.playerData;
-        var enemyData = stageData.GetStageCost(playerData.stageLevel);
-        var enemylist = new List<string>();
-        while(enemyData.cost1 > 0)
-        {
-            enemyTable.GetEntityData(0, ref enemyData.cost1);
-            Debug.Log(enemyData.cost1);
-        }*/
-
+        GameStart();
     }
+    #region GameStart
+
+    /// <summary>
+    /// 게임 시작 또는 재개하기(데이터 불러오기)
+    /// </summary>
+    public void GameStart()
+    {
+        // 게임에 필요한 데이터 가져오거나 생성
+        dataManager.LoadAllData("data");
+        var list = dataManager.GetData();
+        for(int i = 0; i < list.Length; i++)
+        {
+            agents[i].SetData(list[i]);
+        }
+        level = dataManager.playerData.stageLevel;
+        // 게임 시작용 턴 생성
+        var turnManager = GetComponent<TurnManager>();
+        if (turnManager == null) return;
+        turnManager.turns.AddLast(new RepairTurn(level));
+        turnManager.StartTurn();
+    }
+
+    #endregion
 
     #region GameEnd
+    /// <summary>
+    /// 게임 종료 및 메인화면으로 이동
+    /// </summary>
+    void GameEnd()
+    {
+
+    }
+    IEnumerator GoNextLevel()
+    {
+        level += 1;
+        yield return new WaitForSeconds(10);
+
+        OnNextLevel?.Invoke(level);
+    }
+    public static Action<int> OnNextLevel;
     public bool CheckGameEnd()
     {
-        bool isWin;
-        if (!IsGameEnd(out isWin)) return false;
-        if (isWin)
+        if (IsGameEnd(out int winner))
         {
-            Debug.Log("승리");
-            // 데이터 저장
-            DataManager.Instance.SaveAllData("Data");
+            if (agents[winner] is InputManager)
+            {
+                Debug.Log("승리");
+                // 데이터 저장
+                dataManager.SetData(agents[winner].GetAgentData(), level);
+                dataManager.SaveAllData("Data");
+
+                StartCoroutine(GoNextLevel());
+            }
+            else
+            {
+                Debug.Log("패배...");
+                GameEnd();
+            }
+            return true;
         }
-        else
-        {
-            Debug.Log("패배...");
-            
-        }
-        return true;
+        return false;
     }
-    public bool IsGameEnd(out bool isWin)
+    public bool IsGameEnd(out int winner)
     {
         var tiles = _field.GetTiles();
-        bool isPlayerAlive = false;
-        bool isEnemyAlive = false;
+        bool isEnd = false;
+        List<int> teams = new List<int>();
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            var entityTag = tile.occupiedObject.tag;
-            if (entityTag == "Player")
+            var entityTeam = tile.occupiedObject.GetComponent<Team>();
+            if (entityTeam == null) continue;
+            if (!teams.Contains(entityTeam.teamNumber))
             {
-                isPlayerAlive = true;
-                //Debug.Log($"{tile.occupiedObject} player is Alive");
+                teams.Add(entityTeam.teamNumber);
             }
-            else if (entityTag == "Enemy") {
-                isEnemyAlive = true;
-                //Debug.Log($"{tile.occupiedObject} enemy is Alive");
-            }
-            if (isPlayerAlive && isEnemyAlive) break;
         }
-        if (!isEnemyAlive)
+        if (teams.Count == 1)
         {
-            isWin = true;
+            winner = teams[0];
+            isEnd = true;
         }
         else
         {
-            isWin = false;
+            winner = -1;
         }
-        return !(isPlayerAlive && isEnemyAlive);
-    }
-    public bool IsGameEnd()
-    {
-        bool dummy;
-        return IsGameEnd(out dummy);
+        return isEnd;
     }
     
     #endregion

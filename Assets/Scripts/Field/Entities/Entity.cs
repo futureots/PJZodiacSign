@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,36 +7,86 @@ using UnityEngine;
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     public Tile curTile { get; private set; }
-    
-    
-    [SerializeField] BaseSkillData skillData;
 
-    S_BaseEntity _skillInstance;
-    public S_BaseEntity skillInstance
+    
+    /// <summary>기물의 고유한 id(이름)</summary>
+    public string id;
+
+    #region Skill
+    /// <summary>기물 스킬 데이터</summary>
+    public BaseSkillData skillData;
+    /// <summary>skillData의 인스턴스</summary>
+    public IActive skillInstance;
+    /// <summary>
+    /// 기물의 스킬 세팅
+    /// </summary>
+    /// <param name="skillData">기물 스킬 데이터</param>
+    public void SetSkill(BaseSkillData skillData)
+    {
+        this.skillData = skillData;
+        skillInstance = skillData.CreateInstance();
+        if(skillInstance is S_BaseEntity entitySkill)
+        {
+            entitySkill.Owner = this;
+        }
+
+    }
+
+    #endregion
+    
+    Team _team;
+    /// <summary>기물이 속한 팀</summary>
+    public Team team
     {
         get
         {
-            if(_skillInstance == null)
+            if (_team == null)
             {
-                _skillInstance = (S_BaseEntity)skillData.CreateInstance();
+                _team = GetComponent<Team>();
             }
-            return _skillInstance;
+            return _team;
         }
     }
-
-    private void Start()
+    // 기물의 고유 데이터
+    EntityData data;
+    /// <summary>
+    /// 기물의 스탯, 스킬값 세팅
+    /// </summary>
+    /// <param name="data">기물 데이터</param>
+    /// <param name="level">기물의 레벨</param>
+    public void SetEntity(EntityData data, int level =0)
     {
-        
+        this.data = data;
+        id = data.id;
+        this.level = level;
+
+        // 기물 스탯 세팅
+        power = data.power + data.bonusPower * level;
+        maxHp = data.maxHp + data.bonusHp * level;
+        curHp = maxHp;
+        curEnergy = 0;
+
+        // 기물 스킬 세팅(스킬이 엔티티 전용 스킬이면 시전자 할당, 아니면 할당X)
+        SetSkill(data.skill);
+        skillCost = data.skillCost;
     }
-    // 엔티티 데이터 로 전환 예정
-    public string id;
+
+    /// <summary>사망 시 호출</summary>
+    public Action OnDead;
 
     #region Status
+    /// <summary>기물의 레벨</summary>
     public int level { get; private set; }
+    /// <summary>공격력</summary>
     public int power;
+    /// <summary>최대 체력</summary>
     public int maxHp;
+    /// <summary>현재 체력</summary>
     public int curHp;
+    /// <summary>현재 마나</summary>
     public int curEnergy;
+    /// <summary>스킬 마나 소모량</summary>
+    public int skillCost;
     
 
     #region Buff
@@ -66,6 +117,11 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
 
     List<BuffInstance> buffList;
+    /// <summary>
+    /// 버프 추가
+    /// </summary>
+    /// <param name="buff">버프 종류</param>
+    /// <param name="count">버프 중첩 수</param>
     public void AddBuff(BuffData buff, int count)
     {
         if (buffList == null)
@@ -83,9 +139,11 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             buffList.Add(instance);
             instance.ApplyBuff(this);
         }
-        //Debug.Log(buffList.Count);
         
     }
+    /// <summary>
+    /// 버프 갱신
+    /// </summary>
     public void UpdateBuff()
     {
         if (buffList == null) return;
@@ -94,6 +152,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             buff.UpdateBuff(this);
         }
     }
+
+    /// <summary>
+    /// 버프 제거
+    /// </summary>
     public void RemoveBuff()
     {
         if (buffList == null) return;
@@ -107,11 +169,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #endregion
 
-    
     public void Attack()
     {
         if (isSlienced) return;
-        ///Debug.Log($"{name}이 공격");
+        curEnergy += 1;
         var list = GetAttackArea();
         int damage = power;
         
@@ -119,7 +180,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         {
             if (item.isEmpty) continue;
             var target = item.occupiedObject;
-            if(target.tag != tag || target.tag == "Obstacle")
+            var targetTeam = target.GetComponent<Team>();
+            if(!team.isAlly(targetTeam))
             {
                 target.GetComponent<IDamageable>()?.Damaged(power);
             }
@@ -138,6 +200,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Dead()
     {
         //Debug.Log(gameObject+"Dead");
+        OnDead?.Invoke();
         Destroy(gameObject);
     }
 
@@ -192,7 +255,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         curTile = tile;
         transform.position = tile.transform.position;
     }
-
+    /// <summary>
+    /// 기물의 이동 범위 반환
+    /// </summary>
+    /// <returns>기물의 이동범위에 포함되는 타일</returns>
     public List<Tile> GetMoveArea()
     {
         var list = GetComponents<IMoveArea>();
@@ -204,6 +270,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         tiles.Add(curTile);
         return tiles;
     }
+   
     public List<Tile> GetAttackArea(Tile tile)
     {
         var list = GetComponents<IAttackArea>();
@@ -214,6 +281,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         }
         return tiles;
     }
+    /// <summary>
+    /// 기물의 공격 범위 반환
+    /// </summary>
+    /// <returns>기물의 공격 범위에 포함되는 타일</returns>
     public List<Tile> GetAttackArea()
     {
         return GetAttackArea(curTile);

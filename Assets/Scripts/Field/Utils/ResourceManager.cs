@@ -1,20 +1,26 @@
-using Mono.Cecil;
 using UnityEngine;
 
 public class ResourceManager
 {
-    static readonly string EntityPath = "Prefabs/Entity/";
-    public static Entity GetEntityResource(string entityName)
+    //static readonly string EntityPath = "Prefabs/Entity/";
+    static readonly string TablePath = "Tables/BaseEntityTable";
+    
+    public static EntityData GetEntityResource(string entityId)
     {
-        var obj = Resources.Load<Entity>(EntityPath + entityName);
-        return obj;
+        var obj = Resources.Load<EntityTable>(TablePath);
+        var data = obj.entities[entityId];
+        return data;
     }
 
-    public static Entity CreateEntity(string entityName)
+    public static Entity CreateEntity(string entityName, int level = 0)
     {
         var resource = GetEntityResource(entityName);
-        var instance = GameObject.Instantiate(resource);
-        var entity = instance.GetComponent<Entity>();
-        return entity;
+        if(resource == null)
+        {
+            Debug.Log($"{entityName} is Not Exist");
+            return null;
+        }
+        var instance = resource.CreateEntity(level);
+        return instance;
     }
 }

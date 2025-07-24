@@ -5,45 +5,31 @@ using UnityEngine;
 
 public class ActionTurn : ITurn
 {
-    EntityController entityController;
-    public ActionTurn(EntityController controller)
+    Agent agent;
+    public ActionTurn(Agent agent)
     {
-        entityController = controller;
+        this.agent = agent;
     }
-    public void Execute(Action onTurnEnd)
+    public void StartTurn(Action onTurnEnd)
     {
-        Debug.Log(entityController.tag + "행동 턴 시작");
+        Debug.Log(agent.tag + "행동 턴 시작");
         // 현재 플레이어의 행동 턴 일 경우
-        if (entityController == InputManager.Instance.controller)
-        {
-            InputManager.Instance.SetInputMode(InputManager.Mode.Move);
-            InputManager.Instance.turnEndButton.onClick.AddListener(() =>
-            {
-                GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd);
-                InputManager.Instance.turnEndButton.onClick.RemoveAllListeners();
-            });
-        }
-        else
-        {
-            // 적 턴 행동 추가 함수 필요
-            GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd);
-        }
+        agent.SetMode(Mode.Move, () => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
 
     }
     public IEnumerator ActionCoroutine()
     {
-        Debug.Log(entityController.tag +" 행동 턴 실행");
-        InputManager.isInputStop = true;
-        InputManager.Instance.SetInputMode(InputManager.Mode.None);
+        Debug.Log(agent.tag +" 행동 턴 실행");
+        agent.isInputStop = true;
+        agent.SetMode(Mode.None);
         
 
-        var cmd = entityController.curCmd;
+        var cmd = agent.GetCommand();
         if (cmd == null) Debug.Log("No Command");
-        
         cmd?.Execute();
-        entityController.curCmd = null;
+
 
         yield return new WaitForSeconds(0.1f);
-        InputManager.isInputStop = false;
+        agent.isInputStop = false;
     }
 }

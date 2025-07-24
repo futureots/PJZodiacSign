@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
+using UnityEditor.UIElements;
 
 using UnityEngine;
 
 public class AttackTurn : ITurn
 {
-    EntityController entityController;
-    public AttackTurn(EntityController controller)
+    Agent agent;
+    public AttackTurn(Agent agent)
     {
-        entityController = controller;
+        this.agent = agent;
     }
 
-    public void Execute(Action onTurnEnd)
+    public void StartTurn(Action onTurnEnd)
     {
         Debug.Log("공격 턴 시작");
 
@@ -21,22 +22,25 @@ public class AttackTurn : ITurn
     {
         // 현재 전투 중인 필드;
         Field curField = GameManager.Instance.field;
-        InputManager.isInputStop = true;
-        // 해당 팀 기물만 공격
+        agent.isInputStop = true;
+        // 해당 팀 반대 기물만 공격
         foreach (var obj in curField.GetOccupiedObjects())
         {
-            if(obj.tag != entityController.tag)
+            if (agent.team.isAlly(obj.GetComponent<Team>()))
             {
-                var attackable = obj.GetComponent<IAttackable>();
-                if(attackable != null)
-                {
-                    attackable.Attack();
-                }
+                continue;
+            }
+            var attackable = obj.GetComponent<IAttackable>();
+            if (attackable != null)
+            {
+                attackable.Attack();
             }
         }
 
         // 대기시간
         yield return new WaitForSeconds(0.1f);
+
+        curField.CleanField();
 
         // 모든 캐릭터 버프 업데이트
         foreach (var tile in curField.GetTiles())
@@ -46,12 +50,15 @@ public class AttackTurn : ITurn
             if (entity == null) continue;
             entity.UpdateBuff();
             entity.RemoveBuff();
+            
         }
 
-        curField.CleanField();
-        InputManager.isInputStop = false;
+
+        agent.isInputStop = false;
+
         //Debug.Log("CanInput");
     }
+
 }
 
 

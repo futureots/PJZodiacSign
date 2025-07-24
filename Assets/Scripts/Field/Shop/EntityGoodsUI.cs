@@ -12,24 +12,17 @@ public class EntityGoodsUI : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI price;
     [SerializeField] protected Image icon;
 
-    private void Start()
-    {
-        SetGoods(data);
-    }
 
     public void SetGoods(EntityUIData data)
     {
-        goodsName.text = data.name;
+        goodsName.text = data.productName;
         price.text = data.normalPrice.ToString();
         icon.sprite = data.icon;
         buyBtn.onClick.AddListener(() =>
         {
-            if(DataManager.Instance.playerData.credit >= data.normalPrice)
-            {
-                DataManager.Instance.playerData.credit -= data.normalPrice;
-                var entity = ResourceManager.CreateEntity(data.id);
-                InputManager.Instance.controller.PushEntity(entity, InputManager.Instance.controller.instantField);
-            }
+            var agent = transform.root.GetComponent<Agent>();
+            agent.BuyEntity(data);
+
             
         });
     }

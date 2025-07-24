@@ -4,5 +4,10 @@ using UnityEngine;
 
 public interface IMoveArea
 {
+    /// <summary>
+    /// 시작 위치를 중심으로 이동 범위를 반환한다.
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <returns></returns>
     public List<Tile> GetMoveArea(Tile tile);
 }

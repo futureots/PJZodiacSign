@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,24 +11,16 @@ public class ItemGoodsUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI price;
     [SerializeField] protected Image icon;
 
-    private void Start()
-    {
-        SetGoods(data);
-    }
 
     public void SetGoods(ItemData data)
     {
-        goodsName.text = data.name;
+        goodsName.text = data.itemName;
         price.text = data.cost.ToString();
         icon.sprite = data.icon;
         buyBtn.onClick.AddListener(() =>
         {
-            if (DataManager.Instance.playerData.credit >= data.cost)
-            {
-                DataManager.Instance.playerData.credit -= data.cost;
-                InputManager.Instance.UI.inventory.AddItem(data.CreateInstance());
-            }
-
+            var agent = transform.root.GetComponent<Agent>();
+            agent.BuyItem(data);
         });
     }
 }
