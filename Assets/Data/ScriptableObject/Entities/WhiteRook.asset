@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300de8779923c854a85664393e32c9b5, type: 3}
+  m_Name: WhiteRook
+  m_EditorClassIdentifier: 
+  baseEntityPrefab: {fileID: 114028, guid: 43ef2ba32fda59c42a1410ea490d494b, type: 3}
+  id: WhiteRook
+  maxHp: 100
+  power: 100
+  bonusHp: 100
+  bonusPower: 100
+  skill: {fileID: 11400000, guid: 81caa596f29ece04681c6dd8ae3ced41, type: 2}
+  skillCost: 3
