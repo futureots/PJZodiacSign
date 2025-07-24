@@ -24,7 +24,7 @@ public class RepairTurn : ITurn
         GameManager.Instance.field.EraseField();
         foreach (var agent in GameManager.Instance.agents)
         {
-            agent.SetRepairField(level);
+            agent.SetRepairMode(level);
         }
 
         int completeUsers = 0;

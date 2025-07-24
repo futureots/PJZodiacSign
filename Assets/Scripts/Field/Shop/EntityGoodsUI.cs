@@ -15,7 +15,7 @@ public class EntityGoodsUI : MonoBehaviour
 
     public void SetGoods(EntityUIData data)
     {
-        goodsName.text = data.name;
+        goodsName.text = data.productName;
         price.text = data.normalPrice.ToString();
         icon.sprite = data.icon;
         buyBtn.onClick.AddListener(() =>

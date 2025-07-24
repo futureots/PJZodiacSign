@@ -5,6 +5,7 @@ using static UnityEditor.Progress;
 
 public class EnemyController : EntityController
 {
+
     public override void SetMainField(Dictionary<int, EntityLevelData> fieldEntities)
     {
         base.SetMainField(fieldEntities);

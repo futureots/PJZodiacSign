@@ -14,7 +14,7 @@ public class ItemGoodsUI : MonoBehaviour
 
     public void SetGoods(ItemData data)
     {
-        goodsName.text = data.name;
+        goodsName.text = data.itemName;
         price.text = data.cost.ToString();
         icon.sprite = data.icon;
         buyBtn.onClick.AddListener(() =>

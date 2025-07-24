@@ -62,6 +62,13 @@ public class GameManager : Singleton<GameManager>
     {
 
     }
+    IEnumerator GoNextLevel()
+    {
+        level += 1;
+        yield return new WaitForSeconds(10);
+
+        OnNextLevel?.Invoke(level);
+    }
     public static Action<int> OnNextLevel;
     public bool CheckGameEnd()
     {
@@ -73,8 +80,8 @@ public class GameManager : Singleton<GameManager>
                 // 데이터 저장
                 dataManager.SetData(agents[winner].GetAgentData(), level);
                 dataManager.SaveAllData("Data");
-                level += 1;
-                OnNextLevel?.Invoke(level);
+
+                StartCoroutine(GoNextLevel());
             }
             else
             {
@@ -110,11 +117,6 @@ public class GameManager : Singleton<GameManager>
             winner = -1;
         }
         return isEnd;
-    }
-    public bool IsGameEnd()
-    {
-        int dummy;
-        return IsGameEnd(out dummy);
     }
     
     #endregion

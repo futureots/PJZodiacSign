@@ -48,7 +48,7 @@ public abstract class Agent : MonoBehaviour
         inventory.SetItem(agentData.items);
     }
     
-    public virtual void SetRepairField(int level)
+    public virtual void SetRepairMode(int level)
     {
         controller.SetInstantField(data.handEntities);
         controller.SetMainField(data.fieldEntities);

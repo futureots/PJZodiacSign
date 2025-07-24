@@ -30,14 +30,16 @@ public class TurnManager : MonoBehaviour
     void OnTurnComplete()
     {
         GameManager.Instance.field.CleanField();
-        GameManager.Instance.CheckGameEnd();
-        StartTurn();
+        bool isEnd = GameManager.Instance.CheckGameEnd();
+
+        if (!isEnd) StartTurn();
     }
 
     public void NextLevel(int level)
     {
         turns.Clear();
         turns.AddFirst(new RepairTurn(level));
+        StartTurn();
     }
 
     void AddTurnCycle()

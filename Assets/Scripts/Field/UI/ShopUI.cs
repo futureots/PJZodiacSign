@@ -28,48 +28,57 @@ public class ShopUI : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    private void Awake()
-    {
-        ToggleUI(false);
-    }
     
     void SetShop(List<EntityUIData> entityList, List<ItemData> itemList)
     {
-        foreach (EntityUIData entity in entityList)
+        for (int i = 0; i < entityList.Count; i++)
         {
-            
-            var instance = Instantiate(entityUI, entityShop);
-            Debug.Log(entityUI + " : ");
-            var goodsUI = instance.GetComponent<EntityGoodsUI>();
-            if(goodsUI != null)
+            EntityGoodsUI goodsUI;
+            if (entityShop.childCount > i)
             {
-                goodsUI.SetGoods(entity);
+                goodsUI = entityShop.GetChild(i).GetComponent<EntityGoodsUI>();
             }
-            
-        }
-        foreach (ItemData item in itemList)
-        {
-            var instance = Instantiate(itemUI, itemShop);
-            var goodsUI = instance.GetComponent<ItemGoodsUI>();
+            else
+            {
+                goodsUI = Instantiate(entityUI, entityShop).GetComponent<EntityGoodsUI>();
+            }
             if (goodsUI != null)
             {
-                goodsUI.SetGoods(item);
+                goodsUI.SetGoods(entityList[i]);
             }
         }
+        for (int i = entityList.Count; i < entityShop.childCount; i++) entityShop.GetChild(i).gameObject.SetActive(false);
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            ItemGoodsUI goodsUI;
+            if (itemShop.childCount > i)
+            {
+                goodsUI = itemShop.GetChild(i).GetComponent<ItemGoodsUI>();
+            }
+            else
+            {
+                goodsUI = Instantiate(itemUI, itemShop).GetComponent<ItemGoodsUI>();
+            }
+            if (goodsUI != null)
+            {
+                goodsUI.SetGoods(itemList[i]);
+            }
+        }
+        for (int i = itemList.Count; i < itemShop.childCount; i++) itemShop.GetChild(i).gameObject.SetActive(false);
     }
-    public void SetPremiumShop()
+    void SetPremiumShop()
     {
 
     }
-    public void SetNormalShop()
+    void SetNormalShop()
     {
         var items = table.GetRandomItem(2);
         var entities = table.GetRandomEntity(3);
         SetShop(entities, items);
     }
-    public void SetShop(int level)
+    public void SetShop(int level, bool isPremium = false)
     {
-        if(level %5 == 0)
+        if(level %5 == 0 || isPremium)
         {
             SetPremiumShop();
         }
