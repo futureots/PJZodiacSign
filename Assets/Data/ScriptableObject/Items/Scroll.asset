@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec9e5b51adfc5a4bacc10ab2fd62e5c, type: 3}
   m_Name: Scroll
   m_EditorClassIdentifier: 
-  id: 1
-  itemName: Scroll
-  description: "\uC2A4\uD06C\uB864\uC774\uB2E4."
+  id: Scroll
+  productName: "\uC2A4\uD06C\uB864"
   icon: {fileID: 21300000, guid: cbdc230c22f89f245a4cdafd5a9e1701, type: 3}
-  cost: 1
+  normalPrice: 3
+  discountPrice: 1
+  description: "\uC2A4\uD06C\uB864\uC774\uB2E4."

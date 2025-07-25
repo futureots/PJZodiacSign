@@ -2,25 +2,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemGoodsUI : MonoBehaviour
+public class ItemGoodsUI : GoodsUI<ItemData>
 {
-    [SerializeField] ItemData data;
-
-    [SerializeField] Button buyBtn;
-    [SerializeField] TextMeshProUGUI goodsName;
-    [SerializeField] TextMeshProUGUI price;
-    [SerializeField] protected Image icon;
 
 
-    public void SetGoods(ItemData data)
+
+    public override void SetGoods(ItemData data)
     {
-        goodsName.text = data.itemName;
-        price.text = data.cost.ToString();
-        icon.sprite = data.icon;
+        base.SetGoods(data);
         buyBtn.onClick.AddListener(() =>
         {
             var agent = transform.root.GetComponent<Agent>();
-            agent.BuyItem(data);
+            agent.BuyItem(data,price);
         });
     }
 }

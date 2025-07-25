@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace PlayerInput
 {
@@ -37,6 +39,7 @@ namespace PlayerInput
             Debug.Log("SetMoveMode");
             clickEvents.started += DragStart;
             clickEvents.canceled += DragEnd;
+
         }
 
         //선택한 엔티티 저장

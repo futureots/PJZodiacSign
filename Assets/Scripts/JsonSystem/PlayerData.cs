@@ -14,9 +14,9 @@ public class PlayerData
     static string defaultPath = "Player";
 
     // 현재 보유중인 기물 정보
-    public Dictionary<int,EntityLevelData> fieldEntities;
+    public Dictionary<int, EntityLevelHolder> fieldEntities;
 
-    public List<EntityLevelData> handEntities;
+    public List<EntityLevelHolder> handEntities;
 
     // 현재 위치한 지역 아이디
     public int stageLevel;
@@ -30,9 +30,9 @@ public class PlayerData
     public PlayerData()
     {
         //Debug.Log("Player Data Init");
-        fieldEntities = new Dictionary<int, EntityLevelData>();
+        fieldEntities = new Dictionary<int, EntityLevelHolder>();
         // 인코딩으로 int 값으로 변환
-        handEntities = new List<EntityLevelData>();
+        handEntities = new List<EntityLevelHolder>();
         items = new();
         stageLevel = 1;
         credit = 100;
@@ -65,29 +65,29 @@ public class PlayerData
     }
     public static PlayerData DeserializePlayerData(string json)
     {
-        if(json == null) return new PlayerData();
-        return JsonConvert.DeserializeObject<PlayerData>(json,serializerSettings);
+        if (json == null) return new PlayerData();
+        return JsonConvert.DeserializeObject<PlayerData>(json, serializerSettings);
     }
-    
+
     public void SavePlayerData(string fileName)
     {
         string data = SerializePlayerData(this);
         //string data = JsonUtility.ToJson(this);
-        string path = Path.Combine(Application.dataPath+"/Data", fileName + defaultPath + ".Json");
+        string path = Path.Combine(Application.dataPath + "/Data", fileName + defaultPath + ".Json");
         File.WriteAllText(path, data);
         Debug.Log(data);
         Debug.Log("Save");
     }
     public static PlayerData LoadPlayerData(string fileName)
     {
-        string path = Path.Combine(Application.dataPath+"/Data", fileName + defaultPath + ".Json");
+        string path = Path.Combine(Application.dataPath + "/Data", fileName + defaultPath + ".Json");
         string data = null;
         if (File.Exists(path))
         {
             data = File.ReadAllText(path);
             Debug.Log(data);
         }
-        if(data == null)
+        if (data == null)
         {
             return new PlayerData();
         }
@@ -95,15 +95,16 @@ public class PlayerData
         return DeserializePlayerData(data);
     }
 }
+
 [Serializable]
-public struct EntityLevelData
+public struct EntityLevelHolder
 {
-    public EntityLevelData(string _name, int _level = 0)
+    public EntityLevelHolder(string _name, int _level = 0)
     {
         entity = _name;
         level = _level;
     }
-    public EntityLevelData(Entity entity)
+    public EntityLevelHolder(Entity entity)
     {
         this.entity = entity.id;
         level = entity.level;

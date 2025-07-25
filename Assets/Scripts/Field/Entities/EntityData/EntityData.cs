@@ -1,11 +1,10 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class EntityData : ScriptableObject
+public abstract class EntityData : AbstractData
 {
     public GameObject baseEntityPrefab;
-    public string id;
-    
+
 
     [Header("BaseStatus")]
     public int maxHp;

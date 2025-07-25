@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f9c606c06dea843b3153bda6ab5635, type: 3}
   m_Name: WhiteKing
   m_EditorClassIdentifier: 
-  baseEntityPrefab: {fileID: 119820, guid: 9e4e635002b6a524ca896adb28e8e388, type: 3}
   id: WhiteKing
+  productName: "\uD654\uC774\uD2B8\uD0B9"
+  icon: {fileID: 21300000, guid: d46c9ba111b274d4c906685a3f86b6af, type: 3}
+  normalPrice: 50
+  discountPrice: 30
+  baseEntityPrefab: {fileID: 119820, guid: 9e4e635002b6a524ca896adb28e8e388, type: 3}
   maxHp: 30
   power: 5
   bonusHp: 10

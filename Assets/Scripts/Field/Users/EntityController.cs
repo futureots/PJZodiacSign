@@ -54,7 +54,7 @@ public class EntityController : MonoBehaviour
         instantField.gameObject.SetActive(true);
         foreach (var item in handEntities)
         {
-            var entity = ResourceManager.CreateEntity(item.entity, item.level);
+            var entity = item.data.CreateEntity(item.level);
             PlaceEntity(entity, instantField);
         }
     }

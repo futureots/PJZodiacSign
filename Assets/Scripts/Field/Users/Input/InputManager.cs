@@ -9,7 +9,6 @@ using PlayerInput;
 
 public class InputManager : Agent
 {
-        
     public Vector2 PointerPosition { get; private set; }
 
     public GameInputActions inputActions { get; private set; }
@@ -44,14 +43,36 @@ public class InputManager : Agent
     private void Start()
     {
         inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
-        inputActions.Gameplay.Click.started += _ => HandleClick();
-
+        inputActions.Gameplay.Click.started += value => HandleClick(PointerPosition);
+        /*bool isDrag = false;
+        inputActions.Gameplay.Click.started += _ =>
+        {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+            isDrag = true;
+            OnUIMouseInputted?.Invoke(PointerPosition, MousePhase.Down);
+        };
+        inputActions.Gameplay.Click.canceled += _ =>
+        {
+            isDrag = false;
+            OnUIMouseInputted?.Invoke(PointerPosition, MousePhase.Up);
+        };
+        inputActions.Gameplay.Point.performed += value =>
+        {
+            PointerPosition = value.ReadValue<Vector2>();
+            OnUIMouseInputted?.Invoke(PointerPosition, isDrag ? MousePhase.Drag : MousePhase.None);
+        };
+        OnUIMouseInputted += (x, y) =>
+        {
+            if(y == MousePhase.Down)
+            {
+                HandleClick(x);
+            }
+        };*/
     }
+
+
     private void OnEnable() => inputActions.Enable();
     private void OnDisable() => inputActions.Disable();
-
-
-    List<Tile> list = new List<Tile>();
 
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {
@@ -82,7 +103,6 @@ public class InputManager : Agent
     /// </summary>
     public void SetInputMode(Mode mode)
     {
-
         curModeState?.RemoveMode();
         currentMode = mode;
         switch (mode)
@@ -118,17 +138,14 @@ public class InputManager : Agent
     #endregion
 
     #region ClickInfo
-    Action<bool> OnUIClicked;
+
+    //public Action<Vector2,MousePhase> OnUIMouseInputted;
     /// <summary>
     /// 클릭 시 Ray로 부딪힌 기물의 정보 UI 표시하기
     /// </summary>
-    private void HandleClick()
+    private void HandleClick(Vector2 pos)
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
-        Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
+        Ray ray = Camera.main.ScreenPointToRay(pos);
         // 부딪힌 기물, (타일) UI 표시 
         if (Physics.Raycast(ray, out var hit))
         {
@@ -147,8 +164,28 @@ public class InputManager : Agent
         }
 
     }
-
+    
 
 
     #endregion
+}
+public enum MousePhase
+{
+    /// <summary>
+    /// 마우스를 눌렀을 때
+    /// </summary>
+    Down,
+    /// <summary>
+    /// 마우스를 뗄 때
+    /// </summary>
+    Up,
+    /// <summary>
+    /// 마우스 드래그
+    /// </summary>
+    Drag,
+    /// <summary>
+    /// 클릭 상태가 아닐 때
+    /// </summary>
+    None,
+    OnUI
 }

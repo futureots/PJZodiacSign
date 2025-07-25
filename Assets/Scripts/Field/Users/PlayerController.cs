@@ -11,7 +11,7 @@ public class PlayerController : EntityController
         
         foreach (var item in fieldEntities)
         {
-            var entity = ResourceManager.CreateEntity(item.Value.entity,item.Value.level);
+            var entity = item.Value.data.CreateEntity(item.Value.level);
 
             // key를 좌표 값으로 전환
             intVector2 vec = intVector2.Decode(item.Key);

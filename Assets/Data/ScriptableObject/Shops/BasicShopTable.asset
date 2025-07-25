@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: BasicShopTable
   m_EditorClassIdentifier: 
   itemList:
-  - {fileID: 11400000, guid: f7ea33acddff4d24eb4a60c6c518f4b6, type: 2}
-  - {fileID: 11400000, guid: f7ea33acddff4d24eb4a60c6c518f4b6, type: 2}
+  - data: {fileID: 11400000, guid: 06f307f35b8b90844ae4de7007750161, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: f7ea33acddff4d24eb4a60c6c518f4b6, type: 2}
+    weight: 1
   entityList:
-  - {fileID: 11400000, guid: 5bb8423aac8f0aa438843e74a8f5c9aa, type: 2}
-  - {fileID: 11400000, guid: b33dd56155eb432499fd39e975d7b3d8, type: 2}
+  - data: {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 494975a0f4d62c649b596f8dc3caf752, type: 2}
+    weight: 1

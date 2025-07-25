@@ -48,7 +48,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         }
     }
     // 기물의 고유 데이터
-    EntityData data;
+    public EntityData data;
     /// <summary>
     /// 기물의 스탯, 스킬값 세팅
     /// </summary>

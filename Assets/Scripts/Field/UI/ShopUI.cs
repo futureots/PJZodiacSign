@@ -29,7 +29,7 @@ public class ShopUI : MonoBehaviour
         }
     }
     
-    void SetShop(List<EntityUIData> entityList, List<ItemData> itemList)
+    void SetShop(List<EntityData> entityList, List<ItemData> itemList)
     {
         for (int i = 0; i < entityList.Count; i++)
         {

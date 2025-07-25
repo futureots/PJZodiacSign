@@ -11,7 +11,8 @@ public class EnemyController : EntityController
         base.SetMainField(fieldEntities);
         foreach (var datum in fieldEntities)
         {
-            var entity = ResourceManager.CreateEntity(datum.Value.entity,datum.Value.level);
+            
+            var entity = datum.Value.data.CreateEntity(datum.Value.level);
 
             // key를 좌표 값으로 전환
             intVector2 vec = intVector2.Decode(datum.Key);

@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 769f1c560b0cff547bc2b77cb0a51cd1, type: 3}
-  m_Name: WhiteRook
+  m_Script: {fileID: 11500000, guid: b5d7ef077a9c68c41ae22fa2d2547198, type: 3}
+  m_Name: BaseEntityTable
   m_EditorClassIdentifier: 
-  id: WhiteRook
-  productName: "\uD654\uC774\uD2B8\uB8E9"
-  icon: {fileID: 21300000, guid: 8594eda5bcbfff046a1f1c4c793a03e5, type: 3}
-  normalPrice: 30
-  discountPrice: 20
+  tableData:
+  - {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
+  - {fileID: 11400000, guid: 494975a0f4d62c649b596f8dc3caf752, type: 2}
