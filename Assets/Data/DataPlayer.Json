@@ -1,1 +1,27 @@
-{"$type":"PlayerData, Assembly-CSharp","fieldEntities":{"$type":"System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityLevelData, Assembly-CSharp]], mscorlib","1030":{"$type":"EntityLevelData, Assembly-CSharp","entity":"WhiteRook","level":0},"2050":{"$type":"EntityLevelData, Assembly-CSharp","entity":"WhiteRook","level":5},"3073":{"$type":"EntityLevelData, Assembly-CSharp","entity":"WhiteKing","level":0}},"handEntities":{"$type":"System.Collections.Generic.List`1[[EntityLevelData, Assembly-CSharp]], mscorlib","$values":[{"$type":"EntityLevelData, Assembly-CSharp","entity":"WhiteKing","level":0},{"$type":"EntityLevelData, Assembly-CSharp","entity":"WhiteRook","level":0},{"$type":"EntityLevelData, Assembly-CSharp","entity":"WhiteRook","level":0}]},"stageLevel":4,"items":{"$type":"System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib","$values":["Warp","Warp"]},"credit":8634}
+{
+  "$type": "PlayerData, Assembly-CSharp",
+  "fieldEntities": {
+    "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityLevelHolder, Assembly-CSharp]], mscorlib",
+    "1030": {
+      "$type": "EntityLevelHolder, Assembly-CSharp",
+      "entity": "WhiteRook",
+      "level": 0
+    }
+  },
+  "handEntities": {
+    "$type": "System.Collections.Generic.List`1[[EntityLevelHolder, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "EntityLevelHolder, Assembly-CSharp",
+        "entity": "WhiteKing",
+        "level": 0
+      }
+    ]
+  },
+  "stageLevel": 4,
+  "items": {
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": [ "Warp", "Warp" ]
+  },
+  "credit": 8634
+}

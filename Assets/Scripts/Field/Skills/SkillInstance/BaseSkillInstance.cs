@@ -3,12 +3,12 @@ using System.Reflection;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public abstract class BaseSkillInstance : AbstractSkillInstance 
+public abstract class BaseSkillInstance<T> : AbstractSkillInstance where T : BaseSkillData
 {
     
-    protected BaseSkillData data;
+    protected T data;
 
-    public BaseSkillInstance(BaseSkillData data)
+    public BaseSkillInstance(T data)
     {
         this.data = data;
     }

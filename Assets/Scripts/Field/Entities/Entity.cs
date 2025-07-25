@@ -25,7 +25,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         this.skillData = skillData;
         skillInstance = skillData.CreateInstance();
-        if(skillInstance is S_BaseEntity entitySkill)
+        if(skillInstance is IOwnable entitySkill)
         {
             entitySkill.Owner = this;
         }

@@ -16708,6 +16708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemTable: {fileID: 11400000, guid: 8df71ece2ab6ad1438e45221bebbdb78, type: 2}
+  entityTable: {fileID: 11400000, guid: 4e886c3655091304182c830af0823e0e, type: 2}
 --- !u!1 &2054713323
 GameObject:
   m_ObjectHideFlags: 0
@@ -17753,6 +17754,10 @@ PrefabInstance:
     - target: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Name
       value: ShopUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Pivot.x

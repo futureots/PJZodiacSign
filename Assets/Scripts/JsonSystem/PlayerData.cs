@@ -38,21 +38,17 @@ public class PlayerData
         credit = 100;
 
         #region DebugData
-        /*
+        
         items.Add("Warp");
         items.Add("Warp");
         items.Add("Warp");
-        fieldEntities.Add(2050,new EntityLevelData("chicken",1));
-        handEntities.Add(new EntityLevelData("chicken", 0));
-        */
+        fieldEntities.Add(2050,new EntityLevelHolder("WhiteKing", 1));
+        handEntities.Add(new EntityLevelHolder("WhiteRook", 0));
+        
         #endregion
     }
 
-    // 보유중인 유물 정보
-    // 보유중인 재화
-    // 클리어한 지역 종류 및 개수
-    //public Dictionary<string,int> location = new Dictionary<string,int>();
-    // 현재 보유중인 기운 개수
+
 
 
 
