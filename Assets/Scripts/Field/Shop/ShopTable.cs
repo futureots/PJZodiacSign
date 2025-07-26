@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static ShopTable;
 
@@ -13,21 +14,46 @@ public class ShopTable : ScriptableObject
     public List<ItemData> GetRandomItem(int count)
     {
         List<ItemData> list = new List<ItemData>();
-        // 가중치를 이용해 아이템 데이터 반환
-        foreach (var item in itemList)
+        var table = new List<DataSet<ItemData>>(itemList);
+        for (int i = 0; i < count; i++)
         {
-            list.Add(item.data);
+            var sum = table.Sum(x => x.weight);
+            var rand = UnityEngine.Random.Range(0, sum);
+            foreach (var item in table)
+            {
+                rand -= item.weight;
+                if (rand <= 0)
+                {
+                    table.Remove(item);
+                    list.Add(item.data);
+                    break;
+                }
+            }
         }
+
         return list;
     }
     public List<EntityData> GetRandomEntity(int count)
     {
         List<EntityData> list = new List<EntityData>();
-        // 가중치를 이용해 아이템 데이터 반환
-        foreach (var item in entityList)
+        var table = new List<DataSet<EntityData>>(entityList);
+        for (int i = 0; i < count; i++)
         {
-            list.Add(item.data);
+            var sum = table.Sum(x => x.weight);
+            var rand = UnityEngine.Random.Range(0, sum);
+            foreach (var item in table)
+            {
+                rand -= item.weight;
+                if (rand <= 0)
+                {
+                    table.Remove(item);
+                    list.Add(item.data);
+                    Debug.Log($"Add {item.data.productName}");
+                    break;
+                }
+            }
         }
+
         return list;
     }
 }

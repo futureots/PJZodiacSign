@@ -68,7 +68,9 @@ public class ShopUI : MonoBehaviour
     }
     void SetPremiumShop()
     {
-
+        var items = table.GetRandomItem(5);
+        var entities = table.GetRandomEntity(8);
+        SetShop(entities, items);
     }
     void SetNormalShop()
     {

@@ -67,6 +67,7 @@ public class DataManager : MonoBehaviour
         foreach (var item in data.handEntities)
         {
             EntityLevelHolder temp = new EntityLevelHolder(item.data.id, item.level);
+            handEntityNames.Add(temp);
         }
         playerData.handEntities = handEntityNames;
 

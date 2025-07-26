@@ -6,6 +6,21 @@
       "$type": "EntityLevelHolder, Assembly-CSharp",
       "entity": "WhiteRook",
       "level": 0
+    },
+    "2050": {
+      "$type": "EntityLevelHolder, Assembly-CSharp",
+      "entity": "WhiteKing",
+      "level": 1
+    },
+    "2052": {
+      "$type": "EntityLevelHolder, Assembly-CSharp",
+      "entity": "WhiteQueen",
+      "level": 0
+    },
+    "3073": {
+      "$type": "EntityLevelHolder, Assembly-CSharp",
+      "entity": "WhiteRook",
+      "level": 0
     }
   },
   "handEntities": {
@@ -13,15 +28,15 @@
     "$values": [
       {
         "$type": "EntityLevelHolder, Assembly-CSharp",
-        "entity": "WhiteKing",
+        "entity": "WhiteRook",
         "level": 0
       }
     ]
   },
-  "stageLevel": 4,
+  "stageLevel": 5,
   "items": {
     "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
-    "$values": [ "Warp", "Warp" ]
+    "$values": [ "Warp", "Warp", "Warp" ]
   },
-  "credit": 8634
+  "credit": 7134
 }

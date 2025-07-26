@@ -38,13 +38,13 @@ public class PlayerData
         credit = 100;
 
         #region DebugData
-        
+        /*
         items.Add("Warp");
         items.Add("Warp");
         items.Add("Warp");
         fieldEntities.Add(2050,new EntityLevelHolder("WhiteKing", 1));
         handEntities.Add(new EntityLevelHolder("WhiteRook", 0));
-        
+        */
         #endregion
     }
 

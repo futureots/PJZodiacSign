@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RookArea : MonoBehaviour, IMoveArea, IAttackArea
+public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
 {
     public List<Tile> GetAttackArea(Tile tile)
     {
         List<Tile> list = new List<Tile>();
-        intVector2[] direction = new intVector2[] { new intVector2(1, 0), new intVector2(0, 1), new intVector2(-1, 0), new intVector2(0, -1) };
-        
-        for(int i = 0; i < 4; i++)
+        intVector2[] direction = new intVector2[] { new intVector2(1, 1), new intVector2(-1, 1), new intVector2(-1, -1), new intVector2(1, -1) };
+
+        for (int i = 0; i < 4; i++)
         {
             intVector2 curPos = new intVector2(0, 0);
             while (true)
@@ -23,15 +23,13 @@ public class RookArea : MonoBehaviour, IMoveArea, IAttackArea
                 else break;
             }
         }
-        
-
         return list;
     }
 
     public List<Tile> GetMoveArea(Tile tile)
     {
         List<Tile> list = new List<Tile>();
-        intVector2[] direction = new intVector2[] { new intVector2(1, 0), new intVector2(0, 1), new intVector2(-1, 0), new intVector2(0, -1) };
+        intVector2[] direction = new intVector2[] { new intVector2(1, 1), new intVector2(-1, 1), new intVector2(-1, -1), new intVector2(1, -1) };
 
         for (int i = 0; i < 4; i++)
         {
