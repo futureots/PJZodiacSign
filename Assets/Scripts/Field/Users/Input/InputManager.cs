@@ -90,9 +90,9 @@ public class InputManager : Agent
         return closestTile;
     }
 
-    public override void SetRepairMode(int level)
+    public override void SetRepairField(int level)
     {
-        base.SetRepairMode(level);
+        base.SetRepairField(level);
         UI.shop.SetShop(level);
     }
 

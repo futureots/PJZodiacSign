@@ -48,7 +48,7 @@ public abstract class Agent : MonoBehaviour
         inventory.SetItem(agentData.items);
     }
     
-    public virtual void SetRepairMode(int level)
+    public virtual void SetRepairField(int level)
     {
         controller.SetInstantField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
@@ -85,7 +85,7 @@ public abstract class Agent : MonoBehaviour
         var entity = entityData.CreateEntity();
 
         Debug.Log("Buy Entity");
-        controller.PlaceEntity(entity, controller.instantField);
+        controller.PlaceOnInstantField(entity);
 
         return true;
     }

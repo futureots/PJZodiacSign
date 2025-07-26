@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RookArea : MonoBehaviour, IMoveArea, IAttackArea
 {
-    public List<Tile> GetAttackArea(Tile tile)
+    public List<Tile> GetAttackArea(Tile tile, bool isReflect)
     {
         List<Tile> list = new List<Tile>();
         intVector2[] direction = new intVector2[] { new intVector2(1, 0), new intVector2(0, 1), new intVector2(-1, 0), new intVector2(0, -1) };
@@ -14,7 +14,8 @@ public class RookArea : MonoBehaviour, IMoveArea, IAttackArea
             while (true)
             {
                 curPos += direction[i];
-                var nextTile = tile.field.GetTile(tile.fieldPos + curPos);
+                var pos = isReflect ? tile.fieldPos + curPos : tile.fieldPos - curPos;
+                var nextTile = tile.field.GetTile(pos);
                 if (nextTile != null)
                 {
                     list.Add(nextTile);
@@ -28,7 +29,7 @@ public class RookArea : MonoBehaviour, IMoveArea, IAttackArea
         return list;
     }
 
-    public List<Tile> GetMoveArea(Tile tile)
+    public List<Tile> GetMoveArea(Tile tile, bool isReflect)
     {
         List<Tile> list = new List<Tile>();
         intVector2[] direction = new intVector2[] { new intVector2(1, 0), new intVector2(0, 1), new intVector2(-1, 0), new intVector2(0, -1) };
@@ -39,7 +40,8 @@ public class RookArea : MonoBehaviour, IMoveArea, IAttackArea
             while (true)
             {
                 curPos += direction[i];
-                var nextTile = tile.field.GetTile(tile.fieldPos + curPos);
+                var pos = isReflect ? tile.fieldPos + curPos : tile.fieldPos - curPos;
+                var nextTile = tile.field.GetTile(pos);
                 if (nextTile != null)
                 {
                     if (!nextTile.isEmpty && nextTile.occupiedObject != gameObject) break;

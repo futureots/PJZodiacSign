@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
 {
-    public List<Tile> GetAttackArea(Tile tile)
+    public List<Tile> GetAttackArea(Tile tile, bool isReflect)
     {
         List<Tile> list = new List<Tile>();
         intVector2[] direction = new intVector2[] { new intVector2(1, 1), new intVector2(-1, 1), new intVector2(-1, -1), new intVector2(1, -1) };
@@ -14,7 +14,8 @@ public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
             while (true)
             {
                 curPos += direction[i];
-                var nextTile = tile.field.GetTile(tile.fieldPos + curPos);
+                var pos = isReflect ? tile.fieldPos + curPos : tile.fieldPos - curPos;
+                var nextTile = tile.field.GetTile(pos);
                 if (nextTile != null)
                 {
                     list.Add(nextTile);
@@ -26,7 +27,7 @@ public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
         return list;
     }
 
-    public List<Tile> GetMoveArea(Tile tile)
+    public List<Tile> GetMoveArea(Tile tile, bool isReflect)
     {
         List<Tile> list = new List<Tile>();
         intVector2[] direction = new intVector2[] { new intVector2(1, 1), new intVector2(-1, 1), new intVector2(-1, -1), new intVector2(1, -1) };
@@ -37,7 +38,8 @@ public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
             while (true)
             {
                 curPos += direction[i];
-                var nextTile = tile.field.GetTile(tile.fieldPos + curPos);
+                var pos = isReflect ? tile.fieldPos + curPos : tile.fieldPos - curPos;
+                var nextTile = tile.field.GetTile(pos);
                 if (nextTile != null)
                 {
                     if (!nextTile.isEmpty && nextTile.occupiedObject != gameObject) break;
