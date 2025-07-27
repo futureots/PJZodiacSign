@@ -18,33 +18,33 @@ public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
         }
     }
 
-    public List<Tile> GetAttackArea(Tile curTile)
+    public List<Tile> GetAttackArea(Tile tile, bool isReflect)
     {
         List<Tile> tiles = new List<Tile>();
         foreach (var item in area)
         {
-            Tile tile = curTile.field.GetTile(item + curTile.fieldPos);
-            if (tile != null)
+            var pos = isReflect ? tile.fieldPos + item : tile.fieldPos - item;
+            var nextTile = tile.field.GetTile(pos);
+            if (nextTile != null)
             {
-                tiles.Add(tile);
+                tiles.Add(nextTile);
             }
         }
         return tiles;
     }
 
-    public List<Tile> GetMoveArea(Tile curTile)
+    public List<Tile> GetMoveArea(Tile tile, bool isReflect)
     {
         List<Tile> tiles = new List<Tile>();
         foreach (var item in area)
         {
-            Debug.Log(curTile);
-            Debug.Log(curTile.field);
-            Tile tile = curTile.field.GetTile(item + curTile.fieldPos);
-            if (tile != null && tile.isEmpty)
+            var pos = isReflect ? tile.fieldPos + item : tile.fieldPos - item;
+            var nextTile = tile.field.GetTile(pos);
+            if (nextTile != null && nextTile.isEmpty)
             {
-                tiles.Add(tile);
+                tiles.Add(nextTile);
             }
-            
+
         }
         return tiles;
     }

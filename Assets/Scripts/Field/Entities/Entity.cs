@@ -25,7 +25,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         this.skillData = skillData;
         skillInstance = skillData.CreateInstance();
-        if(skillInstance is S_BaseEntity entitySkill)
+        if(skillInstance is IOwnable entitySkill)
         {
             entitySkill.Owner = this;
         }
@@ -48,7 +48,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         }
     }
     // 기물의 고유 데이터
-    EntityData data;
+    public EntityData data;
     /// <summary>
     /// 기물의 스탯, 스킬값 세팅
     /// </summary>
@@ -217,6 +217,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #endregion
 
+    
     /// <summary>
     /// 기물 이동(속박 적용 시 이동 X)
     /// </summary>
@@ -255,6 +256,9 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         curTile = tile;
         transform.position = tile.transform.position;
     }
+
+
+    public bool isReflect;
     /// <summary>
     /// 기물의 이동 범위 반환
     /// </summary>
@@ -265,7 +269,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         var tiles = new List<Tile>();
         foreach (var area in list)
         {
-            tiles.AddRange(area.GetMoveArea(curTile));
+            tiles.AddRange(area.GetMoveArea(curTile,isReflect));
         }
         tiles.Add(curTile);
         return tiles;
@@ -277,7 +281,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         var tiles = new List<Tile>();
         foreach (var area in list)
         {
-            tiles.AddRange(area.GetAttackArea(tile));
+            tiles.AddRange(area.GetAttackArea(tile,isReflect));
         }
         return tiles;
     }

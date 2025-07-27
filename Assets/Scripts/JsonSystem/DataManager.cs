@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
 
     public ItemTable itemTable;
+    public EntityTable entityTable;
     
     public AgentData[] GetData()
     {
@@ -21,32 +23,63 @@ public class DataManager : MonoBehaviour
         var items = new List<ItemData>();
         foreach ( var item in playerData.items)
         {
-            var itemData = itemTable.SearchItem(item);
+            var itemData = itemTable.SearchData(item);
             items.Add(itemData);
         }
-        AgentData player = new AgentData(playerData.credit, playerData.handEntities, playerData.fieldEntities, items);
+
+        var handEntities = new List<EntityLevelData>();
+        foreach (var item in playerData.handEntities)
+        {
+            var entityData = new EntityLevelData(entityTable.SearchData(item.entity),item.level);
+            handEntities.Add(entityData);
+        }
+
+        var fieldEntities = new Dictionary<int, EntityLevelData>();
+        foreach (var item in playerData.fieldEntities)
+        {
+            var entityData = new EntityLevelData(entityTable.SearchData(item.Value.entity), item.Value.level);
+            fieldEntities.Add(item.Key, entityData);
+        }
+
+        AgentData player = new AgentData(playerData.credit, handEntities, fieldEntities, items);
         data.Add(player);
 
-        AgentData enemy = new AgentData(playerData.stageLevel * 3,playerData.handEntities, playerData.fieldEntities);
+        AgentData enemy = new AgentData(playerData.stageLevel * 3,handEntities, fieldEntities);
 
         data.Add(enemy);
         return data.ToArray();
     }
     public void SetData(AgentData data, int stageLevel)
     {
-        List<string> itemName = new List<string>();
+        List<string> itemNames = new List<string>();
         foreach (var item in data.items)
         {
             if (item == null)
             {
-                itemName.Add(null);
+                itemNames.Add(null);
                 continue;
             }
-            itemName.Add(item.itemName);
+            itemNames.Add(item.id);
         }
-        playerData.items = itemName;
-        playerData.handEntities = data.handEntities;
-        playerData.fieldEntities = data.fieldEntities;
+        playerData.items = itemNames;
+
+        List<EntityLevelHolder> handEntityNames = new List<EntityLevelHolder>();
+        foreach (var item in data.handEntities)
+        {
+            EntityLevelHolder temp = new EntityLevelHolder(item.data.id, item.level);
+            handEntityNames.Add(temp);
+        }
+        playerData.handEntities = handEntityNames;
+
+
+        Dictionary<int,EntityLevelHolder> fieldEntities = new Dictionary<int,EntityLevelHolder>();
+        foreach (var item in data.fieldEntities)
+        {
+            fieldEntities.Add(item.Key, new EntityLevelHolder(item.Value.data.id, item.Value.level));
+        }
+        playerData.fieldEntities = fieldEntities;
+
+
         playerData.credit = data.credit;
 
         playerData.stageLevel = stageLevel;
@@ -64,6 +97,8 @@ public class DataManager : MonoBehaviour
     {
         playerData.SavePlayerData(fileName);
     }
+
+
 }
 public struct AgentData
 {
@@ -86,4 +121,19 @@ public struct AgentData
     public Dictionary<int, EntityLevelData> fieldEntities;
     public List<ItemData> items;
 }
+public struct EntityLevelData
+{
+    public EntityLevelData(Entity entity)
+    {
+        data = entity.data;
+        level = entity.level;
+    }
+    public EntityLevelData(EntityData entityData, int level = 0)
+    {
+        data = entityData;
+        this.level = level;
+    }
 
+    public EntityData data;
+    public int level;
+}

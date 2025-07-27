@@ -48,7 +48,7 @@ public abstract class Agent : MonoBehaviour
         inventory.SetItem(agentData.items);
     }
     
-    public virtual void SetRepairMode(int level)
+    public virtual void SetRepairField(int level)
     {
         controller.SetInstantField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
@@ -69,23 +69,23 @@ public abstract class Agent : MonoBehaviour
     /// </summary>
     /// <param name="itemData">구매하려는 아이템 데이터</param>
     /// <returns></returns>
-    public bool BuyItem(ItemData itemData)
+    public bool BuyItem(ItemData itemData, int cost)
     {
-        if (itemData.cost > data.credit) return false;
-        data.credit -= itemData.cost;
+        if (cost > data.credit) return false;
+        data.credit -= cost;
         Debug.Log("Buy Item");
         inventory.AddItem(itemData);
         return true;
     }
-    public bool BuyEntity(EntityUIData entityData)
+    public bool BuyEntity(EntityData entityData, int cost)
     {
-        if (data.credit < entityData.normalPrice) return false;
-        data.credit -= entityData.normalPrice;
-        
-        var entity = ResourceManager.CreateEntity(entityData.id);
+        if (data.credit < cost) return false;
+        data.credit -= cost;
+
+        var entity = entityData.CreateEntity();
 
         Debug.Log("Buy Entity");
-        controller.PlaceEntity(entity, controller.instantField);
+        controller.PlaceOnInstantField(entity);
 
         return true;
     }

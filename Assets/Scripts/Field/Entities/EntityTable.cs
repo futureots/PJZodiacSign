@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EntityTable", menuName = "Scriptable Objects/EntityTable")]
-public class EntityTable : ScriptableObject
+public class EntityTable : Table<EntityData>
 {
-    [SerializeField] List<EntityData> entityList;
+    /*[SerializeField] List<EntityData> entityList;
     Dictionary<string, EntityData> _entities;
     public Dictionary<string, EntityData> entities
     {
@@ -20,6 +20,6 @@ public class EntityTable : ScriptableObject
             }
             return _entities;
         }
-    }
+    }*/
      
 }

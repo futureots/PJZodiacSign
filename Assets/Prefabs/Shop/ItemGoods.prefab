@@ -659,5 +659,5 @@ MonoBehaviour:
   data: {fileID: 0}
   buyBtn: {fileID: 9178098081624935640}
   goodsName: {fileID: 3972954340190997262}
-  price: {fileID: 604563900425637702}
+  priceText: {fileID: 604563900425637702}
   icon: {fileID: 3710636782295635914}

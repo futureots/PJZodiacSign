@@ -4,16 +4,18 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class S_Warp : BaseSkillInstance
+public class S_Warp : BaseSkillInstance<SD_Warp>
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity entity;
     [SkillTarget("대상 타일을 선택하세요.")]
     public Tile tile;
 
-    public S_Warp(BaseSkillData data) : base(data)
+    public S_Warp(SD_Warp data) : base(data)
     {
     }
+
+
 
     //스킬 발동
     public override void Activate()

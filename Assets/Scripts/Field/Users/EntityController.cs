@@ -12,7 +12,7 @@ public class EntityController : MonoBehaviour
     public Field instantField;
 
     // 컨트롤러가 조종 가능한 엔티티
-    List<Entity> entities;
+    public List<Entity> entities;
     // 컨트롤러 팀
     [SerializeField]Team team;
     private void Awake()
@@ -22,45 +22,66 @@ public class EntityController : MonoBehaviour
     }
 
     #region EntityManaging
-    public bool PlaceEntity(Entity instance, Field field)
+    /// <summary>
+    /// 기물을 내 고유 필드에 배치하는 함수
+    /// </summary>
+    /// <param name="instance">기물 오브젝트</param>
+    /// <returns>배치 성공 시 true, 실패 시 false 반환</returns>
+    public bool PlaceOnInstantField(Entity instance)
     {
-        for (int i = field.row - 1; i >= 0; i--) 
+        for (int i = instantField.row - 1; i >= 0; i--)
         {
-            for(int j = 0; j < field.column; j++)
+            for (int j = 0; j < instantField.column; j++)
             {
                 var pos = new intVector2(j, i);
-                var tile = field.GetTile(pos);
+                var tile = instantField.GetTile(pos);
                 if (tile.isEmpty)
                 {
-                    PlaceEntity(instance, field, pos);
+                    PlaceEntity(instance, tile);
                     return true;
                 }
             }
         }
         return false;
     }
-    public bool PlaceEntity(Entity instance, Field field, intVector2 pos)
+    public bool PlaceOnMainField(Entity instance, intVector2 pos)
     {
-        var movable = instance.MoveSequence(field.GetTile(pos), true);
-        if (movable)
+        var tile = GameManager.Instance.field.GetTile(pos,isReflect);
+        return PlaceOnMainField(instance, tile);
+    }
+    public bool PlaceOnMainField(Entity instance, Tile tile)
+    {
+        if (tile.isEmpty)
         {
-            instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
-            entities.Add(instance);
+            PlaceEntity(instance, tile);
+            return true;
         }
-        return movable;
+        return false;
+    }
+    public void PlaceEntity(Entity instance, Tile tile)
+    {
+        instance.MoveTo(tile);
+        instance.isReflect = isReflect;
+        instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
+        entities.Add(instance);
     }
     public void SetInstantField(List<EntityLevelData> handEntities)
     {
         instantField.gameObject.SetActive(true);
         foreach (var item in handEntities)
         {
-            var entity = ResourceManager.CreateEntity(item.entity, item.level);
-            PlaceEntity(entity, instantField);
+            var entity = item.data.CreateEntity(item.level);
+            PlaceOnInstantField(entity);
         }
     }
-    public virtual void SetMainField(Dictionary<int,EntityLevelData> fieldEntities)
+    public void SetMainField(Dictionary<int,EntityLevelData> fieldEntities)
     {
-
+        foreach (var item in fieldEntities)
+        {
+            var entity = item.Value.data.CreateEntity(item.Value.level);
+            intVector2 pos = intVector2.Decode(item.Key);
+            PlaceOnMainField(entity, pos);
+        }
     }
     public virtual void DisposeInstantField()
     {

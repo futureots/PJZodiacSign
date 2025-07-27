@@ -54,7 +54,11 @@ public class Inventory : MonoBehaviour
                 items[i] = instance;
                 OnItemChanged?.Invoke(i, instance);
             }
-            else AddItem(instance);
+            else
+            {
+                items.Add(instance);
+                OnItemChanged?.Invoke(i, instance);
+            }
         }
     }
 

@@ -9,5 +9,5 @@ public interface IAttackArea
     /// </summary>
     /// <param name="tile">시작 위치</param>
     /// <returns></returns>
-    public List<Tile> GetAttackArea(Tile tile);
+    public List<Tile> GetAttackArea(Tile tile, bool isReflect);
 }

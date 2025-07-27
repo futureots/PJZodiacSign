@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Warp
   m_EditorClassIdentifier: 
   id: Warp
-  itemName: "\uC6CC\uD504"
+  productName: "\uC6CC\uD504"
+  icon: {fileID: 21300000, guid: bc4a2c6bdce59a94eb0d6bb7a135043e, type: 3}
+  normalPrice: 10
+  discountPrice: 5
   description: "\uAE30\uBB3C 1\uAC1C\uB97C \uC6D0\uD558\uB294 \uC704\uCE58\uB85C
     \uC774\uB3D9\uC2DC\uD0A8\uB2E4."
-  icon: {fileID: 21300000, guid: bc4a2c6bdce59a94eb0d6bb7a135043e, type: 3}
-  cost: 5
   effect: {fileID: 11400000, guid: 81caa596f29ece04681c6dd8ae3ced41, type: 2}

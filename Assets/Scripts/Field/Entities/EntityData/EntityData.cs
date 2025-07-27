@@ -1,13 +1,10 @@
-using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BaseEntityData", menuName = "Scriptable Objects/BaseEntityData")]
-public class EntityData : ScriptableObject
+public abstract class EntityData : AbstractData
 {
     public GameObject baseEntityPrefab;
-    public string id;
-    
+
 
     [Header("BaseStatus")]
     public int maxHp;
@@ -21,17 +18,12 @@ public class EntityData : ScriptableObject
     public BaseSkillData skill;
     public int skillCost;
 
-    public virtual Entity CreateEntity(int level = 0)
+    public abstract Entity CreateEntity(int level = 0);
+
+    protected Entity CreateInstance()
     {
         var instance = Instantiate(baseEntityPrefab);
-
-        // 기물 공격, 이동 범위 세팅
-        instance.AddComponent<KingArea>();
         var entity = instance.GetOrAddComponent<Entity>();
-        entity.SetEntity(this,level);
-
         return entity;
     }
-    
-
 }
