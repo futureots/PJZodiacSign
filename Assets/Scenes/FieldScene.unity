@@ -600,9 +600,9 @@ GameObject:
   - component: {fileID: 43863448}
   - component: {fileID: 43863451}
   - component: {fileID: 43863450}
-  - component: {fileID: 43863449}
   - component: {fileID: 43863452}
   - component: {fileID: 43863453}
+  - component: {fileID: 43863454}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -632,22 +632,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &43863449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43863446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da19f7e5d2376204b9ad13e7d0894c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isReflect: 1
-  instantField: {fileID: 1817594083}
-  entities: []
-  team: {fileID: 43863452}
 --- !u!114 &43863450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,6 +694,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capacity: 10
+--- !u!114 &43863454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43863446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f853d1a66450d744e8dc65fb2664fd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isReflect: 1
+  instantField: {fileID: 1817594083}
+  entities: []
+  team: {fileID: 0}
 --- !u!1 &66234169
 GameObject:
   m_ObjectHideFlags: 0
@@ -7299,10 +7299,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829814209}
-  - component: {fileID: 829814210}
   - component: {fileID: 829814211}
   - component: {fileID: 829814212}
   - component: {fileID: 829814213}
+  - component: {fileID: 829814214}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -7326,22 +7326,6 @@ Transform:
   - {fileID: 125616119}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!114 &829814210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829814207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa8a21a7a1e87ff47a270eb3adc23353, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isReflect: 0
-  instantField: {fileID: 125616120}
-  entities: []
-  team: {fileID: 0}
 --- !u!114 &829814211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7381,6 +7365,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capacity: 3
+--- !u!114 &829814214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829814207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f853d1a66450d744e8dc65fb2664fd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isReflect: 0
+  instantField: {fileID: 125616120}
+  entities: []
+  team: {fileID: 0}
 --- !u!1 &863644698
 GameObject:
   m_ObjectHideFlags: 0

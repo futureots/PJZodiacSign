@@ -47,6 +47,10 @@ public class EntityController : MonoBehaviour
     public bool PlaceOnMainField(Entity instance, intVector2 pos)
     {
         var tile = GameManager.Instance.field.GetTile(pos,isReflect);
+        return PlaceOnMainField(instance, tile);
+    }
+    public bool PlaceOnMainField(Entity instance, Tile tile)
+    {
         if (tile.isEmpty)
         {
             PlaceEntity(instance, tile);

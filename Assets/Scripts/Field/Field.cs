@@ -203,7 +203,18 @@ public class Field : MonoBehaviour
         return list;
     }
 
-
+    public static List<Tile> GetEmptyTile(List<Tile> list)
+    {
+        var emptyTiles = new List<Tile>();
+        foreach (var tile in list)
+        {
+            if (tile.isEmpty)
+            {
+                emptyTiles.Add(tile);
+            }
+        }
+        return emptyTiles;
+    }
     
 }
 [System.Serializable]
