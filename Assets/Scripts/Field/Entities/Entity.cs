@@ -259,6 +259,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
 
     public bool isReflect;
+
+    #region Area
     /// <summary>
     /// 기물의 이동 범위 반환
     /// </summary>
@@ -274,6 +276,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         tiles.Add(curTile);
         return tiles;
     }
+
    
     public List<Tile> GetAttackArea(Tile tile)
     {
@@ -294,5 +297,70 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         return GetAttackArea(curTile);
     }
 
+
+    #endregion
+
+    #region AICalc
+    /// <summary>
+    /// 이동 범위를 intVector2 배열로 반환
+    /// </summary>
+    /// <returns></returns>
+    public List<intVector2> GetMoveVector()
+    {
+        List<intVector2> list = new List<intVector2>();
+        foreach (var tile in GetMoveArea())
+        {
+            list.Add(tile.fieldPos);
+        }
+        return list;
+    }
+    public List<intVector2> GetAttackVector(Tile start)
+    {
+        var list = new List<intVector2>();
+        foreach (var tile in GetAttackArea(start))
+        {
+            list.Add(tile.fieldPos);
+        }
+        return list;
+    }
+    public List<intVector2> GetAttackVector()
+    {
+        return GetAttackVector(curTile);
+    }
+
+    /// <summary>
+    /// 해당 기물이 이동 시 가장 좋은 위치 반환
+    /// </summary>
+    /// <param name="field">현재 필드 상황</param>
+    /// <param name="tileValues">각 위치의 예상 가치</param>
+    /// <returns></returns>
+    public (int,intVector2) GetBestMove(int[,] field, int[,] tileValues)
+    {
+        var list = GetMoveVector();
+        
+        int max = tileValues[curTile.fieldPos.y, curTile.fieldPos.x];
+        intVector2 pos = new intVector2(-1, -1);
+        foreach (var tile in list)
+        {
+            // 이동이 불가능한 타일일 경우
+            if (field[tile.y, tile.x] != 0) continue;
+
+            // 공격 점수 계산
+
+
+            // 피격 점수 계산
+            var value = tileValues[tile.y, tile.x];
+            if (value + curHp <= 0) value = -9999;
+            if(value > max || pos.y == -1)
+            {
+                max = value;
+                pos = tile;
+            }
+        }
+        return (max, pos);
+    }
+
+
+    #endregion
 
 }

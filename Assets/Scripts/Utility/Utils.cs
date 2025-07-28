@@ -66,7 +66,7 @@ public struct intVector2
     #region Encode & Decode
     public override string ToString()
     {
-        return Encode().ToString();
+        return $"( x : {x}, y : {y} )";
     }
     public int Encode()
     {

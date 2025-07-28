@@ -10,4 +10,5 @@ public interface IMoveArea
     /// <param name="tile"></param>
     /// <returns></returns>
     public List<Tile> GetMoveArea(Tile tile, bool isReflect);
+
 }

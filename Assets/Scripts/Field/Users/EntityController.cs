@@ -62,6 +62,10 @@ public class EntityController : MonoBehaviour
     {
         instance.MoveTo(tile);
         instance.isReflect = isReflect;
+        instance.OnDead += () =>
+        {
+            entities.Remove(instance);
+        };
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
         entities.Add(instance);
     }
