@@ -221,20 +221,20 @@ public class Field : MonoBehaviour
         }
         return field;
     }
-    
-    public int[,] GetOtherTileValues(int teamNum = 0)
+
+    public int[,] GetOtherTileValues(int[,] fieldInfo, int teamNum = 0)
     {
         var field = new int[row, column];
         for(int i = 0; i < row; i++)
         {
             for(int j = 0; j < column; j++)
             {
-                if (tiles[i, j].isEmpty) continue;
+                if (fieldInfo[i, j] == 0) continue;
                 var obj = tiles[i, j].occupiedObject;
                 var entity = obj.GetComponent<Entity>();
                 if (entity == null) continue;
                 if (entity.team.teamNumber == teamNum) continue;
-                foreach(var vec in entity.GetAttackVector())
+                foreach(var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
                 {
                     field[vec.y, vec.x] -= entity.power;
                 }
@@ -245,8 +245,8 @@ public class Field : MonoBehaviour
     }
     public static bool isValidPos(int[,] info, intVector2 pos)
     {
-        var width = info.GetLength(0);
-        var height = info.GetLength(1);
+        var height = info.GetLength(0);
+        var width = info.GetLength(1);
 
         return pos.y >= 0 && pos.y < height && pos.x >= 0 && pos.x < width;
     }

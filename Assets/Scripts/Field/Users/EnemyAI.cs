@@ -60,18 +60,27 @@ public class EnemyAI : Agent
             controller.CreateCommand(list[rand].skillInstance);
         }*/
         // 스킬을 사용할 수 있는 기물이 없으면 이동한다.
-        var field = GameManager.Instance.field.GetFieldInfo();
-        var values = GameManager.Instance.field.GetOtherTileValues(team.teamNumber);
+        int[,] field;
         int max = 0;
         Entity bestEntity = null;
         intVector2 bestPos = new intVector2(-1,-1);
         
         foreach (var item in controller.entities)
         {
+            // 필드 값 가져오기
+            field = GameManager.Instance.field.GetFieldInfo();
+            var p = item.curTile.fieldPos;
+            // 현재 위치를 비우기
+            field[p.y, p.x] = 0;
+            // 적의 공격범위 가져오기 및 예상 데미지 계산
+            var values = GameManager.Instance.field.GetOtherTileValues(field,item.team.teamNumber);
+
             int value;
             intVector2 pos;
+            // 가장 좋은 위치의 행동 가져오기
             (value ,pos) = item.GetBestMove(field, values);
-            Debug.Log($"Best Entity : {item.name} , BestPos : {pos}");
+            Debug.Log($"Best Entity : {item.name} , BestPos : {pos} , Value : {value}");
+
             if (pos.y == -1) continue;
             if(max < value || bestEntity == null)
             {

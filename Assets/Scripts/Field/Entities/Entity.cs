@@ -262,55 +262,66 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #region Area
     /// <summary>
+    /// 기물의 이동 범위 좌표값 반환
+    /// </summary>
+    /// <returns>이동 범위 좌표값 배열</returns>
+    public List<intVector2> GetMoveVector()
+    {
+        var moveArea = new List<intVector2>();
+        if (!isRooted)
+        {
+            var fieldInfo = curTile.field.GetFieldInfo();
+            fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
+            var list = GetComponents<IMoveArea>();
+            
+            foreach (var area in list)
+            {
+                var vectors = area.GetMoveVector(fieldInfo, curTile.fieldPos, isReflect);
+                moveArea.AddRange(vectors);
+            }
+        }
+        
+        moveArea.Add(curTile.fieldPos);
+        return moveArea;
+    }
+    /// <summary>
     /// 기물의 이동 범위 반환
     /// </summary>
-    /// <returns>기물의 이동범위에 포함되는 타일</returns>
+    /// <returns>기물의 이동범위</returns>
     public List<Tile> GetMoveArea()
     {
-
-        // 다른 방식
-        /*
-         * 메인필드에서 fieldInfo를 가져옴(int2차원 배열)
-         * 내 현재 위치를 0으로 전환
-         * GetComponents로 MoveArea가져옴
-         * intVector 배열에 각 이동범위 벡터 가져오기(매개변수로 fieldInfo 넣기)
-         * 각 이동범위를 해당 위치의 타일로 전환
-         */
-
-        var fieldInfo = curTile.field.GetFieldInfo();
-        fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
-        var list = GetComponents<IMoveArea>();
-
-        var moveArea = new List<Tile>();
-        foreach (var area in list)
-        {
-            var vectors = area.GetMoveVector(fieldInfo, curTile.fieldPos, isReflect);
-            var tiles = curTile.field.GetTiles(vectors);
-            moveArea.AddRange(tiles);
-        }
-        moveArea.Add(curTile);
-        return moveArea;
+        var list = GetMoveVector();
+        var tiles = curTile.field.GetTiles(list);
+        return tiles;
     }
 
-   
-    public List<Tile> GetAttackArea(Tile tile)
+    public List<intVector2> GetAttackVector(int[,] field, intVector2 pos)
     {
-        var fieldInfo = tile.field.GetFieldInfo();
-        if (tile.field == curTile.field)
+        var attackArea = new List<intVector2>();
+        if (isSlienced)
         {
-            fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
+            return attackArea;
         }
+        field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
         var list = GetComponents<IAttackArea>();
 
-        var moveArea = new List<Tile>();
+        
         foreach (var area in list)
         {
-            var vectors = area.GetAttackVector(fieldInfo, tile.fieldPos, isReflect);
-            var tiles = tile.field.GetTiles(vectors);
-            moveArea.AddRange(tiles);
+            var vectors = area.GetAttackVector(field, pos, isReflect);
+            attackArea.AddRange(vectors);
         }
-        return moveArea;
+        return attackArea;
     }
+
+    public List<Tile> GetAttackArea(Tile tile)
+    {
+        var field = tile.field.GetFieldInfo();
+        var list = GetAttackVector(field, tile.fieldPos);
+        var tiles = tile.field.GetTiles(list);
+        return tiles;
+    }
+
     /// <summary>
     /// 기물의 공격 범위 반환
     /// </summary>
@@ -319,38 +330,14 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         return GetAttackArea(curTile);
     }
-
+    public List<intVector2> GetAttackVector()
+    {
+        return GetAttackVector(curTile.field.GetFieldInfo(), curTile.fieldPos);
+    }
 
     #endregion
 
     #region AICalc
-    /// <summary>
-    /// 이동 범위를 intVector2 배열로 반환
-    /// </summary>
-    /// <returns></returns>
-    public List<intVector2> GetMoveVector()
-    {
-        List<intVector2> list = new List<intVector2>();
-        foreach (var tile in GetMoveArea())
-        {
-            list.Add(tile.fieldPos);
-        }
-        return list;
-    }
-    public List<intVector2> GetAttackVector(Tile start)
-    {
-        var list = new List<intVector2>();
-        foreach (var tile in GetAttackArea(start))
-        {
-            list.Add(tile.fieldPos);
-        }
-        return list;
-    }
-    public List<intVector2> GetAttackVector()
-    {
-        return GetAttackVector(curTile);
-    }
-
     /// <summary>
     /// 해당 기물이 이동 시 가장 좋은 위치 반환
     /// </summary>
@@ -362,25 +349,38 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         var list = GetMoveVector();
         
         int max = tileValues[curTile.fieldPos.y, curTile.fieldPos.x];
-        intVector2 pos = new intVector2(-1, -1);
-        foreach (var tile in list)
+        
+        List<intVector2> pos = new();
+        foreach (var area in list)
         {
             // 이동이 불가능한 타일일 경우
-            if (field[tile.y, tile.x] != 0) continue;
+            if (field[area.y, area.x] != 0) continue;
+
+            // 피격 점수 계산(이동 시 사망할 경우 -9999)
+            var value = tileValues[area.y, area.x];
+            if (value + curHp <= 0) value = -9999;
 
             // 공격 점수 계산
-
-
-            // 피격 점수 계산
-            var value = tileValues[tile.y, tile.x];
-            if (value + curHp <= 0) value = -9999;
-            if(value > max || pos.y == -1)
+            var plusArea = GetAttackVector(field,area);
+            foreach (var plus in plusArea)
             {
+                if (field[plus.y, plus.x] == 0) continue;
+                if (field[plus.y, plus.x] == team.teamNumber) continue;
+                tileValues[area.y,area.x] += power;
+            }
+
+            if (value > max || pos.Count == 0)
+            {
+                pos.Clear();
                 max = value;
-                pos = tile;
+                pos.Add(area);
+            }
+            else if(value == max)
+            {
+                pos.Add(area);
             }
         }
-        return (max, pos);
+        return (max, pos[UnityEngine.Random.Range(0,pos.Count)]);
     }
 
 
