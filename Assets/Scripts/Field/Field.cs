@@ -243,7 +243,13 @@ public class Field : MonoBehaviour
         }
         return field;
     }
+    public static bool isValidPos(int[,] info, intVector2 pos)
+    {
+        var width = info.GetLength(0);
+        var height = info.GetLength(1);
 
+        return pos.y >= 0 && pos.y < height && pos.x >= 0 && pos.x < width;
+    }
 
     public static List<Tile> GetEmptyTile(List<Tile> list)
     {

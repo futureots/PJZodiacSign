@@ -11,4 +11,6 @@ public interface IMoveArea
     /// <returns></returns>
     public List<Tile> GetMoveArea(Tile tile, bool isReflect);
 
+    public List<intVector2> GetMoveVector(int[,] tiles, intVector2 curPos, bool isReflect);
+
 }

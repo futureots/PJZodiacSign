@@ -10,4 +10,5 @@ public interface IAttackArea
     /// <param name="tile">시작 위치</param>
     /// <returns></returns>
     public List<Tile> GetAttackArea(Tile tile, bool isReflect);
+    public List<intVector2> GetAttackVector(int[,] tiles, intVector2 curPos, bool isReflect);
 }

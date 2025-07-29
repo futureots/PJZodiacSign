@@ -267,26 +267,49 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <returns>기물의 이동범위에 포함되는 타일</returns>
     public List<Tile> GetMoveArea()
     {
+
+        // 다른 방식
+        /*
+         * 메인필드에서 fieldInfo를 가져옴(int2차원 배열)
+         * 내 현재 위치를 0으로 전환
+         * GetComponents로 MoveArea가져옴
+         * intVector 배열에 각 이동범위 벡터 가져오기(매개변수로 fieldInfo 넣기)
+         * 각 이동범위를 해당 위치의 타일로 전환
+         */
+
+        var fieldInfo = curTile.field.GetFieldInfo();
+        fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
         var list = GetComponents<IMoveArea>();
-        var tiles = new List<Tile>();
+
+        var moveArea = new List<Tile>();
         foreach (var area in list)
         {
-            tiles.AddRange(area.GetMoveArea(curTile,isReflect));
+            var vectors = area.GetMoveVector(fieldInfo, curTile.fieldPos, isReflect);
+            var tiles = curTile.field.GetTiles(vectors);
+            moveArea.AddRange(tiles);
         }
-        tiles.Add(curTile);
-        return tiles;
+        moveArea.Add(curTile);
+        return moveArea;
     }
 
    
     public List<Tile> GetAttackArea(Tile tile)
     {
+        var fieldInfo = tile.field.GetFieldInfo();
+        if (tile.field == curTile.field)
+        {
+            fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
+        }
         var list = GetComponents<IAttackArea>();
-        var tiles = new List<Tile>();
+
+        var moveArea = new List<Tile>();
         foreach (var area in list)
         {
-            tiles.AddRange(area.GetAttackArea(tile,isReflect));
+            var vectors = area.GetAttackVector(fieldInfo, tile.fieldPos, isReflect);
+            var tiles = tile.field.GetTiles(vectors);
+            moveArea.AddRange(tiles);
         }
-        return tiles;
+        return moveArea;
     }
     /// <summary>
     /// 기물의 공격 범위 반환

@@ -1,3 +1,5 @@
+using Mono.Cecil.Cil;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,21 +22,13 @@ public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
 
     public List<Tile> GetAttackArea(Tile tile, bool isReflect)
     {
-        List<Tile> tiles = new List<Tile>();
-        foreach (var item in area)
-        {
-            var pos = isReflect ? tile.fieldPos + item : tile.fieldPos - item;
-            var nextTile = tile.field.GetTile(pos);
-            if (nextTile != null)
-            {
-                tiles.Add(nextTile);
-            }
-        }
-        return tiles;
+        var info = tile.field.GetFieldInfo();
+        return tile.field.GetTiles(GetAttackVector(info, tile.fieldPos, isReflect));
     }
 
     public List<Tile> GetMoveArea(Tile tile, bool isReflect)
     {
+        /*
         List<Tile> tiles = new List<Tile>();
         foreach (var item in area)
         {
@@ -46,6 +40,35 @@ public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
             }
 
         }
-        return tiles;
+        return tiles;*/
+        var info = tile.field.GetFieldInfo();
+        return tile.field.GetTiles(GetMoveVector(info, tile.fieldPos, isReflect));
+    }
+
+    public List<intVector2> GetMoveVector(int[,] tiles, intVector2 curPos, bool isReflect)
+    {
+        List<intVector2> vectors = new List<intVector2>();
+        foreach (var item in area)
+        {
+            var pos = isReflect ? curPos + item : curPos - item;
+            if (!Field.isValidPos(tiles, pos)) continue;
+            if (tiles[pos.y, pos.x] != 0) continue;
+            vectors.Add(pos);
+        }
+        return vectors;
+    }
+
+
+
+    public List<intVector2> GetAttackVector(int[,] tiles, intVector2 curPos, bool isReflect)
+    {
+        List<intVector2> vectors = new List<intVector2>();
+        foreach (var item in area)
+        {
+            var pos = isReflect ? curPos + item : curPos - item;
+            if (!Field.isValidPos(tiles, pos)) continue;
+            vectors.Add(pos);
+        }
+        return vectors;
     }
 }
