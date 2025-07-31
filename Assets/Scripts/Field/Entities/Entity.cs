@@ -25,6 +25,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         this.skillData = skillData;
         skillInstance = skillData.CreateInstance();
+        // 스킬 사용 후 마나 초기화
+        skillInstance.AddCallback(x => {
+            if (x)
+            {
+                curEnergy = 0;
+            }
+        });
         if(skillInstance is IOwnable entitySkill)
         {
             entitySkill.Owner = this;

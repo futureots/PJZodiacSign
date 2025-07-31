@@ -54,59 +54,65 @@ public class EnemyAI : Agent
     {
         yield return null;
         // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별
-        /*if(CanActiveSkill(out var list))
+        if(CanActiveSkill(out var list))
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
+            list[rand].skillInstance.SetSkillInput(GameManager.Instance.field);
             controller.CreateCommand(list[rand].skillInstance);
-        }*/
+            yield break;
+        }
+
         // 스킬을 사용할 수 있는 기물이 없으면 이동한다.
-        int[,] field;
+        
         int max = 0;
         Entity bestEntity = null;
         intVector2 bestPos = new intVector2(-1,-1);
         
-        foreach (var item in controller.entities)
+        foreach (var checkEntity in controller.entities)
         {
             // 필드 값 가져오기
-            field = GameManager.Instance.field.GetFieldInfo();
-            var p = item.curTile.fieldPos;
+            int[,] field = GameManager.Instance.field.GetFieldInfo();
+
             // 현재 위치를 비우기
-            field[p.y, p.x] = 0;
+            var entityPos = checkEntity.curTile.fieldPos;
+            field[entityPos.y, entityPos.x] = 0;
             // 적의 공격범위 가져오기 및 예상 데미지 계산
-            var values = GameManager.Instance.field.GetOtherTileValues(field,item.team.teamNumber);
+            var values = GameManager.Instance.field.GetOtherTileValues(field, checkEntity.team.teamNumber);
 
             int value;
             intVector2 pos;
             // 가장 좋은 위치의 행동 가져오기
-            (value ,pos) = item.GetBestMove(field, values);
-            Debug.Log($"Best Entity : {item.name} , BestPos : {pos} , Value : {value}");
+            (value ,pos) = checkEntity.GetBestMove(field, values);
+            Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
 
             if (pos.y == -1) continue;
+            // 같은 값일 경우 전의 명령만 가짐
             if(max < value || bestEntity == null)
             {
                 max = value;
-                bestEntity = item;
+                bestEntity = checkEntity;
                 bestPos = pos;
             }
         }
         controller.CreateCommand(bestEntity, GameManager.Instance.field.GetTile(bestPos));
-
-
-
     }
+
     /// <summary>
     /// 스킬 사용이 가능한 기물이 있는지 확인하는 함수
     /// </summary>
     /// <returns>스킬 사용이 가능함</returns>
-    public bool CanActiveSkill(out List<Entity> Entities)
+    bool CanActiveSkill(out List<Entity> Entities)
     {
         
         Entities = new List<Entity>();
-        foreach(var item in controller.entities)
+        foreach (var item in controller.entities)
         {
-            if(item.curEnergy > item.skillCost)
+            if (item.curEnergy > item.skillCost)
             {
-                Entities.Add(item);
+                if (item.skillInstance.CanSkillInput(GameManager.Instance.field))
+                {
+                    Entities.Add(item);
+                }
             }
         }
         if (Entities.Count > 0) return true;

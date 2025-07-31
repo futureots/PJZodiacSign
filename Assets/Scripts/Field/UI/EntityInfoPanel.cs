@@ -14,7 +14,7 @@ public class EntityInfoPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        entitySkillBtn.gameObject.SetActive(false);
+        //entitySkillBtn.gameObject.SetActive(false);
         InfoPanel.SetActive(false);
         team = transform.root.GetComponent<Team>();
     }

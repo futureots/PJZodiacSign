@@ -59,7 +59,8 @@ public abstract class AbstractSkillInstance : IActive
     }
 
     public abstract void Reinitialize();
-
+    public abstract bool CanSkillInput(Field field);
+    public abstract bool SetSkillInput(Field field);
     public void AddCallback(Action<bool> func)
     {
         callback += func;

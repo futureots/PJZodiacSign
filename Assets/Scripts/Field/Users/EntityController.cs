@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.Rendering.DebugUI;
 
 public class EntityController : MonoBehaviour
@@ -54,6 +55,7 @@ public class EntityController : MonoBehaviour
         if (tile.isEmpty)
         {
             PlaceEntity(instance, tile);
+            entities.Add(instance);
             return true;
         }
         return false;
@@ -67,7 +69,6 @@ public class EntityController : MonoBehaviour
             entities.Remove(instance);
         };
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
-        entities.Add(instance);
     }
     public void SetInstantField(List<EntityLevelData> handEntities)
     {
@@ -85,6 +86,7 @@ public class EntityController : MonoBehaviour
             var entity = item.Value.data.CreateEntity(item.Value.level);
             intVector2 pos = intVector2.Decode(item.Key);
             PlaceOnMainField(entity, pos);
+            
         }
     }
     public virtual void DisposeInstantField()
