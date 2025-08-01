@@ -6,7 +6,8 @@ using UnityEngine;
 
 public interface IActive
 {
-    
+    public bool CanSkillInput(Field field);
+    public bool SetSkillInput(Field field);
     public void AddCallback(Action<bool> func);
     public void ClearCallback();
     public bool ExecuteSequence();

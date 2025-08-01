@@ -22,6 +22,11 @@ public class S_Heal : S_BaseEntity<SD_Heal>
         }
     }
 
+    public override bool CanSkillInput(Field field)
+    {
+        return true;
+    }
+
     public override bool IsValidInput(FieldInfo field)
     {
         return true;
@@ -30,5 +35,10 @@ public class S_Heal : S_BaseEntity<SD_Heal>
     public override void Reinitialize()
     {
         
+    }
+
+    public override bool SetSkillInput(Field field)
+    {
+        return true;
     }
 }

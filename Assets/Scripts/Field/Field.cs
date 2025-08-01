@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class Field : MonoBehaviour
 {
     public int row, column;
     public GameObject tilePrefab;
+
+    Tile[,] _tiles;
     public Tile[,] tiles
     {
         get
@@ -24,7 +27,7 @@ public class Field : MonoBehaviour
             return tiles;
         }
     }
-    Tile[,] _tiles;
+    
     [ContextMenuItem("CreateField","CreateField")]
     [ContextMenuItem("DestroyField", "DestroyField")]
     public List<Row<Tile>> _tileList;
@@ -125,13 +128,6 @@ public class Field : MonoBehaviour
         if (!IsValidCellPos(fieldPos)) return null;
         return tiles[fieldPos.y, fieldPos.x];
     }
-
-    public Tile GetTile(int x, int y)
-    {
-        var pos = new intVector2(x, y);
-        return GetTile(pos);
-
-    }
     /// <summary>
     /// 필드에 있는 모든 타일 가져오기
     /// </summary>
@@ -203,6 +199,58 @@ public class Field : MonoBehaviour
         return list;
     }
 
+    public int[,] GetFieldInfo()
+    {
+        var field = new int[row, column];
+        for(int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < column; j++) 
+            {
+                var t = tiles[i,j];
+                if (t.isEmpty) continue;
+                else
+                {
+                    var team = t.occupiedObject.GetComponent<Team>();
+                    if (team == null) field[i, j] = -1;
+                    else
+                    {
+                        field[i, j] = team.teamNumber;
+                    }
+                }
+            }
+        }
+        return field;
+    }
+
+    public int[,] GetOtherTileValues(int[,] fieldInfo, int teamNum = 0)
+    {
+        var field = new int[row, column];
+        for(int i = 0; i < row; i++)
+        {
+            for(int j = 0; j < column; j++)
+            {
+                if (fieldInfo[i, j] == 0) continue;
+                var obj = tiles[i, j].occupiedObject;
+                var entity = obj.GetComponent<Entity>();
+                if (entity == null) continue;
+                if (entity.team.teamNumber == teamNum) continue;
+                foreach(var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
+                {
+                    field[vec.y, vec.x] -= entity.power;
+                }
+
+            }
+        }
+        return field;
+    }
+    public static bool isValidPos(int[,] info, intVector2 pos)
+    {
+        var height = info.GetLength(0);
+        var width = info.GetLength(1);
+
+        return pos.y >= 0 && pos.y < height && pos.x >= 0 && pos.x < width;
+    }
+
     public static List<Tile> GetEmptyTile(List<Tile> list)
     {
         var emptyTiles = new List<Tile>();
@@ -215,7 +263,6 @@ public class Field : MonoBehaviour
         }
         return emptyTiles;
     }
-    
 }
 [System.Serializable]
 public class Row<T>

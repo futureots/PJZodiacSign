@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b101d185fc2444a4a93ad47e31d0d617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNumber: 0
+  teamNumber: 1
 --- !u!114 &43863453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7338,7 +7338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b101d185fc2444a4a93ad47e31d0d617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamNumber: 1
+  teamNumber: 2
 --- !u!114 &829814212
 MonoBehaviour:
   m_ObjectHideFlags: 0

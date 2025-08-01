@@ -29,7 +29,7 @@ public class ActionTurn : ITurn
         cmd?.Execute();
 
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         agent.isInputStop = false;
     }
 }

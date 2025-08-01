@@ -18,34 +18,30 @@ public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
         }
     }
 
-    public List<Tile> GetAttackArea(Tile tile, bool isReflect)
+    public List<intVector2> GetMoveVector(int[,] tiles, intVector2 curPos, bool isReflect)
     {
-        List<Tile> tiles = new List<Tile>();
+        List<intVector2> vectors = new List<intVector2>();
         foreach (var item in area)
         {
-            var pos = isReflect ? tile.fieldPos + item : tile.fieldPos - item;
-            var nextTile = tile.field.GetTile(pos);
-            if (nextTile != null)
-            {
-                tiles.Add(nextTile);
-            }
+            var pos = isReflect ? curPos + item : curPos - item;
+            if (!Field.isValidPos(tiles, pos)) continue;
+            if (tiles[pos.y, pos.x] != 0) continue;
+            vectors.Add(pos);
         }
-        return tiles;
+        return vectors;
     }
 
-    public List<Tile> GetMoveArea(Tile tile, bool isReflect)
+
+
+    public List<intVector2> GetAttackVector(int[,] tiles, intVector2 curPos, bool isReflect)
     {
-        List<Tile> tiles = new List<Tile>();
+        List<intVector2> vectors = new List<intVector2>();
         foreach (var item in area)
         {
-            var pos = isReflect ? tile.fieldPos + item : tile.fieldPos - item;
-            var nextTile = tile.field.GetTile(pos);
-            if (nextTile != null && nextTile.isEmpty)
-            {
-                tiles.Add(nextTile);
-            }
-
+            var pos = isReflect ? curPos + item : curPos - item;
+            if (!Field.isValidPos(tiles, pos)) continue;
+            vectors.Add(pos);
         }
-        return tiles;
+        return vectors;
     }
 }

@@ -153,7 +153,7 @@ public class InputManager : Agent
             if (entity != null)
             {
                 // UI 표시
-                entityInfoPanel.ShowPanel(entity);
+                //entityInfoPanel.ShowPanel(entity);
             }
             // 다른 클릭 가능한 오브젝트 확인
         }

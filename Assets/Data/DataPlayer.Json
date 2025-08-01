@@ -7,21 +7,6 @@
       "entity": "WhiteRook",
       "level": 0
     },
-    "2050": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteKing",
-      "level": 1
-    },
-    "2052": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteQueen",
-      "level": 0
-    },
-    "3073": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteRook",
-      "level": 0
-    }
   },
   "handEntities": {
     "$type": "System.Collections.Generic.List`1[[EntityLevelHolder, Assembly-CSharp]], mscorlib",

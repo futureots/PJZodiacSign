@@ -25,6 +25,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         this.skillData = skillData;
         skillInstance = skillData.CreateInstance();
+        // 스킬 사용 후 마나 초기화
+        skillInstance.AddCallback(x => {
+            if (x)
+            {
+                curEnergy = 0;
+            }
+        });
         if(skillInstance is IOwnable entitySkill)
         {
             entitySkill.Owner = this;
@@ -259,32 +266,69 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
 
     public bool isReflect;
+
+    #region Area
+    /// <summary>
+    /// 기물의 이동 범위 좌표값 반환
+    /// </summary>
+    /// <returns>이동 범위 좌표값 배열</returns>
+    public List<intVector2> GetMoveVector()
+    {
+        var moveArea = new List<intVector2>();
+        if (!isRooted)
+        {
+            var fieldInfo = curTile.field.GetFieldInfo();
+            fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
+            var list = GetComponents<IMoveArea>();
+            
+            foreach (var area in list)
+            {
+                var vectors = area.GetMoveVector(fieldInfo, curTile.fieldPos, isReflect);
+                moveArea.AddRange(vectors);
+            }
+        }
+        
+        moveArea.Add(curTile.fieldPos);
+        return moveArea;
+    }
     /// <summary>
     /// 기물의 이동 범위 반환
     /// </summary>
-    /// <returns>기물의 이동범위에 포함되는 타일</returns>
+    /// <returns>기물의 이동범위</returns>
     public List<Tile> GetMoveArea()
     {
-        var list = GetComponents<IMoveArea>();
-        var tiles = new List<Tile>();
-        foreach (var area in list)
-        {
-            tiles.AddRange(area.GetMoveArea(curTile,isReflect));
-        }
-        tiles.Add(curTile);
+        var list = GetMoveVector();
+        var tiles = curTile.field.GetTiles(list);
         return tiles;
     }
-   
+
+    public List<intVector2> GetAttackVector(int[,] field, intVector2 pos)
+    {
+        var attackArea = new List<intVector2>();
+        if (isSlienced)
+        {
+            return attackArea;
+        }
+        field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
+        var list = GetComponents<IAttackArea>();
+
+        
+        foreach (var area in list)
+        {
+            var vectors = area.GetAttackVector(field, pos, isReflect);
+            attackArea.AddRange(vectors);
+        }
+        return attackArea;
+    }
+
     public List<Tile> GetAttackArea(Tile tile)
     {
-        var list = GetComponents<IAttackArea>();
-        var tiles = new List<Tile>();
-        foreach (var area in list)
-        {
-            tiles.AddRange(area.GetAttackArea(tile,isReflect));
-        }
+        var field = tile.field.GetFieldInfo();
+        var list = GetAttackVector(field, tile.fieldPos);
+        var tiles = tile.field.GetTiles(list);
         return tiles;
     }
+
     /// <summary>
     /// 기물의 공격 범위 반환
     /// </summary>
@@ -293,6 +337,60 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         return GetAttackArea(curTile);
     }
+    public List<intVector2> GetAttackVector()
+    {
+        return GetAttackVector(curTile.field.GetFieldInfo(), curTile.fieldPos);
+    }
 
+    #endregion
+
+    #region AICalc
+    /// <summary>
+    /// 해당 기물이 이동 시 가장 좋은 위치 반환
+    /// </summary>
+    /// <param name="field">현재 필드 상황</param>
+    /// <param name="tileValues">각 위치의 예상 가치</param>
+    /// <returns></returns>
+    public (int,intVector2) GetBestMove(int[,] field, int[,] tileValues)
+    {
+        var list = GetMoveVector();
+        
+        int max = tileValues[curTile.fieldPos.y, curTile.fieldPos.x];
+        
+        List<intVector2> pos = new();
+        foreach (var area in list)
+        {
+            // 이동이 불가능한 타일일 경우
+            if (field[area.y, area.x] != 0) continue;
+
+            // 피격 점수 계산(이동 시 사망할 경우 -9999)
+            var value = tileValues[area.y, area.x];
+            if (value + curHp <= 0) value = -9999;
+
+            // 공격 점수 계산
+            var plusArea = GetAttackVector(field,area);
+            foreach (var plus in plusArea)
+            {
+                if (field[plus.y, plus.x] == 0) continue;
+                if (field[plus.y, plus.x] == team.teamNumber) continue;
+                tileValues[area.y,area.x] += power;
+            }
+
+            if (value > max || pos.Count == 0)
+            {
+                pos.Clear();
+                max = value;
+                pos.Add(area);
+            }
+            else if(value == max)
+            {
+                pos.Add(area);
+            }
+        }
+        return (max, pos[UnityEngine.Random.Range(0,pos.Count)]);
+    }
+
+
+    #endregion
 
 }
