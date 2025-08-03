@@ -4399,17 +4399,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469030359}
   m_CullTransparentMesh: 1
---- !u!114 &477401646 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1311713456380928953, guid: da74d9377376cbe4b80ef811da223204, type: 3}
-  m_PrefabInstance: {fileID: 2033430856}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &479623623
 GameObject:
   m_ObjectHideFlags: 0
@@ -12945,17 +12934,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618456293}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1629376807 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3009557518759753961, guid: da74d9377376cbe4b80ef811da223204, type: 3}
-  m_PrefabInstance: {fileID: 2033430856}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1633270709
 GameObject:
   m_ObjectHideFlags: 0
@@ -16358,17 +16336,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemTable: {fileID: 11400000, guid: 8df71ece2ab6ad1438e45221bebbdb78, type: 2}
   entityTable: {fileID: 11400000, guid: 4e886c3655091304182c830af0823e0e, type: 2}
---- !u!114 &2020076348 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3174377080089715086, guid: da74d9377376cbe4b80ef811da223204, type: 3}
-  m_PrefabInstance: {fileID: 2033430856}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2033430856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16377,10 +16344,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1839077413}
     m_Modifications:
-    - target: {fileID: 286446102255163853, guid: da74d9377376cbe4b80ef811da223204, type: 3}
-      propertyPath: gaugeText
-      value: 
-      objectReference: {fileID: 2020076348}
     - target: {fileID: 2877092495466000421, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -16485,14 +16448,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6063285321945193788, guid: da74d9377376cbe4b80ef811da223204, type: 3}
-      propertyPath: gaugeBar
-      value: 
-      objectReference: {fileID: 1629376807}
-    - target: {fileID: 6063285321945193788, guid: da74d9377376cbe4b80ef811da223204, type: 3}
-      propertyPath: gaugeText
-      value: 
-      objectReference: {fileID: 477401646}
     - target: {fileID: 6642276120232088437, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

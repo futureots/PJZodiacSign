@@ -21,6 +21,7 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
     //스킬 발동
     public override void Activate()
     {
+        Debug.Log("Activate");
         entity.MoveSequence(tile,true);
     }
 
