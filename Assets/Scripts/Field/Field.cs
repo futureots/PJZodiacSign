@@ -55,7 +55,6 @@ public class Field : MonoBehaviour
                 temp.list.Add(tile);
             }
         }
-        Debug.Log(tiles.Length);
     }
 
     /// <summary>
@@ -234,11 +233,13 @@ public class Field : MonoBehaviour
                 var entity = obj.GetComponent<Entity>();
                 if (entity == null) continue;
                 if (entity.team.teamNumber == teamNum) continue;
-                foreach(var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
+                int entityNum = fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x];
+                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = 0;
+                foreach (var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
                 {
                     field[vec.y, vec.x] -= entity.power;
                 }
-
+                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = entityNum;
             }
         }
         return field;

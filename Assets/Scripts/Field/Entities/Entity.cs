@@ -206,7 +206,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Dead()
     {
-        //Debug.Log(gameObject+"Dead");
         OnDead?.Invoke();
         Destroy(gameObject);
     }
@@ -309,7 +308,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         {
             return attackArea;
         }
-        field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
         var list = GetComponents<IAttackArea>();
 
         
@@ -324,6 +322,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public List<Tile> GetAttackArea(Tile tile)
     {
         var field = tile.field.GetFieldInfo();
+        if(tile.field == curTile.field) field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
         var list = GetAttackVector(field, tile.fieldPos);
         var tiles = tile.field.GetTiles(list);
         return tiles;
@@ -368,7 +367,9 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             if (value + curHp <= 0) value = -9999;
 
             // 공격 점수 계산
+            field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
             var plusArea = GetAttackVector(field,area);
+            field[curTile.fieldPos.y, curTile.fieldPos.x] = team.teamNumber;
             foreach (var plus in plusArea)
             {
                 if (field[plus.y, plus.x] == 0) continue;

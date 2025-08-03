@@ -14,12 +14,10 @@ namespace PlayerInput
         Action<InputAction.CallbackContext> bindAction;
 
         InputManager _inputManager;
-        InputAction clickEvents;
         public SkillModeInput(InputManager input, IActive skill)
         {
             this.skill = skill;
             _inputManager = input;
-            clickEvents = _inputManager.inputActions.Gameplay.Click;
             // 스킬의 변수 중에 입력이 필요한 값만 큐에 저장
             selecters = new();
             skillFields = new();
@@ -40,13 +38,13 @@ namespace PlayerInput
         public void RemoveMode()
         {
             Debug.Log("RemoveSkillMode");
-            
-            clickEvents.started -= SetClick;
+
+            _inputManager.OnObjectClicked.RemoveListener(SetClick);
         }
 
         public void SetMode()
         {
-            clickEvents.started += SetClick;
+            _inputManager.OnObjectClicked.AddListener(SetClick);
 
             // 첫번째 스킬 입력값 설정
             SetNextField();
@@ -55,30 +53,21 @@ namespace PlayerInput
         Queue<FieldInfo> skillFields;
         FieldInfo currentField;
         List<GameObject> selecters;
-        void SetClick(InputAction.CallbackContext context)
+        void SetClick(GameObject obj)
         {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-            Ray ray = Camera.main.ScreenPointToRay(_inputManager.PointerPosition);
-            // 부딪힌 기물, (타일) UI 표시 
-            if (Physics.Raycast(ray, out var hit))
+            var component = obj.GetComponent(currentField.FieldType);
+            currentField.SetValue(skill, component);
+            if (skill.IsValidInput(currentField))
             {
-                var obj = hit.collider.gameObject;
-                var component = obj.GetComponent(currentField.FieldType);
-                currentField.SetValue(skill, component);
-                if (skill.IsValidInput(currentField))
-                {
-                    GameObject selecter = UnityEngine.Object.Instantiate(_inputManager.skillSelecter);
-                    selecters.Add(selecter);
-                    selecter.transform.position = obj.transform.position + Vector3.up * 0.1f;
+                GameObject selecter = UnityEngine.Object.Instantiate(_inputManager.skillSelecter);
+                selecters.Add(selecter);
+                selecter.transform.position = obj.transform.position + Vector3.up * 0.1f;
 
-                    SetNextField();
-                }
+                SetNextField();
             }
-            ;
         }
         bool IsFieldEmpty()
         {
-            Debug.Log($"SkillField Count : {skillFields.Count}");
             if (skillFields.Count <= 0)
             {
                 return true;

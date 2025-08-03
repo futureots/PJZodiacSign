@@ -1,10 +1,12 @@
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System;
 using PlayerInput;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 
 public class InputManager : Agent
@@ -27,7 +29,6 @@ public class InputManager : Agent
 
     // UI 패널
     [Header("UI Element")]
-    public EntityInfoPanel entityInfoPanel;
     public Button turnEndButton;
     public UIContainer UI;
     //public GameObject cam;
@@ -42,38 +43,48 @@ public class InputManager : Agent
     }
     private void Start()
     {
-        inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
-        inputActions.Gameplay.Click.started += value => HandleClick(PointerPosition);
-        /*bool isDrag = false;
-        inputActions.Gameplay.Click.started += _ =>
+        //inputActions.Gameplay.Click.started += value => HandleClick(PointerPosition);
+
+        // 오브젝트 클릭 시 오브젝트 이벤트 트리거
+        inputActions.Gameplay.Click.started += value =>
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
-            isDrag = true;
-            OnUIMouseInputted?.Invoke(PointerPosition, MousePhase.Down);
+            
+            Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
+            // 부딪힌 기물, (타일) UI 표시 
+            if (Physics.Raycast(ray, out var hit))
+            {
+                var other = hit.collider.gameObject;
+                OnObjectClicked?.Invoke(other);
+            }
+            else OnObjectClicked?.Invoke(null);
         };
-        inputActions.Gameplay.Click.canceled += _ =>
-        {
-            isDrag = false;
-            OnUIMouseInputted?.Invoke(PointerPosition, MousePhase.Up);
-        };
+
+        // 마우스 드롭 시 드롭 이벤트 트리거
+        inputActions.Gameplay.Click.canceled += value => OnMouseUp?.Invoke();
+
         inputActions.Gameplay.Point.performed += value =>
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+
             PointerPosition = value.ReadValue<Vector2>();
-            OnUIMouseInputted?.Invoke(PointerPosition, isDrag ? MousePhase.Drag : MousePhase.None);
+            OnMouseMove?.Invoke(PointerPosition);
         };
-        OnUIMouseInputted += (x, y) =>
-        {
-            if(y == MousePhase.Down)
-            {
-                HandleClick(x);
-            }
-        };*/
+
+        OnObjectClicked.AddListener(HandleClick);
+        
     }
 
 
     private void OnEnable() => inputActions.Enable();
     private void OnDisable() => inputActions.Disable();
 
+    /// <summary>
+    /// 벡터값에서 가장 가까운 타일 반환
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
     public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
     {
         float minDistance = 0;
@@ -139,53 +150,41 @@ public class InputManager : Agent
 
     #region ClickInfo
 
-    //public Action<Vector2,MousePhase> OnUIMouseInputted;
     /// <summary>
-    /// 클릭 시 Ray로 부딪힌 기물의 정보 UI 표시하기
+    /// 오브젝트가 기물이면 기물 정보 표시, 아니면 정보 패널 제거
     /// </summary>
-    private void HandleClick(Vector2 pos)
+    void HandleClick(GameObject obj)
     {
-        Ray ray = Camera.main.ScreenPointToRay(pos);
-        // 부딪힌 기물, (타일) UI 표시 
-        if (Physics.Raycast(ray, out var hit))
+        if (obj == null)
         {
-            var entity = hit.collider.GetComponent<Entity>();
-            if (entity != null)
-            {
-                // UI 표시
-                //entityInfoPanel.ShowPanel(entity);
-            }
-            // 다른 클릭 가능한 오브젝트 확인
+            UI.entityInfo.HidePanel();
+            return;
+        }
+        var entity = obj.GetComponent<Entity>();
+        if (entity != null)
+        {
+            UI.entityInfo.ShowPanel(entity);
         }
         else
         {
-            
-            entityInfoPanel.HidePanel();
+            UI.entityInfo.HidePanel();
         }
 
     }
+
+    /// <summary>
+    /// 오브젝트 클릭 시 트리거
+    /// </summary>
+    public UnityEvent<GameObject> OnObjectClicked;
+    /// <summary>
+    /// 마우스 드롭 시
+    /// </summary>
+    public UnityEvent OnMouseUp;
+    /// <summary>
+    /// 마우스 움직일 때마다 트리거
+    /// </summary>
+    public UnityEvent<Vector2> OnMouseMove;
+
     
-
-
     #endregion
-}
-public enum MousePhase
-{
-    /// <summary>
-    /// 마우스를 눌렀을 때
-    /// </summary>
-    Down,
-    /// <summary>
-    /// 마우스를 뗄 때
-    /// </summary>
-    Up,
-    /// <summary>
-    /// 마우스 드래그
-    /// </summary>
-    Drag,
-    /// <summary>
-    /// 클릭 상태가 아닐 때
-    /// </summary>
-    None,
-    OnUI
 }
