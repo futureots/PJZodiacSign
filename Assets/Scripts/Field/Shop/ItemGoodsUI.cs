@@ -9,6 +9,7 @@ public class ItemGoodsUI : GoodsUI<ItemData>
 
     public override void SetGoods(ItemData data)
     {
+        buyBtn.onClick.RemoveAllListeners();
         base.SetGoods(data);
         buyBtn.onClick.AddListener(() =>
         {

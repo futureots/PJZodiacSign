@@ -8110,6 +8110,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e67222e62451b4f903aece05b7fc75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &947649391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+  m_PrefabInstance: {fileID: 4762873540042521378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &977789945
 GameObject:
   m_ObjectHideFlags: 0
@@ -8605,7 +8610,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1033003147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11584,11 +11589,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 144351304114971322, guid: c2a6ec8539f021042b737ca2ceed18e9, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.742
       objectReference: {fileID: 0}
     - target: {fileID: 144351304114971322, guid: c2a6ec8539f021042b737ca2ceed18e9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 924774929992076038, guid: c2a6ec8539f021042b737ca2ceed18e9, type: 3}
       propertyPath: m_Name
@@ -11688,11 +11693,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8139567856629710549, guid: c2a6ec8539f021042b737ca2ceed18e9, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.742
       objectReference: {fileID: 0}
     - target: {fileID: 8139567856629710549, guid: c2a6ec8539f021042b737ca2ceed18e9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16018,6 +16023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityInfo: {fileID: 1484209303}
   inventory: {fileID: 8484285}
+  shopUI: {fileID: 947649391}
   shop: {fileID: 1312818143}
 --- !u!1 &1960240470
 GameObject:
@@ -17851,6 +17857,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2007245452}
+    - target: {fileID: 5109250358509326043, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_Color.b
+      value: 0.4433962
+      objectReference: {fileID: 0}
+    - target: {fileID: 5109250358509326043, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_Color.g
+      value: 0.4433962
+      objectReference: {fileID: 0}
+    - target: {fileID: 5109250358509326043, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_Color.r
+      value: 0.4433962
+      objectReference: {fileID: 0}
     - target: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Name
       value: ShopUI

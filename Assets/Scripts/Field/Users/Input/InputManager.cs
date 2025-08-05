@@ -104,6 +104,8 @@ public class InputManager : Agent
     public override void SetRepairField(int level)
     {
         base.SetRepairField(level);
+        UI.shopUI.SetActive(true);
+        UI.shop.ToggleUI(false);
         UI.shop.SetShop(level);
     }
 
@@ -146,6 +148,17 @@ public class InputManager : Agent
             call?.Invoke();
         });
     }
+
+    public override void EndRepair()
+    {
+        // 기물 데이터는 정비 턴 종료 시 업데이트
+        var (field, hand) = controller.GetFieldData();
+        data.fieldEntities = field;
+        data.handEntities = hand;
+        base.EndRepair();
+        UI.shopUI.SetActive(false);
+    }
+
     #endregion
 
     #region ClickInfo

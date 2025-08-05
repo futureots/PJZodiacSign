@@ -74,11 +74,17 @@ public class GameManager : Singleton<GameManager>
     {
         if (IsGameEnd(out int winner))
         {
-            if (agents[winner] is InputManager)
+            Agent winAgent = null;
+            for(int i = 0; i < agents.Length; i++)
+            {
+                if (agents[i].team.teamNumber == winner) winAgent = agents[i];
+            }
+            if(winAgent == null) return false;
+            if (winAgent is InputManager)
             {
                 Debug.Log("승리");
                 // 데이터 저장
-                dataManager.SetData(agents[winner].GetAgentData(), level);
+                dataManager.SetData(winAgent.GetAgentData(), level);
                 dataManager.SaveAllData("Data");
 
                 StartCoroutine(GoNextLevel());
