@@ -6,19 +6,19 @@ using UnityEngine;
 
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class S_StaleMate : S_BaseEntity<SD_StaleMate>
+public class S_AddBuff : S_BaseEntity<SD_AddBuff>
 {
     [SkillTarget("대상 기물을 선택하세요.")]
     public Entity target;
 
-    public S_StaleMate(SD_StaleMate data, Entity owner = null) : base(data, owner)
+    public S_AddBuff(SD_AddBuff data, Entity owner = null) : base(data, owner)
     {
     }
 
     public override void Activate()
     {
         Debug.Log(data);
-        target.AddBuff(new Root(), 3);
+        target.AddBuff(data.BuffData, data.count);
     }
 
     public override bool IsValidInput(FieldInfo field)
@@ -27,7 +27,10 @@ public class S_StaleMate : S_BaseEntity<SD_StaleMate>
         {
             return IsValidEntity(target);
         }
-        else return true;
+        else
+        {
+            return field.GetValue(this) != null;
+        }
     }
     bool IsValidEntity(Entity other)
     {
