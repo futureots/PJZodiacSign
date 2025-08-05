@@ -101,29 +101,37 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         get
         {
-            if (buffList == null) return false;
-            return buffList.Exists((buff) => buff.buffData is Silence);
+            if (_buffList == null) return false;
+            return _buffList.Exists((buff) => buff.buffData is Silence);
         }
     }
     bool isRooted
     {
         get
         {
-            if (buffList == null) return false;
-            return buffList.Exists((buff) => buff.buffData is Root);
+            if (_buffList == null) return false;
+            return _buffList.Exists((buff) => buff.buffData is Root);
         }
     }
     bool isProtected 
     {
         get
         {
-            if (buffList == null) return false;
-            return buffList.Exists((buff) => buff.buffData is Protect);
+            if (_buffList == null) return false;
+            return _buffList.Exists((buff) => buff.buffData is Protect);
         }
     }
 
 
-    List<BuffInstance> buffList;
+    List<BuffInstance> _buffList;
+    public List<BuffInstance> buffList
+    {
+        get
+        {
+            if(_buffList == null) _buffList = new List<BuffInstance>();
+            return _buffList;
+        }
+    }
     /// <summary>
     /// 버프 추가
     /// </summary>
@@ -131,11 +139,11 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <param name="count">버프 중첩 수</param>
     public void AddBuff(BuffData buff, int count)
     {
-        if (buffList == null)
+        if (_buffList == null)
         {
-            buffList = new List<BuffInstance>();
+            _buffList = new List<BuffInstance>();
         }
-        var existBuff = buffList.Find((x) => x.buffData.GetType() == buff.GetType());
+        var existBuff = _buffList.Find((x) => x.buffData.GetType() == buff.GetType());
         if (existBuff != null)
         {
             existBuff.ExtendBuff(this, count);
@@ -143,18 +151,18 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         else
         {
             var instance = new BuffInstance(count, buff);
-            buffList.Add(instance);
+            _buffList.Add(instance);
             instance.ApplyBuff(this);
         }
-        
+        Debug.Log(buffList.Count);
     }
     /// <summary>
     /// 버프 갱신
     /// </summary>
     public void UpdateBuff()
     {
-        if (buffList == null) return;
-        foreach (var buff in buffList)
+        if (_buffList == null) return;
+        foreach (var buff in _buffList)
         {
             buff.UpdateBuff(this);
         }
@@ -165,12 +173,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     public void RemoveBuff()
     {
-        if (buffList == null) return;
-        var list = buffList.Where((buff) => buff.IsExpired()).ToList();
+        if (_buffList == null) return;
+        var list = _buffList.Where((buff) => buff.IsExpired()).ToList();
         foreach (var buff in list)
         {
             buff.RemoveBuff(this);
-            buffList.Remove(buff);
+            _buffList.Remove(buff);
         }
     }
 
@@ -343,7 +351,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #endregion
 
-    #region AICalc
+    #region AICalculate
     /// <summary>
     /// 해당 기물이 이동 시 가장 좋은 위치 반환
     /// </summary>

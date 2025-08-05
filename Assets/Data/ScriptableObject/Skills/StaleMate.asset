@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f678836aae85064f9f9a64123630a4c, type: 3}
   m_Name: StaleMate
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: d149e5f97965a0e4eb6e9798dc13c8e7, type: 3}
   skillName: "\uC2A4\uD14C\uC77C\uBA54\uC774\uD2B8"
   skillDescription: "\uAE30\uBB3C 1\uAC1C\uB97C 3\uD134\uAC04 \uC18D\uBC15\uC2DC\uD0A8\uB2E4."

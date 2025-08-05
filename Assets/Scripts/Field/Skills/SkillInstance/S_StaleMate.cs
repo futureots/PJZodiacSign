@@ -18,27 +18,24 @@ public class S_StaleMate : S_BaseEntity<SD_StaleMate>
     public override void Activate()
     {
         Debug.Log(data);
-        target.AddBuff(new Root(), 1);
+        target.AddBuff(new Root(), 3);
     }
 
     public override bool IsValidInput(FieldInfo field)
     {
-        if(field.Name == nameof(target))
+        if (field.Name == nameof(target))
         {
             return IsValidEntity(target);
         }
-        return false;
+        else return true;
     }
     bool IsValidEntity(Entity other)
     {
         if (other == null) return false;
-        if (!Owner.team.isAlly(other.team))
+        //공격 범위 내 적만 속박
+        if (Owner.GetAttackArea().Contains(other.curTile))
         {
-            //공격 범위 내 적만 속박
-            if (Owner.GetAttackArea().Contains(other.curTile))
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }

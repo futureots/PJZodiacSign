@@ -5,8 +5,8 @@
     "1030": {
       "$type": "EntityLevelHolder, Assembly-CSharp",
       "entity": "WhiteRook",
-      "level": 0
-    },
+      "level": 2
+    }
   },
   "handEntities": {
     "$type": "System.Collections.Generic.List`1[[EntityLevelHolder, Assembly-CSharp]], mscorlib",

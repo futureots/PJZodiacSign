@@ -79,6 +79,11 @@ namespace PlayerInput
             if (!IsFieldEmpty())
             {
                 currentField = skillFields.Dequeue();
+                if (currentField.GetValue(skill) != null)
+                {
+                    SetNextField();
+                    return;
+                }
                 var attr = currentField.GetCustomAttribute<SkillTargetAttribute>();
                 if (attr != null)
                 {

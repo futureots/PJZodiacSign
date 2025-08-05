@@ -12,6 +12,10 @@ public class ShopUI : MonoBehaviour
     [SerializeField] ShopTable table;
     
     bool isOpen;
+    private void Start()
+    {
+        ToggleUI(false);
+    }
     public void ToggleUI()
     {
         isOpen = !isOpen;

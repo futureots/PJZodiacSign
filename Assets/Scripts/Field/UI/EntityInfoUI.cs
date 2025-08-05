@@ -13,11 +13,12 @@ public class EntityInfoUI : MonoBehaviour
     public TextMeshProUGUI entityName;
     public GaugeUI hpBar;
     public GaugeUI energyBar;
-    // 스킬 세팅 용 컴포넌트 제작
-    // 버프 리스트 표시용 컴포넌트 제작
-    // 레벨 표시 컴포넌트 제작
-    
+    public TextMeshProUGUI powerText;
+    public BuffListUI buffList;
+    public SkillInfoUI skillInfo;
     public Button entitySkillBtn;
+
+
     Team team;
     void Start()
     {
@@ -30,22 +31,25 @@ public class EntityInfoUI : MonoBehaviour
         selectedEntity = entity;
         InfoPanel.SetActive(true);
         // 정보 표시
-        entityName.text = entity.id;
-
+        entityName.text = entity.id + (entity.level == 0 ? "" : $" + {entity.level}");
         hpBar.SetGauge(entity.curHp, entity.maxHp);
         energyBar.SetGauge(entity.curEnergy, entity.skillCost);
+        powerText.text = entity.power.ToString();
+        skillInfo.SetSkillUI(entity.skillData);
+        buffList.SetBuffUI(entity.buffList);
+
 
         // 스킬 버튼 활성화
         if (team.isAlly(entity.team))
         {
-            entitySkillBtn.interactable = true;
+            if (entity.curEnergy >= entity.skillCost)
+            {
+                entitySkillBtn.interactable = true;
+            }
             entitySkillBtn.onClick.RemoveAllListeners();
             entitySkillBtn.onClick.AddListener(() =>
             {
-                if(entity.curEnergy >= entity.skillCost)
-                {
-                    transform.root.GetComponent<InputManager>().SetInputMode(entity.skillInstance);
-                }
+                transform.root.GetComponent<InputManager>().SetInputMode(entity.skillInstance);
             });
         }
         else

@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd430f230437f4648b1e9b46aeb1257b, type: 3}
   m_Name: Protect
   m_EditorClassIdentifier: 
+  buffIcon: {fileID: 21300000, guid: 95225b98114fcf245b8992aab7f4ea5e, type: 3}
