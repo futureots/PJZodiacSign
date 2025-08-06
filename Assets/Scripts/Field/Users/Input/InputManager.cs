@@ -104,8 +104,6 @@ public class InputManager : Agent
     public override void SetRepairField(int level)
     {
         base.SetRepairField(level);
-        UI.shopUI.SetActive(true);
-        UI.shop.ToggleUI(false);
         UI.shop.SetShop(level);
     }
 
@@ -156,7 +154,6 @@ public class InputManager : Agent
         data.fieldEntities = field;
         data.handEntities = hand;
         base.EndRepair();
-        UI.shopUI.SetActive(false);
     }
 
     #endregion

@@ -29,7 +29,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         skillInstance.AddCallback(x => {
             if (x)
             {
-                curEnergy = 0;
+                CurEnergy = 0;
             }
         });
         if(skillInstance is IOwnable entitySkill)
@@ -68,14 +68,14 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         this.level = level;
 
         // 기물 스탯 세팅
-        power = data.power + data.bonusPower * level;
-        maxHp = data.maxHp + data.bonusHp * level;
-        curHp = maxHp;
-        curEnergy = 0;
+        Power = data.power + data.bonusPower * level;
+        MaxHp = data.maxHp + data.bonusHp * level;
+        CurHp = MaxHp;
+        CurEnergy = 0;
 
         // 기물 스킬 세팅(스킬이 엔티티 전용 스킬이면 시전자 할당, 아니면 할당X)
         SetSkill(data.skill);
-        skillCost = data.skillCost;
+        SkillCost = data.skillCost;
     }
 
     /// <summary>사망 시 호출</summary>
@@ -85,16 +85,63 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <summary>기물의 레벨</summary>
     public int level { get; private set; }
     /// <summary>공격력</summary>
-    public int power;
+    [SerializeField] int _power;
+    public int Power
+    {
+        get { return _power; }
+        set
+        {
+            _power = value;
+            OnPowerChanged?.Invoke(_power);
+        }
+    }
+    public Action<int> OnPowerChanged;
     /// <summary>최대 체력</summary>
-    public int maxHp;
+    [SerializeField] int _maxHp;
+    public int MaxHp
+    {
+        get { return _maxHp; }
+        set
+        {
+            _maxHp = value;
+            OnHpChanged?.Invoke(CurHp, _maxHp);
+        }
+    }
     /// <summary>현재 체력</summary>
-    public int curHp;
+    [SerializeField] int _curHp;
+    public int CurHp
+    {
+        get { return _curHp; }
+        set
+        {
+            _curHp = value;
+            OnHpChanged?.Invoke(_curHp, MaxHp);
+        }
+    }
+    public Action<int, int> OnHpChanged;
     /// <summary>현재 마나</summary>
-    public int curEnergy;
+    [SerializeField] int _curEnergy;
+    public int CurEnergy
+    {
+        get { return _curEnergy; }
+        set
+        {
+            _curEnergy = value;
+            OnEnergyChanged?.Invoke(_curEnergy, SkillCost);
+        }
+    }
     /// <summary>스킬 마나 소모량</summary>
-    public int skillCost;
-    
+    [SerializeField] int _skillCost;
+    public int SkillCost
+    {
+        get { return _skillCost; }
+        set
+        {
+            _skillCost = value;
+            OnEnergyChanged?.Invoke(CurEnergy, _skillCost);
+        }
+    }
+    public Action<int, int> OnEnergyChanged;
 
     #region Buff
     bool isSlienced
@@ -187,9 +234,9 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Attack()
     {
         if (isSlienced) return;
-        curEnergy += 1;
+        CurEnergy += 1;
         var list = GetAttackArea();
-        int damage = power;
+        int damage = Power;
         
         foreach (var item in list)
         {
@@ -198,7 +245,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             var targetTeam = target.GetComponent<Team>();
             if(!team.isAlly(targetTeam))
             {
-                target.GetComponent<IDamageable>()?.Damaged(power);
+                target.GetComponent<IDamageable>()?.Damaged(Power);
             }
         }
     }
@@ -208,8 +255,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         // 데미지 경감
         if (isProtected) value /= 2;
 
-        curHp -= value;
-        Debug.Log($"Damaged : {damage} , CurrentHp : {curHp}");
+        CurHp -= value;
+        Debug.Log($"Damaged : {damage} , CurrentHp : {CurHp}");
     }
 
     public void Dead()
@@ -220,12 +267,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Healed(int amount)
     {
-        curHp += amount;
+        CurHp += amount;
+        CurHp = Mathf.Min(MaxHp,CurHp);
     }
 
     public bool isZero()
     {
-        if (curHp > 0) return false;
+        if (CurHp > 0) return false;
         return true;
     }
 
@@ -372,7 +420,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
             // 피격 점수 계산(이동 시 사망할 경우 -9999)
             var value = tileValues[area.y, area.x];
-            if (value + curHp <= 0) value = -9999;
+            if (value + CurHp <= 0) value = -9999;
 
             // 공격 점수 계산
             field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
@@ -382,7 +430,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             {
                 if (field[plus.y, plus.x] == 0) continue;
                 if (field[plus.y, plus.x] == team.teamNumber) continue;
-                tileValues[area.y,area.x] += power;
+                tileValues[area.y,area.x] += Power;
             }
 
             if (value > max || pos.Count == 0)
@@ -401,5 +449,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
 
     #endregion
+
+
+
+
+    
 
 }

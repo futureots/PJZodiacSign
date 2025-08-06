@@ -4,6 +4,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class ShopUI : MonoBehaviour
 {
+    public GameObject shopPanel;
     [SerializeField] EntityGoodsUI entityUI;
     [SerializeField] ItemGoodsUI itemUI;
     [SerializeField] Transform entityShop;
@@ -14,7 +15,6 @@ public class ShopUI : MonoBehaviour
     bool isOpen;
     private void Start()
     {
-        ToggleUI(false);
     }
     public void ToggleUI()
     {
@@ -25,11 +25,11 @@ public class ShopUI : MonoBehaviour
     {
         if (open)
         {
-            gameObject.SetActive(true);
+            shopPanel.SetActive(true);
         }
         else
         {
-            gameObject.SetActive(false);
+            shopPanel.SetActive(false);
         }
     }
     

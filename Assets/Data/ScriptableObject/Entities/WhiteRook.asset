@@ -23,4 +23,4 @@ MonoBehaviour:
   bonusHp: 100
   bonusPower: 2
   skill: {fileID: 11400000, guid: 81caa596f29ece04681c6dd8ae3ced41, type: 2}
-  skillCost: 2
+  skillCost: 3

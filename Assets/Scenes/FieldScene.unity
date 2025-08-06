@@ -8110,11 +8110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e67222e62451b4f903aece05b7fc75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &947649391 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-  m_PrefabInstance: {fileID: 4762873540042521378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &977789945
 GameObject:
   m_ObjectHideFlags: 0
@@ -11003,17 +10998,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301060795}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1312818143 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2054206633266229977, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-  m_PrefabInstance: {fileID: 4762873540042521378}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d1bc780eacaf84a889b5eef2b4453e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1328765851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16023,8 +16007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityInfo: {fileID: 1484209303}
   inventory: {fileID: 8484285}
-  shopUI: {fileID: 947649391}
-  shop: {fileID: 1312818143}
+  shop: {fileID: 4762873540042521383}
 --- !u!1 &1960240470
 GameObject:
   m_ObjectHideFlags: 0
@@ -17857,6 +17840,22 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2007245452}
+    - target: {fileID: 114627293352464518, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -400
+      objectReference: {fileID: 0}
+    - target: {fileID: 114627293352464518, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -400
+      objectReference: {fileID: 0}
+    - target: {fileID: 114627293352464518, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 114627293352464518, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 5109250358509326043, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Color.b
       value: 0.4433962
@@ -17868,6 +17867,14 @@ PrefabInstance:
     - target: {fileID: 5109250358509326043, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Color.r
       value: 0.4433962
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797272343658502129, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4762873540042521383}
+    - target: {fileID: 5797272343658502129, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleUI
       objectReference: {fileID: 0}
     - target: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Name
@@ -17967,6 +17974,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
   m_PrefabInstance: {fileID: 4762873540042521378}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4762873540042521383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4791879704969664254, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+  m_PrefabInstance: {fileID: 4762873540042521378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d1bc780eacaf84a889b5eef2b4453e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5484488986148483992
 PrefabInstance:
   m_ObjectHideFlags: 0

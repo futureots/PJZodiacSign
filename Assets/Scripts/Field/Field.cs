@@ -237,7 +237,7 @@ public class Field : MonoBehaviour
                 fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = 0;
                 foreach (var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
                 {
-                    field[vec.y, vec.x] -= entity.power;
+                    field[vec.y, vec.x] -= entity.Power;
                 }
                 fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = entityNum;
             }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAI : Agent
@@ -52,15 +53,15 @@ public class EnemyAI : Agent
     }
     public IEnumerator SetActionMode()
     {
-        yield return null;
+        yield return new WaitForSeconds(0.5f);
         // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별
-        if(CanActiveSkill(out var list))
+        /*if(CanActiveSkill(out var list))
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
             list[rand].skillInstance.SetSkillInput(GameManager.Instance.field);
             controller.CreateCommand(list[rand].skillInstance);
             yield break;
-        }
+        }*/
 
         // 스킬을 사용할 수 있는 기물이 없으면 이동한다.
         
@@ -107,7 +108,7 @@ public class EnemyAI : Agent
         Entities = new List<Entity>();
         foreach (var item in controller.entities)
         {
-            if (item.curEnergy > item.skillCost)
+            if (item.CurEnergy > item.SkillCost)
             {
                 if (item.skillInstance.CanSkillInput(GameManager.Instance.field))
                 {

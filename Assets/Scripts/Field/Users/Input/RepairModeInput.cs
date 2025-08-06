@@ -37,6 +37,7 @@ namespace PlayerInput
         public void SetMode()
         {
             _inputManager.UI.shop.gameObject.SetActive(true);
+
             Debug.Log("SetRepairMode");
             _inputManager.OnObjectClicked.AddListener(DragStart);
             _inputManager.OnMouseUp.AddListener(DragEnd);

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityInfoUI : MonoBehaviour
 {
@@ -28,13 +30,23 @@ public class EntityInfoUI : MonoBehaviour
 
     public void ShowPanel(Entity entity)
     {
+        if (selectedEntity != null)
+        {
+            selectedEntity.OnHpChanged -= hpBar.SetGauge;
+            selectedEntity.OnEnergyChanged -= energyBar.SetGauge;
+            selectedEntity.OnPowerChanged -= SetPowerText;
+        }
+
         selectedEntity = entity;
         InfoPanel.SetActive(true);
         // 정보 표시
         entityName.text = entity.id + (entity.level == 0 ? "" : $" + {entity.level}");
-        hpBar.SetGauge(entity.curHp, entity.maxHp);
-        energyBar.SetGauge(entity.curEnergy, entity.skillCost);
-        powerText.text = entity.power.ToString();
+        hpBar.SetGauge(entity.CurHp, entity.MaxHp);
+        entity.OnHpChanged += hpBar.SetGauge;
+        energyBar.SetGauge(entity.CurEnergy, entity.SkillCost);
+        entity.OnEnergyChanged += energyBar.SetGauge;
+        SetPowerText(entity.Power);
+        entity.OnPowerChanged += SetPowerText;
         skillInfo.SetSkillUI(entity.skillData);
         buffList.SetBuffUI(entity.buffList);
 
@@ -42,7 +54,7 @@ public class EntityInfoUI : MonoBehaviour
         // 스킬 버튼 활성화
         if (team.isAlly(entity.team))
         {
-            if (entity.curEnergy >= entity.skillCost)
+            if (entity.CurEnergy >= entity.SkillCost)
             {
                 entitySkillBtn.interactable = true;
             }
@@ -61,5 +73,10 @@ public class EntityInfoUI : MonoBehaviour
     public void HidePanel()
     {
         InfoPanel.SetActive(false);
+    }
+
+    void SetPowerText(int value)
+    {
+        powerText.text = value.ToString();
     }
 }

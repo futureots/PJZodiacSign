@@ -13,11 +13,12 @@ public class S_Heal : S_BaseEntity<SD_Heal>
         foreach (var item in list)
         {
             if (item.isEmpty) continue;
+            var other = item.occupiedObject;
             var team = Owner.GetComponent<Team>();  
-            if (team.isAlly(item.GetComponent<Team>()))
+            if (team.isAlly(other.GetComponent<Team>()))
             {
-                var ally = item.GetComponent<Entity>();
-                ally.Healed(Owner.power);
+                var ally = other.GetComponent<IDamageable>();
+                ally.Healed(Owner.Power);
             }
         }
     }

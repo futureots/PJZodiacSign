@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 114627293352464518}
   - component: {fileID: 6659117993075648370}
   - component: {fileID: 5109250358509326043}
-  - component: {fileID: 2054206633266229977}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -78,23 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2054206633266229977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 528285947572437199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d1bc780eacaf84a889b5eef2b4453e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityUI: {fileID: 5699706076091894260, guid: 81ed8dcffc0464a4bafd2e0bf45393d1, type: 3}
-  itemUI: {fileID: 6130968895582846546, guid: d3e4e8f442abf274f81de9f44c01aad3, type: 3}
-  entityShop: {fileID: 8763476463084477363}
-  itemShop: {fileID: 7883611606063271622}
-  table: {fileID: 11400000, guid: fb5c5aaad7b089c47b837dd864309c21, type: 2}
 --- !u!1 &2987025323278343474
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +294,7 @@ GameObject:
   - component: {fileID: 81804333718402411}
   - component: {fileID: 1466510722743037036}
   - component: {fileID: 1500862522989214047}
+  - component: {fileID: 4791879704969664254}
   m_Layer: 5
   m_Name: ShopUI
   m_TagString: Untagged
@@ -403,6 +386,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4791879704969664254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015790146840599873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d1bc780eacaf84a889b5eef2b4453e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopPanel: {fileID: 528285947572437199}
+  entityUI: {fileID: 5699706076091894260, guid: 81ed8dcffc0464a4bafd2e0bf45393d1, type: 3}
+  itemUI: {fileID: 6130968895582846546, guid: d3e4e8f442abf274f81de9f44c01aad3, type: 3}
+  entityShop: {fileID: 8763476463084477363}
+  itemShop: {fileID: 7883611606063271622}
+  table: {fileID: 11400000, guid: fb5c5aaad7b089c47b837dd864309c21, type: 2}
 --- !u!1 &7217119173687630702
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +525,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2054206633266229977}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
         m_MethodName: ToggleUI
         m_Mode: 1
