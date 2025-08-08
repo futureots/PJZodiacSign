@@ -18,6 +18,8 @@ public abstract class EntityData : AbstractData
     public BaseSkillData skill;
     public int skillCost;
 
+    [Header("ObjectValue")]
+    public Vector3 hpPanelPosition;
     public abstract Entity CreateEntity(int level = 0);
 
     protected Entity CreateInstance()

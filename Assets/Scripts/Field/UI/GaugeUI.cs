@@ -10,7 +10,7 @@ public class GaugeUI : MonoBehaviour
     [ContextMenu("SetComponent")]
     public void SetComponent()
     {
-        gaugeBar = GetComponent<Image>();
+        gaugeBar = transform.GetChild(0).GetComponent<Image>();
         gaugeText = GetComponentInChildren<TextMeshProUGUI>();
     }
 

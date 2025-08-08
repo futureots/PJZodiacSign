@@ -24,3 +24,4 @@ MonoBehaviour:
   bonusPower: 2
   skill: {fileID: 11400000, guid: 81caa596f29ece04681c6dd8ae3ced41, type: 2}
   skillCost: 3
+  hpPanelPosition: {x: 0, y: 2, z: 0}

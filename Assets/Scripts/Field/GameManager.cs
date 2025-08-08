@@ -20,7 +20,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     DataManager dataManager;
-    
+    public HpPanelManager hpManager;
 
     private void Awake()
     {
@@ -66,6 +66,9 @@ public class GameManager : Singleton<GameManager>
     {
         level += 1;
         yield return new WaitForSeconds(10);
+
+        // 이거도 개별 Camera마다 필요할 수 있음
+        if(hpManager != null) hpManager.ClearHpBar();
 
         OnNextLevel?.Invoke(level);
     }
@@ -125,6 +128,20 @@ public class GameManager : Singleton<GameManager>
         return isEnd;
     }
     
+    /// <summary>
+    /// 기물의 체력바 UI 세팅, 임시로 main카메라에만 세팅 나중에 카메라 별 세팅 추가 예정(멀티 일때만)
+    /// </summary>
+    public void SetEntityHpBar()
+    {
+        if (hpManager == null) return;
+        foreach (var item in agents)
+        {
+            foreach(var entity in item.controller.entities)
+            {
+                hpManager.CreateHpBar(entity);
+            }
+        }
+    }
     #endregion
 
 }

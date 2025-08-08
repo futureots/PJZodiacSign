@@ -95,13 +95,14 @@ namespace PlayerInput
                 _areaVisualizer.RemoveAttackArea(attackArea);
                 _areaVisualizer.RemoveMoveArea(moveArea);
 
+
                 // 해당 타일로 이동
                 if (!_selectedEntity.MoveSequence(tile, true))
                 {
                     // 실패하면 전 타일로 이동
                     _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
                 }
-                _selectedEntity = null;
+                    _selectedEntity = null;
             }
             // 표시자 제거
             targetSelecter.SetActive(false);

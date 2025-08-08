@@ -42,6 +42,9 @@ public class RepairTurn : ITurn
                         agent.EndRepair();
                     }
                     onTurnEnd?.Invoke();
+
+                    // 배틀 페이즈로 전환
+                    GameManager.Instance.SetEntityHpBar();
                 }
             });
 
