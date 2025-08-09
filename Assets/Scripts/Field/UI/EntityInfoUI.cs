@@ -35,18 +35,24 @@ public class EntityInfoUI : MonoBehaviour
             selectedEntity.OnHpChanged -= hpBar.SetGauge;
             selectedEntity.OnEnergyChanged -= energyBar.SetGauge;
             selectedEntity.OnPowerChanged -= SetPowerText;
+            selectedEntity.OnLevelChanged -= UpdateLevelText;
         }
 
         selectedEntity = entity;
         InfoPanel.SetActive(true);
         // 정보 표시
-        entityName.text = entity.id + (entity.level == 0 ? "" : $" + {entity.level}");
+        UpdateLevelText(selectedEntity.Level);
+        selectedEntity.OnLevelChanged += UpdateLevelText;
+
         hpBar.SetGauge(entity.CurHp, entity.MaxHp);
         entity.OnHpChanged += hpBar.SetGauge;
+
         energyBar.SetGauge(entity.CurEnergy, entity.SkillCost);
         entity.OnEnergyChanged += energyBar.SetGauge;
+
         SetPowerText(entity.Power);
         entity.OnPowerChanged += SetPowerText;
+
         skillInfo.SetSkillUI(entity.skillData);
         buffList.SetBuffUI(entity.buffList);
 
@@ -69,6 +75,10 @@ public class EntityInfoUI : MonoBehaviour
             // 스킬 버튼 비활성화(스킬 아이콘을 통해 스킬 설명을 확인할 수 있음)
             entitySkillBtn.interactable = false;
         }
+    }
+    public void UpdateLevelText(int level)
+    {
+        entityName.text = selectedEntity.id + (level == 0 ? "" : $" + {level}");
     }
     public void HidePanel()
     {

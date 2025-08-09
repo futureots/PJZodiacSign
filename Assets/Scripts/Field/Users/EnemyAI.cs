@@ -51,6 +51,11 @@ public class EnemyAI : Agent
         }
         
     }
+    public override void EndRepair()
+    {
+        controller.UpdateEntities();
+        base.EndRepair();
+    }
     public IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);

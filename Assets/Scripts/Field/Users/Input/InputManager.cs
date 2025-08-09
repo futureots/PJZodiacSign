@@ -149,6 +149,7 @@ public class InputManager : Agent
 
     public override void EndRepair()
     {
+        controller.UpdateEntities();
         // 기물 데이터는 정비 턴 종료 시 업데이트
         var (field, hand) = controller.GetFieldData();
         data.fieldEntities = field;

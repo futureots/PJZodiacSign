@@ -103,7 +103,7 @@ public struct EntityLevelHolder
     public EntityLevelHolder(Entity entity)
     {
         this.entity = entity.id;
-        level = entity.level;
+        level = entity.Level;
     }
     // 기물 이름
     public string entity;

@@ -5,12 +5,12 @@
     "1": {
       "$type": "EntityLevelHolder, Assembly-CSharp",
       "entity": "WhiteBishop",
-      "level": 0
+      "level": 10
     },
     "4": {
       "$type": "EntityLevelHolder, Assembly-CSharp",
       "entity": "WhiteRook",
-      "level": 0
+      "level": 2
     },
 
     "2052": {

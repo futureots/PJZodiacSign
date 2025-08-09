@@ -126,7 +126,7 @@ public struct EntityLevelData
     public EntityLevelData(Entity entity)
     {
         data = entity.data;
-        level = entity.level;
+        level = entity.Level;
     }
     public EntityLevelData(EntityData entityData, int level = 0)
     {

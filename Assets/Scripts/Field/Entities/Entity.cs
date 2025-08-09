@@ -65,7 +65,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         this.data = data;
         id = data.id;
-        this.level = level;
+        this.Level = level;
 
         // 기물 스탯 세팅
         Power = data.power + data.bonusPower * level;
@@ -83,7 +83,17 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #region Status
     /// <summary>기물의 레벨</summary>
-    public int level { get; private set; }
+    [SerializeField] int _level;
+    public int Level { 
+        get { return _level; }
+        set
+        {
+            _level = value;
+            OnLevelChanged?.Invoke(_level);
+        }
+    }
+    
+    public Action<int> OnLevelChanged;
     /// <summary>공격력</summary>
     [SerializeField] int _power;
     public int Power
@@ -234,7 +244,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Attack()
     {
         if (isSlienced) return;
-        CurEnergy += 1;
         var list = GetAttackArea();
         int damage = Power;
         

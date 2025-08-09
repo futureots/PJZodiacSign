@@ -55,7 +55,6 @@ public class EntityController : MonoBehaviour
         if (tile.isEmpty)
         {
             PlaceEntity(instance, tile);
-            entities.Add(instance);
             return true;
         }
         return false;
@@ -96,20 +95,33 @@ public class EntityController : MonoBehaviour
         instantField.gameObject.SetActive(false);
     }
 
+    public void UpdateEntities()
+    {
+        var team = GetComponent<Team>();
+        entities.Clear();
+        foreach(var tile in GameManager.Instance.field.GetTiles())
+        {
+            if(tile.isEmpty) continue;
+            var entity = tile.occupiedObject.GetComponent<Entity>();
+            if(entity == null) continue;
+            if (team.isAlly(entity.team))
+            {
+                entities.Add(entity);
+            }
+        }
+    }
     #endregion
 
     #region Data
     public (Dictionary<int,EntityLevelData>, List<EntityLevelData>) GetFieldData()
     {
         // 메인 필드 데이터 가져오기
-        var tiles = GameManager.Instance.field.GetHalfTiles(isReflect);
         Dictionary<int, EntityLevelData> mainFieldData = new Dictionary<int, EntityLevelData>();
-        foreach (var tile in tiles)
+        UpdateEntities();
+        foreach (var entity in entities)
         {
-            if (tile.isEmpty) continue;
-            var entity = tile.occupiedObject.GetComponent<Entity>();
             var entityData = new EntityLevelData(entity);
-            int pos = tile.fieldPos.Encode();
+            int pos = entity.curTile.fieldPos.Encode();
             mainFieldData.Add(pos, entityData);
         }
 
