@@ -50,6 +50,7 @@ public abstract class Agent : MonoBehaviour
     
     public virtual void SetRepairField(int level)
     {
+        
         controller.SetInstantField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
     }
