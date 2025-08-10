@@ -18,10 +18,10 @@ MonoBehaviour:
   normalPrice: 30
   discountPrice: 15
   baseEntityPrefab: {fileID: 114028, guid: 43ef2ba32fda59c42a1410ea490d494b, type: 3}
-  maxHp: 100
+  maxHp: 45
   power: 2
-  bonusHp: 100
-  bonusPower: 2
+  bonusHp: 10
+  bonusPower: 1
   skill: {fileID: 11400000, guid: 81caa596f29ece04681c6dd8ae3ced41, type: 2}
-  skillCost: 3
+  skillCost: 2
   hpPanelPosition: {x: 0, y: 2, z: 0}

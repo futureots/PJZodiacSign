@@ -1,3 +1,4 @@
+using DG.Tweening;
 using PlayerInput;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ public class InputManager : Agent
     [Header("UI Element")]
     public Button turnEndButton;
     public UIContainer UI;
-    //public GameObject cam;
+    public GameObject cam;
 
 
 
@@ -104,6 +105,7 @@ public class InputManager : Agent
     public override void SetRepairField(int level)
     {
         base.SetRepairField(level);
+        cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
         UI.shop.SetShop(level);
     }
 
@@ -154,6 +156,7 @@ public class InputManager : Agent
         var (field, hand) = controller.GetFieldData();
         data.fieldEntities = field;
         data.handEntities = hand;
+        cam.transform.DOLocalMove(Vector3.zero, 1f);
         base.EndRepair();
     }
 
