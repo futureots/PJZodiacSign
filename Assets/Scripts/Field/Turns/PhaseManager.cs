@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// PhaseManager 클래스 - RepairPhase와 CombatPhase를 관리
 public class PhaseManager : MonoBehaviour
 {
     public LinkedList<IPhase> phases;
@@ -9,11 +8,9 @@ public class PhaseManager : MonoBehaviour
     private void Awake()
     {
         phases = new LinkedList<IPhase>();
-        // GameManager의 OnNextLevel 이벤트 구독
         GameManager.OnNextLevel += NextLevel;
     }
     
-    // 페이즈 시작 메서드
     public void StartPhase()
     {
         if (phases.Count == 0)
@@ -28,14 +25,12 @@ public class PhaseManager : MonoBehaviour
         currentPhase.StartPhase(OnPhaseComplete);
     }
     
-    // 페이즈 완료 콜백
     private void OnPhaseComplete()
     {
         // 다음 페이즈 시작
         StartPhase();
     }
     
-    // 다음 레벨 시작 메서드
     public void NextLevel(int level)
     {
         phases.Clear();

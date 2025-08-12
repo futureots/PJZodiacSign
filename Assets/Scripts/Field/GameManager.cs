@@ -46,12 +46,11 @@ public class GameManager : Singleton<GameManager>
         }
         level = dataManager.playerData.stageLevel;
         
-        // 새로운 페이즈 시스템 사용
-        var phaseManager = GetComponent<PhaseManager>();
-        if (phaseManager == null) return;
-        
-        // 첫 번째 레벨 시작
-        phaseManager.NextLevel(level);
+        // 기존 턴 시스템 사용
+        var turnManager = GetComponent<TurnManager>();
+        if (turnManager == null) return;
+        turnManager.turns.AddLast(new RepairTurn(level));
+        turnManager.StartTurn();
     }
 
     #endregion
@@ -60,37 +59,21 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// 게임 종료 시 처리
     /// </summary>
-    public void GameEnd()
+    void GameEnd()
     {
         Debug.Log("게임 종료");
         // 게임 종료 처리 로직 추가
     }
     
-    /// <summary>
-    /// 다음 레벨로 진행하는 메서드
-    /// </summary>
-    public void GoToNextLevel()
+    IEnumerator GoNextLevel()
     {
-        StartCoroutine(GoToNextLevelCoroutine());
-    }
-    
-    private IEnumerator GoToNextLevelCoroutine()
-    {
-        // 체력바 UI 정리
-        if(hpManager != null) hpManager.ClearHpBar();
-        
-        // 승리 효과 표시 시간 (3초)
-        yield return new WaitForSeconds(3f);
-        
-        // 레벨 증가
         level += 1;
-        
-        // 새로운 레벨의 페이즈 시작
-        var phaseManager = GetComponent<PhaseManager>();
-        if (phaseManager != null)
-        {
-            phaseManager.NextLevel(level);
-        }
+        yield return new WaitForSeconds(3);
+
+        // 이벤트 발생 전 Camera 관련 처리
+        if(hpManager != null) hpManager.ClearHpBar();
+
+        OnNextLevel?.Invoke(level);
     }
     
     public static Action<int> OnNextLevel;
@@ -111,6 +94,8 @@ public class GameManager : Singleton<GameManager>
                 // 플레이어 데이터 저장
                 dataManager.SetData(winAgent.GetAgentData(), level);
                 dataManager.SaveAllData("Data");
+
+                StartCoroutine(GoNextLevel());
             }
             else
             {
