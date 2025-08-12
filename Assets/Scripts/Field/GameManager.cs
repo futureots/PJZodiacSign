@@ -33,11 +33,11 @@ public class GameManager : Singleton<GameManager>
     #region GameStart
 
     /// <summary>
-    /// °ÔÀÓ ½ÃÀÛ ¶Ç´Â Àç°³ÇÏ±â(µ¥ÀÌÅÍ ºÒ·¯¿À±â)
+    /// ê²Œì„ ì‹œì‘ ë˜ëŠ” ë‹¤ìŒ ë ˆë²¨(ë ˆë²¨ì´ ì¦ê°€í–ˆì„ ë•Œ)
     /// </summary>
     public void GameStart()
     {
-        // °ÔÀÓ¿¡ ÇÊ¿äÇÑ µ¥ÀÌÅÍ °¡Á®¿À°Å³ª »ı¼º
+        // ì—ì´ì „íŠ¸ì— í•„ìš”í•œ ë°ì´í„°ë¥¼ ì„¤ì •í•˜ê±°ë‚˜ ë¡œë“œ
         dataManager.LoadAllData("data");
         var list = dataManager.GetData();
         for(int i = 0; i < list.Length; i++)
@@ -45,34 +45,56 @@ public class GameManager : Singleton<GameManager>
             agents[i].SetData(list[i]);
         }
         level = dataManager.playerData.stageLevel;
-        // °ÔÀÓ ½ÃÀÛ¿ë ÅÏ »ı¼º
-        var turnManager = GetComponent<TurnManager>();
-        if (turnManager == null) return;
-        turnManager.turns.AddLast(new RepairTurn(level));
-        turnManager.StartTurn();
+        
+        // ìƒˆë¡œìš´ í˜ì´ì¦ˆ ì‹œìŠ¤í…œ ì‚¬ìš©
+        var phaseManager = GetComponent<PhaseManager>();
+        if (phaseManager == null) return;
+        
+        // ì²« ë²ˆì§¸ ë ˆë²¨ ì‹œì‘
+        phaseManager.NextLevel(level);
     }
 
     #endregion
 
     #region GameEnd
     /// <summary>
-    /// °ÔÀÓ Á¾·á ¹× ¸ŞÀÎÈ­¸éÀ¸·Î ÀÌµ¿
+    /// ê²Œì„ ì¢…ë£Œ ì‹œ ì²˜ë¦¬
     /// </summary>
-    void GameEnd()
+    public void GameEnd()
     {
-
+        Debug.Log("ê²Œì„ ì¢…ë£Œ");
+        // ê²Œì„ ì¢…ë£Œ ì²˜ë¦¬ ë¡œì§ ì¶”ê°€
     }
-    IEnumerator GoNextLevel()
+    
+    /// <summary>
+    /// ë‹¤ìŒ ë ˆë²¨ë¡œ ì§„í–‰í•˜ëŠ” ë©”ì„œë“œ
+    /// </summary>
+    public void GoToNextLevel()
     {
-        level += 1;
-        yield return new WaitForSeconds(10);
-
-        // ÀÌ°Åµµ °³º° Camera¸¶´Ù ÇÊ¿äÇÒ ¼ö ÀÖÀ½
+        StartCoroutine(GoToNextLevelCoroutine());
+    }
+    
+    private IEnumerator GoToNextLevelCoroutine()
+    {
+        // ì²´ë ¥ë°” UI ì •ë¦¬
         if(hpManager != null) hpManager.ClearHpBar();
-
-        OnNextLevel?.Invoke(level);
+        
+        // ìŠ¹ë¦¬ íš¨ê³¼ í‘œì‹œ ì‹œê°„ (3ì´ˆ)
+        yield return new WaitForSeconds(3f);
+        
+        // ë ˆë²¨ ì¦ê°€
+        level += 1;
+        
+        // ìƒˆë¡œìš´ ë ˆë²¨ì˜ í˜ì´ì¦ˆ ì‹œì‘
+        var phaseManager = GetComponent<PhaseManager>();
+        if (phaseManager != null)
+        {
+            phaseManager.NextLevel(level);
+        }
     }
+    
     public static Action<int> OnNextLevel;
+    
     public bool CheckGameEnd()
     {
         if (IsGameEnd(out int winner))
@@ -85,22 +107,21 @@ public class GameManager : Singleton<GameManager>
             if(winAgent == null) return false;
             if (winAgent is InputManager)
             {
-                Debug.Log("½Â¸®");
-                // µ¥ÀÌÅÍ ÀúÀå
+                Debug.Log("ìŠ¹ë¦¬");
+                // í”Œë ˆì´ì–´ ë°ì´í„° ì €ì¥
                 dataManager.SetData(winAgent.GetAgentData(), level);
                 dataManager.SaveAllData("Data");
-
-                StartCoroutine(GoNextLevel());
             }
             else
             {
-                Debug.Log("ÆĞ¹è...");
+                Debug.Log("íŒ¨ë°°...");
                 GameEnd();
             }
             return true;
         }
         return false;
     }
+    
     public bool IsGameEnd(out int winner)
     {
         var tiles = _field.GetTiles();
@@ -128,9 +149,7 @@ public class GameManager : Singleton<GameManager>
         return isEnd;
     }
     
-    /// <summary>
-    /// ±â¹°ÀÇ Ã¼·Â¹Ù UI ¼¼ÆÃ, ÀÓ½Ã·Î mainÄ«¸Ş¶ó¿¡¸¸ ¼¼ÆÃ ³ªÁß¿¡ Ä«¸Ş¶ó º° ¼¼ÆÃ Ãß°¡ ¿¹Á¤(¸ÖÆ¼ ÀÏ¶§¸¸)
-    /// </summary>
+
     public void SetEntityHpBar()
     {
         if (hpManager == null) return;

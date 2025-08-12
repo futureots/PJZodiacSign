@@ -1,25 +1,20 @@
 using PlayerInput;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class RepairTurn : ITurn
+public class RepairPhase : IPhase
 {
     int level;
-    public RepairTurn(int level)
+    
+    public RepairPhase(int level)
     {
         this.level = level;
     }
-    public void StartTurn(Action onTurnEnd)
+    
+    public void StartPhase(Action onPhaseEnd)
     {
-        
-        // »óÁ¡ UI Ç¥½ÃÇÏ±â
-        //Á¤ºñ ½ÃÀÛ
-        Debug.Log($"level {level} : Á¤ºñ ½ÃÀÛ");
-
-
+        Debug.Log($"level {level} : ìˆ˜ë¦¬ í˜ì´ì¦ˆ ì‹œì‘");
 
         GameManager.Instance.field.EraseField();
         foreach (var agent in GameManager.Instance.agents)
@@ -34,20 +29,20 @@ public class RepairTurn : ITurn
             {
                 agent.SetMode(Mode.None);
                 completeUsers++;
-                // ¸ğµç À¯Àú°¡ ÁØºñ ¿Ï·á ½Ã
+                // ëª¨ë“  í”Œë ˆì´ì–´ê°€ ìˆ˜ë¦¬ ì™„ë£Œ ì‹œ
                 if (completeUsers >= GameManager.Instance.agents.Length)
                 {
                     foreach (Agent agent in GameManager.Instance.agents)
                     {
                         agent.EndRepair();
                     }
-                    onTurnEnd?.Invoke();
+                    onPhaseEnd?.Invoke();
 
-                    // ¹èÆ² ÆäÀÌÁî·Î ÀüÈ¯
+                    // ì²´ë ¥ë°” UI í‘œì‹œ
                     GameManager.Instance.SetEntityHpBar();
                 }
             });
-
         }
     }
 }
+

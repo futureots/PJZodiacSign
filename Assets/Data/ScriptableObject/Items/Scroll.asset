@@ -18,3 +18,4 @@ MonoBehaviour:
   normalPrice: 3
   discountPrice: 1
   description: "\uC2A4\uD06C\uB864\uC774\uB2E4."
+  type: 0
