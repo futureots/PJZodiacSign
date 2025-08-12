@@ -63,29 +63,6 @@ public class InventoryUI : MonoBehaviour
     /// </summary>
     void SetInventory()
     {
-        // 아이템 데이터 가져오기
-        /*var list = DataManager.Instance.playerData.items;
-        Debug.Log($"{list.Count} + {itemSlots.Count}");
-        for (int i = 0; i < itemSlots.Count; i++)
-        {
-            if (list.Count <= i)
-            {
-                itemSlots[i].ClearSlot();
-                continue;
-            }
-            // 테이블에서 아이템 서치(없으면 다음)
-            var data = itemTable.SearchItem(list[i]);
-            if (data == null)
-            {
-                itemSlots[i].ClearSlot();
-                continue;
-            }
-
-            ItemInstance instance = data.CreateInstance();
-            // 인벤토리 한 칸에 세팅
-            itemSlots[i].OnClick += OpenItemAction;
-            itemSlots[i].OnMouseInOut += SetInfoUI;
-        }*/
         for(int i=0;i< itemSlots.Count; i++)
         {
             var slot = itemSlots[i];
@@ -103,20 +80,8 @@ public class InventoryUI : MonoBehaviour
     public void UpdateInventory(int index ,ItemInstance item)
     {
         itemSlots[index].SetSlot(item);
-        /*var slot = GetEmptySlot();
-        if (slot == null) return false;
-        slot.SetSlot(item);
-        return true;*/
     }
-    /*
-    ItemSlotUI GetEmptySlot()
-    {
-        foreach(var slot in itemSlots)
-        {
-            if (slot.item == null) return slot;
-        }
-        return null;
-    }*/
+
     public void UseItem(int index)
     {
 
@@ -154,6 +119,14 @@ public class InventoryUI : MonoBehaviour
         if (inventory.items.Count <= index) return;
         var item = inventory.items[index];
         if (item == null) return;
+        
+        //해당 스킬을 전투, 정비 중에 어느때 사용할 수 있는지 확인
+        /*if(item.itemData.type.HasFlag(UseType.Battle) && )
+        {
+
+        }*/
+
+
         actPanel.gameObject.SetActive(true);
         actPanel.transform.position = itemSlots[index].transform.position;
         actPanel.SetItemAction(inventory, index);
