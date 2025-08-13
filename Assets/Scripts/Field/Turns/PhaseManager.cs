@@ -13,9 +13,10 @@ public class PhaseManager : MonoBehaviour
     
     public void StartPhase()
     {
+        // 엔딩 제외 실행되면 안되는 부분
         if (phases.Count == 0)
         {
-            Debug.Log("모든 페이즈가 완료되었습니다.");
+            Debug.Log("AllPhaseEnd");
             return;
         }
         
