@@ -23,7 +23,6 @@ namespace PlayerInput
         }
         public void RemoveMode()
         {
-            Debug.Log("RemoveRepairMode");
             _inputManager.OnObjectClicked.RemoveListener(DragStart);
             _inputManager.OnMouseUp.RemoveListener(DragEnd);
             GameObject.Destroy(targetSelecter);
@@ -38,7 +37,6 @@ namespace PlayerInput
         {
             _inputManager.UI.shop.gameObject.SetActive(true);
 
-            Debug.Log("SetRepairMode");
             _inputManager.OnObjectClicked.AddListener(DragStart);
             _inputManager.OnMouseUp.AddListener(DragEnd);
 

@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,22 +37,14 @@ public class PhaseManager : MonoBehaviour
     {
         phases.Clear();
         
-        // RepairPhase를 먼저 추가
+        // 정비 페이즈를 먼저 추가
         phases.AddLast(new RepairPhase(level));
         
-        // CombatPhase를 추가
-        phases.AddLast(new CombatPhase());
-        
+        // 전투 페이즈를 추가
+        phases.AddLast(new BattlePhase());
+
         // 첫 번째 페이즈 시작
         StartPhase();
     }
     
-    /// <summary>
-    /// 현재 레벨의 모든 페이즈가 완료되었을 때 호출
-    /// </summary>
-    public void OnLevelComplete()
-    {
-        Debug.Log("현재 레벨의 모든 페이즈가 완료되었습니다.");
-        // 레벨 완료 처리 로직 추가
-    }
 }

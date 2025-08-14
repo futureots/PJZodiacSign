@@ -37,7 +37,6 @@ namespace PlayerInput
 
         public void RemoveMode()
         {
-            Debug.Log("RemoveSkillMode");
 
             _inputManager.OnObjectClicked.RemoveListener(SetClick);
         }

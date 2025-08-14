@@ -45,12 +45,11 @@ public class GameManager : Singleton<GameManager>
             agents[i].SetData(list[i]);
         }
         level = dataManager.playerData.stageLevel;
-        
-        // 기존 턴 시스템 사용
-        var turnManager = GetComponent<TurnManager>();
-        if (turnManager == null) return;
-        turnManager.turns.AddLast(new RepairTurn(level));
-        turnManager.StartTurn();
+
+        // 해당 레벨의 정비 페이즈 부터 시작(없을 경우 0레벨부터 시작)
+        var phaseManager = GetComponent<PhaseManager>();
+        if (phaseManager == null) return;
+        phaseManager.NextLevel(dataManager.playerData.stageLevel);
     }
 
     #endregion
@@ -73,65 +72,62 @@ public class GameManager : Singleton<GameManager>
         // 이벤트 발생 전 Camera 관련 처리
         if(hpManager != null) hpManager.ClearHpBar();
 
+        
         OnNextLevel?.Invoke(level);
     }
     
     public static Action<int> OnNextLevel;
     
-    public bool CheckGameEnd()
-    {
-        if (IsGameEnd(out int winner))
-        {
-            Agent winAgent = null;
-            for(int i = 0; i < agents.Length; i++)
-            {
-                if (agents[i].team.teamNumber == winner) winAgent = agents[i];
-            }
-            if(winAgent == null) return false;
-            if (winAgent is InputManager)
-            {
-                Debug.Log("승리");
-                // 플레이어 데이터 저장
-                dataManager.SetData(winAgent.GetAgentData(), level);
-                dataManager.SaveAllData("Data");
 
-                StartCoroutine(GoNextLevel());
-            }
-            else
-            {
-                Debug.Log("패배...");
-                GameEnd();
-            }
-            return true;
+    
+    public bool IsGameEnd(out Agent winner)
+    {
+        var tiles = _field.GetTiles();
+        
+        // LINQ를 사용해서 필드에 남아있는 팀 번호들을 수집
+        var teams = tiles
+            .Where(t => !t.isEmpty)
+            .Select(t => t.occupiedObject.GetComponent<Team>())
+            .Where(t => t != null)
+            .Select(t => t.teamNumber)
+            .Distinct()
+            .ToList();
+        
+        // 팀이 하나만 남아있다면 승리 조건
+        if (teams.Count == 1)
+        {
+            // LINQ FirstOrDefault를 사용해서 해당 팀의 에이전트를 찾기
+            winner = agents.FirstOrDefault(a => a.team.teamNumber == teams[0]);
+            return winner != null;
         }
+
+        winner = null;
         return false;
     }
     
-    public bool IsGameEnd(out int winner)
+    /// <summary>
+    /// 전투 승리 시 다음 레벨로 진행 (BattlePhase용)
+    /// </summary>
+    public bool HandleBattleVictory(Agent winner)
     {
-        var tiles = _field.GetTiles();
-        bool isEnd = false;
-        List<int> teams = new List<int>();
-        foreach (var tile in tiles)
+        if (winner is InputManager)
         {
-            if (tile.isEmpty) continue;
-            var entityTeam = tile.occupiedObject.GetComponent<Team>();
-            if (entityTeam == null) continue;
-            if (!teams.Contains(entityTeam.teamNumber))
-            {
-                teams.Add(entityTeam.teamNumber);
-            }
-        }
-        if (teams.Count == 1)
-        {
-            winner = teams[0];
-            isEnd = true;
+            Debug.Log("전투 승리! 다음 레벨로 진행합니다.");
+            
+            // 플레이어 데이터 저장
+            dataManager.SetData(winner.GetAgentData(), level);
+            dataManager.SaveAllData("Data");
+            
+            // 다음 레벨로 진행
+            StartCoroutine(GoNextLevel());
+            return true;
         }
         else
         {
-            winner = -1;
+            Debug.Log("게임 오버...");
+            GameEnd();
+            return false;
         }
-        return isEnd;
     }
     
 

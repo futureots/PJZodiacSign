@@ -3,25 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatPhase : IPhase
+public class BattlePhase : IPhase
 {
     // 전투 턴 큐(중간 삽입도 가능하도록 LinkedList 사용)
-    private LinkedList<ITurn> combatTurns;
+    private LinkedList<ITurn> turns;
     private Action onPhaseEnd;
     
-    public CombatPhase()
+    public BattlePhase()
     {
-        combatTurns = new LinkedList<ITurn>();
-        InitializeCombatTurns();
+        turns = new LinkedList<ITurn>();
+        AddBattleTurns();
     }
     
-    private void InitializeCombatTurns()
+    private void AddBattleTurns()
     {
         // 각 에이전트마다 ActionTurn과 AttackTurn을 추가
         foreach (var agent in GameManager.Instance.agents)
         {
-            combatTurns.AddLast(new ActionTurn(agent));
-            combatTurns.AddLast(new AttackTurn(agent));
+            turns.AddLast(new ActionTurn(agent));
+            turns.AddLast(new AttackTurn(agent));
         }
     }
     
@@ -29,21 +29,19 @@ public class CombatPhase : IPhase
     {
         this.onPhaseEnd = onPhaseEnd;
         Debug.Log("전투 페이즈 시작");
-        StartNextCombatTurn();
+        StartNextTurn();
     }
     
-    private void StartNextCombatTurn()
+    private void StartNextTurn()
     {
         // 일반적으로 실행되지 않아야 함.
-        if (combatTurns.Count == 0)
+        if (turns.Count <8)
         {
-            Debug.Log("Anomaly End Combat");
-            onPhaseEnd?.Invoke();
-            return;
+            AddBattleTurns();
         }
         
-        var currentTurn = combatTurns.First.Value;
-        combatTurns.RemoveFirst();
+        var currentTurn = turns.First.Value;
+        turns.RemoveFirst();
         
         currentTurn.StartTurn(OnCombatTurnComplete);
     }
@@ -52,17 +50,21 @@ public class CombatPhase : IPhase
     private void OnCombatTurnComplete()
     {
         GameManager.Instance.field.CleanField();
-        bool isEnd = GameManager.Instance.CheckGameEnd();
-        
-        if (isEnd)
+
+        //bool isEnd = GameManager.Instance.CheckGameEnd();
+
+        if(GameManager.Instance.IsGameEnd(out Agent winner))
         {
-            // 게임이 끝나면 페이즈 종료
-            onPhaseEnd?.Invoke();
+            if (!GameManager.Instance.HandleBattleVictory(winner))
+            {
+                // 페이즈 종료
+                onPhaseEnd?.Invoke();
+            }
         }
         else
         {
             // 다음 전투 턴 시작
-            StartNextCombatTurn();
+            StartNextTurn();
         }
     }
 }

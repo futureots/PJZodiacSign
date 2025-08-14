@@ -26,14 +26,12 @@ namespace PlayerInput
 
         public void RemoveMode()
         {
-            Debug.Log("RemoveMoveMode");
             _inputManager.OnObjectClicked.RemoveListener(DragStart);
             _inputManager.OnMouseUp.RemoveListener(DragEnd);
         }
 
         public void SetMode()
         {
-            Debug.Log("SetMoveMode");
             _inputManager.OnObjectClicked.AddListener(DragStart);
             _inputManager.OnMouseUp.AddListener(DragEnd);
 
