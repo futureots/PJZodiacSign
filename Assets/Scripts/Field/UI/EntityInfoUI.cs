@@ -58,17 +58,20 @@ public class EntityInfoUI : MonoBehaviour
 
 
         // 스킬 버튼 활성화
-        if (team.isAlly(entity.team))
+        if(PhaseManager.curPhase == PhaseType.Battle)
         {
-            if (entity.CurEnergy >= entity.SkillCost)
+            if (team.isAlly(entity.team))
             {
-                entitySkillBtn.interactable = true;
+                if (entity.CurEnergy >= entity.SkillCost)
+                {
+                    entitySkillBtn.interactable = true;
+                }
+                entitySkillBtn.onClick.RemoveAllListeners();
+                entitySkillBtn.onClick.AddListener(() =>
+                {
+                    transform.root.GetComponent<InputManager>().SetInputMode(entity.skillInstance);
+                });
             }
-            entitySkillBtn.onClick.RemoveAllListeners();
-            entitySkillBtn.onClick.AddListener(() =>
-            {
-                transform.root.GetComponent<InputManager>().SetInputMode(entity.skillInstance);
-            });
         }
         else
         {

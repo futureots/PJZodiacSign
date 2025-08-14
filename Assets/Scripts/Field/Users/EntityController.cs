@@ -1,8 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.Rendering.DebugUI;
 
 public class EntityController : MonoBehaviour
 {
@@ -91,7 +90,7 @@ public class EntityController : MonoBehaviour
     public virtual void DisposeInstantField()
     {
         Debug.Log("DIsposeInstantField");
-        instantField.EraseField();
+        instantField.ResetField();
         instantField.gameObject.SetActive(false);
     }
 
@@ -150,9 +149,11 @@ public class EntityController : MonoBehaviour
         {
             _curCmd?.Delete();
             _curCmd = value;
+            OnCommandCreated?.Invoke(_curCmd);
         }
     }
     Command _curCmd;
+    public Action<Command> OnCommandCreated;
 
     // 이동 명령 생성
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)

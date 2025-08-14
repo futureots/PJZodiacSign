@@ -29,6 +29,7 @@ public class BattlePhase : IPhase
     {
         this.onPhaseEnd = onPhaseEnd;
         Debug.Log("전투 페이즈 시작");
+        PhaseManager.curPhase = PhaseType.Battle;
         StartNextTurn();
     }
     
@@ -49,11 +50,11 @@ public class BattlePhase : IPhase
     // 턴 종료 시 사망한 기물 정리 및 승패 확인
     private void OnCombatTurnComplete()
     {
-        GameManager.Instance.field.CleanField();
+        GameManager.Instance.field.RemoveDeadEntities();
 
         //bool isEnd = GameManager.Instance.CheckGameEnd();
 
-        if(GameManager.Instance.IsGameEnd(out Agent winner))
+        if(GameManager.Instance.HasGameEnded(out Agent winner))
         {
             if (!GameManager.Instance.HandleBattleVictory(winner))
             {

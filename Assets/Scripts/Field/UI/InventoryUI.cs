@@ -118,20 +118,13 @@ public class InventoryUI : MonoBehaviour
     {
         if (inventory.items.Count <= index) return;
         var item = inventory.items[index];
+
         if (item == null) return;
         
-        //해당 스킬을 전투, 정비 중에 어느때 사용할 수 있는지 확인
-        /*if(item.itemData.type.HasFlag(UseType.Battle) && )
-        {
-
-        }*/
-
-
         actPanel.gameObject.SetActive(true);
         actPanel.transform.position = itemSlots[index].transform.position;
         actPanel.SetItemAction(inventory, index);
 
-        //Debug.Log("OpenItemUI");
     }
     void SetInfoUI(int index, Vector2 pos)
     {

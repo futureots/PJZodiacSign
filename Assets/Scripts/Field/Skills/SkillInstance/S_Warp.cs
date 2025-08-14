@@ -63,7 +63,7 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
     public override bool CanSkillInput(Field field)
     {
         var entities = field.GetOccupiedObjects();
-        var list = field.GetFieldInfo();
+        var list = field.GetFieldState();
         foreach (var item in list)
         {
             if (item == 0) return true;

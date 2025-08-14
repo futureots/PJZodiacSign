@@ -17,6 +17,8 @@ MonoBehaviour:
     weight: 1
   - data: {fileID: 11400000, guid: f7ea33acddff4d24eb4a60c6c518f4b6, type: 2}
     weight: 1
+  - data: {fileID: 11400000, guid: c3f45d8b59654d946b1567d6ac4f6d5a, type: 2}
+    weight: 1
   entityList:
   - data: {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
     weight: 1

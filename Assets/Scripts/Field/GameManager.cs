@@ -28,14 +28,14 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        GameStart();
+        StartGame();
     }
     #region GameStart
 
     /// <summary>
     /// 게임 시작 또는 다음 레벨(레벨이 증가했을 때)
     /// </summary>
-    public void GameStart()
+    public void StartGame()
     {
         // 에이전트에 필요한 데이터를 설정하거나 로드
         dataManager.LoadAllData("data");
@@ -58,7 +58,7 @@ public class GameManager : Singleton<GameManager>
     /// <summary>
     /// 게임 종료 시 처리
     /// </summary>
-    void GameEnd()
+    void EndGame()
     {
         Debug.Log("게임 종료");
         // 게임 종료 처리 로직 추가
@@ -80,7 +80,7 @@ public class GameManager : Singleton<GameManager>
     
 
     
-    public bool IsGameEnd(out Agent winner)
+    public bool HasGameEnded(out Agent winner)
     {
         var tiles = _field.GetTiles();
         
@@ -125,7 +125,7 @@ public class GameManager : Singleton<GameManager>
         else
         {
             Debug.Log("게임 오버...");
-            GameEnd();
+            EndGame();
             return false;
         }
     }

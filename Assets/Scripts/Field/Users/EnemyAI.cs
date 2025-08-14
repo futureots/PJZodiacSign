@@ -77,13 +77,13 @@ public class EnemyAI : Agent
         foreach (var checkEntity in controller.entities)
         {
             // 필드 값 가져오기
-            int[,] field = GameManager.Instance.field.GetFieldInfo();
+            int[,] field = GameManager.Instance.field.GetFieldState();
 
             // 현재 위치를 비우기
             var entityPos = checkEntity.curTile.fieldPos;
             field[entityPos.y, entityPos.x] = 0;
             // 적의 공격범위 가져오기 및 예상 데미지 계산
-            var values = GameManager.Instance.field.GetOtherTileValues(field, checkEntity.team.teamNumber);
+            var values = GameManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
 
             int value;
             intVector2 pos;

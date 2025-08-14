@@ -21,7 +21,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// 기물의 스킬 세팅
     /// </summary>
     /// <param name="skillData">기물 스킬 데이터</param>
-    public void SetSkill(BaseSkillData skillData)
+    public void SetupSkill(BaseSkillData skillData)
     {
         this.skillData = skillData;
         skillInstance = skillData.CreateInstance();
@@ -61,7 +61,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// </summary>
     /// <param name="data">기물 데이터</param>
     /// <param name="level">기물의 레벨</param>
-    public void SetEntity(EntityData data, int level =0)
+    public void InitializeEntity(EntityData data, int level =0)
     {
         this.data = data;
         id = data.id;
@@ -74,7 +74,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         CurEnergy = 0;
 
         // 기물 스킬 세팅(스킬이 엔티티 전용 스킬이면 시전자 할당, 아니면 할당X)
-        SetSkill(data.skill);
+        SetupSkill(data.skill);
         SkillCost = data.skillCost;
     }
 
@@ -321,9 +321,9 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         if (curTile != null)
         {
-            curTile.OccupyObject();
+            curTile.SetOccupant();
         }
-        tile.OccupyObject(gameObject);
+        tile.SetOccupant(gameObject);
         curTile = tile;
         transform.position = tile.transform.position;
     }
@@ -341,7 +341,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         var moveArea = new List<intVector2>();
         if (!isRooted)
         {
-            var fieldInfo = curTile.field.GetFieldInfo();
+            var fieldInfo = curTile.field.GetFieldState();
             fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
             var list = GetComponents<IMoveArea>();
             
@@ -386,7 +386,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public List<Tile> GetAttackArea(Tile tile)
     {
-        var field = tile.field.GetFieldInfo();
+        var field = tile.field.GetFieldState();
         if(tile.field == curTile.field) field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
         var list = GetAttackVector(field, tile.fieldPos);
         var tiles = tile.field.GetTiles(list);
@@ -403,7 +403,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
     public List<intVector2> GetAttackVector()
     {
-        return GetAttackVector(curTile.field.GetFieldInfo(), curTile.fieldPos);
+        return GetAttackVector(curTile.field.GetFieldState(), curTile.fieldPos);
     }
 
     #endregion

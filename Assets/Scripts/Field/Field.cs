@@ -51,7 +51,7 @@ public class Field : MonoBehaviour
                 var tileObj = Instantiate(tilePrefab, transform);
                 tileObj.transform.localPosition = pos;
                 var tile = tileObj.GetComponent<Tile>();
-                tile.SetField(this, j, i);
+                tile.InitializeTile(this, j, i);
                 temp.list.Add(tile);
             }
         }
@@ -75,19 +75,19 @@ public class Field : MonoBehaviour
     /// <summary>
     /// 필드위의 모든 기물 제거(장애물 포함)
     /// </summary>
-    public void EraseField()
+    public void ResetField()
     {
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            tile.ClearBufferedObjects();
-            tile.DestroyOccupiedObject();
+            tile.CleanupBufferedObjects();
+            tile.ClearOccupant();
         }
     }
     /// <summary>
     /// 사망한 오브젝트 제거(장애물 포함)
     /// </summary>
-    public void CleanField()
+    public void RemoveDeadEntities()
     {
         foreach (var tile in tiles)
         {
@@ -96,10 +96,10 @@ public class Field : MonoBehaviour
             var obj = tile.occupiedObject.GetComponent<IDamageable>();
             if (obj.isZero())
             {
-                tile.OccupyObject(null);
+                tile.SetOccupant(null);
                 obj.Dead();
             }
-            tile.ClearBufferedObjects();
+            tile.CleanupBufferedObjects();
         }
     }
 
@@ -198,7 +198,7 @@ public class Field : MonoBehaviour
         return list;
     }
 
-    public int[,] GetFieldInfo()
+    public int[,] GetFieldState()
     {
         var field = new int[row, column];
         for(int i = 0; i < row; i++)
@@ -221,7 +221,7 @@ public class Field : MonoBehaviour
         return field;
     }
 
-    public int[,] GetOtherTileValues(int[,] fieldInfo, int teamNum = 0)
+    public int[,] CalculateEnemyThreat(int[,] fieldInfo, int teamNum = 0)
     {
         var field = new int[row, column];
         for(int i = 0; i < row; i++)
@@ -244,7 +244,7 @@ public class Field : MonoBehaviour
         }
         return field;
     }
-    public static bool isValidPos(int[,] info, intVector2 pos)
+    public static bool IsPositionValid(int[,] info, intVector2 pos)
     {
         var height = info.GetLength(0);
         var width = info.GetLength(1);
