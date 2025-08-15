@@ -19,7 +19,7 @@ public class EnemyAI : Agent
             case Mode.Move:
                 coroutine = SetActionMode();
                 break;
-            case Mode.Active:
+            case Mode.Skill:
                 break;
             case Mode.None:
                 break;
@@ -27,6 +27,13 @@ public class EnemyAI : Agent
                 break;
         }
         this.RunWithCallback(coroutine, call);
+    }
+
+
+    public override void EndRepairPhase()
+    {
+        controller.UpdateEntities();
+        base.EndRepairPhase();
     }
 
 
@@ -51,11 +58,7 @@ public class EnemyAI : Agent
         }
         
     }
-    public override void EndRepairPhase()
-    {
-        controller.UpdateEntities();
-        base.EndRepairPhase();
-    }
+
     public IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
@@ -124,4 +127,6 @@ public class EnemyAI : Agent
         if (Entities.Count > 0) return true;
         return false;
     }
+
+
 }

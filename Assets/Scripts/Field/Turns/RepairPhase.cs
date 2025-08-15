@@ -41,9 +41,6 @@ public class RepairPhase : IPhase
                         agent.EndRepairPhase();
                     }
                     onPhaseEnd?.Invoke();
-
-                    // 체력바 UI 표시
-                    GameManager.Instance.SetEntityHpBar();
                 }
             });
         }

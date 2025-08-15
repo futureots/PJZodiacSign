@@ -124,7 +124,11 @@ public class InventoryUI : MonoBehaviour
         actPanel.gameObject.SetActive(true);
         actPanel.transform.position = itemSlots[index].transform.position;
         actPanel.SetItemAction(inventory, index);
-
+    }
+    // inputManager에서 외부 선택 시 실행
+    void CloseItemAction(GameObject obj)
+    {
+        actPanel.gameObject.SetActive(false);
     }
     void SetInfoUI(int index, Vector2 pos)
     {

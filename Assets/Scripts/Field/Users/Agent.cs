@@ -14,6 +14,20 @@ public abstract class Agent : MonoBehaviour
         controller = GetComponent<EntityController>();
         inventory = GetComponent<Inventory>();
     }
+    #region Phase
+    public virtual void SetRepairPhase(int level)
+    {
+        controller.SetInstantField(data.handEntities);
+        controller.SetMainField(data.fieldEntities);
+    }
+    public virtual void EndRepairPhase()
+    {
+        controller.DisposeInstantField();
+    }
+    public virtual void SetBattlePhase() { }
+    public virtual void EndBattlePhase() { }
+
+    #endregion
     /// <summary>
     /// 현재 controller가 보유중인 커맨드 반환 및 초기화
     /// </summary>
@@ -48,19 +62,8 @@ public abstract class Agent : MonoBehaviour
         inventory.SetItem(agentData.items);
     }
     
-    public virtual void SetRepairPhase(int level)
-    {
-        controller.SetInstantField(data.handEntities);
-        controller.SetMainField(data.fieldEntities);
-    }
-
-    
     // 데이터 갱신(기물 갱신, 게임 클리어 시 해당 데이터 저장. 아이템은 게임 클리어 시 갱신 및 저장)
-    public virtual void EndRepairPhase()
-    {
-        
-        controller.DisposeInstantField();
-    }
+
     /// <summary>
     /// 아이템을 구매할 수 있으면 구매하고 true반환, 없으면 false 반환
     /// </summary>
@@ -93,6 +96,6 @@ public enum Mode
 {
     Repair,//정비 입력(상점창 오픈, 정비용 카메라 무브, 보유 기물 인스턴트 필드)
     Move,//이동 입력(드래그&드롭)
-    Active,//스킬 입력(클릭)
+    Skill,//스킬 입력(클릭)
     None // 입력 X, 정보만 표시
 }

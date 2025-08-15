@@ -16,7 +16,6 @@ public class InputManager : Agent
 
     public GameInputActions inputActions { get; private set; }
 
-
     public Mode currentMode;
     IModeInput curModeState;
 
@@ -35,13 +34,13 @@ public class InputManager : Agent
     public GameObject cam;
 
 
-
     protected new void Awake()
     {
         base.Awake();
         inputActions = new GameInputActions();
 
     }
+    #region InputPackaging
     private void Start()
     {
         //inputActions.Gameplay.Click.started += value => HandleClick(PointerPosition);
@@ -80,28 +79,18 @@ public class InputManager : Agent
     private void OnEnable() => inputActions.Enable();
     private void OnDisable() => inputActions.Disable();
 
-    /// <summary>
-    /// 벡터값에서 가장 가까운 타일 반환
-    /// </summary>
-    /// <param name="pos"></param>
-    /// <param name="tiles"></param>
-    /// <returns></returns>
-    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
-    {
-        float minDistance = 0;
-        Tile closestTile = null;
-        foreach (Tile tile in tiles)
-        {
-            var distance = (tile.transform.position - pos).magnitude;
-            if (closestTile == null || minDistance > distance)
-            {
-                minDistance = distance;
-                closestTile = tile;
-            }
-        }
-        return closestTile;
-    }
+    #endregion
 
+    #region Phase
+    public override void SetMode(Mode mode, Action call)
+    {
+        SetInputMode(mode);
+        turnEndButton.onClick.AddListener(() =>
+        {
+            turnEndButton.onClick.RemoveAllListeners();
+            call?.Invoke();
+        });
+    }
     public override void SetRepairPhase(int level)
     {
         base.SetRepairPhase(level);
@@ -131,6 +120,22 @@ public class InputManager : Agent
         SetInputMode(Mode.Repair);
     }
 
+    public override void SetBattlePhase()
+    {
+        controller.OnCommandCreated += SetMoveMode;
+    }
+    public override void EndBattlePhase()
+    {
+        controller.OnCommandCreated -= SetMoveMode;
+    }
+    void SetMoveMode(Command cmd)
+    {
+        SetInputMode(Mode.Move);
+    }
+
+
+    #endregion
+
     #region InputMode
 
     /// <summary>
@@ -157,21 +162,10 @@ public class InputManager : Agent
     public void SetInputMode(IActive active)
     {
         curModeState?.RemoveMode();
-        currentMode = Mode.Active;
+        currentMode = Mode.Skill;
         curModeState = new SkillModeInput(this, active);
         curModeState.SetMode();
     }
-    public override void SetMode(Mode mode, Action call)
-    {
-        SetInputMode(mode);
-        turnEndButton.onClick.AddListener(() =>
-        {
-            turnEndButton.onClick.RemoveAllListeners();
-            call?.Invoke();
-        });
-    }
-
-
     #endregion
 
     #region ClickInfo
@@ -211,6 +205,27 @@ public class InputManager : Agent
     /// </summary>
     public UnityEvent<Vector2> OnMouseMove;
 
-    
+
     #endregion
+    /// <summary>
+    /// 벡터값에서 가장 가까운 타일 반환
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
+    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    {
+        float minDistance = 0;
+        Tile closestTile = null;
+        foreach (Tile tile in tiles)
+        {
+            var distance = (tile.transform.position - pos).magnitude;
+            if (closestTile == null || minDistance > distance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
 }

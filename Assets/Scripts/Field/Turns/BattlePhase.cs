@@ -27,11 +27,17 @@ public class BattlePhase : IPhase
     
     public void StartPhase(Action onPhaseEnd)
     {
+        GameManager.Instance.SetEntityHpBar();
+
         this.onPhaseEnd = onPhaseEnd;
         Debug.Log("전투 페이즈 시작");
         PhaseManager.curPhase = PhaseType.Battle;
+        foreach (var agent in GameManager.Instance.agents)
+        {
+            agent.SetBattlePhase();
+        }
         StartNextTurn();
-
+    
     }
     
     private void StartNextTurn()
@@ -57,6 +63,11 @@ public class BattlePhase : IPhase
 
         if(GameManager.Instance.HasGameEnded(out Agent winner))
         {
+            foreach (var agent in GameManager.Instance.agents)
+            {
+                agent.EndBattlePhase();
+            }
+
             if (!GameManager.Instance.HandleBattleVictory(winner))
             {
                 // 페이즈 종료
