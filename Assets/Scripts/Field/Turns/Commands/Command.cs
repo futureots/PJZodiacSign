@@ -17,10 +17,12 @@ public abstract class Command
 
     public virtual void Delete()
     {
-        for (int i = selecterObjects.Count - 1; i >= 0; i--)
+        Debug.Log($"Selecter : {selecterObjects.Count}");
+        foreach (GameObject go in selecterObjects)
         {
-            UnityEngine.Object.Destroy(selecterObjects[i]);
+            UnityEngine.Object.Destroy(go);
         }
+        selecterObjects.Clear();
         //Debug.Log("Command Delete");
     }
 }

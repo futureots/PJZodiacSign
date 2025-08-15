@@ -102,11 +102,33 @@ public class InputManager : Agent
         return closestTile;
     }
 
-    public override void SetRepairField(int level)
+    public override void SetRepairPhase(int level)
     {
-        base.SetRepairField(level);
+        base.SetRepairPhase(level);
         cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
         UI.shop.SetShop(level);
+
+        controller.OnCommandCreated += ExecuteCommand;
+    }
+
+    public override void EndRepairPhase()
+    {
+        controller.UpdateEntities();
+        // 기물 데이터는 정비 턴 종료 시 업데이트
+        var (field, hand) = controller.GetFieldData();
+        data.fieldEntities = field;
+        data.handEntities = hand;
+        cam.transform.DOLocalMove(Vector3.zero, 1f);
+
+        controller.OnCommandCreated -= ExecuteCommand;
+
+        base.EndRepairPhase();
+    }
+    void ExecuteCommand(Command command)
+    {
+        Debug.Log("Command Execute");
+        command?.Execute();
+        SetInputMode(Mode.Repair);
     }
 
     #region InputMode
@@ -149,16 +171,6 @@ public class InputManager : Agent
         });
     }
 
-    public override void EndRepair()
-    {
-        controller.UpdateEntities();
-        // 기물 데이터는 정비 턴 종료 시 업데이트
-        var (field, hand) = controller.GetFieldData();
-        data.fieldEntities = field;
-        data.handEntities = hand;
-        cam.transform.DOLocalMove(Vector3.zero, 1f);
-        base.EndRepair();
-    }
 
     #endregion
 

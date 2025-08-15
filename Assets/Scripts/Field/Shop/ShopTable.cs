@@ -48,7 +48,6 @@ public class ShopTable : ScriptableObject
                 {
                     table.Remove(item);
                     list.Add(item.data);
-                    Debug.Log($"Add {item.data.productName}");
                     break;
                 }
             }

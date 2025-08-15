@@ -67,15 +67,20 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         id = data.id;
         this.Level = level;
 
-        // 기물 스탯 세팅
-        Power = data.power + data.bonusPower * level;
-        MaxHp = data.maxHp + data.bonusHp * level;
-        CurHp = MaxHp;
-        CurEnergy = 0;
+        UpdateEntity();
 
         // 기물 스킬 세팅(스킬이 엔티티 전용 스킬이면 시전자 할당, 아니면 할당X)
         SetupSkill(data.skill);
         SkillCost = data.skillCost;
+    }
+
+    void UpdateEntity()
+    {
+        // 기물 스탯 세팅
+        Power = data.power + data.bonusPower * Level;
+        MaxHp = data.maxHp + data.bonusHp * Level;
+        CurHp = MaxHp;
+        CurEnergy = 0;
     }
 
     /// <summary>사망 시 호출</summary>
@@ -90,6 +95,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         {
             _level = value;
             OnLevelChanged?.Invoke(_level);
+            UpdateEntity();
         }
     }
     
@@ -296,7 +302,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <param name="ignoreArea">false : 이동 범위 내 지점만 이동, true : 범위 상관 없이 이동</param>
     /// <param name="ignoreOccupy">false : 도착 지점이 비었을 경우에만 이동, true : 이동 및 점거중인 객체 파괴</param>
     /// <returns></returns>
-    public bool MoveSequence(Tile tile , bool ignoreArea = false, bool ignoreOccupy = false)
+    public bool MoveSequence(Tile tile, bool ignoreArea = false, bool ignoreOccupy = false)
     {
         if(isRooted) return false;
         if (!ignoreArea)

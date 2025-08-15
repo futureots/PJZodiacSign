@@ -18,11 +18,12 @@ public class RepairPhase : IPhase
         PhaseManager.curPhase = PhaseType.Repair;
 
         // 입력 후 커맨드 생성 시 즉시 실행되는 액션 추가(현재 정비 턴은 입력 종료시 커맨드 안만들고 즉시 실행하는데 커맨드 생성방식으로 바꾸고 커맨드 생성 시 즉시 실행되도록 만들기)
+        
 
         GameManager.Instance.field.ResetField();
         foreach (var agent in GameManager.Instance.agents)
         {
-            agent.SetRepairField(level);
+            agent.SetRepairPhase(level);
         }
 
         int completeUsers = 0;
@@ -37,7 +38,7 @@ public class RepairPhase : IPhase
                 {
                     foreach (Agent agent in GameManager.Instance.agents)
                     {
-                        agent.EndRepair();
+                        agent.EndRepairPhase();
                     }
                     onPhaseEnd?.Invoke();
 

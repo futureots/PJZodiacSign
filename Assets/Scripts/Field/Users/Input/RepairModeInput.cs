@@ -30,6 +30,7 @@ namespace PlayerInput
 
             _inputManager.UI.shop.ToggleUI(false);
             _inputManager.UI.shop.gameObject.SetActive(false);
+
             
         }
 
@@ -46,7 +47,10 @@ namespace PlayerInput
             targetSelecter.SetActive(false);
             targetTileSelecter.SetActive(false);
 
+            
         }
+
+
 
         //선택한 엔티티 저장
         Entity _selectedEntity = null;
@@ -64,10 +68,12 @@ namespace PlayerInput
             
             var entity = obj.GetComponent<Entity>();
             if (entity == null) return;
-            // 적인지 아닌지 구분
+
+            // 조종 가능한지 확인
             var team = _inputManager.team;
             if (!team.isAlly(entity.team)) return;
             _selectedEntity = entity;
+
             //값이 변경될 때마다 선택한 엔티티의 위치 이동
 
             targetSelecter.SetActive(true);
@@ -100,7 +106,8 @@ namespace PlayerInput
                     // 실패하면 전 타일로 이동
                     _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
                 }
-                    _selectedEntity = null;
+
+                _selectedEntity = null;
             }
             // 표시자 제거
             targetSelecter.SetActive(false);

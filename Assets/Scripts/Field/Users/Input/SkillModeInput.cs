@@ -91,8 +91,14 @@ namespace PlayerInput
             }
             else
             {
+                Debug.Log(selecters.Count);
+                Debug.Log("SkillCreated");
                 _inputManager.controller.CreateCommand(skill, selecters.ToArray());
-                _inputManager.SetInputMode(Mode.Move);
+                if(PhaseManager.curPhase == PhaseType.Battle)
+                {
+                    _inputManager.SetInputMode(Mode.Move);
+                }
+                
             }
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -159,16 +160,16 @@ public class EntityController : MonoBehaviour
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)
     {
         Command cmd = new MoveCommand(entity, tile);
-        curCmd = cmd;
         cmd.selecterObjects.AddRange(selecter);
+        curCmd = cmd;
         return cmd;
     }
     // 스킬 명령 생성
     public Command CreateCommand(IActive skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
-        curCmd = cmd;
         cmd.selecterObjects.AddRange(selecter);
+        curCmd = cmd;
         return cmd;
     }
     public void ClearCommand()

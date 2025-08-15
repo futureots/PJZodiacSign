@@ -51,10 +51,10 @@ public class EnemyAI : Agent
         }
         
     }
-    public override void EndRepair()
+    public override void EndRepairPhase()
     {
         controller.UpdateEntities();
-        base.EndRepair();
+        base.EndRepairPhase();
     }
     public IEnumerator SetActionMode()
     {

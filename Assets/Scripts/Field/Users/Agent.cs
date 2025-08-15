@@ -48,16 +48,15 @@ public abstract class Agent : MonoBehaviour
         inventory.SetItem(agentData.items);
     }
     
-    public virtual void SetRepairField(int level)
+    public virtual void SetRepairPhase(int level)
     {
-        
         controller.SetInstantField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
     }
 
     
     // 데이터 갱신(기물 갱신, 게임 클리어 시 해당 데이터 저장. 아이템은 게임 클리어 시 갱신 및 저장)
-    public virtual void EndRepair()
+    public virtual void EndRepairPhase()
     {
         
         controller.DisposeInstantField();

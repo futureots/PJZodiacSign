@@ -31,6 +31,7 @@ public class BattlePhase : IPhase
         Debug.Log("전투 페이즈 시작");
         PhaseManager.curPhase = PhaseType.Battle;
         StartNextTurn();
+
     }
     
     private void StartNextTurn()
