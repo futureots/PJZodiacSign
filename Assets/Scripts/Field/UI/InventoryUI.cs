@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
+
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
     
@@ -46,9 +47,16 @@ public class InventoryUI : MonoBehaviour
 
     /// <summary> 아이템 데이터를 인스턴스로 전환 </summary>
     [SerializeField] ItemTable itemTable;
-    
-    
-    
+
+
+    InputManager _inputManager;
+    private void Awake()
+    {
+        _inputManager = transform.root.GetComponent<InputManager>();
+
+    }
+
+
     private void Start()
     {
         ToggleInventory(false);
@@ -57,6 +65,10 @@ public class InventoryUI : MonoBehaviour
         SetInventory();
 
         inventory.OnItemChanged += UpdateInventory;
+        _inputManager.OnMouseUp.AddListener(() =>
+        {
+            actPanel.gameObject.SetActive(false);
+        });
     }
     /// <summary>
     /// 보유 아이템 데이터를 인벤토리에 세팅
@@ -82,10 +94,6 @@ public class InventoryUI : MonoBehaviour
         itemSlots[index].SetSlot(item);
     }
 
-    public void UseItem(int index)
-    {
-
-    }
     /// <summary>
     /// Show/Hide InventoryUI
     /// </summary>

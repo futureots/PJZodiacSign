@@ -7,7 +7,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 
 public class InputManager : Agent
@@ -38,43 +37,60 @@ public class InputManager : Agent
     {
         base.Awake();
         inputActions = new GameInputActions();
-
     }
-    #region InputPackaging
+
     private void Start()
     {
-        //inputActions.Gameplay.Click.started += value => HandleClick(PointerPosition);
+        
 
         // 오브젝트 클릭 시 오브젝트 이벤트 트리거
-        inputActions.Gameplay.Click.started += value =>
-        {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-            
-            Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
-            // 부딪힌 기물, (타일) UI 표시 
-            if (Physics.Raycast(ray, out var hit))
-            {
-                var other = hit.collider.gameObject;
-                OnObjectClicked?.Invoke(other);
-            }
-            else OnObjectClicked?.Invoke(null);
-        };
+        inputActions.Gameplay.Click.started += StartClick;
 
         // 마우스 드롭 시 드롭 이벤트 트리거
-        inputActions.Gameplay.Click.canceled += value => OnMouseUp?.Invoke();
+        inputActions.Gameplay.Click.canceled += CancelClick;
 
-        inputActions.Gameplay.Point.performed += value =>
-        {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-
-            PointerPosition = value.ReadValue<Vector2>();
-            OnMouseMove?.Invoke(PointerPosition);
-        };
+        inputActions.Gameplay.Point.performed += MoveMouse;
 
         OnObjectClicked.AddListener(HandleClick);
-        
     }
+    #region InputPackaging
 
+    /// <summary>
+    /// 마우스 클릭 시작
+    /// </summary>
+    /// <param name="context"></param>
+    void StartClick(InputAction.CallbackContext context)
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
+        // 부딪힌 기물, (타일) UI 표시 
+        if (Physics.Raycast(ray, out var hit))
+        {
+            var other = hit.collider.gameObject;
+            OnObjectClicked?.Invoke(other);
+        }
+        else OnObjectClicked?.Invoke(null);
+    }
+    /// <summary>
+    /// 마우스 클릭 떼기
+    /// </summary>
+    /// <param name="context"></param>
+    void CancelClick(InputAction.CallbackContext context)
+    {
+        OnMouseUp?.Invoke();
+    }
+    /// <summary>
+    /// 마우스 이동
+    /// </summary>
+    /// <param name="context"></param>
+    void MoveMouse(InputAction.CallbackContext context)
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        PointerPosition = context.ReadValue<Vector2>();
+        OnMouseMove?.Invoke(PointerPosition);
+    }
 
     private void OnEnable() => inputActions.Enable();
     private void OnDisable() => inputActions.Disable();

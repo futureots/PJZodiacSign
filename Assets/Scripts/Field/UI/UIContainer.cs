@@ -7,4 +7,5 @@ public class UIContainer : MonoBehaviour
 
     public ShopUI shop;
     
+    public EnhanceConfirmUI confirmDialog;
 }
