@@ -65,7 +65,7 @@ public class InventoryUI : MonoBehaviour
         SetInventory();
 
         inventory.OnItemChanged += UpdateInventory;
-        _inputManager.OnMouseUp.AddListener(() =>
+        _inputManager.OnObjectClicked.AddListener((x) =>
         {
             actPanel.gameObject.SetActive(false);
         });
@@ -124,38 +124,27 @@ public class InventoryUI : MonoBehaviour
 
     void OpenItemAction(int index)
     {
-        if (inventory.items.Count <= index) return;
-        var item = inventory.items[index];
-
-        if (item == null) return;
-        
-        actPanel.gameObject.SetActive(true);
-        actPanel.transform.position = itemSlots[index].transform.position;
-        actPanel.SetItemAction(inventory, index);
-    }
-    // inputManager에서 외부 선택 시 실행
-    void CloseItemAction(GameObject obj)
-    {
-        actPanel.gameObject.SetActive(false);
+        if (inventory.items.ContainsKey(index))
+        {
+            actPanel.gameObject.SetActive(true);
+            actPanel.transform.position = itemSlots[index].transform.position;
+            actPanel.SetItemAction(inventory, index);
+        }
     }
     void SetInfoUI(int index, Vector2 pos)
     {
-        if (inventory.items.Count <= index) return;
-        if (index == -1)
+        if (inventory.items.TryGetValue(index,out var item))
         {
-            infoPanel.gameObject.SetActive(false);
-        }
-        else
-        {
-            var item = inventory.items[index];
-            if (item == null) return;
             if (!infoPanel.gameObject.activeSelf)
             {
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.SetInfo(item);
             }
             infoPanel.transform.localPosition = pos;
-            //Debug.Log(pos);
+        }
+        else
+        {
+            infoPanel.gameObject.SetActive(false);
         }
     }
 

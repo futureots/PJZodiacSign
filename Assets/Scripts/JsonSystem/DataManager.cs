@@ -20,11 +20,11 @@ public class DataManager : MonoBehaviour
         List<AgentData> data = new List<AgentData>();
 
         // 아이템 데이터로 전환
-        var items = new List<ItemData>();
+        var items = new Dictionary<int, ItemData>();
         foreach ( var item in playerData.items)
         {
-            var itemData = itemTable.SearchData(item);
-            items.Add(itemData);
+            var itemData = itemTable.SearchData(item.Value);
+            items.Add(item.Key, itemData);
         }
 
         var handEntities = new List<EntityLevelData>();
@@ -51,15 +51,10 @@ public class DataManager : MonoBehaviour
     }
     public void SetData(AgentData data, int stageLevel)
     {
-        List<string> itemNames = new List<string>();
+        Dictionary<int, string> itemNames = new();
         foreach (var item in data.items)
         {
-            if (item == null)
-            {
-                itemNames.Add(null);
-                continue;
-            }
-            itemNames.Add(item.id);
+            itemNames.Add(item.Key, item.Value.id);
         }
         playerData.items = itemNames;
 
@@ -102,7 +97,7 @@ public class DataManager : MonoBehaviour
 }
 public struct AgentData
 {
-    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<int, EntityLevelData> fields = null, List<ItemData> items = null)
+    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<int, EntityLevelData> fields = null, Dictionary<int,ItemData> items = null)
     {
         this.credit = credit;
 
@@ -119,7 +114,7 @@ public struct AgentData
     public int credit;
     public List<EntityLevelData> handEntities;
     public Dictionary<int, EntityLevelData> fieldEntities;
-    public List<ItemData> items;
+    public Dictionary<int,ItemData> items;
 }
 public struct EntityLevelData
 {

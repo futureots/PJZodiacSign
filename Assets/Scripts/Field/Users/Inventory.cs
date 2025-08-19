@@ -1,36 +1,29 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     // 현재 에이전트가 보유하고 있는 아이템
-    public List<ItemInstance> items { get; private set; }
+    public Dictionary<int,ItemInstance> items { get; private set; }
     public Action<int, ItemInstance> OnItemChanged;
     public int capacity;
     private void Awake()
     {
-        items = new List<ItemInstance>();
+        items = new Dictionary<int, ItemInstance>();
     }
     public bool AddItem(ItemInstance instance)
     {
-        // 중간에 빈공간 먼저 삽입
-        for (int i = 0; i < items.Count; i++)
+        // 용량 개수 만큼 확인 및 빈 공간에 추가
+        for(int i = 0; i < capacity; i++)
         {
-            if(items[i] == null)
-            {
-                items[i] = instance;
-                OnItemChanged?.Invoke(i, instance);
-                return true;
-            }
-        }
-        if(items.Count < capacity)
-        {
-            int lastIndex = items.Count;
-            items.Add(instance);
-            OnItemChanged?.Invoke(lastIndex, instance);
+            if (items.ContainsKey(i)) continue;
+            items.Add(i, instance);
+            OnItemChanged?.Invoke(i, instance);
             return true;
         }
+        // 용량 부족
         return false;
     }
     public bool AddItem(ItemData data)
@@ -40,25 +33,27 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(int index)
     {
-        items[index] = null;
-        OnItemChanged?.Invoke(index, null);
-    }
-    public void SetItem(List<ItemData> list)
-    {
-        for(int i = 0; i < list.Count; i++)
+        if(items.ContainsKey(index))
         {
-            if (list[i] == null) continue;
-            var instance = list[i].CreateInstance();
-            if (items.Count > i)
+            items.Remove(index);
+            OnItemChanged?.Invoke(index, null);
+        }
+        
+    }
+    public void SetItem(Dictionary<int, ItemData> list)
+    {
+        foreach(var pair in list)
+        {
+            var instance = pair.Value.CreateInstance();
+            if (items.ContainsKey(pair.Key))
             {
-                items[i] = instance;
-                OnItemChanged?.Invoke(i, instance);
+                items[pair.Key] = instance;
             }
             else
             {
-                items.Add(instance);
-                OnItemChanged?.Invoke(i, instance);
+                items.Add(pair.Key, instance);
             }
+            OnItemChanged?.Invoke(pair.Key, instance);
         }
     }
 
@@ -66,16 +61,12 @@ public class Inventory : MonoBehaviour
     /// ItemData 배열 반환 빈칸은 null 삽입
     /// </summary>
     /// <returns></returns>
-    public List<ItemData> GetInventoryData()
+    public Dictionary<int, ItemData> GetInventoryData()
     {
-        List<ItemData> list = new List<ItemData>();
+        Dictionary<int,ItemData> list = new Dictionary<int, ItemData>();
         foreach(var item in items)
         {
-            if (item != null)
-            {
-                list.Add(item.itemData);
-            }
-            else list.Add(null);
+            list.Add(item.Key, item.Value.itemData);
         }
         return list;
     }

@@ -9,7 +9,7 @@ public class ActiveItemData : ItemData
     {
         var instance = new ActiveItemInstance(this);
         // 스킬 데이터로 스킬 인스턴스 제작하기
-        instance.effect = effect.CreateInstance();
+        instance.effectData = effect;
         return instance;
         
     }

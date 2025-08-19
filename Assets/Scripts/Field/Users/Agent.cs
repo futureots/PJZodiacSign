@@ -7,7 +7,6 @@ public abstract class Agent : MonoBehaviour
 {
     public bool isInputStop;
     public Team team { get; protected set; }
-    public abstract void SetMode(Mode mode, Action call = null);
     protected void Awake()
     {
         team = GetComponent<Team>();
@@ -15,17 +14,34 @@ public abstract class Agent : MonoBehaviour
         inventory = GetComponent<Inventory>();
     }
     #region Phase
-    public virtual void SetRepairPhase(int level)
-    {
-        controller.SetInstantField(data.handEntities);
-        controller.SetMainField(data.fieldEntities);
-    }
+    /// <summary>
+    /// 정비 페이즈 시작
+    /// </summary>
+    /// <param name="level">현재 레벨</param>
+    public abstract void SetRepairPhase(int level, Action call);
+    /// <summary>
+    /// 정비 페이즈 종료
+    /// </summary>
     public virtual void EndRepairPhase()
     {
         controller.DisposeInstantField();
     }
+
+    /// <summary>
+    /// 전투 페이즈 시작
+    /// </summary>
     public virtual void SetBattlePhase() { }
+    /// <summary>
+    /// 전투 페이즈 종료
+    /// </summary>
     public virtual void EndBattlePhase() { }
+
+    /// <summary>
+    /// 행동 턴 시작
+    /// </summary>
+    /// <param name="call"></param>
+    public virtual void SetActionTurn(Action call) { }
+
 
     #endregion
     /// <summary>

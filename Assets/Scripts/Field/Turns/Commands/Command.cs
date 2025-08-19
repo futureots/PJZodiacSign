@@ -23,6 +23,5 @@ public abstract class Command
             UnityEngine.Object.Destroy(go);
         }
         selecterObjects.Clear();
-        //Debug.Log("Command Delete");
     }
 }

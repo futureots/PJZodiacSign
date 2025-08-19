@@ -33,11 +33,6 @@ public class S_Heal : S_BaseEntity<SD_Heal>
         return true;
     }
 
-    public override void Reinitialize()
-    {
-        
-    }
-
     public override bool SetSkillInput(Field field)
     {
         return true;

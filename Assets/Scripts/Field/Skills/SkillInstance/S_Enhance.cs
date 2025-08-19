@@ -24,10 +24,6 @@ public class S_Enhance : BaseSkillInstance<SD_Enhance>
         return entity !=null;
     }
 
-    public override void Reinitialize()
-    {
-        entity = null;
-    }
 
     public override bool SetSkillInput(Field field)
     {

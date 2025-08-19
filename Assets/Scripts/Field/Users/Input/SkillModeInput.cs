@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -10,15 +11,18 @@ namespace PlayerInput
 {
     public class SkillModeInput : IModeInput
     {
+        Mode prevMode;
+
         IActive skill;
         Action<InputAction.CallbackContext> bindAction;
 
         InputManager _inputManager;
-        public SkillModeInput(InputManager input, IActive skill)
+        public SkillModeInput(InputManager input, IActive skill, Mode mode)
         {
+            prevMode = mode;
             this.skill = skill;
             _inputManager = input;
-            // ½ºÅ³ÀÇ º¯¼ö Áß¿¡ ÀÔ·ÂÀÌ ÇÊ¿äÇÑ °ª¸¸ Å¥¿¡ ÀúÀå
+            // ìŠ¤í‚¬ì— í•„ìš”í•œ ì…ë ¥ì´ í•„ìš”í•œ í•„ë“œ í ìƒì„±
             selecters = new();
             skillFields = new();
             var type = skill.GetType();
@@ -37,15 +41,28 @@ namespace PlayerInput
 
         public void RemoveMode()
         {
-
+            // ìŠ¤í‚¬ ì…ë ¥ì´ ë¶ˆì™„ì „í•œ ìƒíƒœë¡œ ì…ë ¥ ë  ê²½ìš° ì´ˆê¸°í™” ì‹œí–‰
+            if (!IsFieldEmpty() || currentField != null)
+            {
+                CancelSkillInput();
+            }
             _inputManager.OnObjectClicked.RemoveListener(SetClick);
+
+            _inputManager.UI.cancelButton.gameObject.SetActive(false);
+            _inputManager.UI.cancelButton.onClick.RemoveAllListeners();
         }
 
         public void SetMode()
         {
             _inputManager.OnObjectClicked.AddListener(SetClick);
 
-            // Ã¹¹øÂ° ½ºÅ³ ÀÔ·Â°ª ¼³Á¤
+            _inputManager.UI.cancelButton.gameObject.SetActive(true);
+            _inputManager.UI.cancelButton.onClick.AddListener(()=> {
+                _inputManager.SetInputMode(prevMode);
+                });
+
+            Debug.Log("SkillMode");
+            // ì²« ë²ˆì§¸ ìŠ¤í‚¬ ì…ë ¥ í•„ë“œ ì„¤ì •
             SetNextField();
         }
 
@@ -91,8 +108,20 @@ namespace PlayerInput
             }
             else
             {
+                currentField = null;
                 _inputManager.controller.CreateCommand(skill, selecters.ToArray());
+                
             }
+        }
+        void CancelSkillInput()
+        {
+            foreach (var obj in selecters)
+            {
+                GameObject.Destroy(obj);
+            }
+            selecters.Clear();
+            Debug.Log("ìŠ¤í‚¬ ë¹„ì •ìƒì  ì¢…ë£Œë¡œ ì¸í•œ ë¦¬ì…‹");
+            //skill.Reinitialize();
         }
     }
 }

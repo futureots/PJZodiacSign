@@ -7,29 +7,18 @@ using UnityEngine;
 public class EnemyAI : Agent
 {
 
-    public override void SetMode(Mode mode, Action call = null)
+
+    public override void SetActionTurn(Action call)
     {
-        // AI로 계산 해서 명령 제작 후 콜백
-        IEnumerator coroutine = null;
-        switch (mode)
-        {
-            case Mode.Repair:
-                coroutine = SetRepairMode();
-                break;
-            case Mode.Move:
-                coroutine = SetActionMode();
-                break;
-            case Mode.Skill:
-                break;
-            case Mode.None:
-                break;
-            default:
-                break;
-        }
-        this.RunWithCallback(coroutine, call);
+        this.RunWithCallback(SetActionMode(), call);
     }
-
-
+    public override void SetRepairPhase(int level, Action call)
+    {
+        // 레벨에 맞는 데이터 가져와서 세팅하는 기능 추가 필요
+        controller.SetInstantField(data.handEntities);
+        controller.SetMainField(data.fieldEntities);
+        this.RunWithCallback(SetRepairMode(), call);
+    }
     public override void EndRepairPhase()
     {
         controller.UpdateEntities();
@@ -62,12 +51,13 @@ public class EnemyAI : Agent
     public IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
-        // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별
+        // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별)
         if(CanActiveSkill(out var list))
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
-            list[rand].skillInstance.SetSkillInput(GameManager.Instance.field);
-            controller.CreateCommand(list[rand].skillInstance);
+            var skill = list[rand].GetSkillInstance();
+            skill.SetSkillInput(GameManager.Instance.field);
+            controller.CreateCommand(skill);
             yield break;
         }
 
@@ -118,7 +108,7 @@ public class EnemyAI : Agent
         {
             if (item.CurEnergy > item.SkillCost)
             {
-                if (item.skillInstance.CanSkillInput(GameManager.Instance.field))
+                if (item.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
                 {
                     Entities.Add(item);
                 }

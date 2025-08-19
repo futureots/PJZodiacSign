@@ -13,6 +13,7 @@ public class ItemActionUI : MonoBehaviour
         discardBtn.onClick.RemoveAllListeners();
         discardBtn.onClick.AddListener(() => inventory.RemoveItem(index));
         discardBtn.onClick.AddListener(() => gameObject.SetActive(false));
+
         var item = inventory.items[index];
         if (item is IUsable usable)
         {

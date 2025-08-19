@@ -6,8 +6,22 @@ using UnityEngine;
 
 public interface IActive
 {
+    /// <summary>
+    /// 스킬 자동입력이 가능한지 확인하는 함수
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns></returns>
     public bool CanSkillInput(Field field);
+    /// <summary>
+    /// 스킬 입력값 자동 할당 기능(값 선정은 랜덤)
+    /// </summary>
+    /// <param name="field">스킬을 사용할 필드</param>
+    /// <returns></returns>
     public bool SetSkillInput(Field field);
+    /// <summary>
+    /// 스킬 실행 후 콜백 함수
+    /// </summary>
+    /// <param name="func"></param>
     public void AddCallback(Action<bool> func);
     public void ClearCallback();
     public bool ExecuteSequence();
@@ -31,8 +45,4 @@ public interface IActive
     /// <returns></returns>
     public bool IsValidInput(FieldInfo field);
 
-    /// <summary>
-    /// 스킬 대상들을 null로 바꾸는 함수(유지할 경우 넣을 필요 없음)
-    /// </summary>
-    public void Reinitialize();
 }

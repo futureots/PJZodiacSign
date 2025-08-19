@@ -70,7 +70,7 @@ public class EntityInfoUI : MonoBehaviour
                 }
                 entitySkillBtn.onClick.AddListener(() =>
                 {
-                    transform.root.GetComponent<InputManager>().SetInputMode(entity.skillInstance);
+                    transform.root.GetComponent<InputManager>().SetInputMode(entity.GetSkillInstance());
                 });
             }
 

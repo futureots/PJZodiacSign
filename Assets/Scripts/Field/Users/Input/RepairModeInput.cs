@@ -70,6 +70,9 @@ namespace PlayerInput
             // 아군 기물인지 확인
             var team = _inputManager.team;
             if (!team.isAlly(entity.team)) return;
+
+            if (entity.IsFromMainField()) return;
+
             _selectedEntity = entity;
 
             //선택된 기물 위에 선택자 표시
@@ -140,41 +143,43 @@ namespace PlayerInput
             targetTileSelecter.SetActive(false);
             _inputManager.areaVisualizer.RemoveAttackArea(attackArea);
             _inputManager.areaVisualizer.RemoveMoveArea(moveArea);
-            
-            if (_inputManager.UI.confirmDialog != null)
-            {
-                _inputManager.UI.confirmDialog.ShowDialog(
-                    "강화하시겠습니까?",
-                    () => {
-                        // 확인 시 강화 실행
-                        Debug.Log("Enhance Confirmed");
-                        target.Level += 1;
-                        source.curTile.ClearOccupant();
-                        _selectedEntity = null;
+
+            _inputManager.turnEndButton.interactable = false;
+            _inputManager.UI.inventory.gameObject.SetActive(false);
+            _inputManager.UI.confirmDialog.ShowDialog(
+                "강화하시겠습니까?",
+                () => {
+                    // 확인 시 강화 실행
+                    Debug.Log("Enhance Confirmed");
+                    target.Level += 1;
+                    source.curTile.ClearOccupant();
+                    _selectedEntity = null;
                         
-                        // 강화 완료 후 이벤트 구독 재설정
-                        RestoreEventSubscriptions();
-                    },
-                    () => {
-                        // 취소 시 원래 위치로 복귀
-                        Debug.Log("Enhance Cancelled");
-                        _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
-                        _selectedEntity = null;
+                    // 강화 완료 후 이벤트 구독 재설정
+                    RestoreEventSubscriptions();
+                    _inputManager.UI.entityInfo.HidePanel();
+                },
+                () => {
+                    // 취소 시 원래 위치로 복귀
+                    Debug.Log("Enhance Cancelled");
+                    _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                    _selectedEntity = null;
                         
-                        // 강화 취소 후 이벤트 구독 재설정
-                        RestoreEventSubscriptions();
-                    }
-                );
-            }
+                    // 강화 취소 후 이벤트 구독 재설정
+                    RestoreEventSubscriptions();
+                }
+            );
         }
 
         /// <summary>
         /// 이벤트 구독을 재설정합니다.
         /// </summary>
-        private void RestoreEventSubscriptions()
+        void RestoreEventSubscriptions()
         {
             _inputManager.OnObjectClicked.AddListener(DragStart);
             _inputManager.OnMouseUp.AddListener(DragEnd);
+            _inputManager.turnEndButton.interactable = true;
+            _inputManager.UI.inventory.gameObject.SetActive(true);
         }
 
         void DragEntity(Vector2 value)

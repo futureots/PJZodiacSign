@@ -43,10 +43,6 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
         return false;
     }
 
-    public override void Reinitialize()
-    {
-        target = null;
-    }
 
     /// <summary>
     /// 스킬 사용에 필요한 값을 알아서 가져옴.

@@ -30,7 +30,7 @@ public abstract class AbstractSkillInstance : IActive
         {
             Debug.Log("SKILL »ç¿ë");
             Activate();
-            Reinitialize();
+            //Reinitialize();
         }
         callback?.Invoke(isActable);
         return isActable;
@@ -58,7 +58,6 @@ public abstract class AbstractSkillInstance : IActive
         return true;
     }
 
-    public abstract void Reinitialize();
     public abstract bool CanSkillInput(Field field);
     public abstract bool SetSkillInput(Field field);
     public void AddCallback(Action<bool> func)

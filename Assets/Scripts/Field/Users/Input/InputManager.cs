@@ -18,15 +18,15 @@ public class InputManager : Agent
     public Mode currentMode;
     IModeInput curModeState;
 
-    // ÀÔ·Â Ç¥½ÃÀÚ
+    // ì…ë ¥ í‘œì‹œê¸°
     public AreaVisualizer areaVisualizer;
 
-    // Ç¥½Ã ÀÌÆåÆ®
+    // í‘œì‹œ ì˜¤ë¸Œì íŠ¸
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
 
-    // UI ÆĞ³Î
+    // UI ìš”ì†Œ
     [Header("UI Element")]
     public Button turnEndButton;
     public UIContainer UI;
@@ -41,12 +41,10 @@ public class InputManager : Agent
 
     private void Start()
     {
-        
-
-        // ¿ÀºêÁ§Æ® Å¬¸¯ ½Ã ¿ÀºêÁ§Æ® ÀÌº¥Æ® Æ®¸®°Å
+        // ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œì‘ ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°
         inputActions.Gameplay.Click.started += StartClick;
 
-        // ¸¶¿ì½º µå·Ó ½Ã µå·Ó ÀÌº¥Æ® Æ®¸®°Å
+        // ë§ˆìš°ìŠ¤ í´ë¦­ ì·¨ì†Œ ì‹œ ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°
         inputActions.Gameplay.Click.canceled += CancelClick;
 
         inputActions.Gameplay.Point.performed += MoveMouse;
@@ -56,7 +54,7 @@ public class InputManager : Agent
     #region InputPackaging
 
     /// <summary>
-    /// ¸¶¿ì½º Å¬¸¯ ½ÃÀÛ
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œì‘
     /// </summary>
     /// <param name="context"></param>
     void StartClick(InputAction.CallbackContext context)
@@ -64,7 +62,7 @@ public class InputManager : Agent
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
-        // ºÎµúÈù ±â¹°, (Å¸ÀÏ) UI Ç¥½Ã 
+        // ë ˆì´ìºìŠ¤íŠ¸ ê¸°ë¬¼, (íƒ€ì¼) UI í‘œì‹œ 
         if (Physics.Raycast(ray, out var hit))
         {
             var other = hit.collider.gameObject;
@@ -73,7 +71,7 @@ public class InputManager : Agent
         else OnObjectClicked?.Invoke(null);
     }
     /// <summary>
-    /// ¸¶¿ì½º Å¬¸¯ ¶¼±â
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ ì·¨ì†Œ
     /// </summary>
     /// <param name="context"></param>
     void CancelClick(InputAction.CallbackContext context)
@@ -81,7 +79,7 @@ public class InputManager : Agent
         OnMouseUp?.Invoke();
     }
     /// <summary>
-    /// ¸¶¿ì½º ÀÌµ¿
+    /// ë§ˆìš°ìŠ¤ ì´ë™
     /// </summary>
     /// <param name="context"></param>
     void MoveMouse(InputAction.CallbackContext context)
@@ -98,28 +96,30 @@ public class InputManager : Agent
     #endregion
 
     #region Phase
-    public override void SetMode(Mode mode, Action call)
+
+    public override void SetRepairPhase(int level, Action call)
     {
-        SetInputMode(mode);
+        controller.SetInstantField(data.handEntities);
+        controller.SetMainField(data.fieldEntities);
+
+        cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
+        UI.shop.SetShop(level);
+
+        controller.OnCommandCreated += ExecuteCommand;
+
+        SetInputMode(Mode.Repair);
         turnEndButton.onClick.AddListener(() =>
         {
             turnEndButton.onClick.RemoveAllListeners();
             call?.Invoke();
         });
     }
-    public override void SetRepairPhase(int level)
-    {
-        base.SetRepairPhase(level);
-        cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
-        UI.shop.SetShop(level);
-
-        controller.OnCommandCreated += ExecuteCommand;
-    }
 
     public override void EndRepairPhase()
     {
+        SetInputMode(Mode.None);
         controller.UpdateEntities();
-        // ±â¹° µ¥ÀÌÅÍ´Â Á¤ºñ ÅÏ Á¾·á ½Ã ¾÷µ¥ÀÌÆ®
+        // ê¸°ë¬¼ ë°ì´í„°ëŠ” ì €ì¥ ì‹œ ì €ì¥ì†Œ ì—…ë°ì´íŠ¸
         var (field, hand) = controller.GetFieldData();
         data.fieldEntities = field;
         data.handEntities = hand;
@@ -136,26 +136,31 @@ public class InputManager : Agent
         SetInputMode(Mode.Repair);
     }
 
-    public override void SetBattlePhase()
-    {
-        controller.OnCommandCreated += SetMoveMode;
-    }
-    public override void EndBattlePhase()
-    {
-        controller.OnCommandCreated -= SetMoveMode;
-    }
-    void SetMoveMode(Command cmd)
+    public override void SetActionTurn(Action call)
     {
         SetInputMode(Mode.Move);
+        Action<Command> bind = (x) =>
+        {
+            SetInputMode(Mode.Move);
+            turnEndButton.interactable = true;
+        };
+        controller.OnCommandCreated += bind;
+        turnEndButton.onClick.AddListener(() =>
+        {
+            SetInputMode(Mode.None);
+            controller.OnCommandCreated -= bind;
+            turnEndButton.onClick.RemoveAllListeners();
+            call?.Invoke();
+        });
+        turnEndButton.interactable = false;
     }
-
 
     #endregion
 
     #region InputMode
 
     /// <summary>
-    /// ¸ğµå º¯°æ ¹× ÀÔ·Â ¼¼ÆÃ(½ºÅ³ ÀÔ·ÂÀº Á¦¿Ü)
+    /// ì…ë ¥ ëª¨ë“œ ì„¤ì •(ì´ë™ ì…ë ¥, ìŠ¤í‚¬ ì…ë ¥)
     /// </summary>
     public void SetInputMode(Mode mode)
     {
@@ -175,11 +180,18 @@ public class InputManager : Agent
         }
         curModeState.SetMode();
     }
+    
     public void SetInputMode(IActive active)
     {
+
         curModeState?.RemoveMode();
+
+        Mode skillEndMode = Mode.None;
+        if (PhaseManager.curPhase == PhaseType.Repair) skillEndMode = Mode.Repair;
+        else if (PhaseManager.curPhase == PhaseType.Battle) skillEndMode = Mode.Move;
+
+        curModeState = new SkillModeInput(this, active, skillEndMode);
         currentMode = Mode.Skill;
-        curModeState = new SkillModeInput(this, active);
         curModeState.SetMode();
     }
     #endregion
@@ -187,7 +199,7 @@ public class InputManager : Agent
     #region ClickInfo
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ®°¡ ±â¹°ÀÌ¸é ±â¹° Á¤º¸ Ç¥½Ã, ¾Æ´Ï¸é Á¤º¸ ÆĞ³Î Á¦°Å
+    /// ì˜¤ë¸Œì íŠ¸ê°€ ê¸°ë¬¼ì´ë©´ ê¸°ë¬¼ ì •ë³´ í‘œì‹œ, ì•„ë‹ˆë©´ ì •ë³´ íŒ¨ë„ ìˆ¨ê¹€
     /// </summary>
     void HandleClick(GameObject obj)
     {
@@ -209,22 +221,22 @@ public class InputManager : Agent
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Å¬¸¯ ½Ã Æ®¸®°Å
+    /// ì˜¤ë¸Œì íŠ¸ í´ë¦­ ì‹œ ì´ë²¤íŠ¸
     /// </summary>
     public UnityEvent<GameObject> OnObjectClicked;
     /// <summary>
-    /// ¸¶¿ì½º µå·Ó ½Ã
+    /// ë§ˆìš°ìŠ¤ ë²„íŠ¼ ì—…
     /// </summary>
     public UnityEvent OnMouseUp;
     /// <summary>
-    /// ¸¶¿ì½º ¿òÁ÷ÀÏ ¶§¸¶´Ù Æ®¸®°Å
+    /// ë§ˆìš°ìŠ¤ ì´ë™ ì‹œ ì´ë²¤íŠ¸
     /// </summary>
     public UnityEvent<Vector2> OnMouseMove;
 
 
     #endregion
     /// <summary>
-    /// º¤ÅÍ°ª¿¡¼­ °¡Àå °¡±î¿î Å¸ÀÏ ¹İÈ¯
+    /// ê°€ì¥ ê°€ê¹Œìš´ íƒ€ì¼ ë°˜í™˜
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="tiles"></param>
