@@ -28,16 +28,10 @@ namespace PlayerInput
             GameObject.Destroy(targetSelecter);
             GameObject.Destroy(targetTileSelecter);
 
-            _inputManager.UI.shop.ToggleUI(false);
-            _inputManager.UI.shop.gameObject.SetActive(false);
-
-            
         }
 
         public void SetMode()
         {
-            _inputManager.UI.shop.gameObject.SetActive(true);
-
             _inputManager.OnObjectClicked.AddListener(DragStart);
             _inputManager.OnMouseUp.AddListener(DragEnd);
 

@@ -8,9 +8,19 @@ public class BattlePhase : IPhase
     // 전투 턴 큐(중간 삽입도 가능하도록 LinkedList 사용)
     private LinkedList<ITurn> turns;
     private Action onPhaseEnd;
-    
-    public BattlePhase()
+
+    public int Level
     {
+        get
+        {
+            return level;
+        }
+    }
+    int level;
+
+    public BattlePhase(int level)
+    {
+        this.level = level;
         turns = new LinkedList<ITurn>();
         AddBattleTurns();
     }

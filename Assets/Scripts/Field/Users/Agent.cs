@@ -58,6 +58,17 @@ public abstract class Agent : MonoBehaviour
     public EntityController controller { get; protected set; } 
     public Inventory inventory { get; protected set; }
 
+    int credit;
+    public int Credit
+    {
+        get { return credit; }
+        set {
+            credit = value;
+            OnCreditChanged?.Invoke(credit);
+        }
+    }
+    public Action<int> OnCreditChanged;
+
     #region AgentData
     // 데이터 컨테이너(인벤토리는 사용 X)
     protected AgentData data;
@@ -65,6 +76,7 @@ public abstract class Agent : MonoBehaviour
     {
         // 인벤토리 데이터는 저장 직전 불러오기
         data.items = inventory.GetInventoryData();
+        data.credit = Credit;
         return data;
     }
 
@@ -76,33 +88,24 @@ public abstract class Agent : MonoBehaviour
     {
         data = agentData;
         inventory.SetItem(agentData.items);
+        credit = agentData.credit;
     }
     
     // 데이터 갱신(기물 갱신, 게임 클리어 시 해당 데이터 저장. 아이템은 게임 클리어 시 갱신 및 저장)
 
-    /// <summary>
-    /// 아이템을 구매할 수 있으면 구매하고 true반환, 없으면 false 반환
-    /// </summary>
-    /// <param name="itemData">구매하려는 아이템 데이터</param>
-    /// <returns></returns>
-    public bool BuyItem(ItemData itemData, int cost)
+    public bool SummonEntity(EntityData entityData)
     {
-        if (cost > data.credit) return false;
-        data.credit -= cost;
-        Debug.Log("Buy Item");
-        inventory.AddItem(itemData);
-        return true;
-    }
-    public bool BuyEntity(EntityData entityData, int cost)
-    {
-        if (data.credit < cost) return false;
-        data.credit -= cost;
+        if (!CanPlaceOnInstantField()) return false;
 
         var entity = entityData.CreateEntity();
-
-        Debug.Log("Buy Entity");
         controller.PlaceOnInstantField(entity);
 
+        return true;
+    }
+    bool CanPlaceOnInstantField()
+    {
+        var list = Field.GetEmptyTile(controller.instantField.GetTiles());
+        if (list.Count <= 0) return false;
         return true;
     }
     #endregion

@@ -15,15 +15,24 @@
   },
   "handEntities": {
     "$type": "System.Collections.Generic.List`1[[EntityLevelHolder, Assembly-CSharp]], mscorlib",
-    "$values": []
+    "$values": [
+      {
+        "$type": "EntityLevelHolder, Assembly-CSharp",
+        "entity": "WhiteBishop",
+        "level": 0
+      },
+      {
+        "$type": "EntityLevelHolder, Assembly-CSharp",
+        "entity": "WhiteBishop",
+        "level": 0
+      }
+    ]
   },
   "stageLevel": 2,
   "items": {
     "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.String, mscorlib]], mscorlib",
     "0": "Enhance",
-    "2": "Scroll",
-    "3": "Scroll",
-    "4": "Scroll"
+    "2": "Scroll"
   },
-  "credit": 2000
+  "credit": 40
 }

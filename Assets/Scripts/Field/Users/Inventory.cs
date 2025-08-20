@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -16,13 +17,13 @@ public class Inventory : MonoBehaviour
     public bool AddItem(ItemInstance instance)
     {
         // 용량 개수 만큼 확인 및 빈 공간에 추가
-        for(int i = 0; i < capacity; i++)
+        if (CanAddItem(out int index))
         {
-            if (items.ContainsKey(i)) continue;
-            items.Add(i, instance);
-            OnItemChanged?.Invoke(i, instance);
+            items.Add(index, instance);
+            OnItemChanged?.Invoke(index, instance);
             return true;
         }
+        
         // 용량 부족
         return false;
     }
@@ -69,5 +70,16 @@ public class Inventory : MonoBehaviour
             list.Add(item.Key, item.Value.itemData);
         }
         return list;
+    }
+    bool CanAddItem(out int index)
+    {
+        for (int i = 0; i < capacity; i++)
+        {
+            if (items.ContainsKey(i)) continue;
+            index = i;
+            return true;
+        }
+        index = -1;
+        return false;
     }
 }

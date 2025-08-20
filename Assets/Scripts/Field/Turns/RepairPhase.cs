@@ -6,12 +6,18 @@ using UnityEngine;
 public class RepairPhase : IPhase
 {
     int level;
-    
+    public int Level
+    {
+        get
+        {
+            return level;
+        }
+    }
+
     public RepairPhase(int level)
     {
         this.level = level;
     }
-    
     public void StartPhase(Action onPhaseEnd)
     {
         Debug.Log($"level {level} : 수리 페이즈 시작");

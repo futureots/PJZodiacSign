@@ -1,12 +1,14 @@
-using DG.Tweening.Core.Easing;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PhaseManager : MonoBehaviour
 {
     public LinkedList<IPhase> phases;
+    IPhase currentPhase;
     public static PhaseType curPhase;
+    public static Action<IPhase,bool> onPhaseChanged;
 
     private void Awake()
     {
@@ -17,6 +19,12 @@ public class PhaseManager : MonoBehaviour
     
     public void BeginPhase()
     {
+        if (currentPhase != null)
+        {
+            // 현재 페이즈 종료
+            onPhaseChanged?.Invoke(currentPhase, false);
+        }
+
         // 엔딩 제외 실행되면 안되는 부분
         if (phases.Count == 0)
         {
@@ -24,9 +32,12 @@ public class PhaseManager : MonoBehaviour
             return;
         }
         
-        var currentPhase = phases.First.Value;
+        currentPhase = phases.First.Value;
         phases.RemoveFirst();
-        
+
+        // 페이즈 시작
+        onPhaseChanged?.Invoke(currentPhase, true);
+
         currentPhase.StartPhase(OnPhaseComplete);
     }
     
@@ -44,7 +55,7 @@ public class PhaseManager : MonoBehaviour
         phases.AddLast(new RepairPhase(level));
         
         // 전투 페이즈를 추가
-        phases.AddLast(new BattlePhase());
+        phases.AddLast(new BattlePhase(level));
 
         // 첫 번째 페이즈 시작
         BeginPhase();

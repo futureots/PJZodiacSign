@@ -103,7 +103,7 @@ public class InputManager : Agent
         controller.SetMainField(data.fieldEntities);
 
         cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
-        UI.shop.SetShop(level);
+        
 
         controller.OnCommandCreated += ExecuteCommand;
 
