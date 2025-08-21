@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
+    // 0번은 플레이어 1번은 적AI
     public Agent[] agents;
 
     public int level {  get; private set; }
@@ -40,6 +41,8 @@ public class GameManager : Singleton<GameManager>
         // 에이전트에 필요한 데이터를 설정하거나 로드
         dataManager.LoadAllData("data");
         var list = dataManager.GetData();
+
+        
         for(int i = 0; i < list.Length; i++)
         {
             agents[i].SetData(list[i]);
@@ -115,7 +118,7 @@ public class GameManager : Singleton<GameManager>
             Debug.Log("전투 승리! 다음 레벨로 진행합니다.");
             
             // 플레이어 데이터 저장
-            dataManager.SetData(winner.GetAgentData(), level);
+            dataManager.SetData(winner.UpdateAgentData(), level);
             dataManager.SaveAllData("Data");
             
             // 다음 레벨로 진행

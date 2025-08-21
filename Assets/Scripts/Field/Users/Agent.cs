@@ -72,7 +72,7 @@ public abstract class Agent : MonoBehaviour
     #region AgentData
     // 데이터 컨테이너(인벤토리는 사용 X)
     protected AgentData data;
-    public AgentData GetAgentData()
+    public AgentData UpdateAgentData()
     {
         // 인벤토리 데이터는 저장 직전 불러오기
         data.items = inventory.GetInventoryData();

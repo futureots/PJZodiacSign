@@ -1,8 +1,11 @@
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using static ShopTable;
+using static UnityEngine.Rendering.DebugUI;
 
 [CreateAssetMenu(fileName = "ShopTable", menuName = "Scriptable Objects/ShopTable")]
 public class ShopTable : ScriptableObject
@@ -54,6 +57,24 @@ public class ShopTable : ScriptableObject
         }
 
         return list;
+    }
+
+    public bool TryGetBuyableEntity(int credit, out EntityData data)
+    {
+        data = null;
+        var table = entityList.Where(x => x.data.normalPrice <= credit);
+        var sum = table.Sum(x => x.weight);
+        var rand = UnityEngine.Random.Range(0, sum);
+        foreach (var item in table)
+        {
+            rand -= item.weight;
+            if (rand <= 0)
+            {
+                data = item.data;
+                return true;
+            }
+        }
+        return false;
     }
 }
 [System.Serializable]

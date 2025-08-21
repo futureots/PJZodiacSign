@@ -10,14 +10,12 @@ namespace PlayerInput
     public class RepairModeInput : IModeInput
     {
         
-        Action<Vector2> bindAction;
         InputManager _inputManager;
 
         public RepairModeInput(InputManager input)
         {
             _inputManager = input;
 
-            bindAction = null;
             moveArea = new();
             attackArea = new();
         }

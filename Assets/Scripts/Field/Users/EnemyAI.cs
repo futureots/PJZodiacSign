@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyAI : Agent
 {
-
+    public ShopTable shopTable;
 
     public override void SetActionTurn(Action call)
     {
@@ -15,6 +15,20 @@ public class EnemyAI : Agent
     public override void SetRepairPhase(int level, Action call)
     {
         // 레벨에 맞는 데이터 가져와서 세팅하는 기능 추가 필요
+        // 보유 크레딧으로 기물 랜덤 구매하기
+        Debug.Log("Enemy Credit : " + Credit);
+        int loopCount = 30;
+        for(int i=0;i<loopCount;i++)
+        {
+            if (shopTable.TryGetBuyableEntity(Credit, out var entity))
+            {
+                Debug.Log($"{Credit} : entity : {entity.normalPrice}");
+                Credit -= entity.normalPrice;
+                data.handEntities.Add(new EntityLevelData(entity));
+            }
+            else break;
+            Credit--;
+        }
         controller.SetInstantField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
         this.RunWithCallback(SetRepairMode(), call);

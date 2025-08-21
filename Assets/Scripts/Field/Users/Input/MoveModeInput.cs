@@ -10,7 +10,6 @@ namespace PlayerInput
     public class MoveModeInput : IModeInput
     {
 
-        Action<InputAction.CallbackContext> bindAction;
         InputManager _inputManager;
 
         public MoveModeInput(InputManager input)
@@ -18,9 +17,7 @@ namespace PlayerInput
             _inputManager = input;
             visualizer = input.areaVisualizer;
 
-
             attackArea = new List<Tile>();
-            bindAction = null;
         }
 
         public void RemoveMode()
