@@ -2,20 +2,14 @@
   "$type": "PlayerData, Assembly-CSharp",
   "fieldEntities": {
     "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityLevelHolder, Assembly-CSharp]], mscorlib",
-    "1": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteBishop",
-      "level": 10
-    },
-    "4": {
+    "1026": {
       "$type": "EntityLevelHolder, Assembly-CSharp",
       "entity": "WhiteRook",
-      "level": 2
+      "level": 1
     },
-
-    "2052": {
+    "2053": {
       "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteQueen",
+      "entity": "WhiteRook",
       "level": 0
     }
   },
@@ -26,13 +20,19 @@
         "$type": "EntityLevelHolder, Assembly-CSharp",
         "entity": "WhiteBishop",
         "level": 0
+      },
+      {
+        "$type": "EntityLevelHolder, Assembly-CSharp",
+        "entity": "WhiteBishop",
+        "level": 0
       }
     ]
   },
-  "stageLevel": 5,
+  "stageLevel": 2,
   "items": {
-    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
-    "$values": [ "Scroll", "Warp" ]
+    "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.String, mscorlib]], mscorlib",
+    "0": "Enhance",
+    "2": "Scroll"
   },
-  "credit": 9527
+  "credit": 40
 }

@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 528285947572437199}
+  ShopToggleBtn: {fileID: 5797272343658502129}
   entityUI: {fileID: 5699706076091894260, guid: 81ed8dcffc0464a4bafd2e0bf45393d1, type: 3}
   itemUI: {fileID: 6130968895582846546, guid: d3e4e8f442abf274f81de9f44c01aad3, type: 3}
   entityShop: {fileID: 8763476463084477363}

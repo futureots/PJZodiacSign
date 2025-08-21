@@ -4,17 +4,20 @@ using UnityEngine.UI;
 
 public class ItemGoodsUI : GoodsUI<ItemData>
 {
-
-
-
-    public override void SetGoods(ItemData data)
+    public override void SetGoods(ItemData data, Agent customer)
     {
         buyBtn.onClick.RemoveAllListeners();
-        base.SetGoods(data);
+        base.SetGoods(data, customer);
         buyBtn.onClick.AddListener(() =>
         {
-            var agent = transform.root.GetComponent<Agent>();
-            agent.BuyItem(data,price);
+            if (customer.inventory.AddItem(data))
+            {
+                customer.Credit -= price;
+            }
+            else
+            {
+                Debug.Log("인벤토리에 빈 공간이 없습니다!");
+            }
         });
     }
 }

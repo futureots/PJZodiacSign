@@ -7,7 +7,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 
 public class InputManager : Agent
@@ -16,103 +15,152 @@ public class InputManager : Agent
 
     public GameInputActions inputActions { get; private set; }
 
-
     public Mode currentMode;
     IModeInput curModeState;
 
-    // ÀÔ·Â Ç¥½ÃÀÚ
+    // ì…ë ¥ í‘œì‹œê¸°
     public AreaVisualizer areaVisualizer;
 
-    // Ç¥½Ã ÀÌÆåÆ®
+    // í‘œì‹œ ì˜¤ë¸Œì íŠ¸
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
 
-    // UI ÆĞ³Î
+    // UI ìš”ì†Œ
     [Header("UI Element")]
     public Button turnEndButton;
     public UIContainer UI;
     public GameObject cam;
 
 
-
     protected new void Awake()
     {
         base.Awake();
         inputActions = new GameInputActions();
-
     }
+
     private void Start()
     {
-        //inputActions.Gameplay.Click.started += value => HandleClick(PointerPosition);
+        // ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œì‘ ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°
+        inputActions.Gameplay.Click.started += StartClick;
 
-        // ¿ÀºêÁ§Æ® Å¬¸¯ ½Ã ¿ÀºêÁ§Æ® ÀÌº¥Æ® Æ®¸®°Å
-        inputActions.Gameplay.Click.started += value =>
-        {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-            
-            Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
-            // ºÎµúÈù ±â¹°, (Å¸ÀÏ) UI Ç¥½Ã 
-            if (Physics.Raycast(ray, out var hit))
-            {
-                var other = hit.collider.gameObject;
-                OnObjectClicked?.Invoke(other);
-            }
-            else OnObjectClicked?.Invoke(null);
-        };
+        // ë§ˆìš°ìŠ¤ í´ë¦­ ì·¨ì†Œ ì‹œ ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°
+        inputActions.Gameplay.Click.canceled += CancelClick;
 
-        // ¸¶¿ì½º µå·Ó ½Ã µå·Ó ÀÌº¥Æ® Æ®¸®°Å
-        inputActions.Gameplay.Click.canceled += value => OnMouseUp?.Invoke();
-
-        inputActions.Gameplay.Point.performed += value =>
-        {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-
-            PointerPosition = value.ReadValue<Vector2>();
-            OnMouseMove?.Invoke(PointerPosition);
-        };
+        inputActions.Gameplay.Point.performed += MoveMouse;
 
         OnObjectClicked.AddListener(HandleClick);
-        
     }
+    #region InputPackaging
 
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œì‘
+    /// </summary>
+    /// <param name="context"></param>
+    void StartClick(InputAction.CallbackContext context)
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
+        // ë ˆì´ìºìŠ¤íŠ¸ ê¸°ë¬¼, (íƒ€ì¼) UI í‘œì‹œ 
+        if (Physics.Raycast(ray, out var hit))
+        {
+            var other = hit.collider.gameObject;
+            OnObjectClicked?.Invoke(other);
+        }
+        else OnObjectClicked?.Invoke(null);
+    }
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ ì·¨ì†Œ
+    /// </summary>
+    /// <param name="context"></param>
+    void CancelClick(InputAction.CallbackContext context)
+    {
+        OnMouseUp?.Invoke();
+    }
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ ì´ë™
+    /// </summary>
+    /// <param name="context"></param>
+    void MoveMouse(InputAction.CallbackContext context)
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        PointerPosition = context.ReadValue<Vector2>();
+        OnMouseMove?.Invoke(PointerPosition);
+    }
 
     private void OnEnable() => inputActions.Enable();
     private void OnDisable() => inputActions.Disable();
 
-    /// <summary>
-    /// º¤ÅÍ°ª¿¡¼­ °¡Àå °¡±î¿î Å¸ÀÏ ¹İÈ¯
-    /// </summary>
-    /// <param name="pos"></param>
-    /// <param name="tiles"></param>
-    /// <returns></returns>
-    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    #endregion
+
+    #region Phase
+
+    public override void SetRepairPhase(int level, Action call)
     {
-        float minDistance = 0;
-        Tile closestTile = null;
-        foreach (Tile tile in tiles)
+        controller.SetInstantField(data.handEntities);
+        controller.SetMainField(data.fieldEntities);
+
+        cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
+        
+
+        controller.OnCommandCreated += ExecuteCommand;
+
+        SetInputMode(Mode.Repair);
+        turnEndButton.onClick.AddListener(() =>
         {
-            var distance = (tile.transform.position - pos).magnitude;
-            if (closestTile == null || minDistance > distance)
-            {
-                minDistance = distance;
-                closestTile = tile;
-            }
-        }
-        return closestTile;
+            turnEndButton.onClick.RemoveAllListeners();
+            call?.Invoke();
+        });
     }
 
-    public override void SetRepairField(int level)
+    public override void EndRepairPhase()
     {
-        base.SetRepairField(level);
-        cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
-        UI.shop.SetShop(level);
+        SetInputMode(Mode.None);
+        controller.UpdateEntities();
+        // ê¸°ë¬¼ ë°ì´í„°ëŠ” ì €ì¥ ì‹œ ì €ì¥ì†Œ ì—…ë°ì´íŠ¸
+        var (field, hand) = controller.GetFieldData();
+        data.fieldEntities = field;
+        data.handEntities = hand;
+        cam.transform.DOLocalMove(Vector3.zero, 1f);
+
+        controller.OnCommandCreated -= ExecuteCommand;
+
+        base.EndRepairPhase();
     }
+    void ExecuteCommand(Command command)
+    {
+        Debug.Log("Command Execute");
+        command?.Execute();
+        SetInputMode(Mode.Repair);
+    }
+
+    public override void SetActionTurn(Action call)
+    {
+        SetInputMode(Mode.Move);
+        Action<Command> bind = (x) =>
+        {
+            SetInputMode(Mode.Move);
+            turnEndButton.interactable = true;
+        };
+        controller.OnCommandCreated += bind;
+        turnEndButton.onClick.AddListener(() =>
+        {
+            SetInputMode(Mode.None);
+            controller.OnCommandCreated -= bind;
+            turnEndButton.onClick.RemoveAllListeners();
+            call?.Invoke();
+        });
+        turnEndButton.interactable = false;
+    }
+
+    #endregion
 
     #region InputMode
 
     /// <summary>
-    /// ¸ğµå º¯°æ ¹× ÀÔ·Â ¼¼ÆÃ(½ºÅ³ ÀÔ·ÂÀº Á¦¿Ü)
+    /// ì…ë ¥ ëª¨ë“œ ì„¤ì •(ì´ë™ ì…ë ¥, ìŠ¤í‚¬ ì…ë ¥)
     /// </summary>
     public void SetInputMode(Mode mode)
     {
@@ -132,40 +180,26 @@ public class InputManager : Agent
         }
         curModeState.SetMode();
     }
+    
     public void SetInputMode(IActive active)
     {
+
         curModeState?.RemoveMode();
-        currentMode = Mode.Active;
-        curModeState = new SkillModeInput(this, active);
+
+        Mode skillEndMode = Mode.None;
+        if (PhaseManager.curPhase == PhaseType.Repair) skillEndMode = Mode.Repair;
+        else if (PhaseManager.curPhase == PhaseType.Battle) skillEndMode = Mode.Move;
+
+        curModeState = new SkillModeInput(this, active, skillEndMode);
+        currentMode = Mode.Skill;
         curModeState.SetMode();
     }
-    public override void SetMode(Mode mode, Action call)
-    {
-        SetInputMode(mode);
-        turnEndButton.onClick.AddListener(() =>
-        {
-            turnEndButton.onClick.RemoveAllListeners();
-            call?.Invoke();
-        });
-    }
-
-    public override void EndRepair()
-    {
-        controller.UpdateEntities();
-        // ±â¹° µ¥ÀÌÅÍ´Â Á¤ºñ ÅÏ Á¾·á ½Ã ¾÷µ¥ÀÌÆ®
-        var (field, hand) = controller.GetFieldData();
-        data.fieldEntities = field;
-        data.handEntities = hand;
-        cam.transform.DOLocalMove(Vector3.zero, 1f);
-        base.EndRepair();
-    }
-
     #endregion
 
     #region ClickInfo
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ®°¡ ±â¹°ÀÌ¸é ±â¹° Á¤º¸ Ç¥½Ã, ¾Æ´Ï¸é Á¤º¸ ÆĞ³Î Á¦°Å
+    /// ì˜¤ë¸Œì íŠ¸ê°€ ê¸°ë¬¼ì´ë©´ ê¸°ë¬¼ ì •ë³´ í‘œì‹œ, ì•„ë‹ˆë©´ ì •ë³´ íŒ¨ë„ ìˆ¨ê¹€
     /// </summary>
     void HandleClick(GameObject obj)
     {
@@ -187,18 +221,39 @@ public class InputManager : Agent
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® Å¬¸¯ ½Ã Æ®¸®°Å
+    /// ì˜¤ë¸Œì íŠ¸ í´ë¦­ ì‹œ ì´ë²¤íŠ¸
     /// </summary>
     public UnityEvent<GameObject> OnObjectClicked;
     /// <summary>
-    /// ¸¶¿ì½º µå·Ó ½Ã
+    /// ë§ˆìš°ìŠ¤ ë²„íŠ¼ ì—…
     /// </summary>
     public UnityEvent OnMouseUp;
     /// <summary>
-    /// ¸¶¿ì½º ¿òÁ÷ÀÏ ¶§¸¶´Ù Æ®¸®°Å
+    /// ë§ˆìš°ìŠ¤ ì´ë™ ì‹œ ì´ë²¤íŠ¸
     /// </summary>
     public UnityEvent<Vector2> OnMouseMove;
 
-    
+
     #endregion
+    /// <summary>
+    /// ê°€ì¥ ê°€ê¹Œìš´ íƒ€ì¼ ë°˜í™˜
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
+    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    {
+        float minDistance = 0;
+        Tile closestTile = null;
+        foreach (Tile tile in tiles)
+        {
+            var distance = (tile.transform.position - pos).magnitude;
+            if (closestTile == null || minDistance > distance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
 }

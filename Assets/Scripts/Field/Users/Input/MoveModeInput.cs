@@ -4,14 +4,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace PlayerInput
 {
     public class MoveModeInput : IModeInput
     {
 
-        Action<InputAction.CallbackContext> bindAction;
         InputManager _inputManager;
 
         public MoveModeInput(InputManager input)
@@ -19,21 +17,17 @@ namespace PlayerInput
             _inputManager = input;
             visualizer = input.areaVisualizer;
 
-
             attackArea = new List<Tile>();
-            bindAction = null;
         }
 
         public void RemoveMode()
         {
-            Debug.Log("RemoveMoveMode");
             _inputManager.OnObjectClicked.RemoveListener(DragStart);
             _inputManager.OnMouseUp.RemoveListener(DragEnd);
         }
 
         public void SetMode()
         {
-            Debug.Log("SetMoveMode");
             _inputManager.OnObjectClicked.AddListener(DragStart);
             _inputManager.OnMouseUp.AddListener(DragEnd);
 
@@ -55,14 +49,15 @@ namespace PlayerInput
 
             var entity = obj.GetComponent<Entity>();
             if (entity == null) return;
+
             // 적인지 아닌지 구분
             var team = _inputManager.team;
             if (!team.isAlly(entity.team)) return;
             _selectedEntity = entity;
 
-            targetSelecter = UnityEngine.Object.Instantiate(_inputManager.entitySelecter, entity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
-            targetTileSelecter = UnityEngine.Object.Instantiate(_inputManager.tileSelecter, entity.transform.position, Quaternion.identity);
-                    // 기물 이동범위 표시
+            targetSelecter = GameObject.Instantiate(_inputManager.entitySelecter, entity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+            targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter, entity.transform.position, Quaternion.identity);
+            // 기물 이동범위 표시
             moveArea = entity.GetMoveArea();
             _inputManager.areaVisualizer.ShowMoveArea(moveArea);
             _inputManager.OnMouseMove.AddListener(DragEntity);

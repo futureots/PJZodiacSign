@@ -9,13 +9,6 @@ public class ItemData : AbstractData
     {
         return new ItemInstance(this);
     }
-    public UseType type;
+    public PhaseType useType;
 
-}
-[Flags]
-public enum UseType
-{
-    None = 0,
-    Battle = 1 << 0,
-    Repair = 1 << 1
 }

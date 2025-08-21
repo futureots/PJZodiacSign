@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
+    // 0ë²ˆì€ í”Œë ˆì´ì–´ 1ë²ˆì€ ì AI
     public Agent[] agents;
 
     public int level {  get; private set; }
@@ -28,109 +29,111 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        GameStart();
+        StartGame();
     }
     #region GameStart
 
     /// <summary>
-    /// °ÔÀÓ ½ÃÀÛ ¶Ç´Â Àç°³ÇÏ±â(µ¥ÀÌÅÍ ºÒ·¯¿À±â)
+    /// ê²Œì„ ì‹œì‘ ë˜ëŠ” ë‹¤ìŒ ë ˆë²¨(ë ˆë²¨ì´ ì¦ê°€í–ˆì„ ë•Œ)
     /// </summary>
-    public void GameStart()
+    public void StartGame()
     {
-        // °ÔÀÓ¿¡ ÇÊ¿äÇÑ µ¥ÀÌÅÍ °¡Á®¿À°Å³ª »ı¼º
+        // ì—ì´ì „íŠ¸ì— í•„ìš”í•œ ë°ì´í„°ë¥¼ ì„¤ì •í•˜ê±°ë‚˜ ë¡œë“œ
         dataManager.LoadAllData("data");
         var list = dataManager.GetData();
+
+        
         for(int i = 0; i < list.Length; i++)
         {
             agents[i].SetData(list[i]);
         }
         level = dataManager.playerData.stageLevel;
-        // °ÔÀÓ ½ÃÀÛ¿ë ÅÏ »ı¼º
-        var turnManager = GetComponent<TurnManager>();
-        if (turnManager == null) return;
-        turnManager.turns.AddLast(new RepairTurn(level));
-        turnManager.StartTurn();
+
+        // í•´ë‹¹ ë ˆë²¨ì˜ ì •ë¹„ í˜ì´ì¦ˆ ë¶€í„° ì‹œì‘(ì—†ì„ ê²½ìš° 0ë ˆë²¨ë¶€í„° ì‹œì‘)
+        var phaseManager = GetComponent<PhaseManager>();
+        if (phaseManager == null) return;
+        phaseManager.NextLevel(dataManager.playerData.stageLevel);
     }
 
     #endregion
 
     #region GameEnd
     /// <summary>
-    /// °ÔÀÓ Á¾·á ¹× ¸ŞÀÎÈ­¸éÀ¸·Î ÀÌµ¿
+    /// ê²Œì„ ì¢…ë£Œ ì‹œ ì²˜ë¦¬
     /// </summary>
-    void GameEnd()
+    void EndGame()
     {
-
+        Debug.Log("ê²Œì„ ì¢…ë£Œ");
+        // ê²Œì„ ì¢…ë£Œ ì²˜ë¦¬ ë¡œì§ ì¶”ê°€
     }
+    
     IEnumerator GoNextLevel()
     {
         level += 1;
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(3);
 
-        // ÀÌ°Åµµ °³º° Camera¸¶´Ù ÇÊ¿äÇÒ ¼ö ÀÖÀ½
+        // ì´ë²¤íŠ¸ ë°œìƒ ì „ Camera ê´€ë ¨ ì²˜ë¦¬
         if(hpManager != null) hpManager.ClearHpBar();
 
+        
         OnNextLevel?.Invoke(level);
     }
+    
     public static Action<int> OnNextLevel;
-    public bool CheckGameEnd()
-    {
-        if (IsGameEnd(out int winner))
-        {
-            Agent winAgent = null;
-            for(int i = 0; i < agents.Length; i++)
-            {
-                if (agents[i].team.teamNumber == winner) winAgent = agents[i];
-            }
-            if(winAgent == null) return false;
-            if (winAgent is InputManager)
-            {
-                Debug.Log("½Â¸®");
-                // µ¥ÀÌÅÍ ÀúÀå
-                dataManager.SetData(winAgent.GetAgentData(), level);
-                dataManager.SaveAllData("Data");
+    
 
-                StartCoroutine(GoNextLevel());
-            }
-            else
-            {
-                Debug.Log("ÆĞ¹è...");
-                GameEnd();
-            }
-            return true;
-        }
-        return false;
-    }
-    public bool IsGameEnd(out int winner)
+    
+    public bool HasGameEnded(out Agent winner)
     {
         var tiles = _field.GetTiles();
-        bool isEnd = false;
-        List<int> teams = new List<int>();
-        foreach (var tile in tiles)
-        {
-            if (tile.isEmpty) continue;
-            var entityTeam = tile.occupiedObject.GetComponent<Team>();
-            if (entityTeam == null) continue;
-            if (!teams.Contains(entityTeam.teamNumber))
-            {
-                teams.Add(entityTeam.teamNumber);
-            }
-        }
+        
+        // LINQë¥¼ ì‚¬ìš©í•´ì„œ í•„ë“œì— ë‚¨ì•„ìˆëŠ” íŒ€ ë²ˆí˜¸ë“¤ì„ ìˆ˜ì§‘
+        var teams = tiles
+            .Where(t => !t.isEmpty)
+            .Select(t => t.occupiedObject.GetComponent<Team>())
+            .Where(t => t != null)
+            .Select(t => t.teamNumber)
+            .Distinct()
+            .ToList();
+        
+        // íŒ€ì´ í•˜ë‚˜ë§Œ ë‚¨ì•„ìˆë‹¤ë©´ ìŠ¹ë¦¬ ì¡°ê±´
         if (teams.Count == 1)
         {
-            winner = teams[0];
-            isEnd = true;
+            // LINQ FirstOrDefaultë¥¼ ì‚¬ìš©í•´ì„œ í•´ë‹¹ íŒ€ì˜ ì—ì´ì „íŠ¸ë¥¼ ì°¾ê¸°
+            winner = agents.FirstOrDefault(a => a.team.teamNumber == teams[0]);
+            return winner != null;
         }
-        else
-        {
-            winner = -1;
-        }
-        return isEnd;
+
+        winner = null;
+        return false;
     }
     
     /// <summary>
-    /// ±â¹°ÀÇ Ã¼·Â¹Ù UI ¼¼ÆÃ, ÀÓ½Ã·Î mainÄ«¸Ş¶ó¿¡¸¸ ¼¼ÆÃ ³ªÁß¿¡ Ä«¸Ş¶ó º° ¼¼ÆÃ Ãß°¡ ¿¹Á¤(¸ÖÆ¼ ÀÏ¶§¸¸)
+    /// ì „íˆ¬ ìŠ¹ë¦¬ ì‹œ ë‹¤ìŒ ë ˆë²¨ë¡œ ì§„í–‰ (BattlePhaseìš©)
     /// </summary>
+    public bool HandleBattleVictory(Agent winner)
+    {
+        if (winner is InputManager)
+        {
+            Debug.Log("ì „íˆ¬ ìŠ¹ë¦¬! ë‹¤ìŒ ë ˆë²¨ë¡œ ì§„í–‰í•©ë‹ˆë‹¤.");
+            
+            // í”Œë ˆì´ì–´ ë°ì´í„° ì €ì¥
+            dataManager.SetData(winner.UpdateAgentData(), level);
+            dataManager.SaveAllData("Data");
+            
+            // ë‹¤ìŒ ë ˆë²¨ë¡œ ì§„í–‰
+            StartCoroutine(GoNextLevel());
+            return true;
+        }
+        else
+        {
+            Debug.Log("ê²Œì„ ì˜¤ë²„...");
+            EndGame();
+            return false;
+        }
+    }
+    
+
     public void SetEntityHpBar()
     {
         if (hpManager == null) return;

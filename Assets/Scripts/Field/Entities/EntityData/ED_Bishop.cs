@@ -8,7 +8,7 @@ public class ED_Bishop : EntityData
     {
         var entity = CreateInstance();
         entity.AddComponent<BishopArea>();
-        entity.SetEntity(this, level);
+        entity.InitializeEntity(this, level);
         return entity;
     }
 }

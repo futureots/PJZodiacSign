@@ -14,18 +14,17 @@ public class ActionTurn : ITurn
     {
         Debug.Log(agent.tag + "행동 턴 시작");
         // 현재 플레이어의 행동 턴 일 경우
-        agent.SetMode(Mode.Move, () => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
+        agent.SetActionTurn(() => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
+
         foreach (var entity in agent.controller.entities)
         {
             entity.CurEnergy += 1;
         }
-        
     }
     public IEnumerator ActionCoroutine()
     {
         Debug.Log(agent.tag +" 행동 턴 실행");
         agent.isInputStop = true;
-        agent.SetMode(Mode.None);
         
 
         var cmd = agent.GetCommand();

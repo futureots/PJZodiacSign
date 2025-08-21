@@ -53,17 +53,12 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
         if (!tile.isEmpty) return false;
         return true;
     }
-    public override void Reinitialize()
-    {
-        Debug.Log("Reinitialize");
-        entity = null;
-        tile = null;
-    }
+    
 
     public override bool CanSkillInput(Field field)
     {
         var entities = field.GetOccupiedObjects();
-        var list = field.GetFieldInfo();
+        var list = field.GetFieldState();
         foreach (var item in list)
         {
             if (item == 0) return true;

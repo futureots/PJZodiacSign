@@ -1,20 +1,20 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.Rendering.DebugUI;
 
 public class EntityController : MonoBehaviour
 {
-    // ÇÊµå¸¦ ¹Ù¶óº¸´Â ¹æÇâ
+    // í•„ë“œë¥¼ ê±°ìš¸ì²˜ëŸ¼ ë³´ëŠ” ë°©í–¥
     public bool isReflect;
     
-    // ÇöÀç º¸À¯ ±â¹° ÇÊµå(¼³Ä¡ X)
+    // ì†ì— ë“¤ê³  ìˆëŠ” ê¸°ë¬¼ í•„ë“œ(ìœ„ì¹˜ X)
     public Field instantField;
 
-    // ÄÁÆ®·Ñ·¯°¡ Á¶Á¾ °¡´ÉÇÑ ¿£Æ¼Æ¼
+    // íŒ€ì— ì†í•œ ëª¨ë“  ê¸°ë¬¼ë“¤
     public List<Entity> entities;
-    // ÄÁÆ®·Ñ·¯ ÆÀ
+    // íŒ€ ë²ˆí˜¸
     [SerializeField]Team team;
     private void Awake()
     {
@@ -24,10 +24,10 @@ public class EntityController : MonoBehaviour
 
     #region EntityManaging
     /// <summary>
-    /// ±â¹°À» ³» °íÀ¯ ÇÊµå¿¡ ¹èÄ¡ÇÏ´Â ÇÔ¼ö
+    /// ê¸°ë¬¼ì„ ì†ì— ë“¤ê³  ìˆëŠ” í•„ë“œì— ë°°ì¹˜í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
-    /// <param name="instance">±â¹° ¿ÀºêÁ§Æ®</param>
-    /// <returns>¹èÄ¡ ¼º°ø ½Ã true, ½ÇÆĞ ½Ã false ¹İÈ¯</returns>
+    /// <param name="instance">ê¸°ë¬¼ ì¸ìŠ¤í„´ìŠ¤</param>
+    /// <returns>ë°°ì¹˜ ì„±ê³µ ì‹œ true, ì‹¤íŒ¨ ì‹œ false ë°˜í™˜</returns>
     public bool PlaceOnInstantField(Entity instance)
     {
         for (int i = instantField.row - 1; i >= 0; i--)
@@ -63,6 +63,9 @@ public class EntityController : MonoBehaviour
     {
         instance.MoveTo(tile);
         instance.isReflect = isReflect;
+
+        instance.sourceField = tile.field;
+
         instance.OnDead += () =>
         {
             entities.Remove(instance);
@@ -91,7 +94,7 @@ public class EntityController : MonoBehaviour
     public virtual void DisposeInstantField()
     {
         Debug.Log("DIsposeInstantField");
-        instantField.EraseField();
+        instantField.ResetField();
         instantField.gameObject.SetActive(false);
     }
 
@@ -115,7 +118,7 @@ public class EntityController : MonoBehaviour
     #region Data
     public (Dictionary<int,EntityLevelData>, List<EntityLevelData>) GetFieldData()
     {
-        // ¸ŞÀÎ ÇÊµå µ¥ÀÌÅÍ °¡Á®¿À±â
+        // ë©”ì¸ í•„ë“œ ë°ì´í„°ë¥¼ ë”•ì…”ë„ˆë¦¬ë¡œ ë³€í™˜
         Dictionary<int, EntityLevelData> mainFieldData = new Dictionary<int, EntityLevelData>();
         UpdateEntities();
         foreach (var entity in entities)
@@ -125,7 +128,7 @@ public class EntityController : MonoBehaviour
             mainFieldData.Add(pos, entityData);
         }
 
-        //ÀÎ½ºÅÏÆ® ÇÊµå µ¥ÀÌÅÍ °¡Á®¿À±â
+        //ì¸ìŠ¤í„´íŠ¸ í•„ë“œ ë°ì´í„°ë¥¼ ë¦¬ìŠ¤íŠ¸ë¡œ ë³€í™˜
         List<EntityLevelData> instantFieldData = new List<EntityLevelData>();
         foreach (var tile in instantField.GetTiles())
         {
@@ -139,7 +142,7 @@ public class EntityController : MonoBehaviour
     #endregion
 
     #region Command
-    // ÇöÀç ÀúÀåµÈ ¸í·É 
+    // í˜„ì¬ ìƒì„±ëœ ì»¤ë§¨ë“œ 
     public Command curCmd
     {
         get
@@ -150,24 +153,26 @@ public class EntityController : MonoBehaviour
         {
             _curCmd?.Delete();
             _curCmd = value;
+            OnCommandCreated?.Invoke(_curCmd);
         }
     }
     Command _curCmd;
+    public Action<Command> OnCommandCreated;
 
-    // ÀÌµ¿ ¸í·É »ı¼º
+    // ì´ë™ ì»¤ë§¨ë“œ ìƒì„±
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)
     {
         Command cmd = new MoveCommand(entity, tile);
-        curCmd = cmd;
         cmd.selecterObjects.AddRange(selecter);
+        curCmd = cmd;
         return cmd;
     }
-    // ½ºÅ³ ¸í·É »ı¼º
+    // ìŠ¤í‚¬ ì»¤ë§¨ë“œ ìƒì„±
     public Command CreateCommand(IActive skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
-        curCmd = cmd;
         cmd.selecterObjects.AddRange(selecter);
+        curCmd = cmd;
         return cmd;
     }
     public void ClearCommand()

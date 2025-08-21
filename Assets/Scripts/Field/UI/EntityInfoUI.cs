@@ -56,23 +56,32 @@ public class EntityInfoUI : MonoBehaviour
         skillInfo.SetSkillUI(entity.skillData);
         buffList.SetBuffUI(entity.buffList);
 
-
+        bool isSkillUsable = false;
+        entitySkillBtn.onClick.RemoveAllListeners();
         // 스킬 버튼 활성화
-        if (team.isAlly(entity.team))
+        if (PhaseManager.curPhase == PhaseType.Battle)
         {
-            if (entity.CurEnergy >= entity.SkillCost)
+            if (team.isAlly(entity.team))
             {
-                entitySkillBtn.interactable = true;
+                Debug.Log(team.teamNumber + " : " + entity.team.teamNumber);
+                if (entity.CurEnergy >= entity.SkillCost)
+                {
+                    isSkillUsable = true;
+                }
+                entitySkillBtn.onClick.AddListener(() =>
+                {
+                    transform.root.GetComponent<InputManager>().SetInputMode(entity.GetSkillInstance());
+                });
             }
-            entitySkillBtn.onClick.RemoveAllListeners();
-            entitySkillBtn.onClick.AddListener(() =>
-            {
-                transform.root.GetComponent<InputManager>().SetInputMode(entity.skillInstance);
-            });
+
+        }
+
+        if (isSkillUsable)
+        {
+            entitySkillBtn.interactable = true;
         }
         else
         {
-            // 스킬 버튼 비활성화(스킬 아이콘을 통해 스킬 설명을 확인할 수 있음)
             entitySkillBtn.interactable = false;
         }
     }
