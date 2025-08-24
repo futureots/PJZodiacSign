@@ -13,7 +13,7 @@ public class PhaseManager : MonoBehaviour
     private void Awake()
     {
         phases = new LinkedList<IPhase>();
-        GameManager.OnNextLevel += NextLevel;
+        
         curPhase = PhaseType.None;
     }
     
@@ -60,7 +60,14 @@ public class PhaseManager : MonoBehaviour
         // 첫 번째 페이즈 시작
         BeginPhase();
     }
-    
+    private void OnEnable()
+    {
+        GameManager.onNextLevel += NextLevel;
+    }
+    private void OnDisable()
+    {
+        GameManager.onNextLevel -= NextLevel;
+    }
 }
 [Flags]
 public enum PhaseType

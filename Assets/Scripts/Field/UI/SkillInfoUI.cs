@@ -10,8 +10,16 @@ public class SkillInfoUI : MonoBehaviour
 
     public void SetSkillUI(BaseSkillData skillData)
     {
-        skillIcon.sprite = skillData.skillIcon;
-        skillTitle.text = skillData.skillName;
-        skillDescription.text = skillData.skillDescription;
+        if (skillData == null)
+        {
+            skillTitle.text = "스킬 없음";
+            skillDescription.text = string.Empty;
+        }
+        else
+        {
+            skillIcon.sprite = skillData.skillIcon;
+            skillTitle.text = skillData.skillName;
+            skillDescription.text = skillData.skillDescription;
+        }
     }
 }

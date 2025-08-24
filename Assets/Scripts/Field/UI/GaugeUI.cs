@@ -16,7 +16,14 @@ public class GaugeUI : MonoBehaviour
 
     public void SetGauge(int value, int max)
     {
-        gaugeBar.fillAmount = Mathf.Min((float)value / max,1);
+        if(value == 0)
+        {
+            gaugeBar.fillAmount = 0;
+        }
+        else
+        {
+            gaugeBar.fillAmount = Mathf.Min((float)value / max, 1);
+        }
         if (gaugeText != null)
         {
             gaugeText.text = $"{value} / {max}";

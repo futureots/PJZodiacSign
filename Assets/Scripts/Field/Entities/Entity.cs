@@ -42,6 +42,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <summary>skillData의 인스턴스</summary>
     public IActive GetSkillInstance()
     {
+        if (skillData == null) return null;
         var skillInstance = skillData.CreateInstance();
         skillInstance.AddCallback(x => {
             if (x)
@@ -78,7 +79,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// 기물 초기화, 스킬 설정
     /// </summary>
     /// <param name="data">기물 데이터</param>
-    /// <param name="level">기물의 레벨</param>
+    /// <param name="
+    /// 
+    /// 
+    /// ">기물의 레벨</param>
     public void InitializeEntity(EntityData data, int level =0)
     {
         this.data = data;
@@ -102,7 +106,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
 
     /// <summary>죽음 시 호출</summary>
-    public Action OnDead;
+    public Action onDead;
 
     #region Status
     /// <summary>기물의 레벨</summary>
@@ -112,12 +116,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         set
         {
             _level = value;
-            OnLevelChanged?.Invoke(_level);
+            onLevelChanged?.Invoke(_level);
             UpdateEntity();
         }
     }
     
-    public Action<int> OnLevelChanged;
+    public Action<int> onLevelChanged;
     /// <summary>공격력</summary>
     [SerializeField] int _power;
     public int Power
@@ -126,10 +130,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         set
         {
             _power = value;
-            OnPowerChanged?.Invoke(_power);
+            onPowerChanged?.Invoke(_power);
         }
     }
-    public Action<int> OnPowerChanged;
+    public Action<int> onPowerChanged;
     /// <summary>최대 체력</summary>
     [SerializeField] int _maxHp;
     public int MaxHp
@@ -138,7 +142,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         set
         {
             _maxHp = value;
-            OnHpChanged?.Invoke(CurHp, _maxHp);
+            onHpChanged?.Invoke(CurHp, _maxHp);
         }
     }
     /// <summary>현재 체력</summary>
@@ -149,10 +153,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         set
         {
             _curHp = value;
-            OnHpChanged?.Invoke(_curHp, MaxHp);
+            onHpChanged?.Invoke(_curHp, MaxHp);
         }
     }
-    public Action<int, int> OnHpChanged;
+    public Action<int, int> onHpChanged;
     /// <summary>현재 에너지</summary>
     [SerializeField] int _curEnergy;
     public int CurEnergy
@@ -161,7 +165,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         set
         {
             _curEnergy = value;
-            OnEnergyChanged?.Invoke(_curEnergy, SkillCost);
+            onEnergyChanged?.Invoke(_curEnergy, SkillCost);
         }
     }
     /// <summary>스킬 비용</summary>
@@ -172,10 +176,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         set
         {
             _skillCost = value;
-            OnEnergyChanged?.Invoke(CurEnergy, _skillCost);
+            onEnergyChanged?.Invoke(CurEnergy, _skillCost);
         }
     }
-    public Action<int, int> OnEnergyChanged;
+    public Action<int, int> onEnergyChanged;
     #endregion
 
     #region Buff
@@ -295,7 +299,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Dead()
     {
-        OnDead?.Invoke();
+        onDead?.Invoke();
         Destroy(gameObject);
     }
 

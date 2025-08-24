@@ -66,7 +66,7 @@ public class EntityController : MonoBehaviour
 
         instance.sourceField = tile.field;
 
-        instance.OnDead += () =>
+        instance.onDead += () =>
         {
             entities.Remove(instance);
         };
@@ -153,11 +153,11 @@ public class EntityController : MonoBehaviour
         {
             _curCmd?.Delete();
             _curCmd = value;
-            OnCommandCreated?.Invoke(_curCmd);
+            onCommandCreated?.Invoke(_curCmd);
         }
     }
     Command _curCmd;
-    public Action<Command> OnCommandCreated;
+    public Action<Command> onCommandCreated;
 
     // 이동 커맨드 생성
     public Command CreateCommand(Entity entity, Tile tile, params GameObject[] selecter)

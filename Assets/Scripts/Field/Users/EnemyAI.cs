@@ -120,6 +120,7 @@ public class EnemyAI : Agent
         Entities = new List<Entity>();
         foreach (var item in controller.entities)
         {
+            if (item.skillData == null) continue;
             if (item.CurEnergy > item.SkillCost)
             {
                 if (item.GetSkillInstance().CanSkillInput(GameManager.Instance.field))

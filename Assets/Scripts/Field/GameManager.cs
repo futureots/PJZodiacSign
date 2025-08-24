@@ -52,7 +52,8 @@ public class GameManager : Singleton<GameManager>
         // 해당 레벨의 정비 페이즈 부터 시작(없을 경우 0레벨부터 시작)
         var phaseManager = GetComponent<PhaseManager>();
         if (phaseManager == null) return;
-        phaseManager.NextLevel(dataManager.playerData.stageLevel);
+        onNextLevel?.Invoke(level);
+        //phaseManager.NextLevel(dataManager.playerData.stageLevel);
     }
 
     #endregion
@@ -75,11 +76,10 @@ public class GameManager : Singleton<GameManager>
         // 이벤트 발생 전 Camera 관련 처리
         if(hpManager != null) hpManager.ClearHpBar();
 
-        
-        OnNextLevel?.Invoke(level);
+        onNextLevel?.Invoke(level);
     }
     
-    public static Action<int> OnNextLevel;
+    public static Action<int> onNextLevel;
     
 
     

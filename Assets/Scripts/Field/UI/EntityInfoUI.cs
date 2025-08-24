@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -32,26 +33,26 @@ public class EntityInfoUI : MonoBehaviour
     {
         if (selectedEntity != null)
         {
-            selectedEntity.OnHpChanged -= hpBar.SetGauge;
-            selectedEntity.OnEnergyChanged -= energyBar.SetGauge;
-            selectedEntity.OnPowerChanged -= SetPowerText;
-            selectedEntity.OnLevelChanged -= UpdateLevelText;
+            selectedEntity.onHpChanged -= hpBar.SetGauge;
+            selectedEntity.onEnergyChanged -= energyBar.SetGauge;
+            selectedEntity.onPowerChanged -= SetPowerText;
+            selectedEntity.onLevelChanged -= UpdateLevelText;
         }
 
         selectedEntity = entity;
         InfoPanel.SetActive(true);
         // 정보 표시
         UpdateLevelText(selectedEntity.Level);
-        selectedEntity.OnLevelChanged += UpdateLevelText;
+        selectedEntity.onLevelChanged += UpdateLevelText;
 
         hpBar.SetGauge(entity.CurHp, entity.MaxHp);
-        entity.OnHpChanged += hpBar.SetGauge;
+        entity.onHpChanged += hpBar.SetGauge;
 
         energyBar.SetGauge(entity.CurEnergy, entity.SkillCost);
-        entity.OnEnergyChanged += energyBar.SetGauge;
+        entity.onEnergyChanged += energyBar.SetGauge;
 
         SetPowerText(entity.Power);
-        entity.OnPowerChanged += SetPowerText;
+        entity.onPowerChanged += SetPowerText;
 
         skillInfo.SetSkillUI(entity.skillData);
         buffList.SetBuffUI(entity.buffList);
@@ -64,14 +65,17 @@ public class EntityInfoUI : MonoBehaviour
             if (team.isAlly(entity.team))
             {
                 Debug.Log(team.teamNumber + " : " + entity.team.teamNumber);
-                if (entity.CurEnergy >= entity.SkillCost)
+                if (entity.skillData != null)
                 {
-                    isSkillUsable = true;
+                    if (entity.CurEnergy >= entity.SkillCost)
+                    {
+                        isSkillUsable = true;
+                    }
+                    entitySkillBtn.onClick.AddListener(() =>
+                    {
+                        transform.root.GetComponent<InputManager>().SetInputMode(entity.GetSkillInstance());
+                    });
                 }
-                entitySkillBtn.onClick.AddListener(() =>
-                {
-                    transform.root.GetComponent<InputManager>().SetInputMode(entity.GetSkillInstance());
-                });
             }
 
         }

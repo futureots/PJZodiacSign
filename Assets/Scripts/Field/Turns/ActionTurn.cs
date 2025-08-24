@@ -18,7 +18,7 @@ public class ActionTurn : ITurn
 
         foreach (var entity in agent.controller.entities)
         {
-            entity.CurEnergy += 1;
+            entity.CurEnergy = Mathf.Min(entity.CurEnergy + 1, entity.SkillCost);
         }
     }
     public IEnumerator ActionCoroutine()

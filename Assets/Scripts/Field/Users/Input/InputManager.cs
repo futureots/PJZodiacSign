@@ -105,7 +105,7 @@ public class InputManager : Agent
         cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
         
 
-        controller.OnCommandCreated += ExecuteCommand;
+        controller.onCommandCreated += ExecuteCommand;
 
         SetInputMode(Mode.Repair);
         turnEndButton.onClick.AddListener(() =>
@@ -125,7 +125,7 @@ public class InputManager : Agent
         data.handEntities = hand;
         cam.transform.DOLocalMove(Vector3.zero, 1f);
 
-        controller.OnCommandCreated -= ExecuteCommand;
+        controller.onCommandCreated -= ExecuteCommand;
 
         base.EndRepairPhase();
     }
@@ -144,11 +144,11 @@ public class InputManager : Agent
             SetInputMode(Mode.Move);
             turnEndButton.interactable = true;
         };
-        controller.OnCommandCreated += bind;
+        controller.onCommandCreated += bind;
         turnEndButton.onClick.AddListener(() =>
         {
             SetInputMode(Mode.None);
-            controller.OnCommandCreated -= bind;
+            controller.onCommandCreated -= bind;
             turnEndButton.onClick.RemoveAllListeners();
             call?.Invoke();
         });

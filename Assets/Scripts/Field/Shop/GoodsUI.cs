@@ -36,10 +36,10 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
 
     private void OnEnable()
     {
-        customer.OnCreditChanged += UpdateBuyBtn;
+        customer.onCreditChanged += UpdateBuyBtn;
     }
     private void OnDisable()
     {
-        customer.OnCreditChanged -= UpdateBuyBtn;
+        customer.onCreditChanged -= UpdateBuyBtn;
     }
 }

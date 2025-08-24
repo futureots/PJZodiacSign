@@ -64,10 +64,10 @@ public abstract class Agent : MonoBehaviour
         get { return credit; }
         set {
             credit = value;
-            OnCreditChanged?.Invoke(credit);
+            onCreditChanged?.Invoke(credit);
         }
     }
-    public Action<int> OnCreditChanged;
+    public Action<int> onCreditChanged;
 
     #region AgentData
     // 데이터 컨테이너(인벤토리는 사용 X)
@@ -88,7 +88,7 @@ public abstract class Agent : MonoBehaviour
     {
         data = agentData;
         inventory.SetItem(agentData.items);
-        credit = agentData.credit;
+        Credit = agentData.credit;
     }
     
     // 데이터 갱신(기물 갱신, 게임 클리어 시 해당 데이터 저장. 아이템은 게임 클리어 시 갱신 및 저장)

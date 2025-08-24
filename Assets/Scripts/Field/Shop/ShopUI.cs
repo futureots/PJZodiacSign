@@ -24,28 +24,6 @@ public class ShopUI : MonoBehaviour
     private void Awake()
     {
         customer = transform.root.GetComponent<InputManager>();
-        PhaseManager.onPhaseChanged += (x, y) =>
-        {
-            // 페이즈 시작
-            if (y)
-            {
-                if (x is RepairPhase phase)
-                {
-                    ShopToggleBtn.gameObject.SetActive(true);
-                    SetShop(phase.Level);
-                }
-            }
-            // 페이즈 종료
-            else
-            {
-                shopPanel.SetActive(false);
-                ShopToggleBtn.gameObject.SetActive(false);
-            }
-        };
-    }
-    private void Start()
-    {
-
     }
     public void ToggleUI()
     {
@@ -86,8 +64,6 @@ public class ShopUI : MonoBehaviour
         entities = table.GetRandomEntity(3);
         SetShop(entities, items);
     }
-
-
     void SetShop(List<EntityData> entityList, List<ItemData> itemList)
     {
         for (int i = 0; i < entityList.Count; i++)
@@ -125,5 +101,31 @@ public class ShopUI : MonoBehaviour
         }
         for (int i = itemList.Count; i < itemShop.childCount; i++) itemShop.GetChild(i).gameObject.SetActive(false);
     }
+    void PhaseChange(IPhase curPhase, bool start)
+    {
+        // 페이즈 시작
+        if (start)
+        {
+            if (curPhase is RepairPhase phase)
+            {
+                ShopToggleBtn.gameObject.SetActive(true);
+                SetShop(phase.Level);
+            }
+        }
+        // 페이즈 종료
+        else
+        {
+            shopPanel.SetActive(false);
+            ShopToggleBtn.gameObject.SetActive(false);
+        }
+    }
 
+    private void OnEnable()
+    {
+        PhaseManager.onPhaseChanged += PhaseChange;
+    }
+    private void OnDisable()
+    {
+        PhaseManager.onPhaseChanged -= PhaseChange;
+    }
 }
