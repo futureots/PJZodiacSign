@@ -17,6 +17,8 @@ MonoBehaviour:
     weight: 1
   - data: {fileID: 11400000, guid: f7ea33acddff4d24eb4a60c6c518f4b6, type: 2}
     weight: 1
+  - data: {fileID: 11400000, guid: c3f45d8b59654d946b1567d6ac4f6d5a, type: 2}
+    weight: 1
   entityList:
   - data: {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
     weight: 1
@@ -26,3 +28,7 @@ MonoBehaviour:
     weight: 1
   - data: {fileID: 11400000, guid: 494975a0f4d62c649b596f8dc3caf752, type: 2}
     weight: 1
+  - data: {fileID: 11400000, guid: 16c116a67e5399045bb75f15ea3e825a, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 1633ceb1b7c0d11489be71fbdb9c63d7, type: 2}
+    weight: 5

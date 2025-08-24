@@ -1,10 +1,12 @@
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System;
+using DG.Tweening;
 using PlayerInput;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class InputManager : Agent
@@ -13,93 +15,152 @@ public class InputManager : Agent
 
     public GameInputActions inputActions { get; private set; }
 
-
     public Mode currentMode;
     IModeInput curModeState;
 
-    // ÀÔ·Â Ç¥½ÃÀÚ
+    // ì…ë ¥ í‘œì‹œê¸°
     public AreaVisualizer areaVisualizer;
 
-    // Ç¥½Ã ÀÌÆåÆ®
+    // í‘œì‹œ ì˜¤ë¸Œì íŠ¸
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
 
-    // UI ÆĞ³Î
+    // UI ìš”ì†Œ
     [Header("UI Element")]
-    public EntityInfoPanel entityInfoPanel;
     public Button turnEndButton;
     public UIContainer UI;
-    //public GameObject cam;
-
+    public GameObject cam;
 
 
     protected new void Awake()
     {
         base.Awake();
         inputActions = new GameInputActions();
-
     }
+
     private void Start()
     {
-        inputActions.Gameplay.Point.performed += value => PointerPosition = value.ReadValue<Vector2>();
-        inputActions.Gameplay.Click.started += value => HandleClick(PointerPosition);
-        /*bool isDrag = false;
-        inputActions.Gameplay.Click.started += _ =>
-        {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-            isDrag = true;
-            OnUIMouseInputted?.Invoke(PointerPosition, MousePhase.Down);
-        };
-        inputActions.Gameplay.Click.canceled += _ =>
-        {
-            isDrag = false;
-            OnUIMouseInputted?.Invoke(PointerPosition, MousePhase.Up);
-        };
-        inputActions.Gameplay.Point.performed += value =>
-        {
-            PointerPosition = value.ReadValue<Vector2>();
-            OnUIMouseInputted?.Invoke(PointerPosition, isDrag ? MousePhase.Drag : MousePhase.None);
-        };
-        OnUIMouseInputted += (x, y) =>
-        {
-            if(y == MousePhase.Down)
-            {
-                HandleClick(x);
-            }
-        };*/
-    }
+        // ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œì‘ ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°
+        inputActions.Gameplay.Click.started += StartClick;
 
+        // ë§ˆìš°ìŠ¤ í´ë¦­ ì·¨ì†Œ ì‹œ ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°
+        inputActions.Gameplay.Click.canceled += CancelClick;
+
+        inputActions.Gameplay.Point.performed += MoveMouse;
+
+        OnObjectClicked.AddListener(HandleClick);
+    }
+    #region InputPackaging
+
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ ì‹œì‘
+    /// </summary>
+    /// <param name="context"></param>
+    void StartClick(InputAction.CallbackContext context)
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
+        // ë ˆì´ìºìŠ¤íŠ¸ ê¸°ë¬¼, (íƒ€ì¼) UI í‘œì‹œ 
+        if (Physics.Raycast(ray, out var hit))
+        {
+            var other = hit.collider.gameObject;
+            OnObjectClicked?.Invoke(other);
+        }
+        else OnObjectClicked?.Invoke(null);
+    }
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ í´ë¦­ ì·¨ì†Œ
+    /// </summary>
+    /// <param name="context"></param>
+    void CancelClick(InputAction.CallbackContext context)
+    {
+        OnMouseUp?.Invoke();
+    }
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ ì´ë™
+    /// </summary>
+    /// <param name="context"></param>
+    void MoveMouse(InputAction.CallbackContext context)
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        PointerPosition = context.ReadValue<Vector2>();
+        OnMouseMove?.Invoke(PointerPosition);
+    }
 
     private void OnEnable() => inputActions.Enable();
     private void OnDisable() => inputActions.Disable();
 
-    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    #endregion
+
+    #region Phase
+
+    public override void SetRepairPhase(int level, Action call)
     {
-        float minDistance = 0;
-        Tile closestTile = null;
-        foreach (Tile tile in tiles)
+        controller.SetInstantField(data.handEntities);
+        controller.SetMainField(data.fieldEntities);
+
+        cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
+        
+
+        controller.onCommandCreated += ExecuteCommand;
+
+        SetInputMode(Mode.Repair);
+        turnEndButton.onClick.AddListener(() =>
         {
-            var distance = (tile.transform.position - pos).magnitude;
-            if (closestTile == null || minDistance > distance)
-            {
-                minDistance = distance;
-                closestTile = tile;
-            }
-        }
-        return closestTile;
+            turnEndButton.onClick.RemoveAllListeners();
+            call?.Invoke();
+        });
     }
 
-    public override void SetRepairField(int level)
+    public override void EndRepairPhase()
     {
-        base.SetRepairField(level);
-        UI.shop.SetShop(level);
+        SetInputMode(Mode.None);
+        controller.UpdateEntities();
+        // ê¸°ë¬¼ ë°ì´í„°ëŠ” ì €ì¥ ì‹œ ì €ì¥ì†Œ ì—…ë°ì´íŠ¸
+        var (field, hand) = controller.GetFieldData();
+        data.fieldEntities = field;
+        data.handEntities = hand;
+        cam.transform.DOLocalMove(Vector3.zero, 1f);
+
+        controller.onCommandCreated -= ExecuteCommand;
+
+        base.EndRepairPhase();
     }
+    void ExecuteCommand(Command command)
+    {
+        Debug.Log("Command Execute");
+        command?.Execute();
+        SetInputMode(Mode.Repair);
+    }
+
+    public override void SetActionTurn(Action call)
+    {
+        SetInputMode(Mode.Move);
+        Action<Command> bind = (x) =>
+        {
+            SetInputMode(Mode.Move);
+            turnEndButton.interactable = true;
+        };
+        controller.onCommandCreated += bind;
+        turnEndButton.onClick.AddListener(() =>
+        {
+            SetInputMode(Mode.None);
+            controller.onCommandCreated -= bind;
+            turnEndButton.onClick.RemoveAllListeners();
+            call?.Invoke();
+        });
+        turnEndButton.interactable = false;
+    }
+
+    #endregion
 
     #region InputMode
 
     /// <summary>
-    /// ¸ğµå º¯°æ ¹× ÀÔ·Â ¼¼ÆÃ(½ºÅ³ ÀÔ·ÂÀº Á¦¿Ü)
+    /// ì…ë ¥ ëª¨ë“œ ì„¤ì •(ì´ë™ ì…ë ¥, ìŠ¤í‚¬ ì…ë ¥)
     /// </summary>
     public void SetInputMode(Mode mode)
     {
@@ -119,73 +180,80 @@ public class InputManager : Agent
         }
         curModeState.SetMode();
     }
+    
     public void SetInputMode(IActive active)
     {
+
         curModeState?.RemoveMode();
-        currentMode = Mode.Active;
-        curModeState = new SkillModeInput(this, active);
+
+        Mode skillEndMode = Mode.None;
+        if (PhaseManager.curPhase == PhaseType.Repair) skillEndMode = Mode.Repair;
+        else if (PhaseManager.curPhase == PhaseType.Battle) skillEndMode = Mode.Move;
+
+        curModeState = new SkillModeInput(this, active, skillEndMode);
+        currentMode = Mode.Skill;
         curModeState.SetMode();
-    }
-    public override void SetMode(Mode mode, Action call)
-    {
-        SetInputMode(mode);
-        turnEndButton.onClick.AddListener(() =>
-        {
-            turnEndButton.onClick.RemoveAllListeners();
-            call?.Invoke();
-        });
     }
     #endregion
 
     #region ClickInfo
 
-    //public Action<Vector2,MousePhase> OnUIMouseInputted;
     /// <summary>
-    /// Å¬¸¯ ½Ã Ray·Î ºÎµúÈù ±â¹°ÀÇ Á¤º¸ UI Ç¥½ÃÇÏ±â
+    /// ì˜¤ë¸Œì íŠ¸ê°€ ê¸°ë¬¼ì´ë©´ ê¸°ë¬¼ ì •ë³´ í‘œì‹œ, ì•„ë‹ˆë©´ ì •ë³´ íŒ¨ë„ ìˆ¨ê¹€
     /// </summary>
-    private void HandleClick(Vector2 pos)
+    void HandleClick(GameObject obj)
     {
-        Ray ray = Camera.main.ScreenPointToRay(pos);
-        // ºÎµúÈù ±â¹°, (Å¸ÀÏ) UI Ç¥½Ã 
-        if (Physics.Raycast(ray, out var hit))
+        if (obj == null)
         {
-            var entity = hit.collider.GetComponent<Entity>();
-            if (entity != null)
-            {
-                // UI Ç¥½Ã
-                //entityInfoPanel.ShowPanel(entity);
-            }
-            // ´Ù¸¥ Å¬¸¯ °¡´ÉÇÑ ¿ÀºêÁ§Æ® È®ÀÎ
+            UI.entityInfo.HidePanel();
+            return;
+        }
+        var entity = obj.GetComponent<Entity>();
+        if (entity != null)
+        {
+            UI.entityInfo.ShowPanel(entity);
         }
         else
         {
-            
-            entityInfoPanel.HidePanel();
+            UI.entityInfo.HidePanel();
         }
 
     }
-    
+
+    /// <summary>
+    /// ì˜¤ë¸Œì íŠ¸ í´ë¦­ ì‹œ ì´ë²¤íŠ¸
+    /// </summary>
+    public UnityEvent<GameObject> OnObjectClicked;
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ ë²„íŠ¼ ì—…
+    /// </summary>
+    public UnityEvent OnMouseUp;
+    /// <summary>
+    /// ë§ˆìš°ìŠ¤ ì´ë™ ì‹œ ì´ë²¤íŠ¸
+    /// </summary>
+    public UnityEvent<Vector2> OnMouseMove;
 
 
     #endregion
-}
-public enum MousePhase
-{
     /// <summary>
-    /// ¸¶¿ì½º¸¦ ´­·¶À» ¶§
+    /// ê°€ì¥ ê°€ê¹Œìš´ íƒ€ì¼ ë°˜í™˜
     /// </summary>
-    Down,
-    /// <summary>
-    /// ¸¶¿ì½º¸¦ ¶¿ ¶§
-    /// </summary>
-    Up,
-    /// <summary>
-    /// ¸¶¿ì½º µå·¡±×
-    /// </summary>
-    Drag,
-    /// <summary>
-    /// Å¬¸¯ »óÅÂ°¡ ¾Æ´Ò ¶§
-    /// </summary>
-    None,
-    OnUI
+    /// <param name="pos"></param>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
+    public Tile GetClosestTile(Vector3 pos, List<Tile> tiles)
+    {
+        float minDistance = 0;
+        Tile closestTile = null;
+        foreach (Tile tile in tiles)
+        {
+            var distance = (tile.transform.position - pos).magnitude;
+            if (closestTile == null || minDistance > distance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+        return closestTile;
+    }
 }

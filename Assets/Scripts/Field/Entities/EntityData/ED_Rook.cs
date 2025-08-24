@@ -9,7 +9,7 @@ public class ED_Rook : EntityData
         var entity = CreateInstance();
         // 기물 공격, 이동 범위 세팅
         entity.AddComponent<RookArea>();
-        entity.SetEntity(this, level);
+        entity.InitializeEntity(this, level);
 
         return entity;
     }

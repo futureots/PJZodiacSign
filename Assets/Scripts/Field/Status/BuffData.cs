@@ -5,6 +5,8 @@ using UnityEngine;
 //[CreateAssetMenu(fileName = "BuffData", menuName = "Scriptable Objects/Buff/BuffData")]
 public abstract class BuffData : ScriptableObject
 {
+    /// <summary>버프 아이콘</summary>
+    public Sprite buffIcon;
     /// <summary>
     /// 상태이상 적용
     /// </summary>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -10,17 +11,18 @@ namespace PlayerInput
 {
     public class SkillModeInput : IModeInput
     {
+        Mode prevMode;
+
         IActive skill;
         Action<InputAction.CallbackContext> bindAction;
 
         InputManager _inputManager;
-        InputAction clickEvents;
-        public SkillModeInput(InputManager input, IActive skill)
+        public SkillModeInput(InputManager input, IActive skill, Mode mode)
         {
+            prevMode = mode;
             this.skill = skill;
             _inputManager = input;
-            clickEvents = _inputManager.inputActions.Gameplay.Click;
-            // Ω∫≈≥¿« ∫Øºˆ ¡ﬂø° ¿‘∑¬¿Ã « ø‰«— ∞™∏∏ ≈•ø° ¿˙¿Â
+            // Ïä§ÌÇ¨Ïóê ÌïÑÏöîÌïú ÏûÖÎ†•Ïù¥ ÌïÑÏöîÌïú ÌïÑÎìú ÌÅê ÏÉùÏÑ±
             selecters = new();
             skillFields = new();
             var type = skill.GetType();
@@ -39,46 +41,49 @@ namespace PlayerInput
 
         public void RemoveMode()
         {
-            Debug.Log("RemoveSkillMode");
-            
-            clickEvents.started -= SetClick;
+            // Ïä§ÌÇ¨ ÏûÖÎ†•Ïù¥ Î∂àÏôÑÏ†ÑÌïú ÏÉÅÌÉúÎ°ú ÏûÖÎ†• Îê† Í≤ΩÏö∞ Ï¥àÍ∏∞Ìôî ÏãúÌñâ
+            if (!IsFieldEmpty() || currentField != null)
+            {
+                CancelSkillInput();
+            }
+            _inputManager.OnObjectClicked.RemoveListener(SetClick);
+
+            _inputManager.UI.cancelButton.gameObject.SetActive(false);
+            _inputManager.UI.cancelButton.onClick.RemoveAllListeners();
         }
 
         public void SetMode()
         {
-            clickEvents.started += SetClick;
+            _inputManager.OnObjectClicked.AddListener(SetClick);
 
-            // √ππ¯¬∞ Ω∫≈≥ ¿‘∑¬∞™ º≥¡§
+            _inputManager.UI.cancelButton.gameObject.SetActive(true);
+            _inputManager.UI.cancelButton.onClick.AddListener(()=> {
+                _inputManager.SetInputMode(prevMode);
+                });
+
+            Debug.Log("SkillMode");
+            // Ï≤´ Î≤àÏß∏ Ïä§ÌÇ¨ ÏûÖÎ†• ÌïÑÎìú ÏÑ§Ï†ï
             SetNextField();
         }
 
         Queue<FieldInfo> skillFields;
         FieldInfo currentField;
         List<GameObject> selecters;
-        void SetClick(InputAction.CallbackContext context)
+        void SetClick(GameObject obj)
         {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-            Ray ray = Camera.main.ScreenPointToRay(_inputManager.PointerPosition);
-            // ∫Œµ˙»˘ ±‚π∞, (≈∏¿œ) UI «•Ω√ 
-            if (Physics.Raycast(ray, out var hit))
+            var component = obj.GetComponent(currentField.FieldType);
+            currentField.SetValue(skill, component);
+            if (skill.IsValidInput(currentField))
             {
-                var obj = hit.collider.gameObject;
-                var component = obj.GetComponent(currentField.FieldType);
-                currentField.SetValue(skill, component);
-                if (skill.IsValidInput(currentField))
-                {
-                    GameObject selecter = UnityEngine.Object.Instantiate(_inputManager.skillSelecter);
-                    selecters.Add(selecter);
-                    selecter.transform.position = obj.transform.position + Vector3.up * 0.1f;
+                GameObject selecter = UnityEngine.Object.Instantiate(_inputManager.skillSelecter);
+                selecters.Add(selecter);
+                selecter.transform.position = obj.transform.position + Vector3.up * 0.1f;
 
-                    SetNextField();
-                }
+                SetNextField();
             }
-            ;
         }
         bool IsFieldEmpty()
         {
-            Debug.Log($"SkillField Count : {skillFields.Count}");
             if (skillFields.Count <= 0)
             {
                 return true;
@@ -90,6 +95,11 @@ namespace PlayerInput
             if (!IsFieldEmpty())
             {
                 currentField = skillFields.Dequeue();
+                if (currentField.GetValue(skill) != null)
+                {
+                    SetNextField();
+                    return;
+                }
                 var attr = currentField.GetCustomAttribute<SkillTargetAttribute>();
                 if (attr != null)
                 {
@@ -98,9 +108,20 @@ namespace PlayerInput
             }
             else
             {
+                currentField = null;
                 _inputManager.controller.CreateCommand(skill, selecters.ToArray());
-                _inputManager.SetInputMode(Mode.Move);
+                
             }
+        }
+        void CancelSkillInput()
+        {
+            foreach (var obj in selecters)
+            {
+                GameObject.Destroy(obj);
+            }
+            selecters.Clear();
+            Debug.Log("Ïä§ÌÇ¨ ÎπÑÏ†ïÏÉÅÏ†Å Ï¢ÖÎ£åÎ°ú Ïù∏Ìïú Î¶¨ÏÖã");
+            //skill.Reinitialize();
         }
     }
 }

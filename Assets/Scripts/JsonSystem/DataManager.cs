@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ public class DataManager : MonoBehaviour
 {
 
     public PlayerData playerData {  get; private set; }
-
+    public LevelTable enemyData;
     /// <summary>
     /// 적 엔티티 데이터
     /// </summary>
@@ -15,16 +16,16 @@ public class DataManager : MonoBehaviour
     public ItemTable itemTable;
     public EntityTable entityTable;
     
-    public AgentData[] GetData()
+    public AgentData[]  GetData()
     {
         List<AgentData> data = new List<AgentData>();
 
         // 아이템 데이터로 전환
-        var items = new List<ItemData>();
+        var items = new Dictionary<int, ItemData>();
         foreach ( var item in playerData.items)
         {
-            var itemData = itemTable.SearchData(item);
-            items.Add(itemData);
+            var itemData = itemTable.SearchData(item.Value);
+            items.Add(item.Key, itemData);
         }
 
         var handEntities = new List<EntityLevelData>();
@@ -44,22 +45,18 @@ public class DataManager : MonoBehaviour
         AgentData player = new AgentData(playerData.credit, handEntities, fieldEntities, items);
         data.Add(player);
 
-        AgentData enemy = new AgentData(playerData.stageLevel * 3,handEntities, fieldEntities);
+
+        AgentData enemy = enemyData.GetLevelData(playerData.stageLevel);
 
         data.Add(enemy);
         return data.ToArray();
     }
     public void SetData(AgentData data, int stageLevel)
     {
-        List<string> itemNames = new List<string>();
+        Dictionary<int, string> itemNames = new();
         foreach (var item in data.items)
         {
-            if (item == null)
-            {
-                itemNames.Add(null);
-                continue;
-            }
-            itemNames.Add(item.id);
+            itemNames.Add(item.Key, item.Value.id);
         }
         playerData.items = itemNames;
 
@@ -100,9 +97,10 @@ public class DataManager : MonoBehaviour
 
 
 }
+[System.Serializable]
 public struct AgentData
 {
-    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<int, EntityLevelData> fields = null, List<ItemData> items = null)
+    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<int, EntityLevelData> fields = null, Dictionary<int,ItemData> items = null)
     {
         this.credit = credit;
 
@@ -119,14 +117,15 @@ public struct AgentData
     public int credit;
     public List<EntityLevelData> handEntities;
     public Dictionary<int, EntityLevelData> fieldEntities;
-    public List<ItemData> items;
+    public Dictionary<int,ItemData> items;
 }
+[System.Serializable]
 public struct EntityLevelData
 {
     public EntityLevelData(Entity entity)
     {
         data = entity.data;
-        level = entity.level;
+        level = entity.Level;
     }
     public EntityLevelData(EntityData entityData, int level = 0)
     {

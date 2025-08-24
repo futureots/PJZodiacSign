@@ -38,9 +38,9 @@ public class AttackTurn : ITurn
         }
 
         // 대기시간
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
-        curField.CleanField();
+        curField.RemoveDeadEntities();
 
         // 모든 캐릭터 버프 업데이트
         foreach (var tile in curField.GetTiles())

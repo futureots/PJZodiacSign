@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 public class ItemData : AbstractData
 {
     public string description;
@@ -10,4 +9,6 @@ public class ItemData : AbstractData
     {
         return new ItemInstance(this);
     }
+    public PhaseType useType;
+
 }

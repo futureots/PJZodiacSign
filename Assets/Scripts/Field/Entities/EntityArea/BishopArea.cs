@@ -16,7 +16,7 @@ public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
             {
                 vector += direction[i];
                 var pos = isReflect ? curPos + vector : curPos - vector;
-                if (!Field.isValidPos(tiles, pos)) break;
+                if (!Field.IsPositionValid(tiles, pos)) break;
                 list.Add(pos);
                 if (tiles[pos.y, pos.x] != 0)
                 {
@@ -41,7 +41,7 @@ public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
             {
                 vector += direction[i];
                 var pos = isReflect ? curPos + vector : curPos - vector;
-                if (!Field.isValidPos(tiles, pos)) break;
+                if (!Field.IsPositionValid(tiles, pos)) break;
                 if (tiles[pos.y, pos.x] != 0)
                 {
                     break;

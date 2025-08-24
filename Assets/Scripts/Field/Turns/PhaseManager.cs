@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+
+public class PhaseManager : MonoBehaviour
+{
+    public LinkedList<IPhase> phases;
+    IPhase currentPhase;
+    public static PhaseType curPhase;
+    public static Action<IPhase,bool> onPhaseChanged;
+
+    private void Awake()
+    {
+        phases = new LinkedList<IPhase>();
+        
+        curPhase = PhaseType.None;
+    }
+    
+    public void BeginPhase()
+    {
+        if (currentPhase != null)
+        {
+            // 현재 페이즈 종료
+            onPhaseChanged?.Invoke(currentPhase, false);
+        }
+
+        // 엔딩 제외 실행되면 안되는 부분
+        if (phases.Count == 0)
+        {
+            Debug.Log("AllPhaseEnd");
+            return;
+        }
+        
+        currentPhase = phases.First.Value;
+        phases.RemoveFirst();
+
+        // 페이즈 시작
+        onPhaseChanged?.Invoke(currentPhase, true);
+
+        currentPhase.StartPhase(OnPhaseComplete);
+    }
+    
+    private void OnPhaseComplete()
+    {
+        // 다음 페이즈 시작
+        BeginPhase();
+    }
+    
+    public void NextLevel(int level)
+    {
+        phases.Clear();
+        
+        // 정비 페이즈를 먼저 추가
+        phases.AddLast(new RepairPhase(level));
+        
+        // 전투 페이즈를 추가
+        phases.AddLast(new BattlePhase(level));
+
+        // 첫 번째 페이즈 시작
+        BeginPhase();
+    }
+    private void OnEnable()
+    {
+        GameManager.onNextLevel += NextLevel;
+    }
+    private void OnDisable()
+    {
+        GameManager.onNextLevel -= NextLevel;
+    }
+}
+[Flags]
+public enum PhaseType
+{
+    None = 0,
+    Battle = 1 << 0,
+    Repair = 1 << 1
+}

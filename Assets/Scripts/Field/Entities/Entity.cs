@@ -6,43 +6,62 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
+    #region sourceField
+    public Field sourceField;
+
+    // ê¸°ë¬¼ì´ ë©”ì¸í•„ë“œì—ì„œ ì˜¨ ê²ƒì¸ì§€ í™•ì¸
+    public bool IsFromMainField()
+    {
+        return sourceField == GameManager.Instance.field;
+    }
+
+    // ê¸°ë¬¼ì´ ì¸ìŠ¤í„´íŠ¸í•„ë“œì—ì„œ ì˜¨ ê²ƒì¸ì§€ í™•ì¸
+    public bool IsFromInstantField()
+    {
+        return sourceField != GameManager.Instance.field;
+    }
+    #endregion
+
     public Tile curTile { get; private set; }
 
     
-    /// <summary>±â¹°ÀÇ °íÀ¯ÇÑ id(ÀÌ¸§)</summary>
+    /// <summary>ê¸°ë¬¼ì˜ ê³ ìœ  id(ì´ë¦„)</summary>
     public string id;
 
     #region Skill
-    /// <summary>±â¹° ½ºÅ³ µ¥ÀÌÅÍ</summary>
+    /// <summary>ê¸°ë¬¼ ìŠ¤í‚¬ ë°ì´í„°</summary>
     public BaseSkillData skillData;
-    /// <summary>skillDataÀÇ ÀÎ½ºÅÏ½º</summary>
-    public IActive skillInstance;
     /// <summary>
-    /// ±â¹°ÀÇ ½ºÅ³ ¼¼ÆÃ
+    /// ê¸°ë¬¼ì˜ ìŠ¤í‚¬ ì„¤ì •
     /// </summary>
-    /// <param name="skillData">±â¹° ½ºÅ³ µ¥ÀÌÅÍ</param>
-    public void SetSkill(BaseSkillData skillData)
+    /// <param name="skillData">ê¸°ë¬¼ ìŠ¤í‚¬ ë°ì´í„°</param>
+    public void SetupSkill(BaseSkillData skillData)
     {
         this.skillData = skillData;
-        skillInstance = skillData.CreateInstance();
-        // ½ºÅ³ »ç¿ë ÈÄ ¸¶³ª ÃÊ±âÈ­
+    }
+    /// <summary>skillDataì˜ ì¸ìŠ¤í„´ìŠ¤</summary>
+    public IActive GetSkillInstance()
+    {
+        if (skillData == null) return null;
+        var skillInstance = skillData.CreateInstance();
         skillInstance.AddCallback(x => {
             if (x)
             {
-                curEnergy = 0;
+                CurEnergy = 0;
             }
         });
-        if(skillInstance is IOwnable entitySkill)
+        if (skillInstance is IOwnable entitySkill)
         {
             entitySkill.Owner = this;
         }
-
+        return skillInstance;
     }
+
 
     #endregion
     
     Team _team;
-    /// <summary>±â¹°ÀÌ ¼ÓÇÑ ÆÀ</summary>
+    /// <summary>ê¸°ë¬¼ì˜ íŒ€ ë²ˆí˜¸</summary>
     public Team team
     {
         get
@@ -54,88 +73,163 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             return _team;
         }
     }
-    // ±â¹°ÀÇ °íÀ¯ µ¥ÀÌÅÍ
+    // ê¸°ë¬¼ì˜ ê¸°ë³¸ ë°ì´í„°
     public EntityData data;
     /// <summary>
-    /// ±â¹°ÀÇ ½ºÅÈ, ½ºÅ³°ª ¼¼ÆÃ
+    /// ê¸°ë¬¼ ì´ˆê¸°í™”, ìŠ¤í‚¬ ì„¤ì •
     /// </summary>
-    /// <param name="data">±â¹° µ¥ÀÌÅÍ</param>
-    /// <param name="level">±â¹°ÀÇ ·¹º§</param>
-    public void SetEntity(EntityData data, int level =0)
+    /// <param name="data">ê¸°ë¬¼ ë°ì´í„°</param>
+    /// <param name="
+    /// 
+    /// 
+    /// ">ê¸°ë¬¼ì˜ ë ˆë²¨</param>
+    public void InitializeEntity(EntityData data, int level =0)
     {
         this.data = data;
         id = data.id;
-        this.level = level;
+        this.Level = level;
 
-        // ±â¹° ½ºÅÈ ¼¼ÆÃ
-        power = data.power + data.bonusPower * level;
-        maxHp = data.maxHp + data.bonusHp * level;
-        curHp = maxHp;
-        curEnergy = 0;
+        UpdateEntity();
 
-        // ±â¹° ½ºÅ³ ¼¼ÆÃ(½ºÅ³ÀÌ ¿£Æ¼Æ¼ Àü¿ë ½ºÅ³ÀÌ¸é ½ÃÀüÀÚ ÇÒ´ç, ¾Æ´Ï¸é ÇÒ´çX)
-        SetSkill(data.skill);
-        skillCost = data.skillCost;
+        // ê¸°ë¬¼ ìŠ¤í‚¬ ì„¤ì •(ìŠ¤í‚¬ì´ ìŠ¤í¬ë¦½íŠ¸ ê¸°ë°˜ ìŠ¤í‚¬ì´ë©´ ìë™ìœ¼ë¡œ í• ë‹¹, ì•„ë‹ˆë©´ í• ë‹¹X)
+        SetupSkill(data.skill);
+        SkillCost = data.skillCost;
     }
 
-    /// <summary>»ç¸Á ½Ã È£Ãâ</summary>
-    public Action OnDead;
+    void UpdateEntity()
+    {
+        // ê¸°ë¬¼ ìŠ¤íƒ¯ ê³„ì‚°
+        Power = data.power + data.bonusPower * Level;
+        MaxHp = data.maxHp + data.bonusHp * Level;
+        CurHp = MaxHp;
+        CurEnergy = 0;
+    }
+
+    /// <summary>ì£½ìŒ ì‹œ í˜¸ì¶œ</summary>
+    public Action onDead;
 
     #region Status
-    /// <summary>±â¹°ÀÇ ·¹º§</summary>
-    public int level { get; private set; }
-    /// <summary>°ø°İ·Â</summary>
-    public int power;
-    /// <summary>ÃÖ´ë Ã¼·Â</summary>
-    public int maxHp;
-    /// <summary>ÇöÀç Ã¼·Â</summary>
-    public int curHp;
-    /// <summary>ÇöÀç ¸¶³ª</summary>
-    public int curEnergy;
-    /// <summary>½ºÅ³ ¸¶³ª ¼Ò¸ğ·®</summary>
-    public int skillCost;
+    /// <summary>ê¸°ë¬¼ì˜ ë ˆë²¨</summary>
+    [SerializeField] int _level;
+    public int Level { 
+        get { return _level; }
+        set
+        {
+            _level = value;
+            onLevelChanged?.Invoke(_level);
+            UpdateEntity();
+        }
+    }
     
+    public Action<int> onLevelChanged;
+    /// <summary>ê³µê²©ë ¥</summary>
+    [SerializeField] int _power;
+    public int Power
+    {
+        get { return _power; }
+        set
+        {
+            _power = value;
+            onPowerChanged?.Invoke(_power);
+        }
+    }
+    public Action<int> onPowerChanged;
+    /// <summary>ìµœëŒ€ ì²´ë ¥</summary>
+    [SerializeField] int _maxHp;
+    public int MaxHp
+    {
+        get { return _maxHp; }
+        set
+        {
+            _maxHp = value;
+            onHpChanged?.Invoke(CurHp, _maxHp);
+        }
+    }
+    /// <summary>í˜„ì¬ ì²´ë ¥</summary>
+    [SerializeField] int _curHp;
+    public int CurHp
+    {
+        get { return _curHp; }
+        set
+        {
+            _curHp = value;
+            onHpChanged?.Invoke(_curHp, MaxHp);
+        }
+    }
+    public Action<int, int> onHpChanged;
+    /// <summary>í˜„ì¬ ì—ë„ˆì§€</summary>
+    [SerializeField] int _curEnergy;
+    public int CurEnergy
+    {
+        get { return _curEnergy; }
+        set
+        {
+            _curEnergy = value;
+            onEnergyChanged?.Invoke(_curEnergy, SkillCost);
+        }
+    }
+    /// <summary>ìŠ¤í‚¬ ë¹„ìš©</summary>
+    [SerializeField] int _skillCost;
+    public int SkillCost
+    {
+        get { return _skillCost; }
+        set
+        {
+            _skillCost = value;
+            onEnergyChanged?.Invoke(CurEnergy, _skillCost);
+        }
+    }
+    public Action<int, int> onEnergyChanged;
+    #endregion
 
     #region Buff
     bool isSlienced
     {
         get
         {
-            if (buffList == null) return false;
-            return buffList.Exists((buff) => buff.buffData is Silence);
+            if (_buffList == null) return false;
+            return _buffList.Exists((buff) => buff.buffData is Silence);
         }
     }
     bool isRooted
     {
         get
         {
-            if (buffList == null) return false;
-            return buffList.Exists((buff) => buff.buffData is Root);
+            if (_buffList == null) return false;
+            return _buffList.Exists((buff) => buff.buffData is Root);
         }
     }
     bool isProtected 
     {
         get
         {
-            if (buffList == null) return false;
-            return buffList.Exists((buff) => buff.buffData is Protect);
+            if (_buffList == null) return false;
+            return _buffList.Exists((buff) => buff.buffData is Protect);
         }
     }
 
 
-    List<BuffInstance> buffList;
+    List<BuffInstance> _buffList;
+    public List<BuffInstance> buffList
+    {
+        get
+        {
+            if(_buffList == null) _buffList = new List<BuffInstance>();
+            return _buffList;
+        }
+    }
     /// <summary>
-    /// ¹öÇÁ Ãß°¡
+    /// ë²„í”„ ì¶”ê°€
     /// </summary>
-    /// <param name="buff">¹öÇÁ Á¾·ù</param>
-    /// <param name="count">¹öÇÁ ÁßÃ¸ ¼ö</param>
+    /// <param name="buff">ë²„í”„ ë°ì´í„°</param>
+    /// <param name="count">ë²„í”„ ì§€ì† í„´</param>
     public void AddBuff(BuffData buff, int count)
     {
-        if (buffList == null)
+        if (_buffList == null)
         {
-            buffList = new List<BuffInstance>();
+            _buffList = new List<BuffInstance>();
         }
-        var existBuff = buffList.Find((x) => x.buffData.GetType() == buff.GetType());
+        var existBuff = _buffList.Find((x) => x.buffData.GetType() == buff.GetType());
         if (existBuff != null)
         {
             existBuff.ExtendBuff(this, count);
@@ -143,34 +237,34 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         else
         {
             var instance = new BuffInstance(count, buff);
-            buffList.Add(instance);
+            _buffList.Add(instance);
             instance.ApplyBuff(this);
         }
-        
+        Debug.Log(buffList.Count);
     }
     /// <summary>
-    /// ¹öÇÁ °»½Å
+    /// ë²„í”„ ì—…ë°ì´íŠ¸
     /// </summary>
     public void UpdateBuff()
     {
-        if (buffList == null) return;
-        foreach (var buff in buffList)
+        if (_buffList == null) return;
+        foreach (var buff in _buffList)
         {
             buff.UpdateBuff(this);
         }
     }
 
     /// <summary>
-    /// ¹öÇÁ Á¦°Å
+    /// ë²„í”„ ì œê±°
     /// </summary>
     public void RemoveBuff()
     {
-        if (buffList == null) return;
-        var list = buffList.Where((buff) => buff.IsExpired()).ToList();
+        if (_buffList == null) return;
+        var list = _buffList.Where((buff) => buff.IsExpired()).ToList();
         foreach (var buff in list)
         {
             buff.RemoveBuff(this);
-            buffList.Remove(buff);
+            _buffList.Remove(buff);
         }
     }
 
@@ -179,9 +273,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     public void Attack()
     {
         if (isSlienced) return;
-        curEnergy += 1;
         var list = GetAttackArea();
-        int damage = power;
+        int damage = Power;
         
         foreach (var item in list)
         {
@@ -190,49 +283,48 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             var targetTeam = target.GetComponent<Team>();
             if(!team.isAlly(targetTeam))
             {
-                target.GetComponent<IDamageable>()?.Damaged(power);
+                target.GetComponent<IDamageable>()?.Damaged(Power);
             }
         }
     }
     public void Damaged(int damage)
     {
         var value = damage;
-        // µ¥¹ÌÁö °æ°¨
+        // ë³´í˜¸ë§‰ ê³„ì‚°
         if (isProtected) value /= 2;
 
-        curHp -= value;
-        Debug.Log($"Damaged : {damage} , CurrentHp : {curHp}");
+        CurHp -= value;
+        Debug.Log($"Damaged : {damage} , CurrentHp : {CurHp}");
     }
 
     public void Dead()
     {
-        //Debug.Log(gameObject+"Dead");
-        OnDead?.Invoke();
+        onDead?.Invoke();
         Destroy(gameObject);
     }
 
     public void Healed(int amount)
     {
-        curHp += amount;
+        CurHp += amount;
+        CurHp = Mathf.Min(MaxHp,CurHp);
     }
 
     public bool isZero()
     {
-        if (curHp > 0) return false;
+        if (CurHp > 0) return false;
         return true;
     }
 
-    #endregion
 
     
     /// <summary>
-    /// ±â¹° ÀÌµ¿(¼Ó¹Ú Àû¿ë ½Ã ÀÌµ¿ X)
+    /// ê¸°ë¬¼ ì´ë™(ì´ë™ ì œí•œ X)
     /// </summary>
-    /// <param name="tile">ÀÌµ¿ÇÒ ÁöÁ¡</param>
-    /// <param name="ignoreArea">false : ÀÌµ¿ ¹üÀ§ ³» ÁöÁ¡¸¸ ÀÌµ¿, true : ¹üÀ§ »ó°ü ¾øÀÌ ÀÌµ¿</param>
-    /// <param name="ignoreOccupy">false : µµÂø ÁöÁ¡ÀÌ ºñ¾úÀ» °æ¿ì¿¡¸¸ ÀÌµ¿, true : ÀÌµ¿ ¹× Á¡°ÅÁßÀÎ °´Ã¼ ÆÄ±«</param>
+    /// <param name="tile">ì´ë™í•  íƒ€ì¼</param>
+    /// <param name="ignoreArea">false : ì´ë™ ì˜ì—­ ë‚´ì—ì„œë§Œ ì´ë™, true : ì˜ì—­ ë¬´ì‹œí•˜ê³  ì´ë™</param>
+    /// <param name="ignoreOccupy">false : íƒ€ì¼ì´ ë¹„ì–´ìˆì„ ë•Œë§Œ ì´ë™, true : ì´ë™ ì‹œ íƒ€ì¼ì˜ ê¸°ë¬¼ ì œê±°</param>
     /// <returns></returns>
-    public bool MoveSequence(Tile tile , bool ignoreArea = false, bool ignoreOccupy = false)
+    public bool MoveSequence(Tile tile, bool ignoreArea = false, bool ignoreOccupy = false)
     {
         if(isRooted) return false;
         if (!ignoreArea)
@@ -250,16 +342,16 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
 
     /// <summary>
-    /// ÇØ´ç Å¸ÀÏ·Î ÀÌµ¿(ÇØ´ç Å¸ÀÏÀÇ Á¡·É ¿©ºÎ, ±â¹°ÀÇ ÀÌµ¿ ¹üÀ§ °í·Á X)
+    /// í•´ë‹¹ íƒ€ì¼ë¡œ ì´ë™(í•´ë‹¹ íƒ€ì¼ì˜ ê¸°ë¬¼ ì œê±°, ì´ë™ ì œí•œ X)
     /// </summary>
-    /// <param name="tile">ÀÌµ¿ÇÒ ÁöÁ¡</param>
+    /// <param name="tile">ì´ë™í•  íƒ€ì¼</param>
     public void MoveTo(Tile tile)
     {
         if (curTile != null)
         {
-            curTile.OccupyObject();
+            curTile.SetOccupant();
         }
-        tile.OccupyObject(gameObject);
+        tile.SetOccupant(gameObject);
         curTile = tile;
         transform.position = tile.transform.position;
     }
@@ -269,15 +361,15 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     #region Area
     /// <summary>
-    /// ±â¹°ÀÇ ÀÌµ¿ ¹üÀ§ ÁÂÇ¥°ª ¹İÈ¯
+    /// ê¸°ë¬¼ì˜ ì´ë™ ê°€ëŠ¥ ì¢Œí‘œë¥¼ ë°˜í™˜
     /// </summary>
-    /// <returns>ÀÌµ¿ ¹üÀ§ ÁÂÇ¥°ª ¹è¿­</returns>
+    /// <returns>ì´ë™ ê°€ëŠ¥ ì¢Œí‘œì˜ ë°°ì—´</returns>
     public List<intVector2> GetMoveVector()
     {
         var moveArea = new List<intVector2>();
         if (!isRooted)
         {
-            var fieldInfo = curTile.field.GetFieldInfo();
+            var fieldInfo = curTile.field.GetFieldState();
             fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
             var list = GetComponents<IMoveArea>();
             
@@ -292,9 +384,9 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         return moveArea;
     }
     /// <summary>
-    /// ±â¹°ÀÇ ÀÌµ¿ ¹üÀ§ ¹İÈ¯
+    /// ê¸°ë¬¼ì˜ ì´ë™ ì˜ì—­ ë°˜í™˜
     /// </summary>
-    /// <returns>±â¹°ÀÇ ÀÌµ¿¹üÀ§</returns>
+    /// <returns>ê¸°ë¬¼ì´ ì´ë™ê°€ëŠ¥í•œ íƒ€ì¼ë“¤</returns>
     public List<Tile> GetMoveArea()
     {
         var list = GetMoveVector();
@@ -309,7 +401,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         {
             return attackArea;
         }
-        field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
         var list = GetComponents<IAttackArea>();
 
         
@@ -323,33 +414,34 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public List<Tile> GetAttackArea(Tile tile)
     {
-        var field = tile.field.GetFieldInfo();
+        var field = tile.field.GetFieldState();
+        if(tile.field == curTile.field) field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
         var list = GetAttackVector(field, tile.fieldPos);
         var tiles = tile.field.GetTiles(list);
         return tiles;
     }
 
     /// <summary>
-    /// ±â¹°ÀÇ °ø°İ ¹üÀ§ ¹İÈ¯
+    /// ê¸°ë¬¼ì˜ ê³µê²© ì˜ì—­ ë°˜í™˜
     /// </summary>
-    /// <returns>±â¹°ÀÇ °ø°İ ¹üÀ§¿¡ Æ÷ÇÔµÇ´Â Å¸ÀÏ</returns>
+    /// <returns>ê¸°ë¬¼ì´ ê³µê²©í•  ìˆ˜ ìˆëŠ” íƒ€ì¼</returns>
     public List<Tile> GetAttackArea()
     {
         return GetAttackArea(curTile);
     }
     public List<intVector2> GetAttackVector()
     {
-        return GetAttackVector(curTile.field.GetFieldInfo(), curTile.fieldPos);
+        return GetAttackVector(curTile.field.GetFieldState(), curTile.fieldPos);
     }
 
     #endregion
 
-    #region AICalc
+    #region AICalculate
     /// <summary>
-    /// ÇØ´ç ±â¹°ÀÌ ÀÌµ¿ ½Ã °¡Àå ÁÁÀº À§Ä¡ ¹İÈ¯
+    /// í•´ë‹¹ ê¸°ë¬¼ì˜ ì´ë™ í›„ ê³µê²© ê°€ëŠ¥í•œ ìœ„ì¹˜ ë°˜í™˜
     /// </summary>
-    /// <param name="field">ÇöÀç ÇÊµå »óÈ²</param>
-    /// <param name="tileValues">°¢ À§Ä¡ÀÇ ¿¹»ó °¡Ä¡</param>
+    /// <param name="field">í˜„ì¬ í•„ë“œ ìƒíƒœ</param>
+    /// <param name="tileValues">íƒ€ì¼ ìœ„ì¹˜ë³„ ê°€ì¹˜</param>
     /// <returns></returns>
     public (int,intVector2) GetBestMove(int[,] field, int[,] tileValues)
     {
@@ -360,20 +452,22 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         List<intVector2> pos = new();
         foreach (var area in list)
         {
-            // ÀÌµ¿ÀÌ ºÒ°¡´ÉÇÑ Å¸ÀÏÀÏ °æ¿ì
+            // ì´ë™í•  ìˆ˜ ì—†ëŠ” íƒ€ì¼ì€ ì œì™¸
             if (field[area.y, area.x] != 0) continue;
 
-            // ÇÇ°İ Á¡¼ö °è»ê(ÀÌµ¿ ½Ã »ç¸ÁÇÒ °æ¿ì -9999)
+            // ì£½ìŒ ìœ„í—˜ ì²´í¬(ì´ë™ í›„ ì²´ë ¥ì´ 0 ì´í•˜ë©´ -9999)
             var value = tileValues[area.y, area.x];
-            if (value + curHp <= 0) value = -9999;
+            if (value + CurHp <= 0) value = -9999;
 
-            // °ø°İ Á¡¼ö °è»ê
+            // ê³µê²© ê°€ëŠ¥ ì²´í¬
+            field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
             var plusArea = GetAttackVector(field,area);
+            field[curTile.fieldPos.y, curTile.fieldPos.x] = team.teamNumber;
             foreach (var plus in plusArea)
             {
                 if (field[plus.y, plus.x] == 0) continue;
                 if (field[plus.y, plus.x] == team.teamNumber) continue;
-                tileValues[area.y,area.x] += power;
+                tileValues[area.y,area.x] += Power;
             }
 
             if (value > max || pos.Count == 0)
@@ -392,5 +486,15 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
 
     #endregion
+
+
+    
+
+
+    
+
+
+    
+ 
 
 }

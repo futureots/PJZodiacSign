@@ -24,7 +24,7 @@ public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
         foreach (var item in area)
         {
             var pos = isReflect ? curPos + item : curPos - item;
-            if (!Field.isValidPos(tiles, pos)) continue;
+            if (!Field.IsPositionValid(tiles, pos)) continue;
             if (tiles[pos.y, pos.x] != 0) continue;
             vectors.Add(pos);
         }
@@ -39,7 +39,7 @@ public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
         foreach (var item in area)
         {
             var pos = isReflect ? curPos + item : curPos - item;
-            if (!Field.isValidPos(tiles, pos)) continue;
+            if (!Field.IsPositionValid(tiles, pos)) continue;
             vectors.Add(pos);
         }
         return vectors;
