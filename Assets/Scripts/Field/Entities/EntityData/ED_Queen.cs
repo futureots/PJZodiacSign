@@ -9,7 +9,7 @@ public class ED_Queen : EntityData
         var entity = CreateInstance();
         entity.AddComponent<BishopArea>();
         entity.AddComponent<RookArea>();
-        entity.SetEntity(this, level);
+        entity.InitializeEntity(this, level);
         return entity;
     }
 }

@@ -1,17 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class ShopUI : MonoBehaviour
 {
+    InputManager customer;
+
+    public GameObject shopPanel;
+    [SerializeField] Button ShopToggleBtn;
+
     [SerializeField] EntityGoodsUI entityUI;
     [SerializeField] ItemGoodsUI itemUI;
     [SerializeField] Transform entityShop;
     [SerializeField] Transform itemShop;
 
     [SerializeField] ShopTable table;
-    
+
+    List<ItemData> items;
+    List<EntityData> entities;
+
     bool isOpen;
+    private void Awake()
+    {
+        customer = transform.root.GetComponent<InputManager>();
+    }
     public void ToggleUI()
     {
         isOpen = !isOpen;
@@ -21,14 +34,36 @@ public class ShopUI : MonoBehaviour
     {
         if (open)
         {
-            gameObject.SetActive(true);
+            shopPanel.SetActive(true);
         }
         else
         {
-            gameObject.SetActive(false);
+            shopPanel.SetActive(false);
         }
     }
-    
+    public void SetShop(int level, bool isPremium = false)
+    {
+        if (level % 5 == 0 || isPremium)
+        {
+            SetPremiumShop();
+        }
+        else
+        {
+            SetNormalShop();
+        }
+    }
+    void SetPremiumShop()
+    {
+        items = table.GetRandomItem(5);
+        entities = table.GetRandomEntity(8);
+        SetShop(entities, items);
+    }
+    void SetNormalShop()
+    {
+        items = table.GetRandomItem(2);
+        entities = table.GetRandomEntity(3);
+        SetShop(entities, items);
+    }
     void SetShop(List<EntityData> entityList, List<ItemData> itemList)
     {
         for (int i = 0; i < entityList.Count; i++)
@@ -44,7 +79,7 @@ public class ShopUI : MonoBehaviour
             }
             if (goodsUI != null)
             {
-                goodsUI.SetGoods(entityList[i]);
+                goodsUI.SetGoods(entityList[i],customer);
             }
         }
         for (int i = entityList.Count; i < entityShop.childCount; i++) entityShop.GetChild(i).gameObject.SetActive(false);
@@ -61,32 +96,36 @@ public class ShopUI : MonoBehaviour
             }
             if (goodsUI != null)
             {
-                goodsUI.SetGoods(itemList[i]);
+                goodsUI.SetGoods(itemList[i],customer);
             }
         }
         for (int i = itemList.Count; i < itemShop.childCount; i++) itemShop.GetChild(i).gameObject.SetActive(false);
     }
-    void SetPremiumShop()
+    void PhaseChange(IPhase curPhase, bool start)
     {
-        var items = table.GetRandomItem(5);
-        var entities = table.GetRandomEntity(8);
-        SetShop(entities, items);
-    }
-    void SetNormalShop()
-    {
-        var items = table.GetRandomItem(2);
-        var entities = table.GetRandomEntity(3);
-        SetShop(entities, items);
-    }
-    public void SetShop(int level, bool isPremium = false)
-    {
-        if(level %5 == 0 || isPremium)
+        // 페이즈 시작
+        if (start)
         {
-            SetPremiumShop();
+            if (curPhase is RepairPhase phase)
+            {
+                ShopToggleBtn.gameObject.SetActive(true);
+                SetShop(phase.Level);
+            }
         }
+        // 페이즈 종료
         else
         {
-            SetNormalShop();
+            shopPanel.SetActive(false);
+            ShopToggleBtn.gameObject.SetActive(false);
         }
+    }
+
+    private void OnEnable()
+    {
+        PhaseManager.onPhaseChanged += PhaseChange;
+    }
+    private void OnDisable()
+    {
+        PhaseManager.onPhaseChanged -= PhaseChange;
     }
 }

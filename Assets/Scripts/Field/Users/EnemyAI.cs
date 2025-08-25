@@ -1,31 +1,42 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAI : Agent
 {
+    public ShopTable shopTable;
 
-    public override void SetMode(Mode mode, Action call = null)
+    public override void SetActionTurn(Action call)
     {
-        // AI로 계산 해서 명령 제작 후 콜백
-        IEnumerator coroutine = null;
-        switch (mode)
+        this.RunWithCallback(SetActionMode(), call);
+    }
+    public override void SetRepairPhase(int level, Action call)
+    {
+        // 레벨에 맞는 데이터 가져와서 세팅하는 기능 추가 필요
+        // 보유 크레딧으로 기물 랜덤 구매하기
+        Debug.Log("Enemy Credit : " + Credit);
+        int loopCount = 30;
+        for(int i=0;i<loopCount;i++)
         {
-            case Mode.Repair:
-                coroutine = SetRepairMode();
-                break;
-            case Mode.Move:
-                coroutine = SetActionMode();
-                break;
-            case Mode.Active:
-                break;
-            case Mode.None:
-                break;
-            default:
-                break;
+            if (shopTable.TryGetBuyableEntity(Credit, out var entity))
+            {
+                Debug.Log($"{Credit} : entity : {entity.normalPrice}");
+                Credit -= entity.normalPrice;
+                data.handEntities.Add(new EntityLevelData(entity));
+            }
+            else break;
+            Credit--;
         }
-        this.RunWithCallback(coroutine, call);
+        controller.SetInstantField(data.handEntities);
+        controller.SetMainField(data.fieldEntities);
+        this.RunWithCallback(SetRepairMode(), call);
+    }
+    public override void EndRepairPhase()
+    {
+        controller.UpdateEntities();
+        base.EndRepairPhase();
     }
 
 
@@ -50,15 +61,17 @@ public class EnemyAI : Agent
         }
         
     }
+
     public IEnumerator SetActionMode()
     {
-        yield return null;
-        // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별
+        yield return new WaitForSeconds(0.5f);
+        // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별)
         if(CanActiveSkill(out var list))
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
-            list[rand].skillInstance.SetSkillInput(GameManager.Instance.field);
-            controller.CreateCommand(list[rand].skillInstance);
+            var skill = list[rand].GetSkillInstance();
+            skill.SetSkillInput(GameManager.Instance.field);
+            controller.CreateCommand(skill);
             yield break;
         }
 
@@ -71,13 +84,13 @@ public class EnemyAI : Agent
         foreach (var checkEntity in controller.entities)
         {
             // 필드 값 가져오기
-            int[,] field = GameManager.Instance.field.GetFieldInfo();
+            int[,] field = GameManager.Instance.field.GetFieldState();
 
             // 현재 위치를 비우기
             var entityPos = checkEntity.curTile.fieldPos;
             field[entityPos.y, entityPos.x] = 0;
             // 적의 공격범위 가져오기 및 예상 데미지 계산
-            var values = GameManager.Instance.field.GetOtherTileValues(field, checkEntity.team.teamNumber);
+            var values = GameManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
 
             int value;
             intVector2 pos;
@@ -107,9 +120,10 @@ public class EnemyAI : Agent
         Entities = new List<Entity>();
         foreach (var item in controller.entities)
         {
-            if (item.curEnergy > item.skillCost)
+            if (item.skillData == null) continue;
+            if (item.CurEnergy > item.SkillCost)
             {
-                if (item.skillInstance.CanSkillInput(GameManager.Instance.field))
+                if (item.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
                 {
                     Entities.Add(item);
                 }
@@ -118,4 +132,6 @@ public class EnemyAI : Agent
         if (Entities.Count > 0) return true;
         return false;
     }
+
+
 }

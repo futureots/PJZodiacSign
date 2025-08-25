@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
+
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
     
@@ -46,9 +47,16 @@ public class InventoryUI : MonoBehaviour
 
     /// <summary> 아이템 데이터를 인스턴스로 전환 </summary>
     [SerializeField] ItemTable itemTable;
-    
-    
-    
+
+
+    InputManager _inputManager;
+    private void Awake()
+    {
+        _inputManager = transform.root.GetComponent<InputManager>();
+
+    }
+
+
     private void Start()
     {
         ToggleInventory(false);
@@ -57,35 +65,16 @@ public class InventoryUI : MonoBehaviour
         SetInventory();
 
         inventory.OnItemChanged += UpdateInventory;
+        _inputManager.OnObjectClicked.AddListener((x) =>
+        {
+            actPanel.gameObject.SetActive(false);
+        });
     }
     /// <summary>
     /// 보유 아이템 데이터를 인벤토리에 세팅
     /// </summary>
     void SetInventory()
     {
-        // 아이템 데이터 가져오기
-        /*var list = DataManager.Instance.playerData.items;
-        Debug.Log($"{list.Count} + {itemSlots.Count}");
-        for (int i = 0; i < itemSlots.Count; i++)
-        {
-            if (list.Count <= i)
-            {
-                itemSlots[i].ClearSlot();
-                continue;
-            }
-            // 테이블에서 아이템 서치(없으면 다음)
-            var data = itemTable.SearchItem(list[i]);
-            if (data == null)
-            {
-                itemSlots[i].ClearSlot();
-                continue;
-            }
-
-            ItemInstance instance = data.CreateInstance();
-            // 인벤토리 한 칸에 세팅
-            itemSlots[i].OnClick += OpenItemAction;
-            itemSlots[i].OnMouseInOut += SetInfoUI;
-        }*/
         for(int i=0;i< itemSlots.Count; i++)
         {
             var slot = itemSlots[i];
@@ -103,24 +92,8 @@ public class InventoryUI : MonoBehaviour
     public void UpdateInventory(int index ,ItemInstance item)
     {
         itemSlots[index].SetSlot(item);
-        /*var slot = GetEmptySlot();
-        if (slot == null) return false;
-        slot.SetSlot(item);
-        return true;*/
     }
-    /*
-    ItemSlotUI GetEmptySlot()
-    {
-        foreach(var slot in itemSlots)
-        {
-            if (slot.item == null) return slot;
-        }
-        return null;
-    }*/
-    public void UseItem(int index)
-    {
 
-    }
     /// <summary>
     /// Show/Hide InventoryUI
     /// </summary>
@@ -151,33 +124,27 @@ public class InventoryUI : MonoBehaviour
 
     void OpenItemAction(int index)
     {
-        if (inventory.items.Count <= index) return;
-        var item = inventory.items[index];
-        if (item == null) return;
-        actPanel.gameObject.SetActive(true);
-        actPanel.transform.position = itemSlots[index].transform.position;
-        actPanel.SetItemAction(inventory, index);
-
-        //Debug.Log("OpenItemUI");
+        if (inventory.items.ContainsKey(index))
+        {
+            actPanel.gameObject.SetActive(true);
+            actPanel.transform.position = itemSlots[index].transform.position;
+            actPanel.SetItemAction(inventory, index);
+        }
     }
     void SetInfoUI(int index, Vector2 pos)
     {
-        if (inventory.items.Count <= index) return;
-        if (index == -1)
+        if (inventory.items.TryGetValue(index,out var item))
         {
-            infoPanel.gameObject.SetActive(false);
-        }
-        else
-        {
-            var item = inventory.items[index];
-            if (item == null) return;
             if (!infoPanel.gameObject.activeSelf)
             {
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.SetInfo(item);
             }
             infoPanel.transform.localPosition = pos;
-            //Debug.Log(pos);
+        }
+        else
+        {
+            infoPanel.gameObject.SetActive(false);
         }
     }
 

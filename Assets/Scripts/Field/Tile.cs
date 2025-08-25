@@ -29,7 +29,7 @@ public class Tile : MonoBehaviour
         currentMaterials = originMaterials;
         bufferedObjects = new Queue<GameObject>();
     }
-    public void SetField(Field f,int x, int y)
+    public void InitializeTile(Field f,int x, int y)
     {
         isEmpty = true;
         field = f;
@@ -37,7 +37,7 @@ public class Tile : MonoBehaviour
         fieldPos.y = y;
     }
     
-    public void OccupyObject(GameObject e = null)
+    public void SetOccupant(GameObject e = null)
     {
         if(e != null)
         {
@@ -58,7 +58,7 @@ public class Tile : MonoBehaviour
 
     }
 
-    public void ClearBufferedObjects()
+    public void CleanupBufferedObjects()
     {
         // 밀려난 오브젝트(파괴 예정 기물, 장애물 등) 삭제
         foreach (var item in bufferedObjects)
@@ -75,7 +75,7 @@ public class Tile : MonoBehaviour
         }
         bufferedObjects.Clear();
     }
-    public void DestroyOccupiedObject()
+    public void ClearOccupant()
     {
         var component = occupiedObject.GetComponent<IDamageable>();
         if (component != null)
@@ -90,12 +90,12 @@ public class Tile : MonoBehaviour
         isEmpty = true;
     }
 
-    public void AddColor(Material material)
+    public void ApplyHighlight(Material material)
     {
         currentMaterials.Add(material);
         renderer.materials = currentMaterials.ToArray();
     }
-    public void RemoveColor(Material material)
+    public void RemoveHighlight(Material material)
     {
         currentMaterials.Remove(material);
         renderer.materials = currentMaterials.ToArray();

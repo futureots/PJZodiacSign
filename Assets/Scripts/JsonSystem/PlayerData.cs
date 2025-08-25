@@ -22,7 +22,7 @@ public class PlayerData
     public int stageLevel;
 
     // 현재 보유중인 (아이템 정보,개수)
-    public List<string> items;
+    public Dictionary<int, string> items;
 
     public int credit;
 
@@ -103,7 +103,7 @@ public struct EntityLevelHolder
     public EntityLevelHolder(Entity entity)
     {
         this.entity = entity.id;
-        level = entity.level;
+        level = entity.Level;
     }
     // 기물 이름
     public string entity;

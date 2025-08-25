@@ -25,7 +25,7 @@ public class AreaVisualizer : MonoBehaviour
     {
         foreach (Tile tile in tiles)
         {
-            tile.AddColor(moveMaterial);
+            tile.ApplyHighlight(moveMaterial);
             highlightedTiles.Add(tile);
         }
     }
@@ -33,7 +33,7 @@ public class AreaVisualizer : MonoBehaviour
     {
         foreach (Tile tile in tiles)
         {
-            tile.RemoveColor(moveMaterial);
+            tile.RemoveHighlight(moveMaterial);
             highlightedTiles.Remove(tile);
         }
     }
@@ -41,7 +41,7 @@ public class AreaVisualizer : MonoBehaviour
     {
         foreach (Tile tile in tiles)
         {
-            tile.AddColor(attackMaterial);
+            tile.ApplyHighlight(attackMaterial);
             highlightedTiles.Add(tile);
         }
     }
@@ -49,7 +49,7 @@ public class AreaVisualizer : MonoBehaviour
     {
         foreach (Tile tile in tiles)
         {
-            tile.RemoveColor(attackMaterial);
+            tile.RemoveHighlight(attackMaterial);
             highlightedTiles.Remove(tile);
         }
     }
@@ -58,8 +58,8 @@ public class AreaVisualizer : MonoBehaviour
         var tiles = highlightedTiles.Distinct().ToList();
         foreach (Tile tile in tiles)
         {
-            tile.RemoveColor(attackMaterial);
-            tile.RemoveColor(moveMaterial);
+            tile.RemoveHighlight(attackMaterial);
+            tile.RemoveHighlight(moveMaterial);
         }
         highlightedTiles.Clear();
     }

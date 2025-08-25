@@ -13,23 +13,34 @@ public class ItemActionUI : MonoBehaviour
         discardBtn.onClick.RemoveAllListeners();
         discardBtn.onClick.AddListener(() => inventory.RemoveItem(index));
         discardBtn.onClick.AddListener(() => gameObject.SetActive(false));
-        
-        if(inventory.items[index] is IUsable usable)
+
+        var item = inventory.items[index];
+        if (item is IUsable usable)
         {
             var effect = usable.GetUseEffect();
             useBtn.gameObject.SetActive(true);
 
-            useBtn.onClick.RemoveAllListeners();
-            useBtn.onClick.AddListener(()=>
+            // 현재 페이즈에서 아이템을 사용가능한지 확인
+            if (item.itemData.useType.HasFlag(PhaseManager.curPhase))
             {
-                effect.AddCallback(x =>
+                useBtn.interactable = true;
+
+                useBtn.onClick.RemoveAllListeners();
+                useBtn.onClick.AddListener(() =>
                 {
-                    if (x) inventory.RemoveItem(index);
-                    effect.ClearCallback();
+                    effect.AddCallback(x =>
+                    {
+                        if (x) inventory.RemoveItem(index);
+                        effect.ClearCallback();
+                    });
+                    transform.root.GetComponent<InputManager>().SetInputMode(effect);
                 });
-                transform.root.GetComponent<InputManager>().SetInputMode(effect);
-            });
-            useBtn.onClick.AddListener(() => gameObject.SetActive(false));
+                useBtn.onClick.AddListener(() => gameObject.SetActive(false));
+            }
+            else
+            {
+                useBtn.interactable = false;
+            }
         }
         else
         {
