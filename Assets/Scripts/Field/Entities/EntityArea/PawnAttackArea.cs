@@ -9,6 +9,7 @@ public class PawnAttackArea : MonoBehaviour, IAttackArea
         for(int i= -1;i < 2; i += 2)
         {
             var pos = isReflect ? curPos - new intVector2(i, 1) : curPos +  new intVector2(i, 1);
+            if (!Field.IsPositionValid(tiles, pos)) continue;
             list.Add(pos);
         }
         return list;

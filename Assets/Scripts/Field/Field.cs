@@ -2,11 +2,15 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 
 
 
 public class Field : MonoBehaviour
 {
+    [Header("Materials")]
+    public List<Material> tileMaterial;
+
     public int row, column;
     public GameObject tilePrefab;
 
@@ -41,6 +45,7 @@ public class Field : MonoBehaviour
         _tileList = new List<Row<Tile>>();
         //행,열의 길이 만큼 체스판 생성
         //tiles = new Tile[row, column];
+        
         for (int i = 0; i < row; i++)
         {
             var temp = new Row<Tile>();
@@ -49,6 +54,10 @@ public class Field : MonoBehaviour
             {
                 Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
                 var tileObj = Instantiate(tilePrefab, transform);
+                if (tileMaterial.Count > 0)
+                {
+                    tileObj.GetComponentInChildren<Renderer>().material = tileMaterial[(j + i % 2) % tileMaterial.Count];
+                }
                 tileObj.transform.localPosition = pos;
                 var tile = tileObj.GetComponent<Tile>();
                 tile.InitializeTile(this, j, i);
