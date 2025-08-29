@@ -7,6 +7,12 @@ using UnityEngine;
 public class AttackTurn : ITurn
 {
     Agent agent;
+
+    public Agent Agent
+    {
+        get { return agent; }
+    }
+
     public AttackTurn(Agent agent)
     {
         this.agent = agent;
@@ -22,7 +28,6 @@ public class AttackTurn : ITurn
     {
         // 현재 전투 중인 필드;
         Field curField = GameManager.Instance.field;
-        agent.isInputStop = true;
         // 해당 팀 반대 기물만 공격
         foreach (var obj in curField.GetOccupiedObjects())
         {
@@ -38,7 +43,7 @@ public class AttackTurn : ITurn
         }
 
         // 대기시간
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2f);
 
         curField.RemoveDeadEntities();
 
@@ -54,11 +59,12 @@ public class AttackTurn : ITurn
         }
 
 
-        agent.isInputStop = false;
-
-        //Debug.Log("CanInput");
     }
 
+    public string GetTurnInfo()
+    {
+        return $"팀 {agent.team.teamNumber} 공격 ";
+    }
 }
 
 

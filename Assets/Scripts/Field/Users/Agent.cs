@@ -5,7 +5,6 @@ using UnityEngine;
 
 public abstract class Agent : MonoBehaviour
 {
-    public bool isInputStop;
     public Team team { get; protected set; }
     protected void Awake()
     {

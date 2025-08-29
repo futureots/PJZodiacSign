@@ -6,14 +6,16 @@ using UnityEngine;
 public class ActionTurn : ITurn
 {
     Agent agent;
+    public Agent Agent
+    {
+        get { return agent; }
+    }
     public ActionTurn(Agent agent)
     {
         this.agent = agent;
     }
     public void StartTurn(Action onTurnEnd)
     {
-        Debug.Log(agent.tag + "행동 턴 시작");
-        // 현재 플레이어의 행동 턴 일 경우
         agent.SetActionTurn(() => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
 
         foreach (var entity in agent.controller.entities)
@@ -23,8 +25,6 @@ public class ActionTurn : ITurn
     }
     public IEnumerator ActionCoroutine()
     {
-        Debug.Log(agent.tag +" 행동 턴 실행");
-        agent.isInputStop = true;
         
 
         var cmd = agent.GetCommand();
@@ -32,7 +32,11 @@ public class ActionTurn : ITurn
         cmd?.Execute();
 
 
-        yield return new WaitForSeconds(0.5f);
-        agent.isInputStop = false;
+        yield return new WaitForSeconds(2f);
+    }
+
+    public string GetTurnInfo()
+    {
+        return $"팀 {agent.team.teamNumber} 행동 ";
     }
 }

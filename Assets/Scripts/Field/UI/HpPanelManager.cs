@@ -17,12 +17,15 @@ public class HpPanelManager : MonoBehaviour
     /// </summary>
     public void CreateHpBar(Entity target)
     {
+
         var obj = Instantiate(hpBar);
         hpBarList.Add(obj);
 
         var bar = obj.GetComponent<EntityHpUI>();
         if (bar == null) return;
+
         bar.SetEntity(target);
+        bar.hpBar.gaugeBar.color = GameManager.Instance.teamColorTable.teamColors[target.team.teamNumber];
         
     }
 

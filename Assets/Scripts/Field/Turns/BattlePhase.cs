@@ -9,6 +9,8 @@ public class BattlePhase : IPhase
     private LinkedList<ITurn> turns;
     private Action onPhaseEnd;
 
+    TurnQueueUI turnUI;
+
     public int Level
     {
         get
@@ -18,10 +20,11 @@ public class BattlePhase : IPhase
     }
     int level;
 
-    public BattlePhase(int level)
+    public BattlePhase(int level, TurnQueueUI turnUI)
     {
         this.level = level;
         turns = new LinkedList<ITurn>();
+        this.turnUI = turnUI;
         AddBattleTurns();
     }
     
@@ -30,8 +33,12 @@ public class BattlePhase : IPhase
         // 각 에이전트마다 ActionTurn과 AttackTurn을 추가
         foreach (var agent in GameManager.Instance.agents)
         {
-            turns.AddLast(new ActionTurn(agent));
-            turns.AddLast(new AttackTurn(agent));
+            var actionTurn = new ActionTurn(agent);
+            turns.AddLast(actionTurn);
+            turnUI.PushBack(actionTurn);
+            var attackTurn = new AttackTurn(agent);
+            turns.AddLast(attackTurn);
+            turnUI.PushBack(attackTurn);
         }
     }
     
@@ -52,14 +59,17 @@ public class BattlePhase : IPhase
     
     private void StartNextTurn()
     {
-        // 일반적으로 실행되지 않아야 함.
-        if (turns.Count <8)
+        Debug.Log("Start Next Turn");
+        if (turns.Count <5)
         {
             AddBattleTurns();
         }
         
         var currentTurn = turns.First.Value;
+        
         turns.RemoveFirst();
+        // TurnQueueUI 동기화
+        turnUI.PopFront();
         
         currentTurn.StartTurn(OnCombatTurnComplete);
     }
