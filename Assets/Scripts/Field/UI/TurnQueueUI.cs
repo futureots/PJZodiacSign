@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Transactions;
+using UnityEditor;
 using UnityEngine;
 
 public class TurnQueueUI : MonoBehaviour
@@ -16,10 +17,36 @@ public class TurnQueueUI : MonoBehaviour
     public float movingSpeed;
     // 제거된 턴들을 보관하는 리스트
     private List<ITurn> uncreatedTurns;
+    
 
     private void Awake()
     {
         uncreatedTurns = new List<ITurn>();
+    }
+    
+    /// <summary>
+    /// BattlePhase에서 발생한 턴 큐 변경 이벤트를 처리합니다.
+    /// </summary>
+    private void OnTurnQueueChanged(object sender, TurnQueueEventArgs e)
+    {
+        switch (e.EventType)
+        {
+            case TurnQueueEventType.TurnAdded:
+                PushBack(e.Turn);
+                break;
+            case TurnQueueEventType.TurnInserted:
+                InsertTurnBlock(e.Index, e.Turn);
+                break;
+            case TurnQueueEventType.TurnStarted:
+                PopFront();
+                break;
+            case TurnQueueEventType.TurnRemoved:
+                // 특정 턴 제거 로직이 필요한 경우 구현
+                break;
+            case TurnQueueEventType.TurnMoved:
+                // 턴 이동 로직이 필요한 경우 구현
+                break;
+        }
     }
     public int capacity;
     public void PushBack(ITurn turn)
@@ -185,7 +212,14 @@ public class TurnQueueUI : MonoBehaviour
         }
         return null;
     }
-    
+    private void OnEnable()
+    {
+        BattlePhase.OnTurnQueueChanged += OnTurnQueueChanged;
+    }
+    private void OnDisable()
+    {
+        BattlePhase.OnTurnQueueChanged -= OnTurnQueueChanged;
+    }
 }
 
 

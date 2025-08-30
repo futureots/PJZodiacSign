@@ -8,20 +8,15 @@ public class TurnBlock : MonoBehaviour
     public TextMeshProUGUI turnText;
     public Image backgroundImage;
     
-    [Header("Team Colors")]
-    public Color team1Color = Color.blue;
-    public Color team2Color = Color.red;
-    
-    [Header("Turn Type Colors")]
-    public Color actionTurnColor = Color.green;
-    public Color attackTurnColor = Color.cyan;
-    
     private ITurn turnData;
-
     Animator anim;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+    }
+    private void Start()
+    {
+        anim.SetTrigger("Appear");
     }
     /// <summary>
     /// TurnBlock을 초기화하고 ITurn 데이터를 설정합니다.
@@ -31,6 +26,7 @@ public class TurnBlock : MonoBehaviour
     public void Initialize(ITurn turn)
     {
         turnData = turn;
+        
         
         UpdateDisplay();
     }
@@ -84,10 +80,6 @@ public class TurnBlock : MonoBehaviour
         return turnData;
     }
 
-    private void OnEnable()
-    {
-        anim.SetTrigger("Appear");
-    }
     public void Destroy()
     {
         anim.SetTrigger("Disappear");
@@ -95,3 +87,4 @@ public class TurnBlock : MonoBehaviour
     }
 
 }
+

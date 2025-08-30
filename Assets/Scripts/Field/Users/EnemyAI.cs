@@ -22,7 +22,7 @@ public class EnemyAI : Agent
         {
             if (shopTable.TryGetBuyableEntity(Credit, out var entity))
             {
-                Debug.Log($"{Credit} : entity : {entity.normalPrice}");
+                //Debug.Log($"{Credit} : entity : {entity.normalPrice}");
                 Credit -= entity.normalPrice;
                 data.handEntities.Add(new EntityLevelData(entity));
             }

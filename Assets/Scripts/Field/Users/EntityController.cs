@@ -93,7 +93,6 @@ public class EntityController : MonoBehaviour
     }
     public virtual void DisposeInstantField()
     {
-        Debug.Log("DIsposeInstantField");
         instantField.ResetField();
         instantField.gameObject.SetActive(false);
     }

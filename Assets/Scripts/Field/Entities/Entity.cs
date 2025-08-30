@@ -294,7 +294,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         if (isProtected) value /= 2;
 
         CurHp -= value;
-        Debug.Log($"Damaged : {damage} , CurrentHp : {CurHp}");
     }
 
     public void Dead()

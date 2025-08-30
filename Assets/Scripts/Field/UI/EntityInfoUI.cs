@@ -64,7 +64,6 @@ public class EntityInfoUI : MonoBehaviour
         {
             if (team.isAlly(entity.team))
             {
-                Debug.Log(team.teamNumber + " : " + entity.team.teamNumber);
                 if (entity.skillData != null)
                 {
                     if (entity.CurEnergy >= entity.SkillCost)

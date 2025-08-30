@@ -11,7 +11,7 @@ namespace PlayerInput
 
         public void SetMode()
         {
-            Debug.Log("SetEmptyMode");
+            //Debug.Log("SetEmptyMode");
         }
     }
 }

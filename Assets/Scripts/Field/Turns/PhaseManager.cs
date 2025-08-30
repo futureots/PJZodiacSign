@@ -10,7 +10,6 @@ public class PhaseManager : MonoBehaviour
     public static PhaseType curPhase;
     public static Action<IPhase,bool> onPhaseChanged;
 
-    public TurnQueueUI BattleTurnUI;
     private void Awake()
     {
         phases = new LinkedList<IPhase>();
@@ -56,7 +55,8 @@ public class PhaseManager : MonoBehaviour
         phases.AddLast(new RepairPhase(level));
         
         // 전투 페이즈를 추가
-        phases.AddLast(new BattlePhase(level,BattleTurnUI));
+        var battlePhase = new BattlePhase(level);
+        phases.AddLast(battlePhase);
 
         // 첫 번째 페이즈 시작
         BeginPhase();
