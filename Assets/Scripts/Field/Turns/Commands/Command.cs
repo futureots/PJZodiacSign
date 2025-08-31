@@ -24,4 +24,8 @@ public abstract class Command
         }
         selecterObjects.Clear();
     }
+    public override string ToString()
+    {
+        return base.ToString();
+    }
 }

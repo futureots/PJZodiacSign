@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ActionTurn : ITurn
 {
+    public static Action<Agent, Command> OnCommandExecuted;
     Agent agent;
     public Agent Agent
     {
@@ -25,9 +26,9 @@ public class ActionTurn : ITurn
     }
     public IEnumerator ActionCoroutine()
     {
-        
-
         var cmd = agent.GetCommand();
+        //Debug.Log(cmd.ToString());
+        OnCommandExecuted?.Invoke(agent, cmd);
         if (cmd == null) Debug.Log("No Command");
         cmd?.Execute();
 

@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class AreaVisualizer : MonoBehaviour
 {
+
     /// <summary>
-    /// ¿¹»ó Àû °ø°İ ¹üÀ§ Ç¥½Ã ¸ŞÅ×¸®¾ó
+    /// ì˜ˆìƒ ì  ê³µê²© ë²”ìœ„ í‘œì‹œ ë©”í…Œë¦¬ì–¼
     /// </summary>
     public Material enemyAttackMaterial;
 
     /// <summary>
-    /// ¼±ÅÃÇÑ ¿£Æ¼Æ¼ ¿¹»ó °ø°İ¹üÀ§ Ç¥½Ã ¸ŞÅ×¸®¾ó
+    /// ì„ íƒí•œ ì—”í‹°í‹° ì˜ˆìƒ ê³µê²©ë²”ìœ„ í‘œì‹œ ë©”í…Œë¦¬ì–¼
     /// </summary>
     public Material attackMaterial;
 
     /// <summary>
-    /// ¼±ÅÃÇÑ ¿£Æ¼Æ¼ ÀÌµ¿ °¡´É¹üÀ§ Ç¥½Ã ¸ŞÅ×¸®¾ó
+    /// ì„ íƒí•œ ì—”í‹°í‹° ì´ë™ ê°€ëŠ¥ë²”ìœ„ í‘œì‹œ ë©”í…Œë¦¬ì–¼
     /// </summary>
     public Material moveMaterial;
 

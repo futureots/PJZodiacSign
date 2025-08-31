@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CameraFocus : MonoBehaviour
 {
-    // Ä«¸Ş¶ó À§Ä¡
+
+    // ì¹´ë©”ë¼ ìœ„ì¹˜
     Transform camTransform => transform;
-    // Áß½É ´ë»óÀ§Ä¡
+    // ì¤‘ì‹¬ ëŒ€ìƒìœ„ì¹˜
     public Transform targetTransform;
     /// <summary>
-    /// Ä«¸Ş¶ó È¸Àü ¼Óµµ
+    /// ì¹´ë©”ë¼ íšŒì „ ì†ë„
     /// </summary>
     public float rotateSpeed;
     public float zoomSpeed;
@@ -21,7 +22,7 @@ public class CameraFocus : MonoBehaviour
     private void Update()
     {
         camTransform.LookAt(targetTransform);
-        // ¸¶¿ì½º ¿ìÅ¬¸¯À¸·Î Ä«¸Ş¶ó È¸Àü
+        // ë§ˆìš°ìŠ¤ ìš°í´ë¦­ìœ¼ë¡œ ì¹´ë©”ë¼ íšŒì „
         if (Input.GetMouseButton(1))
         {
             SetCameraHorizontal();

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class S_Warp : BaseSkillInstance<SD_Warp>
 {
-    [SkillTarget("´ë»ó ±â¹°À» ¼±ÅÃÇÏ¼¼¿ä.")]
+    [SkillTarget("ëŒ€ìƒ ê¸°ë¬¼ì„ ì„ íƒí•˜ì„¸ìš”.")]
     public Entity entity;
-    [SkillTarget("´ë»ó Å¸ÀÏÀ» ¼±ÅÃÇÏ¼¼¿ä.")]
+    [SkillTarget("ëŒ€ìƒ íƒ€ì¼ì„ ì„ íƒí•˜ì„¸ìš”.")]
     public Tile tile;
 
     public S_Warp(SD_Warp data) : base(data)
@@ -18,7 +18,7 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
 
 
 
-    //½ºÅ³ ¹ßµ¿
+    //ìŠ¤í‚¬ ë°œë™
     public override void Activate()
     {
         Debug.Log("Activate");
@@ -41,15 +41,15 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
 
     bool IsValidEntity()
     {
-        Debug.Log("ÀÔ·Â°ª entity : " + entity);
+        Debug.Log("ì…ë ¥ê°’ entity : " + entity);
         if (entity == null) return false;
         return true;
     }
     bool IsValidTile()
     {
-        Debug.Log("ÀÔ·Â°ª tile : " + tile);
+        Debug.Log("ì…ë ¥ê°’ tile : " + tile);
         if (tile == null) return false;
-        // Á¡·É È®ÀÎ
+        // ì ë ¹ í™•ì¸
         if (!tile.isEmpty) return false;
         return true;
     }

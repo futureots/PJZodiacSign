@@ -96,7 +96,7 @@ public class EnemyAI : Agent
             intVector2 pos;
             // 가장 좋은 위치의 행동 가져오기
             (value ,pos) = checkEntity.GetBestMove(field, values);
-            Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
+            //Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
 
             if (pos.y == -1) continue;
             // 같은 값일 경우 전의 명령만 가짐

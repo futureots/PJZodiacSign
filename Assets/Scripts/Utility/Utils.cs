@@ -66,7 +66,7 @@ public struct intVector2
     #region Encode & Decode
     public override string ToString()
     {
-        return $"( x : {x}, y : {y} )";
+        return $"{(char)(x + 'A')}, {y + 1}";
     }
     public int Encode()
     {
