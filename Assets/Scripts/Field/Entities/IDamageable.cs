@@ -6,22 +6,22 @@ using UnityEngine;
 public interface IDamageable
 {
     /// <summary>
-    /// ÀÌ °´Ã¼¸¦ damage¸¸Å­ ÇÇÇØ¸¦ ÀÔÈù´Ù.
+    /// damageë§Œí¼ í”¼í•´ë¥¼ ì…ëŠ”ë‹¤.
     /// </summary>
-    /// <param name="damage">ÇÇÇØ·®</param>
+    /// <param name="damage">í”¼í•´ëŸ‰</param>
     public void Damaged(int damage);
     /// <summary>
-    /// ÀÌ °´Ã¼¸¦ amount¸¸Å­ È¸º¹ÇÑ´Ù.
+    /// amountë§Œí¼ íšŒë³µí•œë‹¤.
     /// </summary>
-    /// <param name="amount">È¸º¹·®</param>
+    /// <param name="amount">íšŒë³µëŸ‰</param>
     public void Healed(int amount);
     /// <summary>
-    /// Ã¼·ÂÀÌ 0ÀÌ µÆ´ÂÁö È®ÀÎ
+    /// ì²´ë ¥ì´ 0ì¸ì§€ í™•ì¸
     /// </summary>
-    /// <returns>Ã¼·ÂÀÌ 0ÀÌ¸é true, ¾Æ´Ï¸é false</returns>
+    /// <returns>ì²´ë ¥ì´ 0ì´ë©´ true, ì•„ë‹ˆë©´ false</returns>
     public bool isZero();
     /// <summary>
-    /// »ç¸Á ½Ã È£ÃâÇÏ´Â ÇÔ¼ö
+    /// ì‚¬ë§ ì‹œ í˜¸ì¶œ
     /// </summary>
     public void Dead();
 

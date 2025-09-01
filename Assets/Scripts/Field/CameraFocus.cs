@@ -35,7 +35,6 @@ public class CameraFocus : MonoBehaviour
     void SetCameraHorizontal()
     {
         var mouseX = Input.GetAxis("Mouse X");
-        //Debug.Log(mouseX);
         var rot = targetTransform.rotation.eulerAngles;
         rot.y += mouseX * rotateSpeed * 100 * Time.deltaTime;
         targetTransform.rotation = Quaternion.Euler(rot);
@@ -46,13 +45,11 @@ public class CameraFocus : MonoBehaviour
         var rot = targetTransform.rotation.eulerAngles;
         rot.x -= mouseY * rotateSpeed * 100 * Time.deltaTime;
         rot.x = Mathf.Clamp(rot.x, 10, 80);
-        //Debug.Log(rot.x);
         targetTransform.rotation = Quaternion.Euler(rot);
     }
     void SetCameraZoom()
     {
         var scroll = Input.GetAxis("Mouse ScrollWheel");
-        //Debug.Log(scroll);
         camTransform.position -= camTransform.position.normalized * scroll * zoomSpeed * Time.deltaTime * 1000;
     }
 }

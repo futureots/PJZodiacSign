@@ -38,13 +38,11 @@ public class Field : MonoBehaviour
 
     #region Field
     /// <summary>
-    /// ÇÊµå »ı¼º
+    /// í•„ë“œ ìƒì„±
     /// </summary>
     public void CreateField()
     {
         _tileList = new List<Row<Tile>>();
-        //Çà,¿­ÀÇ ±æÀÌ ¸¸Å­ Ã¼½ºÆÇ »ı¼º
-        //tiles = new Tile[row, column];
         
         for (int i = 0; i < row; i++)
         {
@@ -67,7 +65,7 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÊµå Á¦°Å
+    /// í•„ë“œ ì œê±°
     /// </summary>
     public void DestroyField()
     {
@@ -82,7 +80,7 @@ public class Field : MonoBehaviour
         _tileList.Clear();
     }
     /// <summary>
-    /// ÇÊµåÀ§ÀÇ ¸ğµç ±â¹° Á¦°Å(Àå¾Ö¹° Æ÷ÇÔ)
+    /// í•„ë“œìœ„ì˜ ëª¨ë“  ê¸°ë¬¼ ì œê±°(ì¥ì• ë¬¼ í¬í•¨)
     /// </summary>
     public void ResetField()
     {
@@ -94,14 +92,14 @@ public class Field : MonoBehaviour
         }
     }
     /// <summary>
-    /// »ç¸ÁÇÑ ¿ÀºêÁ§Æ® Á¦°Å(Àå¾Ö¹° Æ÷ÇÔ)
+    /// ì‚¬ë§í•œ ì˜¤ë¸Œì íŠ¸ ì œê±°(ì¥ì• ë¬¼ í¬í•¨)
     /// </summary>
     public void RemoveDeadEntities()
     {
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            // Å¸ÀÏ¿¡ Á¸ÀçÇÏ´Â ±â¹°ÀÇ ¼ö°¡ 1°³ ÀÌ»óÀÌ¸é ¸¶Áö¸·¿¡ µé¾î¿Â °´Ã¼ Á¦¿ÜÇÏ°í ÀüºÎ »èÁ¦
+            // íƒ€ì¼ì— ì¡´ì¬í•˜ëŠ” ê¸°ë¬¼ì˜ ìˆ˜ê°€ 1ê°œ ì´ìƒì´ë©´ ë§ˆì§€ë§‰ì— ë“¤ì–´ì˜¨ ê°ì²´ ì œì™¸í•˜ê³  ì „ë¶€ ì‚­ì œ
             var obj = tile.occupiedObject.GetComponent<IDamageable>();
             if (obj.isZero())
             {
@@ -115,7 +113,7 @@ public class Field : MonoBehaviour
     #endregion
 
     #region Tile
-    // ÇØ´ç À§Ä¡°¡ ÇÊµå³»¿¡ Á¸ÀçÇÏ´Â À§Ä¡ÀÎÁö È®ÀÎ
+    // í•´ë‹¹ ìœ„ì¹˜ê°€ í•„ë“œë‚´ì— ì¡´ì¬í•˜ëŠ” ìœ„ì¹˜ì¸ì§€ í™•ì¸
     public bool IsValidCellPos(intVector2 pos)
     {
         if(pos.x>=column || pos.x < 0 || pos.y >= row || pos.y < 0 || tiles[pos.y,pos.x] == null)
@@ -124,7 +122,7 @@ public class Field : MonoBehaviour
         }
         return true;
     }
-    // ÇØ´ç À§Ä¡ÀÇ ¼¿À» ¹İÈ¯
+    // í•´ë‹¹ ìœ„ì¹˜ì˜ ì…€ì„ ë°˜í™˜
     public Tile GetTile(intVector2 pos, bool isReflect = false)
     {
         var fieldPos = pos;
@@ -137,7 +135,7 @@ public class Field : MonoBehaviour
         return tiles[fieldPos.y, fieldPos.x];
     }
     /// <summary>
-    /// ÇÊµå¿¡ ÀÖ´Â ¸ğµç Å¸ÀÏ °¡Á®¿À±â
+    /// í•„ë“œì— ìˆëŠ” ëª¨ë“  íƒ€ì¼ ê°€ì ¸ì˜¤ê¸°
     /// </summary>
     public List<Tile> GetTiles()
     {
@@ -152,7 +150,7 @@ public class Field : MonoBehaviour
         return list;
     }
 
-    //ÇØ´ç À§Ä¡ Å¸ÀÏµé °¡Á®¿À±â
+    //í•´ë‹¹ ìœ„ì¹˜ íƒ€ì¼ë“¤ ê°€ì ¸ì˜¤ê¸°
     public List<Tile> GetTiles(List<intVector2> positions)
     {
         var list = new List<Tile>();
@@ -166,9 +164,9 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸Ç Àı¹İÀÇ Å¸ÀÏÀ» °¡Á®¿À±â
+    /// ë§¨ ì ˆë°˜ì˜ íƒ€ì¼ì„ ê°€ì ¸ì˜¤ê¸°
     /// </summary>
-    /// <param name="isReflect">true = Àû Ãø, false = ÇÃ·¹ÀÌ¾î Ãø</param>
+    /// <param name="isReflect">true = ì  ì¸¡, false = í”Œë ˆì´ì–´ ì¸¡</param>
     /// <returns></returns>
     public List<Tile> GetHalfTiles(bool isReflect)
     {
@@ -191,7 +189,7 @@ public class Field : MonoBehaviour
     }
     #endregion
 
-    //°ø°İ °¡´ÉÇÑ ¿ÀºêÁ§Æ® °¡Á®¿À±â
+    //ê³µê²© ê°€ëŠ¥í•œ ì˜¤ë¸Œì íŠ¸ ê°€ì ¸ì˜¤ê¸°
     public List<GameObject> GetOccupiedObjects()
     {
         List<GameObject> list = new();
@@ -207,6 +205,10 @@ public class Field : MonoBehaviour
         return list;
     }
 
+    /// <summary>
+    /// í˜„ì¬ í•„ë“œ ìƒíƒœ ê°€ì ¸ì˜¤ê¸°
+    /// </summary>
+    /// <returns>í•„ë“œ í¬ê¸°ì— ë§ëŠ” 2ì°¨ì› ë°°ì—´ ë°˜í™˜ ë¹ˆ íƒ€ì¼ì€ 0, ì¤‘ë¦½ì€ -1, ë‚˜ë¨¸ì§€ëŠ” íŒ€ ë²ˆí˜¸</returns>
     public int[,] GetFieldState()
     {
         var field = new int[row, column];
@@ -230,6 +232,13 @@ public class Field : MonoBehaviour
         return field;
     }
 
+
+    /// <summary>
+    /// ìƒëŒ€(ì¤‘ë¦½ í¬í•¨)ì˜ ê³µê²©ë²”ìœ„ ë° ì˜ˆìƒ ë°ë¯¸ì§€ ê³„ì‚° í›„ ë°˜í™˜
+    /// </summary>
+    /// <param name="fieldInfo">2ì°¨ì› ë°°ì—´</param>
+    /// <param name="teamNum">íŒ€ ë²ˆí˜¸</param>
+    /// <returns>í•´ë‹¹ íŒ€ì˜ ìƒëŒ€(ì¤‘ë¦½ í¬í•¨)ì˜ ê³µê²© ë²”ìœ„, ë°ë¯¸ì§€ ë°˜í™˜</returns>
     public int[,] CalculateEnemyThreat(int[,] fieldInfo, int teamNum = 0)
     {
         var field = new int[row, column];
@@ -253,6 +262,13 @@ public class Field : MonoBehaviour
         }
         return field;
     }
+
+    /// <summary>
+    /// í•´ë‹¹ Vectorê°’ì´ ì´ í•„ë“œì— ì¡´ì¬í•˜ëŠ” ê°’ì¸ì§€ í™•ì¸
+    /// </summary>
+    /// <param name="info">íƒ€ì¼ 2ì°¨ì› ë°°ì—´</param>
+    /// <param name="pos">ìœ„ì¹˜</param>
+    /// <returns>ë°°ì—´ì— ì¡´ì¬í•˜ë©´ true, ë°°ì—´ ë°– ê°’ì´ë©´ false ë°˜í™˜</returns>
     public static bool IsPositionValid(int[,] info, intVector2 pos)
     {
         var height = info.GetLength(0);
@@ -261,6 +277,11 @@ public class Field : MonoBehaviour
         return pos.y >= 0 && pos.y < height && pos.x >= 0 && pos.x < width;
     }
 
+    /// <summary>
+    /// íƒ€ì¼ ë¦¬ìŠ¤íŠ¸ì˜ ì ê±°ë˜ì§€ ì•Šì€ ë¹ˆ íƒ€ì¼ ë¦¬ìŠ¤íŠ¸ ë°˜í™˜
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
     public static List<Tile> GetEmptyTile(List<Tile> list)
     {
         var emptyTiles = new List<Tile>();

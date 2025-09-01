@@ -61,7 +61,7 @@ namespace PlayerInput
 
             // 아군 기물인지 확인
             var team = _inputManager.team;
-            if (!team.isAlly(entity.team)) return;
+            if (!team.IsAlly(entity.team)) return;
 
             if (entity.IsFromMainField()) return;
 

@@ -16,7 +16,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             }
             else
             {
-                Debug.Log("╪рх╞гр ╨С ╟Ь╟ёюл ╬Ь╫ю╢о╢ы!");
+                Debug.Log("Л├▄М≥≤М∙═ К╧┬ ЙЁ╣Й╟└Л²╢ Л≈├Л┼╣К▀┬К▀╓!");
             }
         });
     }

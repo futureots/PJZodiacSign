@@ -25,11 +25,18 @@ public class ShopUI : MonoBehaviour
     {
         customer = transform.root.GetComponent<InputManager>();
     }
+    /// <summary>
+    /// 상점 창 표시 토글
+    /// </summary>
     public void ToggleUI()
     {
         isOpen = !isOpen;
         ToggleUI(isOpen);
     }
+    /// <summary>
+    /// 상점 창 표시 활성화 비활성화
+    /// </summary>
+    /// <param name="open"></param>
     public void ToggleUI(bool open)
     {
         if (open)
@@ -41,6 +48,11 @@ public class ShopUI : MonoBehaviour
             shopPanel.SetActive(false);
         }
     }
+    /// <summary>
+    /// 현재 레벨에 맞는 상점 세팅
+    /// </summary>
+    /// <param name="level"></param>
+    /// <param name="isPremium"></param>
     public void SetShop(int level, bool isPremium = false)
     {
         if (level % 5 == 0 || isPremium)
@@ -103,7 +115,7 @@ public class ShopUI : MonoBehaviour
     }
     void PhaseChange(IPhase curPhase, bool start)
     {
-        // ������ ����
+        // 페이즈 시작
         if (start)
         {
             if (curPhase is RepairPhase phase)
@@ -112,7 +124,7 @@ public class ShopUI : MonoBehaviour
                 SetShop(phase.Level);
             }
         }
-        // ������ ����
+        // 페이즈 종료
         else
         {
             shopPanel.SetActive(false);

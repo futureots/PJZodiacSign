@@ -16,7 +16,7 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             }
             else
             {
-                Debug.Log("ÀÎº¥Åä¸®¿¡ ºó °ø°£ÀÌ ¾ø½À´Ï´Ù!");
+                Debug.Log("ì¸ë²¤í† ë¦¬ì— ë¹ˆ ê³µê°„ì´ ì—†ìŠµë‹ˆë‹¤!");
             }
         });
     }

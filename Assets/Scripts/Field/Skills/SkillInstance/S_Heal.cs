@@ -15,7 +15,7 @@ public class S_Heal : S_BaseEntity<SD_Heal>
             if (item.isEmpty) continue;
             var other = item.occupiedObject;
             var team = Owner.GetComponent<Team>();  
-            if (team.isAlly(other.GetComponent<Team>()))
+            if (team.IsAlly(other.GetComponent<Team>()))
             {
                 var ally = other.GetComponent<IDamageable>();
                 ally.Healed(Owner.Power);

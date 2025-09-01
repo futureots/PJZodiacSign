@@ -33,7 +33,7 @@ namespace PlayerInput
 
         }
 
-        //¼±ÅÃÇÑ ¿£Æ¼Æ¼ ÀúÀå
+        //ì„ íƒí•œ ì—”í‹°í‹° ì €ì¥
         Entity _selectedEntity = null;
         GameObject targetSelecter = null;
         GameObject targetTileSelecter = null;
@@ -42,7 +42,7 @@ namespace PlayerInput
         AreaVisualizer visualizer;
 
 
-        // µå·¡±× ½ÃÀÛ
+        // ë“œë˜ê·¸ ì‹œì‘
         void DragStart(GameObject obj)
         {
             if (obj == null) return;
@@ -50,22 +50,22 @@ namespace PlayerInput
             var entity = obj.GetComponent<Entity>();
             if (entity == null) return;
 
-            // ÀûÀÎÁö ¾Æ´ÑÁö ±¸ºĞ
+            // ì ì¸ì§€ ì•„ë‹Œì§€ êµ¬ë¶„
             var team = _inputManager.team;
-            if (!team.isAlly(entity.team)) return;
+            if (!team.IsAlly(entity.team)) return;
             _selectedEntity = entity;
 
             targetSelecter = GameObject.Instantiate(_inputManager.entitySelecter, entity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
             targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter, entity.transform.position, Quaternion.identity);
-            // ±â¹° ÀÌµ¿¹üÀ§ Ç¥½Ã
+            // ê¸°ë¬¼ ì´ë™ë²”ìœ„ í‘œì‹œ
             moveArea = entity.GetMoveArea();
             _inputManager.areaVisualizer.ShowMoveArea(moveArea);
             _inputManager.OnMouseMove.AddListener(DragEntity);
         }
-        // µå·¡±× Á¾·á
+        // ë“œë˜ê·¸ ì¢…ë£Œ
         void DragEnd()
         {
-            // ¿£Æ¼Æ¼ Å¬¸®¾î
+            // ì—”í‹°í‹° í´ë¦¬ì–´
             if (_selectedEntity != null)
             {
                 var tile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
@@ -73,10 +73,10 @@ namespace PlayerInput
                 visualizer.RemoveAttackArea(attackArea);
                 visualizer.RemoveMoveArea(moveArea);
 
-                // Á¦ÀÚ¸® ÀÌµ¿ ºÒ°¡´É
+                // ì œìë¦¬ ì´ë™ ë¶ˆê°€ëŠ¥
                 if (!_selectedEntity.curTile.Equals(tile))
                 {
-                    //Ä¿¸Çµå »ı¼º
+                    //ì»¤ë§¨ë“œ ìƒì„±
                     _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
                 }
                 else
@@ -89,7 +89,7 @@ namespace PlayerInput
             _inputManager.OnMouseMove.RemoveListener(DragEntity);
         }
 
-        // µå·¡±× Áß
+        // ë“œë˜ê·¸ ì¤‘
         void DragEntity(Vector2 value)
         {
             Ray ray = Camera.main.ScreenPointToRay(value);
@@ -101,7 +101,7 @@ namespace PlayerInput
                 Vector3 pos = ray.GetPoint(rayDistance);
                 _selectedEntity.transform.position = pos;
             }
-            // °ø°İ ¹üÀ§ Ç¥½Ã
+            // ê³µê²© ë²”ìœ„ í‘œì‹œ
             var closeTile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
             targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
             _areaVisualizer.RemoveAttackArea(attackArea);
