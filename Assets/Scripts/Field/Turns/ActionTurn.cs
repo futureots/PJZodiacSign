@@ -1,16 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class ActionTurn : ITurn
 {
     public static Action<Agent, Command> OnCommandExecuted;
     Agent agent;
-    public Agent Agent
-    {
-        get { return agent; }
-    }
+    public int TeamNumber => agent.team.teamNumber;
     public ActionTurn(Agent agent)
     {
         this.agent = agent;
@@ -19,15 +17,17 @@ public class ActionTurn : ITurn
     {
         agent.SetActionTurn(() => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
 
+        // 버프 업데이트
         foreach (var entity in agent.controller.entities)
         {
+            entity.UpdateBuff();
+            entity.RemoveBuff();
             entity.CurEnergy = Mathf.Min(entity.CurEnergy + 1, entity.SkillCost);
         }
     }
     public IEnumerator ActionCoroutine()
     {
         var cmd = agent.GetCommand();
-        //Debug.Log(cmd.ToString());
         OnCommandExecuted?.Invoke(agent, cmd);
         if (cmd == null) Debug.Log("No Command");
         cmd?.Execute();

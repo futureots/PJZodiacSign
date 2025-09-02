@@ -2133,7 +2133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85b1f41bf0348c48b1ee892c626e7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capacity: 0
+  capacity: 10
   content: {fileID: 1966056778}
   commandBlock: {fileID: 3727253429646636434, guid: 7c46d11034735aa4cb2f465912db1472, type: 3}
   blockList: []
@@ -10543,7 +10543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1035787433
 RectTransform:
   m_ObjectHideFlags: 0

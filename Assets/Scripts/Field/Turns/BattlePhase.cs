@@ -37,9 +37,14 @@ public class BattlePhase : IPhase
             turns.AddLast(actionTurn);
             OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(actionTurn, TurnQueueEventType.TurnAdded));
             
-            var attackTurn = new AttackTurn(agent);
+            var attackTurn = new AttackTurn(GameManager.Instance.GetOppositeAgent(agent));
             turns.AddLast(attackTurn);
             OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(attackTurn, TurnQueueEventType.TurnAdded));
+
+            //중립 오브젝트 공격 턴 추가
+            var calcTurn = new CalculationTurn();
+            turns.AddLast(calcTurn);
+            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(calcTurn, TurnQueueEventType.TurnAdded));
         }
     }
     

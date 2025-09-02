@@ -47,7 +47,7 @@ public class TurnBlock : MonoBehaviour
         turnText.text = text;
         
         // 팀에 따른 색상 설정
-        Color teamColor = GameManager.Instance.teamColorTable.teamColors[turnData.Agent.team.teamNumber];
+        Color teamColor = GameManager.Instance.teamColorTable.teamColors[turnData.TeamNumber];
 
         // 배경색을 팀 색상으로, 텍스트 색상을 턴 타입 색상으로 설정
         if (backgroundImage != null)
@@ -62,7 +62,7 @@ public class TurnBlock : MonoBehaviour
     string GetTurnText()
     {
         string text = "";
-        text += "팀 " + turnData.Agent.team.teamNumber;
+        text += "팀 " + turnData.TeamNumber;
         if (turnData is ActionTurn)
         {
             text += " 행동";

@@ -8,7 +8,7 @@ public interface ITurn
     /// <param name="onTurnEnd">턴 종료 시 호출할 콜백 함수</param>
     void StartTurn(Action onTurnEnd);
 
-    Agent Agent
+    int TeamNumber
     {
         get;
     }
