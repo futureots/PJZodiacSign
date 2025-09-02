@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class S_Warp : BaseSkillInstance<SD_Warp>
 {
-    [SkillTarget("´ë»ó ±â¹°À» ¼±ÅÃÇÏ¼¼¿ä.")]
+    [SkillTarget("ëŒ€ìƒ ê¸°ë¬¼ì„ ì„ íƒí•˜ì„¸ìš”.")]
     public Entity entity;
-    [SkillTarget("´ë»ó Å¸ÀÏÀ» ¼±ÅÃÇÏ¼¼¿ä.")]
+    [SkillTarget("ëŒ€ìƒ íƒ€ì¼ì„ ì„ íƒí•˜ì„¸ìš”.")]
     public Tile tile;
 
     public S_Warp(SD_Warp data) : base(data)
@@ -18,16 +18,13 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
 
 
 
-    //½ºÅ³ ¹ßµ¿
     public override void Activate()
     {
-        Debug.Log("Activate");
         entity.MoveSequence(tile,true);
     }
 
     public override bool IsValidInput(FieldInfo field)
     {
-        //Debug.Log(field.Name);
         switch (field.Name)
         {
             case nameof(entity):
@@ -41,15 +38,12 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
 
     bool IsValidEntity()
     {
-        Debug.Log("ÀÔ·Â°ª entity : " + entity);
         if (entity == null) return false;
         return true;
     }
     bool IsValidTile()
     {
-        Debug.Log("ÀÔ·Â°ª tile : " + tile);
         if (tile == null) return false;
-        // Á¡·É È®ÀÎ
         if (!tile.isEmpty) return false;
         return true;
     }

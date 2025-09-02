@@ -13,6 +13,11 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     [SerializeField] protected TextMeshProUGUI countText;
     protected int price;
 
+    /// <summary>
+    /// 해당 UI가 표시할 오브젝트 세팅
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="customer"></param>
     public virtual void SetGoods(T data, Agent customer)
     {
         this.customer = customer;
@@ -22,6 +27,11 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
         icon.sprite = data.icon;
         UpdateBuyBtn(customer.Credit);
     }
+
+    /// <summary>
+    /// 소비자가 상품을 구매할 크레딧을 보유하고 있는지 확인
+    /// </summary>
+    /// <param name="credit"></param>
     void UpdateBuyBtn(int credit)
     {
         if (credit < price)

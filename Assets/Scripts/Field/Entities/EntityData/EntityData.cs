@@ -20,6 +20,11 @@ public abstract class EntityData : AbstractData
 
     [Header("ObjectValue")]
     public Vector3 hpPanelPosition;
+    /// <summary>
+    /// 데이터 기반 기물 오브젝트 생성 및 반환
+    /// </summary>
+    /// <param name="level">생성된 오브젝트의 기본 레벨</param>
+    /// <returns></returns>
     public abstract Entity CreateEntity(int level = 0);
 
     protected Entity CreateInstance()

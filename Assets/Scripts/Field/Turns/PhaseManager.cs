@@ -25,7 +25,6 @@ public class PhaseManager : MonoBehaviour
             onPhaseChanged?.Invoke(currentPhase, false);
         }
 
-        // 엔딩 제외 실행되면 안되는 부분
         if (phases.Count == 0)
         {
             Debug.Log("AllPhaseEnd");
@@ -55,7 +54,8 @@ public class PhaseManager : MonoBehaviour
         phases.AddLast(new RepairPhase(level));
         
         // 전투 페이즈를 추가
-        phases.AddLast(new BattlePhase(level));
+        var battlePhase = new BattlePhase(level);
+        phases.AddLast(battlePhase);
 
         // 첫 번째 페이즈 시작
         BeginPhase();

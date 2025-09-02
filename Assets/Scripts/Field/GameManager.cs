@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
 
     DataManager dataManager;
     public HpPanelManager hpManager;
+    public TeamColorTable teamColorTable;
 
     private void Awake()
     {

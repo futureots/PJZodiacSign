@@ -5,11 +5,7 @@ using UnityEngine;
 public interface IAttackArea
 {
     /// <summary>
-    /// ½ÃÀÛ À§Ä¡¸¦ Áß½ÉÀ¸·Î °ø°Ý ¹üÀ§¸¦ ¹ÝÈ¯ÇÑ´Ù.
+    /// ì‹œìž‘ ìœ„ì¹˜ë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ê³µê²© ë²”ìœ„ë¥¼ ë°˜í™˜í•œë‹¤.
     /// </summary>
-    /// <param name="tiles"></param>
-    /// <param name="curPos"></param>
-    /// <param name="isReflect"></param>
-    /// <returns></returns>
     public List<intVector2> GetAttackVector(int[,] tiles, intVector2 curPos, bool isReflect);
 }

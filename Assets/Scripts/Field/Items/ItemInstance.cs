@@ -12,6 +12,10 @@ public class ItemInstance
     }
 
     public Action OnDiscard;
+
+    /// <summary>
+    /// 아이템 버리기
+    /// </summary>
     public void Discard()
     {
         OnDiscard?.Invoke();

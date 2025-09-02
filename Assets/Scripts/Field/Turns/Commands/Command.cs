@@ -17,11 +17,15 @@ public abstract class Command
 
     public virtual void Delete()
     {
-        Debug.Log($"Selecter : {selecterObjects.Count}");
+        //Debug.Log($"Selecter : {selecterObjects.Count}");
         foreach (GameObject go in selecterObjects)
         {
             UnityEngine.Object.Destroy(go);
         }
         selecterObjects.Clear();
+    }
+    public override string ToString()
+    {
+        return base.ToString();
     }
 }

@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // ÇöÀç ¿¡ÀÌÀüÆ®°¡ º¸À¯ÇÏ°í ÀÖ´Â ¾ÆÀÌÅÛ
+    /// <summary>
+    /// ìœ ì €ê°€ ë“¤ê³  ìˆëŠ” ì•„ì´í…œ
+    /// </summary>
     public Dictionary<int,ItemInstance> items { get; private set; }
     public Action<int, ItemInstance> OnItemChanged;
     public int capacity;
@@ -14,9 +16,10 @@ public class Inventory : MonoBehaviour
     {
         items = new Dictionary<int, ItemInstance>();
     }
+
     public bool AddItem(ItemInstance instance)
     {
-        // ¿ë·® °³¼ö ¸¸Å­ È®ÀÎ ¹× ºó °ø°£¿¡ Ãß°¡
+        // ìš©ëŸ‰ ê°œìˆ˜ ë§Œí¼ í™•ì¸ ë° ë¹ˆ ê³µê°„ì— ì¶”ê°€
         if (CanAddItem(out int index))
         {
             items.Add(index, instance);
@@ -24,14 +27,22 @@ public class Inventory : MonoBehaviour
             return true;
         }
         
-        // ¿ë·® ºÎÁ·
+        // ìš©ëŸ‰ ë¶€ì¡±
         return false;
     }
+    /// <summary>
+    /// ì¸ë²¤í† ë¦¬ì— ì•„ì´í…œ ì¶”ê°€
+    /// </summary>
+    /// <returns></returns>
     public bool AddItem(ItemData data)
     {
         return AddItem(data.CreateInstance());
     }
 
+    /// <summary>
+    /// ì¸ë²¤í† ë¦¬ ì•„ì´í…œ ì œê±°
+    /// </summary>
+    /// <param name="index"></param>
     public void RemoveItem(int index)
     {
         if(items.ContainsKey(index))
@@ -59,7 +70,7 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// ItemData ¹è¿­ ¹İÈ¯ ºóÄ­Àº null »ğÀÔ
+    /// ItemData ë°°ì—´ ë°˜í™˜ ë¹ˆì¹¸ì€ null ì‚½ì…
     /// </summary>
     /// <returns></returns>
     public Dictionary<int, ItemData> GetInventoryData()
@@ -71,6 +82,12 @@ public class Inventory : MonoBehaviour
         }
         return list;
     }
+
+    /// <summary>
+    /// ì¸ë²¤í† ë¦¬ì— ê³µê°„ì´ ìˆëŠ”ì§€ í™•ì¸
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
     bool CanAddItem(out int index)
     {
         for (int i = 0; i < capacity; i++)

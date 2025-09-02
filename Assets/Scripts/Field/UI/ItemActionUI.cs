@@ -8,6 +8,11 @@ public class ItemActionUI : MonoBehaviour
     public Button useBtn;
     public Button discardBtn;
 
+    /// <summary>
+    /// ê° ë²„íŠ¼ì˜ ìƒí˜¸ì‘ìš© ì„¤ì •
+    /// </summary>
+    /// <param name="inventory"></param>
+    /// <param name="index"></param>
     public void SetItemAction(Inventory inventory, int index)
     {
         discardBtn.onClick.RemoveAllListeners();
@@ -20,7 +25,6 @@ public class ItemActionUI : MonoBehaviour
             var effect = usable.GetUseEffect();
             useBtn.gameObject.SetActive(true);
 
-            // ÇöÀç ÆäÀÌÁî¿¡¼­ ¾ÆÀÌÅÛÀ» »ç¿ë°¡´ÉÇÑÁö È®ÀÎ
             if (item.itemData.useType.HasFlag(PhaseManager.curPhase))
             {
                 useBtn.interactable = true;

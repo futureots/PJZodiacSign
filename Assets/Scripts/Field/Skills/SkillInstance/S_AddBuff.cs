@@ -8,8 +8,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class S_AddBuff : S_BaseEntity<SD_AddBuff>
 {
-    [SkillTarget("´ë»ó ±â¹°À» ¼±ÅÃÇÏ¼¼¿ä.")]
+    [SkillTarget("ëŒ€ìƒ ê¸°ë¬¼ì„ ì„ íƒí•˜ì„¸ìš”.")]
     public Entity target;
+
 
     public S_AddBuff(SD_AddBuff data, Entity owner = null) : base(data, owner)
     {
@@ -35,7 +36,7 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
     bool IsValidEntity(Entity other)
     {
         if (other == null) return false;
-        //°ø°İ ¹üÀ§ ³» Àû¸¸ ¼Ó¹Ú
+        //ê³µê²© ë²”ìœ„ ë‚´ ì ë§Œ ì†ë°•
         if (Owner.GetAttackArea().Contains(other.curTile))
         {
             return true;
@@ -45,10 +46,10 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
 
 
     /// <summary>
-    /// ½ºÅ³ »ç¿ë¿¡ ÇÊ¿äÇÑ °ªÀ» ¾Ë¾Æ¼­ °¡Á®¿È.
+    /// ìŠ¤í‚¬ ì‚¬ìš©ì— í•„ìš”í•œ ê°’ì„ ì•Œì•„ì„œ ê°€ì ¸ì˜´.
     /// </summary>
-    /// <param name="field">ÇöÀç ½ºÅ³À» »ç¿ëÇÑ ÇÊµå</param>
-    /// <returns>½ºÅ³ »ç¿ëÀÌ °¡´ÉÇÑÁö true, ¾Æ´Ï¸é false</returns>
+    /// <param name="field">í˜„ì¬ ìŠ¤í‚¬ì„ ì‚¬ìš©í•œ í•„ë“œ</param>
+    /// <returns>ìŠ¤í‚¬ ì‚¬ìš©ì´ ê°€ëŠ¥í•œì§€ true, ì•„ë‹ˆë©´ false</returns>
     public override bool CanSkillInput(Field field)
     {
         var other = GetValidEntities(field);
@@ -59,9 +60,9 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
         return false;
     }
     /// <summary>
-    /// ½ºÅ³ ÀÔ·ÂÀÌ °¡´ÉÇÑ °æ¿ì¿¡¸¸ ½ºÅ³ÀÇ ÀÔ·Â°ªÀ» ÇÒ´çÇÔ.
+    /// ìŠ¤í‚¬ ì…ë ¥ì´ ê°€ëŠ¥í•œ ê²½ìš°ì—ë§Œ ìŠ¤í‚¬ì˜ ì…ë ¥ê°’ì„ í• ë‹¹í•¨.
     /// </summary>
-    /// <param name="field">½ºÅ³À» »ç¿ëÇÒ ÇÊµå</param>
+    /// <param name="field">ìŠ¤í‚¬ì„ ì‚¬ìš©í•  í•„ë“œ</param>
     public override bool SetSkillInput(Field field)
     {
         var entities = GetValidEntities(field);

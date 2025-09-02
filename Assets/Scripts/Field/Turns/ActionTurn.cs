@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class ActionTurn : ITurn
 {
+    public static Action<Agent, Command> OnCommandExecuted;
     Agent agent;
+    public Agent Agent
+    {
+        get { return agent; }
+    }
     public ActionTurn(Agent agent)
     {
         this.agent = agent;
     }
     public void StartTurn(Action onTurnEnd)
     {
-        Debug.Log(agent.tag + "«‡µø ≈œ Ω√¿€");
-        // «ˆ¿Á «√∑π¿ÃæÓ¿« «‡µø ≈œ ¿œ ∞ÊøÏ
         agent.SetActionTurn(() => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
 
         foreach (var entity in agent.controller.entities)
@@ -23,16 +26,18 @@ public class ActionTurn : ITurn
     }
     public IEnumerator ActionCoroutine()
     {
-        Debug.Log(agent.tag +" «‡µø ≈œ Ω««‡");
-        agent.isInputStop = true;
-        
-
         var cmd = agent.GetCommand();
+        //Debug.Log(cmd.ToString());
+        OnCommandExecuted?.Invoke(agent, cmd);
         if (cmd == null) Debug.Log("No Command");
         cmd?.Execute();
 
 
-        yield return new WaitForSeconds(0.5f);
-        agent.isInputStop = false;
+        yield return new WaitForSeconds(2f);
+    }
+
+    public string GetTurnInfo()
+    {
+        return $"ÌåÄ {agent.team.teamNumber} ÌñâÎèô ";
     }
 }

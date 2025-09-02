@@ -5,21 +5,27 @@ using UnityEngine;
 //[CreateAssetMenu(fileName = "BuffData", menuName = "Scriptable Objects/Buff/BuffData")]
 public abstract class BuffData : ScriptableObject
 {
-    /// <summary>¹öÇÁ ¾ÆÀÌÄÜ</summary>
+    /// <summary>ë²„í”„ ì•„ì´ì½˜</summary>
     public Sprite buffIcon;
     /// <summary>
-    /// »óÅÂÀÌ»ó Àû¿ë
+    /// ìƒíƒœì´ìƒ ì ìš©
     /// </summary>
     public abstract void ApplyBuff(Entity entity, int count);
     /// <summary>
-    /// ÅÏ Á¾·á½Ã »óÅÂÈ¿°ú º¯È­ ¹× ¾÷µ¥ÀÌÆ®
+    /// í„´ ì¢…ë£Œì‹œ ìƒíƒœíš¨ê³¼ ë³€í™” ë° ì—…ë°ì´íŠ¸
     /// </summary>
     public abstract void UpdateBuff(Entity entity,ref int count);
     /// <summary>
-    /// »óÅÂÈ¿°ú Á¦°Å
+    /// ìƒíƒœíš¨ê³¼ ì œê±°
     /// </summary>
     /// <param name="entity"></param>
     public abstract void RemoveBuff(Entity entity, int count);
 
+    /// <summary>
+    /// ë²„í”„ íš¨ê³¼ê°€ ì¡´ì¬í•  ê²½ìš° ì—°ì¥
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="currentCount"></param>
+    /// <param name="count"></param>
     public abstract void ExtendBuff(Entity entity, ref int currentCount, int count);
 }

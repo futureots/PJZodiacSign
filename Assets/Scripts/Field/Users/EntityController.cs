@@ -93,7 +93,6 @@ public class EntityController : MonoBehaviour
     }
     public virtual void DisposeInstantField()
     {
-        Debug.Log("DIsposeInstantField");
         instantField.ResetField();
         instantField.gameObject.SetActive(false);
     }
@@ -107,7 +106,7 @@ public class EntityController : MonoBehaviour
             if(tile.isEmpty) continue;
             var entity = tile.occupiedObject.GetComponent<Entity>();
             if(entity == null) continue;
-            if (team.isAlly(entity.team))
+            if (team.IsAlly(entity.team))
             {
                 entities.Add(entity);
             }

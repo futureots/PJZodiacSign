@@ -23,10 +23,14 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
 
     public Action<int> OnClick;
     /// <summary>
-    /// ¸¶¿ì½º°¡ µé¾î¿Ã ¶§, ³ª°¥ ¶§ È£ÃâµÇ´Â ÇÔ¼ö
+    /// ë§ˆìš°ìŠ¤ê°€ ë“¤ì–´ì˜¬ ë•Œ, ë‚˜ê°ˆ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     /// </summary>
     public Action<int, Vector2> OnMouseInOut;
     public void SetSlotIndex(int index) => this.index = index;
+    /// <summary>
+    /// ìŠ¬ë¡¯ì— ì•„ì´í…œ ì„¤ì •
+    /// </summary>
+    /// <param name="item"></param>
     public void SetSlot(ItemInstance item)
     {
         if (item == null)
@@ -40,6 +44,9 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
 
     }
 
+    /// <summary>
+    /// ìŠ¬ë¡¯ ë¹„ìš°ê¸°
+    /// </summary>
     public void ClearSlot()
     {
         Image.sprite = null;
@@ -56,7 +63,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // null ÀÔ·Â ½Ã ÇØ´ç ÆĞ³Î ºñÈ°¼ºÈ­
+        // null ì…ë ¥ ì‹œ í•´ë‹¹ íŒ¨ë„ ë¹„í™œì„±í™”
         OnMouseInOut?.Invoke(-1, eventData.position);
     }
 

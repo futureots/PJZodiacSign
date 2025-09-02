@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IMoveArea
 {
     /// <summary>
-    /// ½ÃÀÛ À§Ä¡¸¦ Áß½ÉÀ¸·Î ÀÌµ¿ ¹üÀ§¸¦ ¹İÈ¯ÇÑ´Ù.
+    /// ì‹œì‘ ìœ„ì¹˜ë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ì´ë™ ë²”ìœ„ë¥¼ ë°˜í™˜í•œë‹¤.
     /// </summary>
     public List<intVector2> GetMoveVector(int[,] tiles, intVector2 curPos, bool isReflect);
 

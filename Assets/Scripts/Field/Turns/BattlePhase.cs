@@ -9,6 +9,9 @@ public class BattlePhase : IPhase
     private LinkedList<ITurn> turns;
     private Action onPhaseEnd;
 
+    // 턴 큐 변경 이벤트
+    public static event EventHandler<TurnQueueEventArgs> OnTurnQueueChanged;
+
     public int Level
     {
         get
@@ -22,7 +25,7 @@ public class BattlePhase : IPhase
     {
         this.level = level;
         turns = new LinkedList<ITurn>();
-        AddBattleTurns();
+        
     }
     
     private void AddBattleTurns()
@@ -30,8 +33,13 @@ public class BattlePhase : IPhase
         // 각 에이전트마다 ActionTurn과 AttackTurn을 추가
         foreach (var agent in GameManager.Instance.agents)
         {
-            turns.AddLast(new ActionTurn(agent));
-            turns.AddLast(new AttackTurn(agent));
+            var actionTurn = new ActionTurn(agent);
+            turns.AddLast(actionTurn);
+            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(actionTurn, TurnQueueEventType.TurnAdded));
+            
+            var attackTurn = new AttackTurn(agent);
+            turns.AddLast(attackTurn);
+            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(attackTurn, TurnQueueEventType.TurnAdded));
         }
     }
     
@@ -52,16 +60,63 @@ public class BattlePhase : IPhase
     
     private void StartNextTurn()
     {
-        // 일반적으로 실행되지 않아야 함.
-        if (turns.Count <8)
+        //Debug.Log("Start Next Turn");
+        if (turns.Count <5)
         {
             AddBattleTurns();
         }
         
         var currentTurn = turns.First.Value;
+        
         turns.RemoveFirst();
+        // 턴 시작 이벤트 발생
+        OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(currentTurn, TurnQueueEventType.TurnStarted));
         
         currentTurn.StartTurn(OnCombatTurnComplete);
+    }
+    
+    /// <summary>
+    /// 특정 위치에 턴을 삽입합니다.
+    /// </summary>
+    /// <param name="turn">삽입할 턴</param>
+    /// <param name="index">삽입할 위치 (0부터 시작)</param>
+    public void InsertTurn(ITurn turn, int index)
+    {
+        if (index < 0 || index > turns.Count)
+        {
+            Debug.LogWarning($"Invalid index: {index}. Index should be between 0 and {turns.Count}");
+            return;
+        }
+        
+        var node = turns.First;
+        for (int i = 0; i < index; i++)
+        {
+            node = node.Next;
+        }
+        
+        if (node == null)
+        {
+            turns.AddLast(turn);
+        }
+        else
+        {
+            turns.AddBefore(node, turn);
+        }
+        
+        // 이벤트 발생
+        OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(turn, TurnQueueEventType.TurnInserted, index));
+    }
+    
+    /// <summary>
+    /// 특정 턴을 제거합니다.
+    /// </summary>
+    /// <param name="turn">제거할 턴</param>
+    public void RemoveTurn(ITurn turn)
+    {
+        if (turns.Remove(turn))
+        {
+            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(turn, TurnQueueEventType.TurnRemoved));
+        }
     }
     
     // 턴 종료 시 사망한 기물 정리 및 승패 확인

@@ -11,8 +11,8 @@ public abstract class S_BaseEntity<T> : BaseSkillInstance<T>,IOwnable where T : 
         _owner = owner;
     }
 
-    // ½ºÅ³ ½ÃÀüÀÚ ¿£Æ¼Æ¼, ¾øÀ¸¸é ½ÃÀüÀÚµµ ¼±ÅÃ°¡´É
-    [SkillTarget("½ºÅ³ ½ÃÀüÀÚ¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä.")]
+    // ìŠ¤í‚¬ ì‹œì „ì ì—”í‹°í‹°, ì—†ìœ¼ë©´ ì‹œì „ìë„ ì„ íƒê°€ëŠ¥
+    [SkillTarget("ìŠ¤í‚¬ ì‹œì „ìë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”.")]
     public Entity _owner;
 
     public Entity Owner { 

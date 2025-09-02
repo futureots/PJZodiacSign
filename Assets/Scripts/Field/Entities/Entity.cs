@@ -281,7 +281,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             if (item.isEmpty) continue;
             var target = item.occupiedObject;
             var targetTeam = target.GetComponent<Team>();
-            if(!team.isAlly(targetTeam))
+            if(!team.IsAlly(targetTeam))
             {
                 target.GetComponent<IDamageable>()?.Damaged(Power);
             }
@@ -294,7 +294,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         if (isProtected) value /= 2;
 
         CurHp -= value;
-        Debug.Log($"Damaged : {damage} , CurrentHp : {CurHp}");
     }
 
     public void Dead()

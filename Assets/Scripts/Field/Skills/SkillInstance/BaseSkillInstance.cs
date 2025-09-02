@@ -8,6 +8,7 @@ public abstract class BaseSkillInstance<T> : AbstractSkillInstance where T : Bas
     
     protected T data;
 
+
     public BaseSkillInstance(T data)
     {
         this.data = data;
@@ -28,7 +29,7 @@ public abstract class AbstractSkillInstance : IActive
         var isActable = IsActable();
         if (isActable)
         {
-            Debug.Log("SKILL »ç¿ë");
+            Debug.Log("SKILL ì‚¬ìš©");
             Activate();
             //Reinitialize();
         }
@@ -47,7 +48,7 @@ public abstract class AbstractSkillInstance : IActive
             if (attr != null)
             {
                 var check = IsValidInput(item);
-                Debug.Log("½ÇÇà °¡´É ¿©ºÎ : " + check);
+                Debug.Log("ì‹¤í–‰ ê°€ëŠ¥ ì—¬ë¶€ : " + check);
                 if (!check)
                 {
                     return false;

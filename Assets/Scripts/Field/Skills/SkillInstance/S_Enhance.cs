@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class S_Enhance : BaseSkillInstance<SD_Enhance>
 {
-    [SkillTarget("°­È­ ´ë»óÀ» ¼±ÅÃÇÏ¼¼¿ä.")]
+    [SkillTarget("ê°•í™” ëŒ€ìƒì„ ì„ íƒí•˜ì„¸ìš”.")]
     public Entity entity;
     public S_Enhance(SD_Enhance data) : base(data)
     {

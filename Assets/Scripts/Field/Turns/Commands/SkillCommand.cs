@@ -17,4 +17,17 @@ public class SkillCommand : Command
         var result = skill.ExecuteSequence();
         base.Execute();
     }
+    public override string ToString()
+    {
+        if( skill is AbstractSkillInstance sk)
+        {
+            if(skill is S_BaseEntity<BaseSkillData> s)
+            {
+                return $"{s.Owner.name}이 {s.skillName} 사용";
+            }
+            return $"{sk.skillName} 사용";
+        }
+        return "";
+            
+    }
 }

@@ -13,16 +13,19 @@ public class HpPanelManager : MonoBehaviour
         hpBarList = new List<GameObject>();
     }
     /// <summary>
-    ///  hpÄµ¹ö½º¿¡ Ã¼·Â¹Ù »ı¼º ÈÄ ¿ÀºêÁ§Æ® ÁöÁ¤
+    ///  hpìº”ë²„ìŠ¤ì— ì²´ë ¥ë°” ìƒì„± í›„ ì˜¤ë¸Œì íŠ¸ ì§€ì •
     /// </summary>
     public void CreateHpBar(Entity target)
     {
+
         var obj = Instantiate(hpBar);
         hpBarList.Add(obj);
 
         var bar = obj.GetComponent<EntityHpUI>();
         if (bar == null) return;
+
         bar.SetEntity(target);
+        bar.hpBar.gaugeBar.color = GameManager.Instance.teamColorTable.teamColors[target.team.teamNumber];
         
     }
 

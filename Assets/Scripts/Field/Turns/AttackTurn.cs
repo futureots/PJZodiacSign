@@ -7,6 +7,12 @@ using UnityEngine;
 public class AttackTurn : ITurn
 {
     Agent agent;
+
+    public Agent Agent
+    {
+        get { return agent; }
+    }
+
     public AttackTurn(Agent agent)
     {
         this.agent = agent;
@@ -14,19 +20,18 @@ public class AttackTurn : ITurn
 
     public void StartTurn(Action onTurnEnd)
     {
-        Debug.Log("°ø°İ ÅÏ ½ÃÀÛ");
+        Debug.Log("ê³µê²© í„´ ì‹œì‘");
 
         GameManager.Instance.RunWithCallback(AttackCoroutine(), onTurnEnd);
     }
     public IEnumerator AttackCoroutine()
     {
-        // ÇöÀç ÀüÅõ ÁßÀÎ ÇÊµå;
+        // í˜„ì¬ ì „íˆ¬ ì¤‘ì¸ í•„ë“œ;
         Field curField = GameManager.Instance.field;
-        agent.isInputStop = true;
-        // ÇØ´ç ÆÀ ¹İ´ë ±â¹°¸¸ °ø°İ
+        // í•´ë‹¹ íŒ€ ë°˜ëŒ€ ê¸°ë¬¼ë§Œ ê³µê²©
         foreach (var obj in curField.GetOccupiedObjects())
         {
-            if (agent.team.isAlly(obj.GetComponent<Team>()))
+            if (agent.team.IsAlly(obj.GetComponent<Team>()))
             {
                 continue;
             }
@@ -37,12 +42,12 @@ public class AttackTurn : ITurn
             }
         }
 
-        // ´ë±â½Ã°£
-        yield return new WaitForSeconds(0.1f);
+        // ëŒ€ê¸°ì‹œê°„
+        yield return new WaitForSeconds(2f);
 
         curField.RemoveDeadEntities();
 
-        // ¸ğµç Ä³¸¯ÅÍ ¹öÇÁ ¾÷µ¥ÀÌÆ®
+        // ëª¨ë“  ìºë¦­í„° ë²„í”„ ì—…ë°ì´íŠ¸
         foreach (var tile in curField.GetTiles())
         {
             if (tile.isEmpty) continue;
@@ -54,11 +59,12 @@ public class AttackTurn : ITurn
         }
 
 
-        agent.isInputStop = false;
-
-        //Debug.Log("CanInput");
     }
 
+    public string GetTurnInfo()
+    {
+        return $"íŒ€ {agent.team.teamNumber} ê³µê²© ";
+    }
 }
 
 

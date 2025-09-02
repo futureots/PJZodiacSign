@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IAttackable
 {
     /// <summary>
-    /// ÀÌ °´Ã¼°¡ °ø°İÀ» ½ÃÀüÇÑ´Ù.
+    /// ê³µê²© ì‹œì „
     /// </summary>
     public void Attack();
 }

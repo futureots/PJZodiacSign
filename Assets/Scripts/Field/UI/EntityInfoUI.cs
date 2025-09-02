@@ -11,7 +11,7 @@ public class EntityInfoUI : MonoBehaviour
 {
     Entity selectedEntity;
 
-    [Header("Á¤º¸ UI")]
+    [Header("ì •ë³´ UI")]
     public GameObject InfoPanel;
     public TextMeshProUGUI entityName;
     public GaugeUI hpBar;
@@ -41,7 +41,7 @@ public class EntityInfoUI : MonoBehaviour
 
         selectedEntity = entity;
         InfoPanel.SetActive(true);
-        // Á¤º¸ Ç¥½Ã
+        // ì •ë³´ í‘œì‹œ
         UpdateLevelText(selectedEntity.Level);
         selectedEntity.onLevelChanged += UpdateLevelText;
 
@@ -59,12 +59,11 @@ public class EntityInfoUI : MonoBehaviour
 
         bool isSkillUsable = false;
         entitySkillBtn.onClick.RemoveAllListeners();
-        // ½ºÅ³ ¹öÆ° È°¼ºÈ­
+        // ìŠ¤í‚¬ ë²„íŠ¼ í™œì„±í™”
         if (PhaseManager.curPhase == PhaseType.Battle)
         {
-            if (team.isAlly(entity.team))
+            if (team.IsAlly(entity.team))
             {
-                Debug.Log(team.teamNumber + " : " + entity.team.teamNumber);
                 if (entity.skillData != null)
                 {
                     if (entity.CurEnergy >= entity.SkillCost)

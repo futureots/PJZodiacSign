@@ -7,39 +7,45 @@ using UnityEngine;
 public interface IActive
 {
     /// <summary>
-    /// ½ºÅ³ ÀÚµ¿ÀÔ·ÂÀÌ °¡´ÉÇÑÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+    /// ìŠ¤í‚¬ ìë™ì…ë ¥ì´ ê°€ëŠ¥í•œì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <param name="field"></param>
     /// <returns></returns>
     public bool CanSkillInput(Field field);
     /// <summary>
-    /// ½ºÅ³ ÀÔ·Â°ª ÀÚµ¿ ÇÒ´ç ±â´É(°ª ¼±Á¤Àº ·£´ı)
+    /// ìŠ¤í‚¬ ì…ë ¥ê°’ ìë™ í• ë‹¹ ê¸°ëŠ¥(ê°’ ì„ ì •ì€ ëœë¤)
     /// </summary>
-    /// <param name="field">½ºÅ³À» »ç¿ëÇÒ ÇÊµå</param>
+    /// <param name="field">ìŠ¤í‚¬ì„ ì‚¬ìš©í•  í•„ë“œ</param>
     /// <returns></returns>
     public bool SetSkillInput(Field field);
     /// <summary>
-    /// ½ºÅ³ ½ÇÇà ÈÄ Äİ¹é ÇÔ¼ö
+    /// ì½œë°± í•¨ìˆ˜ ì¶”ê°€
     /// </summary>
     /// <param name="func"></param>
     public void AddCallback(Action<bool> func);
+    /// <summary>
+    /// ì½œë°± í•¨ìˆ˜ ì´ˆê¸°í™”
+    /// </summary>
     public void ClearCallback();
+    /// <summary>
+    /// ìŠ¤í‚¬ ì‚¬ìš© ë˜í•‘ í•¨ìˆ˜
+    /// </summary>
+    /// <returns></returns>
     public bool ExecuteSequence();
     /// <summary>
-    /// ½ºÅ³À» »ç¿ëÇÏ´Â ÇÔ¼ö
+    /// ìŠ¤í‚¬ì„ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     public void Activate();
     /// <summary>
-    /// ½ºÅ³ÀÌ »ç¿ë°¡´ÉÇÑÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+    /// ìŠ¤í‚¬ì´ ì‚¬ìš©ê°€ëŠ¥í•œì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <returns></returns>
-    
     public bool IsActable()
     {
         return true;
     }
     /// <summary>
-    /// fieldÀÇ º¯¼ö°¡ ÇÊ¿äÇÑ °ªÀ» °¡Áö°í ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö ³»ºÎÀûÀ¸·Î °¢ º¯¼ö¿¡ ´ëÇÑ Á¦ÇÑ Ãß°¡
+    /// fieldì˜ ë³€ìˆ˜ê°€ í•„ìš”í•œ ê°’ì„ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜ ë‚´ë¶€ì ìœ¼ë¡œ ê° ë³€ìˆ˜ì— ëŒ€í•œ ì œí•œ ì¶”ê°€
     /// </summary>
     /// <param name="field"></param>
     /// <returns></returns>

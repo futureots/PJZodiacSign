@@ -15,12 +15,18 @@ public class Tile : MonoBehaviour
     }
     List<Material> originMaterials;
     List<Material> currentMaterials;
-    //ÀÌ Å¸ÀÏÀÌ ÀÖ´Â ÇÊµå
+
+    /// <summary>
+    /// í•´ë‹¹ íƒ€ì¼ì´ ì¡´ì¬í•˜ëŠ” í•„ë“œ
+    /// </summary>
     public Field field;
     public intVector2 fieldPos;
     public GameObject occupiedObject;
     public Queue<GameObject> bufferedObjects;
-    // Å¸ÀÏ·Î ÀÌµ¿°¡´ÉÇÑÁö 
+
+    /// <summary>
+    /// í•´ë‹¹ íƒ€ì¼ì˜ ì ê±° ìƒíƒœ
+    /// </summary>
     public bool isEmpty;
 
     private void Awake()
@@ -29,6 +35,12 @@ public class Tile : MonoBehaviour
         currentMaterials = originMaterials;
         bufferedObjects = new Queue<GameObject>();
     }
+    /// <summary>
+    /// í•„ë“œ ì„¤ì •
+    /// </summary>
+    /// <param name="f">í•„ë“œ</param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public void InitializeTile(Field f,int x, int y)
     {
         isEmpty = true;
@@ -37,6 +49,10 @@ public class Tile : MonoBehaviour
         fieldPos.y = y;
     }
     
+    /// <summary>
+    /// íƒ€ì¼ ì ê±°
+    /// </summary>
+    /// <param name="e">íƒ€ì¼ì„ ì ê±°í•œ ì˜¤ë¸Œì íŠ¸</param>
     public void SetOccupant(GameObject e = null)
     {
         if(e != null)
@@ -58,9 +74,11 @@ public class Tile : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// ë°€ë ¤ë‚œ ì˜¤ë¸Œì íŠ¸(íŒŒê´´ ì˜ˆì • ê¸°ë¬¼, ì¥ì• ë¬¼ ë“±) ì‚­ì œ
+    /// </summary>
     public void CleanupBufferedObjects()
     {
-        // ¹Ğ·Á³­ ¿ÀºêÁ§Æ®(ÆÄ±« ¿¹Á¤ ±â¹°, Àå¾Ö¹° µî) »èÁ¦
         foreach (var item in bufferedObjects)
         {
             var component = item.GetComponent<IDamageable>();
@@ -75,6 +93,10 @@ public class Tile : MonoBehaviour
         }
         bufferedObjects.Clear();
     }
+
+    /// <summary>
+    /// ì ê±°í•œ ì˜¤ë¸Œì íŠ¸ ì œê±°
+    /// </summary>
     public void ClearOccupant()
     {
         var component = occupiedObject.GetComponent<IDamageable>();
@@ -90,6 +112,7 @@ public class Tile : MonoBehaviour
         isEmpty = true;
     }
 
+    
     public void ApplyHighlight(Material material)
     {
         currentMaterials.Add(material);

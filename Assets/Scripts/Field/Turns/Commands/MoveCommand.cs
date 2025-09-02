@@ -18,5 +18,8 @@ public class MoveCommand : Command
         base.Execute();
     }
 
-
+    public override string ToString()
+    {
+        return $"{entity.name}이 {tile.fieldPos.ToString()}으로 이동";
+    }
 }

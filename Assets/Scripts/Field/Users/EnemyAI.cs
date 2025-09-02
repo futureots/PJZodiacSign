@@ -14,15 +14,13 @@ public class EnemyAI : Agent
     }
     public override void SetRepairPhase(int level, Action call)
     {
-        // ·¹º§¿¡ ¸Â´Â µ¥ÀÌÅÍ °¡Á®¿Í¼­ ¼¼ÆÃÇÏ´Â ±â´É Ãß°¡ ÇÊ¿ä
-        // º¸À¯ Å©·¹µ÷À¸·Î ±â¹° ·£´ı ±¸¸ÅÇÏ±â
+        // ë³´ìœ  í¬ë ˆë”§ìœ¼ë¡œ ê¸°ë¬¼ ëœë¤ êµ¬ë§¤í•˜ê¸°
         Debug.Log("Enemy Credit : " + Credit);
         int loopCount = 30;
         for(int i=0;i<loopCount;i++)
         {
             if (shopTable.TryGetBuyableEntity(Credit, out var entity))
             {
-                Debug.Log($"{Credit} : entity : {entity.normalPrice}");
                 Credit -= entity.normalPrice;
                 data.handEntities.Add(new EntityLevelData(entity));
             }
@@ -43,9 +41,8 @@ public class EnemyAI : Agent
     public IEnumerator SetRepairMode()
     {
         yield return null;
-        // Å©·¹µ÷À» »ç¿ëÇØ ±â¹° ±¸¸Å ¹× ³» ÇÊµå¿¡ ¹èÄ¡
 
-        // ³» ÇÊµå¿¡ ÀÖ´Â ±â¹°À» ¸ŞÀÎ ÇÊµå¿¡ ¹èÄ¡
+        // ë‚´ í•„ë“œì— ìˆëŠ” ê¸°ë¬¼ì„ ë©”ì¸ í•„ë“œì— ë°°ì¹˜
         var list = controller.instantField.GetOccupiedObjects();
         var fieldTiles = Field.GetEmptyTile(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
         foreach (var obj in list)
@@ -53,10 +50,10 @@ public class EnemyAI : Agent
             var entity = obj.GetComponent<Entity>();
             if(entity == null) continue;
 
-            // ºó Å¸ÀÏ Áß ·£´ı À§Ä¡ ¼±ÅÃ
+            // ë¹ˆ íƒ€ì¼ ì¤‘ ëœë¤ ìœ„ì¹˜ ì„ íƒ
             Tile tile = fieldTiles[UnityEngine.Random.Range(0, fieldTiles.Count)];
             
-            // ¼±ÅÃÇÑ À§Ä¡¿¡ ±â¹° ÀÌµ¿
+            // ì„ íƒí•œ ìœ„ì¹˜ì— ê¸°ë¬¼ ì´ë™
             controller.PlaceOnMainField(entity,tile);
         }
         
@@ -65,7 +62,7 @@ public class EnemyAI : Agent
     public IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
-        // ½ºÅ³À» »ç¿ëÇÒ ¼ö ÀÖÀ» °æ¿ì ½ºÅ³À» ¿ì¼±ÀûÀ¸·Î »ç¿ë(½ºÅ³ÀÇ ÀÔ·Â°ªÀ» ³ÖÀ» ¼ö ¾øÀ¸¸é ÇØ´ç ±â¹° »©°í Àç ÆÇº°)
+        // ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ìˆì„ ê²½ìš° ìŠ¤í‚¬ì„ ìš°ì„ ì ìœ¼ë¡œ ì‚¬ìš©(ìŠ¤í‚¬ì˜ ì…ë ¥ê°’ì„ ë„£ì„ ìˆ˜ ì—†ìœ¼ë©´ í•´ë‹¹ ê¸°ë¬¼ ë¹¼ê³  ì¬ íŒë³„)
         if(CanActiveSkill(out var list))
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
@@ -75,7 +72,7 @@ public class EnemyAI : Agent
             yield break;
         }
 
-        // ½ºÅ³À» »ç¿ëÇÒ ¼ö ÀÖ´Â ±â¹°ÀÌ ¾øÀ¸¸é ÀÌµ¿ÇÑ´Ù.
+        // ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” ê¸°ë¬¼ì´ ì—†ìœ¼ë©´ ì´ë™í•œë‹¤.
         
         int max = 0;
         Entity bestEntity = null;
@@ -83,23 +80,23 @@ public class EnemyAI : Agent
         
         foreach (var checkEntity in controller.entities)
         {
-            // ÇÊµå °ª °¡Á®¿À±â
+            // í•„ë“œ ê°’ ê°€ì ¸ì˜¤ê¸°
             int[,] field = GameManager.Instance.field.GetFieldState();
 
-            // ÇöÀç À§Ä¡¸¦ ºñ¿ì±â
+            // í˜„ì¬ ìœ„ì¹˜ë¥¼ ë¹„ìš°ê¸°
             var entityPos = checkEntity.curTile.fieldPos;
             field[entityPos.y, entityPos.x] = 0;
-            // ÀûÀÇ °ø°İ¹üÀ§ °¡Á®¿À±â ¹× ¿¹»ó µ¥¹ÌÁö °è»ê
+            // ì ì˜ ê³µê²©ë²”ìœ„ ê°€ì ¸ì˜¤ê¸° ë° ì˜ˆìƒ ë°ë¯¸ì§€ ê³„ì‚°
             var values = GameManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
 
             int value;
             intVector2 pos;
-            // °¡Àå ÁÁÀº À§Ä¡ÀÇ Çàµ¿ °¡Á®¿À±â
+            // ê°€ì¥ ì¢‹ì€ ìœ„ì¹˜ì˜ í–‰ë™ ê°€ì ¸ì˜¤ê¸°
             (value ,pos) = checkEntity.GetBestMove(field, values);
-            Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
+            //Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
 
             if (pos.y == -1) continue;
-            // °°Àº °ªÀÏ °æ¿ì ÀüÀÇ ¸í·É¸¸ °¡Áü
+            // ê°™ì€ ê°’ì¼ ê²½ìš° ì „ì˜ ëª…ë ¹ë§Œ ê°€ì§
             if(max < value || bestEntity == null)
             {
                 max = value;
@@ -111,9 +108,9 @@ public class EnemyAI : Agent
     }
 
     /// <summary>
-    /// ½ºÅ³ »ç¿ëÀÌ °¡´ÉÇÑ ±â¹°ÀÌ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö
+    /// ìŠ¤í‚¬ ì‚¬ìš©ì´ ê°€ëŠ¥í•œ ê¸°ë¬¼ì´ ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
-    /// <returns>½ºÅ³ »ç¿ëÀÌ °¡´ÉÇÔ</returns>
+    /// <returns>ìŠ¤í‚¬ ì‚¬ìš©ì´ ê°€ëŠ¥í•¨</returns>
     bool CanActiveSkill(out List<Entity> Entities)
     {
         
