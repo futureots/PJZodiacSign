@@ -25,7 +25,6 @@ public class PhaseManager : MonoBehaviour
             onPhaseChanged?.Invoke(currentPhase, false);
         }
 
-        // 엔딩 제외 실행되면 안되는 부분
         if (phases.Count == 0)
         {
             Debug.Log("AllPhaseEnd");

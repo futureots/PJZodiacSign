@@ -12,7 +12,7 @@ public class BuffInstance
         buffData = data;
     }
     /// <summary>
-    /// ¹öÇÁ Àû¿ë
+    /// ë²„í”„ ì ìš©
     /// </summary>
     /// <param name="entity"></param>
     public void ApplyBuff(Entity entity)
@@ -20,24 +20,34 @@ public class BuffInstance
         buffData.ApplyBuff(entity,count);
     }
     /// <summary>
-    /// ÅÏ °¨¼Ò ¹× ¹öÇÁ È¿°ú ¾÷µ¥ÀÌÆ®
+    /// í„´ ê°ì†Œ ë° ë²„í”„ íš¨ê³¼ ì—…ë°ì´íŠ¸
     /// </summary>
     public void UpdateBuff(Entity entity)
     {
         buffData.UpdateBuff(entity,ref count);
     }
     /// <summary>
-    /// ¹öÇÁ Á¦°Å
+    /// ë²„í”„ ì œê±°
     /// </summary>
     /// <param name="entity"></param>
     public void RemoveBuff(Entity entity)
     {
         buffData.RemoveBuff(entity,count);
     }
+    /// <summary>
+    /// ë²„í”„ ì§€ì† íš¨ê³¼ê°€ ëë‚¬ëŠ”ì§€ í™•ì¸
+    /// </summary>
+    /// <returns></returns>
     public bool IsExpired()
     {
         return count == 0;
     }
+
+    /// <summary>
+    /// ë²„í”„ ì—°ì¥
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="count"></param>
     public void ExtendBuff(Entity entity,int count)
     {
         buffData.ExtendBuff(entity, ref this.count, count);

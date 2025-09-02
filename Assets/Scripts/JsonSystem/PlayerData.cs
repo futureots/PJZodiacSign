@@ -6,32 +6,36 @@ using System.IO;
 using System;
 
 /// <summary>
-/// ÇÃ·¹ÀÌ¾îÀÇ µ¥ÀÌÅÍ ÀúÀå Å¬·¡½º json ÀúÀå ¹× ºÒ·¯¿À±â °¡´É
+/// í”Œë ˆì´ì–´ì˜ ë°ì´í„° ì €ì¥ í´ë˜ìŠ¤ json ì €ì¥ ë° ë¶ˆëŸ¬ì˜¤ê¸° ê°€ëŠ¥
 /// </summary>
 public class PlayerData
 {
     [NonSerialized]
     static string defaultPath = "Player";
 
-    // ÇöÀç º¸À¯ÁßÀÎ ±â¹° Á¤º¸
+    /// <summary>
+    /// í•„ë“œì— ë°°ì¹˜í•œ í”Œë ˆì´ì–´ ê¸°ë¬¼ ì •ë³´
+    /// </summary>
     public Dictionary<int, EntityLevelHolder> fieldEntities;
-
+    /// <summary>
+    /// ë°°ì¹˜í•˜ì§€ ì•Šì•˜ì§€ë§Œ ë³´ìœ í•œ í”Œë ˆì´ì–´ ê¸°ë¬¼ ì •ë³´
+    /// </summary>
     public List<EntityLevelHolder> handEntities;
 
-    // ÇöÀç À§Ä¡ÇÑ Áö¿ª ¾ÆÀÌµğ
+    // í˜„ì¬ ìœ„ì¹˜í•œ ì§€ì—­ ì•„ì´ë””
     public int stageLevel;
 
-    // ÇöÀç º¸À¯ÁßÀÎ (¾ÆÀÌÅÛ Á¤º¸,°³¼ö)
+    // í˜„ì¬ ë³´ìœ ì¤‘ì¸ (ì•„ì´í…œ ì •ë³´,ê°œìˆ˜)
     public Dictionary<int, string> items;
 
     public int credit;
 
-    //ÆÄÀÏ¿¡¼­ ÀĞ¾î¿Ã ¶§ È£ÃâµÊ
+    //íŒŒì¼ì—ì„œ ì½ì–´ì˜¬ ë•Œ í˜¸ì¶œë¨
     public PlayerData()
     {
         //Debug.Log("Player Data Init");
         fieldEntities = new Dictionary<int, EntityLevelHolder>();
-        // ÀÎÄÚµùÀ¸·Î int °ªÀ¸·Î º¯È¯
+        // ì¸ì½”ë”©ìœ¼ë¡œ int ê°’ìœ¼ë¡œ ë³€í™˜
         handEntities = new List<EntityLevelHolder>();
         items = new();
         stageLevel = 1;
@@ -105,8 +109,8 @@ public struct EntityLevelHolder
         this.entity = entity.id;
         level = entity.Level;
     }
-    // ±â¹° ÀÌ¸§
+    // ê¸°ë¬¼ ì´ë¦„
     public string entity;
-    // ±â¹° ·¹º§(½ºÅÈ ÃÊ±â°ª ¼³Á¤¿¡ ÇÊ¿ä)
+    // ê¸°ë¬¼ ë ˆë²¨(ìŠ¤íƒ¯ ì´ˆê¸°ê°’ ì„¤ì •ì— í•„ìš”)
     public int level;
 }

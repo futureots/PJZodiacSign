@@ -66,16 +66,16 @@ public struct intVector2
     #region Encode & Decode
     public override string ToString()
     {
-        return $"{(char)(x + 'A')}, {y + 1}";
+        return $"{(char)(x + 'A')}, {y + 1}";//ì²´ìŠ¤ ì¢Œí‘œê°’ìœ¼ë¡œ ë³€í™˜
     }
     public int Encode()
     {
-        return x  | (y << 10); // X¸¦ »óÀ§ 10ºñÆ®, Y¸¦ ÇÏÀ§ 10ºñÆ®¿¡ ³ÖÀ½
+        return x  | (y << 10); // Xë¥¼ ìƒìœ„ 10ë¹„íŠ¸, Yë¥¼ í•˜ìœ„ 10ë¹„íŠ¸ì— ë„£ìŒ
     }
 
     public static intVector2 Decode(int value)
     {
-        int x = value & 0x3FF; // ÇÏÀ§ 10ºñÆ® ¸¶½ºÅ©
+        int x = value & 0x3FF; // í•˜ìœ„ 10ë¹„íŠ¸ ë§ˆìŠ¤í¬
         int y = value >> 10;
         return new intVector2 (x, y);
     }

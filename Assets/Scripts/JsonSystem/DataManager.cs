@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-
-    public PlayerData playerData {  get; private set; }
-    public LevelTable enemyData;
     /// <summary>
-    /// Àû ¿£Æ¼Æ¼ µ¥ÀÌÅÍ
+    /// í”Œë ˆì´ì–´ ë°ì´í„°
     /// </summary>
+    public PlayerData playerData {  get; private set; }
+    /// <summary>
+    /// ì  ë ˆë²¨ ë°ì´í„°
+    /// </summary>
+    public LevelTable enemyData;
+
 
     public ItemTable itemTable;
     public EntityTable entityTable;
@@ -20,7 +23,7 @@ public class DataManager : MonoBehaviour
     {
         List<AgentData> data = new List<AgentData>();
 
-        // ¾ÆÀÌÅÛ µ¥ÀÌÅÍ·Î ÀüÈ¯
+        // ì•„ì´í…œ ë°ì´í„°ë¡œ ì „í™˜
         var items = new Dictionary<int, ItemData>();
         foreach ( var item in playerData.items)
         {

@@ -38,6 +38,6 @@ public class ActionTurn : ITurn
 
     public string GetTurnInfo()
     {
-        return $"ÆÀ {agent.team.teamNumber} Çàµ¿ ";
+        return $"íŒ€ {agent.team.teamNumber} í–‰ë™ ";
     }
 }

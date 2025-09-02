@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour                     //이 스크립트 상속하면 싱글톤 생성 완료
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour                     
 {
     private static T instance = null;
-    public static T Instance                                                                                           //instance의 값이 손상되지 않게
+    public static T Instance                                                                                           
     {
         get
         {
@@ -27,7 +27,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour               
     }
     private void Awake()
     {
-        /*if (transform.parent != null || transform.root != null)                                                             //싱글톤 오브젝트가 파괴되지 않도록 처리
+        /*if (transform.parent != null || transform.root != null)                                                             
         {
             DontDestroyOnLoad(this.transform.root.gameObject);
         }

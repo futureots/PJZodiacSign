@@ -14,12 +14,12 @@ public abstract class Agent : MonoBehaviour
     }
     #region Phase
     /// <summary>
-    /// Á¤ºñ ÆäÀÌÁî ½ÃÀÛ
+    /// ì •ë¹„ í˜ì´ì¦ˆ ì‹œì‘
     /// </summary>
-    /// <param name="level">ÇöÀç ·¹º§</param>
+    /// <param name="level">í˜„ì¬ ë ˆë²¨</param>
     public abstract void SetRepairPhase(int level, Action call);
     /// <summary>
-    /// Á¤ºñ ÆäÀÌÁî Á¾·á
+    /// ì •ë¹„ í˜ì´ì¦ˆ ì¢…ë£Œ
     /// </summary>
     public virtual void EndRepairPhase()
     {
@@ -27,16 +27,16 @@ public abstract class Agent : MonoBehaviour
     }
 
     /// <summary>
-    /// ÀüÅõ ÆäÀÌÁî ½ÃÀÛ
+    /// ì „íˆ¬ í˜ì´ì¦ˆ ì‹œì‘
     /// </summary>
     public virtual void SetBattlePhase() { }
     /// <summary>
-    /// ÀüÅõ ÆäÀÌÁî Á¾·á
+    /// ì „íˆ¬ í˜ì´ì¦ˆ ì¢…ë£Œ
     /// </summary>
     public virtual void EndBattlePhase() { }
 
     /// <summary>
-    /// Çàµ¿ ÅÏ ½ÃÀÛ
+    /// í–‰ë™ í„´ ì‹œì‘
     /// </summary>
     /// <param name="call"></param>
     public virtual void SetActionTurn(Action call) { }
@@ -44,16 +44,16 @@ public abstract class Agent : MonoBehaviour
 
     #endregion
     /// <summary>
-    /// ÇöÀç controller°¡ º¸À¯ÁßÀÎ Ä¿¸Çµå ¹İÈ¯ ¹× ÃÊ±âÈ­
+    /// í˜„ì¬ controllerê°€ ë³´ìœ ì¤‘ì¸ ì»¤ë§¨ë“œ ë°˜í™˜
     /// </summary>
-    /// <returns>ÀÔ·ÂÇÑ Ä¿¸Çµå</returns>
+    /// <returns>ì…ë ¥í•œ ì»¤ë§¨ë“œ</returns>
     public Command GetCommand()
     {
         var cmd = controller.curCmd;
         return cmd;
     }
 
-    // ÄÁÆ®·Ñ·¯
+    // ì»¨íŠ¸ë¡¤ëŸ¬
     public EntityController controller { get; protected set; } 
     public Inventory inventory { get; protected set; }
 
@@ -69,18 +69,18 @@ public abstract class Agent : MonoBehaviour
     public Action<int> onCreditChanged;
 
     #region AgentData
-    // µ¥ÀÌÅÍ ÄÁÅ×ÀÌ³Ê(ÀÎº¥Åä¸®´Â »ç¿ë X)
+    // ë°ì´í„° ì»¨í…Œì´ë„ˆ(ì¸ë²¤í† ë¦¬ëŠ” ì‚¬ìš© X)
     protected AgentData data;
     public AgentData UpdateAgentData()
     {
-        // ÀÎº¥Åä¸® µ¥ÀÌÅÍ´Â ÀúÀå Á÷Àü ºÒ·¯¿À±â
+        // ì¸ë²¤í† ë¦¬ ë°ì´í„°ëŠ” ì €ì¥ ì§ì „ ë¶ˆëŸ¬ì˜¤ê¸°
         data.items = inventory.GetInventoryData();
         data.credit = Credit;
         return data;
     }
 
     /// <summary>
-    /// µ¥ÀÌÅÍ ±â¹İÀ¸·Î ¿¡ÀÌÀüÆ® ¼¼ÆÃÇÏ±â(°ÔÀÓ ½ÃÀÛ, Àç°³ ½Ã 1È¸¸¸ ½ÇÇà)
+    /// ë°ì´í„° ê¸°ë°˜ìœ¼ë¡œ ì—ì´ì „íŠ¸ ì„¸íŒ…í•˜ê¸°(ê²Œì„ ì‹œì‘, ì¬ê°œ ì‹œ 1íšŒë§Œ ì‹¤í–‰)
     /// </summary>
     /// <param name="agentData"></param>
     public void SetData(AgentData agentData)
@@ -90,7 +90,7 @@ public abstract class Agent : MonoBehaviour
         Credit = agentData.credit;
     }
     
-    // µ¥ÀÌÅÍ °»½Å(±â¹° °»½Å, °ÔÀÓ Å¬¸®¾î ½Ã ÇØ´ç µ¥ÀÌÅÍ ÀúÀå. ¾ÆÀÌÅÛÀº °ÔÀÓ Å¬¸®¾î ½Ã °»½Å ¹× ÀúÀå)
+    // ë°ì´í„° ê°±ì‹ (ê¸°ë¬¼ ê°±ì‹ , ê²Œì„ í´ë¦¬ì–´ ì‹œ í•´ë‹¹ ë°ì´í„° ì €ì¥. ì•„ì´í…œì€ ê²Œì„ í´ë¦¬ì–´ ì‹œ ê°±ì‹  ë° ì €ì¥)
 
     public bool SummonEntity(EntityData entityData)
     {
@@ -112,8 +112,8 @@ public abstract class Agent : MonoBehaviour
 }
 public enum Mode
 {
-    Repair,//Á¤ºñ ÀÔ·Â(»óÁ¡Ã¢ ¿ÀÇÂ, Á¤ºñ¿ë Ä«¸Ş¶ó ¹«ºê, º¸À¯ ±â¹° ÀÎ½ºÅÏÆ® ÇÊµå)
-    Move,//ÀÌµ¿ ÀÔ·Â(µå·¡±×&µå·Ó)
-    Skill,//½ºÅ³ ÀÔ·Â(Å¬¸¯)
-    None // ÀÔ·Â X, Á¤º¸¸¸ Ç¥½Ã
+    Repair,//ì •ë¹„ ì…ë ¥(ìƒì ì°½ ì˜¤í”ˆ, ì •ë¹„ìš© ì¹´ë©”ë¼ ë¬´ë¸Œ, ë³´ìœ  ê¸°ë¬¼ ì¸ìŠ¤í„´íŠ¸ í•„ë“œ)
+    Move,//ì´ë™ ì…ë ¥(ë“œë˜ê·¸&ë“œë¡­)
+    Skill,//ìŠ¤í‚¬ ì…ë ¥(í´ë¦­)
+    None // ì…ë ¥ X, ì •ë³´ë§Œ í‘œì‹œ
 }

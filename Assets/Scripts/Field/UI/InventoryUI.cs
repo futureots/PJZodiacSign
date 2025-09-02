@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
 
-    /// <summary>ÇöÀç UI Ç¥½Ã »óÅÂ</summary>
+    /// <summary>í˜„ì¬ UI í‘œì‹œ ìƒíƒœ</summary>
     public bool isOpen { get; private set; } = false;
     
     #region Debugging
@@ -27,25 +27,25 @@ public class InventoryUI : MonoBehaviour
     }
     #endregion
 
-    /// <summary>´İÀ» ¶§ ÀÌµ¿ÇÏ´Â Æ÷Áö¼Ç</summary>
+    /// <summary>ë‹«ì„ ë•Œ ì´ë™í•˜ëŠ” í¬ì§€ì…˜</summary>
     [ContextMenuItem("SetClosePos", "SetClosedPosition")]
     [SerializeField] Vector3 closedPosition;
-    /// <summary>¿­ ¶§ ÀÌµ¿ÇÏ´Â Æ÷Áö¼Ç</summary>
+    /// <summary>ì—´ ë•Œ ì´ë™í•˜ëŠ” í¬ì§€ì…˜</summary>
     [ContextMenuItem("SetOpenPos", "SetOpenedPosition")]
     [SerializeField] Vector3 openedPosition;
 
 
-    [Header("¿ÀºêÁ§Æ®")]
+    [Header("ì˜¤ë¸Œì íŠ¸")]
     public ItemInfoUI infoPanel;
     public ItemActionUI actPanel;
-    /// <summary> ¿­°í ´İ´Â ¹öÆ° ÄÄÆ÷³ÍÆ® </summary>
+    /// <summary> ì—´ê³  ë‹«ëŠ” ë²„íŠ¼ ì»´í¬ë„ŒíŠ¸ </summary>
     public Button popBtn;
 
     public Inventory inventory;
     [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
     [SerializeField] List<ItemSlotUI> itemSlots;
 
-    /// <summary> ¾ÆÀÌÅÛ µ¥ÀÌÅÍ¸¦ ÀÎ½ºÅÏ½º·Î ÀüÈ¯ </summary>
+    /// <summary> ì•„ì´í…œ ë°ì´í„°ë¥¼ ì¸ìŠ¤í„´ìŠ¤ë¡œ ì „í™˜ </summary>
     [SerializeField] ItemTable itemTable;
 
 
@@ -61,7 +61,7 @@ public class InventoryUI : MonoBehaviour
     {
         ToggleInventory(false);
 
-        // ÀÎº¥Åä¸® µ¥ÀÌÅÍ ºÒ·¯¿Í¼­ Ç¥½Ã
+        // ì¸ë²¤í† ë¦¬ ë°ì´í„° ë¶ˆëŸ¬ì™€ì„œ í‘œì‹œ
         SetInventory();
 
         inventory.OnItemChanged += UpdateInventory;
@@ -71,7 +71,7 @@ public class InventoryUI : MonoBehaviour
         });
     }
     /// <summary>
-    /// º¸À¯ ¾ÆÀÌÅÛ µ¥ÀÌÅÍ¸¦ ÀÎº¥Åä¸®¿¡ ¼¼ÆÃ
+    /// ë³´ìœ  ì•„ì´í…œ ë°ì´í„°ë¥¼ ì¸ë²¤í† ë¦¬ì— ì„¸íŒ…
     /// </summary>
     void SetInventory()
     {
@@ -86,7 +86,7 @@ public class InventoryUI : MonoBehaviour
     }
 
     /// <summary>
-    /// ÀÎº¥Åä¸®¿¡ ¾ÆÀÌÅÛ Ãß°¡ ½Ã UI¿¡ µ¿±âÈ­
+    /// ì¸ë²¤í† ë¦¬ì— ì•„ì´í…œ ì¶”ê°€ ì‹œ UIì— ë™ê¸°í™”
     /// </summary>
     /// <param name="item"></param>
     public void UpdateInventory(int index ,ItemInstance item)
