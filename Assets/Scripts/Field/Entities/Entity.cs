@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 
+
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
     #region sourceField
@@ -232,13 +233,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         var existBuff = _buffList.Find((x) => x.buffData.GetType() == buff.GetType());
         if (existBuff != null)
         {
-            existBuff.ExtendBuff(this, count);
+            existBuff.ExtendBuff(count);
         }
         else
         {
             var instance = new BuffInstance(count, buff);
             _buffList.Add(instance);
-            instance.ApplyBuff(this);
+            instance.ApplyBuff(gameObject);
         }
         Debug.Log(buffList.Count);
     }
@@ -250,7 +251,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         if (_buffList == null) return;
         foreach (var buff in _buffList)
         {
-            buff.UpdateBuff(this);
+            buff.UpdateBuff();
         }
     }
 
@@ -263,7 +264,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         var list = _buffList.Where((buff) => buff.IsExpired()).ToList();
         foreach (var buff in list)
         {
-            buff.RemoveBuff(this);
+            buff.RemoveBuff();
             _buffList.Remove(buff);
         }
     }
