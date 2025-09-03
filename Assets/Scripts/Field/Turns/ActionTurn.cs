@@ -20,9 +20,7 @@ public class ActionTurn : ITurn
         // 버프 업데이트
         foreach (var entity in agent.controller.entities)
         {
-            entity.UpdateBuff();
-            entity.RemoveBuff();
-            entity.CurEnergy = Mathf.Min(entity.CurEnergy + 1, entity.SkillCost);
+            entity.OnTurnStart();
         }
     }
     public IEnumerator ActionCoroutine()

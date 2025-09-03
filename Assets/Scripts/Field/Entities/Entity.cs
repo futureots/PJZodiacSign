@@ -2,11 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 
+[RequireComponent(typeof(BuffManager))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
+
+    private void Awake()
+    {
+        buffList = GetComponent<BuffManager>();
+        statusEffects = new();
+    }
+
     #region sourceField
     public Field sourceField;
 
@@ -76,14 +85,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
     // 기물의 기본 데이터
     public EntityData data;
+
+
     /// <summary>
     /// 기물 초기화, 스킬 설정
     /// </summary>
     /// <param name="data">기물 데이터</param>
-    /// <param name="
-    /// 
-    /// 
-    /// ">기물의 레벨</param>
+    /// <param name="level">기물의 레벨</param>
     public void InitializeEntity(EntityData data, int level =0)
     {
         this.data = data;
@@ -184,88 +192,60 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     #endregion
 
     #region Buff
+
+    public void OnTurnStart()
+    {
+        buffList.UpdateBuff();
+        buffList.RemoveBuff();
+        CurEnergy = Mathf.Min(CurEnergy + 1, SkillCost);
+    }
+
+    public BuffManager buffList;
+
+    Dictionary<string, int> statusEffects;
+    public void AddEffect(string effectName)
+    {
+        if (statusEffects.ContainsKey(effectName))
+        {
+            statusEffects[effectName] += 1;
+        }
+        else
+        {
+            statusEffects.Add(effectName, 1);
+        }
+    }
+    public void SubtractEffect(string effectName)
+    {
+        if (statusEffects.ContainsKey(effectName))
+        {
+            statusEffects[effectName] -= 1;
+            if(statusEffects[effectName] <= 0)
+            {
+                statusEffects.Remove(effectName);
+            }
+        }
+        else return;
+    }
+
     bool isSlienced
     {
         get
         {
-            if (_buffList == null) return false;
-            return _buffList.Exists((buff) => buff.buffData is Silence);
+            return statusEffects.ContainsKey("slience");
         }
     }
     bool isRooted
     {
         get
         {
-            if (_buffList == null) return false;
-            return _buffList.Exists((buff) => buff.buffData is Root);
+            return statusEffects.ContainsKey("root");
         }
     }
-    bool isProtected 
+    bool isProtected
     {
         get
         {
-            if (_buffList == null) return false;
-            return _buffList.Exists((buff) => buff.buffData is Protect);
-        }
-    }
-
-
-    List<BuffInstance> _buffList;
-    public List<BuffInstance> buffList
-    {
-        get
-        {
-            if(_buffList == null) _buffList = new List<BuffInstance>();
-            return _buffList;
-        }
-    }
-    /// <summary>
-    /// 버프 추가
-    /// </summary>
-    /// <param name="buff">버프 데이터</param>
-    /// <param name="count">버프 지속 턴</param>
-    public void AddBuff(BuffData buff, int count)
-    {
-        if (_buffList == null)
-        {
-            _buffList = new List<BuffInstance>();
-        }
-        var existBuff = _buffList.Find((x) => x.buffData.GetType() == buff.GetType());
-        if (existBuff != null)
-        {
-            existBuff.ExtendBuff(count);
-        }
-        else
-        {
-            var instance = new BuffInstance(count, buff);
-            _buffList.Add(instance);
-            instance.ApplyBuff(gameObject);
-        }
-        Debug.Log(buffList.Count);
-    }
-    /// <summary>
-    /// 버프 업데이트
-    /// </summary>
-    public void UpdateBuff()
-    {
-        if (_buffList == null) return;
-        foreach (var buff in _buffList)
-        {
-            buff.UpdateBuff();
-        }
-    }
-
-    /// <summary>
-    /// 버프 제거
-    /// </summary>
-    public void RemoveBuff()
-    {
-        if (_buffList == null) return;
-        var list = _buffList.Where((buff) => buff.IsExpired()).ToList();
-        foreach (var buff in list)
-        {
-            buff.RemoveBuff();
-            _buffList.Remove(buff);
+            return statusEffects.ContainsKey("protect");
         }
     }
 

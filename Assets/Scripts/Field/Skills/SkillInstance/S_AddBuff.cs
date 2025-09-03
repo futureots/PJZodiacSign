@@ -19,7 +19,7 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
     public override void Activate()
     {
         Debug.Log(data);
-        target.AddBuff(data.BuffData, data.count);
+        target.buffList.AddBuff(data.BuffData, data.count);
     }
 
     public override bool IsValidInput(FieldInfo field)
