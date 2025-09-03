@@ -9,9 +9,8 @@ public class BattlePhase : IPhase
     private LinkedList<ITurn> turns;
     private Action onPhaseEnd;
 
-    // 턴 큐 변경 이벤트
-    public static event EventHandler<TurnQueueEventArgs> OnTurnQueueChanged;
-
+    // 턴 종료 시 턴 정보(행동 턴은 해당 커맨드 정보를 가짐) 반환 및 이벤트 추가(해당 턴 동안 기물 사망 시 로그 추가)
+    public static event EventHandler<TurnQueueEventArgs> OnTurnChanged;
     public int Level
     {
         get
@@ -35,16 +34,13 @@ public class BattlePhase : IPhase
         {
             var actionTurn = new ActionTurn(agent);
             turns.AddLast(actionTurn);
-            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(actionTurn, TurnQueueEventType.TurnAdded));
             
             var attackTurn = new AttackTurn(GameManager.Instance.GetOppositeAgent(agent));
             turns.AddLast(attackTurn);
-            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(attackTurn, TurnQueueEventType.TurnAdded));
 
             //중립 오브젝트 공격 턴 추가
             var calcTurn = new CalculationTurn();
             turns.AddLast(calcTurn);
-            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(calcTurn, TurnQueueEventType.TurnAdded));
         }
     }
     
@@ -75,7 +71,7 @@ public class BattlePhase : IPhase
         
         turns.RemoveFirst();
         // 턴 시작 이벤트 발생
-        OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(currentTurn, TurnQueueEventType.TurnStarted));
+        OnTurnChanged?.Invoke(this, new TurnQueueEventArgs(currentTurn, TurnQueueEventType.TurnStarted));
         
         currentTurn.StartTurn(OnCombatTurnComplete);
     }
@@ -109,20 +105,9 @@ public class BattlePhase : IPhase
         }
         
         // 이벤트 발생
-        OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(turn, TurnQueueEventType.TurnInserted, index));
+        OnTurnChanged?.Invoke(this, new TurnQueueEventArgs(turn, TurnQueueEventType.TurnInserted, index));
     }
     
-    /// <summary>
-    /// 특정 턴을 제거합니다.
-    /// </summary>
-    /// <param name="turn">제거할 턴</param>
-    public void RemoveTurn(ITurn turn)
-    {
-        if (turns.Remove(turn))
-        {
-            OnTurnQueueChanged?.Invoke(this, new TurnQueueEventArgs(turn, TurnQueueEventType.TurnRemoved));
-        }
-    }
     
     // 턴 종료 시 사망한 기물 정리 및 승패 확인
     private void OnCombatTurnComplete()

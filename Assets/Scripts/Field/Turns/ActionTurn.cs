@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class ActionTurn : ITurn
 {
-    public static Action<Agent, Command> OnCommandExecuted;
     Agent agent;
     public int TeamNumber => agent.team.teamNumber;
     public ActionTurn(Agent agent)
@@ -26,7 +25,6 @@ public class ActionTurn : ITurn
     public IEnumerator ActionCoroutine()
     {
         var cmd = agent.GetCommand();
-        OnCommandExecuted?.Invoke(agent, cmd);
         if (cmd == null) Debug.Log("No Command");
         cmd?.Execute();
 
@@ -34,8 +32,4 @@ public class ActionTurn : ITurn
         yield return new WaitForSeconds(2f);
     }
 
-    public string GetTurnInfo()
-    {
-        return $"팀 {agent.team.teamNumber} 행동 ";
-    }
 }

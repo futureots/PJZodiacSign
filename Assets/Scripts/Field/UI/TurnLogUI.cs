@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandLogUI : MonoBehaviour
+public class TurnLogUI : MonoBehaviour
 {
     public int capacity;
     public Transform content;
@@ -26,10 +26,11 @@ public class CommandLogUI : MonoBehaviour
 
     private void OnEnable()
     {
-        ActionTurn.OnCommandExecuted += CreateLog;
+        
+        
     }
     private void OnDisable()
     {
-        ActionTurn.OnCommandExecuted -= CreateLog;
+        
     }
 }
