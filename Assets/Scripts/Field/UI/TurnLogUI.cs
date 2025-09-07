@@ -16,10 +16,10 @@ public class TurnLogUI : MonoBehaviour
     void Start()
     {
         Entity.onDead += CreateDeadLog;
-        BattlePhase.OnTurnStarted += CreateLog;
+        BattlePhase.OnTurnStarted += CreateTurnLog;
     }
 
-    public void CreateLog(ITurn turn)
+    public void CreateTurnLog(ITurn turn)
     {
         var block = Instantiate(turnBlock,content);
         blockList.Add(block.gameObject);
@@ -42,7 +42,7 @@ public class TurnLogUI : MonoBehaviour
     private void OnDestroy()
     {
         Entity.onDead -= CreateDeadLog;
-        BattlePhase.OnTurnStarted -= CreateLog;
+        BattlePhase.OnTurnStarted -= CreateTurnLog;
     }
 
     [ContextMenu("Clear")]

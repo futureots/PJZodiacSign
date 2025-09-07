@@ -28,9 +28,11 @@ public class AttackTurn : ITurn
         {
             entity.Attack();
         }
-        /*foreach (var obj in curField.GetOccupiedObjects())
+
+        // 중립 오브젝트 실행
+        foreach (var obj in curField.GetOccupiedObjects())
         {
-            if (agent.team.IsAlly(obj.GetComponent<Team>()))
+            if (obj.GetComponent<Team>())
             {
                 continue;
             }
@@ -39,7 +41,7 @@ public class AttackTurn : ITurn
             {
                 attackable.Attack();
             }
-        }*/
+        }
 
         // 대기시간
         yield return new WaitForSeconds(2f);

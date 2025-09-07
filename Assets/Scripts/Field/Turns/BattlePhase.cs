@@ -39,9 +39,12 @@ public class BattlePhase : IPhase
             var attackTurn = new AttackTurn(GameManager.Instance.GetOppositeAgent(agent));
             turns.AddLast(attackTurn);
 
-            //중립 오브젝트 공격 턴 추가
+            // 현재 attackTurn내부에 해당 함수 실행 중 필요 시 사용(굳이 없을 듯)
+            /*
+            // 중립 오브젝트 공격 턴 추가
             var calcTurn = new CalculationTurn();
             turns.AddLast(calcTurn);
+            */
         }
     }
     
