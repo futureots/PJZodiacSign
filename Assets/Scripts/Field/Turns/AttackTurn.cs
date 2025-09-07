@@ -17,7 +17,6 @@ public class AttackTurn : ITurn
 
     public void StartTurn(Action onTurnEnd)
     {
-        Debug.Log("공격 턴 시작");
 
         GameManager.Instance.RunWithCallback(AttackCoroutine(), onTurnEnd);
     }

@@ -18,6 +18,15 @@ public class TurnBlock : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
+    private void OnDestroy()
+    {
+        foreach (var block in logs)
+        {
+            Destroy(block.gameObject);
+        }
+        logs.Clear();
+    }
+
     /// <summary>
     /// TurnBlock을 초기화하고 ITurn 데이터를 설정합니다.
     /// </summary>

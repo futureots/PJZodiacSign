@@ -25,6 +25,10 @@ public class TurnLogUI : MonoBehaviour
         blockList.Add(block.gameObject);
         block.Initialize(turn);
         curTurnBlock = block;
+        if (blockList.Count > capacity)
+        {
+            EraseFront();
+        }
     }
 
     public void CreateDeadLog(Entity entity)
@@ -35,19 +39,16 @@ public class TurnLogUI : MonoBehaviour
         block.Initialize(entity);
     }
 
-    private void OnEnable()
-    {
-        
-        
-    }
-    private void OnDisable()
-    {
-        
-    }
-
     private void OnDestroy()
     {
         Entity.onDead -= CreateDeadLog;
         BattlePhase.OnTurnStarted -= CreateLog;
+    }
+
+    [ContextMenu("Clear")]
+    public void EraseFront()
+    {
+        Destroy(blockList[0]);
+        blockList.RemoveAt(0);
     }
 }

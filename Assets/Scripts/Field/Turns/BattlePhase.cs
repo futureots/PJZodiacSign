@@ -10,7 +10,7 @@ public class BattlePhase : IPhase
     private Action onPhaseEnd;
 
     // 턴 종료 시 턴 정보(행동 턴은 해당 커맨드 정보를 가짐) 반환 및 이벤트 추가(해당 턴 동안 기물 사망 시 로그 추가)
-    public static event EventHandler<TurnQueueEventArgs> OnTurnChanged;
+    
     public static Action<ITurn> OnTurnStarted;
     public int Level
     {
@@ -73,7 +73,6 @@ public class BattlePhase : IPhase
         turns.RemoveFirst();
         // 턴 시작 이벤트 발생
         OnTurnStarted(currentTurn);
-        OnTurnChanged?.Invoke(this, new TurnQueueEventArgs(currentTurn, TurnQueueEventType.TurnStarted));
         
         currentTurn.StartTurn(OnCombatTurnComplete);
     }
@@ -106,8 +105,7 @@ public class BattlePhase : IPhase
             turns.AddBefore(node, turn);
         }
         
-        // 이벤트 발생
-        OnTurnChanged?.Invoke(this, new TurnQueueEventArgs(turn, TurnQueueEventType.TurnInserted, index));
+        
     }
     
     

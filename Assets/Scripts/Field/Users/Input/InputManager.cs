@@ -50,6 +50,12 @@ public class InputManager : Agent
         inputActions.Gameplay.Point.performed += MoveMouse;
 
         OnObjectClicked.AddListener(HandleClick);
+
+        GameManager.onNextLevel += AddCredit;
+    }
+    private void OnDestroy()
+    {
+        GameManager.onNextLevel -= AddCredit;
     }
     #region InputPackaging
 
@@ -155,6 +161,10 @@ public class InputManager : Agent
         turnEndButton.interactable = false;
     }
 
+    void AddCredit(int level)
+    {
+        Credit += 30 + level;
+    }
     #endregion
 
     #region InputMode

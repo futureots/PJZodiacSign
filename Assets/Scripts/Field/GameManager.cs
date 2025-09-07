@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
+    public static Action<int> onNextLevel;
     // 0번은 플레이어 1번은 적AI
     public Agent[] agents;
 
@@ -84,7 +85,7 @@ public class GameManager : Singleton<GameManager>
         onNextLevel?.Invoke(level);
     }
     
-    public static Action<int> onNextLevel;
+    
     
 
     
