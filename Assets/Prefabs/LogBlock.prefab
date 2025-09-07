@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8071399580477798924}
   - component: {fileID: 3727253429646636434}
   m_Layer: 5
-  m_Name: CommandBlock
+  m_Name: LogBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

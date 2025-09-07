@@ -2087,7 +2087,7 @@ GameObject:
   - component: {fileID: 233994386}
   - component: {fileID: 233994387}
   m_Layer: 5
-  m_Name: CommandLogUI
+  m_Name: TurnLogUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2110,7 +2110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -490.01, y: 0}
+  m_AnchoredPosition: {x: -198.22998, y: 0}
   m_SizeDelta: {x: 300, y: 800}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &233994386
@@ -2135,8 +2135,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 5
   content: {fileID: 1966056778}
-  commandBlock: {fileID: 3727253429646636434, guid: 7c46d11034735aa4cb2f465912db1472, type: 3}
+  turnBlock: {fileID: 6746459635128084257, guid: 881cdd3070bec4146917edbf45fddfdf, type: 3}
+  logBlock: {fileID: 3727253429646636434, guid: 7c46d11034735aa4cb2f465912db1472, type: 3}
   blockList: []
+  curTurnBlock: {fileID: 0}
 --- !u!1 &238457762
 GameObject:
   m_ObjectHideFlags: 0
@@ -9800,7 +9802,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1732536660}
   m_HandleRect: {fileID: 1732536659}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

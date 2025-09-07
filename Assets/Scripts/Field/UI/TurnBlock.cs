@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class TurnBlock : MonoBehaviour
 {
@@ -11,15 +12,12 @@ public class TurnBlock : MonoBehaviour
     
     private ITurn turnData;
     Animator anim;
+    public List<LogBlock> logs;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
     }
-    private void Start()
-    {
-        GetComponentInChildren<CanvasGroup>().DOFade(1, 1f);
-        //anim.SetTrigger("Appear");
-    }
+
     /// <summary>
     /// TurnBlock을 초기화하고 ITurn 데이터를 설정합니다.
     /// </summary>
@@ -28,7 +26,6 @@ public class TurnBlock : MonoBehaviour
     public void Initialize(ITurn turn)
     {
         turnData = turn;
-        
         
         UpdateDisplay();
     }
@@ -82,12 +79,7 @@ public class TurnBlock : MonoBehaviour
         return turnData;
     }
 
-    public void Destroy()
-    {
-        //anim.SetTrigger("Disappear");
-        GetComponentInChildren<CanvasGroup>().DOFade(0, 1f);
-        Destroy(gameObject, 1f);
-    }
+
 
 }
 

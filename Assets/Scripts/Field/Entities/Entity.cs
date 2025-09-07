@@ -9,7 +9,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 [RequireComponent(typeof(BuffManager))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
-
+    // 사망 시 해당 엔티티 
     private void Awake()
     {
         buffList = GetComponent<BuffManager>();
@@ -114,8 +114,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         CurEnergy = 0;
     }
 
-    /// <summary>죽음 시 호출</summary>
-    public Action onDead;
 
     #region Status
     /// <summary>기물의 레벨</summary>
@@ -250,7 +248,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
 
     #endregion
-
+    public static Action<Entity> onDead;
     public void Attack()
     {
         if (isSlienced) return;
@@ -279,7 +277,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Dead()
     {
-        onDead?.Invoke();
+        onDead?.Invoke(this);
         Destroy(gameObject);
     }
 

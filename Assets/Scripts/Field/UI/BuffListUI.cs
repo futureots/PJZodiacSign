@@ -26,7 +26,7 @@ public class BuffListUI : MonoBehaviour
     
     public void SetBuffUI(BuffManager buffManager)
     {
-        List<BuffInstance> buffList = buffManager.buffList;
+        List<BuffInstance> buffList = buffManager.BuffList;
         for (int i = 0; i < buffIcons.Count; i++)
         {
             if (buffList.Count > i)

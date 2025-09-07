@@ -8,7 +8,7 @@ using System.Linq;
 public class BuffManager : MonoBehaviour
 {
     List<BuffInstance> _buffList;
-    public List<BuffInstance> buffList
+    public List<BuffInstance> BuffList
     {
         get
         {
@@ -34,14 +34,14 @@ public class BuffManager : MonoBehaviour
             _buffList.Add(instance);
             instance.ApplyBuff(gameObject);
         }
-        Debug.Log(buffList.Count);
+        Debug.Log(BuffList.Count);
     }
     /// <summary>
     /// 버프 업데이트
     /// </summary>
     public void UpdateBuff()
     {
-        foreach (var buff in _buffList)
+        foreach (var buff in BuffList)
         {
             buff.UpdateBuff();
         }
