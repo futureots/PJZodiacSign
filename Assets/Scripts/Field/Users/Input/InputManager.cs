@@ -163,7 +163,9 @@ public class InputManager : Agent
 
     void AddCredit(int level)
     {
-        Credit += 30 + level;
+        // 이자 및 고정값 추가(나중에 기물 가격과 비교해서 밸런싱)
+        Credit += Mathf.Min((int)(Credit * 0.1f), 50);
+        Credit += 50;
     }
     #endregion
 
