@@ -77,7 +77,8 @@ public class EnemyAI : Agent
         int max = 0;
         Entity bestEntity = null;
         intVector2 bestPos = new intVector2(-1,-1);
-        
+
+        bool flag = false;
         foreach (var checkEntity in controller.entities)
         {
             // 필드 값 가져오기
@@ -89,22 +90,29 @@ public class EnemyAI : Agent
             // 적의 공격범위 가져오기 및 예상 데미지 계산
             var values = GameManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
 
-            int value;
-            intVector2 pos;
             // 가장 좋은 위치의 행동 가져오기
-            (value ,pos) = checkEntity.GetBestMove(field, values);
-            //Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
-
-            if (pos.y == -1) continue;
-            // 같은 값일 경우 전의 명령만 가짐
-            if(max < value || bestEntity == null)
+            if(checkEntity.GetBestMove(field, values,out int value, out intVector2 pos))
             {
-                max = value;
-                bestEntity = checkEntity;
-                bestPos = pos;
+                flag = true;
+                Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
+                // 같은 값일 경우 이후의 명령만 가짐
+                if (max < value || bestEntity == null)
+                {
+                    max = value;
+                    bestEntity = checkEntity;
+                    bestPos = pos;
+                }
             }
         }
-        controller.CreateCommand(bestEntity, GameManager.Instance.field.GetTile(bestPos));
+        if (flag)
+        {
+            controller.CreateCommand(bestEntity, GameManager.Instance.field.GetTile(bestPos));
+        }
+        else
+        {
+            // 이에 대한 조치 요망 => 행동하지 않고 턴을 넘겨야함.
+            Debug.Log("행동 불가능!");
+        }
     }
 
     /// <summary>

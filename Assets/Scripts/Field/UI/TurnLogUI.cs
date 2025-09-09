@@ -54,14 +54,20 @@ public class TurnLogUI : MonoBehaviour
     [ContextMenu("Clear")]
     public void EraseFront()
     {
+        if (blockList.Count <= 0) return;
         Destroy(blockList[0]);
         blockList.RemoveAt(0);
     }
 
     void ClearLog()
     {
+        Debug.Log("로그 초기화");
         //로그 오브젝트 제거
-        
+        foreach (var block in blockList)
+        {
+            Destroy(block.gameObject);
+        }
+        blockList.Clear();
     }
 
     void PhaseChange(IPhase curPhase, bool start)

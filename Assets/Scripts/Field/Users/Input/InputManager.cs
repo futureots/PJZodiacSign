@@ -114,6 +114,7 @@ public class InputManager : Agent
         controller.onCommandCreated += ExecuteCommand;
 
         SetInputMode(Mode.Repair);
+        turnEndButton.interactable = true;
         turnEndButton.onClick.AddListener(() =>
         {
             turnEndButton.onClick.RemoveAllListeners();
@@ -157,6 +158,7 @@ public class InputManager : Agent
             controller.onCommandCreated -= bind;
             turnEndButton.onClick.RemoveAllListeners();
             call?.Invoke();
+            turnEndButton.interactable = false;
         });
         turnEndButton.interactable = false;
     }

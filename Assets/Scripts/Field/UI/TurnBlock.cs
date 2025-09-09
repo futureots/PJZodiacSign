@@ -79,9 +79,13 @@ public class TurnBlock : MonoBehaviour
 
     void UpdateDisplay(Command cmd)
     {
+        
         if(turnData == null) return;
-
-        string text = cmd.ToString();
+        string text = "행동 불능";
+        if (cmd != null)
+        {
+            text = cmd.ToString();
+        }
         turnText.text = text;
     }
 

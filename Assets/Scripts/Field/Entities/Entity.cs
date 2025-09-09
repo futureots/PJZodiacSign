@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -423,21 +424,22 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <param name="field">현재 필드 상태</param>
     /// <param name="tileValues">타일 위치별 가치</param>
     /// <returns></returns>
-    public (int,intVector2) GetBestMove(int[,] field, int[,] tileValues)
+    public bool GetBestMove(int[,] field, int[,] tileValues, out int value, out intVector2 pos)
     {
         var list = GetMoveVector();
         
         int max = tileValues[curTile.fieldPos.y, curTile.fieldPos.x];
         
-        List<intVector2> pos = new();
+        List<intVector2> valuablePos = new();
         foreach (var area in list)
         {
+            
             // 이동할 수 없는 타일은 제외
-            if (field[area.y, area.x] != 0) continue;
-
-            // 죽음 위험 체크(이동 후 체력이 0 이하면 -9999)
-            var value = tileValues[area.y, area.x];
-            if (value + CurHp <= 0) value = -9999;
+            if (field[area.y, area.x] != 0 || curTile.fieldPos == area) continue;
+            Debug.Log($"Best Entity : {data.productName} , CurPos : {curTile.fieldPos} , Expect : {area} ");
+            // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
+            var damage = tileValues[area.y, area.x];
+            if (damage + CurHp <= 0) damage -= 5;
 
             // 공격 가능 체크
             field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
@@ -450,18 +452,27 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
                 tileValues[area.y,area.x] += Power;
             }
 
-            if (value > max || pos.Count == 0)
+            if (damage > max || valuablePos.Count == 0)
             {
-                pos.Clear();
-                max = value;
-                pos.Add(area);
+                valuablePos.Clear();
+                max = damage;
+                valuablePos.Add(area);
             }
-            else if(value == max)
+            else if(damage == max)
             {
-                pos.Add(area);
+                valuablePos.Add(area);
             }
         }
-        return (max, pos[UnityEngine.Random.Range(0,pos.Count)]);
+        if(valuablePos.Count <= 0)
+        {
+            value = 0;
+            pos = intVector2.Zero;
+
+            return false;
+        }
+        value = max;
+        pos = valuablePos[UnityEngine.Random.Range(0, valuablePos.Count)];
+        return true;
     }
 
 
