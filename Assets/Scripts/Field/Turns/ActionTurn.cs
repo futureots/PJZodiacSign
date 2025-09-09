@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ActionTurn : ITurn
 {
+    public Action<Command> onCommandExecuted;
     Agent agent;
     public int TeamNumber => agent.team.teamNumber;
     public ActionTurn(Agent agent)
@@ -27,6 +28,7 @@ public class ActionTurn : ITurn
         var cmd = agent.GetCommand();
         if (cmd == null) Debug.Log("No Command");
         cmd?.Execute();
+        onCommandExecuted?.Invoke(cmd);
 
 
         yield return new WaitForSeconds(2f);

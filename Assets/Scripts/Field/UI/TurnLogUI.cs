@@ -15,7 +15,7 @@ public class TurnLogUI : MonoBehaviour
     }
     void Start()
     {
-        Entity.onDead += CreateDeadLog;
+        Entity.onEntityDead += CreateDeadLog;
         BattlePhase.OnTurnStarted += CreateTurnLog;
     }
 
@@ -41,7 +41,7 @@ public class TurnLogUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        Entity.onDead -= CreateDeadLog;
+        Entity.onEntityDead -= CreateDeadLog;
         BattlePhase.OnTurnStarted -= CreateTurnLog;
     }
 

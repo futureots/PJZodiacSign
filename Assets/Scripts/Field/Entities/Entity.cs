@@ -248,7 +248,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
 
     #endregion
-    public static Action<Entity> onDead;
+    public static Action<Entity> onEntityDead;
+    public Action onDead;
     public void Attack()
     {
         if (isSlienced) return;
@@ -277,7 +278,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Dead()
     {
-        onDead?.Invoke(this);
+        onEntityDead?.Invoke(this);
+        onDead?.Invoke();
         Destroy(gameObject);
     }
 

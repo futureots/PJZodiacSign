@@ -20,6 +20,6 @@ public class MoveCommand : Command
 
     public override string ToString()
     {
-        return $"{entity.name}ÀÌ {tile.fieldPos.ToString()}À¸·Î ÀÌµ¿";
+        return $"{entity.data.productName}({entity.curTile.fieldPos})ì´ {tile.fieldPos}ìœ¼ë¡œ ì´ë™";
     }
 }

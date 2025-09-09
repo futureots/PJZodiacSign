@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +14,14 @@ public class EntityHpUI : MonoBehaviour
     public GaugeUI energyBar;
     private void Start()
     {
-        Entity.onDead += OnDead;
+        
     }
 
     public void SetEntity(Entity entity)
     {
         if(_entity != null)
         {
+            _entity.onDead -= OnDead;
             _entity.onHpChanged -= hpBar.SetGauge;
             _entity.onEnergyChanged -= energyBar.SetGauge;
             _entity.onLevelChanged -= UpdateLevelText;
@@ -39,8 +41,8 @@ public class EntityHpUI : MonoBehaviour
         UpdateLevelText(_entity.Level);
         _entity.onLevelChanged += UpdateLevelText;
 
-        
-        
+        _entity.onDead += OnDead;
+
 
     }
 
@@ -65,16 +67,19 @@ public class EntityHpUI : MonoBehaviour
             
     }
     
-    void OnDead(Entity entity)
+    void OnDead()
     {
-        if(entity == _entity)
-        {
-            Destroy(gameObject);
-        }
-            
+        Destroy(gameObject);
     }
+
     private void OnDestroy()
     {
-        Entity.onDead -= OnDead;
+        if (_entity != null)
+        {
+            _entity.onDead -= OnDead;
+            _entity.onHpChanged -= hpBar.SetGauge;
+            _entity.onEnergyChanged -= energyBar.SetGauge;
+            _entity.onLevelChanged -= UpdateLevelText;
+        }
     }
 }

@@ -21,15 +21,8 @@ public class EntityController : MonoBehaviour
         entities = new List<Entity>();
         team = GetComponent<Team>();
     }
-    private void Start()
-    {
-        Entity.onDead += RemoveMyEntity;
-    }
 
-    private void OnDestroy()
-    {
-        Entity.onDead -= RemoveMyEntity;
-    }
+
     #region EntityManaging
     /// <summary>
     /// 기물을 손에 들고 있는 필드에 배치하는 함수
@@ -73,14 +66,14 @@ public class EntityController : MonoBehaviour
         instance.isReflect = isReflect;
 
         instance.sourceField = tile.field;
+        instance.onDead += () =>
+        {
+            entities.Remove(instance);
+        };
 
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
     }
 
-    void RemoveMyEntity(Entity entity)
-    {
-        entities.Remove(entity);
-    }
 
     public void SetInstantField(List<EntityLevelData> handEntities)
     {
@@ -160,7 +153,7 @@ public class EntityController : MonoBehaviour
         }
         set
         {
-            _curCmd?.Delete();
+            _curCmd?.DeleteObjects();
             _curCmd = value;
             onCommandCreated?.Invoke(_curCmd);
         }
