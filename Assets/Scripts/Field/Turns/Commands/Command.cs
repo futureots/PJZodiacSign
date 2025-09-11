@@ -5,22 +5,21 @@ using UnityEngine;
 
 public abstract class Command
 {
-
     public List<GameObject> selecterObjects;
     /// <summary>
-    /// Ä¿¸Çµå ½ÇÇà
+    /// ì»¤ë§¨ë“œ ì‹¤í–‰
     /// </summary>
     public virtual void Execute()
     {
-        Delete();
+        DeleteObjects();
     }
 
-    public virtual void Delete()
+    public virtual void DeleteObjects()
     {
         //Debug.Log($"Selecter : {selecterObjects.Count}");
         foreach (GameObject go in selecterObjects)
         {
-            UnityEngine.Object.Destroy(go);
+            GameObject.Destroy(go);
         }
         selecterObjects.Clear();
     }

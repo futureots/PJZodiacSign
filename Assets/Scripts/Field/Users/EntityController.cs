@@ -22,6 +22,7 @@ public class EntityController : MonoBehaviour
         team = GetComponent<Team>();
     }
 
+
     #region EntityManaging
     /// <summary>
     /// 기물을 손에 들고 있는 필드에 배치하는 함수
@@ -65,13 +66,15 @@ public class EntityController : MonoBehaviour
         instance.isReflect = isReflect;
 
         instance.sourceField = tile.field;
-
         instance.onDead += () =>
         {
             entities.Remove(instance);
         };
+
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
     }
+
+
     public void SetInstantField(List<EntityLevelData> handEntities)
     {
         instantField.gameObject.SetActive(true);
@@ -150,7 +153,7 @@ public class EntityController : MonoBehaviour
         }
         set
         {
-            _curCmd?.Delete();
+            _curCmd?.DeleteObjects();
             _curCmd = value;
             onCommandCreated?.Invoke(_curCmd);
         }

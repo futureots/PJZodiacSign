@@ -1,11 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
+
+[RequireComponent(typeof(BuffManager))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable
 {
+    // 사망 시 해당 엔티티 
+    private void Awake()
+    {
+        buffList = GetComponent<BuffManager>();
+        statusEffects = new();
+    }
+
     #region sourceField
     public Field sourceField;
 
@@ -75,14 +86,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
     // 기물의 기본 데이터
     public EntityData data;
+
+
     /// <summary>
     /// 기물 초기화, 스킬 설정
     /// </summary>
     /// <param name="data">기물 데이터</param>
-    /// <param name="
-    /// 
-    /// 
-    /// ">기물의 레벨</param>
+    /// <param name="level">기물의 레벨</param>
     public void InitializeEntity(EntityData data, int level =0)
     {
         this.data = data;
@@ -105,8 +115,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         CurEnergy = 0;
     }
 
-    /// <summary>죽음 시 호출</summary>
-    public Action onDead;
 
     #region Status
     /// <summary>기물의 레벨</summary>
@@ -183,93 +191,66 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     #endregion
 
     #region Buff
+
+    public void OnTurnStart()
+    {
+        buffList.UpdateBuff();
+        buffList.RemoveBuff();
+        CurEnergy = Mathf.Min(CurEnergy + 1, SkillCost);
+    }
+
+    public BuffManager buffList;
+
+    Dictionary<string, int> statusEffects;
+    public void AddEffect(string effectName)
+    {
+        if (statusEffects.ContainsKey(effectName))
+        {
+            statusEffects[effectName] += 1;
+        }
+        else
+        {
+            statusEffects.Add(effectName, 1);
+        }
+    }
+    public void SubtractEffect(string effectName)
+    {
+        if (statusEffects.ContainsKey(effectName))
+        {
+            statusEffects[effectName] -= 1;
+            if(statusEffects[effectName] <= 0)
+            {
+                statusEffects.Remove(effectName);
+            }
+        }
+        else return;
+    }
+
     bool isSlienced
     {
         get
         {
-            if (_buffList == null) return false;
-            return _buffList.Exists((buff) => buff.buffData is Silence);
+            return statusEffects.ContainsKey("slience");
         }
     }
     bool isRooted
     {
         get
         {
-            if (_buffList == null) return false;
-            return _buffList.Exists((buff) => buff.buffData is Root);
+            return statusEffects.ContainsKey("root");
         }
     }
-    bool isProtected 
+    bool isProtected
     {
         get
         {
-            if (_buffList == null) return false;
-            return _buffList.Exists((buff) => buff.buffData is Protect);
-        }
-    }
-
-
-    List<BuffInstance> _buffList;
-    public List<BuffInstance> buffList
-    {
-        get
-        {
-            if(_buffList == null) _buffList = new List<BuffInstance>();
-            return _buffList;
-        }
-    }
-    /// <summary>
-    /// 버프 추가
-    /// </summary>
-    /// <param name="buff">버프 데이터</param>
-    /// <param name="count">버프 지속 턴</param>
-    public void AddBuff(BuffData buff, int count)
-    {
-        if (_buffList == null)
-        {
-            _buffList = new List<BuffInstance>();
-        }
-        var existBuff = _buffList.Find((x) => x.buffData.GetType() == buff.GetType());
-        if (existBuff != null)
-        {
-            existBuff.ExtendBuff(this, count);
-        }
-        else
-        {
-            var instance = new BuffInstance(count, buff);
-            _buffList.Add(instance);
-            instance.ApplyBuff(this);
-        }
-        Debug.Log(buffList.Count);
-    }
-    /// <summary>
-    /// 버프 업데이트
-    /// </summary>
-    public void UpdateBuff()
-    {
-        if (_buffList == null) return;
-        foreach (var buff in _buffList)
-        {
-            buff.UpdateBuff(this);
-        }
-    }
-
-    /// <summary>
-    /// 버프 제거
-    /// </summary>
-    public void RemoveBuff()
-    {
-        if (_buffList == null) return;
-        var list = _buffList.Where((buff) => buff.IsExpired()).ToList();
-        foreach (var buff in list)
-        {
-            buff.RemoveBuff(this);
-            _buffList.Remove(buff);
+            return statusEffects.ContainsKey("protect");
         }
     }
 
     #endregion
-
+    public static Action<Entity> onEntityDead;
+    public Action onDead;
     public void Attack()
     {
         if (isSlienced) return;
@@ -298,6 +279,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
     public void Dead()
     {
+        onEntityDead?.Invoke(this);
         onDead?.Invoke();
         Destroy(gameObject);
     }
@@ -442,21 +424,22 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <param name="field">현재 필드 상태</param>
     /// <param name="tileValues">타일 위치별 가치</param>
     /// <returns></returns>
-    public (int,intVector2) GetBestMove(int[,] field, int[,] tileValues)
+    public bool GetBestMove(int[,] field, int[,] tileValues, out int value, out intVector2 pos)
     {
         var list = GetMoveVector();
         
         int max = tileValues[curTile.fieldPos.y, curTile.fieldPos.x];
         
-        List<intVector2> pos = new();
+        List<intVector2> valuablePos = new();
         foreach (var area in list)
         {
+            
             // 이동할 수 없는 타일은 제외
-            if (field[area.y, area.x] != 0) continue;
-
-            // 죽음 위험 체크(이동 후 체력이 0 이하면 -9999)
-            var value = tileValues[area.y, area.x];
-            if (value + CurHp <= 0) value = -9999;
+            if (field[area.y, area.x] != 0 || curTile.fieldPos == area) continue;
+            Debug.Log($"Best Entity : {data.productName} , CurPos : {curTile.fieldPos} , Expect : {area} ");
+            // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
+            var damage = tileValues[area.y, area.x];
+            if (damage + CurHp <= 0) damage -= 5;
 
             // 공격 가능 체크
             field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
@@ -469,18 +452,27 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
                 tileValues[area.y,area.x] += Power;
             }
 
-            if (value > max || pos.Count == 0)
+            if (damage > max || valuablePos.Count == 0)
             {
-                pos.Clear();
-                max = value;
-                pos.Add(area);
+                valuablePos.Clear();
+                max = damage;
+                valuablePos.Add(area);
             }
-            else if(value == max)
+            else if(damage == max)
             {
-                pos.Add(area);
+                valuablePos.Add(area);
             }
         }
-        return (max, pos[UnityEngine.Random.Range(0,pos.Count)]);
+        if(valuablePos.Count <= 0)
+        {
+            value = 0;
+            pos = intVector2.Zero;
+
+            return false;
+        }
+        value = max;
+        pos = valuablePos[UnityEngine.Random.Range(0, valuablePos.Count)];
+        return true;
     }
 
 

@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System.Collections.Generic;
+using UnityEditor;
 
 public class TurnBlock : MonoBehaviour
 {
@@ -11,15 +13,21 @@ public class TurnBlock : MonoBehaviour
     
     private ITurn turnData;
     Animator anim;
+    public List<LogBlock> logs;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
     }
-    private void Start()
+
+    private void OnDestroy()
     {
-        GetComponentInChildren<CanvasGroup>().DOFade(1, 1f);
-        //anim.SetTrigger("Appear");
+        foreach (var block in logs)
+        {
+            Destroy(block.gameObject);
+        }
+        logs.Clear();
     }
+
     /// <summary>
     /// TurnBlock을 초기화하고 ITurn 데이터를 설정합니다.
     /// </summary>
@@ -29,10 +37,28 @@ public class TurnBlock : MonoBehaviour
     {
         turnData = turn;
         
-        
         UpdateDisplay();
+
+        // 해당 턴의 커맨드를 받는 구독자 생성 및 이벤트 발동 시 해당 커맨드에 대한 UI 업데이트 및 구독 해제
+        if(turnData is ActionTurn actionTurn)
+        {
+            actionTurn.onCommandExecuted += CommandUpdate;
+        }
     }
-    
+
+    /// <summary>
+    /// 해당 턴이 행동턴일 때 커맨드를 표기하는 기능
+    /// </summary>
+    /// <param name="cmd"></param>
+    void CommandUpdate(Command cmd)
+    {
+        // 해당 커맨드에 대한 설명이 포함된 블록 표시
+        UpdateDisplay(cmd);
+        if (turnData is ActionTurn actionTurn)
+        {
+            actionTurn.onCommandExecuted -= CommandUpdate;
+        }
+    }
     /// <summary>
     /// 턴 타입과 팀에 따라 UI를 업데이트합니다.
     /// </summary>
@@ -48,16 +74,23 @@ public class TurnBlock : MonoBehaviour
         
         // 팀에 따른 색상 설정
         Color teamColor = GameManager.Instance.teamColorTable.teamColors[turnData.TeamNumber];
-
-        // 배경색을 팀 색상으로, 텍스트 색상을 턴 타입 색상으로 설정
-        if (backgroundImage != null)
-        {
-            backgroundImage.color = teamColor;
-        }
+        backgroundImage.color = teamColor;
     }
-    
+
+    void UpdateDisplay(Command cmd)
+    {
+        
+        if(turnData == null) return;
+        string text = "행동 불능";
+        if (cmd != null)
+        {
+            text = cmd.ToString();
+        }
+        turnText.text = text;
+    }
+
     /// <summary>
-    /// 턴 타입에 따른 텍스트를 반환합니다.
+    /// 턴 타입에 따른 텍스트를 반환
     /// </summary>
     string GetTurnText()
     {
@@ -75,19 +108,14 @@ public class TurnBlock : MonoBehaviour
     }
     
     /// <summary>
-    /// 현재 저장된 ITurn 데이터를 반환합니다.
+    /// 현재 저장된 ITurn 데이터를 반환
     /// </summary>
     public ITurn GetTurnData()
     {
         return turnData;
     }
 
-    public void Destroy()
-    {
-        //anim.SetTrigger("Disappear");
-        GetComponentInChildren<CanvasGroup>().DOFade(0, 1f);
-        Destroy(gameObject, 1f);
-    }
+
 
 }
 

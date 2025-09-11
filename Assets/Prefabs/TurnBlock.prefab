@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnText: {fileID: 6910469632842246439}
   backgroundImage: {fileID: 6965344750265361790}
+  logs: []
 --- !u!1 &5289360591583658855
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +160,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5289360591583658855}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

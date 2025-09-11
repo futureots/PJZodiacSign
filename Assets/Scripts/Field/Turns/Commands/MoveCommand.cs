@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 public class MoveCommand : Command
 {
+    Tile prevTile;
     Entity entity;
     Tile tile;
     public MoveCommand(Entity entity, Tile tile)
     {
         selecterObjects = new();
         this.entity = entity;
+        prevTile = entity.curTile;
         this.tile = tile;
     }
 
@@ -20,6 +22,6 @@ public class MoveCommand : Command
 
     public override string ToString()
     {
-        return $"{entity.name}¿Ã {tile.fieldPos.ToString()}¿∏∑Œ ¿Ãµø";
+        return $"{entity.data.productName}({prevTile.fieldPos})Ïù¥ {tile.fieldPos}ÏúºÎ°ú Ïù¥Îèô";
     }
 }

@@ -6,23 +6,25 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PowerModifier", menuName = "Scriptable Objects/Buff/PowerModifier")]
 public class PowerModifier : BuffData
 {
-    public override void ApplyBuff(Entity entity, int count)
+    Entity entity;
+    public override void ApplyBuff(GameObject target, int count)
     {
+        entity = target.GetComponent<Entity>();
         entity.Power += count;
     }
 
-    public override void ExtendBuff(Entity entity, ref int currentCount, int count)
+    public override void ExtendBuff(GameObject target, ref int currentCount, int count)
     {
         entity.Power += count;
         currentCount += count;
     }
 
-    public override void RemoveBuff(Entity entity, int count)
+    public override void RemoveBuff(GameObject target, int count)
     {
         entity.Power -= count;
     }
 
-    public override void UpdateBuff(Entity entity, ref int count)
+    public override void UpdateBuff(GameObject target, ref int count)
     {
         
     }

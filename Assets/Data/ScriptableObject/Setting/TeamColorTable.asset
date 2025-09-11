@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TeamColorTable
   m_EditorClassIdentifier: 
   teamColors:
-  - {r: 0.37254903, g: 0.37254903, b: 0.37254903, a: 1}
+  - {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
   - {r: 0.37254903, g: 1, b: 0.37254903, a: 1}
   - {r: 1, g: 0.37254903, b: 0.37254903, a: 1}

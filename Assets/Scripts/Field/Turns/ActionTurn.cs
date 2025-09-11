@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ActionTurn : ITurn
 {
-    public static Action<Agent, Command> OnCommandExecuted;
+    public Action<Command> onCommandExecuted;
     Agent agent;
     public int TeamNumber => agent.team.teamNumber;
     public ActionTurn(Agent agent)
@@ -20,24 +20,18 @@ public class ActionTurn : ITurn
         // 버프 업데이트
         foreach (var entity in agent.controller.entities)
         {
-            entity.UpdateBuff();
-            entity.RemoveBuff();
-            entity.CurEnergy = Mathf.Min(entity.CurEnergy + 1, entity.SkillCost);
+            entity.OnTurnStart();
         }
     }
     public IEnumerator ActionCoroutine()
     {
         var cmd = agent.GetCommand();
-        OnCommandExecuted?.Invoke(agent, cmd);
         if (cmd == null) Debug.Log("No Command");
         cmd?.Execute();
+        onCommandExecuted?.Invoke(cmd);
 
 
         yield return new WaitForSeconds(2f);
     }
 
-    public string GetTurnInfo()
-    {
-        return $"팀 {agent.team.teamNumber} 행동 ";
-    }
 }

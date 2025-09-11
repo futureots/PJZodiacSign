@@ -51,7 +51,6 @@ public struct intVector2
     {
         return new intVector2(left.x*right, left.y*right);
     }
-
     public override bool Equals(object obj)
     {
         return obj is intVector2 vector &&
@@ -79,6 +78,8 @@ public struct intVector2
         int y = value >> 10;
         return new intVector2 (x, y);
     }
+
+    public static intVector2 Zero => new intVector2(0, 0);
     #endregion
 }
 

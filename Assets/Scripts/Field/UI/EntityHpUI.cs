@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,10 @@ public class EntityHpUI : MonoBehaviour
     
     public GaugeUI hpBar;
     public GaugeUI energyBar;
-
+    private void Start()
+    {
+        
+    }
 
     public void SetEntity(Entity entity)
     {
@@ -28,9 +32,6 @@ public class EntityHpUI : MonoBehaviour
         transform.SetParent(entity.transform);
         transform.localPosition = Vector3.zero + entity.data.hpPanelPosition;
 
-
-        _entity.onDead += OnDead;
-
         hpBar.SetGauge(_entity.CurHp, _entity.MaxHp);
         _entity.onHpChanged += hpBar.SetGauge;
 
@@ -40,8 +41,8 @@ public class EntityHpUI : MonoBehaviour
         UpdateLevelText(_entity.Level);
         _entity.onLevelChanged += UpdateLevelText;
 
-        
-        
+        _entity.onDead += OnDead;
+
 
     }
 
@@ -69,5 +70,16 @@ public class EntityHpUI : MonoBehaviour
     void OnDead()
     {
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (_entity != null)
+        {
+            _entity.onDead -= OnDead;
+            _entity.onHpChanged -= hpBar.SetGauge;
+            _entity.onEnergyChanged -= energyBar.SetGauge;
+            _entity.onLevelChanged -= UpdateLevelText;
+        }
     }
 }
