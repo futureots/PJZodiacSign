@@ -106,7 +106,7 @@ public struct EntityLevelHolder
     }
     public EntityLevelHolder(Entity entity)
     {
-        this.entity = entity.id;
+        this.entity = entity.baseData.id;
         level = entity.Level;
     }
     // 기물 이름

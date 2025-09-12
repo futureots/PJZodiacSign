@@ -71,7 +71,7 @@ namespace PlayerInput
             
             // 기물 이동영역 표시
             moveArea = GameManager.Instance.field.GetHalfTiles(_inputManager.controller.isReflect);
-            moveArea.AddRange(_inputManager.controller.instantField.GetTiles());
+            moveArea.AddRange(_inputManager.controller.resourceField.GetTiles());
 
             targetTileSelecter.SetActive(true);
             _inputManager.areaVisualizer.ShowMoveArea(moveArea);
@@ -91,7 +91,7 @@ namespace PlayerInput
 
 
                 // 해당 타일로 이동
-                if (!_selectedEntity.MoveSequence(tile, true))
+                if (!_selectedEntity.Move(tile))
                 {
                     var target = tile.occupiedObject.GetComponent<Entity>();
                     

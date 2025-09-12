@@ -24,7 +24,7 @@ public class AttackTurn : ITurn
     {
         // 현재 전투 중인 필드;
         Field curField = GameManager.Instance.field;
-        foreach(var entity in agent.controller.entities)
+        foreach(var entity in agent.controller.fieldEntities)
         {
             entity.Attack();
         }

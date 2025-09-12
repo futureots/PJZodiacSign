@@ -1,56 +1,53 @@
+using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EntityController : MonoBehaviour, IMoveHandler
+public class EntityController : MonoBehaviour
 {
     // 필드를 거울처럼 보는 방향
     public bool isReflect;
     
     // 손에 들고 있는 기물 필드(위치 X)
-    public Field instantField;
+    public Field resourceField;
 
     // 팀에 속한 모든 기물들
-    public List<Entity> entities;
+    public List<Entity> fieldEntities;
+    List<Entity> resourceEntities;
+    List<Entity> onFieldEntities;
+
     // 팀 번호
     [SerializeField]Team team;
     private void Awake()
     {
-        entities = new List<Entity>();
-        team = GetComponent<Team>();
+        fieldEntities = new List<Entity>();
+        resourceEntities = new List<Entity>();
+        onFieldEntities = new List<Entity>();
+
+        //team = GetComponent<Team>();
     }
 
 
     #region EntityManaging
+
     /// <summary>
-    /// 기물을 손에 들고 있는 필드에 배치하는 함수
+    /// 기물을 리소스 필드에 배치하는 함수
     /// </summary>
     /// <param name="instance">기물 인스턴스</param>
     /// <returns>배치 성공 시 true, 실패 시 false 반환</returns>
     public bool PlaceOnInstantField(Entity instance)
     {
-        for (int i = instantField.row - 1; i >= 0; i--)
+        var list = resourceField.GetEmptyTiles();
+        if(list.Count <= 0)
         {
-            for (int j = 0; j < instantField.column; j++)
-            {
-                var pos = new intVector2(j, i);
-                var tile = instantField.GetTile(pos);
-                if (tile.isEmpty)
-                {
-                    PlaceEntity(instance, tile);
-                    return true;
-                }
-            }
+            return false;
         }
-        return false;
+        PlaceEntity(instance, list[0]);
+        return true;
     }
-    public bool PlaceOnMainField(Entity instance, intVector2 pos)
-    {
-        var tile = GameManager.Instance.field.GetTile(pos,isReflect);
-        return PlaceOnMainField(instance, tile);
-    }
+
     public bool PlaceOnMainField(Entity instance, Tile tile)
     {
         if (tile.isEmpty)
@@ -62,48 +59,58 @@ public class EntityController : MonoBehaviour, IMoveHandler
     }
     public void PlaceEntity(Entity instance, Tile tile)
     {
-        instance.MoveTo(tile);
+        instance.Move(tile, true);
         instance.isReflect = isReflect;
 
         instance.sourceField = tile.field;
         instance.onDead += () =>
         {
-            entities.Remove(instance);
+            fieldEntities.Remove(instance);
         };
 
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
     }
 
 
-    public void SetInstantField(List<EntityLevelData> handEntities)
+    public void SetResourceField(List<EntityLevelData> handData)
     {
-        instantField.gameObject.SetActive(true);
-        foreach (var item in handEntities)
+        resourceEntities.Clear();
+
+        resourceField.gameObject.SetActive(true);
+        foreach (var item in handData)
         {
             var entity = item.data.CreateEntity(item.level);
+
             PlaceOnInstantField(entity);
+
+            resourceEntities.Add(entity);
         }
     }
-    public void SetMainField(Dictionary<int,EntityLevelData> fieldEntities)
+    public void SetMainField(Dictionary<int,EntityLevelData> fieldData)
     {
-        foreach (var item in fieldEntities)
+        fieldEntities.Clear();
+
+        foreach (var item in fieldData)
         {
             var entity = item.Value.data.CreateEntity(item.Value.level);
             intVector2 pos = intVector2.Decode(item.Key);
-            PlaceOnMainField(entity, pos);
-            
+
+            var tile = GameManager.Instance.field.GetTile(pos, isReflect);
+            entity.Move(tile, true);
+
+            fieldEntities.Add(entity);
         }
     }
     public virtual void DisposeInstantField()
     {
-        instantField.ResetField();
-        instantField.gameObject.SetActive(false);
+        resourceField.ResetField();
+        resourceField.gameObject.SetActive(false);
     }
 
     public void UpdateEntities()
     {
         var team = GetComponent<Team>();
-        entities.Clear();
+        fieldEntities.Clear();
         foreach(var tile in GameManager.Instance.field.GetTiles())
         {
             if(tile.isEmpty) continue;
@@ -111,7 +118,7 @@ public class EntityController : MonoBehaviour, IMoveHandler
             if(entity == null) continue;
             if (team.IsAlly(entity.team))
             {
-                entities.Add(entity);
+                fieldEntities.Add(entity);
             }
         }
     }
@@ -123,7 +130,7 @@ public class EntityController : MonoBehaviour, IMoveHandler
         // 메인 필드 데이터를 딕셔너리로 변환
         Dictionary<int, EntityLevelData> mainFieldData = new Dictionary<int, EntityLevelData>();
         UpdateEntities();
-        foreach (var entity in entities)
+        foreach (var entity in fieldEntities)
         {
             var entityData = new EntityLevelData(entity);
             int pos = entity.curTile.fieldPos.Encode();
@@ -132,7 +139,7 @@ public class EntityController : MonoBehaviour, IMoveHandler
 
         //인스턴트 필드 데이터를 리스트로 변환
         List<EntityLevelData> instantFieldData = new List<EntityLevelData>();
-        foreach (var tile in instantField.GetTiles())
+        foreach (var tile in resourceField.GetTiles())
         {
             if (tile.isEmpty) continue;
             var entity = tile.occupiedObject.GetComponent<Entity>();
@@ -180,11 +187,6 @@ public class EntityController : MonoBehaviour, IMoveHandler
     public void ClearCommand()
     {
         curCmd = null;
-    }
-
-    public void Move(IMovable movable, Tile tile)
-    {
-        movable.curTile.UnsetOccupant();
     }
 
     #endregion

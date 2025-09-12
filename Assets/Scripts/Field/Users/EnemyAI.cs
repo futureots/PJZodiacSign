@@ -27,7 +27,7 @@ public class EnemyAI : Agent
             else break;
             Credit--;
         }
-        controller.SetInstantField(data.handEntities);
+        controller.SetResourceField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
         this.RunWithCallback(SetRepairMode(), call);
     }
@@ -43,7 +43,7 @@ public class EnemyAI : Agent
         yield return null;
 
         // 내 필드에 있는 기물을 메인 필드에 배치
-        var list = controller.instantField.GetOccupiedObjects();
+        var list = controller.resourceField.GetOccupiedObjects();
         var fieldTiles = Field.GetEmptyTile(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
         foreach (var obj in list)
         {
@@ -79,7 +79,7 @@ public class EnemyAI : Agent
         intVector2 bestPos = new intVector2(-1,-1);
 
         bool flag = false;
-        foreach (var checkEntity in controller.entities)
+        foreach (var checkEntity in controller.fieldEntities)
         {
             // 필드 값 가져오기
             int[,] field = GameManager.Instance.field.GetFieldState();
@@ -123,7 +123,7 @@ public class EnemyAI : Agent
     {
         
         Entities = new List<Entity>();
-        foreach (var item in controller.entities)
+        foreach (var item in controller.fieldEntities)
         {
             if (item.skillData == null) continue;
             if (item.CurEnergy > item.SkillCost)

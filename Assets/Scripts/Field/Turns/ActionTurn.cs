@@ -18,7 +18,7 @@ public class ActionTurn : ITurn
         agent.SetActionTurn(() => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
 
         // 버프 업데이트
-        foreach (var entity in agent.controller.entities)
+        foreach (var entity in agent.controller.fieldEntities)
         {
             entity.OnTurnStart();
         }

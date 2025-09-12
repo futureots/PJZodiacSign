@@ -5,8 +5,6 @@ using System.Threading;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-
-
 [RequireComponent(typeof(BuffManager))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
 {
@@ -35,9 +33,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
 
     public Tile curTile { get; set; }
 
-    
-    /// <summary>기물의 고유 id(이름)</summary>
-    public string id;
 
     #region Skill
 
@@ -74,6 +69,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     #endregion
     
     Team _team;
+
     /// <summary>기물의 팀 번호</summary>
     public Team team
     {
@@ -86,6 +82,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
             return _team;
         }
     }
+
     // 기물의 기본 데이터
     public EntityData baseData;
 
@@ -98,7 +95,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     public void InitializeEntity(EntityData data, int level =0)
     {
         this.baseData = data;
-        id = data.id;
         this.Level = level;
 
         UpdateEntity();
@@ -304,38 +300,25 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     /// 기물 이동(이동 제한 X)
     /// </summary>
     /// <param name="tile">이동할 타일</param>
-    /// <param name="ignoreArea">false : 이동 영역 내에서만 이동, true : 영역 무시하고 이동</param>
     /// <param name="ignoreOccupy">false : 타일이 비어있을 때만 이동, true : 이동 시 타일의 기물 제거</param>
     /// <returns></returns>
-    public bool MoveSequence(Tile tile, bool ignoreArea = false, bool ignoreOccupy = false)
+    public bool Move(Tile tile, bool ignoreOccupy = false)
     {
         if(isRooted) return false;
-        if (!ignoreArea)
-        {
-            var isInArea = GetMoveArea().Contains(tile);
-            if (!isInArea) return false;
-        }
         if (!ignoreOccupy)
         {
             var isOccupied = !tile.isEmpty;
             if (isOccupied) return false;
         }
-        MoveTo(tile);
-        return true;
-    }
 
-    /// <summary>
-    /// 해당 타일로 이동(해당 타일의 기물 제거, 이동 제한 X)
-    /// </summary>
-    /// <param name="tile">이동할 타일</param>
-    public void MoveTo(Tile tile)
-    {
         if (curTile != null)
         {
             curTile.UnsetOccupant();
         }
-        tile.SetOccupant(gameObject);
+        tile.SetOccupant(gameObject, true);
         curTile = tile;
+
+        return true;
     }
 
 

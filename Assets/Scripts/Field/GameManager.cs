@@ -145,7 +145,7 @@ public class GameManager : Singleton<GameManager>
         if (hpManager == null) return;
         foreach (var item in agents)
         {
-            foreach(var entity in item.controller.entities)
+            foreach(var entity in item.controller.fieldEntities)
             {
                 hpManager.CreateHpBar(entity);
             }

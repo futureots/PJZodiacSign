@@ -187,7 +187,7 @@ public class Field : MonoBehaviour
     }
     #endregion
 
-    //공격 가능한 오브젝트 가져오기
+    //점거 중인 오브젝트 가져오기
     public List<GameObject> GetOccupiedObjects()
     {
         List<GameObject> list = new();
@@ -199,6 +199,19 @@ public class Field : MonoBehaviour
             {
                 list.Add(occupiedObj);
             }
+        }
+        return list;
+    }
+    public List<Tile> GetEmptyTiles()
+    {
+        List<Tile> list = new();
+        foreach(var tile in tiles)
+        {
+            if (!tile.isEmpty)
+            {
+                continue;
+            }
+            list.Add(tile);
         }
         return list;
     }
