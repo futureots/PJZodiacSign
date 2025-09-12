@@ -15,22 +15,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
         statusEffects = new();
     }
 
-    #region sourceField
-    public Field sourceField;
-
-    // 기물이 메인필드에서 온 것인지 확인
-    public bool IsFromMainField()
-    {
-        return sourceField == GameManager.Instance.field;
-    }
-
-    // 기물이 인스턴트필드에서 온 것인지 확인
-    public bool IsFromInstantField()
-    {
-        return sourceField != GameManager.Instance.field;
-    }
-    #endregion
-
     public Tile curTile { get; set; }
 
 

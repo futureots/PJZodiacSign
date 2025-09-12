@@ -98,16 +98,16 @@ public abstract class Agent : MonoBehaviour
     /// <returns></returns>
     public bool SummonEntity(EntityData entityData)
     {
-        if (!CanPlaceOnInstantField()) return false;
+        if (!CanPlaceOnResourceField()) return false;
 
         var entity = entityData.CreateEntity();
-        controller.PlaceOnInstantField(entity);
+        controller.PlaceOnResourceField(entity);
 
         return true;
     }
-    bool CanPlaceOnInstantField()
+    bool CanPlaceOnResourceField()
     {
-        var list = Field.GetEmptyTile(controller.resourceField.GetTiles());
+        var list = Field.GetEmptyTiles(controller.resourceField.GetTiles());
         if (list.Count <= 0) return false;
         return true;
     }

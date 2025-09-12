@@ -43,18 +43,15 @@ public class EnemyAI : Agent
         yield return null;
 
         // 내 필드에 있는 기물을 메인 필드에 배치
-        var list = controller.resourceField.GetOccupiedObjects();
-        var fieldTiles = Field.GetEmptyTile(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
-        foreach (var obj in list)
+        var fieldTiles = Field.GetEmptyTiles(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
+        foreach (var entity in controller.resourceEntities)
         {
-            var entity = obj.GetComponent<Entity>();
-            if(entity == null) continue;
-
             // 빈 타일 중 랜덤 위치 선택
             Tile tile = fieldTiles[UnityEngine.Random.Range(0, fieldTiles.Count)];
             
             // 선택한 위치에 기물 이동
-            controller.PlaceOnMainField(entity,tile);
+            entity.Move(tile);
+            fieldTiles.Remove(tile);
         }
         
     }

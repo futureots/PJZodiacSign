@@ -202,19 +202,6 @@ public class Field : MonoBehaviour
         }
         return list;
     }
-    public List<Tile> GetEmptyTiles()
-    {
-        List<Tile> list = new();
-        foreach(var tile in tiles)
-        {
-            if (!tile.isEmpty)
-            {
-                continue;
-            }
-            list.Add(tile);
-        }
-        return list;
-    }
 
     /// <summary>
     /// 현재 필드 상태 가져오기
@@ -293,7 +280,7 @@ public class Field : MonoBehaviour
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static List<Tile> GetEmptyTile(List<Tile> list)
+    public static List<Tile> GetEmptyTiles(List<Tile> list)
     {
         var emptyTiles = new List<Tile>();
         foreach (var tile in list)

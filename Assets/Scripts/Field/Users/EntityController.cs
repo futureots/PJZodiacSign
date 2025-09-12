@@ -4,19 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityController : MonoBehaviour
 {
     // 필드를 거울처럼 보는 방향
     public bool isReflect;
     
-    // 손에 들고 있는 기물 필드(위치 X)
+    // 리소스 필드(위치 X)
     public Field resourceField;
 
     // 팀에 속한 모든 기물들
-    public List<Entity> fieldEntities;
-    List<Entity> resourceEntities;
-    List<Entity> onFieldEntities;
+    public List<Entity> fieldEntities { get; private set; }
+    void AddFieldEntity(Entity entity)
+    {
+        if (fieldEntities.Contains(entity)) return;
+        fieldEntities.Add(entity);
+        entity.onDead += () =>
+        {
+            fieldEntities.Remove(entity);
+        };
+    }
+    public List<Entity> resourceEntities { get; private set; }
 
     // 팀 번호
     [SerializeField]Team team;
@@ -24,7 +33,6 @@ public class EntityController : MonoBehaviour
     {
         fieldEntities = new List<Entity>();
         resourceEntities = new List<Entity>();
-        onFieldEntities = new List<Entity>();
 
         //team = GetComponent<Team>();
     }
@@ -33,40 +41,26 @@ public class EntityController : MonoBehaviour
     #region EntityManaging
 
     /// <summary>
-    /// 기물을 리소스 필드에 배치하는 함수
+    /// 기물을 리소스 필드에 초기 배치하는 함수
     /// </summary>
     /// <param name="instance">기물 인스턴스</param>
     /// <returns>배치 성공 시 true, 실패 시 false 반환</returns>
-    public bool PlaceOnInstantField(Entity instance)
+    public bool PlaceOnResourceField(Entity instance)
     {
-        var list = resourceField.GetEmptyTiles();
-        if(list.Count <= 0)
+        var list = Field.GetEmptyTiles(resourceField.GetTiles());
+        if (list.Count <= 0)
         {
             return false;
         }
         PlaceEntity(instance, list[0]);
+        resourceEntities.Add(instance);
         return true;
     }
 
-    public bool PlaceOnMainField(Entity instance, Tile tile)
-    {
-        if (tile.isEmpty)
-        {
-            PlaceEntity(instance, tile);
-            return true;
-        }
-        return false;
-    }
     public void PlaceEntity(Entity instance, Tile tile)
     {
         instance.Move(tile, true);
         instance.isReflect = isReflect;
-
-        instance.sourceField = tile.field;
-        instance.onDead += () =>
-        {
-            fieldEntities.Remove(instance);
-        };
 
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
     }
@@ -75,15 +69,15 @@ public class EntityController : MonoBehaviour
     public void SetResourceField(List<EntityLevelData> handData)
     {
         resourceEntities.Clear();
-
         resourceField.gameObject.SetActive(true);
+
         foreach (var item in handData)
         {
             var entity = item.data.CreateEntity(item.level);
-
-            PlaceOnInstantField(entity);
-
-            resourceEntities.Add(entity);
+            if (!PlaceOnResourceField(entity))
+            {
+                Destroy(entity);
+            }
         }
     }
     public void SetMainField(Dictionary<int,EntityLevelData> fieldData)
@@ -96,9 +90,11 @@ public class EntityController : MonoBehaviour
             intVector2 pos = intVector2.Decode(item.Key);
 
             var tile = GameManager.Instance.field.GetTile(pos, isReflect);
-            entity.Move(tile, true);
+            PlaceEntity(entity, tile);
 
-            fieldEntities.Add(entity);
+            entity.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
+
+            AddFieldEntity(entity);
         }
     }
     public virtual void DisposeInstantField()
@@ -110,17 +106,16 @@ public class EntityController : MonoBehaviour
     public void UpdateEntities()
     {
         var team = GetComponent<Team>();
-        fieldEntities.Clear();
-        foreach(var tile in GameManager.Instance.field.GetTiles())
+
+        foreach (var e in resourceEntities)
         {
-            if(tile.isEmpty) continue;
-            var entity = tile.occupiedObject.GetComponent<Entity>();
-            if(entity == null) continue;
-            if (team.IsAlly(entity.team))
+            if (e == null) continue;
+            if(e.curTile.field != resourceField)
             {
-                fieldEntities.Add(entity);
+                AddFieldEntity(e);
             }
         }
+        resourceEntities.RemoveAll((e) => e.curTile.field != resourceField);
     }
     #endregion
 

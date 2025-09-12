@@ -60,8 +60,7 @@ namespace PlayerInput
             var team = _inputManager.team;
             if (!team.IsAlly(entity.team)) return;
 
-
-            if (entity.IsFromMainField()) return;
+            if (!_inputManager.controller.resourceEntities.Contains(entity)) return;
 
             _selectedEntity = entity;
 
