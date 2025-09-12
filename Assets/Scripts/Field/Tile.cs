@@ -22,18 +22,16 @@ public class Tile : MonoBehaviour
     public Field field;
     public intVector2 fieldPos;
     public GameObject occupiedObject;
-    public Queue<GameObject> bufferedObjects;
 
     /// <summary>
     /// 해당 타일의 점거 상태
     /// </summary>
-    public bool isEmpty;
+    public bool isEmpty => occupiedObject == null;
 
     private void Awake()
     {
         originMaterials = renderer.materials.ToList();
         currentMaterials = originMaterials;
-        bufferedObjects = new Queue<GameObject>();
     }
     /// <summary>
     /// 필드 설정
@@ -43,7 +41,6 @@ public class Tile : MonoBehaviour
     /// <param name="y"></param>
     public void InitializeTile(Field f,int x, int y)
     {
-        isEmpty = true;
         field = f;
         fieldPos.x = x;
         fieldPos.y = y;
@@ -53,45 +50,25 @@ public class Tile : MonoBehaviour
     /// 타일 점거
     /// </summary>
     /// <param name="e">타일을 점거한 오브젝트</param>
-    public void SetOccupant(GameObject e = null)
+    public bool SetOccupant(GameObject obj = null, bool ignoreOccupant= false)
     {
-        if(e != null)
+        if(isEmpty || ignoreOccupant)
         {
-            if (!isEmpty)
-            {
-                bufferedObjects.Enqueue(occupiedObject);
-                occupiedObject.SetActive(false);
-            }
-            occupiedObject = e;
-            e.transform.SetParent(transform);
-            isEmpty = false;
+            Destroy(occupiedObject);
+
+            occupiedObject = obj;
+            obj.transform.SetParent(transform);
+            obj.transform.localPosition = Vector3.zero;
+            return true;
         }
         else
         {
-            isEmpty = true;
-            occupiedObject = null;
+            return false;
         }
-
-    }
-
-    /// <summary>
-    /// 밀려난 오브젝트(파괴 예정 기물, 장애물 등) 삭제
-    /// </summary>
-    public void CleanupBufferedObjects()
+    } 
+    public void UnsetOccupant()
     {
-        foreach (var item in bufferedObjects)
-        {
-            var component = item.GetComponent<IDamageable>();
-            if (component != null)
-            {
-                component.Dead();
-            }
-            else
-            {
-                Destroy(item);
-            }
-        }
-        bufferedObjects.Clear();
+        occupiedObject = null;
     }
 
     /// <summary>
@@ -100,6 +77,7 @@ public class Tile : MonoBehaviour
     public void ClearOccupant()
     {
         var component = occupiedObject.GetComponent<IDamageable>();
+        UnsetOccupant();
         if (component != null)
         {
             component.Dead();
@@ -108,8 +86,6 @@ public class Tile : MonoBehaviour
         {
             Destroy(occupiedObject);
         }
-        occupiedObject = null;
-        isEmpty = true;
     }
 
     

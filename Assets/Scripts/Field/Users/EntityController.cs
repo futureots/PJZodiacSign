@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EntityController : MonoBehaviour
+public class EntityController : MonoBehaviour, IMoveHandler
 {
     // 필드를 거울처럼 보는 방향
     public bool isReflect;
@@ -180,6 +180,11 @@ public class EntityController : MonoBehaviour
     public void ClearCommand()
     {
         curCmd = null;
+    }
+
+    public void Move(IMovable movable, Tile tile)
+    {
+        movable.curTile.UnsetOccupant();
     }
 
     #endregion

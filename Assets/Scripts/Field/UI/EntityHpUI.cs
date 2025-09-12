@@ -30,7 +30,7 @@ public class EntityHpUI : MonoBehaviour
         
 
         transform.SetParent(entity.transform);
-        transform.localPosition = Vector3.zero + entity.data.hpPanelPosition;
+        transform.localPosition = Vector3.zero + entity.baseData.hpPanelPosition;
 
         hpBar.SetGauge(_entity.CurHp, _entity.MaxHp);
         _entity.onHpChanged += hpBar.SetGauge;

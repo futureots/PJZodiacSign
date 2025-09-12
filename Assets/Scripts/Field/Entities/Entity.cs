@@ -8,7 +8,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 
 [RequireComponent(typeof(BuffManager))]
-public class Entity : MonoBehaviour, IDamageable, IAttackable
+public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
 {
     // 사망 시 해당 엔티티 
     private void Awake()
@@ -33,13 +33,15 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     }
     #endregion
 
-    public Tile curTile { get; private set; }
+    public Tile curTile { get; set; }
 
     
     /// <summary>기물의 고유 id(이름)</summary>
     public string id;
 
     #region Skill
+
+
     /// <summary>기물 스킬 데이터</summary>
     public BaseSkillData skillData;
     /// <summary>
@@ -85,7 +87,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
         }
     }
     // 기물의 기본 데이터
-    public EntityData data;
+    public EntityData baseData;
 
 
     /// <summary>
@@ -95,7 +97,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     /// <param name="level">기물의 레벨</param>
     public void InitializeEntity(EntityData data, int level =0)
     {
-        this.data = data;
+        this.baseData = data;
         id = data.id;
         this.Level = level;
 
@@ -109,8 +111,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     void UpdateEntity()
     {
         // 기물 스탯 계산
-        Power = data.power + data.bonusPower * Level;
-        MaxHp = data.maxHp + data.bonusHp * Level;
+        Power = baseData.power + baseData.bonusPower * Level;
+        MaxHp = baseData.maxHp + baseData.bonusHp * Level;
         CurHp = MaxHp;
         CurEnergy = 0;
     }
@@ -330,11 +332,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
     {
         if (curTile != null)
         {
-            curTile.SetOccupant();
+            curTile.UnsetOccupant();
         }
         tile.SetOccupant(gameObject);
         curTile = tile;
-        transform.position = tile.transform.position;
     }
 
 
@@ -436,7 +437,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
             
             // 이동할 수 없는 타일은 제외
             if (field[area.y, area.x] != 0 || curTile.fieldPos == area) continue;
-            Debug.Log($"Best Entity : {data.productName} , CurPos : {curTile.fieldPos} , Expect : {area} ");
+            Debug.Log($"Best Entity : {baseData.productName} , CurPos : {curTile.fieldPos} , Expect : {area} ");
             // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
             var damage = tileValues[area.y, area.x];
             if (damage + CurHp <= 0) damage -= 5;
@@ -477,15 +478,4 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable
 
 
     #endregion
-
-
-    
-
-
-    
-
-
-    
- 
-
 }

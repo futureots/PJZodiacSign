@@ -87,7 +87,6 @@ public class Field : MonoBehaviour
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            tile.CleanupBufferedObjects();
             tile.ClearOccupant();
         }
     }
@@ -103,10 +102,9 @@ public class Field : MonoBehaviour
             var obj = tile.occupiedObject.GetComponent<IDamageable>();
             if (obj.isZero())
             {
-                tile.SetOccupant(null);
+                tile.UnsetOccupant();
                 obj.Dead();
             }
-            tile.CleanupBufferedObjects();
         }
     }
 

@@ -22,6 +22,6 @@ public class MoveCommand : Command
 
     public override string ToString()
     {
-        return $"{entity.data.productName}({prevTile.fieldPos})이 {tile.fieldPos}으로 이동";
+        return $"{entity.baseData.productName}({prevTile.fieldPos})이 {tile.fieldPos}으로 이동";
     }
 }

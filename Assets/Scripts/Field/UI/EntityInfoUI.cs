@@ -90,7 +90,7 @@ public class EntityInfoUI : MonoBehaviour
     }
     public void UpdateLevelText(int level)
     {
-        entityName.text = selectedEntity.data.productName + (level == 0 ? "" : $" + {level}");
+        entityName.text = selectedEntity.baseData.productName + (level == 0 ? "" : $" + {level}");
     }
     public void HidePanel()
     {

@@ -19,14 +19,6 @@ namespace PlayerInput
             moveArea = new();
             attackArea = new();
         }
-        public void RemoveMode()
-        {
-            _inputManager.OnObjectClicked.RemoveListener(DragStart);
-            _inputManager.OnMouseUp.RemoveListener(DragEnd);
-            GameObject.Destroy(targetSelecter);
-            GameObject.Destroy(targetTileSelecter);
-
-        }
 
         public void SetMode()
         {
@@ -37,10 +29,15 @@ namespace PlayerInput
             targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter);
             targetSelecter.SetActive(false);
             targetTileSelecter.SetActive(false);
-
-            
         }
 
+        public void RemoveMode()
+        {
+            _inputManager.OnObjectClicked.RemoveListener(DragStart);
+            _inputManager.OnMouseUp.RemoveListener(DragEnd);
+            GameObject.Destroy(targetSelecter);
+            GameObject.Destroy(targetTileSelecter);
+        }
 
 
         Entity _selectedEntity = null;
@@ -62,6 +59,7 @@ namespace PlayerInput
             // 아군 기물인지 확인
             var team = _inputManager.team;
             if (!team.IsAlly(entity.team)) return;
+
 
             if (entity.IsFromMainField()) return;
 
@@ -100,7 +98,7 @@ namespace PlayerInput
                     if (target != null)
                     {
                         // 같은 기물이 같은 레벨이면 강화
-                        if (target != _selectedEntity && _selectedEntity.data == target.data && _selectedEntity.Level == target.Level)
+                        if (target != _selectedEntity && _selectedEntity.baseData == target.baseData && _selectedEntity.Level == target.Level)
                         {
                             // 강화 확인 다이얼로그 표시
                             ShowEnhanceConfirmDialog(target, _selectedEntity);
