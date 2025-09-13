@@ -60,7 +60,7 @@ public class EnemyAI : Agent
     {
         yield return new WaitForSeconds(0.5f);
         // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별)
-        if(CanActiveSkill(out var list))
+        if(TryGetActableSkills(out var list))
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
             var skill = list[rand].GetSkillInstance();
@@ -116,18 +116,20 @@ public class EnemyAI : Agent
     /// 스킬 사용이 가능한 기물이 있는지 확인하는 함수
     /// </summary>
     /// <returns>스킬 사용이 가능함</returns>
-    bool CanActiveSkill(out List<Entity> Entities)
+    bool TryGetActableSkills(out List<SkillComponent> Entities)
     {
         
-        Entities = new List<Entity>();
+        Entities = new List<SkillComponent>();
         foreach (var item in controller.fieldEntities)
         {
-            if (item.skillData == null) continue;
-            if (item.CurEnergy > item.SkillCost)
+            if(item.TryGetComponent<SkillComponent>(out var skill))
             {
-                if (item.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
+                if (skill.CurEnergy >= skill.SkillCost)
                 {
-                    Entities.Add(item);
+                    if (skill.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
+                    {
+                        Entities.Add(skill);
+                    }
                 }
             }
         }

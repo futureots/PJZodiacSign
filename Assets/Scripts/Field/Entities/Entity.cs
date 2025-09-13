@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -16,41 +17,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     }
 
     public Tile curTile { get; set; }
-
-
-    #region Skill
-
-
-    /// <summary>기물 스킬 데이터</summary>
-    public BaseSkillData skillData;
-    /// <summary>
-    /// 기물의 스킬 설정
-    /// </summary>
-    /// <param name="skillData">기물 스킬 데이터</param>
-    public void SetupSkill(BaseSkillData skillData)
-    {
-        this.skillData = skillData;
-    }
-    /// <summary>skillData의 인스턴스</summary>
-    public IActive GetSkillInstance()
-    {
-        if (skillData == null) return null;
-        var skillInstance = skillData.CreateInstance();
-        skillInstance.AddCallback(x => {
-            if (x)
-            {
-                CurEnergy = 0;
-            }
-        });
-        if (skillInstance is IOwnable entitySkill)
-        {
-            entitySkill.Owner = this;
-        }
-        return skillInstance;
-    }
-
-
-    #endregion
     
     Team _team;
 
@@ -83,9 +49,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
 
         UpdateEntity();
 
-        // 기물 스킬 설정(스킬이 스크립트 기반 스킬이면 자동으로 할당, 아니면 할당X)
-        SetupSkill(data.skill);
-        SkillCost = data.skillCost;
+        // 기물 스킬 설정(나중에 엔티티 데이터 팩토리 패턴 적용 시 해당 세팅은 인스턴스 생성 시로 변경 예정)
+        if (data.skill != null)
+        {
+            var _skill = gameObject.GetOrAddComponent<SkillComponent>();
+            
+            _skill.SetupSkill(data.skill, data.skillCost);
+        }
     }
 
     void UpdateEntity()
@@ -94,7 +64,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
         Power = baseData.power + baseData.bonusPower * Level;
         MaxHp = baseData.maxHp + baseData.bonusHp * Level;
         CurHp = MaxHp;
-        CurEnergy = 0;
     }
 
 
@@ -147,29 +116,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
         }
     }
     public Action<int, int> onHpChanged;
-    /// <summary>현재 에너지</summary>
-    [SerializeField] int _curEnergy;
-    public int CurEnergy
-    {
-        get { return _curEnergy; }
-        set
-        {
-            _curEnergy = value;
-            onEnergyChanged?.Invoke(_curEnergy, SkillCost);
-        }
-    }
-    /// <summary>스킬 비용</summary>
-    [SerializeField] int _skillCost;
-    public int SkillCost
-    {
-        get { return _skillCost; }
-        set
-        {
-            _skillCost = value;
-            onEnergyChanged?.Invoke(CurEnergy, _skillCost);
-        }
-    }
-    public Action<int, int> onEnergyChanged;
     #endregion
 
     #region Buff
@@ -178,7 +124,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     {
         buffList.UpdateBuff();
         buffList.RemoveBuff();
-        CurEnergy = Mathf.Min(CurEnergy + 1, SkillCost);
     }
 
     public BuffManager buffList;

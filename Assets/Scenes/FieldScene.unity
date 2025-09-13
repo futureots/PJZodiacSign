@@ -591,7 +591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReflect: 0
   resourceField: {fileID: 1817594083}
-  fieldEntities: []
   team: {fileID: 43863452}
 --- !u!1 &50566219
 GameObject:
@@ -7751,7 +7750,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isReflect: 1
   resourceField: {fileID: 125616120}
-  fieldEntities: []
   team: {fileID: 829814211}
 --- !u!1 &838555973
 GameObject:
@@ -16609,7 +16607,7 @@ GameObject:
   - component: {fileID: 1817594082}
   - component: {fileID: 1817594083}
   m_Layer: 0
-  m_Name: PlayerInstantField
+  m_Name: PlayerResourceField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

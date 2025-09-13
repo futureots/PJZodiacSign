@@ -20,6 +20,11 @@ public class ActionTurn : ITurn
         // 버프 업데이트
         foreach (var entity in agent.controller.fieldEntities)
         {
+            if(entity.TryGetComponent<SkillComponent>(out var component))
+            {
+                component.RegenerateEnergy();
+            }
+            
             entity.OnTurnStart();
         }
     }

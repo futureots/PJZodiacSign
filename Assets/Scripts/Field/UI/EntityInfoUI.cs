@@ -10,6 +10,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class EntityInfoUI : MonoBehaviour
 {
     Entity selectedEntity;
+    SkillComponent _skill;
 
     [Header("정보 UI")]
     public GameObject InfoPanel;
@@ -34,9 +35,10 @@ public class EntityInfoUI : MonoBehaviour
         if (selectedEntity != null)
         {
             selectedEntity.onHpChanged -= hpBar.SetGauge;
-            selectedEntity.onEnergyChanged -= energyBar.SetGauge;
             selectedEntity.onPowerChanged -= SetPowerText;
             selectedEntity.onLevelChanged -= UpdateLevelText;
+
+            if(_skill !=null) _skill.onEnergyChanged -= energyBar.SetGauge;
         }
 
         selectedEntity = entity;
@@ -48,44 +50,49 @@ public class EntityInfoUI : MonoBehaviour
         hpBar.SetGauge(entity.CurHp, entity.MaxHp);
         entity.onHpChanged += hpBar.SetGauge;
 
-        energyBar.SetGauge(entity.CurEnergy, entity.SkillCost);
-        entity.onEnergyChanged += energyBar.SetGauge;
-
         SetPowerText(entity.Power);
         entity.onPowerChanged += SetPowerText;
 
-        skillInfo.SetSkillUI(entity.skillData);
+
         buffList.SetBuffUI(entity.buffList);
 
-        bool isSkillUsable = false;
-        entitySkillBtn.onClick.RemoveAllListeners();
-        // 스킬 버튼 활성화
-        if (PhaseManager.curPhase == PhaseType.Battle)
+
+        if (TryGetComponent<SkillComponent>(out var skill))
         {
-            if (team.IsAlly(entity.team))
+            energyBar.SetGauge(skill.CurEnergy, skill.SkillCost);
+            skill.onEnergyChanged += energyBar.SetGauge;
+
+            skillInfo.SetSkillUI(skill.skillData);
+
+            bool isSkillUsable = false;
+            entitySkillBtn.onClick.RemoveAllListeners();
+            // 스킬 버튼 활성화
+            if (PhaseManager.curPhase == PhaseType.Battle)
             {
-                if (entity.skillData != null)
+                if (team.IsAlly(entity.team))
                 {
-                    if (entity.CurEnergy >= entity.SkillCost)
+                    if (skill.skillData != null)
                     {
-                        isSkillUsable = true;
+                        if (skill.CurEnergy >= skill.SkillCost)
+                        {
+                            isSkillUsable = true;
+                        }
+                        entitySkillBtn.onClick.AddListener(() =>
+                        {
+                            transform.root.GetComponent<InputManager>().SetInputMode(skill.GetSkillInstance());
+                        });
                     }
-                    entitySkillBtn.onClick.AddListener(() =>
-                    {
-                        transform.root.GetComponent<InputManager>().SetInputMode(entity.GetSkillInstance());
-                    });
                 }
+
             }
-
-        }
-
-        if (isSkillUsable)
-        {
-            entitySkillBtn.interactable = true;
-        }
-        else
-        {
-            entitySkillBtn.interactable = false;
+            if (isSkillUsable)
+            {
+                entitySkillBtn.interactable = true;
+            }
+            else
+            {
+                entitySkillBtn.interactable = false;
+            }
         }
     }
     public void UpdateLevelText(int level)
