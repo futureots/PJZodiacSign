@@ -7,26 +7,23 @@ public class BuffInstance
     public BuffData buffData;
     public int count;
 
-    GameObject target;
     public BuffInstance(int count,BuffData data)
     {
         this.count = count;
         buffData = data;
-        target = null;
     }
     /// <summary>
     /// 버프 적용
     /// </summary>
     /// <param name="entity"></param>
-    public void ApplyBuff(GameObject target)
+    public bool TryApplyBuff(GameObject target)
     {
-        buffData.ApplyBuff(target,count);
-        this.target = target;
+        return buffData.ApplyBuff(target,count);
     }
     /// <summary>
     /// 턴 감소 및 버프 효과 업데이트
     /// </summary>
-    public void UpdateBuff()
+    public void UpdateBuff(GameObject target)
     {
         buffData.UpdateBuff(target,ref count);
     }
@@ -34,7 +31,7 @@ public class BuffInstance
     /// 버프 제거
     /// </summary>
     /// <param name="target"></param>
-    public void RemoveBuff()
+    public void RemoveBuff(GameObject target)
     {
         buffData.RemoveBuff(target,count);
     }
@@ -49,7 +46,7 @@ public class BuffInstance
     /// </summary>
     /// <param name="target"></param>
     /// <param name="count"></param>
-    public void ExtendBuff(int count)
+    public void ExtendBuff(GameObject target, int count)
     {
         buffData.ExtendBuff(target, ref this.count, count);
     }

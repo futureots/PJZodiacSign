@@ -245,15 +245,25 @@ public class Field : MonoBehaviour
             for(int j = 0; j < column; j++)
             {
                 if (fieldInfo[i, j] == 0) continue;
+
                 var obj = tiles[i, j].occupiedObject;
                 var entity = obj.GetComponent<Entity>();
                 if (entity == null) continue;
                 if (entity.team.teamNumber == teamNum) continue;
+
                 int entityNum = fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x];
                 fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = 0;
+
+                // 기물의 공격력 반환
+                int power = 0;
+                if(entity.TryGetComponent<PowerComponent>(out var component))
+                {
+                    power = component.Power;
+                }
+
                 foreach (var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
                 {
-                    field[vec.y, vec.x] -= entity.Power;
+                    field[vec.y, vec.x] -= power;
                 }
                 fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = entityNum;
             }

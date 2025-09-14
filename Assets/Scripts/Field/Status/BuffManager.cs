@@ -26,13 +26,15 @@ public class BuffManager : MonoBehaviour
         var existBuff = _buffList.Find((x) => x.buffData.id == buff.id);
         if (existBuff != null)
         {
-            existBuff.ExtendBuff(count);
+            existBuff.ExtendBuff(gameObject, count);
         }
         else
         {
             var instance = new BuffInstance(count, buff);
-            _buffList.Add(instance);
-            instance.ApplyBuff(gameObject);
+            if (instance.TryApplyBuff(gameObject))
+            {
+                _buffList.Add(instance);
+            }
         }
         Debug.Log(BuffList.Count);
     }
@@ -43,7 +45,7 @@ public class BuffManager : MonoBehaviour
     {
         foreach (var buff in BuffList)
         {
-            buff.UpdateBuff();
+            buff.UpdateBuff(gameObject);
         }
     }
 
@@ -55,7 +57,7 @@ public class BuffManager : MonoBehaviour
         var list = _buffList.Where((buff) => buff.IsExpired()).ToList();
         foreach (var buff in list)
         {
-            buff.RemoveBuff();
+            buff.RemoveBuff(gameObject);
             _buffList.Remove(buff);
         }
     }

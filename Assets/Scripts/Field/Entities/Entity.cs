@@ -7,14 +7,10 @@ using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(BuffManager))]
+[RequireComponent (typeof(PowerComponent))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
 {
-    // 사망 시 해당 엔티티 
-    private void Awake()
-    {
-        buffList = GetComponent<BuffManager>();
-        statusEffects = new();
-    }
+
 
     public Tile curTile { get; set; }
     
@@ -36,6 +32,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     // 기물의 기본 데이터
     public EntityData baseData;
 
+
+    // 사망 시 해당 엔티티 
+    private void Awake()
+    {
+        buffList = GetComponent<BuffManager>();
+        statusEffects = new();
+    }
 
     /// <summary>
     /// 기물 초기화, 스킬 설정
@@ -61,15 +64,20 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     void UpdateEntity()
     {
         // 기물 스탯 계산
-        Power = baseData.power + baseData.bonusPower * Level;
+        if(TryGetComponent<PowerComponent>(out var power))
+        {
+            power.Power = baseData.power + baseData.bonusPower * Level;
+        }
         MaxHp = baseData.maxHp + baseData.bonusHp * Level;
         CurHp = MaxHp;
     }
 
 
     #region Status
+
     /// <summary>기물의 레벨</summary>
     [SerializeField] int _level;
+
     public int Level { 
         get { return _level; }
         set
@@ -81,20 +89,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     }
     
     public Action<int> onLevelChanged;
-    /// <summary>공격력</summary>
-    [SerializeField] int _power;
-    public int Power
-    {
-        get { return _power; }
-        set
-        {
-            _power = value;
-            onPowerChanged?.Invoke(_power);
-        }
-    }
-    public Action<int> onPowerChanged;
+
     /// <summary>최대 체력</summary>
     [SerializeField] int _maxHp;
+
     public int MaxHp
     {
         get { return _maxHp; }
@@ -104,8 +102,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
             onHpChanged?.Invoke(CurHp, _maxHp);
         }
     }
+
     /// <summary>현재 체력</summary>
     [SerializeField] int _curHp;
+
     public int CurHp
     {
         get { return _curHp; }
@@ -115,6 +115,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
             onHpChanged?.Invoke(_curHp, MaxHp);
         }
     }
+
     public Action<int, int> onHpChanged;
     #endregion
 
@@ -182,7 +183,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     {
         if (isSlienced) return;
         var list = GetAttackArea();
-        int damage = Power;
+        int damage = 0;
+        if (TryGetComponent<PowerComponent>(out var component))
+        {
+            damage = component.Power;
+        }
+        
         
         foreach (var item in list)
         {
@@ -191,7 +197,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
             var targetTeam = target.GetComponent<Team>();
             if(!team.IsAlly(targetTeam))
             {
-                target.GetComponent<IDamageable>()?.Damaged(Power);
+                target.GetComponent<IDamageable>()?.Damaged(damage);
             }
         }
     }
@@ -340,7 +346,11 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     public bool GetBestMove(int[,] field, int[,] tileValues, out int value, out intVector2 pos)
     {
         var list = GetMoveVector();
-        
+        int power = 0;
+        if(TryGetComponent<PowerComponent>(out var component))
+        {
+            power = component.Power;
+        }
         int max = tileValues[curTile.fieldPos.y, curTile.fieldPos.x];
         
         List<intVector2> valuablePos = new();
@@ -362,7 +372,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
             {
                 if (field[plus.y, plus.x] == 0) continue;
                 if (field[plus.y, plus.x] == team.teamNumber) continue;
-                tileValues[area.y,area.x] += Power;
+                tileValues[area.y, area.x] += power;
             }
 
             if (damage > max || valuablePos.Count == 0)

@@ -9,6 +9,11 @@ public class S_Heal : S_BaseEntity<SD_Heal>
 
     public override void Activate()
     {
+        int amount = 0;
+        if(Owner.TryGetComponent<PowerComponent>(out var component))
+        {
+            amount = component.Power;
+        }
         var list = Owner.GetAttackArea();
         foreach (var item in list)
         {
@@ -18,7 +23,7 @@ public class S_Heal : S_BaseEntity<SD_Heal>
             if (team.IsAlly(other.GetComponent<Team>()))
             {
                 var ally = other.GetComponent<IDamageable>();
-                ally.Healed(Owner.Power);
+                ally.Healed(amount);
             }
         }
     }

@@ -7,10 +7,12 @@ using static UnityEngine.EventSystems.EventTrigger;
 [CreateAssetMenu(fileName = "StatusEffect", menuName = "Scriptable Objects/Buff/StatusEffect")]
 public class StatusEffect : BuffData
 {
-    public override void ApplyBuff(GameObject target, int count)
+    public override bool ApplyBuff(GameObject target, int count)
     {
+        // 해당 오브젝트가 버프 부여가 가능한 경우 true 반환
         var entity = target.GetComponent<Entity>();
         entity.AddEffect(id);
+        return true;
     }
     public override void ExtendBuff(GameObject target, ref int currentCount, int count)
     {
