@@ -8,12 +8,15 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(BuffManager))]
 [RequireComponent (typeof(PowerComponent))]
-public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
+[RequireComponent(typeof(AreaComponent))]
+public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 {
 
 
-    public Tile curTile { get; set; }
-    
+    public Tile CurTile { get; private set; }
+
+    public bool IsReflect { get; set; }
+
     Team _team;
 
     /// <summary>기물의 팀 번호</summary>
@@ -36,7 +39,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     // 사망 시 해당 엔티티 
     private void Awake()
     {
-        buffList = GetComponent<BuffManager>();
         statusEffects = new();
     }
 
@@ -72,13 +74,11 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
         CurHp = MaxHp;
     }
 
-
-    #region Status
-
     /// <summary>기물의 레벨</summary>
     [SerializeField] int _level;
 
-    public int Level { 
+    public int Level
+    {
         get { return _level; }
         set
         {
@@ -87,8 +87,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
             UpdateEntity();
         }
     }
-    
+
     public Action<int> onLevelChanged;
+
+    #region Status
+
+
 
     /// <summary>최대 체력</summary>
     [SerializeField] int _maxHp;
@@ -121,14 +125,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
 
     #region Buff
 
-    public void OnTurnStart()
-    {
-        buffList.UpdateBuff();
-        buffList.RemoveBuff();
-    }
-
-    public BuffManager buffList;
-
     Dictionary<string, int> statusEffects;
     public void AddEffect(string effectName)
     {
@@ -154,13 +150,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
         else return;
     }
 
-    bool isSlienced
-    {
-        get
-        {
-            return statusEffects.ContainsKey("slience");
-        }
-    }
     bool isRooted
     {
         get
@@ -176,12 +165,14 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
         }
     }
 
+
+
     #endregion
+
     public static Action<Entity> onEntityDead;
     public Action onDead;
     public void Attack()
     {
-        if (isSlienced) return;
         var list = GetAttackArea();
         int damage = 0;
         if (TryGetComponent<PowerComponent>(out var component))
@@ -228,8 +219,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
         if (CurHp > 0) return false;
         return true;
     }
-
-
     
     /// <summary>
     /// 기물 이동(이동 제한 X)
@@ -246,79 +235,34 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
             if (isOccupied) return false;
         }
 
-        if (curTile != null)
+        if (CurTile != null)
         {
-            curTile.UnsetOccupant();
+            CurTile.UnsetOccupant();
         }
         tile.SetOccupant(gameObject, true);
-        curTile = tile;
+        CurTile = tile;
 
         return true;
     }
 
-
-    public bool isReflect;
-
     #region Area
-    /// <summary>
-    /// 기물의 이동 가능 좌표를 반환
-    /// </summary>
-    /// <returns>이동 가능 좌표의 배열</returns>
-    public List<intVector2> GetMoveVector()
-    {
-        var moveArea = new List<intVector2>();
-        if (!isRooted)
-        {
-            var fieldInfo = curTile.field.GetFieldState();
-            fieldInfo[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
-            var list = GetComponents<IMoveArea>();
-            
-            foreach (var area in list)
-            {
-                var vectors = area.GetMoveVector(fieldInfo, curTile.fieldPos, isReflect);
-                moveArea.AddRange(vectors);
-            }
-        }
-        
-        moveArea.Add(curTile.fieldPos);
-        return moveArea;
-    }
+
     /// <summary>
     /// 기물의 이동 영역 반환
     /// </summary>
     /// <returns>기물이 이동가능한 타일들</returns>
     public List<Tile> GetMoveArea()
     {
-        var list = GetMoveVector();
-        var tiles = curTile.field.GetTiles(list);
-        return tiles;
-    }
-
-    public List<intVector2> GetAttackVector(int[,] field, intVector2 pos)
-    {
-        var attackArea = new List<intVector2>();
-        if (isSlienced)
+        if(TryGetComponent<AreaComponent>(out var area))
         {
-            return attackArea;
-        }
-        var list = GetComponents<IAttackArea>();
+            var field = CurTile.field.GetFieldState();
+            field[CurTile.fieldPos.y, CurTile.fieldPos.x] = 0;
 
-        
-        foreach (var area in list)
-        {
-            var vectors = area.GetAttackVector(field, pos, isReflect);
-            attackArea.AddRange(vectors);
+            var list = area.GetMoveVector(field,CurTile.fieldPos, IsReflect);
+            var tiles = CurTile.field.GetTiles(list);
+            return tiles;
         }
-        return attackArea;
-    }
-
-    public List<Tile> GetAttackArea(Tile tile)
-    {
-        var field = tile.field.GetFieldState();
-        if(tile.field == curTile.field) field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
-        var list = GetAttackVector(field, tile.fieldPos);
-        var tiles = tile.field.GetTiles(list);
-        return tiles;
+        return new List<Tile>();
     }
 
     /// <summary>
@@ -327,11 +271,25 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     /// <returns>기물이 공격할 수 있는 타일</returns>
     public List<Tile> GetAttackArea()
     {
-        return GetAttackArea(curTile);
+        return GetAttackArea(CurTile);
     }
-    public List<intVector2> GetAttackVector()
+
+    public List<Tile> GetAttackArea(Tile tile)
     {
-        return GetAttackVector(curTile.field.GetFieldState(), curTile.fieldPos);
+        // IOccupant 인터페이스 사용해서 해당 함수도 AreaComponent로 빼기
+        var field = tile.field.GetFieldState();
+        if(tile.field == CurTile.field) field[CurTile.fieldPos.y, CurTile.fieldPos.x] = 0;
+        
+        if(TryGetComponent<AreaComponent>(out var component))
+        {
+            var list = component.GetAttackVector(field, tile.fieldPos, IsReflect);
+            var tiles = tile.field.GetTiles(list);
+            return tiles;
+        }
+        else
+        {
+            return new List<Tile>();
+        }
     }
 
     #endregion
@@ -345,45 +303,51 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IMovable
     /// <returns></returns>
     public bool GetBestMove(int[,] field, int[,] tileValues, out int value, out intVector2 pos)
     {
-        var list = GetMoveVector();
+        
         int power = 0;
         if(TryGetComponent<PowerComponent>(out var component))
         {
             power = component.Power;
         }
-        int max = tileValues[curTile.fieldPos.y, curTile.fieldPos.x];
-        
+        int max = tileValues[CurTile.fieldPos.y, CurTile.fieldPos.x];
+
         List<intVector2> valuablePos = new();
-        foreach (var area in list)
+        if(TryGetComponent<AreaComponent>(out var area))
         {
-            
-            // 이동할 수 없는 타일은 제외
-            if (field[area.y, area.x] != 0 || curTile.fieldPos == area) continue;
-            Debug.Log($"Best Entity : {baseData.productName} , CurPos : {curTile.fieldPos} , Expect : {area} ");
-            // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
-            var damage = tileValues[area.y, area.x];
-            if (damage + CurHp <= 0) damage -= 5;
+            var list = area.GetMoveVector(field, CurTile.fieldPos, IsReflect);
 
-            // 공격 가능 체크
-            field[curTile.fieldPos.y, curTile.fieldPos.x] = 0;
-            var plusArea = GetAttackVector(field,area);
-            field[curTile.fieldPos.y, curTile.fieldPos.x] = team.teamNumber;
-            foreach (var plus in plusArea)
+            foreach (var item in list)
             {
-                if (field[plus.y, plus.x] == 0) continue;
-                if (field[plus.y, plus.x] == team.teamNumber) continue;
-                tileValues[area.y, area.x] += power;
-            }
+                // 이동할 수 없는 타일은 제외
+                if (field[item.y, item.x] != 0 || CurTile.fieldPos == item) continue;
+                Debug.Log($"Best Entity : {baseData.productName} , CurPos : {CurTile.fieldPos} , Expect : {item} ");
+                // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
+                var damage = tileValues[item.y, item.x];
+                if (damage + CurHp <= 0) damage -= 5;
 
-            if (damage > max || valuablePos.Count == 0)
-            {
-                valuablePos.Clear();
-                max = damage;
-                valuablePos.Add(area);
-            }
-            else if(damage == max)
-            {
-                valuablePos.Add(area);
+                // 공격 가능 체크
+                field[CurTile.fieldPos.y, CurTile.fieldPos.x] = 0;
+                var plusArea = area.GetAttackVector(field, item, IsReflect);
+                field[CurTile.fieldPos.y, CurTile.fieldPos.x] = team.teamNumber;
+                foreach (var plus in plusArea)
+                {
+                    if (field[plus.y, plus.x] == 0) continue;
+                    if (field[plus.y, plus.x] == team.teamNumber) continue;
+                    tileValues[item.y, item.x] += power;
+                }
+
+
+
+                if (damage > max || valuablePos.Count == 0)
+                {
+                    valuablePos.Clear();
+                    max = damage;
+                    valuablePos.Add(item);
+                }
+                else if (damage == max)
+                {
+                    valuablePos.Add(item);
+                }
             }
         }
         if(valuablePos.Count <= 0)

@@ -60,12 +60,14 @@ public class EntityInfoUI : MonoBehaviour
             power.onPowerChanged += SetPowerText;
         }
 
-
-
-        buffList.SetBuffUI(entity.buffList);
+        // 버프 표시
+        if (entity.TryGetComponent<BuffManager>(out var buffs))
+        {
+            buffList.SetBuffUI(buffs);
+        }
 
         // 스킬 및 마나 표시
-        if (TryGetComponent<SkillComponent>(out var skill))
+        if (entity.TryGetComponent<SkillComponent>(out var skill))
         {
             _skill = skill;
 

@@ -82,7 +82,7 @@ public class EnemyAI : Agent
             int[,] field = GameManager.Instance.field.GetFieldState();
 
             // 현재 위치를 비우기
-            var entityPos = checkEntity.curTile.fieldPos;
+            var entityPos = checkEntity.CurTile.fieldPos;
             field[entityPos.y, entityPos.x] = 0;
             // 적의 공격범위 가져오기 및 예상 데미지 계산
             var values = GameManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);

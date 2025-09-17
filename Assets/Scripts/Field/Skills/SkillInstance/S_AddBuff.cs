@@ -19,7 +19,11 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
     public override void Activate()
     {
         Debug.Log(data);
-        target.buffList.AddBuff(data.BuffData, data.count);
+        if(target.TryGetComponent<BuffManager>(out var component))
+        {
+            component.AddBuff(data.BuffData, data.count);
+        }
+        
     }
 
     public override bool IsValidInput(FieldInfo field)
@@ -37,7 +41,7 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
     {
         if (other == null) return false;
         //공격 범위 내 적만 속박
-        if (Owner.GetAttackArea().Contains(other.curTile))
+        if (Owner.GetAttackArea().Contains(other.CurTile))
         {
             return true;
         }

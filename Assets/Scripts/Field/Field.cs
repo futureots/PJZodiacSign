@@ -230,6 +230,15 @@ public class Field : MonoBehaviour
         return field;
     }
 
+    public int[,] GetFieldState(IOccupant occupant)
+    {
+        var list = GetFieldState();
+        if(occupant.CurTile.field == this)
+        {
+            list[occupant.CurTile.fieldPos.y, occupant.CurTile.fieldPos.x] = 0;
+        }
+        return list;
+    }
 
     /// <summary>
     /// 상대(중립 포함)의 공격범위 및 예상 데미지 계산 후 반환
@@ -251,8 +260,8 @@ public class Field : MonoBehaviour
                 if (entity == null) continue;
                 if (entity.team.teamNumber == teamNum) continue;
 
-                int entityNum = fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x];
-                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = 0;
+                int entityNum = fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
+                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = 0;
 
                 // 기물의 공격력 반환
                 int power = 0;
@@ -261,11 +270,14 @@ public class Field : MonoBehaviour
                     power = component.Power;
                 }
 
-                foreach (var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
+                if(entity.TryGetComponent<AreaComponent>(out var area))
                 {
-                    field[vec.y, vec.x] -= power;
+                    foreach (var vec in area.GetAttackVector(fieldInfo, new intVector2(j, i), entity.IsReflect))
+                    {
+                        field[vec.y, vec.x] -= power;
+                    }
                 }
-                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = entityNum;
+                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = entityNum;
             }
         }
         return field;

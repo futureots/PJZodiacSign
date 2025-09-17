@@ -11,6 +11,6 @@ public class LogBlock : MonoBehaviour
 
     public void Initialize(Entity deadEntity)
     {
-        commandText.text = $"({deadEntity.curTile.fieldPos}){deadEntity.baseData.productName} 사망";
+        commandText.text = $"({deadEntity.CurTile.fieldPos}){deadEntity.baseData.productName} 사망";
     }
 }

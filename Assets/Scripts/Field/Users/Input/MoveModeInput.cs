@@ -33,10 +33,11 @@ namespace PlayerInput
 
         }
 
-        //선택한 엔티티 저장
-        Entity _selectedEntity = null;
         GameObject targetSelecter = null;
         GameObject targetTileSelecter = null;
+
+        //선택한 엔티티 저장
+        Entity _selectedEntity = null;
         List<Tile> moveArea;
         List<Tile> attackArea;
         AreaVisualizer visualizer;
@@ -69,12 +70,12 @@ namespace PlayerInput
             if (_selectedEntity != null)
             {
                 var tile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
-                _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                _selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
                 visualizer.RemoveAttackArea(attackArea);
                 visualizer.RemoveMoveArea(moveArea);
 
                 // 제자리 이동 불가능
-                if (!_selectedEntity.curTile.Equals(tile))
+                if (!_selectedEntity.CurTile.Equals(tile))
                 {
                     //커맨드 생성
                     _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
