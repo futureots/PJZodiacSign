@@ -7,7 +7,7 @@ public class ED_Knight : EntityData
     public override Entity CreateEntity(int level = 0)
     {
         var entity = CreateInstance();
-        entity.AddComponent<KnightArea>();
+        //entity.AddComponent<CustomArea>();
         entity.InitializeEntity(this, level);
 
         return entity;

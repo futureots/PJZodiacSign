@@ -7,8 +7,8 @@ public class ED_Queen : EntityData
     public override Entity CreateEntity(int level = 0)
     {
         var entity = CreateInstance();
-        entity.AddComponent<BishopArea>();
-        entity.AddComponent<RookArea>();
+        //entity.AddComponent<BishopArea>();
+        //entity.AddComponent<RookArea>();
         entity.InitializeEntity(this, level);
         return entity;
     }

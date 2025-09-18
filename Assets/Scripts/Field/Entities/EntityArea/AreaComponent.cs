@@ -3,71 +3,73 @@ using UnityEngine;
 
 public class AreaComponent : MonoBehaviour
 {
+
+    public void SetArea(List<Area> moveArea, List<Area> attackArea)
+    {
+        this.moveArea = moveArea;
+        this.attackArea = attackArea;
+    }
+
     #region Attack
+    public int sealCount;
     bool isSealed
     {
         get
         {
-            return false;
+            return sealCount>0;
         }
     }
 
+    public List<Area> attackArea;
+
     public List<intVector2> GetAttackVector(int[,] field, intVector2 pos, bool isReflect)
     {
-        var attackArea = new List<intVector2>();
+        var list = new List<intVector2>();
         if (isSealed)
         {
-            return attackArea;
+            return list;
         }
-        var list = GetComponents<IAttackArea>();
-
-
-        foreach (var area in list)
+        
+        foreach (var area in attackArea)
         {
-            var vectors = area.GetAttackVector(field, pos, isReflect);
-            attackArea.AddRange(vectors);
+            var vectors = area.GetVectors(field, pos, isReflect);
+            list.AddRange(vectors);
         }
-        return attackArea;
+        return list;
     }
 
     #endregion
 
     #region Move
+
+    public int rootCount;
     bool isRooted
     {
         get
         {
-            return false;
+            return rootCount>0;
         }
     }
 
+    public List<Area> moveArea;
     /// <summary>
     /// 기물의 이동 가능 좌표를 반환
     /// </summary>
     /// <returns>이동 가능 좌표의 배열</returns>
     public List<intVector2> GetMoveVector(int[,] field, intVector2 pos, bool isReflect)
     {
-        var moveArea = new List<intVector2>();
+        var list = new List<intVector2>();
         if (isRooted)
         {
-            return moveArea;
+            return list;
         }
-        
-        if(TryGetComponent<IOccupant>(out var occupant))
+
+        foreach (var area in moveArea)
         {
-            var list = GetComponents<IMoveArea>();
-
-            foreach (var area in list)
-            {
-                var vectors = area.GetMoveVector(field, pos, occupant.IsReflect);
-                moveArea.AddRange(vectors);
-            }
-
-            moveArea.Add(pos);
+            var vectors = area.GetVectors(field, pos, isReflect);
+            list.AddRange(vectors);
         }
-
-        
-        return moveArea;
+        return list;
     }
 
     #endregion
