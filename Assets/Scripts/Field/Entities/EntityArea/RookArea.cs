@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 [CreateAssetMenu(fileName = "RookArea", menuName = "Scriptable Objects/Area/RookArea")]
 public class RookArea : Area
 {
 
-    protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, bool isReflect)
+    protected override List<intVector2> GetVector(int[,] tiles, intVector2 pos, bool isReflect)
     {
         List<intVector2> list = new List<intVector2>();
         intVector2[] direction = new intVector2[] { new intVector2(1, 0), new intVector2(0, 1), new intVector2(-1, 0), new intVector2(0, -1) };
@@ -13,15 +14,17 @@ public class RookArea : Area
         for (int i = 0; i < 4; i++)
         {
             intVector2 vector = new intVector2(0, 0);
-            while (true)
+            for (int j = 0; j < 8; j++)
             {
                 vector += direction[i];
-                var pos = isReflect ? curPos + vector : curPos - vector;
-                if (IsValidPos(tiles, pos)) break;
-                list.Add(pos);
-                if (tiles[pos.y, pos.x] != 0) {
+                var position = isReflect ? pos + vector : pos - vector;
+                if (!IsValidPos(tiles, position)) break;
+                list.Add(position);
+                if (tiles[position.y, position.x] != 0)
+                {
                     break;
                 }
+
             }
         }
 

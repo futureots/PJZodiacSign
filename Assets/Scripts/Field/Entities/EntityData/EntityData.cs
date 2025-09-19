@@ -1,10 +1,15 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class EntityData : AbstractData
+
+[CreateAssetMenu(fileName = "Entity", menuName = "Scriptable Objects/EntityData")]
+public class EntityData : AbstractData
 {
     public GameObject baseEntityPrefab;
-
+    [Header("Area")]
+    public List<Area> moveArea;
+    public List<Area> attackArea;
 
     [Header("BaseStatus")]
     public int maxHp;
@@ -16,21 +21,10 @@ public abstract class EntityData : AbstractData
 
     [Header("Skill")]
     public BaseSkillData skill;
-    public int skillCost;
+    public bool energy;
+    public int maxEnergy;
 
     [Header("ObjectValue")]
     public Vector3 hpPanelPosition;
-    /// <summary>
-    /// 데이터 기반 기물 오브젝트 생성 및 반환
-    /// </summary>
-    /// <param name="level">생성된 오브젝트의 기본 레벨</param>
-    /// <returns></returns>
-    public abstract Entity CreateEntity(int level = 0);
 
-    protected Entity CreateInstance()
-    {
-        var instance = Instantiate(baseEntityPrefab);
-        var entity = instance.GetOrAddComponent<Entity>();
-        return entity;
-    }
 }

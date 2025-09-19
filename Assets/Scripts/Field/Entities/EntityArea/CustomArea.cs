@@ -12,7 +12,8 @@ public class CustomArea : Area
         
         foreach (var item in positions)
         {
-            area.Add(isReflect ? item + pos : item - pos);
+            var position = isReflect ? pos + item : pos - item;
+            area.Add(position);
         }
         return area;
     }

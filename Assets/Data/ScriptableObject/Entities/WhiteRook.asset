@@ -9,19 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 300de8779923c854a85664393e32c9b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
   m_Name: WhiteRook
   m_EditorClassIdentifier: 
   id: WhiteRook
   productName: "\uD654\uC774\uD2B8\uB8E9"
   icon: {fileID: 21300000, guid: 8594eda5bcbfff046a1f1c4c793a03e5, type: 3}
-  normalPrice: 30
-  discountPrice: 15
+  normalPrice: 45
+  discountPrice: 25
   baseEntityPrefab: {fileID: 114028, guid: 43ef2ba32fda59c42a1410ea490d494b, type: 3}
-  maxHp: 45
-  power: 2
-  bonusHp: 10
+  moveArea:
+  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
+  attackArea:
+  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
+  maxHp: 35
+  power: 4
+  bonusHp: 5
   bonusPower: 1
-  skill: {fileID: 11400000, guid: 81caa596f29ece04681c6dd8ae3ced41, type: 2}
-  skillCost: 2
+  skill: {fileID: 0}
+  energy: 1
+  maxEnergy: 4
   hpPanelPosition: {x: 0, y: 2, z: 0}

@@ -9,15 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cfbfe1756f0d0d4a9e1cabbd7e19ae6, type: 3}
-  m_Name: TestEnemyTable
+  m_Script: {fileID: 11500000, guid: ac195565dfe302c43bdb2e2aba98ebbd, type: 3}
+  m_Name: PawnMoveArea
   m_EditorClassIdentifier: 
-  credit: 100
-  entities: []
-  fieldEntities:
-  - entityData:
-      data: {fileID: 11400000, guid: 840fa1fe4952ad34b9f7694dde58f110, type: 2}
-      level: 1
-    fieldPos:
-      x: 1
-      y: 1

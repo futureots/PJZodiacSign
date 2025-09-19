@@ -73,7 +73,7 @@ public class EntityController : MonoBehaviour
 
         foreach (var item in handData)
         {
-            var entity = item.data.CreateEntity(item.level);
+            var entity = EntityFactory.CreateEntity(item.data, item.level);
             if (!PlaceOnResourceField(entity))
             {
                 Destroy(entity);
@@ -86,7 +86,7 @@ public class EntityController : MonoBehaviour
 
         foreach (var item in fieldData)
         {
-            var entity = item.Value.data.CreateEntity(item.Value.level);
+            var entity = EntityFactory.CreateEntity(item.Value.data, item.Value.level);
             intVector2 pos = intVector2.Decode(item.Key);
 
             var tile = GameManager.Instance.field.GetTile(pos, isReflect);

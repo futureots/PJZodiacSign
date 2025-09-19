@@ -124,13 +124,14 @@ public class EnemyAI : Agent
         {
             if(item.TryGetComponent<SkillComponent>(out var skill))
             {
-                if (skill.CurEnergy >= skill.SkillCost)
+                // 스킬 사용이 가능한지 확인하는 조건문
+                /*if (false)
                 {
                     if (skill.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
                     {
                         Entities.Add(skill);
                     }
-                }
+                }*/
             }
         }
         if (Entities.Count > 0) return true;

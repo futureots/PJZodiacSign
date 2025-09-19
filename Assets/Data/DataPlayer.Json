@@ -2,11 +2,6 @@
   "$type": "PlayerData, Assembly-CSharp",
   "fieldEntities": {
     "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityLevelHolder, Assembly-CSharp]], mscorlib",
-    "1026": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteRook",
-      "level": 1
-    },
     "2050": {
       "$type": "EntityLevelHolder, Assembly-CSharp",
       "entity": "WhiteBishop",

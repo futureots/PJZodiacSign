@@ -17,7 +17,7 @@ public class BishopArea : Area
             {
                 vector += direction[i];
                 var position = isReflect ? pos + vector : pos - vector;
-                if (IsValidPos(tiles, position)) break;
+                if (!IsValidPos(tiles, position)) break;
                 list.Add(position);
                 if (tiles[position.y, position.x] != 0)
                 {

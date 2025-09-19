@@ -100,7 +100,7 @@ public abstract class Agent : MonoBehaviour
     {
         if (!CanPlaceOnResourceField()) return false;
 
-        var entity = entityData.CreateEntity();
+        var entity = EntityFactory.CreateEntity(entityData);
         controller.PlaceOnResourceField(entity);
 
         return true;

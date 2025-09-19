@@ -8,11 +8,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(BuffManager))]
 [RequireComponent (typeof(PowerComponent))]
-[RequireComponent(typeof(AreaComponent))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 {
-
-
     public Tile CurTile { get; private set; }
 
     public bool IsReflect { get; set; }
@@ -35,15 +32,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     // 기물의 기본 데이터
     public EntityData baseData;
 
-
-    // 사망 시 해당 엔티티 
-    private void Awake()
-    {
-        statusEffects = new();
-    }
-
     /// <summary>
-    /// 기물 초기화, 스킬 설정
+    /// 기물 초기 스탯 세팅
     /// </summary>
     /// <param name="data">기물 데이터</param>
     /// <param name="level">기물의 레벨</param>
@@ -53,14 +43,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
         this.Level = level;
 
         UpdateEntity();
-
-        // 기물 스킬 설정(나중에 엔티티 데이터 팩토리 패턴 적용 시 해당 세팅은 인스턴스 생성 시로 변경 예정)
-        if (data.skill != null)
-        {
-            var _skill = gameObject.GetOrAddComponent<SkillComponent>();
-            
-            _skill.SetupSkill(data.skill, data.skillCost);
-        }
     }
 
     void UpdateEntity()
@@ -92,8 +74,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 
     #region Status
 
-
-
     /// <summary>최대 체력</summary>
     [SerializeField] int _maxHp;
 
@@ -123,51 +103,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     public Action<int, int> onHpChanged;
     #endregion
 
-    #region Buff
-
-    Dictionary<string, int> statusEffects;
-    public void AddEffect(string effectName)
-    {
-        if (statusEffects.ContainsKey(effectName))
-        {
-            statusEffects[effectName] += 1;
-        }
-        else
-        {
-            statusEffects.Add(effectName, 1);
-        }
-    }
-    public void SubtractEffect(string effectName)
-    {
-        if (statusEffects.ContainsKey(effectName))
-        {
-            statusEffects[effectName] -= 1;
-            if(statusEffects[effectName] <= 0)
-            {
-                statusEffects.Remove(effectName);
-            }
-        }
-        else return;
-    }
-
-    bool isRooted
-    {
-        get
-        {
-            return statusEffects.ContainsKey("root");
-        }
-    }
-    bool isProtected
-    {
-        get
-        {
-            return statusEffects.ContainsKey("protect");
-        }
-    }
-
-
-
-    #endregion
+    // 나중에 스탯 계산용 핸들러 추가하면서 빼기
+    public bool isProtected;
 
     public static Action<Entity> onEntityDead;
     public Action onDead;
@@ -228,7 +165,6 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     /// <returns></returns>
     public bool Move(Tile tile, bool ignoreOccupy = false)
     {
-        if(isRooted) return false;
         if (!ignoreOccupy)
         {
             var isOccupied = !tile.isEmpty;
@@ -259,7 +195,10 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
             field[CurTile.fieldPos.y, CurTile.fieldPos.x] = 0;
 
             var list = area.GetMoveVector(field,CurTile.fieldPos, IsReflect);
-            var tiles = CurTile.field.GetTiles(list);
+            var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
+
+            tiles.Add(CurTile);
+
             return tiles;
         }
         return new List<Tile>();

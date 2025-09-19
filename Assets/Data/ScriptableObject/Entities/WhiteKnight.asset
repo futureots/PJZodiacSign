@@ -9,19 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 475724e70f1a6f5429576c44a904c4da, type: 3}
+  m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
   m_Name: WhiteKnight
   m_EditorClassIdentifier: 
   id: WhiteKnight
   productName: "\uD654\uC774\uD2B8\uB098\uC774\uD2B8"
   icon: {fileID: 21300000, guid: 9127bb7b525b8424fb967ef6627e220c, type: 3}
-  normalPrice: 30
-  discountPrice: 20
+  normalPrice: 43
+  discountPrice: 30
   baseEntityPrefab: {fileID: 107724, guid: 7248632fb471af143947a88a47eae959, type: 3}
-  maxHp: 100
-  power: 3
-  bonusHp: 10
+  moveArea:
+  - {fileID: 11400000, guid: 14c6b2a741906954f878ea85cd55e6fa, type: 2}
+  attackArea:
+  - {fileID: 11400000, guid: 14c6b2a741906954f878ea85cd55e6fa, type: 2}
+  maxHp: 46
+  power: 4
+  bonusHp: 1
   bonusPower: 1
   skill: {fileID: 0}
-  skillCost: 0
+  energy: 0
+  maxEnergy: 0
   hpPanelPosition: {x: 0, y: 2.5, z: 0}

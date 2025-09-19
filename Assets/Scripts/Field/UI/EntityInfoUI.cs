@@ -11,6 +11,7 @@ public class EntityInfoUI : MonoBehaviour
 {
     Entity selectedEntity;
     SkillComponent _skill;
+    EnergyComponent _energy;
     PowerComponent _power;
 
     [Header("정보 UI")]
@@ -39,7 +40,7 @@ public class EntityInfoUI : MonoBehaviour
             selectedEntity.onLevelChanged -= UpdateLevelText;
 
             if (_power != null) _power.onPowerChanged -= SetPowerText;
-            if(_skill !=null) _skill.onEnergyChanged -= energyBar.SetGauge;
+            if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
         }
 
         selectedEntity = entity;
@@ -54,10 +55,15 @@ public class EntityInfoUI : MonoBehaviour
         // 공격력 표시
         if(entity.TryGetComponent<PowerComponent>(out var power))
         {
+            powerText.gameObject.SetActive(true);
             _power = power;
             Debug.Log("PowerComponent : " + power.Power);
             SetPowerText(power.Power);
             power.onPowerChanged += SetPowerText;
+        }
+        else
+        {
+            powerText.gameObject.SetActive(false);
         }
 
         // 버프 표시
@@ -66,13 +72,17 @@ public class EntityInfoUI : MonoBehaviour
             buffList.SetBuffUI(buffs);
         }
 
+        if(entity.TryGetComponent<EnergyComponent>(out var energy))
+        {
+            _energy = energy;
+            energyBar.SetGauge(_energy.CurEnergy, _energy.MaxEnergy);
+            _energy.onEnergyChanged += energyBar.SetGauge;
+        }
+
         // 스킬 및 마나 표시
         if (entity.TryGetComponent<SkillComponent>(out var skill))
         {
             _skill = skill;
-
-            energyBar.SetGauge(_skill.CurEnergy, _skill.SkillCost);
-            _skill.onEnergyChanged += energyBar.SetGauge;
 
             skillInfo.SetSkillUI(_skill.skillData);
 
@@ -85,7 +95,8 @@ public class EntityInfoUI : MonoBehaviour
                 {
                     if (_skill.skillData != null)
                     {
-                        if (_skill.CurEnergy >= _skill.SkillCost)
+                        // 스킬의 조건을 만족했는지 확인하는 조건문
+                        if (true)
                         {
                             isSkillUsable = true;
                         }

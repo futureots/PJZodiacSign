@@ -20,9 +20,9 @@ public class ActionTurn : ITurn
         // 버프 업데이트
         foreach (var entity in agent.controller.fieldEntities)
         {
-            if(entity.TryGetComponent<SkillComponent>(out var skill))
+            if(entity.TryGetComponent<EnergyComponent>(out var energy))
             {
-                skill.RegenerateEnergy();
+                energy.RegenerateEnergy();
             }
 
             if(entity.TryGetComponent<BuffManager>(out var buffs))

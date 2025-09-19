@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EntityHpUI : MonoBehaviour
 {
     Entity _entity;
-    SkillComponent _skill;
+    EnergyComponent _energy;
 
     public GameObject levelObject;
     public TextMeshProUGUI levelText;
@@ -24,7 +24,7 @@ public class EntityHpUI : MonoBehaviour
         {
             _entity.onDead -= OnDead;
             _entity.onHpChanged -= hpBar.SetGauge;
-            if(_skill !=null) _skill.onEnergyChanged -= energyBar.SetGauge;
+            if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
             _entity.onLevelChanged -= UpdateLevelText;
         }
         _entity = entity;
@@ -36,15 +36,15 @@ public class EntityHpUI : MonoBehaviour
         hpBar.SetGauge(_entity.CurHp, _entity.MaxHp);
         _entity.onHpChanged += hpBar.SetGauge;
 
-        if(entity.TryGetComponent<SkillComponent>(out var component))
+        if(entity.TryGetComponent<EnergyComponent>(out var component))
         {
-            _skill = component;
-            energyBar.SetGauge(component.CurEnergy, component.SkillCost);
+            _energy = component;
+            energyBar.SetGauge(component.CurEnergy, component.MaxEnergy);
             component.onEnergyChanged += energyBar.SetGauge;
         }
         else
         {
-            _skill = null;
+            _energy = null;
         }
 
             UpdateLevelText(_entity.Level);
@@ -87,7 +87,7 @@ public class EntityHpUI : MonoBehaviour
         {
             _entity.onDead -= OnDead;
             _entity.onHpChanged -= hpBar.SetGauge;
-            if(_skill !=null) _skill.onEnergyChanged -= energyBar.SetGauge;
+            if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
             _entity.onLevelChanged -= UpdateLevelText;
         }
     }

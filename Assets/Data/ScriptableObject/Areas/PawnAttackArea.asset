@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7296cafdbff8e6d428f1a1012f18a736, type: 3}
-  m_Name: BishopMoveArea
+  m_Script: {fileID: 11500000, guid: 02e0cb05b9a2d3f45b0ceb54c2aad33d, type: 3}
+  m_Name: PawnAttackArea
   m_EditorClassIdentifier: 
-  isContainOccupiedPos: 0
+  positions:
+  - x: 1
+    y: 1
+  - x: -1
+    y: 1
