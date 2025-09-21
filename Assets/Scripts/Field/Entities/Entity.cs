@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
+
+[RequireComponent(typeof(PowerComponent))]
+[RequireComponent(typeof(HealthComponent))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 {
     public Tile CurTile { get; private set; }
@@ -39,19 +43,21 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     {
         this.baseData = data;
         this.Level = level;
+        
+        //체력 분리
+        health = GetComponent<HealthComponent>();
+        health.Initialize(baseData.maxHp + baseData.bonusHp * level);
 
-        UpdateEntity();
+        power = GetComponent<PowerComponent>();
+        power.Init(baseData.power + baseData.bonusPower * level);
+        onLevelChanged += UpdateEntity;
     }
 
-    void UpdateEntity()
+    void UpdateEntity(int cur, int prev)
     {
-        // 기물 스탯 계산
-        if(TryGetComponent<PowerComponent>(out var power))
-        {
-            power.Power = baseData.power + baseData.bonusPower * Level;
-        }
-        MaxHp = baseData.maxHp + baseData.bonusHp * Level;
-        CurHp = MaxHp;
+        health.MaxHealth += baseData.bonusHp * (cur - prev);
+        health.CurHealth += baseData.bonusHp * (cur - prev);
+        power.Power += baseData.bonusPower * (cur - prev);
     }
 
     /// <summary>기물의 레벨</summary>
@@ -62,43 +68,20 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
         get { return _level; }
         set
         {
+            int t = _level;
             _level = value;
-            onLevelChanged?.Invoke(_level);
-            UpdateEntity();
+            onLevelChanged?.Invoke(_level,t);
+            
         }
     }
 
-    public Action<int> onLevelChanged;
+    public Action<int, int> onLevelChanged;
 
     #region Status
 
-    /// <summary>최대 체력</summary>
-    [SerializeField] int _maxHp;
-
-    public int MaxHp
-    {
-        get { return _maxHp; }
-        set
-        {
-            _maxHp = value;
-            onHpChanged?.Invoke(CurHp, _maxHp);
-        }
-    }
-
-    /// <summary>현재 체력</summary>
-    [SerializeField] int _curHp;
-
-    public int CurHp
-    {
-        get { return _curHp; }
-        set
-        {
-            _curHp = value;
-            onHpChanged?.Invoke(_curHp, MaxHp);
-        }
-    }
-
-    public Action<int, int> onHpChanged;
+    public PowerComponent power;
+    public HealthComponent health;
+    
     #endregion
 
     // 나중에 스탯 계산용 핸들러 추가하면서 빼기
@@ -109,11 +92,8 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     public void Attack()
     {
         var list = GetAttackArea();
-        int damage = 0;
-        if (TryGetComponent<PowerComponent>(out var component))
-        {
-            damage = component.Power;
-        }
+        int damage = power.Power;
+        
         
         
         foreach (var item in list)
@@ -133,7 +113,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
         // 보호막 계산
         if (isProtected) value /= 2;
 
-        CurHp -= value;
+        health.CurHealth -= value;
     }
 
     public void Dead()
@@ -145,13 +125,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 
     public void Healed(int amount)
     {
-        CurHp += amount;
-        CurHp = Mathf.Min(MaxHp,CurHp);
+        health.CurHealth += amount;
     }
 
     public bool isZero()
     {
-        if (CurHp > 0) return false;
+        if (health.CurHealth > 0) return false;
         return true;
     }
     

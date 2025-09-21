@@ -36,7 +36,7 @@ public class EntityInfoUI : MonoBehaviour
     {
         if (selectedEntity != null)
         {
-            selectedEntity.onHpChanged -= hpBar.SetGauge;
+            selectedEntity.health.onHealthChanged -= hpBar.SetGauge;
             selectedEntity.onLevelChanged -= UpdateLevelText;
 
             if (_power != null) _power.onPowerChanged -= SetPowerText;
@@ -49,8 +49,8 @@ public class EntityInfoUI : MonoBehaviour
         UpdateLevelText(selectedEntity.Level);
         selectedEntity.onLevelChanged += UpdateLevelText;
 
-        hpBar.SetGauge(entity.CurHp, entity.MaxHp);
-        entity.onHpChanged += hpBar.SetGauge;
+        hpBar.SetGauge(entity.health.CurHealth, entity.health.MaxHealth);
+        entity.health.onHealthChanged += hpBar.SetGauge;
 
         // 공격력 표시
         if(entity.TryGetComponent<PowerComponent>(out var power))
@@ -118,7 +118,7 @@ public class EntityInfoUI : MonoBehaviour
             }
         }
     }
-    public void UpdateLevelText(int level)
+    public void UpdateLevelText(int level, int prevLevel = 0)
     {
         entityName.text = selectedEntity.baseData.productName + (level == 0 ? "" : $" + {level}");
     }

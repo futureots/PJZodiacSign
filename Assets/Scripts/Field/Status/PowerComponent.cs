@@ -16,4 +16,8 @@ public class PowerComponent : MonoBehaviour
     }
     public Action<int> onPowerChanged;
 
+    public void Init(int power)
+    {
+        _power = power;
+    }
 }

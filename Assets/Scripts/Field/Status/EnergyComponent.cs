@@ -26,7 +26,7 @@ public class EnergyComponent : MonoBehaviour
     }
     public Action<int, int> onEnergyChanged;
 
-    public void SetEnergy(int skillCost)
+    public void Initialize(int skillCost)
     {
         _maxEnergy = skillCost;
         _curEnergy = 0;

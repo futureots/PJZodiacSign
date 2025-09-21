@@ -11,7 +11,6 @@ public class EntityFactory : MonoBehaviour
         entity.InitializeEntity(data, level);
         
         instance.AddComponent<BuffManager>();
-        instance.AddComponent<PowerComponent>();
 
         // 범위 정의
         var area = instance.AddComponent<AreaComponent>();
@@ -20,7 +19,7 @@ public class EntityFactory : MonoBehaviour
         if (data.energy)
         {
             var energy = instance.AddComponent<EnergyComponent>();
-            energy.SetEnergy(data.maxEnergy);
+            energy.Initialize(data.maxEnergy);
         }
         
         // 스킬 정의
