@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 public class EnemyAI : Agent
@@ -79,16 +80,13 @@ public class EnemyAI : Agent
         foreach (var checkEntity in controller.fieldEntities)
         {
             // 필드 값 가져오기
-            int[,] field = GameManager.Instance.field.GetFieldState();
+            int[,] field = GameManager.Instance.field.GetFieldState(checkEntity);
 
-            // 현재 위치를 비우기
-            var entityPos = checkEntity.CurTile.fieldPos;
-            field[entityPos.y, entityPos.x] = 0;
             // 적의 공격범위 가져오기 및 예상 데미지 계산
             var values = GameManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
 
             // 가장 좋은 위치의 행동 가져오기
-            if(checkEntity.GetBestMove(field, values,out int value, out intVector2 pos))
+            if(TryGetBestMove(checkEntity,field, values,out int value, out intVector2 pos))
             {
                 flag = true;
                 Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
@@ -138,5 +136,67 @@ public class EnemyAI : Agent
         return false;
     }
 
+    bool TryGetBestMove(
+        Entity entity,
+        int[,] field,
+        int[,] tileValues,
+        out int value,
+        out intVector2 pos)
+    {
 
+        int power = 0;
+        if (entity.TryGetComponent<PowerComponent>(out var component))
+        {
+            power = component.Power;
+        }
+        var tile = entity.CurTile;
+        int max = tileValues[tile.fieldPos.y, tile.fieldPos.x];
+
+        List<intVector2> valuablePos = new();
+        if (entity.TryGetComponent<AreaComponent>(out var area))
+        {
+            var list = area.GetMoveVector(field, tile.fieldPos, entity.IsReflect);
+
+            foreach (var item in list)
+            {
+                // 이동할 수 없는 타일은 제외
+                if (field[item.y, item.x] != 0 || tile.fieldPos == item) continue;
+                // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
+                var damage = tileValues[item.y, item.x];
+                if (damage + entity.CurHp <= 0) damage -= 5;
+
+                // 공격 가능 체크
+                field[tile.fieldPos.y, tile.fieldPos.x] = 0;
+                var plusArea = area.GetAttackVector(field, item, entity.IsReflect);
+                field[tile.fieldPos.y, tile.fieldPos.x] = team.teamNumber;
+                foreach (var plus in plusArea)
+                {
+                    if (field[plus.y, plus.x] == 0) continue;
+                    if (field[plus.y, plus.x] == team.teamNumber) continue;
+                    tileValues[item.y, item.x] += power;
+                }
+
+                if (damage > max || valuablePos.Count == 0)
+                {
+                    valuablePos.Clear();
+                    max = damage;
+                    valuablePos.Add(item);
+                }
+                else if (damage == max)
+                {
+                    valuablePos.Add(item);
+                }
+            }
+        }
+        if (valuablePos.Count <= 0)
+        {
+            value = 0;
+            pos = intVector2.Zero;
+
+            return false;
+        }
+        value = max;
+        pos = valuablePos[UnityEngine.Random.Range(0, valuablePos.Count)];
+        return true;
+    }
 }

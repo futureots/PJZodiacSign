@@ -6,8 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-[RequireComponent(typeof(BuffManager))]
-[RequireComponent (typeof(PowerComponent))]
 public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 {
     public Tile CurTile { get; private set; }
@@ -191,8 +189,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     {
         if(TryGetComponent<AreaComponent>(out var area))
         {
-            var field = CurTile.field.GetFieldState();
-            field[CurTile.fieldPos.y, CurTile.fieldPos.x] = 0;
+            var field = CurTile.field.GetFieldState(this);
 
             var list = area.GetMoveVector(field,CurTile.fieldPos, IsReflect);
             var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
@@ -216,8 +213,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     public List<Tile> GetAttackArea(Tile tile)
     {
         // IOccupant 인터페이스 사용해서 해당 함수도 AreaComponent로 빼기
-        var field = tile.field.GetFieldState();
-        if(tile.field == CurTile.field) field[CurTile.fieldPos.y, CurTile.fieldPos.x] = 0;
+        var field = tile.field.GetFieldState(this);
         
         if(TryGetComponent<AreaComponent>(out var component))
         {
@@ -233,74 +229,4 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 
     #endregion
 
-    #region AICalculate
-    /// <summary>
-    /// 해당 기물의 이동 후 공격 가능한 위치 반환
-    /// </summary>
-    /// <param name="field">현재 필드 상태</param>
-    /// <param name="tileValues">타일 위치별 가치</param>
-    /// <returns></returns>
-    public bool GetBestMove(int[,] field, int[,] tileValues, out int value, out intVector2 pos)
-    {
-        
-        int power = 0;
-        if(TryGetComponent<PowerComponent>(out var component))
-        {
-            power = component.Power;
-        }
-        int max = tileValues[CurTile.fieldPos.y, CurTile.fieldPos.x];
-
-        List<intVector2> valuablePos = new();
-        if(TryGetComponent<AreaComponent>(out var area))
-        {
-            var list = area.GetMoveVector(field, CurTile.fieldPos, IsReflect);
-
-            foreach (var item in list)
-            {
-                // 이동할 수 없는 타일은 제외
-                if (field[item.y, item.x] != 0 || CurTile.fieldPos == item) continue;
-                Debug.Log($"Best Entity : {baseData.productName} , CurPos : {CurTile.fieldPos} , Expect : {item} ");
-                // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
-                var damage = tileValues[item.y, item.x];
-                if (damage + CurHp <= 0) damage -= 5;
-
-                // 공격 가능 체크
-                field[CurTile.fieldPos.y, CurTile.fieldPos.x] = 0;
-                var plusArea = area.GetAttackVector(field, item, IsReflect);
-                field[CurTile.fieldPos.y, CurTile.fieldPos.x] = team.teamNumber;
-                foreach (var plus in plusArea)
-                {
-                    if (field[plus.y, plus.x] == 0) continue;
-                    if (field[plus.y, plus.x] == team.teamNumber) continue;
-                    tileValues[item.y, item.x] += power;
-                }
-
-
-
-                if (damage > max || valuablePos.Count == 0)
-                {
-                    valuablePos.Clear();
-                    max = damage;
-                    valuablePos.Add(item);
-                }
-                else if (damage == max)
-                {
-                    valuablePos.Add(item);
-                }
-            }
-        }
-        if(valuablePos.Count <= 0)
-        {
-            value = 0;
-            pos = intVector2.Zero;
-
-            return false;
-        }
-        value = max;
-        pos = valuablePos[UnityEngine.Random.Range(0, valuablePos.Count)];
-        return true;
-    }
-
-
-    #endregion
 }

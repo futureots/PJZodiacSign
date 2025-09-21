@@ -7,9 +7,11 @@ public class EntityFactory : MonoBehaviour
         var instance = Instantiate(data.baseEntityPrefab);
         var entity = instance.AddComponent<Entity>();
         // 스탯 정의
+        entity.name = data.id;
         entity.InitializeEntity(data, level);
         
-        entity.name = data.id;
+        instance.AddComponent<BuffManager>();
+        instance.AddComponent<PowerComponent>();
 
         // 범위 정의
         var area = instance.AddComponent<AreaComponent>();
