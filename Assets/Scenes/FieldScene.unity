@@ -11292,7 +11292,7 @@ Transform:
   m_GameObject: {fileID: 1182249134}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 0, z: -15}
+  m_LocalPosition: {x: 0, y: -10, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18616,7 +18616,7 @@ Transform:
   m_GameObject: {fileID: 2007245450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -90}
+  m_LocalPosition: {x: 0, y: 0, z: -110}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18788,6 +18788,7 @@ MonoBehaviour:
   - {fileID: 43863451}
   - {fileID: 829814212}
   _field: {fileID: 1259859472}
+  entityInstaller: {fileID: 0}
   hpManager: {fileID: 1033003151}
   teamColorTable: {fileID: 11400000, guid: cacfc615a8b711e4d8a2f616afed52ae, type: 2}
 --- !u!4 &2018355401

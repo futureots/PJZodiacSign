@@ -16,6 +16,7 @@ public class EntityFactory : MonoBehaviour
         var area = instance.AddComponent<AreaComponent>();
         area.SetArea(data.moveArea, data.attackArea);
 
+        // 마나 정의
         if (data.energy)
         {
             var energy = instance.AddComponent<EnergyComponent>();

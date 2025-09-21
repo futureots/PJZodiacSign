@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 [CreateAssetMenu(fileName = "RookArea", menuName = "Scriptable Objects/Area/RookArea")]
 public class RookArea : Area
