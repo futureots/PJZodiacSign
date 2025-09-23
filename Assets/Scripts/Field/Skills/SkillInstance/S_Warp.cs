@@ -20,7 +20,7 @@ public class S_Warp : BaseSkillInstance<SD_Warp>
 
     public override void Activate()
     {
-        entity.MoveSequence(tile,true);
+        entity.Move(tile);
     }
 
     public override bool IsValidInput(FieldInfo field)

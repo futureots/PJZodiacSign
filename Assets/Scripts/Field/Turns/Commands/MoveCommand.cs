@@ -10,18 +10,24 @@ public class MoveCommand : Command
     {
         selecterObjects = new();
         this.entity = entity;
-        prevTile = entity.curTile;
+        prevTile = entity.CurTile;
         this.tile = tile;
     }
 
     public override void Execute()
     {
-        var result = entity.MoveSequence(tile, true);
+        var result = entity.Move(tile);
         base.Execute();
     }
 
     public override string ToString()
     {
-        return $"{entity.data.productName}({prevTile.fieldPos})이 {tile.fieldPos}으로 이동";
+        var prevPos = prevTile.fieldPos;
+        var prevText = $"( {(char)((prevPos.x) + 'A')}, {prevPos.y + 1} )";
+
+        var pos = tile.fieldPos;
+        var posText = $"( {(char)((pos.x) + 'A')}, {pos.y + 1} )";
+
+        return $"{entity.baseData.productName} {prevText} 이 {posText}으로 이동";
     }
 }

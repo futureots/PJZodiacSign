@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
+[CreateAssetMenu(fileName ="BishopArea",menuName ="Scriptable Objects/Area/BishopArea")]
+public class BishopArea : Area
 {
-
-    public List<intVector2> GetAttackVector(int[,] tiles, intVector2 curPos, bool isReflect)
+    
+    protected override List<intVector2> GetVector(int[,] tiles, intVector2 pos, bool isReflect)
     {
         List<intVector2> list = new List<intVector2>();
         intVector2[] direction = new intVector2[] { new intVector2(1, 1), new intVector2(-1, 1), new intVector2(-1, -1), new intVector2(1, -1) };
@@ -12,41 +13,17 @@ public class BishopArea : MonoBehaviour, IAttackArea, IMoveArea
         for (int i = 0; i < 4; i++)
         {
             intVector2 vector = new intVector2(0, 0);
-            while (true)
+            for (int j = 0; j < 8; j++) 
             {
                 vector += direction[i];
-                var pos = isReflect ? curPos + vector : curPos - vector;
-                if (!Field.IsPositionValid(tiles, pos)) break;
-                list.Add(pos);
-                if (tiles[pos.y, pos.x] != 0)
+                var position = isReflect ? pos + vector : pos - vector;
+                if (!IsValidPos(tiles, position)) break;
+                list.Add(position);
+                if (tiles[position.y, position.x] != 0)
                 {
                     break;
                 }
-            }
-        }
-
-        return list;
-    }
-
-
-    public List<intVector2> GetMoveVector(int[,] tiles, intVector2 curPos, bool isReflect)
-    {
-        List<intVector2> list = new List<intVector2>();
-        intVector2[] direction = new intVector2[] { new intVector2(1, 1), new intVector2(-1, 1), new intVector2(-1, -1), new intVector2(1, -1) };
-
-        for (int i = 0; i < 4; i++)
-        {
-            intVector2 vector = new intVector2(0, 0);
-            while (true)
-            {
-                vector += direction[i];
-                var pos = isReflect ? curPos + vector : curPos - vector;
-                if (!Field.IsPositionValid(tiles, pos)) break;
-                if (tiles[pos.y, pos.x] != 0)
-                {
-                    break;
-                }
-                list.Add(pos);
+                
             }
         }
 

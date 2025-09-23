@@ -16,5 +16,5 @@ MonoBehaviour:
   skillName: "\uC2A4\uD14C\uC77C \uBA54\uC774\uD2B8"
   skillDescription: "\uACF5\uACA9 \uBC94\uC704 \uB0B4 \uC801 1\uBA85\uC744 3\uD134\uAC04
     \uC18D\uBC15\uD55C\uB2E4."
-  BuffData: {fileID: 11400000, guid: af78c85f6b08bb948ab5e20bc59e929d, type: 2}
+  BuffData: {fileID: 11400000, guid: 4e7539a9c8760284abc0ed5068df776b, type: 2}
   count: 3

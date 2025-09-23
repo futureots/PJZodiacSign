@@ -2,9 +2,10 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PawnMoveArea : MonoBehaviour, IMoveArea
+[CreateAssetMenu(fileName = "PawnMoveArea", menuName = "Scriptable Objects/Area/PawnMoveArea")]
+public class PawnMoveArea : Area
 {
-    public List<intVector2> GetMoveVector(int[,] tiles, intVector2 curPos, bool isReflect)
+    protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, bool isReflect)
     {
 
         List<intVector2> area = new();

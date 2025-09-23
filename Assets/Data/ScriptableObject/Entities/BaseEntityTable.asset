@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BaseEntityTable
   m_EditorClassIdentifier: 
   tableData:
-  - {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
-  - {fileID: 11400000, guid: 494975a0f4d62c649b596f8dc3caf752, type: 2}
   - {fileID: 11400000, guid: 840fa1fe4952ad34b9f7694dde58f110, type: 2}
-  - {fileID: 11400000, guid: c9e66444eea10a4408c15a4739a755b9, type: 2}
-  - {fileID: 11400000, guid: 16c116a67e5399045bb75f15ea3e825a, type: 2}
-  - {fileID: 11400000, guid: 1633ceb1b7c0d11489be71fbdb9c63d7, type: 2}
+  - {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
+  - {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
+  - {fileID: 11400000, guid: 54a5fff0eb0334a4291770de80d881ef, type: 2}
+  - {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+  - {fileID: 11400000, guid: 30f28ad064d449f47b120eee42b1b191, type: 2}

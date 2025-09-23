@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EntityHpUI : MonoBehaviour
 {
     Entity _entity;
+    EnergyComponent _energy;
 
     public GameObject levelObject;
     public TextMeshProUGUI levelText;
@@ -22,23 +23,31 @@ public class EntityHpUI : MonoBehaviour
         if(_entity != null)
         {
             _entity.onDead -= OnDead;
-            _entity.onHpChanged -= hpBar.SetGauge;
-            _entity.onEnergyChanged -= energyBar.SetGauge;
+            _entity.health.onHealthChanged -= hpBar.SetGauge;
+            if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
             _entity.onLevelChanged -= UpdateLevelText;
         }
         _entity = entity;
         
 
         transform.SetParent(entity.transform);
-        transform.localPosition = Vector3.zero + entity.data.hpPanelPosition;
+        transform.localPosition = Vector3.zero + entity.baseData.hpPanelPosition;
 
-        hpBar.SetGauge(_entity.CurHp, _entity.MaxHp);
-        _entity.onHpChanged += hpBar.SetGauge;
+        hpBar.SetGauge(_entity.health.CurHealth, _entity.health.MaxHealth);
+        _entity.health.onHealthChanged += hpBar.SetGauge;
 
-        energyBar.SetGauge(_entity.CurEnergy, _entity.SkillCost);
-        _entity.onEnergyChanged += energyBar.SetGauge;
+        if(entity.TryGetComponent<EnergyComponent>(out var component))
+        {
+            _energy = component;
+            energyBar.SetGauge(component.CurEnergy, component.MaxEnergy);
+            component.onEnergyChanged += energyBar.SetGauge;
+        }
+        else
+        {
+            _energy = null;
+        }
 
-        UpdateLevelText(_entity.Level);
+            UpdateLevelText(_entity.Level);
         _entity.onLevelChanged += UpdateLevelText;
 
         _entity.onDead += OnDead;
@@ -53,7 +62,7 @@ public class EntityHpUI : MonoBehaviour
             transform.LookAt(transform.position + Camera.main.transform.forward);
         }
     }
-    void UpdateLevelText(int level)
+    void UpdateLevelText(int level, int prev=0)
     {
         if (level ==0)
         {
@@ -77,8 +86,8 @@ public class EntityHpUI : MonoBehaviour
         if (_entity != null)
         {
             _entity.onDead -= OnDead;
-            _entity.onHpChanged -= hpBar.SetGauge;
-            _entity.onEnergyChanged -= energyBar.SetGauge;
+            _entity.health.onHealthChanged -= hpBar.SetGauge;
+            if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
             _entity.onLevelChanged -= UpdateLevelText;
         }
     }

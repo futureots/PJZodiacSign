@@ -65,7 +65,7 @@ public struct intVector2
     #region Encode & Decode
     public override string ToString()
     {
-        return $"{(char)(x + 'A')}, {y + 1}";//체스 좌표값으로 변환
+        return $"{(x + 1)}, {y + 1}";//체스 좌표값으로 변환
     }
     public int Encode()
     {

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71f9c606c06dea843b3153bda6ab5635, type: 3}
+  m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
   m_Name: WhiteKing
   m_EditorClassIdentifier: 
   id: WhiteKing
@@ -18,10 +18,15 @@ MonoBehaviour:
   normalPrice: 50
   discountPrice: 30
   baseEntityPrefab: {fileID: 119820, guid: 9e4e635002b6a524ca896adb28e8e388, type: 3}
-  maxHp: 50
-  power: 4
+  moveArea:
+  - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
+  attackArea:
+  - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
+  maxHp: 100
+  power: 2
   bonusHp: 10
   bonusPower: 1
-  skill: {fileID: 11400000, guid: 4442f64d40b70aa47960590571fe7e36, type: 2}
-  skillCost: 5
-  hpPanelPosition: {x: 0, y: 3.5, z: 0}
+  skill: {fileID: 0}
+  energy: 0
+  maxEnergy: 3
+  hpPanelPosition: {x: 0, y: 3, z: 0}

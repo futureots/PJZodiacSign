@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class ActionTurn : ITurn
@@ -18,9 +17,18 @@ public class ActionTurn : ITurn
         agent.SetActionTurn(() => GameManager.Instance.RunWithCallback(ActionCoroutine(), onTurnEnd));
 
         // 버프 업데이트
-        foreach (var entity in agent.controller.entities)
+        foreach (var entity in agent.controller.fieldEntities)
         {
-            entity.OnTurnStart();
+            if(entity.TryGetComponent<EnergyComponent>(out var energy))
+            {
+                energy.RegenerateEnergy();
+            }
+
+            if(entity.TryGetComponent<BuffManager>(out var buffs))
+            {
+                buffs.UpdateBuff();
+                buffs.RemoveBuff();
+            }
         }
     }
     public IEnumerator ActionCoroutine()

@@ -13,6 +13,7 @@ public class GameManager : Singleton<GameManager>
     // 0번은 플레이어 1번은 적AI
     public Agent[] agents;
 
+
     public Agent GetOppositeAgent(Agent agent)
     {
         return agent == agents[0] ? agents[1] : agents[0];
@@ -24,6 +25,8 @@ public class GameManager : Singleton<GameManager>
     {
         get { return _field; }
     }
+
+    public EntityFactory entityInstaller;
 
     DataManager dataManager;
     public HpPanelManager hpManager;
@@ -145,7 +148,7 @@ public class GameManager : Singleton<GameManager>
         if (hpManager == null) return;
         foreach (var item in agents)
         {
-            foreach(var entity in item.controller.entities)
+            foreach(var entity in item.controller.fieldEntities)
             {
                 hpManager.CreateHpBar(entity);
             }

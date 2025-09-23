@@ -105,10 +105,10 @@ public class InputManager : Agent
 
     public override void SetRepairPhase(int level, Action call)
     {
-        controller.SetInstantField(data.handEntities);
+        controller.SetResourceField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
 
-        cam.transform.DOLocalMove(new Vector3(0, 0, -15),1f);
+        cam.transform.DOLocalMove(new Vector3(0, -10, -15),1f);
         
 
         controller.onCommandCreated += ExecuteCommand;
@@ -130,7 +130,7 @@ public class InputManager : Agent
         var (field, hand) = controller.GetFieldData();
         data.fieldEntities = field;
         data.handEntities = hand;
-        cam.transform.DOLocalMove(Vector3.zero, 1f);
+        cam.transform.DOLocalMove(Vector3.up * -10, 1f);
 
         controller.onCommandCreated -= ExecuteCommand;
 

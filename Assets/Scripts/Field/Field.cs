@@ -87,7 +87,6 @@ public class Field : MonoBehaviour
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            tile.CleanupBufferedObjects();
             tile.ClearOccupant();
         }
     }
@@ -103,10 +102,9 @@ public class Field : MonoBehaviour
             var obj = tile.occupiedObject.GetComponent<IDamageable>();
             if (obj.isZero())
             {
-                tile.SetOccupant(null);
+                tile.UnsetOccupant();
                 obj.Dead();
             }
-            tile.CleanupBufferedObjects();
         }
     }
 
@@ -189,7 +187,7 @@ public class Field : MonoBehaviour
     }
     #endregion
 
-    //공격 가능한 오브젝트 가져오기
+    //점거 중인 오브젝트 가져오기
     public List<GameObject> GetOccupiedObjects()
     {
         List<GameObject> list = new();
@@ -232,6 +230,15 @@ public class Field : MonoBehaviour
         return field;
     }
 
+    public int[,] GetFieldState(IOccupant occupant)
+    {
+        var list = GetFieldState();
+        if(occupant.CurTile.field == this)
+        {
+            list[occupant.CurTile.fieldPos.y, occupant.CurTile.fieldPos.x] = 0;
+        }
+        return list;
+    }
 
     /// <summary>
     /// 상대(중립 포함)의 공격범위 및 예상 데미지 계산 후 반환
@@ -247,17 +254,30 @@ public class Field : MonoBehaviour
             for(int j = 0; j < column; j++)
             {
                 if (fieldInfo[i, j] == 0) continue;
+
                 var obj = tiles[i, j].occupiedObject;
                 var entity = obj.GetComponent<Entity>();
                 if (entity == null) continue;
                 if (entity.team.teamNumber == teamNum) continue;
-                int entityNum = fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x];
-                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = 0;
-                foreach (var vec in entity.GetAttackVector(fieldInfo,new intVector2(j,i)))
+
+                int entityNum = fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
+                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = 0;
+
+                // 기물의 공격력 반환
+                int power = 0;
+                if(entity.TryGetComponent<PowerComponent>(out var component))
                 {
-                    field[vec.y, vec.x] -= entity.Power;
+                    power = component.Power;
                 }
-                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = entityNum;
+
+                if(entity.TryGetComponent<AreaComponent>(out var area))
+                {
+                    foreach (var vec in area.GetAttackVector(fieldInfo, new intVector2(j, i), entity.IsReflect))
+                    {
+                        field[vec.y, vec.x] -= power;
+                    }
+                }
+                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = entityNum;
             }
         }
         return field;
@@ -282,7 +302,7 @@ public class Field : MonoBehaviour
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static List<Tile> GetEmptyTile(List<Tile> list)
+    public static List<Tile> GetEmptyTiles(List<Tile> list)
     {
         var emptyTiles = new List<Tile>();
         foreach (var tile in list)

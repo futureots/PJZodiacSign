@@ -9,19 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5ddb00321e52f64d9bfb7dde51917c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
   m_Name: WhiteBishop
   m_EditorClassIdentifier: 
   id: WhiteBishop
   productName: "\uD654\uC774\uD2B8\uBE44\uC20D"
   icon: {fileID: 21300000, guid: 7d03dd3f645aa6f408a5ede41524af84, type: 3}
   normalPrice: 40
-  discountPrice: 20
+  discountPrice: 30
   baseEntityPrefab: {fileID: 190264, guid: cd05c23b470229c44a8d53d6e86225f6, type: 3}
-  maxHp: 40
-  power: 8
-  bonusHp: 10
+  moveArea:
+  - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
+  attackArea:
+  - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
+  maxHp: 50
+  power: 3
+  bonusHp: 5
   bonusPower: 1
   skill: {fileID: 11400000, guid: 4157b8eacda450f499ba458fbc42723a, type: 2}
-  skillCost: 3
+  energy: 1
+  maxEnergy: 5
   hpPanelPosition: {x: 0, y: 2.5, z: 0}

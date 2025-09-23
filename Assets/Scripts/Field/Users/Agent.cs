@@ -90,20 +90,24 @@ public abstract class Agent : MonoBehaviour
         Credit = agentData.credit;
     }
     
-    // 데이터 갱신(기물 갱신, 게임 클리어 시 해당 데이터 저장. 아이템은 게임 클리어 시 갱신 및 저장)
-
+    
+    /// <summary>
+    /// 기물 소환
+    /// </summary>
+    /// <param name="entityData">기물 데이터</param>
+    /// <returns></returns>
     public bool SummonEntity(EntityData entityData)
     {
-        if (!CanPlaceOnInstantField()) return false;
+        if (!CanPlaceOnResourceField()) return false;
 
-        var entity = entityData.CreateEntity();
-        controller.PlaceOnInstantField(entity);
+        var entity = EntityFactory.CreateEntity(entityData);
+        controller.PlaceOnResourceField(entity);
 
         return true;
     }
-    bool CanPlaceOnInstantField()
+    bool CanPlaceOnResourceField()
     {
-        var list = Field.GetEmptyTile(controller.instantField.GetTiles());
+        var list = Field.GetEmptyTiles(controller.resourceField.GetTiles());
         if (list.Count <= 0) return false;
         return true;
     }

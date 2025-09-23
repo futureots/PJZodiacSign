@@ -19,14 +19,6 @@ namespace PlayerInput
             moveArea = new();
             attackArea = new();
         }
-        public void RemoveMode()
-        {
-            _inputManager.OnObjectClicked.RemoveListener(DragStart);
-            _inputManager.OnMouseUp.RemoveListener(DragEnd);
-            GameObject.Destroy(targetSelecter);
-            GameObject.Destroy(targetTileSelecter);
-
-        }
 
         public void SetMode()
         {
@@ -37,10 +29,15 @@ namespace PlayerInput
             targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter);
             targetSelecter.SetActive(false);
             targetTileSelecter.SetActive(false);
-
-            
         }
 
+        public void RemoveMode()
+        {
+            _inputManager.OnObjectClicked.RemoveListener(DragStart);
+            _inputManager.OnMouseUp.RemoveListener(DragEnd);
+            GameObject.Destroy(targetSelecter);
+            GameObject.Destroy(targetTileSelecter);
+        }
 
 
         Entity _selectedEntity = null;
@@ -63,7 +60,7 @@ namespace PlayerInput
             var team = _inputManager.team;
             if (!team.IsAlly(entity.team)) return;
 
-            if (entity.IsFromMainField()) return;
+            if (!_inputManager.controller.resourceEntities.Contains(entity)) return;
 
             _selectedEntity = entity;
 
@@ -73,7 +70,7 @@ namespace PlayerInput
             
             // 기물 이동영역 표시
             moveArea = GameManager.Instance.field.GetHalfTiles(_inputManager.controller.isReflect);
-            moveArea.AddRange(_inputManager.controller.instantField.GetTiles());
+            moveArea.AddRange(_inputManager.controller.resourceField.GetTiles());
 
             targetTileSelecter.SetActive(true);
             _inputManager.areaVisualizer.ShowMoveArea(moveArea);
@@ -93,21 +90,21 @@ namespace PlayerInput
 
 
                 // 해당 타일로 이동
-                if (!_selectedEntity.MoveSequence(tile, true))
+                if (!_selectedEntity.Move(tile))
                 {
                     var target = tile.occupiedObject.GetComponent<Entity>();
                     
                     if (target != null)
                     {
                         // 같은 기물이 같은 레벨이면 강화
-                        if (target != _selectedEntity && _selectedEntity.data == target.data && _selectedEntity.Level == target.Level)
+                        if (target != _selectedEntity && _selectedEntity.baseData == target.baseData && _selectedEntity.Level == target.Level)
                         {
                             // 강화 확인 다이얼로그 표시
                             ShowEnhanceConfirmDialog(target, _selectedEntity);
                             return;
                         }
                     }
-                    _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                    _selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
                 }
                 _selectedEntity = null;
             }
@@ -140,26 +137,26 @@ namespace PlayerInput
             _inputManager.UI.inventory.gameObject.SetActive(false);
             _inputManager.UI.confirmDialog.ShowDialog(
                 "강화하시겠습니까?",
-                () => {
+                (Action)(() => {
                     // 확인 시 강화 실행
                     Debug.Log("Enhance Confirmed");
                     target.Level += 1;
-                    source.curTile.ClearOccupant();
+                    source.CurTile.ClearOccupant();
                     _selectedEntity = null;
-                        
+
                     // 강화 완료 후 이벤트 구독 재설정
                     RestoreEventSubscriptions();
                     _inputManager.UI.entityInfo.HidePanel();
-                },
-                () => {
+                }),
+                (Action)(() => {
                     // 취소 시 원래 위치로 복귀
                     Debug.Log("Enhance Cancelled");
-                    _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                    _selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
                     _selectedEntity = null;
-                        
+
                     // 강화 취소 후 이벤트 구독 재설정
                     RestoreEventSubscriptions();
-                }
+                })
             );
         }
 

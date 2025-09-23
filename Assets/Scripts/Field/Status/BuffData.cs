@@ -10,9 +10,9 @@ public abstract class BuffData : ScriptableObject
     /// <summary>버프 아이콘</summary>
     public Sprite buffIcon;
     /// <summary>
-    /// 상태이상 적용
+    /// 상태이상 적용 성공 시 true 실패 시 false 반환
     /// </summary>
-    public abstract void ApplyBuff(GameObject target, int count);
+    public abstract bool ApplyBuff(GameObject target, int count);
     /// <summary>
     /// 턴 종료시 상태효과 변화 및 업데이트
     /// </summary>

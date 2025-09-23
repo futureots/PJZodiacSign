@@ -1,47 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KingArea : MonoBehaviour,IMoveArea, IAttackArea
+[CreateAssetMenu(fileName = "KingArea", menuName = "Scriptable Objects/Area/KingArea")]
+public class KingArea : Area
 {
-    List<intVector2> area;
 
-    private void Start()
+    protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, bool isReflect)
     {
-        area = new List<intVector2>();
-        for(int i = -1; i < 2; i++)
+        List<intVector2> list = new List<intVector2>();
+        for (int i = -1; i < 2; i++)
         {
-            for(int j = -1; j < 2; j++)
+            for (int j = -1; j < 2; j++)
             {
-                if (i == j && j == 0) continue;
-                area.Add(new intVector2(i, j));
+                if (i == 0 && j == 0) continue;
+                var item = new intVector2(i, j);
+
+                var pos = isReflect ? curPos + item : curPos - item;
+                list.Add(pos);
             }
         }
-    }
-
-    public List<intVector2> GetMoveVector(int[,] tiles, intVector2 curPos, bool isReflect)
-    {
-        List<intVector2> vectors = new List<intVector2>();
-        foreach (var item in area)
-        {
-            var pos = isReflect ? curPos + item : curPos - item;
-            if (!Field.IsPositionValid(tiles, pos)) continue;
-            if (tiles[pos.y, pos.x] != 0) continue;
-            vectors.Add(pos);
-        }
-        return vectors;
-    }
-
-
-
-    public List<intVector2> GetAttackVector(int[,] tiles, intVector2 curPos, bool isReflect)
-    {
-        List<intVector2> vectors = new List<intVector2>();
-        foreach (var item in area)
-        {
-            var pos = isReflect ? curPos + item : curPos - item;
-            if (!Field.IsPositionValid(tiles, pos)) continue;
-            vectors.Add(pos);
-        }
-        return vectors;
+        return list;
     }
 }
