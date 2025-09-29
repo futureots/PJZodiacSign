@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PhaseManager : MonoBehaviour
+public class PhaseManager : MonoBehaviour, IPhaseManageService
 {
+    Field mainField;
+
     public LinkedList<IPhase> phases;
     IPhase currentPhase;
-    public static PhaseType curPhase;
-    public static Action<IPhase,bool> onPhaseChanged;
+    public event Action<IPhase,bool> onPhaseChanged;
+
+    public PhaseType CurPhase => currentPhase.PhaseType;
 
     private void Awake()
     {
         phases = new LinkedList<IPhase>();
-        
-        curPhase = PhaseType.None;
+    }
+
+    public void Init(Field mainField)
+    {
+        this.mainField = mainField;
     }
     
     public void BeginPhase()
@@ -51,10 +57,10 @@ public class PhaseManager : MonoBehaviour
         phases.Clear();
         
         // 정비 페이즈를 먼저 추가
-        phases.AddLast(new RepairPhase(level));
+        phases.AddLast(new RepairPhase(level, mainField));
         
         // 전투 페이즈를 추가
-        var battlePhase = new BattlePhase(level);
+        var battlePhase = new BattlePhase(level,mainField);
         phases.AddLast(battlePhase);
 
         // 첫 번째 페이즈 시작
@@ -75,4 +81,10 @@ public enum PhaseType
     None = 0,
     Battle = 1 << 0,
     Repair = 1 << 1
+}
+
+public interface IPhaseManageService
+{
+    public PhaseType CurPhase { get;}
+    public event Action<IPhase, bool> onPhaseChanged;
 }

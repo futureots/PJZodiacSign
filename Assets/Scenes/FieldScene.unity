@@ -534,7 +534,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa59aea847f183c45a1bc758870af2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMode: 0
   areaVisualizer: {fileID: 43863450}
   entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
   tileSelecter: {fileID: 6044037666520248651, guid: ac29f7d983f2bf44ab4f57429e81251a, type: 3}
@@ -13547,6 +13546,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa6f988546f8624cbdd0246d9fed035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  phaseManager: {fileID: 2018355404}
+  mainField: {fileID: 1259859472}
+  resourcefields:
+  - {fileID: 1817594083}
+  - {fileID: 125616120}
+  inputManager: {fileID: 43863451}
+  enemyAI: {fileID: 829814212}
+  entityInfoUI: {fileID: 1484209303}
+  shopUI: {fileID: 4762873540042521383}
+  inventoryUI: {fileID: 8484285}
+  turnLogUI: {fileID: 233994387}
 --- !u!4 &1415260957
 Transform:
   m_ObjectHideFlags: 0

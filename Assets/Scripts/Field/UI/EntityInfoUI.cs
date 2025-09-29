@@ -9,6 +9,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityInfoUI : MonoBehaviour
 {
+    IPhaseManageService _service;
+    InputManager _inputManager;
+
     Entity selectedEntity;
     SkillComponent _skill;
     EnergyComponent _energy;
@@ -30,6 +33,13 @@ public class EntityInfoUI : MonoBehaviour
     {
         InfoPanel.SetActive(false);
         team = transform.root.GetComponent<Team>();
+    }
+
+    public void Init(InputManager input,IPhaseManageService service)
+    {
+        _service = service;
+        _inputManager = input;
+        team = _inputManager.GetComponent<Team>();
     }
 
     public void ShowPanel(Entity entity)
@@ -89,7 +99,7 @@ public class EntityInfoUI : MonoBehaviour
             bool isSkillUsable = false;
             entitySkillBtn.onClick.RemoveAllListeners();
             // 스킬 버튼 활성화
-            if (PhaseManager.curPhase == PhaseType.Battle)
+            if (_service.CurPhase == PhaseType.Battle)
             {
                 if (team.IsAlly(entity.team))
                 {
@@ -102,7 +112,7 @@ public class EntityInfoUI : MonoBehaviour
                         }
                         entitySkillBtn.onClick.AddListener(() =>
                         {
-                            transform.root.GetComponent<InputManager>().SetInputMode(_skill.GetSkillInstance());
+                            _inputManager.SetInputMode(_skill.GetSkillInstance());
                         });
                     }
                 }

@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class BattlePhase : IPhase
 {
+    Field field;
     // 전투 턴 큐(중간 삽입도 가능하도록 LinkedList 사용)
     private LinkedList<ITurn> turns;
     private Action onPhaseEnd;
@@ -19,11 +21,15 @@ public class BattlePhase : IPhase
             return level;
         }
     }
+
+    public PhaseType PhaseType => PhaseType.Battle;
+
     int level;
 
-    public BattlePhase(int level)
+    public BattlePhase(int level, Field mainField)
     {
         this.level = level;
+        field = mainField;
         turns = new LinkedList<ITurn>();
         
     }
@@ -54,7 +60,6 @@ public class BattlePhase : IPhase
 
         this.onPhaseEnd = onPhaseEnd;
         Debug.Log("전투 페이즈 시작");
-        PhaseManager.curPhase = PhaseType.Battle;
         foreach (var agent in GameManager.Instance.agents)
         {
             agent.SetBattlePhase();
@@ -115,7 +120,7 @@ public class BattlePhase : IPhase
     // 턴 종료 시 사망한 기물 정리 및 승패 확인
     private void OnCombatTurnComplete()
     {
-        GameManager.Instance.field.RemoveDeadEntities();
+        field.RemoveDeadEntities();
 
         //bool isEnd = GameManager.Instance.CheckGameEnd();
 

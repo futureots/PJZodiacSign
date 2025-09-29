@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-
+    IPhaseManageService _phaseManageService;
+    InputManager _inputManager;
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
     
@@ -36,8 +37,8 @@ public class InventoryUI : MonoBehaviour
 
 
     [Header("오브젝트")]
-    public ItemInfoUI infoPanel;
-    public ItemActionUI actPanel;
+    [SerializeField] ItemInfoUI infoPanel;
+    [SerializeField] ItemActionUI actPanel;
     /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
     public Button popBtn;
 
@@ -48,12 +49,11 @@ public class InventoryUI : MonoBehaviour
     /// <summary> 아이템 데이터를 인스턴스로 전환 </summary>
     [SerializeField] ItemTable itemTable;
 
-
-    InputManager _inputManager;
-    private void Awake()
+    public void Init(InputManager input, IPhaseManageService phaseManageService)
     {
-        _inputManager = transform.root.GetComponent<InputManager>();
-
+        _inputManager = input;
+        _phaseManageService = phaseManageService;
+        actPanel.Init(phaseManageService);
     }
 
 
