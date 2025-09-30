@@ -11,15 +11,15 @@ namespace PlayerInput
 {
     public class SkillModeInput : IModeInput
     {
-        Mode prevMode;
+        IPhaseManageService phaseService;
 
         IActive skill;
         Action<InputAction.CallbackContext> bindAction;
 
         InputManager _inputManager;
-        public SkillModeInput(InputManager input, IActive skill, Mode mode)
+        public SkillModeInput(InputManager input, IActive skill, IPhaseManageService phaseService)
         {
-            prevMode = mode;
+            this.phaseService = phaseService;
             this.skill = skill;
             _inputManager = input;
             // 스킬에 필요한 입력이 필요한 필드 큐 생성
@@ -58,7 +58,7 @@ namespace PlayerInput
 
             _inputManager.UI.cancelButton.gameObject.SetActive(true);
             _inputManager.UI.cancelButton.onClick.AddListener(()=> {
-                _inputManager.SetInputMode(prevMode);
+                _inputManager.SetInputMode(phaseService.CurPhase);
                 });
 
             Debug.Log("SkillMode");

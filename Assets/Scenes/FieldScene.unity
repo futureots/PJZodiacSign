@@ -534,7 +534,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa59aea847f183c45a1bc758870af2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMode: 0
   areaVisualizer: {fileID: 43863450}
   entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
   tileSelecter: {fileID: 6044037666520248651, guid: ac29f7d983f2bf44ab4f57429e81251a, type: 3}
@@ -13518,6 +13517,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e67222e62451b4f903aece05b7fc75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1415260955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1415260957}
+  - component: {fileID: 1415260956}
+  m_Layer: 0
+  m_Name: CompositionRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1415260956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415260955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa6f988546f8624cbdd0246d9fed035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phaseManager: {fileID: 2018355404}
+  mainField: {fileID: 1259859472}
+  resourcefields:
+  - {fileID: 1817594083}
+  - {fileID: 125616120}
+  inputManager: {fileID: 43863451}
+  enemyAI: {fileID: 829814212}
+  entityInfoUI: {fileID: 1484209303}
+  shopUI: {fileID: 4762873540042521383}
+  inventoryUI: {fileID: 8484285}
+  turnLogUI: {fileID: 233994387}
+--- !u!4 &1415260957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415260955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.803013, y: -39.255295, z: -50.161133}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1426587718
 GameObject:
   m_ObjectHideFlags: 0
@@ -18660,7 +18714,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -18788,7 +18842,6 @@ MonoBehaviour:
   - {fileID: 43863451}
   - {fileID: 829814212}
   _field: {fileID: 1259859472}
-  entityInstaller: {fileID: 0}
   hpManager: {fileID: 1033003151}
   teamColorTable: {fileID: 11400000, guid: cacfc615a8b711e4d8a2f616afed52ae, type: 2}
 --- !u!4 &2018355401
@@ -20430,3 +20483,4 @@ SceneRoots:
   - {fileID: 43863448}
   - {fileID: 1760094520}
   - {fileID: 1017691951}
+  - {fileID: 1415260957}

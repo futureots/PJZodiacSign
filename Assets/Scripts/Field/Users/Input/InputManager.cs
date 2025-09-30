@@ -11,11 +11,12 @@ using UnityEngine.UI;
 
 public class InputManager : Agent
 {
+    IPhaseManageService phaseService;
+
     public Vector2 PointerPosition { get; private set; }
 
     public GameInputActions inputActions { get; private set; }
 
-    public Mode currentMode;
     IModeInput curModeState;
 
     // 입력 표시기
@@ -53,6 +54,12 @@ public class InputManager : Agent
 
         GameManager.onNextLevel += AddCredit;
     }
+
+    public void Init(IPhaseManageService phaseManageService)
+    {
+        phaseService = phaseManageService;
+    }
+
     private void OnDestroy()
     {
         GameManager.onNextLevel -= AddCredit;
@@ -113,7 +120,7 @@ public class InputManager : Agent
 
         controller.onCommandCreated += ExecuteCommand;
 
-        SetInputMode(Mode.Repair);
+        SetInputMode(PhaseType.Repair);
         turnEndButton.interactable = true;
         turnEndButton.onClick.AddListener(() =>
         {
@@ -124,7 +131,7 @@ public class InputManager : Agent
 
     public override void EndRepairPhase()
     {
-        SetInputMode(Mode.None);
+        SetInputMode(PhaseType.None);
         controller.UpdateEntities();
         // 기물 데이터는 저장 시 저장소 업데이트
         var (field, hand) = controller.GetFieldData();
@@ -140,21 +147,21 @@ public class InputManager : Agent
     {
         Debug.Log("Command Execute");
         command?.Execute();
-        SetInputMode(Mode.Repair);
+        SetInputMode(PhaseType.Repair);
     }
 
     public override void SetActionTurn(Action call)
     {
-        SetInputMode(Mode.Move);
+        SetInputMode(PhaseType.Battle);
         Action<Command> bind = (x) =>
         {
-            SetInputMode(Mode.Move);
+            SetInputMode(PhaseType.Battle);
             turnEndButton.interactable = true;
         };
         controller.onCommandCreated += bind;
         turnEndButton.onClick.AddListener(() =>
         {
-            SetInputMode(Mode.None);
+            SetInputMode(PhaseType.None);
             controller.onCommandCreated -= bind;
             turnEndButton.onClick.RemoveAllListeners();
             call?.Invoke();
@@ -176,19 +183,18 @@ public class InputManager : Agent
     /// <summary>
     /// 입력 모드 설정(이동 입력, 스킬 입력)
     /// </summary>
-    public void SetInputMode(Mode mode)
+    public void SetInputMode(PhaseType mode)
     {
         curModeState?.RemoveMode();
-        currentMode = mode;
         switch (mode)
         {
-            case Mode.Move:
+            case PhaseType.Battle:
                 curModeState = new MoveModeInput(this);
                 break;
-            case Mode.Repair:
+            case PhaseType.Repair:
                 curModeState = new RepairModeInput(this);
                 break;
-            case Mode.None:
+            case PhaseType.None:
                 curModeState = new EmptyModeInput();
                 break;
         }
@@ -200,12 +206,7 @@ public class InputManager : Agent
 
         curModeState?.RemoveMode();
 
-        Mode skillEndMode = Mode.None;
-        if (PhaseManager.curPhase == PhaseType.Repair) skillEndMode = Mode.Repair;
-        else if (PhaseManager.curPhase == PhaseType.Battle) skillEndMode = Mode.Move;
-
-        curModeState = new SkillModeInput(this, active, skillEndMode);
-        currentMode = Mode.Skill;
+        curModeState = new SkillModeInput(this, active, phaseService);
         curModeState.SetMode();
     }
     #endregion

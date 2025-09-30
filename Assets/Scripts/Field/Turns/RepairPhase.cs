@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RepairPhase : IPhase
 {
+    IPhaseManageService _service;
+    Field field;
     int level;
     public int Level
     {
@@ -13,18 +15,19 @@ public class RepairPhase : IPhase
             return level;
         }
     }
+    public PhaseType PhaseType => PhaseType.Repair;
 
-    public RepairPhase(int level)
+    public RepairPhase(int level,Field mainField)
     {
         this.level = level;
+        field = mainField;
     }
     public void StartPhase(Action onPhaseEnd)
     {
         Debug.Log($"level {level} : 수리 페이즈 시작");
-        PhaseManager.curPhase = PhaseType.Repair;
 
         
-        GameManager.Instance.field.ResetField();
+        field.ResetField();
         int completeUsers = 0;
         foreach (var agent in GameManager.Instance.agents)
         {

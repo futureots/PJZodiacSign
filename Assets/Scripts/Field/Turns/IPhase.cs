@@ -3,7 +3,7 @@ using System;
 public interface IPhase
 {
     public int Level {  get; }
-
+    public PhaseType PhaseType { get; }
     /// <summary>
     /// 페이즈 시작
     /// </summary>

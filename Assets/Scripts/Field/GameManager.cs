@@ -26,7 +26,7 @@ public class GameManager : Singleton<GameManager>
         get { return _field; }
     }
 
-    public EntityFactory entityInstaller;
+    //public EntityFactory entityInstaller;
 
     DataManager dataManager;
     public HpPanelManager hpManager;

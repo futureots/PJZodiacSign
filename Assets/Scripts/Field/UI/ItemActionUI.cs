@@ -4,8 +4,16 @@ using UnityEngine.UI;
 
 public class ItemActionUI : MonoBehaviour
 {
+    [Header("Dependency")]
+    IPhaseManageService phaseManageService;
+
     public Button useBtn;
     public Button discardBtn;
+
+    public void Init(IPhaseManageService phaseManageService)
+    {
+        this.phaseManageService = phaseManageService;
+    }
 
     /// <summary>
     /// 각 버튼의 상호작용 설정
@@ -24,7 +32,7 @@ public class ItemActionUI : MonoBehaviour
             var effect = usable.GetUseEffect();
             useBtn.gameObject.SetActive(true);
 
-            if (item.itemData.useType.HasFlag(PhaseManager.curPhase))
+            if (item.itemData.useType.HasFlag(phaseManageService.CurPhase))
             {
                 useBtn.interactable = true;
 

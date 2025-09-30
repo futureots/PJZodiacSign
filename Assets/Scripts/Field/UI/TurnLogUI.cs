@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TurnLogUI : MonoBehaviour
 {
+    IPhaseManageService phaseManageService;
     public int capacity;
     
     public TurnBlock turnBlock;
@@ -23,6 +24,12 @@ public class TurnLogUI : MonoBehaviour
     {
         Entity.onEntityDead += CreateDeadLog;
         BattlePhase.OnTurnStarted += CreateTurnLog;
+    }
+
+    public void Init(IPhaseManageService phaseManageService)
+    {
+        this.phaseManageService = phaseManageService;
+        phaseManageService.onPhaseChanged += PhaseChange;
     }
 
     public void CreateTurnLog(ITurn turn)
@@ -89,13 +96,12 @@ public class TurnLogUI : MonoBehaviour
             }
         }
     }
-    private void OnEnable()
-    {
-        PhaseManager.onPhaseChanged += PhaseChange;
-    }
-
     private void OnDisable()
     {
-        PhaseManager.onPhaseChanged -= PhaseChange;
+        if (phaseManageService != null)
+        {
+            phaseManageService.onPhaseChanged -= PhaseChange;
+        }
+        
     }
 }

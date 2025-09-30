@@ -5,7 +5,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class ShopUI : MonoBehaviour
 {
+    [Header("Dependency")]
     InputManager customer;
+    IPhaseManageService phaseManageService;
 
     public GameObject shopPanel;
     [SerializeField] GameObject ShopToggle;
@@ -20,10 +22,12 @@ public class ShopUI : MonoBehaviour
     List<ItemData> items;
     List<EntityData> entities;
 
-    private void Awake()
+    public void Init(InputManager inputManager,IPhaseManageService phaseManageService)
     {
-        customer = transform.root.GetComponent<InputManager>();
+        this.phaseManageService = phaseManageService;
+        customer = inputManager;
     }
+
     /// <summary>
     /// 현재 레벨에 맞는 상점 세팅
     /// </summary>
@@ -110,10 +114,10 @@ public class ShopUI : MonoBehaviour
 
     private void OnEnable()
     {
-        PhaseManager.onPhaseChanged += PhaseChange;
+        phaseManageService.onPhaseChanged += PhaseChange;
     }
     private void OnDisable()
     {
-        PhaseManager.onPhaseChanged -= PhaseChange;
+        phaseManageService.onPhaseChanged -= PhaseChange;
     }
 }
