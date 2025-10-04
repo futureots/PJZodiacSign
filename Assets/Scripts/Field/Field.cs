@@ -8,11 +8,10 @@ using UnityEngine.Rendering.Universal.Internal;
 
 public class Field : MonoBehaviour
 {
-    [Header("Materials")]
-    public List<Material> tileMaterial;
-
+    [Header("Field Shape")]
+    public GameObject[] tilePrefab;
     public int row, column;
-    public GameObject tilePrefab;
+    
 
     Tile[,] _tiles;
     public Tile[,] tiles
@@ -51,11 +50,7 @@ public class Field : MonoBehaviour
             for (int j = 0; j < column; j++)
             {
                 Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
-                var tileObj = Instantiate(tilePrefab, transform);
-                if (tileMaterial.Count > 0)
-                {
-                    tileObj.GetComponentInChildren<Renderer>().material = tileMaterial[(j + i % 2) % tileMaterial.Count];
-                }
+                var tileObj = Instantiate(tilePrefab[(j + i) % tilePrefab.Length], transform);
                 tileObj.transform.localPosition = pos;
                 var tile = tileObj.GetComponent<Tile>();
                 tile.InitializeTile(this, j, i);

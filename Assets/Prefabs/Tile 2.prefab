@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d7a86252ff87c941b14acfc8f4fac79, type: 2}
+  - {fileID: 2100000, guid: f6467dd55ba8d89429387781d74dffb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: -6836918966842894570}
   - component: {fileID: 8465199760712711516}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: Tile 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
