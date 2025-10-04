@@ -148,13 +148,13 @@ public class EnemyAI : Agent
         {
             power = component.Power;
         }
-        var tile = entity.CurTile;
+        var tile = entity.curTile;
         int max = tileValues[tile.fieldPos.y, tile.fieldPos.x];
 
         List<intVector2> valuablePos = new();
         if (entity.TryGetComponent<AreaComponent>(out var area))
         {
-            var list = area.GetMoveVector(field, tile.fieldPos, entity.IsReflect);
+            var list = area.GetMoveVector(field, tile.fieldPos, entity.isReflect);
 
             foreach (var item in list)
             {
@@ -166,7 +166,7 @@ public class EnemyAI : Agent
 
                 // 공격 가능 체크
                 field[tile.fieldPos.y, tile.fieldPos.x] = 0;
-                var plusArea = area.GetAttackVector(field, item, entity.IsReflect);
+                var plusArea = area.GetAttackVector(field, item, entity.isReflect);
                 field[tile.fieldPos.y, tile.fieldPos.x] = team.teamNumber;
                 foreach (var plus in plusArea)
                 {

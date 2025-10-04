@@ -230,12 +230,12 @@ public class Field : MonoBehaviour
         return field;
     }
 
-    public int[,] GetFieldState(IOccupant occupant)
+    public int[,] GetFieldState(Occupant occupant)
     {
         var list = GetFieldState();
-        if(occupant.CurTile.field == this)
+        if(occupant.curTile.field == this)
         {
-            list[occupant.CurTile.fieldPos.y, occupant.CurTile.fieldPos.x] = 0;
+            list[occupant.curTile.fieldPos.y, occupant.curTile.fieldPos.x] = 0;
         }
         return list;
     }
@@ -260,8 +260,8 @@ public class Field : MonoBehaviour
                 if (entity == null) continue;
                 if (entity.team.teamNumber == teamNum) continue;
 
-                int entityNum = fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
-                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = 0;
+                int entityNum = fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x];
+                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = 0;
 
                 // 기물의 공격력 반환
                 int power = 0;
@@ -272,12 +272,12 @@ public class Field : MonoBehaviour
 
                 if(entity.TryGetComponent<AreaComponent>(out var area))
                 {
-                    foreach (var vec in area.GetAttackVector(fieldInfo, new intVector2(j, i), entity.IsReflect))
+                    foreach (var vec in area.GetAttackVector(fieldInfo, new intVector2(j, i), entity.isReflect))
                     {
                         field[vec.y, vec.x] -= power;
                     }
                 }
-                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = entityNum;
+                fieldInfo[entity.curTile.fieldPos.y, entity.curTile.fieldPos.x] = entityNum;
             }
         }
         return field;

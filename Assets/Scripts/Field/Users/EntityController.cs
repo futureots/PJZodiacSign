@@ -58,8 +58,8 @@ public class EntityController : MonoBehaviour
 
     public void PlaceEntity(Entity instance, Tile tile)
     {
-        instance.Move(tile, true);
-        instance.IsReflect = isReflect;
+        instance.Initialize(isReflect, tile);
+        
 
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
     }
@@ -109,12 +109,12 @@ public class EntityController : MonoBehaviour
         foreach (var e in resourceEntities)
         {
             if (e == null) continue;
-            if(e.CurTile.field != resourceField)
+            if(e.curTile.field != resourceField)
             {
                 AddFieldEntity(e);
             }
         }
-        resourceEntities.RemoveAll((e) => e.CurTile.field != resourceField);
+        resourceEntities.RemoveAll((e) => e.curTile.field != resourceField);
     }
     #endregion
 
@@ -127,7 +127,7 @@ public class EntityController : MonoBehaviour
         foreach (var entity in fieldEntities)
         {
             var entityData = new EntityLevelData(entity);
-            int pos = entity.CurTile.fieldPos.Encode();
+            int pos = entity.curTile.fieldPos.Encode();
             mainFieldData.Add(pos, entityData);
         }
 

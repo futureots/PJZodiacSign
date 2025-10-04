@@ -10,11 +10,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(PowerComponent))]
 [RequireComponent(typeof(HealthComponent))]
-public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
+public class Entity : Occupant, IDamageable, IAttackable
 {
-    public Tile CurTile { get; private set; }
-
-    public bool IsReflect { get; set; }
 
     Team _team;
 
@@ -33,6 +30,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 
     // 기물의 기본 데이터
     public EntityData baseData;
+
+    public void Initialize(bool isReflect , Tile tile)
+    {
+        this.isReflect = isReflect;
+        Move(tile, true);
+    }
 
     /// <summary>
     /// 기물 초기 스탯 세팅
@@ -148,12 +151,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
             if (isOccupied) return false;
         }
 
-        if (CurTile != null)
+        if (curTile != null)
         {
-            CurTile.UnsetOccupant();
+            curTile.UnsetOccupant();
         }
         tile.SetOccupant(gameObject, true);
-        CurTile = tile;
+        curTile = tile;
 
         return true;
     }
@@ -168,12 +171,12 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     {
         if(TryGetComponent<AreaComponent>(out var area))
         {
-            var field = CurTile.field.GetFieldState(this);
+            var field = curTile.field.GetFieldState(this);
 
-            var list = area.GetMoveVector(field,CurTile.fieldPos, IsReflect);
-            var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
+            var list = area.GetMoveVector(field,curTile.fieldPos, isReflect);
+            var tiles = curTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
 
-            tiles.Add(CurTile);
+            tiles.Add(curTile);
 
             return tiles;
         }
@@ -186,7 +189,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
     /// <returns>기물이 공격할 수 있는 타일</returns>
     public List<Tile> GetAttackArea()
     {
-        return GetAttackArea(CurTile);
+        return GetAttackArea(curTile);
     }
 
     public List<Tile> GetAttackArea(Tile tile)
@@ -196,7 +199,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
         
         if(TryGetComponent<AreaComponent>(out var component))
         {
-            var list = component.GetAttackVector(field, tile.fieldPos, IsReflect);
+            var list = component.GetAttackVector(field, tile.fieldPos, isReflect);
             var tiles = tile.field.GetTiles(list);
             return tiles;
         }
