@@ -31,7 +31,10 @@ public class InputManager : Agent
     [Header("UI Element")]
     public Button turnEndButton;
     public UIContainer UI;
+    [Header("Camera")]
     public GameObject cam;
+    [SerializeField] Vector3 RepairCamPos;
+    [SerializeField] Vector3 BattleCamPos;
 
 
     protected new void Awake()
@@ -115,7 +118,7 @@ public class InputManager : Agent
         controller.SetResourceField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
 
-        cam.transform.DOLocalMove(new Vector3(0, -10, -15),1f);
+        cam.transform.DOLocalMove(RepairCamPos,1f);
         
 
         controller.onCommandCreated += ExecuteCommand;
@@ -137,7 +140,7 @@ public class InputManager : Agent
         var (field, hand) = controller.GetFieldData();
         data.fieldEntities = field;
         data.handEntities = hand;
-        cam.transform.DOLocalMove(Vector3.up * -10, 1f);
+        cam.transform.DOLocalMove(BattleCamPos, 1f);
 
         controller.onCommandCreated -= ExecuteCommand;
 
