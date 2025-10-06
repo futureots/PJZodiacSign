@@ -9,6 +9,7 @@ public class FieldSide : MonoBehaviour
     [SerializeField] GameObject VertexOutBoard;
     [SerializeField] SideTile SideBoard;
     [SerializeField] intVector2 size;
+    [SerializeField] float tileDistance;
     public bool isShowText;
 
     [ContextMenuItem("CreateSide", "CreateSide")]
@@ -17,16 +18,16 @@ public class FieldSide : MonoBehaviour
     
     public void CreateSide()
     {
-
+        float halfDistance = tileDistance / 2;
         int col = size.x;
         int row = size.y;
-        float posX = ((col / 2) * 10 + 5);
-        float posZ = ((row / 2) * 10 + 5);
+        float posX = ((col / 2) * tileDistance + halfDistance);
+        float posZ = ((row / 2) * tileDistance + halfDistance);
         for (int i = 0; i < row; i++)
         {
             for(int j = 0; j < 2; j++)
             {
-                var vec = new Vector3(posX * (j == 0 ? -1 : 1), 0, (i - row / 2) * 10 + 5);
+                var vec = new Vector3(posX * (j == 0 ? -1 : 1), 0, (i - row / 2) * tileDistance + halfDistance);
                 var rot = new Vector3(0, j * 180, 0);
                 var obj = Instantiate(SideBoard, transform);
                 sideList.Add(obj.gameObject);
@@ -48,7 +49,7 @@ public class FieldSide : MonoBehaviour
         {
             for (int j = 0; j < 2; j++)
             {
-                var vec = new Vector3((i - col / 2) * 10 + 5, 0, posZ * (j == 0 ? -1 : 1));
+                var vec = new Vector3((i - col / 2) * tileDistance + halfDistance, 0, posZ * (j == 0 ? -1 : 1));
                 var rot = new Vector3(0, j * 180, 0);
                 var obj = Instantiate(SideBoard, transform);
                 sideList.Add(obj.gameObject);

@@ -11,6 +11,7 @@ public class Field : MonoBehaviour
     [Header("Field Shape")]
     public GameObject[] tilePrefab;
     public int row, column;
+    [SerializeField] float tileDistance;
     
 
     Tile[,] _tiles;
@@ -42,14 +43,15 @@ public class Field : MonoBehaviour
     public void CreateField()
     {
         _tileList = new List<Row<Tile>>();
-        
+
+        float halfDistance = tileDistance / 2;
         for (int i = 0; i < row; i++)
         {
             var temp = new Row<Tile>();
             _tileList.Add(temp);
             for (int j = 0; j < column; j++)
             {
-                Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
+                Vector3 pos = new Vector3((j - column / 2) * tileDistance + halfDistance, 0, (i - row / 2) * tileDistance + halfDistance);
                 var tileObj = Instantiate(tilePrefab[(j + i) % tilePrefab.Length], transform);
                 tileObj.transform.localPosition = pos;
                 var tile = tileObj.GetComponent<Tile>();

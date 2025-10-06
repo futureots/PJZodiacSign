@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Entity", menuName = "Scriptable Objects/EntityData")]
 public class EntityData : AbstractData
 {
+    [Header("GameObject")]
     public GameObject baseEntityPrefab;
     [Header("Area")]
     public List<Area> moveArea;

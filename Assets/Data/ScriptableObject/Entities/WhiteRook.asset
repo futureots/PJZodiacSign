@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 8594eda5bcbfff046a1f1c4c793a03e5, type: 3}
   normalPrice: 45
   discountPrice: 25
-  baseEntityPrefab: {fileID: 114028, guid: 43ef2ba32fda59c42a1410ea490d494b, type: 3}
+  baseEntityPrefab: {fileID: 5673443005526589948, guid: 22618bc184acb1d499583dc8cf79005f, type: 3}
   moveArea:
   - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
   attackArea:
