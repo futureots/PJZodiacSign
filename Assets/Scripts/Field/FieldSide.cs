@@ -9,7 +9,7 @@ public class FieldSide : MonoBehaviour
     [SerializeField] GameObject VertexOutBoard;
     [SerializeField] SideTile SideBoard;
     [SerializeField] intVector2 size;
-
+    public bool isShowText;
 
     [ContextMenuItem("CreateSide", "CreateSide")]
     [ContextMenuItem("DestroySide", "DestroySide")]
@@ -30,8 +30,16 @@ public class FieldSide : MonoBehaviour
                 var rot = new Vector3(0, j * 180, 0);
                 var obj = Instantiate(SideBoard, transform);
                 sideList.Add(obj.gameObject);
-                obj.Initialize((i + 1).ToString());
-                obj.transform.localPosition = vec;
+                if (isShowText)
+                {
+                    obj.Initialize((i + 1).ToString());
+                }
+                else
+                {
+                    obj.Initialize();
+                }
+
+                    obj.transform.localPosition = vec;
                 obj.transform.localEulerAngles = rot;
             }
         }
@@ -44,7 +52,14 @@ public class FieldSide : MonoBehaviour
                 var rot = new Vector3(0, j * 180, 0);
                 var obj = Instantiate(SideBoard, transform);
                 sideList.Add(obj.gameObject);
-                obj.Initialize(((char)(i + 'A')).ToString(), -90);
+                if (isShowText)
+                {
+                    obj.Initialize(((char)(i + 'A')).ToString(), -90);
+                }
+                else
+                {
+                    obj.Initialize(-90);
+                }
                 obj.transform.localPosition = vec;
                 obj.transform.localEulerAngles = rot;
             }

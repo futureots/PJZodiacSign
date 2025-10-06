@@ -29,4 +29,4 @@ MonoBehaviour:
   skill: {fileID: 0}
   energy: 0
   maxEnergy: 0
-  hpPanelPosition: {x: 0, y: 1.5, z: 0}
+  hpPanelPosition: {x: 0, y: 9, z: 0}
