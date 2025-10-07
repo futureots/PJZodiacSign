@@ -31,4 +31,4 @@ MonoBehaviour:
   skill: {fileID: 11400000, guid: 4442f64d40b70aa47960590571fe7e36, type: 2}
   energy: 1
   maxEnergy: 3
-  hpPanelPosition: {x: 0, y: 18, z: 0}
+  hpPanelPosition: {x: 0, y: 3.5, z: 0}
