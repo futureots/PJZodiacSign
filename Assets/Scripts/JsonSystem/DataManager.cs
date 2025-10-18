@@ -4,8 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
+
     /// <summary>
     /// 플레이어 데이터
     /// </summary>

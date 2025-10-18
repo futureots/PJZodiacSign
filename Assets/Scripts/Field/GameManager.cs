@@ -7,24 +7,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
     public static Action<int> onNextLevel;
     // 0번은 플레이어 1번은 적AI
     public Agent[] agents;
 
-
-    public Agent GetOppositeAgent(Agent agent)
-    {
-        return agent == agents[0] ? agents[1] : agents[0];
-    }
-    public int level {  get; private set; }
-    
-    [SerializeField] Field _field;
-    public Field field
-    {
-        get { return _field; }
-    }
 
     //public EntityFactory entityInstaller;
 
@@ -32,14 +20,28 @@ public class GameManager : Singleton<GameManager>
     public HpPanelManager hpManager;
     public TeamColorTable teamColorTable;
 
+    public static GameManager Instance { get; private set; }
     private void Awake()
     {
-        dataManager = this.GetOrAddComponent<DataManager>();
+        Instance = this;
+        dataManager = DataManager.Instance;
     }
     private void Start()
     {
         StartGame();
     }
+    public Agent GetOppositeAgent(Agent agent)
+    {
+        return agent == agents[0] ? agents[1] : agents[0];
+    }
+    public int level { get; private set; }
+
+    [SerializeField] Field _field;
+    public Field field
+    {
+        get { return _field; }
+    }
+
     #region GameStart
 
     /// <summary>

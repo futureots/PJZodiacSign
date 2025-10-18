@@ -29,6 +29,11 @@ public struct intVector2
         this.x = x;
         this.y = y;
     }
+    public intVector2(intVector2 vec)
+    {
+        this.x = vec.x;
+        this.y = vec.y;
+    }
     public int x;
     public int y;
     public static intVector2 operator +(intVector2 left, intVector2 right)

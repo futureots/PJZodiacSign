@@ -17,28 +17,22 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                     GameObject obj = new GameObject(typeof(T).Name, typeof(T));
                     instance = obj.GetComponent<T>();
                 }
-                if( instance is Singleton<T> singleton)
-                {
-                    singleton.Init();
-                }
             }
             return instance;
         }
     }
     private void Awake()
     {
-        /*if (transform.parent != null || transform.root != null)                                                             
+        
+        if (instance == null)
         {
-            DontDestroyOnLoad(this.transform.root.gameObject);
+            instance = this as T;
         }
-        else
+        else if (instance != this) 
         {
-            DontDestroyOnLoad(this.gameObject);
-        }*/
-    }
-
-    public virtual void Init()
-    {
-
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(instance.transform.root.gameObject);
+         
     }
 }

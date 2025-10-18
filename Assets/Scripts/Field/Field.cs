@@ -1,8 +1,9 @@
-using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
+using UnityEngine.Rendering;
+
 
 
 
@@ -156,6 +157,52 @@ public class Field : MonoBehaviour
             list.Add(tile);
         }
         return list;
+    }
+
+    /// <summary>
+    /// 기준점에서 상대위치 타일 가져오기
+    /// </summary>
+    public List<Tile> GetTiles(intVector2 origin, List<intVector2> vectors,  Func<Tile,bool> query = null)
+    {
+        query ??= _ => true;
+        var list = new List<Tile>();
+        foreach (var pos in vectors)
+        {
+            var tile = GetTile(origin + pos);
+            if (tile == null) continue; 
+            list.Add(tile);
+        }
+        return list.Where(query).ToList();
+        
+    }
+
+    /// <summary>
+    /// 기준점에서 해당 방향 타일 가져오기
+    /// </summary>
+    public List<Tile> GetTiles(intVector2 origin, List<intVector2> directions, bool isPierce, Func<Tile, bool> query = null)
+    {
+        query ??= _ => true;
+        var list = new List<Tile>();
+        foreach (var direction in directions)
+        {
+            var vector = intVector2.Zero;
+            while (true)
+            {
+                vector += direction;
+                var tile = GetTile(origin + vector);
+                if (tile == null) break;
+                if (tile.isEmpty || isPierce)
+                {
+                    list.Add(tile);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+        }
+        return list.Where(query).ToList();
     }
 
     /// <summary>
