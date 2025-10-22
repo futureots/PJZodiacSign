@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
@@ -124,7 +123,7 @@ public class InventoryUI : MonoBehaviour
 
     void OpenItemAction(int index)
     {
-        if (inventory.items.ContainsKey(index))
+        if (inventory.items[index] != null)
         {
             actPanel.gameObject.SetActive(true);
             actPanel.transform.position = itemSlots[index].transform.position;
@@ -133,18 +132,24 @@ public class InventoryUI : MonoBehaviour
     }
     void SetInfoUI(int index, Vector2 pos)
     {
-        if (inventory.items.TryGetValue(index,out var item))
+        if (index >= inventory.capacity || index < 0)
         {
+            infoPanel.gameObject.SetActive(false);
+        }
+        else if (inventory.items[index] == null)
+        {
+            infoPanel.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log(inventory.items[index]);
+            var item = inventory.items[index];
             if (!infoPanel.gameObject.activeSelf)
             {
                 infoPanel.gameObject.SetActive(true);
                 infoPanel.SetInfo(item);
             }
             infoPanel.transform.localPosition = pos;
-        }
-        else
-        {
-            infoPanel.gameObject.SetActive(false);
         }
     }
 

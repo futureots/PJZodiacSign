@@ -1,6 +1,5 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
@@ -10,12 +9,11 @@ public class DataManager : Singleton<DataManager>
     /// <summary>
     /// 플레이어 데이터
     /// </summary>
-    public PlayerData playerData {  get; private set; }
+    public PlayData playerData {  get; private set; }
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
     public LevelTable enemyData;
-
 
     public ItemTable itemTable;
     public EntityTable entityTable;
@@ -24,31 +22,38 @@ public class DataManager : Singleton<DataManager>
     {
         List<AgentData> data = new List<AgentData>();
 
-        // 아이템 데이터로 전환
-        var items = new Dictionary<int, ItemData>();
-        foreach ( var item in playerData.items)
-        {
-            var itemData = itemTable.SearchData(item.Value);
-            items.Add(item.Key, itemData);
-        }
-
         var handEntities = new List<EntityLevelData>();
         foreach (var item in playerData.handEntities)
         {
-            var entityData = new EntityLevelData(entityTable.SearchData(item.entity),item.level);
-            handEntities.Add(entityData);
+            var entityData = ConvertData(item);
+            if (entityData.HasValue)
+            {
+                handEntities.Add(entityData.Value);
+            }
         }
 
-        var fieldEntities = new Dictionary<int, EntityLevelData>();
+        var fieldEntities = new Dictionary<intVector2, EntityLevelData>();
         foreach (var item in playerData.fieldEntities)
         {
-            var entityData = new EntityLevelData(entityTable.SearchData(item.Value.entity), item.Value.level);
-            fieldEntities.Add(item.Key, entityData);
+            var entityData = ConvertData(item.Value);
+            if (entityData.HasValue)
+            {
+                var pos = JsonConvert.DeserializeObject<intVector2>(item.Key);
+                fieldEntities.Add(pos, entityData.Value);
+            }
         }
+
+        // 아이템 데이터로 전환
+        var items = new List<ItemData>();
+        foreach (var item in playerData.items)
+        {
+            var itemData = itemTable.SearchData(item);
+            items.Add(itemData);
+        }
+        Debug.Log(items.Count);
 
         AgentData player = new AgentData(playerData.credit, handEntities, fieldEntities, items);
         data.Add(player);
-
 
         AgentData enemy = enemyData.GetLevelData(playerData.stageLevel);
 
@@ -57,26 +62,27 @@ public class DataManager : Singleton<DataManager>
     }
     public void SetData(AgentData data, int stageLevel)
     {
-        Dictionary<int, string> itemNames = new();
+        List<string> itemNames = new();
         foreach (var item in data.items)
         {
-            itemNames.Add(item.Key, item.Value.id);
+            itemNames.Add(item.id);
         }
         playerData.items = itemNames;
 
-        List<EntityLevelHolder> handEntityNames = new List<EntityLevelHolder>();
+        List<string> handEntityNames = new List<string>();
         foreach (var item in data.handEntities)
         {
-            EntityLevelHolder temp = new EntityLevelHolder(item.data.id, item.level);
+            var temp = item.data.id + "+"+ item.level;
             handEntityNames.Add(temp);
         }
         playerData.handEntities = handEntityNames;
 
 
-        Dictionary<int,EntityLevelHolder> fieldEntities = new Dictionary<int,EntityLevelHolder>();
+        Dictionary<string,string> fieldEntities = new();
         foreach (var item in data.fieldEntities)
         {
-            fieldEntities.Add(item.Key, new EntityLevelHolder(item.Value.data.id, item.Value.level));
+            var posData = JsonConvert.SerializeObject(item.Key);
+            fieldEntities.Add(posData, $"{item.Value.data.id}+{item.Value.level}");
         }
         playerData.fieldEntities = fieldEntities;
 
@@ -90,7 +96,7 @@ public class DataManager : Singleton<DataManager>
 
     public void LoadAllData(string fileName)
     {
-        playerData = PlayerData.LoadPlayerData(fileName);
+        playerData = PlayData.LoadPlayerData(fileName);
     }
 
 
@@ -99,12 +105,26 @@ public class DataManager : Singleton<DataManager>
         playerData.SavePlayerData(fileName);
     }
 
+    EntityLevelData? ConvertData(string csv)
+    {
+        
+        var list = csv.Split('+',2);
+        if (list.Length == 1)
+        {
+            return new EntityLevelData(entityTable.SearchData(list[0]));
+        }
+        else if (list.Length == 2)
+        {
+            return new EntityLevelData(entityTable.SearchData(list[0]), int.Parse(list[1]));
+        }
+        else return null;
+    }
 
 }
 [System.Serializable]
 public struct AgentData
 {
-    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<int, EntityLevelData> fields = null, Dictionary<int,ItemData> items = null)
+    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)
     {
         this.credit = credit;
 
@@ -120,8 +140,8 @@ public struct AgentData
 
     public int credit;
     public List<EntityLevelData> handEntities;
-    public Dictionary<int, EntityLevelData> fieldEntities;
-    public Dictionary<int,ItemData> items;
+    public Dictionary<intVector2, EntityLevelData> fieldEntities;
+    public List<ItemData> items;
 }
 [System.Serializable]
 public struct EntityLevelData

@@ -68,10 +68,6 @@ public struct intVector2
         return HashCode.Combine(x, y);
     }
     #region Encode & Decode
-    public override string ToString()
-    {
-        return $"{(x + 1)}, {y + 1}";//체스 좌표값으로 변환
-    }
     public int Encode()
     {
         return x  | (y << 10); // X를 상위 10비트, Y를 하위 10비트에 넣음

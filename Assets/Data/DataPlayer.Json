@@ -1,47 +1,17 @@
 {
-  "$type": "PlayerData, Assembly-CSharp",
+  "$type": "PlayData, Assembly-CSharp",
   "fieldEntities": {
-    "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[EntityLevelHolder, Assembly-CSharp]], mscorlib",
-    "2050": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteBishop",
-      "level": 0
-    },
-    "2051": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteQueen",
-      "level": 0
-    },
-    "2052": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteRook",
-      "level": 0
-    },
-    "2053": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteKing",
-      "level": 0
-    },
-    "2054": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhiteKnight",
-      "level": 0
-    },
-    "2055": {
-      "$type": "EntityLevelHolder, Assembly-CSharp",
-      "entity": "WhitePawn",
-      "level": 0
-    }
+    "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String, mscorlib]], mscorlib",
+    "{\"x\":0,\"y\":0}": "WhiteKing"
   },
   "handEntities": {
-    "$type": "System.Collections.Generic.List`1[[EntityLevelHolder, Assembly-CSharp]], mscorlib",
-    "$values": []
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": [ "WhitePawn+2" ]
   },
-  "stageLevel": 2,
+  "stageLevel": 1,
   "items": {
-    "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.String, mscorlib]], mscorlib",
-    "0": "Enhance",
-    "2": "Scroll"
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": [ null, "Enhance", "Warp" ]
   },
-  "credit": 256
+  "credit": 100
 }

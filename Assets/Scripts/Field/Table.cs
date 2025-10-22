@@ -16,8 +16,7 @@ public abstract class Table<T> : ScriptableObject where T : AbstractData
     public T SearchData(string id)
     {
         var item = table.Find(x => x.id.Equals(id));
-        //Debug.Log(item.itemData.itemName);
-        if (item == null) return default;
+        //if (item == null) return null;
         return item;
     }
 }
