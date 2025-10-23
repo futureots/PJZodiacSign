@@ -1,29 +1,42 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
 public class DataManager : Singleton<DataManager>
 {
-
-    /// <summary>
-    /// 플레이어 데이터
-    /// </summary>
-    public PlayData playerData {  get; private set; }
+    [NonSerialized]
+    readonly string defaultName = "Player";
+    [NonSerialized]
+    readonly string defaultPath = Application.dataPath + "/Data";
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
     public LevelTable enemyData;
-
     public ItemTable itemTable;
     public EntityTable entityTable;
-    
+
+    /// <summary>
+    /// 플레이어 데이터
+    /// </summary>
+    public PlayData playData {  get; private set; }
+
+    public bool isModified { get; private set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        LoadAllData("data");
+    }
+
     public AgentData[]  GetData()
     {
         List<AgentData> data = new List<AgentData>();
 
         var handEntities = new List<EntityLevelData>();
-        foreach (var item in playerData.handEntities)
+        foreach (var item in playData.handEntities)
         {
             var entityData = ConvertData(item);
             if (entityData.HasValue)
@@ -33,7 +46,7 @@ public class DataManager : Singleton<DataManager>
         }
 
         var fieldEntities = new Dictionary<intVector2, EntityLevelData>();
-        foreach (var item in playerData.fieldEntities)
+        foreach (var item in playData.fieldEntities)
         {
             var entityData = ConvertData(item.Value);
             if (entityData.HasValue)
@@ -45,17 +58,17 @@ public class DataManager : Singleton<DataManager>
 
         // 아이템 데이터로 전환
         var items = new List<ItemData>();
-        foreach (var item in playerData.items)
+        foreach (var item in playData.items)
         {
             var itemData = itemTable.SearchData(item);
             items.Add(itemData);
         }
         Debug.Log(items.Count);
 
-        AgentData player = new AgentData(playerData.credit, handEntities, fieldEntities, items);
+        AgentData player = new AgentData(playData.credit, handEntities, fieldEntities, items);
         data.Add(player);
 
-        AgentData enemy = enemyData.GetLevelData(playerData.stageLevel);
+        AgentData enemy = enemyData.GetLevelData(playData.stageLevel);
 
         data.Add(enemy);
         return data.ToArray();
@@ -67,7 +80,7 @@ public class DataManager : Singleton<DataManager>
         {
             itemNames.Add(item.id);
         }
-        playerData.items = itemNames;
+        playData.items = itemNames;
 
         List<string> handEntityNames = new List<string>();
         foreach (var item in data.handEntities)
@@ -75,7 +88,7 @@ public class DataManager : Singleton<DataManager>
             var temp = item.data.id + "+"+ item.level;
             handEntityNames.Add(temp);
         }
-        playerData.handEntities = handEntityNames;
+        playData.handEntities = handEntityNames;
 
 
         Dictionary<string,string> fieldEntities = new();
@@ -84,31 +97,42 @@ public class DataManager : Singleton<DataManager>
             var posData = JsonConvert.SerializeObject(item.Key);
             fieldEntities.Add(posData, $"{item.Value.data.id}+{item.Value.level}");
         }
-        playerData.fieldEntities = fieldEntities;
+        playData.fieldEntities = fieldEntities;
 
+        playData.credit = data.credit;
 
-        playerData.credit = data.credit;
-
-        playerData.stageLevel = stageLevel;
-
+        playData.stageLevel = stageLevel;
     }
 
-
-    public void LoadAllData(string fileName)
+    public void ResetData(string fileName)
     {
-        playerData = PlayData.LoadPlayerData(fileName);
+        DeleteData(fileName);
+        LoadAllData(fileName);
     }
-
 
     public void SaveAllData(string fileName)
     {
-        playerData.SavePlayerData(fileName);
+        var data = PlayData.SerializePlayerData(playData);
+        SaveData(data, fileName);
+    }
+
+    public void LoadAllData(string fileName)
+    {
+        if(TryLoadData(fileName,out var json))
+        {
+            playData = PlayData.DeserializePlayerData(json);
+            isModified = true;
+        }
+        else
+        {
+            playData = new();
+            isModified = false;
+        }
     }
 
     EntityLevelData? ConvertData(string csv)
     {
-        
-        var list = csv.Split('+',2);
+        var list = csv.Split('+', 2);
         if (list.Length == 1)
         {
             return new EntityLevelData(entityTable.SearchData(list[0]));
@@ -120,6 +144,56 @@ public class DataManager : Singleton<DataManager>
         else return null;
     }
 
+    /// <summary>
+    /// data를 fileName으로 된 json파일로 저장
+    /// </summary>
+    public void SaveData(string data,string fileName)
+    {
+        
+        if (!Directory.Exists(defaultPath))
+        {
+            Directory.CreateDirectory(defaultPath);
+        }
+        string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+        File.WriteAllText(filePath, data);
+        Debug.Log(data);
+        Debug.Log("Save");
+    }
+
+    /// <summary>
+    /// 저장된 데이터가 존재하는지 확인 후 데이터 반환
+    /// </summary>
+    public bool TryLoadData(string fileName, out string json)
+    {
+        json = null;
+        if (Directory.Exists(defaultPath))
+        {
+            string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+            if (File.Exists(filePath))
+            {
+                json = File.ReadAllText(filePath);
+                Debug.Log(json);
+                return true;
+            }
+        }
+        Debug.Log("NoExist");
+        return false;
+    }
+
+    /// <summary>
+    /// fileName으로 된 파일을 제거한다.
+    /// </summary>
+    public void DeleteData(string fileName)
+    {
+        if (Directory.Exists(defaultPath))
+        {
+            string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+    }
 }
 [System.Serializable]
 public struct AgentData

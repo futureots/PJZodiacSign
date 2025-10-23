@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        dataManager.SaveAllData("data");
         StartGame();
     }
     public Agent GetOppositeAgent(Agent agent)
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         // 에이전트에 필요한 데이터를 설정하거나 로드
-        dataManager.LoadAllData("data");
+        //dataManager.LoadAllData("data");
         var list = dataManager.GetData();
 
         
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
         {
             agents[i].SetData(list[i]);
         }
-        level = dataManager.playerData.stageLevel;
+        level = dataManager.playData.stageLevel;
 
         // 해당 레벨의 정비 페이즈 부터 시작(없을 경우 0레벨부터 시작)
         var phaseManager = GetComponent<PhaseManager>();
