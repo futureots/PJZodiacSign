@@ -30,5 +30,10 @@ namespace Debugging
             DataManager.Instance.ResetData("data");
             SceneManager.LoadScene(0);
         }
+
+        public void ExitGame()
+        {
+            Application.Quit();
+        }
     }
 }
