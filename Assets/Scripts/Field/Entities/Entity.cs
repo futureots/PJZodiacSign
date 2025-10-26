@@ -106,7 +106,9 @@ public class Entity : Occupant, IDamageable, IAttackable
             var targetTeam = target.GetComponent<Team>();
             if(!team.IsAlly(targetTeam))
             {
-                target.GetComponent<IDamageable>()?.Damaged(damage);
+                var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up*5,Utils.QI);
+                effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
+                //target.GetComponent<IDamageable>()?.Damaged(damage);
             }
         }
     }

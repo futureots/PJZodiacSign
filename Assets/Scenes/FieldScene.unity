@@ -38448,9 +38448,9 @@ MonoBehaviour:
   agents:
   - {fileID: 43863451}
   - {fileID: 829814212}
-  _field: {fileID: 1259859472}
   hpManager: {fileID: 1033003151}
   teamColorTable: {fileID: 11400000, guid: cacfc615a8b711e4d8a2f616afed52ae, type: 2}
+  _field: {fileID: 1259859472}
 --- !u!4 &2018355401
 Transform:
   m_ObjectHideFlags: 0
