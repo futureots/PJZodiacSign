@@ -30,7 +30,7 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     // 기물의 기본 데이터
     public EntityData baseData;
-
+    
 
     /// <summary>기물의 레벨</summary>
     [SerializeField] int _level;
@@ -125,7 +125,17 @@ public class Entity : Occupant, IDamageable, IAttackable
     {
         onEntityDead?.Invoke(this);
         onDead?.Invoke();
-        Destroy(gameObject);
+        var effect = Instantiate(baseData.dissolveEffect, transform);
+        if(effect.TryGetComponent<DissolveEffect>(out var dissolve))
+        {
+            if(TryGetComponent<MeshFilter>(out var mesh))
+            {
+                dissolve.Initialize(mesh.mesh, GetComponent<MeshRenderer>());
+                dissolve.PlayEffect(2f);
+            }
+        }
+        
+        
     }
 
     public void Healed(int amount)

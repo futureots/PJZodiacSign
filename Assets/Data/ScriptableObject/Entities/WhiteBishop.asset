@@ -19,6 +19,7 @@ MonoBehaviour:
   discountPrice: 30
   baseEntityPrefab: {fileID: 5643862530595515229, guid: 9dc7409fbbba50c4c99dbf7f9a991673, type: 3}
   basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
+  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
   attackArea:

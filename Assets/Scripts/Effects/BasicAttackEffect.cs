@@ -13,9 +13,10 @@ public class BasicAttackEffect : MonoBehaviour
         this.target = target;
         this.damage = damage;
         float time = (target.transform.position - transform.position).magnitude*speed;
-        transform.DOMove(target.transform.position+ Vector3.up*5, time).SetEase(Ease.Linear);
-        // 오류로 도착 못할 경우 대비
-        Destroy(gameObject, 2f);
+        Sequence sequence = DOTween.Sequence().
+            Append(transform.DOMove(target.transform.position + Vector3.up * 5, time).SetEase(Ease.Linear)).
+            AppendCallback(() => Destroy(gameObject));            // 도착 시 부딪히지 않아도 삭제
+
     }
 
     private void OnTriggerEnter(Collider other)
