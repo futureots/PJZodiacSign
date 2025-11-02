@@ -71,10 +71,11 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public List<ItemData> GetInventoryData()
     {
-        List<ItemData> list = new();
-        foreach(var item in items)
+        List<ItemData> list = new(capacity);
+        for(int i = 0; i < items.Length; i++)
         {
-            list.Add(item.itemData);
+            if( items[i] == null) continue;
+            list[i] = items[i].itemData;
         }
         return list;
     }
