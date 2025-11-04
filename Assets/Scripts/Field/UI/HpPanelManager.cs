@@ -1,9 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HpPanelManager : MonoBehaviour
 {
+    /**
+     * 
+     */
     public GameObject hpBar;
 
     List<GameObject> hpBarList;

@@ -1,26 +1,42 @@
 using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class FieldController : MonoBehaviour
 {
-    [SerializeField] Field field;
-
-    public ITurn curState;
-    public List<Command> commandList;
-
-    public void Initialize(Field field)
+    /** FieldController
+     * 필드 로드
+     * 레벨 기믹 수행
+     * Agent 생성 및 필드 시스템과 Command 통신
+     */
+    
+    #region FieldLoad
+    private Field field;   // Inject
+    private Shop shop;  // Inject
+    
+    public void LoadField()
     {
-        this.field = field;
+        
     }
-
+    
+    #endregion
+    
+    #region TurnManage
+    public uint turnCount;
+    public ITurn curState;
+    
+    
     public void SetState(ITurn state)
     {
 
         curState = state;
     }
-
+    
+    #endregion
+    
+    #region Commands
+    public List<Command> commandList;
+    private CommandSystem commandSystem;    // Attach
+    
     public void SendCommands()
     {
         //field에 커맨드 전송 및 콜백 함수 설정
@@ -29,26 +45,22 @@ public class FieldController : MonoBehaviour
     {
 
     }
-}
+    
+    #endregion
+    
+    #region Agents
+    public List<Agent> agents;
+    #endregion
 
-/*public interface ITurn
-{
-    public enum State
+    /// <summary>
+    /// Initiate Controller
+    /// </summary>
+    /// <remarks>필드, 상점 주입받고 전투 Model을 초기화</remarks>
+    public void Init(Field field, Shop shop = null)
     {
-        Attack,
-        Action,
-        Repair
+        this.field = field;
+        this.shop = shop;
+
+        commandSystem = new();
     }
-    /// <summary>
-    /// 턴 상태
-    /// </summary>
-    public State curState { get; }
-    /// <summary>
-    /// 턴의 주인(없을 경우 NULL)
-    /// </summary>
-    public Agent owner {  get; }
-    /// <summary>
-    /// 몇 번째 턴인지 표시하는 변수
-    /// </summary>
-    public int Count { get; }
-}*/
+}

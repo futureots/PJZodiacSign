@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    IPhaseManageService _phaseManageService;
+    IPhaseManageService _phaseManageService;    // TODO: Phase 의존성 주입
     InputManager _inputManager;
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
@@ -42,7 +42,7 @@ public class InventoryUI : MonoBehaviour
     /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
     public Button popBtn;
 
-    public Inventory inventory;
+    public Inventory inventory;     // TODO: 로컬플레이어 의존성 주입
     [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
     [SerializeField] List<ItemSlotUI> itemSlots;
 

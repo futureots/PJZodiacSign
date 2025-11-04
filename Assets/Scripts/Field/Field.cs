@@ -1,13 +1,12 @@
-using JetBrains.Annotations;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
-
 
 
 public class Field : MonoBehaviour
 {
+    /**
+     * 
+     */
     [Header("Materials")]
     public List<Material> tileMaterial;
 

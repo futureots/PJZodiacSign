@@ -7,7 +7,7 @@ public class ShopUI : MonoBehaviour
 {
     [Header("Dependency")]
     InputManager customer;
-    IPhaseManageService phaseManageService;
+    IPhaseManageService phaseManageService;     // TODO: phase 의존성 주입
 
     public GameObject shopPanel;
     [SerializeField] GameObject ShopToggle;
