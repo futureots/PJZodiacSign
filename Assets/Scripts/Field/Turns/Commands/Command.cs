@@ -27,4 +27,12 @@ public abstract class Command
     {
         return base.ToString();
     }
+
+    public virtual bool AddObjects(params GameObject[] list)
+    {
+        if (selecterObjects == null) return false;
+        selecterObjects.AddRange(list);
+        return true;
+    }
+    
 }

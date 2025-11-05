@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace PlayerInput
 {
@@ -11,6 +7,15 @@ namespace PlayerInput
     {
 
         InputManager _inputManager;
+
+        //선택한 엔티티 저장
+        Entity _selectedEntity = null;
+        List<Tile> moveArea;
+        List<Tile> attackArea;
+        AreaVisualizer visualizer;
+
+        GameObject targetSelecter = null;
+        GameObject targetTileSelecter = null;
 
         public MoveModeInput(InputManager input)
         {
@@ -32,15 +37,6 @@ namespace PlayerInput
             _inputManager.OnMouseUp.AddListener(DragEnd);
 
         }
-
-        GameObject targetSelecter = null;
-        GameObject targetTileSelecter = null;
-
-        //선택한 엔티티 저장
-        Entity _selectedEntity = null;
-        List<Tile> moveArea;
-        List<Tile> attackArea;
-        AreaVisualizer visualizer;
 
 
         // 드래그 시작
@@ -78,6 +74,9 @@ namespace PlayerInput
                 if (!_selectedEntity.curTile.Equals(tile))
                 {
                     //커맨드 생성
+                    var cmd = new MoveCommand(_selectedEntity, tile);
+                    cmd.AddObjects(targetSelecter, targetTileSelecter);
+                    
                     _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
                 }
                 else
