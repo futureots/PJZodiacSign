@@ -1,15 +1,42 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
 public abstract class Agent : MonoBehaviour
 {
     public Team team { get; protected set; }
+
+    // 컨트롤러
+    public EntityController controller { get; protected set; }
+    public Inventory inventory { get; protected set; }
+
+    int credit;
+    public int Credit
+    {
+        get { return credit; }
+        set
+        {
+            credit = value;
+            onCreditChanged?.Invoke(credit);
+        }
+    }
+    public Action<int> onCreditChanged;
+
+    // 행동 포인트
+    public int actionCount;
+    // 현재 설정 중인 커맨드 인덱스
+    int cmdIndex;
+    // 설정한 커맨드 리스트
+    public Command[] commands;
+
     protected void Awake()
     {
         team = GetComponent<Team>();
         controller = GetComponent<EntityController>();
         inventory = GetComponent<Inventory>();
+
+        commands = new Command[actionCount];
     }
     #region Phase
     /// <summary>
@@ -42,6 +69,8 @@ public abstract class Agent : MonoBehaviour
 
 
     #endregion
+
+    
     /// <summary>
     /// 현재 controller가 보유중인 커맨드 반환
     /// </summary>
@@ -52,20 +81,6 @@ public abstract class Agent : MonoBehaviour
         return cmd;
     }
 
-    // 컨트롤러
-    public EntityController controller { get; protected set; } 
-    public Inventory inventory { get; protected set; }
-
-    int credit;
-    public int Credit
-    {
-        get { return credit; }
-        set {
-            credit = value;
-            onCreditChanged?.Invoke(credit);
-        }
-    }
-    public Action<int> onCreditChanged;
 
     #region AgentData
     // 데이터 컨테이너(인벤토리는 사용 X)

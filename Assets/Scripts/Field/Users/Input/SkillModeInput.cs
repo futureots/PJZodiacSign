@@ -65,10 +65,11 @@ namespace PlayerInput
             // 첫 번째 스킬 입력 필드 설정
             SetNextField();
         }
+        List<GameObject> selecters;
 
         Queue<FieldInfo> skillFields;
         FieldInfo currentField;
-        List<GameObject> selecters;
+        
         void SetClick(GameObject obj)
         {
             var component = obj.GetComponent(currentField.FieldType);
