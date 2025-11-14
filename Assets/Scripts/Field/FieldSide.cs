@@ -51,6 +51,8 @@ public class FieldSide : MonoBehaviour
                 var rot = new Vector3(0, j * 180, 0);
                 var obj = Instantiate(SideBoard, transform);
                 sideList.Add(obj.gameObject);
+                obj.transform.localPosition = vec;
+                obj.transform.localEulerAngles = rot;
                 if (isShowText)
                 {
                     obj.Initialize(((char)(i + 'A')).ToString(), -90);
@@ -59,8 +61,6 @@ public class FieldSide : MonoBehaviour
                 {
                     obj.Initialize(-90);
                 }
-                obj.transform.localPosition = vec;
-                obj.transform.localEulerAngles = rot;
             }
         }
 

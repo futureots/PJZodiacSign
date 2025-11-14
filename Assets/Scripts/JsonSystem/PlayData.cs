@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -14,7 +15,7 @@ public class PlayData
     public Dictionary<string, string> fieldEntities;
 
     /// <summary>
-    /// 배치하지 않았지만 보유한 플레이어 기물 정보
+    /// 배치하지 않은 보유중인 플레이어 기물 정보
     /// </summary>
     public List<string> handEntities;
 
@@ -32,7 +33,10 @@ public class PlayData
     // 현재 위치한 지역 아이디
     public int stageLevel;
 
+    public float time;
 
+    
+    public DateTime startTime;
 
     //파일에서 읽어올 때 호출됨
     public PlayData()
@@ -53,6 +57,17 @@ public class PlayData
         handEntities.Add("WhitePawn+2");
         */
         #endregion
+    }
+
+    public void Initialize()
+    {
+        startTime = DateTime.Now;
+    }
+    public void End()
+    {
+        var endTime = DateTime.Now;
+        var timeGap = endTime - startTime;
+        
     }
 
     static JsonSerializerSettings serializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };

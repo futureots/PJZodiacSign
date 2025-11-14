@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1371268057927993528, guid: 7f9b9c097e1ab3d49aae9ad2d62c0103, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,8 +107,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7f9b9c097e1ab3d49aae9ad2d62c0103, type: 2}
-  m_sharedMaterial: {fileID: 1371268057927993528, guid: 7f9b9c097e1ab3d49aae9ad2d62c0103, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -322,8 +322,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 5, z: 10}
-  m_Center: {x: 0, y: -2.5, z: 0}
+  m_Size: {x: 3.3, y: 1, z: 2}
+  m_Center: {x: -0.65, y: -0.5, z: 0}
 --- !u!114 &1703809058762160059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,4 +337,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SideTile
   meshObj: {fileID: 1554764847798303977}
-  text: {fileID: 1674314940489668675}
+  textObj: {fileID: 1375991758609250344}
