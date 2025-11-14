@@ -9,7 +9,7 @@ public class NotificationUI : MonoBehaviour
     {
         notificationText.text = text;
         var sequence = DOTween.Sequence()
-            .Append(transform.DOScale(Vector3.one*0.2f, 0.3f)).SetEase(Ease.InOutQuad)
+            .Append(transform.DOScale(Vector3.one, 0.3f)).SetEase(Ease.InOutQuad)
             .AppendInterval(0.7f)
             .Append(transform.DOScale(Vector3.zero, 0.3f)).SetEase(Ease.InOutQuad);
     }

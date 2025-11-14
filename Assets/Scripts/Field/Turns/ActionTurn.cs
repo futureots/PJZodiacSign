@@ -39,7 +39,7 @@ public class ActionTurn : ITurn
         onCommandExecuted?.Invoke(cmd);
 
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
     }
 
 }

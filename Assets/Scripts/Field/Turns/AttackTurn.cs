@@ -43,7 +43,7 @@ public class AttackTurn : ITurn
         }
 
         // 대기시간
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
 
     }

@@ -28,7 +28,7 @@ MonoBehaviour:
   power: 1
   bonusHp: 6
   bonusPower: 0
-  skill: {fileID: 0}
+  skill: {fileID: 11400000, guid: 8a70cdc3cda463846b4e5b2710402b0d, type: 2}
   energy: 0
   maxEnergy: 8
   hpPanelPosition: {x: 0, y: 2.3, z: 0}
