@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -10,6 +11,11 @@ public class GameManager : MonoBehaviour
     // 0번은 플레이어 1번은 적AI
     public Agent[] agents;
 
+    [SerializeField]
+    int endLevel;
+    [SerializeField]
+    GameOverUI gameOverUI;
+    
 
     //public EntityFactory entityInstaller;
 
@@ -18,6 +24,15 @@ public class GameManager : MonoBehaviour
     public TeamColorTable teamColorTable;
 
     public static GameManager Instance { get; private set; }
+
+    public int level { get; private set; }
+
+    [SerializeField] Field _field;
+    public Field field
+    {
+        get { return _field; }
+    }
+
     private void Awake()
     {
         Instance = this;
@@ -27,18 +42,14 @@ public class GameManager : MonoBehaviour
     {
         dataManager.SaveAllData("data");
         StartGame();
+        gameOverUI.onEnd += EndGame;
+        gameOverUI.onContinue += GoNext;
     }
     public Agent GetOppositeAgent(Agent agent)
     {
         return agent == agents[0] ? agents[1] : agents[0];
     }
-    public int level { get; private set; }
 
-    [SerializeField] Field _field;
-    public Field field
-    {
-        get { return _field; }
-    }
 
     #region GameStart
 
@@ -74,7 +85,12 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         Debug.Log("게임 종료");
-        // 게임 종료 처리 로직 추가
+        // 게임 종료 처리 로직 추가(데이터 제거)
+        SceneManager.LoadScene(0);
+    }
+    void GoNext()
+    {
+        StartCoroutine(GoNextLevel());
     }
     
     IEnumerator GoNextLevel()
@@ -130,14 +146,25 @@ public class GameManager : MonoBehaviour
             dataManager.SetData(winner.UpdateAgentData(), level);
             dataManager.SaveAllData("Data");
             
-            // 다음 레벨로 진행
-            StartCoroutine(GoNextLevel());
+            if(level == endLevel)
+            {
+                gameOverUI.gameObject.SetActive(true);
+                gameOverUI.Initialize(true);
+                //일단 게임 오버 창 키고, 계속하기 입력 시 다음 레벨로 진행
+            }
+            else
+            {
+                // 다음 레벨로 진행
+                GoNext();
+            }
             return true;
         }
         else
         {
             Debug.Log("게임 오버...");
-            EndGame();
+            // 게임 오버창 키고, 메인으로 돌아가는 기능만 선택 가능
+            gameOverUI.gameObject.SetActive(true);
+            gameOverUI.Initialize();
             return false;
         }
     }
