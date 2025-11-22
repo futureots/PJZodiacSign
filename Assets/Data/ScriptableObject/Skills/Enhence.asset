@@ -15,3 +15,4 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: 395fe610317dbca4e9b7f2cd4c50a82d, type: 3}
   skillName: "\uAC15\uD654"
   skillDescription: "\uB300\uC0C1\uC758 \uB808\uBCA8\uC744 1 \uC99D\uAC00\uC2DC\uD0A8\uB2E4."
+  conditions: []
