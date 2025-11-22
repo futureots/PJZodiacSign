@@ -15,7 +15,8 @@ public class FieldController : MonoBehaviour
     
     public void LoadField()
     {
-        
+        // TODO: 필드에 필요한 정보 전달
+        LevelManager.Instance.Load();
     }
     
     #endregion
@@ -56,11 +57,20 @@ public class FieldController : MonoBehaviour
     /// Initiate Controller
     /// </summary>
     /// <remarks>필드, 상점 주입받고 전투 Model을 초기화</remarks>
-    public void Init(Field field, Shop shop = null)
+    public void Init(StageData data)
     {
-        this.field = field;
-        this.shop = shop;
-
+        /* 레벨 데이터로 씬 로드 준비
+         * - 에이전트 목록 확인 및 생성
+         * - 전투 정보 정리 (상점아이템, 특수조건, 기믹 등)
+         * - 필드 전달용 정보 정리
+         *  - 에이전트별 기물 정보
+         *  - 상점아이템 목록
+         *  - 특수타일 정보
+         * - 필드 로드
+         */
         commandSystem = new();
+        
+        
+        // TODO: 필드 주입받기
     }
 }

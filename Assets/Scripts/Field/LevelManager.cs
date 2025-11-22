@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
     /*
      * 레벨 생성 관리자
@@ -12,15 +13,19 @@ public class LevelManager : MonoBehaviour
 
     public bool loadFinished = false;
 
-    public void Init( /*LevelData data*/)
+    public void Init( /*LevelData data*/ string levelData)
     {
         loadFinished = false;
         
-        
+        // TODO: LevelData 확인 후 씬 로드
+        SceneManager.LoadScene(levelData);
+        // TODO: 데이터 전달
     }
 
-    private void Load()
+    public void Load()
     {
-        
+        /* TODO: 컨트롤러에 따라 필드 로드
+         * - 
+        */ 
     }
 }
