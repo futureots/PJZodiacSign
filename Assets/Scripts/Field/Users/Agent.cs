@@ -5,18 +5,21 @@ using UnityEngine;
 public abstract class Agent : MonoBehaviour
 {
     public Team team { get; protected set; }
+    
     protected void Awake()
     {
         team = GetComponent<Team>();
         controller = GetComponent<EntityController>();
         inventory = GetComponent<Inventory>();
     }
+    
     #region Phase
     /// <summary>
     /// 정비 페이즈 시작
     /// </summary>
     /// <param name="level">현재 레벨</param>
     public abstract void SetRepairPhase(int level, Action call);
+    
     /// <summary>
     /// 정비 페이즈 종료
     /// </summary>
@@ -29,6 +32,7 @@ public abstract class Agent : MonoBehaviour
     /// 전투 페이즈 시작
     /// </summary>
     public virtual void SetBattlePhase() { }
+    
     /// <summary>
     /// 전투 페이즈 종료
     /// </summary>
@@ -39,9 +43,9 @@ public abstract class Agent : MonoBehaviour
     /// </summary>
     /// <param name="call"></param>
     public virtual void SetActionTurn(Action call) { }
-
-
+    
     #endregion
+    
     /// <summary>
     /// 현재 controller가 보유중인 커맨드 반환
     /// </summary>
@@ -54,22 +58,24 @@ public abstract class Agent : MonoBehaviour
 
     // 컨트롤러
     public EntityController controller { get; protected set; } 
+    
     public Inventory inventory { get; protected set; }
 
-    int credit;
     public int Credit
     {
-        get { return credit; }
+        get => data.credit;
         set {
-            credit = value;
-            onCreditChanged?.Invoke(credit);
+            data.credit = value;
+            onCreditChanged?.Invoke(data.credit);
         }
     }
     public Action<int> onCreditChanged;
 
     #region AgentData
+    
     // 데이터 컨테이너(인벤토리는 사용 X)
     protected AgentData data;
+    
     public AgentData UpdateAgentData()
     {
         // 인벤토리 데이터는 저장 직전 불러오기
@@ -89,7 +95,7 @@ public abstract class Agent : MonoBehaviour
         Credit = agentData.credit;
     }
     
-    
+    // TODO: 커맨드 생성 요청 방식으로 변경
     /// <summary>
     /// 기물 소환
     /// </summary>
