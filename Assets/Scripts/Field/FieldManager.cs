@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Field : MonoBehaviour
+public class FieldManager : MonoBehaviour
 {
     /**
-     * 
+     * 필드 1개를 관리 (전투필드, 리소스필드)
      */
+    
     [Header("Materials")]
     public List<Material> tileMaterial;
 

@@ -16,7 +16,7 @@ public class FieldController : MonoBehaviour
     public void LoadField()
     {
         // TODO: 필드에 필요한 정보 전달
-        LevelManager.Instance.Load();
+        StageManager.Instance.Load();
     }
     
     #endregion
