@@ -106,7 +106,7 @@ public class EntityInfoUI : MonoBehaviour
                     if (_skill.skillData != null)
                     {
                         // 스킬의 조건을 만족했는지 확인하는 조건문
-                        if (true)
+                        if (_skill.IsUsable())
                         {
                             isSkillUsable = true;
                         }
