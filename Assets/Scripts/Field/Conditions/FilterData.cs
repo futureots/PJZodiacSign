@@ -1,7 +1,7 @@
 using UnityEngine;
 using Condition;
 
-public abstract class ConditionData : ScriptableObject, IConditionData
+public abstract class FilterData : ScriptableObject, IFilterData
 {
     [SerializeField]
     protected ConditionType _conditionType;
@@ -12,5 +12,5 @@ public abstract class ConditionData : ScriptableObject, IConditionData
         }
     }
 
-    public abstract ConditionArgs QueryConditions(ConditionArgs args);
+    public abstract ConditionArgs FilterConditions(ConditionArgs args, params ConditionArgs[] prevArgs);
 }

@@ -75,7 +75,7 @@ public class InputManager : Agent
     /// <param name="context"></param>
     void StartClick(InputAction.CallbackContext context)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
 
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 레이캐스트 기물, (타일) UI 표시 
@@ -100,7 +100,7 @@ public class InputManager : Agent
     /// <param name="context"></param>
     void MoveMouse(InputAction.CallbackContext context)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
 
         PointerPosition = context.ReadValue<Vector2>();
         OnMouseMove?.Invoke(PointerPosition);

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Utils
@@ -84,4 +82,13 @@ public struct intVector2
     #endregion
 }
 
+[Serializable]
+public class Row<T>
+{
+    public Row()
+    {
+        list = new List<T>();
+    }
+    public List<T> list;
+}
 

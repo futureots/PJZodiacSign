@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 
 
@@ -359,12 +358,4 @@ public class Field : MonoBehaviour
         return emptyTiles;
     }
 }
-[System.Serializable]
-public class Row<T>
-{
-    public Row()
-    {
-        list = new List<T>();
-    }
-    public List<T> list;
-}
+
