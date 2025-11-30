@@ -12,14 +12,6 @@ public class FieldController : MonoBehaviour
     #region FieldLoad
     private Field field;   // Inject
     private Shop shop;  // Inject
-
-    public void SetLoadingUI(bool set)
-    {
-        // NOTE: 로딩씬 Script 추가 시 해당 로직 추가로 변경
-        GameObject LoadingUI = transform.GetChild(0).gameObject;
-        
-        LoadingUI.SetActive(set);
-    }
     
     public void LoadField()
     {

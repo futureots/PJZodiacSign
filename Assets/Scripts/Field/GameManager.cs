@@ -6,13 +6,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : SingletonObject<GameManager>
 {
     DataManager dataManager;
+    [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
 
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         dataManager = this.GetOrAddComponent<DataManager>();
     }
     
@@ -26,39 +28,47 @@ public class GameManager : Singleton<GameManager>
     /// <remarks>필드모델 + 컨트롤러로 전투씬 로드 및 진입</remarks>
     public void EnterBattle(string fieldModel, string fieldController)
     {
-        
+        StartCoroutine(LoadBattleScene(fieldModel, fieldController));
     }
 
-    private IEnumerator LoadBattleScene(string model, string controller)
+    private IEnumerator LoadBattleScene(string modelName, string controllerName)
     {
-        SceneManager.LoadScene(controller);
-        Scene controllerScene = SceneManager.GetActiveScene();
-
-        // Find FieldController
-        FieldController fieldController = null;
-        foreach (GameObject obj in controllerScene.GetRootGameObjects())
-        {
-            fieldController = obj.GetComponentInChildren<FieldController>();
-
-            if (!fieldController)
-            {
-                break;
-            }
+        // Set Loading UI
+        LoadingUI.SetActive(true);
+        
+        // Load Scenes
+        AsyncOperation modelOp = SceneManager.LoadSceneAsync(modelName, LoadSceneMode.Single);
+        if (modelOp == null) { 
+            Debug.LogError($"Failed to Load Model : {modelName}");
+            yield break;
         }
+        AsyncOperation controllerOp = SceneManager.LoadSceneAsync(controllerName, LoadSceneMode.Additive);
+        if (controllerOp == null) { 
+            Debug.LogError($"Failed to Load Controller : {controllerName}");
+            yield break;
+        }
+        
+        // Wait for Scene Load
+        yield return new WaitUntil(() => modelOp.isDone && controllerOp.isDone);
+        yield return null;                 
+        
+        // Find FieldController
+        Scene controllerScene = SceneManager.GetSceneByName(controllerName);
+        FieldController fieldController = FindFirstObjectByType<FieldController>();
+        
         // Fail to Load Controller
         if (!fieldController)
         {
-            Debug.LogError($"Failed to Load Controller : {controller}");
+            Debug.LogError($"Failed to Load Controller : {fieldController}");
             yield break;        // INSTANT KILL
         }
         
-        // Set Loading UI
-        fieldController.SetLoadingUI(true);
-        // loading Model Scene
-        AsyncOperation modelLoadOps = SceneManager.LoadSceneAsync(model, LoadSceneMode.Additive);
-        yield return new WaitUntil(() => modelLoadOps.isDone);
+
+        // TODO: Controller씬에 Service 주입
+
+        // TODO: 전투 Init 실행
         
-        
+        LoadingUI.SetActive(false);
     }
 
     /// <summary>

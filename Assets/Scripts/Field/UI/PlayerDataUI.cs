@@ -31,7 +31,7 @@ public class PlayerDataUI : MonoBehaviour
 
     private void OnEnable()
     {
-        agent.onCreditChanged += UpdateCredit;
+        // agent.onCreditChanged += UpdateCredit;
         // GameManager.onNextLevel += UpdateLevel;
         
     }

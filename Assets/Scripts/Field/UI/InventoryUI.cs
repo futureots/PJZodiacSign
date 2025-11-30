@@ -64,7 +64,7 @@ public class InventoryUI : MonoBehaviour
         // 인벤토리 데이터 불러와서 표시
         SetInventory();
 
-        inventory.OnItemChanged += UpdateInventory;
+        // inventory.OnItemChanged += UpdateInventory;
         _inputManager.OnObjectClicked.AddListener((x) =>
         {
             actPanel.gameObject.SetActive(false);

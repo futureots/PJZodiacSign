@@ -111,13 +111,4 @@ public class ShopUI : MonoBehaviour
             }
         }
     }
-
-    private void OnEnable()
-    {
-        phaseManageService.onPhaseChanged += PhaseChange;
-    }
-    private void OnDisable()
-    {
-        phaseManageService.onPhaseChanged -= PhaseChange;
-    }
 }
