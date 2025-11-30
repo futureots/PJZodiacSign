@@ -12,15 +12,9 @@ public class StageManager : Singleton<StageManager>
      */
 
     public int level {  get; private set; }
-    public bool loadFinished = false;
-    
-    public HpPanelManager hpManager;
-    public TeamColorTable teamColorTable;
 
     public void Init( /*LevelData data*/ string levelData)
     {
-        loadFinished = false;
-        
         // TODO: LevelData 확인 후 씬 로드
         SceneManager.LoadScene(levelData);
         // TODO: 데이터 전달

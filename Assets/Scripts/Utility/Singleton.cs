@@ -65,6 +65,7 @@ public class SingletonObject<T> : MonoBehaviour where T : MonoBehaviour
 
     public virtual void Awake()
     {
+        if (Instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
     }
 }

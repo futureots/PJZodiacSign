@@ -4032,7 +4032,7 @@ GameObject:
   - component: {fileID: 573551414}
   - component: {fileID: 573551415}
   m_Layer: 0
-  m_Name: LevelManager
+  m_Name: StageManaer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
