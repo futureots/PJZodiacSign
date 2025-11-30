@@ -1,5 +1,7 @@
 
-public class Shop
+using UnityEngine;
+
+public class Shop : MonoBehaviour
 {
     
 }

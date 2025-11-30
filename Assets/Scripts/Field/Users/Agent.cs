@@ -91,7 +91,7 @@ public abstract class Agent : MonoBehaviour
     public void SetData(AgentData agentData)
     {
         data = agentData;
-        inventory.SetItem(agentData.items);
+        // inventory.SetItem(agentData.items);
         Credit = agentData.credit;
     }
     

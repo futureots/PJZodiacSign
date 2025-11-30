@@ -122,6 +122,7 @@ public struct AgentData
     public Dictionary<int, EntityLevelData> fieldEntities;
     public Dictionary<int,ItemData> items;
 }
+
 [System.Serializable]
 public struct EntityLevelData
 {

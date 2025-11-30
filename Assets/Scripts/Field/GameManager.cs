@@ -20,17 +20,19 @@ public class GameManager : SingletonObject<GameManager>
     /// <summary>
     /// 전투 스테이지 진입
     /// </summary>
-    /// <param name="modelName">Field Name to Use (SceneNames)</param>
-    /// <param name="controllerName">Field Controller to Use(SceneNames)</param>
-    public void EnterBattle(string modelName, string controllerName)
+    /// <param name="stageData">Stage data to Load</param>
+    public void EnterBattle(StageData stageData)
     {
-        StartCoroutine(LoadBattleScene(modelName, controllerName));
+        StartCoroutine(LoadBattleScene(stageData));
     }
 
     
     /// Model-Controller Scene async Load Routine
-    private IEnumerator LoadBattleScene(string modelName, string controllerName)
+    private IEnumerator LoadBattleScene(StageData stageData)
     {
+        string modelName = stageData.modelName;
+        string controllerName = stageData.controllerName;
+        
         // Set Loading UI
         LoadingUI.SetActive(true);
         
@@ -40,28 +42,32 @@ public class GameManager : SingletonObject<GameManager>
             Debug.LogError($"Failed to Load Model : {modelName}");
             yield break;
         }
+        
         AsyncOperation controllerOp = SceneManager.LoadSceneAsync(controllerName, LoadSceneMode.Additive);
         if (controllerOp == null) { 
             Debug.LogError($"Failed to Load Controller : {controllerName}");
             yield break;
         }
+        controllerOp.allowSceneActivation = false;
         
         // Wait for Scene Load
+        yield return new WaitUntil(() => modelOp.progress >= 0.9f && controllerOp.progress >= 0.9f);
+        
+        // Start Loaded Scene
+        controllerOp.allowSceneActivation = true;
         yield return new WaitUntil(() => modelOp.isDone && controllerOp.isDone);
         yield return null;                 
         
         // Find FieldController in Controller Scene
         FieldController fieldController = FindFirstObjectByType<FieldController>();
-        
-        // Fail to Load Controller
         if (!fieldController)
         {
             Debug.LogError($"Failed to Load Controller : {fieldController}");
             yield break;
         }
-
-        // TODO: 전투 Init 실행
         
+        // Init FieldController
+        fieldController.Init(stageData);
         LoadingUI.SetActive(false);
     }
 
@@ -76,7 +82,7 @@ public class GameManager : SingletonObject<GameManager>
     {
         Debug.Log("게임 종료");
         // TODO: 게임 종료 처리 로직 추가
-        EnterBattle(SceneName.FieldModel.Default, SceneName.FieldController.Default);       // 기본 씬 재로드
+        EnterBattle(ScriptableObject.CreateInstance<StageData>());       // 기본 씬 재로드
     }
     
     #endregion

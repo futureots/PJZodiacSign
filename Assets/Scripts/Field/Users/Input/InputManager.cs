@@ -97,7 +97,7 @@ public class InputManager : Agent
     /// <param name="context"></param>
     void MoveMouse(InputAction.CallbackContext context)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        // if (EventSystem.current.IsPointerOverGameObject()) return;
 
         PointerPosition = context.ReadValue<Vector2>();
         OnMouseMove?.Invoke(PointerPosition);

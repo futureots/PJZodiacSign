@@ -4,45 +4,37 @@ using UnityEngine;
 public class FieldController : MonoBehaviour
 {
     /** FieldController
-     * 필드 로드
      * 레벨 기믹 수행
+     * 페이즈-턴 운영
      * Agent 생성 및 필드 시스템과 Command 통신
      */
-    
-    #region FieldLoad
-    private Field field;   // Inject
-    private Shop shop;  // Inject
-    
-    public void LoadField()
-    {
-        // TODO: 필드에 필요한 정보 전달
-        StageManager.Instance.Load();
-    }
-    
-    #endregion
-    
-    #region TurnManage
-    public uint turnCount;
-    public ITurn curState;
-    
-    
-    public void SetState(ITurn state)
-    {
+    protected StageManager stageManager;
 
-        curState = state;
+    protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
+    
+    #region PhaseManager
+    
+    [SerializeField] protected uint turnCount;
+    [SerializeField] public List<Phase> phases;
+    public Phase currentPhase;
+    
+    public virtual void SetPhase(Phase phase)
+    {
+        
     }
     
     #endregion
     
     #region Commands
-    public List<Command> commandList;
-    private CommandSystem commandSystem;    // Attach
     
-    public void SendCommands()
+    public List<Command> commandList;
+    protected CommandSystem commandSystem;    // Attach
+    
+    public virtual void SendCommands()
     {
         //field에 커맨드 전송 및 콜백 함수 설정
     }
-    void OnCommandExecuted()
+    public virtual void OnCommandExecuted()
     {
 
     }
@@ -50,27 +42,40 @@ public class FieldController : MonoBehaviour
     #endregion
     
     #region Agents
+
+    public Agent localPlayer;
     public List<Agent> agents;
+    
     #endregion
 
     /// <summary>
     /// Initiate Controller
     /// </summary>
     /// <remarks>필드, 상점 주입받고 전투 Model을 초기화</remarks>
-    public void Init(StageData data)
+    public virtual void Init(StageData data)
     {
         /* 레벨 데이터로 씬 로드 준비
          * - 에이전트 목록 확인 및 생성
-         * - 전투 정보 정리 (상점아이템, 특수조건, 기믹 등)
-         * - 필드 전달용 정보 정리
-         *  - 에이전트별 기물 정보
-         *  - 상점아이템 목록
-         *  - 특수타일 정보
-         * - 필드 로드
          */
+        
+        // Load Field
+        stageManager = StageManager.Instance;
+        stageManager.Init(data);
+        
+        // 에이전트 생성 및 초기화
+        localPlayer.SetData(data.player);
+        for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
+        {
+            agents[i].SetData(data.agents[i]);
+        }
         commandSystem = new();
+        commandList = new();
         
+        // TODO: 기믹 세팅
+        SpecialRule = data.specialRule;
         
-        // TODO: 필드 주입받기
+        // 턴 초기화
+        turnCount = 0;
+        currentPhase = phases[0];
     }
 }

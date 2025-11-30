@@ -1,13 +1,25 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-[System.Serializable]
-public class StageData
+[CreateAssetMenu(fileName = "Stage", menuName = "StageData")]
+public class StageData :  ScriptableObject
 {
-    // 스테이지 1개 진행에 필요한 정보
+    /**
+     * 스테이지 1개 진행에 필요한 정보
+     */
+    
+    // Stage Config
+    public string modelName = SceneName.FieldModel.Default;
+    public string controllerName = SceneName.FieldController.Default;
 
-    public AgentData[] agents = new AgentData[2];
+    // Player and Agents
+    public AgentData player = new AgentData();
+    public List<AgentData> agents = new List<AgentData>();
 
-    public ShopTable shopTable;
+    // Field System Data
+    // public ShopTable shopTable;
+    // TODO: 특수 타일, 기믹 오브젝트 등 타일 정보
 
-    public List<string> SpecialRule = new();
+    // Special Rules
+    public List<string> specialRule = new();
 }

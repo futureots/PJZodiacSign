@@ -1,23 +1,21 @@
+
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class StageManager : Singleton<StageManager>
 {
     /*
-     * 스테이지 레벨 1개 생성 관리자
-     * - 레벨 로드시 데이터를 GameManager로부터 전달받아 레벨 생성
-     * - Controller씬 로드
+     * 스테이지 레벨 1개 관리
      * - 필요 데이터 전달, 의존성 주입
      * - FieldController Init 수행
      */
+    [SerializeField] private Shop shop;
+    [SerializeField] private EntityFactory entityFactory;
 
-    public int level {  get; private set; }
-
-    public void Init( /*LevelData data*/ string levelData)
+    public void Init( StageData stageData)
     {
-        // TODO: LevelData 확인 후 씬 로드
-        SceneManager.LoadScene(levelData);
-        // TODO: 데이터 전달
+        // shop.Init(stageData.shopTable);
+        // 
     }
 
     public void Load()

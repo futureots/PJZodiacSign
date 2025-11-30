@@ -5,7 +5,9 @@ using UnityEngine;
 public class Field : MonoBehaviour
 {
     /**
-     * 필드 1개를 관리 (전투필드, 리소스필드)
+     * 필드 1개를 관리
+     * - 타일 머터리얼
+     * - 타일 크기 및 각 객체
      */
     
     [Header("Materials")]
@@ -14,7 +16,7 @@ public class Field : MonoBehaviour
     public int row, column;
     public GameObject tilePrefab;
 
-    Tile[,] _tiles;
+    private Tile[,] _tiles;
     public Tile[,] tiles
     {
         get
@@ -315,6 +317,7 @@ public class Field : MonoBehaviour
         return emptyTiles;
     }
 }
+
 [System.Serializable]
 public class Row<T>
 {

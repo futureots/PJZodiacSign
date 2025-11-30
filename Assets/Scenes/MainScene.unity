@@ -11161,8 +11161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644ff29f7a4694412b72890d455e9658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  model: FieldModel
-  controller: BaseBattle
+  stageData: {fileID: 11400000, guid: 46b2d6ace184e3148baf6222d3292a7d, type: 2}
 --- !u!1 &1994002323
 GameObject:
   m_ObjectHideFlags: 0

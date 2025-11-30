@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class StageEntry : MonoBehaviour
 {
-    public string model;
-    public string controller;
+    [SerializeField]
+    public StageData stageData;
 
     public void EnterBattle()
     {
@@ -13,6 +13,6 @@ public class StageEntry : MonoBehaviour
             return;
         }
         
-        GameManager.Instance.EnterBattle(model, controller);
+        GameManager.Instance.EnterBattle(stageData);
     }
 }
