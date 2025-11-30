@@ -27,7 +27,7 @@ public class HpPanelManager : MonoBehaviour
         if (bar == null) return;
 
         bar.SetEntity(target);
-        bar.hpBar.gaugeBar.color = GameManager.Instance.teamColorTable.teamColors[target.team.teamNumber];
+        // bar.hpBar.gaugeBar.color = GameManager.Instance.teamColorTable.teamColors[target.team.teamNumber];
         
     }
 

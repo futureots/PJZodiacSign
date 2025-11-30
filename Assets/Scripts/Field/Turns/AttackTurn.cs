@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-
 using UnityEngine;
 
 public class AttackTurn : ITurn
@@ -21,31 +20,29 @@ public class AttackTurn : ITurn
     }
     public IEnumerator AttackCoroutine()
     {
-        // 현재 전투 중인 필드;
-        Field curField = GameManager.Instance.field;
-        foreach(var entity in agent.controller.fieldEntities)
-        {
-            entity.Attack();
-        }
-
-        // 중립 오브젝트 실행
-        foreach (var obj in curField.GetOccupiedObjects())
-        {
-            if (obj.GetComponent<Team>())
-            {
-                continue;
-            }
-            var attackable = obj.GetComponent<IAttackable>();
-            if (attackable != null)
-            {
-                attackable.Attack();
-            }
-        }
-
-        // 대기시간
+        // // 현재 전투 중인 필드;
+        // Field curField = GameManager.Instance.field;
+        // foreach(var entity in agent.controller.fieldEntities)
+        // {
+        //     entity.Attack();
+        // }
+        //
+        // // 중립 오브젝트 실행
+        // foreach (var obj in curField.GetOccupiedObjects())
+        // {
+        //     if (obj.GetComponent<Team>())
+        //     {
+        //         continue;
+        //     }
+        //     var attackable = obj.GetComponent<IAttackable>();
+        //     if (attackable != null)
+        //     {
+        //         attackable.Attack();
+        //     }
+        // }
+        //
+        // // 대기시간
         yield return new WaitForSeconds(2f);
-
-
     }
 
     public string GetTurnInfo()

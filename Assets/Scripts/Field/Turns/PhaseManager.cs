@@ -68,11 +68,11 @@ public class PhaseManager : MonoBehaviour, IPhaseManageService
     }
     private void OnEnable()
     {
-        GameManager.onNextLevel += NextLevel;
+        // GameManager.onNextLevel += NextLevel;
     }
     private void OnDisable()
     {
-        GameManager.onNextLevel -= NextLevel;
+        // GameManager.onNextLevel -= NextLevel;
     }
 }
 [Flags]

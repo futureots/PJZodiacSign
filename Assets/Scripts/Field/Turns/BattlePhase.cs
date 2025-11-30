@@ -36,35 +36,35 @@ public class BattlePhase : IPhase
     
     private void AddBattleTurns()
     {
-        // 각 에이전트마다 ActionTurn과 AttackTurn을 추가
-        foreach (var agent in GameManager.Instance.agents)
-        {
-            var actionTurn = new ActionTurn(agent);
-            turns.AddLast(actionTurn);
-            
-            var attackTurn = new AttackTurn(GameManager.Instance.GetOppositeAgent(agent));
-            turns.AddLast(attackTurn);
-
-            // 현재 attackTurn내부에 해당 함수 실행 중 필요 시 사용(굳이 없을 듯)
-            /*
-            // 중립 오브젝트 공격 턴 추가
-            var calcTurn = new CalculationTurn();
-            turns.AddLast(calcTurn);
-            */
-        }
+        // // 각 에이전트마다 ActionTurn과 AttackTurn을 추가
+        // foreach (var agent in GameManager.Instance.agents)
+        // {
+        //     var actionTurn = new ActionTurn(agent);
+        //     turns.AddLast(actionTurn);
+        //     
+        //     var attackTurn = new AttackTurn(GameManager.Instance.GetOppositeAgent(agent));
+        //     turns.AddLast(attackTurn);
+        //
+        //     // 현재 attackTurn내부에 해당 함수 실행 중 필요 시 사용(굳이 없을 듯)
+        //     /*
+        //     // 중립 오브젝트 공격 턴 추가
+        //     var calcTurn = new CalculationTurn();
+        //     turns.AddLast(calcTurn);
+        //     */
+        // }
     }
     
     public void StartPhase(Action onPhaseEnd)
     {
-        GameManager.Instance.SetEntityHpBar();
-
-        this.onPhaseEnd = onPhaseEnd;
-        Debug.Log("전투 페이즈 시작");
-        foreach (var agent in GameManager.Instance.agents)
-        {
-            agent.SetBattlePhase();
-        }
-        StartNextTurn();
+        // GameManager.Instance.SetEntityHpBar();
+        //
+        // this.onPhaseEnd = onPhaseEnd;
+        // Debug.Log("전투 페이즈 시작");
+        // foreach (var agent in GameManager.Instance.agents)
+        // {
+        //     agent.SetBattlePhase();
+        // }
+        // StartNextTurn();
     
     }
     
@@ -120,27 +120,27 @@ public class BattlePhase : IPhase
     // 턴 종료 시 사망한 기물 정리 및 승패 확인
     private void OnCombatTurnComplete()
     {
-        field.RemoveDeadEntities();
-
-        //bool isEnd = GameManager.Instance.CheckGameEnd();
-
-        if(GameManager.Instance.HasGameEnded(out Agent winner))
-        {
-            foreach (var agent in GameManager.Instance.agents)
-            {
-                agent.EndBattlePhase();
-            }
-
-            if (!GameManager.Instance.HandleBattleVictory(winner))
-            {
-                // 페이즈 종료
-                onPhaseEnd?.Invoke();
-            }
-        }
-        else
-        {
-            // 다음 전투 턴 시작
-            StartNextTurn();
-        }
+        // field.RemoveDeadEntities();
+        //
+        // //bool isEnd = GameManager.Instance.CheckGameEnd();
+        //
+        // if(GameManager.Instance.HasGameEnded(out Agent winner))
+        // {
+        //     foreach (var agent in GameManager.Instance.agents)
+        //     {
+        //         agent.EndBattlePhase();
+        //     }
+        //
+        //     if (!GameManager.Instance.HandleBattleVictory(winner))
+        //     {
+        //         // 페이즈 종료
+        //         onPhaseEnd?.Invoke();
+        //     }
+        // }
+        // else
+        // {
+        //     // 다음 전투 턴 시작
+        //     StartNextTurn();
+        // }
     }
 }

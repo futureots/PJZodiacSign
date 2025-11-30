@@ -81,20 +81,20 @@ public class EntityController : MonoBehaviour
     }
     public void SetMainField(Dictionary<int,EntityLevelData> fieldData)
     {
-        fieldEntities.Clear();
-
-        foreach (var item in fieldData)
-        {
-            var entity = EntityFactory.CreateEntity(item.Value.data, item.Value.level);
-            intVector2 pos = intVector2.Decode(item.Key);
-
-            var tile = GameManager.Instance.field.GetTile(pos, isReflect);
-            PlaceEntity(entity, tile);
-
-            entity.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
-
-            AddFieldEntity(entity);
-        }
+        // fieldEntities.Clear();
+        //
+        // foreach (var item in fieldData)
+        // {
+        //     var entity = EntityFactory.CreateEntity(item.Value.data, item.Value.level);
+        //     intVector2 pos = intVector2.Decode(item.Key);
+        //
+        //     var tile = GameManager.Instance.field.GetTile(pos, isReflect);
+        //     PlaceEntity(entity, tile);
+        //
+        //     entity.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
+        //
+        //     AddFieldEntity(entity);
+        // }
     }
     public virtual void DisposeInstantField()
     {

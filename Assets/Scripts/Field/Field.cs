@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class FieldManager : MonoBehaviour
+public class Field : MonoBehaviour
 {
     /**
      * 필드 1개를 관리 (전투필드, 리소스필드)
