@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : Singleton<GameManager>
@@ -25,6 +26,38 @@ public class GameManager : Singleton<GameManager>
     /// <remarks>필드모델 + 컨트롤러로 전투씬 로드 및 진입</remarks>
     public void EnterBattle(string fieldModel, string fieldController)
     {
+        
+    }
+
+    private IEnumerator LoadBattleScene(string model, string controller)
+    {
+        SceneManager.LoadScene(controller);
+        Scene controllerScene = SceneManager.GetActiveScene();
+
+        // Find FieldController
+        FieldController fieldController = null;
+        foreach (GameObject obj in controllerScene.GetRootGameObjects())
+        {
+            fieldController = obj.GetComponentInChildren<FieldController>();
+
+            if (!fieldController)
+            {
+                break;
+            }
+        }
+        // Fail to Load Controller
+        if (!fieldController)
+        {
+            Debug.LogError($"Failed to Load Controller : {controller}");
+            yield break;        // INSTANT KILL
+        }
+        
+        // Set Loading UI
+        fieldController.SetLoadingUI(true);
+        // loading Model Scene
+        AsyncOperation modelLoadOps = SceneManager.LoadSceneAsync(model, LoadSceneMode.Additive);
+        yield return new WaitUntil(() => modelLoadOps.isDone);
+        
         
     }
 
