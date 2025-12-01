@@ -63,10 +63,10 @@ public class FieldController : MonoBehaviour
         stageManager.Init(data);
         
         // 에이전트 생성 및 초기화
-        localPlayer.SetData(data.player);
+        // localPlayer.SetData(data.player);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
         {
-            agents[i].SetData(data.agents[i]);
+            // agents[i].SetData(data.agents[i]);
         }
         commandSystem = new();
         commandList = new();

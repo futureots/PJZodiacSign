@@ -13,8 +13,11 @@ public class StageData :  ScriptableObject
     public string controllerName = SceneName.FieldController.Default;
 
     // Player and Agents
-    public AgentData player = new AgentData();
-    public List<AgentData> agents = new List<AgentData>();
+    // public AgentData player = new AgentData();
+    // public List<AgentData> agents = new List<AgentData>();
+    // TODO: AgentData 스크립터블오브젝트 내 참조 오류 해결
+    public string player = "DEFAULT";
+    public List<string> agents = new();
 
     // Field System Data
     // public ShopTable shopTable;
