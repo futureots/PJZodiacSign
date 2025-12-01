@@ -1,159 +1,96 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : SingletonObject<GameManager>
 {
-    public static Action<int> onNextLevel;
-    // 0번은 플레이어 1번은 적AI
-    public Agent[] agents;
-
-
-    public Agent GetOppositeAgent(Agent agent)
-    {
-        return agent == agents[0] ? agents[1] : agents[0];
-    }
-    public int level {  get; private set; }
+    private DataManager dataManager;
+    [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
+    private StageData currentStage = null;
     
-    [SerializeField] Field _field;
-    public Field field
+    public override void Awake()
     {
-        get { return _field; }
+        base.Awake();
+        // dataManager = this.GetOrAddComponent<DataManager>();     // TODO: 데이터 로드 로직 추가
+        // dataManager.LoadAllData();                   
     }
-
-    //public EntityFactory entityInstaller;
-
-    DataManager dataManager;
-    public HpPanelManager hpManager;
-    public TeamColorTable teamColorTable;
-
-    private void Awake()
-    {
-        dataManager = this.GetOrAddComponent<DataManager>();
-    }
-    private void Start()
-    {
-        StartGame();
-    }
-    #region GameStart
+    
+    #region BattleInit
 
     /// <summary>
-    /// 게임 시작 또는 다음 레벨(레벨이 증가했을 때)
+    /// 전투 스테이지 진입
     /// </summary>
-    public void StartGame()
+    /// <param name="stageData">Stage data to Load</param>
+    public void EnterBattle(StageData stageData)
     {
-        // 에이전트에 필요한 데이터를 설정하거나 로드
-        dataManager.LoadAllData("data");
-        var list = dataManager.GetData();
+        StartCoroutine(LoadBattleScene(stageData));
+    }
 
+    
+    /// Model-Controller Scene async Load Routine
+    private IEnumerator LoadBattleScene(StageData stageData)
+    {
+        string modelName = stageData.modelName;
+        string controllerName = stageData.controllerName;
         
-        for(int i = 0; i < list.Length; i++)
-        {
-            agents[i].SetData(list[i]);
+        // Set Loading UI
+        LoadingUI.SetActive(true);
+        
+        // Load Scenes
+        AsyncOperation modelOp = SceneManager.LoadSceneAsync(modelName, LoadSceneMode.Single);
+        if (modelOp == null) { 
+            Debug.LogError($"Failed to Load Model : {modelName}");
+            yield break;
         }
-        level = dataManager.playerData.stageLevel;
-
-        // 해당 레벨의 정비 페이즈 부터 시작(없을 경우 0레벨부터 시작)
-        var phaseManager = GetComponent<PhaseManager>();
-        if (phaseManager == null) return;
-        onNextLevel?.Invoke(level);
-        //phaseManager.NextLevel(dataManager.playerData.stageLevel);
+        
+        AsyncOperation controllerOp = SceneManager.LoadSceneAsync(controllerName, LoadSceneMode.Additive);
+        if (controllerOp == null) { 
+            Debug.LogError($"Failed to Load Controller : {controllerName}");
+            yield break;
+        }
+        controllerOp.allowSceneActivation = false;
+        
+        // Wait for Scene Load
+        yield return new WaitUntil(() => modelOp.progress >= 0.9f && controllerOp.progress >= 0.9f);
+        
+        // Start Loaded Scene
+        controllerOp.allowSceneActivation = true;
+        yield return new WaitUntil(() => modelOp.isDone && controllerOp.isDone);
+        yield return null;                 
+        
+        // Find FieldController in Controller Scene
+        FieldController fieldController = FindFirstObjectByType<FieldController>();
+        if (!fieldController)
+        {
+            Debug.LogError($"Failed to Load Controller : {fieldController}");
+            yield break;
+        }
+        
+        // Init FieldController
+        fieldController.Init(stageData);
+        
+        // Complete Loading
+        currentStage = stageData;
+        LoadingUI.SetActive(false);
     }
 
     #endregion
 
-    #region GameEnd
+    #region BattleEnd
+    
     /// <summary>
     /// 게임 종료 시 처리
     /// </summary>
-    void EndGame()
+    void ExitBattle ()
     {
         Debug.Log("게임 종료");
-        // 게임 종료 처리 로직 추가
-    }
-    
-    IEnumerator GoNextLevel()
-    {
-        level += 1;
-        yield return new WaitForSeconds(3);
-
-        // 이벤트 발생 전 Camera 관련 처리
-        if(hpManager != null) hpManager.ClearHpBar();
-
-        onNextLevel?.Invoke(level);
-    }
-    
-    
-    
-
-    
-    public bool HasGameEnded(out Agent winner)
-    {
-        var tiles = _field.GetTiles();
-        
-        // LINQ를 사용해서 필드에 남아있는 팀 번호들을 수집
-        var teams = tiles
-            .Where(t => !t.isEmpty)
-            .Select(t => t.occupiedObject.GetComponent<Team>())
-            .Where(t => t != null)
-            .Select(t => t.teamNumber)
-            .Distinct()
-            .ToList();
-        
-        // 팀이 하나만 남아있다면 승리 조건
-        if (teams.Count == 1)
+        // TODO: 게임 종료 처리 로직 추가
+        if (currentStage != null)
         {
-            // LINQ FirstOrDefault를 사용해서 해당 팀의 에이전트를 찾기
-            winner = agents.FirstOrDefault(a => a.team.teamNumber == teams[0]);
-            return winner != null;
-        }
-
-        winner = null;
-        return false;
-    }
-    
-    /// <summary>
-    /// 전투 승리 시 다음 레벨로 진행 (BattlePhase용)
-    /// </summary>
-    public bool HandleBattleVictory(Agent winner)
-    {
-        if (winner is InputManager)
-        {
-            Debug.Log("전투 승리! 다음 레벨로 진행합니다.");
-            
-            // 플레이어 데이터 저장
-            dataManager.SetData(winner.UpdateAgentData(), level);
-            dataManager.SaveAllData("Data");
-            
-            // 다음 레벨로 진행
-            StartCoroutine(GoNextLevel());
-            return true;
-        }
-        else
-        {
-            Debug.Log("게임 오버...");
-            EndGame();
-            return false;
+            EnterBattle(currentStage);       // 기본 씬 재로드
         }
     }
     
-
-    public void SetEntityHpBar()
-    {
-        if (hpManager == null) return;
-        foreach (var item in agents)
-        {
-            foreach(var entity in item.controller.fieldEntities)
-            {
-                hpManager.CreateHpBar(entity);
-            }
-        }
-    }
     #endregion
-
 }

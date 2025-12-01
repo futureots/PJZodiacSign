@@ -1,54 +1,81 @@
 using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class FieldController : MonoBehaviour
 {
-    [SerializeField] Field field;
+    /** FieldController
+     * 레벨 기믹 수행
+     * 페이즈-턴 운영
+     * Agent 생성 및 필드 시스템과 Command 통신
+     */
+    protected StageManager stageManager;
 
-    public ITurn curState;
+    protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
+    
+    #region PhaseManager
+    
+    [SerializeField] protected uint turnCount;
+    [SerializeField] public List<Phase> phases;
+    public Phase currentPhase;
+    
+    public virtual void SetPhase(Phase phase)
+    {
+        
+    }
+    
+    #endregion
+    
+    #region Commands
+    
     public List<Command> commandList;
-
-    public void Initialize(Field field)
-    {
-        this.field = field;
-    }
-
-    public void SetState(ITurn state)
-    {
-
-        curState = state;
-    }
-
-    public void SendCommands()
+    protected CommandSystem commandSystem;    // Attach
+    
+    public virtual void SendCommands()
     {
         //field에 커맨드 전송 및 콜백 함수 설정
     }
-    void OnCommandExecuted()
+    public virtual void OnCommandExecuted()
     {
 
+    }
+    
+    #endregion
+    
+    #region Agents
+
+    public Agent localPlayer;
+    public List<Agent> agents;
+    
+    #endregion
+
+    /// <summary>
+    /// Initiate Controller
+    /// </summary>
+    /// <remarks>필드, 상점 주입받고 전투 Model을 초기화</remarks>
+    public virtual void Init(StageData data)
+    {
+        /* 레벨 데이터로 씬 로드 준비
+         * - 에이전트 목록 확인 및 생성
+         */
+        
+        // Load Field
+        stageManager = StageManager.Instance;
+        stageManager.Init(data);
+        
+        // 에이전트 생성 및 초기화
+        // localPlayer.SetData(data.player);
+        for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
+        {
+            // agents[i].SetData(data.agents[i]);
+        }
+        commandSystem = new();
+        commandList = new();
+        
+        // TODO: 기믹 세팅
+        SpecialRule = data.specialRule;
+        
+        // TODO: 페이즈 초기화
+        turnCount = 0;
+        // currentPhase = phases[0];
     }
 }
-
-/*public interface ITurn
-{
-    public enum State
-    {
-        Attack,
-        Action,
-        Repair
-    }
-    /// <summary>
-    /// 턴 상태
-    /// </summary>
-    public State curState { get; }
-    /// <summary>
-    /// 턴의 주인(없을 경우 NULL)
-    /// </summary>
-    public Agent owner {  get; }
-    /// <summary>
-    /// 몇 번째 턴인지 표시하는 변수
-    /// </summary>
-    public int Count { get; }
-}*/

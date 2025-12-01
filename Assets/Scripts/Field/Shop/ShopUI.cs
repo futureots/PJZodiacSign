@@ -7,7 +7,7 @@ public class ShopUI : MonoBehaviour
 {
     [Header("Dependency")]
     InputManager customer;
-    IPhaseManageService phaseManageService;
+    IPhaseManageService phaseManageService;     // TODO: phase 의존성 주입
 
     public GameObject shopPanel;
     [SerializeField] GameObject ShopToggle;
@@ -110,14 +110,5 @@ public class ShopUI : MonoBehaviour
                 ShopToggle.SetActive(false);
             }
         }
-    }
-
-    private void OnEnable()
-    {
-        phaseManageService.onPhaseChanged += PhaseChange;
-    }
-    private void OnDisable()
-    {
-        phaseManageService.onPhaseChanged -= PhaseChange;
     }
 }

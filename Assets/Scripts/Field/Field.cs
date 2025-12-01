@@ -1,20 +1,22 @@
-using JetBrains.Annotations;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
-
 
 
 public class Field : MonoBehaviour
 {
+    /**
+     * 필드 1개를 관리
+     * - 타일 머터리얼
+     * - 타일 크기 및 각 객체
+     */
+    
     [Header("Materials")]
     public List<Material> tileMaterial;
 
     public int row, column;
     public GameObject tilePrefab;
 
-    Tile[,] _tiles;
+    private Tile[,] _tiles;
     public Tile[,] tiles
     {
         get
@@ -315,6 +317,7 @@ public class Field : MonoBehaviour
         return emptyTiles;
     }
 }
+
 [System.Serializable]
 public class Row<T>
 {

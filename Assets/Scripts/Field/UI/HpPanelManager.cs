@@ -1,9 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HpPanelManager : MonoBehaviour
 {
+    /**
+     * 
+     */
     public GameObject hpBar;
 
     List<GameObject> hpBarList;
@@ -25,7 +27,7 @@ public class HpPanelManager : MonoBehaviour
         if (bar == null) return;
 
         bar.SetEntity(target);
-        bar.hpBar.gaugeBar.color = GameManager.Instance.teamColorTable.teamColors[target.team.teamNumber];
+        // bar.hpBar.gaugeBar.color = GameManager.Instance.teamColorTable.teamColors[target.team.teamNumber];
         
     }
 

@@ -73,8 +73,8 @@ public class TurnBlock : MonoBehaviour
         turnText.text = text;
         
         // 팀에 따른 색상 설정
-        Color teamColor = GameManager.Instance.teamColorTable.teamColors[turnData.TeamNumber];
-        backgroundImage.color = teamColor;
+        // Color teamColor = GameManager.Instance.teamColorTable.teamColors[turnData.TeamNumber];
+        // backgroundImage.color = teamColor;
     }
 
     void UpdateDisplay(Command cmd)
