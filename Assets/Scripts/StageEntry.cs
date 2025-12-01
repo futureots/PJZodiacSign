@@ -3,7 +3,7 @@ using UnityEngine;
 public class StageEntry : MonoBehaviour
 {
     [SerializeField]
-    public StageData stageData;
+    public StageData stageData = new StageData();
 
     public void EnterBattle()
     {

@@ -74,8 +74,8 @@ public class FieldController : MonoBehaviour
         // TODO: 기믹 세팅
         SpecialRule = data.specialRule;
         
-        // 턴 초기화
+        // TODO: 페이즈 초기화
         turnCount = 0;
-        currentPhase = phases[0];
+        // currentPhase = phases[0];
     }
 }

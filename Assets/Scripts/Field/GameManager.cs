@@ -7,6 +7,7 @@ public class GameManager : SingletonObject<GameManager>
 {
     private DataManager dataManager;
     [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
+    private StageData currentStage = null;
     
     public override void Awake()
     {
@@ -68,6 +69,9 @@ public class GameManager : SingletonObject<GameManager>
         
         // Init FieldController
         fieldController.Init(stageData);
+        
+        // Complete Loading
+        currentStage = stageData;
         LoadingUI.SetActive(false);
     }
 
@@ -82,7 +86,10 @@ public class GameManager : SingletonObject<GameManager>
     {
         Debug.Log("게임 종료");
         // TODO: 게임 종료 처리 로직 추가
-        EnterBattle(ScriptableObject.CreateInstance<StageData>());       // 기본 씬 재로드
+        if (currentStage != null)
+        {
+            EnterBattle(currentStage);       // 기본 씬 재로드
+        }
     }
     
     #endregion
