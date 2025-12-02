@@ -69,7 +69,7 @@ namespace PlayerInput
             targetSelecter.transform.position = _selectedEntity.transform.position + Vector3.up * 0.1f;
             
             // 기물 이동영역 표시
-            moveArea = GameManager.Instance.field.GetHalfTiles(_inputManager.controller.isReflect);
+            moveArea = new List<Tile>(); // GameManager.Instance.field.GetHalfTiles(_inputManager.controller.isReflect);
             moveArea.AddRange(_inputManager.controller.resourceField.GetTiles());
 
             targetTileSelecter.SetActive(true);

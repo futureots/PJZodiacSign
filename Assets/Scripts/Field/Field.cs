@@ -1,20 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-
-
-
 
 public class Field : MonoBehaviour
 {
     [Header("Field Shape")]
     public GameObject[] tilePrefab;
+    /**
+     * 필드 1개를 관리
+     * - 타일 머터리얼
+     * - 타일 크기 및 각 객체
+     */
+    
+    [Header("Materials")]
+    public List<Material> tileMaterial;
+
     public int row, column;
     [SerializeField] float tileDistance;
     
 
-    Tile[,] _tiles;
+    private Tile[,] _tiles;
     public Tile[,] tiles
     {
         get
@@ -358,4 +363,3 @@ public class Field : MonoBehaviour
         return emptyTiles;
     }
 }
-

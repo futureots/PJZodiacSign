@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityController : MonoBehaviour
 {
@@ -56,8 +58,8 @@ public class EntityController : MonoBehaviour
 
     public void PlaceEntity(Entity instance, Tile tile)
     {
-        instance.Initialize(isReflect, tile);
-        
+        instance.Move(tile, true);
+        instance.IsReflect = isReflect;
 
         instance.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
     }
@@ -77,22 +79,22 @@ public class EntityController : MonoBehaviour
             }
         }
     }
-    public void SetMainField(Dictionary<intVector2,EntityLevelData> fieldData)
+    public void SetMainField(Dictionary<int,EntityLevelData> fieldData)
     {
-        fieldEntities.Clear();
-
-        foreach (var item in fieldData)
-        {
-            var entity = EntityFactory.CreateEntity(item.Value.data, item.Value.level);
-            intVector2 pos = item.Key;// 배치 가능한지 확인
-
-            var tile = GameManager.Instance.field.GetTile(pos, isReflect);
-            PlaceEntity(entity, tile);
-
-            entity.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
-
-            AddFieldEntity(entity);
-        }
+        // fieldEntities.Clear();
+        //
+        // foreach (var item in fieldData)
+        // {
+        //     var entity = EntityFactory.CreateEntity(item.Value.data, item.Value.level);
+        //     intVector2 pos = intVector2.Decode(item.Key);
+        //
+        //     var tile = GameManager.Instance.field.GetTile(pos, isReflect);
+        //     PlaceEntity(entity, tile);
+        //
+        //     entity.GetOrAddComponent<Team>().teamNumber = team.teamNumber;
+        //
+        //     AddFieldEntity(entity);
+        // }
     }
     public virtual void DisposeInstantField()
     {
@@ -107,25 +109,25 @@ public class EntityController : MonoBehaviour
         foreach (var e in resourceEntities)
         {
             if (e == null) continue;
-            if(e.curTile.field != resourceField)
+            if(e.CurTile.field != resourceField)
             {
                 AddFieldEntity(e);
             }
         }
-        resourceEntities.RemoveAll((e) => e.curTile.field != resourceField);
+        resourceEntities.RemoveAll((e) => e.CurTile.field != resourceField);
     }
     #endregion
 
     #region Data
-    public (Dictionary<intVector2,EntityLevelData>, List<EntityLevelData>) GetFieldData()
+    public (Dictionary<int,EntityLevelData>, List<EntityLevelData>) GetFieldData()
     {
         // 메인 필드 데이터를 딕셔너리로 변환
-        Dictionary<intVector2, EntityLevelData> mainFieldData = new();
+        Dictionary<int, EntityLevelData> mainFieldData = new Dictionary<int, EntityLevelData>();
         UpdateEntities();
         foreach (var entity in fieldEntities)
         {
             var entityData = new EntityLevelData(entity);
-            intVector2 pos = entity.curTile.fieldPos;
+            int pos = entity.CurTile.fieldPos.Encode();
             mainFieldData.Add(pos, entityData);
         }
 
