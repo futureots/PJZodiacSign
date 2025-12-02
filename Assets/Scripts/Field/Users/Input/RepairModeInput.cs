@@ -104,7 +104,7 @@ namespace PlayerInput
                             return;
                         }
                     }
-                    _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                    _selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
                 }
                 _selectedEntity = null;
             }
@@ -141,7 +141,7 @@ namespace PlayerInput
                     // 확인 시 강화 실행
                     Debug.Log("Enhance Confirmed");
                     target.Level += 1;
-                    source.curTile.ClearOccupant();
+                    source.CurTile.ClearOccupant();
                     _selectedEntity = null;
 
                     // 강화 완료 후 이벤트 구독 재설정
@@ -151,7 +151,7 @@ namespace PlayerInput
                 (Action)(() => {
                     // 취소 시 원래 위치로 복귀
                     Debug.Log("Enhance Cancelled");
-                    _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                    _selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
                     _selectedEntity = null;
 
                     // 강화 취소 후 이벤트 구독 재설정

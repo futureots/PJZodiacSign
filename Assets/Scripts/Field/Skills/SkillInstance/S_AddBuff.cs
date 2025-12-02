@@ -41,7 +41,7 @@ public class S_AddBuff : S_BaseEntity<SD_AddBuff>
     {
         if (other == null) return false;
         //공격 범위 내 적만 속박
-        if (Owner.GetAttackArea().Contains(other.curTile))
+        if (Owner.GetAttackArea().Contains(other.CurTile))
         {
             return true;
         }

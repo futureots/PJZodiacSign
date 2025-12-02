@@ -11,7 +11,7 @@ public class LogBlock : MonoBehaviour
 
     public void Initialize(Entity deadEntity)
     {
-        var pos = deadEntity.curTile.fieldPos;
+        var pos = deadEntity.CurTile.fieldPos;
         var text = $"( {(char)((pos.x - 1)+'A')}, {pos.y} )";
 
 

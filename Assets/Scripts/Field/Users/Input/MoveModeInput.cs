@@ -66,12 +66,12 @@ namespace PlayerInput
             if (_selectedEntity != null)
             {
                 var tile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
-                _selectedEntity.transform.position = _selectedEntity.curTile.transform.position;
+                _selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
                 visualizer.RemoveAttackArea(attackArea);
                 visualizer.RemoveMoveArea(moveArea);
 
                 // 제자리 이동 불가능
-                if (!_selectedEntity.curTile.Equals(tile))
+                if (!_selectedEntity.CurTile.Equals(tile))
                 {
                     //커맨드 생성
                     var cmd = new MoveCommand(_selectedEntity, tile);

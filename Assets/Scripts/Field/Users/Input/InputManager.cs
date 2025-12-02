@@ -55,7 +55,7 @@ public class InputManager : Agent
 
         OnObjectClicked.AddListener(HandleClick);
 
-        GameManager.onNextLevel += AddCredit;
+        //GameManager.onNextLevel += AddCredit;
     }
 
     public void Init(IPhaseManageService phaseManageService)
@@ -65,7 +65,7 @@ public class InputManager : Agent
 
     private void OnDestroy()
     {
-        GameManager.onNextLevel -= AddCredit;
+        //GameManager.onNextLevel -= AddCredit;
     }
     #region InputPackaging
 

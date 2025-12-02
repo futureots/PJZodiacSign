@@ -10,7 +10,7 @@ public class MoveCommand : Command
     {
         selecterObjects = new();
         this.entity = entity;
-        prevTile = entity.curTile;
+        prevTile = entity.CurTile;
         this.tile = tile;
     }
 

@@ -64,7 +64,7 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public void Initialize(bool isReflect, Tile tile)
     {
-        this.isReflect = isReflect;
+        this.IsReflect = isReflect;
         Move(tile, true);
     }
 
@@ -163,12 +163,12 @@ public class Entity : Occupant, IDamageable, IAttackable
             if (isOccupied) return false;
         }
 
-        if (curTile != null)
+        if (CurTile != null)
         {
-            curTile.UnsetOccupant();
+            CurTile.UnsetOccupant();
         }
         tile.SetOccupant(gameObject, true);
-        curTile = tile;
+        CurTile = tile;
 
         return true;
     }
@@ -183,12 +183,12 @@ public class Entity : Occupant, IDamageable, IAttackable
     {
         if(TryGetComponent<AreaComponent>(out var area))
         {
-            var field = curTile.field.GetFieldState(this);
+            var field = CurTile.field.GetFieldState(this);
 
-            var list = area.GetMoveVector(field,curTile.fieldPos, isReflect);
-            var tiles = curTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
+            var list = area.GetMoveVector(field,CurTile.fieldPos, IsReflect);
+            var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
 
-            tiles.Add(curTile);
+            tiles.Add(CurTile);
 
             return tiles;
         }
@@ -201,7 +201,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     /// <returns>기물이 공격할 수 있는 타일</returns>
     public List<Tile> GetAttackArea()
     {
-        return GetAttackArea(curTile);
+        return GetAttackArea(CurTile);
     }
 
     public List<Tile> GetAttackArea(Tile tile)
@@ -211,7 +211,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         
         if(TryGetComponent<AreaComponent>(out var component))
         {
-            var list = component.GetAttackVector(field, tile.fieldPos, isReflect);
+            var list = component.GetAttackVector(field, tile.fieldPos, IsReflect);
             var tiles = tile.field.GetTiles(list);
             return tiles;
         }
