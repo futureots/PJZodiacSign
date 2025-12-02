@@ -15,18 +15,20 @@ MonoBehaviour:
   id: WhiteKing
   productName: "\uD654\uC774\uD2B8\uD0B9"
   icon: {fileID: 21300000, guid: d46c9ba111b274d4c906685a3f86b6af, type: 3}
-  normalPrice: 50
-  discountPrice: 30
-  baseEntityPrefab: {fileID: 119820, guid: 9e4e635002b6a524ca896adb28e8e388, type: 3}
+  normalPrice: 40
+  discountPrice: 20
+  baseEntityPrefab: {fileID: 7329533503546949574, guid: 5db96196d8d507b46be7a46fbabf1386, type: 3}
+  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
+  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
   attackArea:
   - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
-  maxHp: 100
-  power: 2
-  bonusHp: 10
+  maxHp: 30
+  power: 1
+  bonusHp: 7
   bonusPower: 1
   skill: {fileID: 0}
   energy: 0
   maxEnergy: 3
-  hpPanelPosition: {x: 0, y: 3, z: 0}
+  hpPanelPosition: {x: 0, y: 4, z: 0}

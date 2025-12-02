@@ -13,10 +13,10 @@ public class EnemyTable : ScriptableObject
 
     public AgentData GetAgentData()
     {
-        Dictionary<int,EntityLevelData> fields = new Dictionary<int,EntityLevelData>();
+        Dictionary<intVector2,EntityLevelData> fields = new Dictionary<intVector2,EntityLevelData>();
         foreach (var entity in fieldEntities)
         {
-            fields.Add(entity.fieldPos.Encode(), entity.entityData);
+            fields.Add(entity.fieldPos, entity.entityData);
         }
         List<EntityLevelData> hands = new List<EntityLevelData>(entities);
         return new AgentData(credit, hands,fields);

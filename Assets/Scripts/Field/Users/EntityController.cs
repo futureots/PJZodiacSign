@@ -79,14 +79,14 @@ public class EntityController : MonoBehaviour
             }
         }
     }
-    public void SetMainField(Dictionary<int,EntityLevelData> fieldData)
+    public void SetMainField(Dictionary<intVector2,EntityLevelData> fieldData)
     {
         // fieldEntities.Clear();
         //
         // foreach (var item in fieldData)
         // {
         //     var entity = EntityFactory.CreateEntity(item.Value.data, item.Value.level);
-        //     intVector2 pos = intVector2.Decode(item.Key);
+        //     intVector2 pos = item.Key;
         //
         //     var tile = GameManager.Instance.field.GetTile(pos, isReflect);
         //     PlaceEntity(entity, tile);
@@ -119,15 +119,15 @@ public class EntityController : MonoBehaviour
     #endregion
 
     #region Data
-    public (Dictionary<int,EntityLevelData>, List<EntityLevelData>) GetFieldData()
+    public (Dictionary<intVector2,EntityLevelData>, List<EntityLevelData>) GetFieldData()
     {
         // 메인 필드 데이터를 딕셔너리로 변환
-        Dictionary<int, EntityLevelData> mainFieldData = new Dictionary<int, EntityLevelData>();
+        Dictionary<intVector2, EntityLevelData> mainFieldData = new Dictionary<intVector2, EntityLevelData>();
         UpdateEntities();
         foreach (var entity in fieldEntities)
         {
             var entityData = new EntityLevelData(entity);
-            int pos = entity.CurTile.fieldPos.Encode();
+            intVector2 pos = entity.CurTile.fieldPos;
             mainFieldData.Add(pos, entityData);
         }
 

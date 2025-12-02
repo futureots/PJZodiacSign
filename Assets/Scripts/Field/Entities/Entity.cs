@@ -10,11 +10,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(PowerComponent))]
 [RequireComponent(typeof(HealthComponent))]
-public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
+public class Entity : Occupant, IDamageable, IAttackable
 {
-    public Tile CurTile { get; private set; }
-
-    public bool IsReflect { get; set; }
 
     Team _team;
 
@@ -33,32 +30,7 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 
     // 기물의 기본 데이터
     public EntityData baseData;
-
-    /// <summary>
-    /// 기물 초기 스탯 세팅
-    /// </summary>
-    /// <param name="data">기물 데이터</param>
-    /// <param name="level">기물의 레벨</param>
-    public void InitializeEntity(EntityData data, int level =0)
-    {
-        this.baseData = data;
-        this.Level = level;
-        
-        //체력 분리
-        health = GetComponent<HealthComponent>();
-        health.Initialize(baseData.maxHp + baseData.bonusHp * level);
-
-        power = GetComponent<PowerComponent>();
-        power.Init(baseData.power + baseData.bonusPower * level);
-        onLevelChanged += UpdateEntity;
-    }
-
-    void UpdateEntity(int cur, int prev)
-    {
-        health.MaxHealth += baseData.bonusHp * (cur - prev);
-        health.CurHealth += baseData.bonusHp * (cur - prev);
-        power.Power += baseData.bonusPower * (cur - prev);
-    }
+    
 
     /// <summary>기물의 레벨</summary>
     [SerializeField] int _level;
@@ -89,13 +61,44 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 
     public static Action<Entity> onEntityDead;
     public Action onDead;
+
+    public void Initialize(bool isReflect, Tile tile)
+    {
+        this.IsReflect = isReflect;
+        Move(tile, true);
+    }
+
+    /// <summary>
+    /// 기물 초기 스탯 세팅
+    /// </summary>
+    /// <param name="data">기물 데이터</param>
+    /// <param name="level">기물의 레벨</param>
+    public void InitializeEntity(EntityData data, int level = 0)
+    {
+        this.baseData = data;
+        this.Level = level;
+
+        //체력 분리
+        health = GetComponent<HealthComponent>();
+        health.Initialize(baseData.maxHp + baseData.bonusHp * level);
+
+        power = GetComponent<PowerComponent>();
+        power.Init(baseData.power + baseData.bonusPower * level);
+        onLevelChanged += UpdateEntity;
+    }
+
+    void UpdateEntity(int cur, int prev)
+    {
+        health.MaxHealth += baseData.bonusHp * (cur - prev);
+        health.CurHealth += baseData.bonusHp * (cur - prev);
+        power.Power += baseData.bonusPower * (cur - prev);
+    }
+
     public void Attack()
     {
         var list = GetAttackArea();
         int damage = power.Power;
-        
-        
-        
+
         foreach (var item in list)
         {
             if (item.isEmpty) continue;
@@ -103,10 +106,13 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
             var targetTeam = target.GetComponent<Team>();
             if(!team.IsAlly(targetTeam))
             {
-                target.GetComponent<IDamageable>()?.Damaged(damage);
+                var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up*7,Utils.QI);
+                effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
+                //target.GetComponent<IDamageable>()?.Damaged(damage);
             }
         }
     }
+
     public void Damaged(int damage)
     {
         var value = damage;
@@ -115,12 +121,21 @@ public class Entity : MonoBehaviour, IDamageable, IAttackable, IOccupant
 
         health.CurHealth -= value;
     }
-
     public void Dead()
     {
         onEntityDead?.Invoke(this);
         onDead?.Invoke();
-        Destroy(gameObject);
+        var effect = Instantiate(baseData.dissolveEffect, transform);
+        if(effect.TryGetComponent<DissolveEffect>(out var dissolve))
+        {
+            if(TryGetComponent<MeshFilter>(out var mesh))
+            {
+                dissolve.Initialize(mesh.mesh, GetComponent<MeshRenderer>());
+                dissolve.PlayEffect(2f);
+            }
+        }
+        
+        
     }
 
     public void Healed(int amount)

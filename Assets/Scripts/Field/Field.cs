@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-
 
 public class Field : MonoBehaviour
 {
+    [Header("Field Shape")]
+    public GameObject[] tilePrefab;
     /**
      * 필드 1개를 관리
      * - 타일 머터리얼
@@ -14,7 +17,8 @@ public class Field : MonoBehaviour
     public List<Material> tileMaterial;
 
     public int row, column;
-    public GameObject tilePrefab;
+    [SerializeField] float tileDistance;
+    
 
     private Tile[,] _tiles;
     public Tile[,] tiles
@@ -45,19 +49,16 @@ public class Field : MonoBehaviour
     public void CreateField()
     {
         _tileList = new List<Row<Tile>>();
-        
+
+        float halfDistance = tileDistance / 2;
         for (int i = 0; i < row; i++)
         {
             var temp = new Row<Tile>();
             _tileList.Add(temp);
             for (int j = 0; j < column; j++)
             {
-                Vector3 pos = new Vector3((j - column / 2) * 10 + 5, 0, (i - row / 2) * 10 + 5);
-                var tileObj = Instantiate(tilePrefab, transform);
-                if (tileMaterial.Count > 0)
-                {
-                    tileObj.GetComponentInChildren<Renderer>().material = tileMaterial[(j + i % 2) % tileMaterial.Count];
-                }
+                Vector3 pos = new Vector3((j - column / 2) * tileDistance + halfDistance, 0, (i - row / 2) * tileDistance + halfDistance);
+                var tileObj = Instantiate(tilePrefab[(j + i) % tilePrefab.Length], transform);
                 tileObj.transform.localPosition = pos;
                 var tile = tileObj.GetComponent<Tile>();
                 tile.InitializeTile(this, j, i);
@@ -164,6 +165,52 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
+    /// 기준점에서 상대위치 타일 가져오기
+    /// </summary>
+    public List<Tile> GetTiles(intVector2 origin, List<intVector2> vectors,  Func<Tile,bool> query = null)
+    {
+        query ??= _ => true;
+        var list = new List<Tile>();
+        foreach (var pos in vectors)
+        {
+            var tile = GetTile(origin + pos);
+            if (tile == null) continue; 
+            list.Add(tile);
+        }
+        return list.Where(query).ToList();
+        
+    }
+
+    /// <summary>
+    /// 기준점에서 해당 방향 타일 가져오기
+    /// </summary>
+    public List<Tile> GetTiles(intVector2 origin, List<intVector2> directions, bool isPierce, Func<Tile, bool> query = null)
+    {
+        query ??= _ => true;
+        var list = new List<Tile>();
+        foreach (var direction in directions)
+        {
+            var vector = intVector2.Zero;
+            while (true)
+            {
+                vector += direction;
+                var tile = GetTile(origin + vector);
+                if (tile == null) break;
+                if (tile.isEmpty || isPierce)
+                {
+                    list.Add(tile);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+        }
+        return list.Where(query).ToList();
+    }
+
+    /// <summary>
     /// 맨 절반의 타일을 가져오기
     /// </summary>
     /// <param name="isReflect">true = 적 측, false = 플레이어 측</param>
@@ -232,7 +279,7 @@ public class Field : MonoBehaviour
         return field;
     }
 
-    public int[,] GetFieldState(IOccupant occupant)
+    public int[,] GetFieldState(Occupant occupant)
     {
         var list = GetFieldState();
         if(occupant.CurTile.field == this)
@@ -316,14 +363,4 @@ public class Field : MonoBehaviour
         }
         return emptyTiles;
     }
-}
-
-[System.Serializable]
-public class Row<T>
-{
-    public Row()
-    {
-        list = new List<T>();
-    }
-    public List<T> list;
 }

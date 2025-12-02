@@ -1,3 +1,4 @@
+using Condition;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -14,9 +15,22 @@ namespace PlayerInput
         IPhaseManageService phaseService;
 
         IActive skill;
+        
         Action<InputAction.CallbackContext> bindAction;
 
         InputManager _inputManager;
+
+        List<GameObject> selecters;
+
+        Queue<FieldInfo> skillFields;
+        FieldInfo currentField;
+
+        SkillComponent skillComp;
+        Queue<ConditionData> conditions;
+        ConditionData curCondition;
+        ConditionArgs currentArgs, inputArgs;
+        List<ConditionArgs> parameters;
+
         public SkillModeInput(InputManager input, IActive skill, IPhaseManageService phaseService)
         {
             this.phaseService = phaseService;
@@ -37,6 +51,12 @@ namespace PlayerInput
                 }
             }
 
+            //parameters = new();
+            //conditions = new();
+            //foreach (var item in skillComp.skillData.conditions)
+            //{
+            //    conditions.Enqueue(item);
+            //}
         }
 
         public void RemoveMode()
@@ -66,9 +86,7 @@ namespace PlayerInput
             SetNextField();
         }
 
-        Queue<FieldInfo> skillFields;
-        FieldInfo currentField;
-        List<GameObject> selecters;
+        
         void SetClick(GameObject obj)
         {
             var component = obj.GetComponent(currentField.FieldType);
@@ -81,6 +99,37 @@ namespace PlayerInput
 
                 SetNextField();
             }
+
+            //// 변경후 사용할 코드
+            //switch (currentArgs.currentType)
+            //{
+            //    case ConditionType.TILE:
+            //        var tile = obj.GetComponent<Tile>();
+            //        if (currentArgs.tiles.Contains(tile))
+            //        {
+            //            inputArgs.tiles.Add(tile);
+            //            if (inputArgs.tiles.Count >= curCondition.inputCount)
+            //            {
+            //                parameters.Add(inputArgs);
+            //                SetNextField();
+            //            }
+            //        }
+            //        break;
+            //    case ConditionType.ENTITY:
+            //        var entity = obj.GetComponent<Entity>();
+            //        if (currentArgs.entities.Contains(entity))
+            //        {
+            //            inputArgs.entities.Add(entity);
+            //            if(inputArgs.entities.Count >= curCondition.inputCount)
+            //            {
+            //                parameters.Add(inputArgs);
+            //                SetNextField();
+            //            }
+            //        }
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
         bool IsFieldEmpty()
         {
@@ -110,8 +159,32 @@ namespace PlayerInput
             {
                 currentField = null;
                 _inputManager.controller.CreateCommand(skill, selecters.ToArray());
-                
             }
+
+            //// 변경 후 사용할 코드
+            //// 조건 하나 필터링하기
+            //if (conditions.Count > 0)
+            //{
+            //    var curCondition = conditions.Dequeue();
+            //    // default 주입
+            //    currentArgs = new();
+            //    if (curCondition.args.Count > 0)
+            //    {
+            //        var type = curCondition.args[0].conditionType;
+            //        // 첫번째 타입에 대한 의존성 주입
+            //    }
+            //    // currentArgs에 현재 선택가능한 리스트 필터링
+            //    foreach (var condition in curCondition.args)
+            //    {
+            //        condition.FilterConditions(currentArgs);
+            //    }
+            //    // 현재 curArg와 동일한 타입의 arg 생성
+            //    inputArgs = new(currentArgs.currentType);
+            //}
+            //else
+            //{
+            //    // parameter와 skill을 담은 커맨드 생성 및 반환
+            //}
         }
         void CancelSkillInput()
         {

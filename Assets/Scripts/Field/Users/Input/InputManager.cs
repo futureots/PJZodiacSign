@@ -31,7 +31,10 @@ public class InputManager : Agent
     [Header("UI Element")]
     public Button turnEndButton;
     public UIContainer UI;
+    [Header("Camera")]
     public GameObject cam;
+    [SerializeField] Vector3 RepairCamPos;
+    [SerializeField] Vector3 BattleCamPos;
 
 
     protected new void Awake()
@@ -52,7 +55,7 @@ public class InputManager : Agent
 
         OnObjectClicked.AddListener(HandleClick);
 
-        // GameManager.onNextLevel += AddCredit;
+        //GameManager.onNextLevel += AddCredit;
     }
 
     public void Init(IPhaseManageService phaseManageService)
@@ -62,7 +65,7 @@ public class InputManager : Agent
 
     private void OnDestroy()
     {
-        // GameManager.onNextLevel -= AddCredit;
+        //GameManager.onNextLevel -= AddCredit;
     }
     #region InputPackaging
 
@@ -72,7 +75,7 @@ public class InputManager : Agent
     /// <param name="context"></param>
     void StartClick(InputAction.CallbackContext context)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
 
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 레이캐스트 기물, (타일) UI 표시 
@@ -97,7 +100,7 @@ public class InputManager : Agent
     /// <param name="context"></param>
     void MoveMouse(InputAction.CallbackContext context)
     {
-        // if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
 
         PointerPosition = context.ReadValue<Vector2>();
         OnMouseMove?.Invoke(PointerPosition);
@@ -115,7 +118,7 @@ public class InputManager : Agent
         controller.SetResourceField(data.handEntities);
         controller.SetMainField(data.fieldEntities);
 
-        cam.transform.DOLocalMove(new Vector3(0, -10, -15),1f);
+        cam.transform.DOLocalMove(RepairCamPos,1f);
         
 
         controller.onCommandCreated += ExecuteCommand;
@@ -137,7 +140,7 @@ public class InputManager : Agent
         var (field, hand) = controller.GetFieldData();
         data.fieldEntities = field;
         data.handEntities = hand;
-        cam.transform.DOLocalMove(Vector3.up * -10, 1f);
+        cam.transform.DOLocalMove(BattleCamPos, 1f);
 
         controller.onCommandCreated -= ExecuteCommand;
 

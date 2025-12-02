@@ -15,18 +15,20 @@ MonoBehaviour:
   id: WhitePawn
   productName: "\uD654\uC774\uD2B8\uD3F0"
   icon: {fileID: 21300000, guid: d0385e81792813d47941df5768214d4e, type: 3}
-  normalPrice: 30
-  discountPrice: 20
-  baseEntityPrefab: {fileID: 104878, guid: 48d5ea4ff810d0e4ea36af7235dd5fd7, type: 3}
+  normalPrice: 10
+  discountPrice: 5
+  baseEntityPrefab: {fileID: 7936770708661616826, guid: 40f8e382b0ef4e64f9188abc60f72c91, type: 3}
+  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
+  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: da36b4289602af04babfd8c98277b8c2, type: 2}
   attackArea:
   - {fileID: 11400000, guid: 9a83579b14451034aba17caa5308ffa1, type: 2}
-  maxHp: 30
+  maxHp: 6
   power: 1
-  bonusHp: 3
-  bonusPower: 1
-  skill: {fileID: 0}
+  bonusHp: 6
+  bonusPower: 0
+  skill: {fileID: 11400000, guid: 8a70cdc3cda463846b4e5b2710402b0d, type: 2}
   energy: 0
-  maxEnergy: 0
-  hpPanelPosition: {x: 0, y: 1.5, z: 0}
+  maxEnergy: 8
+  hpPanelPosition: {x: 0, y: 2.3, z: 0}

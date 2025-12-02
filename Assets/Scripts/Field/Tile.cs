@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    
-    public new Renderer renderer
-    {
-        get
-        {
-            return GetComponentInChildren<Renderer>();
-        }
-    }
+    [SerializeField] Renderer renderer;
     List<Material> originMaterials;
     List<Material> currentMaterials;
 
@@ -29,8 +22,13 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
+        if (renderer == null)
+        {
+            renderer = GetComponentInChildren<Renderer>();
+        }
         originMaterials = renderer.materials.ToList();
         currentMaterials = originMaterials;
+
     }
     /// <summary>
     /// 필드 설정
