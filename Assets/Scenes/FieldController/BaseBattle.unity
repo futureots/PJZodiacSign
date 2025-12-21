@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa59aea847f183c45a1bc758870af2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  actionCount: 0
   areaVisualizer: {fileID: 0}
   entitySelecter: {fileID: 0}
   tileSelecter: {fileID: 0}
@@ -170,6 +171,8 @@ MonoBehaviour:
   turnEndButton: {fileID: 0}
   UI: {fileID: 0}
   cam: {fileID: 0}
+  RepairCamPos: {x: 0, y: 0, z: 0}
+  BattleCamPos: {x: 0, y: 0, z: 0}
   OnObjectClicked:
     m_PersistentCalls:
       m_Calls: []
@@ -224,7 +227,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldController
   turnCount: 0
-  phases: []
+  phases:
+  - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
+  - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}
   currentPhase: {fileID: 0}
   localPlayer: {fileID: 477964638}
   agents:
@@ -273,6 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfae69d9bdc56d41a5693269fe0440d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  actionCount: 0
   shopTable: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

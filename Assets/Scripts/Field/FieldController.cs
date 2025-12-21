@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,13 +15,31 @@ public class FieldController : MonoBehaviour
     
     #region PhaseManager
     
-    [SerializeField] protected uint turnCount;
-    [SerializeField] public List<Phase> phases;
-    public Phase currentPhase;
     
-    public virtual void SetPhase(Phase phase)
+    [SerializeField] protected uint turnCount;       // turn Count in current Phase
+    [SerializeField] public List<Phase> phases;     
+    public Phase currentPhase { get; private set; }
+    public event Action<Phase> OnPhaseChanged;
+    public Turn currentTurn { get; private set; }
+    public event Action<Turn> OnTurnChanged;
+    
+    public virtual void SetPhase(int index)
     {
-        
+        if (index >= phases.Count)
+        {
+            Debug.LogError($"Invalid Phase index");
+            return;
+        }
+
+        currentPhase = phases[index];
+        OnPhaseChanged?.Invoke(currentPhase);
+
+        SetTurn(0);
+    }
+
+    public virtual void NextTurn(int index = -1)
+    {
+        if (index == -1) index = 
     }
     
     #endregion
