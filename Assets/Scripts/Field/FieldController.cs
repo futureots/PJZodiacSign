@@ -37,7 +37,7 @@ public class FieldController : MonoBehaviour
         SetTurn(0);
     }
 
-    public virtual void NextTurn(int index = -1)
+    public virtual void SetTurn(int index = -1)
     {
         if (index == -1) index = 
     }
