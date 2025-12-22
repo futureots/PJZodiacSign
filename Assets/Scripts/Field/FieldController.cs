@@ -13,9 +13,11 @@ public class FieldController : MonoBehaviour
 
     protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
     
-    #region PhaseManager
-    
-    
+    #region PhaseManager 
+    /**
+     * 페이즈 - 턴 관리 시스템
+     * - 
+     */
     [SerializeField] protected uint turnCount;       // turn Count in current Phase
     [SerializeField] public List<Phase> phases;     
     public Phase currentPhase { get; private set; }
@@ -37,9 +39,9 @@ public class FieldController : MonoBehaviour
         SetTurn(0);
     }
 
-    public virtual void SetTurn(int index = -1)
+    public virtual void SetTurn(int index)
     {
-        if (index == -1) index = 
+
     }
     
     #endregion

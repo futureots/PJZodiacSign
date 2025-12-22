@@ -19,16 +19,18 @@ public enum PlayerTurn
 [Serializable]
 public class Turn
 {
-    public PlayerTurn player;
-
+    public int agentID;
     public string type;
+
+    // NOTE: 
+    public List<string> actions; 
 }
 
 
 [CreateAssetMenu(fileName = "Phase", menuName = "Scriptable Objects/PhaseData")]
 public class Phase : ScriptableObject
 {
-    public bool loop;
-
+    public string name;
+    public bool isLoop;
     public List<Turn> turnList = new();
 }
