@@ -26,8 +26,9 @@ public class EntityFactory : MonoBehaviour
         // 스킬 정의
         if (data.skill)
         {
-            var skill = instance.AddComponent<SkillComponent>();
-            skill.SetupSkill(data.skill);
+            // TODO : 스킬 데이터에 맞는 스킬 컴포넌트 추가
+            //var skill = instance.AddComponent<SkillComponent>();
+            //skill.SetupSkill(data.skill);
         }
         return entity;
     }

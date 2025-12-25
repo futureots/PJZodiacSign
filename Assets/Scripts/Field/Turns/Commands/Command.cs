@@ -14,6 +14,7 @@ public abstract class Command
         DeleteObjects();
     }
 
+    // 시각화에 사용된 오브젝트 삭제(다른데로 이전해야함)
     public virtual void DeleteObjects()
     {
         //Debug.Log($"Selecter : {selecterObjects.Count}");

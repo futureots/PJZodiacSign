@@ -1,10 +1,12 @@
+using Condition;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillCommand : Command
 {
-    //ÀÔ·Â°ªÀÌ ¸ğµÎ ÀÔ·ÂµÈ ½ºÅ³
+    #region oldSkillCommand
+    //ì…ë ¥ê°’ì´ ëª¨ë‘ ì…ë ¥ëœ ìŠ¤í‚¬
     public IActive skill;
 
     public SkillCommand(IActive skill)
@@ -12,9 +14,26 @@ public class SkillCommand : Command
         selecterObjects = new();
         this.skill = skill;
     }
+
+    #endregion
+
+    #region newCommand
+
+    public SkillComponent _skill;
+    public List<ConditionArgs> args;
+    
+    public SkillCommand(SkillComponent skill, List<ConditionArgs> args)
+    {
+        this._skill = skill;
+        this.args = args;
+    }
+
+    #endregion
+
     public override void Execute()
     {
-        var result = skill.ExecuteSequence();
+        //var result = skill.ExecuteSequence();
+        var result = _skill.ExecuteSkill(args.ToArray());
         base.Execute();
     }
     public override string ToString()
@@ -23,9 +42,9 @@ public class SkillCommand : Command
         {
             if(skill is S_BaseEntity<BaseSkillData> s)
             {
-                return $"{s.Owner.name}ÀÌ {s.skillName} »ç¿ë";
+                return $"{s.Owner.name}ì´ {s.skillName} ì‚¬ìš©";
             }
-            return $"{sk.skillName} »ç¿ë";
+            return $"{sk.skillName} ì‚¬ìš©";
         }
         return "";
             
