@@ -46,6 +46,7 @@ namespace Condition
     public struct ConditionData
     {
         public List<FilterData> args;
+        public bool isNeedInput;
         public int inputCount;
         // 이건 없으면 마우스에 위치한 오브젝트만 표시
         public FilterData outputArea;

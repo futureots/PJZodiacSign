@@ -112,7 +112,8 @@ public class EntityInfoUI : MonoBehaviour
                         }
                         entitySkillBtn.onClick.AddListener(() =>
                         {
-                            _inputManager.SetInputMode(_skill.GetSkillInstance());
+                            // TODO : 스킬 입력 모드로 변경 및 입력에 필요한 값 전송
+                            //_inputManager.SetInputMode(_skill.GetSkillInstance());
                         });
                     }
                 }
