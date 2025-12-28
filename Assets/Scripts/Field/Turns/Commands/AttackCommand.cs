@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class AttackCommand : Command
@@ -9,8 +11,9 @@ public class AttackCommand : Command
         this.entity = entity;
     }
 
-    public override void Execute()
+    public override IEnumerator Execute(Action callback)
     {
-        entity.Attack();
+        yield return entity.StartCoroutine(entity.Attack());
+        callback?.Invoke();
     }
 }

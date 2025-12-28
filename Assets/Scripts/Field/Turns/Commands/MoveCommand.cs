@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+
 public class MoveCommand : Command
 {
     Tile prevTile;
@@ -11,10 +14,11 @@ public class MoveCommand : Command
         this.tile = tile;
     }
 
-    public override void Execute()
+    public override IEnumerator Execute(Action callback)
     {
         var result = entity.Move(tile);
-        base.Execute();
+        yield return null;
+        callback?.Invoke();
     }
 
     public override string ToString()

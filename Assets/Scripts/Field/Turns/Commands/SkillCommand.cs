@@ -1,4 +1,5 @@
 using Condition;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,11 +31,12 @@ public class SkillCommand : Command
 
     #endregion
 
-    public override void Execute()
+    public override IEnumerator Execute(Action callback)
     {
         //var result = skill.ExecuteSequence();
-        var result = _skill.ExecuteSkill(args.ToArray());
-        base.Execute();
+        yield return _skill.StartCoroutine(_skill.ExecuteSkill(args.ToArray()));
+        callback?.Invoke();
+        
     }
     public override string ToString()
     {

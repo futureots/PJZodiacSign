@@ -66,13 +66,13 @@ public class SkillComponent : MonoBehaviour
 
     #region new skillSystem
 
-    public event Action<bool> onSkillSuccess;
+    //public event Action<bool> onSkillSuccess;
 
-    public virtual bool ExecuteSkill(params ConditionArgs[] args)
+    public virtual IEnumerator ExecuteSkill(params ConditionArgs[] args)
     {
         // TODO : args가 스킬을 실행하는데 문제없는지 확인, 실행 불가능하면 onSkillSuccess false 발생 및 중지
         // TODO : 각 스킬의 로직을 코루틴으로 구현 및 이 함수에서 args 받아서 실행
-        return true;
+        yield return null;
     }
 
     #endregion

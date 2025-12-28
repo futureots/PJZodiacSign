@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +10,11 @@ public abstract class Command
     /// <summary>
     /// 커맨드 실행
     /// </summary>
-    public virtual void Execute()
+    public virtual IEnumerator Execute(Action callback = null)
     {
+        yield return null;
         DeleteObjects();
+        callback?.Invoke();
     }
 
     // 시각화에 사용된 오브젝트 삭제(다른데로 이전해야함)

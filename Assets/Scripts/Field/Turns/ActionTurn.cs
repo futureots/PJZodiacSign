@@ -35,11 +35,11 @@ public class ActionTurn : ITurn
     {
         var cmd = agent.GetCommand();
         if (cmd == null) Debug.Log("No Command");
-        cmd?.Execute();
+        yield return agent.StartCoroutine(cmd?.Execute());
         onCommandExecuted?.Invoke(cmd);
 
 
-        yield return new WaitForSeconds(1f);
+        
     }
 
 }
