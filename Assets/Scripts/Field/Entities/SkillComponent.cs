@@ -1,5 +1,3 @@
-using Condition;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -67,11 +65,14 @@ public class SkillComponent : MonoBehaviour
     #region new skillSystem
 
     //public event Action<bool> onSkillSuccess;
-
-    public virtual IEnumerator ExecuteSkill(params ConditionArgs[] args)
+    public virtual IEnumerator InputSkill()
     {
-        // TODO : args가 스킬을 실행하는데 문제없는지 확인, 실행 불가능하면 onSkillSuccess false 발생 및 중지
-        // TODO : 각 스킬의 로직을 코루틴으로 구현 및 이 함수에서 args 받아서 실행
+        // TODO : skillData에 있는 로직을 불러와 입력 코루틴 호출
+        yield return null;
+    }
+    public virtual IEnumerator ExecuteSkill()
+    {
+        // TODO : 자식 클래스 내에 저장된 변수를 사용해 각 스킬의 로직을 코루틴으로 구현
         yield return null;
     }
 

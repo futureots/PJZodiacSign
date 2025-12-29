@@ -1,4 +1,3 @@
-using Condition;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,12 +20,10 @@ public class SkillCommand : Command
     #region newCommand
 
     public SkillComponent _skill;
-    public List<ConditionArgs> args;
     
-    public SkillCommand(SkillComponent skill, List<ConditionArgs> args)
+    public SkillCommand(SkillComponent skill)
     {
         this._skill = skill;
-        this.args = args;
     }
 
     #endregion
@@ -34,7 +31,7 @@ public class SkillCommand : Command
     public override IEnumerator Execute(Action callback)
     {
         //var result = skill.ExecuteSequence();
-        yield return _skill.StartCoroutine(_skill.ExecuteSkill(args.ToArray()));
+        yield return _skill.StartCoroutine(_skill.ExecuteSkill());
         callback?.Invoke();
         
     }

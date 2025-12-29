@@ -1,10 +1,8 @@
-using Condition;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 
@@ -26,10 +24,6 @@ namespace PlayerInput
         FieldInfo currentField;
 
         SkillComponent skillComp;
-        Queue<ConditionData> conditions;
-        ConditionData curCondition;
-        ConditionArgs currentArgs, inputArgs;
-        List<ConditionArgs> parameters;
 
         public SkillModeInput(InputManager input, IActive skill, IPhaseManageService phaseService)
         {
@@ -51,12 +45,6 @@ namespace PlayerInput
                 }
             }
 
-            //parameters = new();
-            //conditions = new();
-            //foreach (var item in skillComp.skillData.conditions)
-            //{
-            //    conditions.Enqueue(item);
-            //}
         }
 
         public void RemoveMode()
@@ -99,37 +87,6 @@ namespace PlayerInput
 
                 SetNextField();
             }
-
-            //// 변경후 사용할 코드
-            //switch (currentArgs.currentType)
-            //{
-            //    case ConditionType.TILE:
-            //        var tile = obj.GetComponent<Tile>();
-            //        if (currentArgs.tiles.Contains(tile))
-            //        {
-            //            inputArgs.tiles.Add(tile);
-            //            if (inputArgs.tiles.Count >= curCondition.inputCount)
-            //            {
-            //                parameters.Add(inputArgs);
-            //                SetNextField();
-            //            }
-            //        }
-            //        break;
-            //    case ConditionType.ENTITY:
-            //        var entity = obj.GetComponent<Entity>();
-            //        if (currentArgs.entities.Contains(entity))
-            //        {
-            //            inputArgs.entities.Add(entity);
-            //            if(inputArgs.entities.Count >= curCondition.inputCount)
-            //            {
-            //                parameters.Add(inputArgs);
-            //                SetNextField();
-            //            }
-            //        }
-            //        break;
-            //    default:
-            //        break;
-            //}
         }
         bool IsFieldEmpty()
         {
@@ -161,30 +118,6 @@ namespace PlayerInput
                 _inputManager.controller.CreateCommand(skill, selecters.ToArray());
             }
 
-            //// 변경 후 사용할 코드
-            //// 조건 하나 필터링하기
-            //if (conditions.Count > 0)
-            //{
-            //    var curCondition = conditions.Dequeue();
-            //    // default 주입
-            //    currentArgs = new();
-            //    if (curCondition.args.Count > 0)
-            //    {
-            //        var type = curCondition.args[0].conditionType;
-            //        // 첫번째 타입에 대한 의존성 주입
-            //    }
-            //    // currentArgs에 현재 선택가능한 리스트 필터링
-            //    foreach (var condition in curCondition.args)
-            //    {
-            //        condition.FilterConditions(currentArgs);
-            //    }
-            //    // 현재 curArg와 동일한 타입의 arg 생성
-            //    inputArgs = new(currentArgs.currentType);
-            //}
-            //else
-            //{
-            //    // parameter와 skill을 담은 커맨드 생성 및 반환
-            //}
         }
         void CancelSkillInput()
         {
@@ -196,5 +129,54 @@ namespace PlayerInput
             Debug.Log("스킬 비정상적 종료로 인한 리셋");
             //skill.Reinitialize();
         }
+
+        #region newSkillInput
+        
+        // 스킬 입력 및 커맨드 생성 코루틴
+        public IEnumerator InputSkill(SkillComponent skill)
+        {
+            // TODO : skill.inputSkill 실행
+            // TODO : 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
+            yield break;
+        }
+
+        public IEnumerator InputEntity(List<Entity> list, Action<Entity> input, Action<bool> callback, int count = -1)
+        {
+            bool isContinue = true;
+            for (int i = 0; i < Mathf.Min(count, list.Count); i++)
+            {
+                // TODO : list 기물 시각화
+                // TODO : list 내에서 count만큼 입력 받기, 입력받은 기물은 선택 대상에서 제거
+                // TODO : 시각화 제거
+                if (!isContinue)
+                {
+                    callback?.Invoke(false);
+                    yield break;
+                }
+            }
+
+            callback?.Invoke(true);
+            
+        }
+        public IEnumerator InputTile(List<Tile> list, Action<Tile> input, Action<bool> callback, int count = -1)
+        {
+            bool isContinue = true;
+            for(int i=0;i < Mathf.Min(count,list.Count); i++)
+            {
+                // TODO : list 타일 시각화
+                // TODO : list 내에서 count만큼 입력 받기, 입력받은 타일은 선택 대상에서 제거
+                // TODO : 시각화 제거
+                if (!isContinue)
+                {
+                    callback?.Invoke(false);
+                    yield break;
+                }
+            }
+
+
+            callback?.Invoke(true);
+        }
+
+        #endregion
     }
 }
