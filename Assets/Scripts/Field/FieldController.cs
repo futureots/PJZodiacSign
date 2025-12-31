@@ -13,35 +13,73 @@ public class FieldController : MonoBehaviour
 
     protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
     
-    #region PhaseManager 
+    #region PhaseManage
+
     /**
      * 페이즈 - 턴 관리 시스템
-     * - 
+     * - 페이즈별로 턴 순회
+     * - 페이즈 전환, 턴 전환 Event
      */
+    private int phaseIndex;
+    private int turnIndex;
+    
     [SerializeField] protected uint turnCount;       // turn Count in current Phase
     [SerializeField] public List<Phase> phases;     
-    public Phase currentPhase { get; private set; }
-    public event Action<Phase> OnPhaseChanged;
-    public Turn currentTurn { get; private set; }
-    public event Action<Turn> OnTurnChanged;
+    public Phase CurrentPhase => phases[phaseIndex];
+
+    public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
-    public virtual void SetPhase(int index)
+    public event Action<Phase> OnPhaseChanged;
+    public event Action<Turn> OnTurnChanged;
+
+    
+    public virtual void SetPhase(int index = -1)
     {
+        // Next Phase
+        if (index == -1)
+        {
+            index = phaseIndex + 1;
+        }
+        
+        // Invalid Phase Count
         if (index >= phases.Count)
         {
             Debug.LogError($"Invalid Phase index");
             return;
         }
 
-        currentPhase = phases[index];
-        OnPhaseChanged?.Invoke(currentPhase);
+        phaseIndex = index;
+        OnPhaseChanged?.Invoke(CurrentPhase);
 
         SetTurn(0);
     }
 
     public virtual void SetTurn(int index)
     {
+        // Next Turn
+        if (index == -1)
+        {
+            index = turnIndex + 1;
+        }
+        
+        // Invalid Phase Count
+        if (index >= CurrentPhase.turnList.Count)
+        {
+            // Loop Phase
+            if (CurrentPhase.isLoop)
+            {
+                index = 0;
+            }
+            else
+            {
+                Debug.LogError($"Invalid Turn index");
+                return;
+            }
+        }
 
+        // Set Turn
+        turnIndex = index;
+        OnTurnChanged?.Invoke(CurrentTurn);
     }
     
     #endregion
