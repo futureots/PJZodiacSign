@@ -171,7 +171,7 @@ public class EntityController : MonoBehaviour
         return cmd;
     }
     // 스킬 커맨드 생성
-    public Command CreateCommand(IActive skill, params GameObject[] selecter)
+    public Command CreateCommand(SkillComponent skill, params GameObject[] selecter)
     {
         Command cmd = new SkillCommand(skill);
         cmd.selecterObjects.AddRange(selecter);

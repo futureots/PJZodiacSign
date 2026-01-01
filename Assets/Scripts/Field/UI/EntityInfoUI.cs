@@ -1,3 +1,4 @@
+using PlayerInput;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -99,7 +100,7 @@ public class EntityInfoUI : MonoBehaviour
             bool isSkillUsable = false;
             entitySkillBtn.onClick.RemoveAllListeners();
             // 스킬 버튼 활성화
-            if (_service.CurPhase == PhaseType.Battle)
+            if (_service.CurPhase == PhaseType.Battle && _inputManager.curModeState is MoveModeInput)
             {
                 if (team.IsAlly(entity.team))
                 {
@@ -113,7 +114,7 @@ public class EntityInfoUI : MonoBehaviour
                         entitySkillBtn.onClick.AddListener(() =>
                         {
                             // TODO : 스킬 입력 모드로 변경 및 입력에 필요한 값 전송
-                            //_inputManager.SetInputMode(_skill.GetSkillInstance());
+                            _inputManager.SetInputMode(skill);
                         });
                     }
                 }

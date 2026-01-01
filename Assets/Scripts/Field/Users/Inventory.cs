@@ -7,18 +7,18 @@ public class Inventory : MonoBehaviour
     /// <summary>
     /// 유저가 들고 있는 아이템
     /// </summary>
-    public ItemInstance[] items { get; private set; }
-    public Action<int, ItemInstance> OnItemChanged;
+    public ItemComponent[] items { get; private set; }
+    public Action<int, ItemComponent> OnItemChanged;
     public int capacity;
     private void Awake()
     {
-        items = new ItemInstance[capacity];
+        items = new ItemComponent[capacity];
     }
     private void Start()
     {
     }
 
-    public bool AddItem(ItemInstance instance)
+    public bool AddItem(ItemComponent instance)
     {
         // 용량 개수 만큼 확인 및 빈 공간에 추가
         if (CanAddItem(out int index))
@@ -31,15 +31,6 @@ public class Inventory : MonoBehaviour
         // 용량 부족
         return false;
     }
-    /// <summary>
-    /// 인벤토리에 아이템 추가
-    /// </summary>
-    /// <returns></returns>
-    public bool AddItem(ItemData data)
-    {
-        return AddItem(data.CreateInstance());
-    }
-
     /// <summary>
     /// 인벤토리 아이템 제거
     /// </summary>
@@ -55,13 +46,14 @@ public class Inventory : MonoBehaviour
     }
     public void SetItem(List<ItemData> list)
     {
+        // TODO : 풀링된 아이템 또는 직접 아이템 오브젝트를 불러와 인벤토리에 세팅
         for (int i = 0; i < list.Count; i++)
         {
             if (list[i] == null) continue;
             
-            var instance = list[i].CreateInstance();
-            items[i] = instance;
-            OnItemChanged?.Invoke(i, instance);
+            //var instance = list[i].CreateInstance();
+            //items[i] = instance;
+            //OnItemChanged?.Invoke(i, instance);
         }
     }
 

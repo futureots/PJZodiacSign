@@ -32,7 +32,7 @@ public class ItemInfoUI : MonoBehaviour
     {
         RectTransform.anchoredPosition = Input.mousePosition;
     }
-    public void SetInfo(ItemInstance item)
+    public void SetInfo(ItemComponent item)
     {
         Text.text = item.itemData.description;
     }
