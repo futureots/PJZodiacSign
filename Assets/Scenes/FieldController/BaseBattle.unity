@@ -158,11 +158,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477964636}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa59aea847f183c45a1bc758870af2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  actionCount: 0
   areaVisualizer: {fileID: 0}
   entitySelecter: {fileID: 0}
   tileSelecter: {fileID: 0}
@@ -170,6 +171,8 @@ MonoBehaviour:
   turnEndButton: {fileID: 0}
   UI: {fileID: 0}
   cam: {fileID: 0}
+  RepairCamPos: {x: 0, y: 0, z: 0}
+  BattleCamPos: {x: 0, y: 0, z: 0}
   OnObjectClicked:
     m_PersistentCalls:
       m_Calls: []
@@ -224,11 +227,69 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldController
   turnCount: 0
-  phases: []
-  currentPhase: {fileID: 0}
+  phases:
+  - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
+  - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}
   localPlayer: {fileID: 477964638}
   agents:
   - {fileID: 1990503683}
+--- !u!1001 &1980045898
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 828.41296
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 562.2049
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625329847462083965, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
 --- !u!1 &1990503681
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,11 +329,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990503681}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbfae69d9bdc56d41a5693269fe0440d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  actionCount: 0
   shopTable: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -281,3 +343,4 @@ SceneRoots:
   - {fileID: 807200185}
   - {fileID: 477964637}
   - {fileID: 1990503682}
+  - {fileID: 1980045898}

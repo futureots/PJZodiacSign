@@ -25,9 +25,8 @@ public class DataManager : Singleton<DataManager>
 
     public bool isModified { get; private set; }
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
         LoadAllData("data");
     }
 

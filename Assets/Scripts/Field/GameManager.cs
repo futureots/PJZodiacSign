@@ -13,13 +13,24 @@ public class GameManager : SingletonObject<GameManager>
     {
         base.Awake();
         // dataManager = this.GetOrAddComponent<DataManager>();     // TODO: 데이터 로드 로직 추가
-        // dataManager.LoadAllData();                   
+        // dataManager.LoadAllData();    
+        
+        // TODO: Debug용 Mock 컨트롤러 추가 시 삭제
+        #if UNITY_EDITOR
+        currentStage = new();
+        FieldController fieldController = FindFirstObjectByType<FieldController>();
+        if (fieldController)
+        {
+            fieldController.Init(currentStage);
+        }
+         
+        #endif
     }
     
     #region BattleInit
 
     /// <summary>
-    /// 전투 스테이지 진입
+    /// Enter Battle Scene
     /// </summary>
     /// <param name="stageData">Stage data to Load</param>
     public void EnterBattle(StageData stageData)
@@ -80,7 +91,7 @@ public class GameManager : SingletonObject<GameManager>
     #region BattleEnd
     
     /// <summary>
-    /// 게임 종료 시 처리
+    /// Procedure when Battle End
     /// </summary>
     void ExitBattle ()
     {
@@ -88,7 +99,7 @@ public class GameManager : SingletonObject<GameManager>
         // TODO: 게임 종료 처리 로직 추가
         if (currentStage != null)
         {
-            EnterBattle(currentStage);       // 기본 씬 재로드
+            EnterBattle(currentStage);       // NOTE: 기본 씬 재로드
         }
     }
     
