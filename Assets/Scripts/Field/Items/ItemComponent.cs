@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEngine;
 
 [System.Serializable]
 public class ItemComponent : SkillComponent

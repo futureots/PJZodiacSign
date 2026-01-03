@@ -1,12 +1,8 @@
+using Battle.Phase;
 using PlayerInput;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityInfoUI : MonoBehaviour
 {

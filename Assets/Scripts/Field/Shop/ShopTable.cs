@@ -1,11 +1,7 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using static ShopTable;
-using static UnityEngine.Rendering.DebugUI;
 
 [CreateAssetMenu(fileName = "ShopTable", menuName = "Scriptable Objects/ShopTable")]
 public class ShopTable : ScriptableObject

@@ -16,21 +16,21 @@ public class NotificationUI : MonoBehaviour
     private void Start()
     {
         SetZero();
-        BattlePhase.OnTurnStarted += ShowMyTurn;
+        //BattlePhase.OnTurnStarted += ShowMyTurn;
     }
 
     private void OnDestroy()
     {
-        BattlePhase.OnTurnStarted -= ShowMyTurn;
+        //BattlePhase.OnTurnStarted -= ShowMyTurn;
     }
 
-    void ShowMyTurn(ITurn turn)
-    {
-        if (turn.TeamNumber == 1 && turn is ActionTurn)
-        {
-            Show("나의 턴");
-        }
-    }
+    //void ShowMyTurn(ITurn turn)
+    //{
+    //    if (turn.TeamNumber == 1 && turn is ActionTurn)
+    //    {
+    //        Show("나의 턴");
+    //    }
+    //}
 
     [ContextMenu("SetZero")]
     public void SetZero() => transform.localScale = Vector3.zero;

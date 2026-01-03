@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class TurnBlock : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class TurnBlock : MonoBehaviour
     public TextMeshProUGUI turnText;
     public Image backgroundImage;
     
-    private ITurn turnData;
+    private Turn turnData;
     Animator anim;
     public List<LogBlock> logs;
     private void Awake()
@@ -33,17 +31,17 @@ public class TurnBlock : MonoBehaviour
     /// </summary>
     /// <param name="turn">표시할 턴 데이터</param>
     /// <param name="team">팀 번호 (1 또는 2)</param>
-    public void Initialize(ITurn turn)
+    public void Initialize()
     {
-        turnData = turn;
+        //turnData = turn;
         
         UpdateDisplay();
 
         // 해당 턴의 커맨드를 받는 구독자 생성 및 이벤트 발동 시 해당 커맨드에 대한 UI 업데이트 및 구독 해제
-        if(turnData is ActionTurn actionTurn)
-        {
-            actionTurn.onCommandExecuted += CommandUpdate;
-        }
+        //if(turnData is ActionTurn actionTurn)
+        //{
+        //    actionTurn.onCommandExecuted += CommandUpdate;
+        //}
     }
 
     /// <summary>
@@ -54,10 +52,10 @@ public class TurnBlock : MonoBehaviour
     {
         // 해당 커맨드에 대한 설명이 포함된 블록 표시
         UpdateDisplay(cmd);
-        if (turnData is ActionTurn actionTurn)
-        {
-            actionTurn.onCommandExecuted -= CommandUpdate;
-        }
+        //if (turnData is ActionTurn actionTurn)
+        //{
+        //    actionTurn.onCommandExecuted -= CommandUpdate;
+        //}
     }
     /// <summary>
     /// 턴 타입과 팀에 따라 UI를 업데이트합니다.
@@ -67,10 +65,10 @@ public class TurnBlock : MonoBehaviour
         if (turnData == null) return;
 
         // 턴 타입에 따른 텍스트 설정
-        string text = GetTurnText();
+        //string text = GetTurnText();
 
         // 전체 텍스트 조합 (예: "Team 1 행동", "Team 2 공격")
-        turnText.text = text;
+        //turnText.text = text;
         
         // 팀에 따른 색상 설정
         // Color teamColor = GameManager.Instance.teamColorTable.teamColors[turnData.TeamNumber];
@@ -89,31 +87,7 @@ public class TurnBlock : MonoBehaviour
         turnText.text = text;
     }
 
-    /// <summary>
-    /// 턴 타입에 따른 텍스트를 반환
-    /// </summary>
-    string GetTurnText()
-    {
-        string text = "";
-        text += "팀 " + turnData.TeamNumber;
-        if (turnData is ActionTurn)
-        {
-            text += " 행동";
-        }
-        else if (turnData is AttackTurn)
-        {
-            text += " 공격";
-        }
-        return text;
-    }
     
-    /// <summary>
-    /// 현재 저장된 ITurn 데이터를 반환
-    /// </summary>
-    public ITurn GetTurnData()
-    {
-        return turnData;
-    }
 
 
 

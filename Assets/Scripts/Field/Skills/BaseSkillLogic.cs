@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-[System.Serializable]
+[Serializable]
 public abstract class BaseSkillLogic
 {
     public virtual IEnumerator InputSkill(IInput input, Action<bool> callback) {

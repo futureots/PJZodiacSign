@@ -233,7 +233,7 @@ MonoBehaviour:
   localPlayer: {fileID: 477964638}
   agents:
   - {fileID: 1990503683}
---- !u!1001 &1980045898
+--- !u!1001 &826401884
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -243,15 +243,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 828.41296
+      value: 23.44484
       objectReference: {fileID: 0}
     - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 562.2049
+      value: 71.68877
       objectReference: {fileID: 0}
     - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -83.39342
       objectReference: {fileID: 0}
     - target: {fileID: 7536887041384811472, guid: ac72fc53fa4c7324f942b259ff120a7b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -343,4 +343,4 @@ SceneRoots:
   - {fileID: 807200185}
   - {fileID: 477964637}
   - {fileID: 1990503682}
-  - {fileID: 1980045898}
+  - {fileID: 826401884}

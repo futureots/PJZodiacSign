@@ -1,7 +1,7 @@
+using Battle.Phase;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
+
 
 public class ShopUI : MonoBehaviour
 {
@@ -93,22 +93,22 @@ public class ShopUI : MonoBehaviour
         }
         for (int i = itemList.Count; i < itemShop.childCount; i++) itemShop.GetChild(i).gameObject.SetActive(false);
     }
-    void PhaseChange(IPhase curPhase, bool start)
-    {
-        if (curPhase is RepairPhase phase)
-        {
-            // 페이즈 시작
-            if (start)
-            {
-                ShopToggle.SetActive(true);
-                SetShop(phase.Level);
-            }
-            // 페이즈 종료
-            else
-            {
-                shopPanel.SetActive(false);
-                ShopToggle.SetActive(false);
-            }
-        }
-    }
+    //void PhaseChange(IPhase curPhase, bool start)
+    //{
+    //    if (curPhase is RepairPhase phase)
+    //    {
+    //        // 페이즈 시작
+    //        if (start)
+    //        {
+    //            ShopToggle.SetActive(true);
+    //            SetShop(phase.Level);
+    //        }
+    //        // 페이즈 종료
+    //        else
+    //        {
+    //            shopPanel.SetActive(false);
+    //            ShopToggle.SetActive(false); 
+    //        }
+    //    }
+    //}
 }

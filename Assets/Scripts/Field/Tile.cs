@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] Renderer renderer;
+    [SerializeField] Renderer tileRenderer;
     List<Material> originMaterials;
     List<Material> currentMaterials;
 
@@ -22,11 +22,11 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        if (renderer == null)
+        if (tileRenderer == null)
         {
-            renderer = GetComponentInChildren<Renderer>();
+            tileRenderer = GetComponentInChildren<Renderer>();
         }
-        originMaterials = renderer.materials.ToList();
+        originMaterials = tileRenderer.materials.ToList();
         currentMaterials = originMaterials;
 
     }
@@ -89,12 +89,12 @@ public class Tile : MonoBehaviour
     public void ApplyHighlight(Material material)
     {
         currentMaterials.Add(material);
-        renderer.materials = currentMaterials.ToArray();
+        tileRenderer.materials = currentMaterials.ToArray();
     }
     public void RemoveHighlight(Material material)
     {
         currentMaterials.Remove(material);
-        renderer.materials = currentMaterials.ToArray();
+        tileRenderer.materials = currentMaterials.ToArray();
     }
 
 }

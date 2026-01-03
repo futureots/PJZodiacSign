@@ -1,5 +1,4 @@
-using System;
-using UnityEngine;
+using Battle.Phase;
 
 public class ItemData : AbstractData
 {

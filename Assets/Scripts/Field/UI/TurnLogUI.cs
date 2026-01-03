@@ -1,3 +1,4 @@
+using Battle.Phase;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,20 +24,20 @@ public class TurnLogUI : MonoBehaviour
     void Start()
     {
         Entity.onEntityDead += CreateDeadLog;
-        BattlePhase.OnTurnStarted += CreateTurnLog;
+        //BattlePhase.OnTurnStarted += CreateTurnLog;
     }
 
     public void Init(IPhaseManageService phaseManageService)
     {
         this.phaseManageService = phaseManageService;
-        phaseManageService.onPhaseChanged += PhaseChange;
+        //phaseManageService.onPhaseChanged += PhaseChange;
     }
 
-    public void CreateTurnLog(ITurn turn)
+    public void CreateTurnLog()
     {
         var block = Instantiate(turnBlock,content);
         blockList.Add(block.gameObject);
-        block.Initialize(turn);
+        //block.Initialize(turn);
         curTurnBlock = block;
         if (blockList.Count > capacity)
         {
@@ -55,7 +56,7 @@ public class TurnLogUI : MonoBehaviour
     private void OnDestroy()
     {
         Entity.onEntityDead -= CreateDeadLog;
-        BattlePhase.OnTurnStarted -= CreateTurnLog;
+        //BattlePhase.OnTurnStarted -= CreateTurnLog;
     }
 
     [ContextMenu("Clear")]
@@ -66,42 +67,7 @@ public class TurnLogUI : MonoBehaviour
         blockList.RemoveAt(0);
     }
 
-    void ClearLog()
-    {
-        Debug.Log("로그 초기화");
-        //로그 오브젝트 제거
-        foreach (var block in blockList)
-        {
-            Destroy(block.gameObject);
-        }
-        blockList.Clear();
-    }
 
-    void PhaseChange(IPhase curPhase, bool start)
-    {
-        if (curPhase is BattlePhase)
-        {
-            // 페이즈 시작
-            if (start)
-            {
-                LogToggle.SetActive(true);
-                // logpanel 초기화
-                ClearLog();
-            }
-            // 페이즈 종료
-            else
-            {
-                LogToggle.SetActive(false);
-                LogPanel.SetActive(false);
-            }
-        }
-    }
-    private void OnDisable()
-    {
-        if (phaseManageService != null)
-        {
-            phaseManageService.onPhaseChanged -= PhaseChange;
-        }
-        
-    }
+
+
 }
