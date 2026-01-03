@@ -10,14 +10,15 @@ public class ItemGoodsUI : GoodsUI<ItemData>
         base.SetGoods(data, customer);
         buyBtn.onClick.AddListener(() =>
         {
-            if (customer.inventory.AddItem(data))
-            {
-                customer.Credit -= price;
-            }
-            else
-            {
-                Debug.Log("인벤토리에 빈 공간이 없습니다!");
-            }
+            // TODO : 인벤토리에 구매한 아이템 추가
+            //if (customer.inventory.AddItem(data))
+            //{
+            //    customer.Credit -= price;
+            //}
+            //else
+            //{
+            //    Debug.Log("인벤토리에 빈 공간이 없습니다!");
+            //}
         });
     }
 }

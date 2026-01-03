@@ -31,7 +31,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler, IPointerExitHandl
     /// 슬롯에 아이템 설정
     /// </summary>
     /// <param name="item"></param>
-    public void SetSlot(ItemInstance item)
+    public void SetSlot(ItemComponent item)
     {
         if (item == null)
         {

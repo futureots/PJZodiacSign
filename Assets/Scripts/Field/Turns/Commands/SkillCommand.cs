@@ -1,33 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillCommand : Command
 {
-    //ÀÔ·Â°ªÀÌ ¸ðµÎ ÀÔ·ÂµÈ ½ºÅ³
-    public IActive skill;
 
-    public SkillCommand(IActive skill)
+    public SkillComponent _skill;
+    
+    public SkillCommand(SkillComponent skill)
     {
-        selecterObjects = new();
-        this.skill = skill;
+        this._skill = skill;
     }
-    public override void Execute()
+
+    public override IEnumerator Execute(Action callback)
     {
-        var result = skill.ExecuteSequence();
-        base.Execute();
+        //var result = skill.ExecuteSequence();
+        yield return _skill.StartCoroutine(_skill.ExecuteSkill());
+        callback?.Invoke();
+        
     }
     public override string ToString()
     {
-        if( skill is AbstractSkillInstance sk)
-        {
-            if(skill is S_BaseEntity<BaseSkillData> s)
-            {
-                return $"{s.Owner.name}ÀÌ {s.skillName} »ç¿ë";
-            }
-            return $"{sk.skillName} »ç¿ë";
-        }
-        return "";
+        string text = "";
+        text += $"{_skill.skillData.skillName} ì‚¬ìš©";
+        return text;
             
     }
 }

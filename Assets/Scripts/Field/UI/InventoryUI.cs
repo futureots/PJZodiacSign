@@ -88,7 +88,7 @@ public class InventoryUI : MonoBehaviour
     /// 인벤토리에 아이템 추가 시 UI에 동기화
     /// </summary>
     /// <param name="item"></param>
-    public void UpdateInventory(int index ,ItemInstance item)
+    public void UpdateInventory(int index ,ItemComponent item)
     {
         itemSlots[index].SetSlot(item);
     }

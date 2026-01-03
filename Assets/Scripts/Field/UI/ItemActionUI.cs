@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemActionUI : MonoBehaviour
@@ -27,35 +26,23 @@ public class ItemActionUI : MonoBehaviour
         discardBtn.onClick.AddListener(() => gameObject.SetActive(false));
 
         var item = inventory.items[index];
-        if (item is IUsable usable)
+
+        useBtn.gameObject.SetActive(true);
+
+        if (item.itemData.useType.HasFlag(phaseManageService.CurPhase))
         {
-            var effect = usable.GetUseEffect();
-            useBtn.gameObject.SetActive(true);
+            useBtn.interactable = true;
 
-            if (item.itemData.useType.HasFlag(phaseManageService.CurPhase))
+            useBtn.onClick.RemoveAllListeners();
+            useBtn.onClick.AddListener(() =>
             {
-                useBtn.interactable = true;
-
-                useBtn.onClick.RemoveAllListeners();
-                useBtn.onClick.AddListener(() =>
-                {
-                    effect.AddCallback(x =>
-                    {
-                        if (x) inventory.RemoveItem(index);
-                        effect.ClearCallback();
-                    });
-                    transform.root.GetComponent<InputManager>().SetInputMode(effect);
-                });
-                useBtn.onClick.AddListener(() => gameObject.SetActive(false));
-            }
-            else
-            {
-                useBtn.interactable = false;
-            }
+                transform.root.GetComponent<InputManager>().SetInputMode(item);
+            });
+            useBtn.onClick.AddListener(() => gameObject.SetActive(false));
         }
         else
         {
-            useBtn.gameObject.SetActive(false);
+            useBtn.interactable = false;
         }
 
     }

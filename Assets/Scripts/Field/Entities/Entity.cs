@@ -1,11 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 
 [RequireComponent(typeof(PowerComponent))]
@@ -94,7 +91,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         power.Power += baseData.bonusPower * (cur - prev);
     }
 
-    public void Attack()
+    public IEnumerator Attack()
     {
         var list = GetAttackArea();
         int damage = power.Power;
@@ -111,6 +108,7 @@ public class Entity : Occupant, IDamageable, IAttackable
                 //target.GetComponent<IDamageable>()?.Damaged(damage);
             }
         }
+        yield return null;
     }
 
     public void Damaged(int damage)

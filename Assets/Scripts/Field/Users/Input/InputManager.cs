@@ -17,7 +17,7 @@ public class InputManager : Agent
 
     public GameInputActions inputActions { get; private set; }
 
-    IModeInput curModeState;
+    public IModeInput curModeState { get; private set; }
 
     // 입력 표시기
     public AreaVisualizer areaVisualizer;
@@ -204,12 +204,11 @@ public class InputManager : Agent
         curModeState.SetMode();
     }
     
-    public void SetInputMode(IActive active)
+    public void SetInputMode(SkillComponent skill)
     {
-
         curModeState?.RemoveMode();
 
-        curModeState = new SkillModeInput(this, active, phaseService);
+        curModeState = new SkillModeInput(this, skill, phaseService);
         curModeState.SetMode();
     }
     #endregion
