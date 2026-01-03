@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02b50b7cafd45dcbab425db4ef0fec4, type: 3}
   m_Name: RepairPhase_2P
   m_EditorClassIdentifier: Assembly-CSharp::Phase
-  loop: 0
+  phaseName: 
+  isLoop: 0
   turnList:
-  - player: 1
+  - agentID: 0
     type: repair
-  - player: 2
+    actions: []
+  - agentID: 0
     type: repair
+    actions: []
+  useUIType: 127

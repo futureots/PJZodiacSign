@@ -6,14 +6,15 @@ using UnityEngine;
 public enum UIType
 {
     None,
-    PlayerData = 1 << 0,
-    EntityInfo =  1 << 1,
-    Turn = 1 << 2,
-    Option = 1 << 3,
-    Shop =  1 << 4,
-    Resource = 1 << 5,
-    Log = 1 << 6,
-    Inventory =  1 << 7,
+    Option = 1 << 0,
+    PlayerData =  1 << 1,
+    EntityInfo = 1 << 2,
+    Inventory = 1 << 3,
+    Turn = 1 << 4,
+    Common = Option | PlayerData | EntityInfo | Inventory | Turn,
+    Shop =  1 << 5,
+    Resource = 1 << 6,
+    Log = 1 << 7,
 }
 
 [Serializable]
@@ -23,10 +24,20 @@ public struct UIMap
     public GameObject uiPanel;      // NOTE: UI Panel 추상 타입으로 개선
 }
 
-public class UIMapper
+public class UIMapper : MonoBehaviour
 {
+    /**
+     * Model UI 관리자
+     * - 타입에 따른 UI 객체 맵핑
+     * - UI 사용 플래그를 이용하여 UI 활성화 관리
+     */
     [SerializeField] private List<UIMap> uiMaps;
-    private Dictionary<UIType, GameObject> container = new();
+    private readonly Dictionary<UIType, GameObject> _container = new();
+
+    private void Awake()
+    {
+        RefreshDictionary();
+    }
 
     /// <summary>
     /// Refresh UI Container Dictionary
@@ -34,19 +45,32 @@ public class UIMapper
     private void RefreshDictionary()
     {
         // Reset Container
-        container.Clear();
+        _container.Clear();
 
         // Bake Dictionary
         foreach (var ui in uiMaps)
         {
-            if (ui.uiPanel && !container.ContainsKey(ui.type))
+            if (ui.uiPanel && !_container.ContainsKey(ui.type))
             {
-                container.Add(ui.type, ui.uiPanel);
+                _container.Add(ui.type, ui.uiPanel);
                 
                 ui.uiPanel.SetActive(false);        // Default Inactive
             }
         }
     }
-    
-    
+
+    /// <summary>
+    /// Active UI for Phase
+    /// </summary>
+    /// <param name="uiFlag">Flag for UI to use</param>
+    public void SetUI(UIType uiFlag)
+    {
+        foreach (var map in uiMaps)
+        {
+            if (!map.uiPanel) continue;     // use Only when UI Exists
+
+            bool active = uiFlag.HasFlag(map.type);
+            map.uiPanel.SetActive(active);
+        }
+    }
 }

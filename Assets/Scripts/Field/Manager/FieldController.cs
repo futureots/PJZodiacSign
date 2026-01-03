@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +14,6 @@ public class FieldController : MonoBehaviour
     protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
     
     #region PhaseManage
-
     /**
      * 페이즈 - 턴 관리 시스템
      * - 페이즈별로 턴 순회
@@ -29,10 +28,10 @@ public class FieldController : MonoBehaviour
 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
-    public event Action<Phase> OnPhaseChanged;
-    public event Action<Turn> OnTurnChanged;
-
-    
+    /// <summary>
+    /// Phase Set and Reset Turn
+    /// </summary>
+    /// <param name="index">Phase index for set (-1 for Next Phase)</param>
     public virtual void SetPhase(int index = -1)
     {
         // Next Phase
@@ -47,14 +46,21 @@ public class FieldController : MonoBehaviour
             Debug.LogError($"Invalid Phase index");
             return;
         }
-
+        
         phaseIndex = index;
-        OnPhaseChanged?.Invoke(CurrentPhase);
 
+        // Set Model
+        stageManager.SetPhase(CurrentPhase);
+        
+        // Reset Turn
         SetTurn(0);
     }
 
-    public virtual void SetTurn(int index)
+    /// <summary>
+    /// Turn Set
+    /// </summary>
+    /// <param name="index">Turn index for Set, -1 for Next Turn</param>
+    public virtual void SetTurn(int index = -1)
     {
         // Next Turn
         if (index == -1)
@@ -72,26 +78,32 @@ public class FieldController : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Invalid Turn index");
+                SetPhase();         // NOTE: Move to Next Phase When all Turn Ends
                 return;
             }
         }
 
         // Set Turn
         turnIndex = index;
-        OnTurnChanged?.Invoke(CurrentTurn);
+        turnCount++;
+        
+        // Set Model
+        stageManager.SetTurn(CurrentTurn);
     }
     
     #endregion
     
     #region Commands
+    /**
+     * 
+     */
     
     public List<Command> commandList;
     protected CommandSystem commandSystem;    // Attach
     
     public virtual void SendCommands()
     {
-        //field에 커맨드 전송 및 콜백 함수 설정
+        //TODO: field에 커맨드 전송 및 콜백 함수 설정
     }
     public virtual void OnCommandExecuted()
     {
@@ -101,7 +113,9 @@ public class FieldController : MonoBehaviour
     #endregion
     
     #region Agents
-
+    /**
+     * 
+     */
     public Agent localPlayer;
     public List<Agent> agents;
     
@@ -110,7 +124,7 @@ public class FieldController : MonoBehaviour
     /// <summary>
     /// Initiate Controller
     /// </summary>
-    /// <remarks>필드, 상점 주입받고 전투 Model을 초기화</remarks>
+    /// <remarks>Load Model and set Command, Special Rule, and Reset Phase</remarks>
     public virtual void Init(StageData data)
     {
         /* 레벨 데이터로 씬 로드 준비
@@ -121,7 +135,7 @@ public class FieldController : MonoBehaviour
         stageManager = StageManager.Instance;
         stageManager.Init(data);
         
-        // 에이전트 생성 및 초기화
+        // TODO: 에이전트 생성 및 초기화
         // localPlayer.SetData(data.player);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
         {
@@ -133,8 +147,8 @@ public class FieldController : MonoBehaviour
         // TODO: 기믹 세팅
         SpecialRule = data.specialRule;
         
-        // TODO: 페이즈 초기화
+        // Reset Phase
         turnCount = 0;
-        // currentPhase = phases[0];
+        SetPhase(0);
     }
 }

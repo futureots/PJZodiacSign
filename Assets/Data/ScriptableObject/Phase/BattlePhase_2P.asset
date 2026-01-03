@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02b50b7cafd45dcbab425db4ef0fec4, type: 3}
   m_Name: BattlePhase_2P
   m_EditorClassIdentifier: Assembly-CSharp::Phase
-  loop: 1
+  phaseName: 
+  isLoop: 1
   turnList:
-  - player: 1
+  - agentID: 0
     type: Skill
-  - player: 1
+    actions: []
+  - agentID: 1
     type: Act
-  - player: 2
+    actions: []
+  - agentID: 1
     type: Skill
-  - player: 2
+    actions: []
+  - agentID: 0
     type: Act
+    actions: []
+  useUIType: 159

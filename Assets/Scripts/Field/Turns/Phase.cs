@@ -30,7 +30,9 @@ public class Turn
 [CreateAssetMenu(fileName = "Phase", menuName = "Scriptable Objects/PhaseData")]
 public class Phase : ScriptableObject
 {
-    public string name;
+    public string phaseName;
     public bool isLoop;
     public List<Turn> turnList = new();
+    
+    public UIType useUIType;
 }
