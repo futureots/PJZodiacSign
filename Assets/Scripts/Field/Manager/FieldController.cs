@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +29,9 @@ public class FieldController : MonoBehaviour
 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
+    public event Action<Phase> onPhaseStarted;
+    public event Action<Turn> onTurnStarted;
+
     /// <summary>
     /// Phase Set and Reset Turn
     /// </summary>
@@ -51,6 +55,7 @@ public class FieldController : MonoBehaviour
 
         // Set Model
         stageManager.SetPhase(CurrentPhase);
+        onPhaseStarted?.Invoke(CurrentPhase);
         
         // Reset Turn
         SetTurn(0);
@@ -89,6 +94,7 @@ public class FieldController : MonoBehaviour
         
         // Set Model
         stageManager.SetTurn(CurrentTurn);
+        onTurnStarted?.Invoke(CurrentTurn);
     }
     
     #endregion

@@ -7,34 +7,8 @@ public class EnemyAI : Agent
 {
     public ShopTable shopTable;
 
-    public override void SetActionTurn(Action call)
-    {
-        this.RunWithCallback(SetActionMode(), call);
-    }
-    public override void SetRepairPhase(int level, Action call)
-    {
-        // 보유 크레딧으로 기물 랜덤 구매하기
-        Debug.Log("Enemy Credit : " + Credit);
-        int loopCount = 30;
-        for(int i=0;i<loopCount;i++)
-        {
-            if (shopTable.TryGetBuyableEntity(Credit, out var entity))
-            {
-                Credit -= entity.normalPrice;
-                data.handEntities.Add(new EntityLevelData(entity));
-            }
-            else break;
-            Credit--;
-        }
-        controller.SetResourceField(data.handEntities);
-        controller.SetMainField(data.fieldEntities);
-        this.RunWithCallback(SetRepairMode(), call);
-    }
-    public override void EndRepairPhase()
-    {
-        controller.UpdateEntities();
-        base.EndRepairPhase();
-    }
+
+
 
 
     public IEnumerator SetRepairMode()
@@ -108,31 +82,7 @@ public class EnemyAI : Agent
         // }
     }
 
-    /// <summary>
-    /// 스킬 사용이 가능한 기물이 있는지 확인하는 함수
-    /// </summary>
-    /// <returns>스킬 사용이 가능함</returns>
-    bool TryGetActableSkills(out List<SkillComponent> Entities)
-    {
-        
-        Entities = new List<SkillComponent>();
-        foreach (var item in controller.fieldEntities)
-        {
-            if(item.TryGetComponent<SkillComponent>(out var skill))
-            {
-                // 스킬 사용이 가능한지 확인하는 조건문
-                /*if (false)
-                {
-                    if (skill.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
-                    {
-                        Entities.Add(skill);
-                    }
-                }*/
-            }
-        }
-        if (Entities.Count > 0) return true;
-        return false;
-    }
+
 
     bool TryGetBestMove(
         Entity entity,
@@ -198,3 +148,5 @@ public class EnemyAI : Agent
         return true;
     }
 }
+
+

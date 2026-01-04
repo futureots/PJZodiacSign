@@ -54,11 +54,8 @@ namespace PlayerInput
             var entity = obj.GetComponent<Entity>();
             if (entity == null) return;
 
-            // 아군 기물인지 확인
-            var team = _inputManager.team;
-            if (!team.IsAlly(entity.team)) return;
-
-            if (!_inputManager.controller.resourceEntities.Contains(entity)) return;
+            // 아군 기물인지 확인 + 리소스 필드에 있는 기물인지 확인
+            if (!_inputManager.agent.entities.Contains(entity) && true) return;
 
             _selectedEntity = entity;
 
@@ -68,7 +65,7 @@ namespace PlayerInput
             
             // 기물 이동영역 표시
             moveArea = new List<Tile>(); // GameManager.Instance.field.GetHalfTiles(_inputManager.controller.isReflect);
-            moveArea.AddRange(_inputManager.controller.resourceField.GetTiles());
+            //moveArea.AddRange(_inputManager.controller.resourceField.GetTiles());
 
             targetTileSelecter.SetActive(true);
             _inputManager.areaVisualizer.ShowMoveArea(moveArea);

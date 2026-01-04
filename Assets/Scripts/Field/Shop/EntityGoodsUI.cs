@@ -8,14 +8,14 @@ public class EntityGoodsUI : GoodsUI<EntityData>
         base.SetGoods(data, customer);
         buyBtn.onClick.AddListener(() =>
         {
-            if (customer.SummonEntity(data))
-            {
-                customer.Credit -= price;
-            }
-            else
-            {
-                Debug.Log("소환할 빈 공간이 없습니다!");
-            }
+            //if (customer.SummonEntity(data))
+            //{
+            //    customer.Credit -= price;
+            //}
+            //else
+            //{
+            //    Debug.Log("소환할 빈 공간이 없습니다!");
+            //}
         });
     }
 }

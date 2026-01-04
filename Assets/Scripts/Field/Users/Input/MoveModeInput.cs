@@ -48,8 +48,7 @@ namespace PlayerInput
             if (entity == null) return;
 
             // 적인지 아닌지 구분
-            var team = _inputManager.team;
-            if (!team.IsAlly(entity.team)) return;
+            if (!_inputManager.agent.entities.Contains(entity)) return;
             _selectedEntity = entity;
 
             targetSelecter = GameObject.Instantiate(_inputManager.entitySelecter, entity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
@@ -66,7 +65,7 @@ namespace PlayerInput
             if (_selectedEntity != null)
             {
                 var tile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
-                _selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
+                //_selectedEntity.transform.position = _selectedEntity.CurTile.transform.position;
                 visualizer.RemoveAttackArea(attackArea);
                 visualizer.RemoveMoveArea(moveArea);
 
@@ -77,7 +76,7 @@ namespace PlayerInput
                     var cmd = new MoveCommand(_selectedEntity, tile);
                     cmd.AddObjects(targetSelecter, targetTileSelecter);
                     
-                    _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
+                    _inputManager.agent.CreateMoveCommand(_selectedEntity, tile);
                 }
                 else
                 {
@@ -96,13 +95,13 @@ namespace PlayerInput
             var _areaVisualizer = _inputManager.areaVisualizer;
             Plane plane = new Plane(Vector3.up, new Vector3(0, 10, 0));
             float rayDistance;
+            Vector3 pos = _selectedEntity.transform.position;
             if (plane.Raycast(ray, out rayDistance))
             {
-                Vector3 pos = ray.GetPoint(rayDistance);
-                _selectedEntity.transform.position = pos;
+                pos = ray.GetPoint(rayDistance);
             }
             // 공격 범위 표시
-            var closeTile = _inputManager.GetClosestTile(_selectedEntity.transform.position, moveArea);
+            var closeTile = _inputManager.GetClosestTile(pos, moveArea);
             targetTileSelecter.transform.position = closeTile.transform.position + Vector3.up * 0.1f;
             _areaVisualizer.RemoveAttackArea(attackArea);
             attackArea = _selectedEntity.GetAttackArea(closeTile);

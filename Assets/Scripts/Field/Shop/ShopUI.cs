@@ -71,7 +71,7 @@ public class ShopUI : MonoBehaviour
             }
             if (goodsUI != null)
             {
-                goodsUI.SetGoods(entityList[i],customer);
+                //goodsUI.SetGoods(entityList[i],customer);
             }
         }
         for (int i = entityList.Count; i < entityShop.childCount; i++) entityShop.GetChild(i).gameObject.SetActive(false);
@@ -88,7 +88,7 @@ public class ShopUI : MonoBehaviour
             }
             if (goodsUI != null)
             {
-                goodsUI.SetGoods(itemList[i],customer);
+                //goodsUI.SetGoods(itemList[i],customer);
             }
         }
         for (int i = itemList.Count; i < itemShop.childCount; i++) itemShop.GetChild(i).gameObject.SetActive(false);

@@ -1,4 +1,3 @@
-using Battle.Phase;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,16 +9,15 @@ namespace PlayerInput
 {
     public class SkillModeInput : IModeInput, IInput
     {
-        IPhaseManageService phaseService;
+        
 
         InputManager _inputManager;
 
         List<GameObject> selecters;
 
         SkillComponent skillComp;
-        public SkillModeInput(InputManager input, SkillComponent skill, IPhaseManageService phaseService)
+        public SkillModeInput(InputManager input, SkillComponent skill)
         {
-            this.phaseService = phaseService;
             _inputManager = input;
             skillComp = skill;
 
@@ -28,7 +26,6 @@ namespace PlayerInput
 
         public void RemoveMode()
         {
-
             _inputManager.UI.cancelButton.gameObject.SetActive(false);
         }
 
@@ -48,9 +45,10 @@ namespace PlayerInput
             // TODO : 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
             if (isCompleted)
             {
-                // TODO : 커맨드 생성
-                _inputManager.controller.CreateCommand(skill, selecters.ToArray());
+                // NOTE : 커맨드 생성
+                _inputManager.agent.CreateSkillCommand(skill);
             }
+            _inputManager.SetInputMode();
             yield break;
         }
 
