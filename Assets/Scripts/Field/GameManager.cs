@@ -26,6 +26,7 @@ public class GameManager : SingletonObject<GameManager>
          
         #endif
     }
+
     
     #region BattleInit
 

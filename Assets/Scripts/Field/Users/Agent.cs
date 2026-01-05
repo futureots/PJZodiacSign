@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class Agent : MonoBehaviour
+public class Agent : MonoBehaviour
 {
-    public Team team { get; protected set; }
+    public int id;
 
     public FieldController fieldController { get; protected set; }
 
@@ -64,7 +63,7 @@ public abstract class Agent : MonoBehaviour
     {
         fieldController.commandList.AddRange(commands);
         commands.Clear();
-
+        fieldController.ExecutedCommands();
     }
 
     

@@ -14,7 +14,10 @@ public class SkillComponent : MonoBehaviour
             return silenceCount > 0;
         }
     }
-
+    private void Awake()
+    {
+        Init(skillData);
+    }
     public void Init(BaseSkillData data)
     {
         skillData = data;
@@ -37,7 +40,8 @@ public class SkillComponent : MonoBehaviour
     public virtual IEnumerator ExecuteSkill()
     {
         // TODO : 자식 클래스 내에 저장된 변수를 사용해 각 스킬의 로직을 코루틴으로 구현
-        yield return null;
+        
+        yield return StartCoroutine(skillLogic.ExecuteSkill());
         if (TryGetComponent<EnergyComponent>(out var energy))
         {
             energy.CurEnergy = 0;

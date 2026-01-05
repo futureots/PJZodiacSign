@@ -26,13 +26,10 @@ namespace PlayerInput
 
         public void RemoveMode()
         {
-            _inputManager.UI.cancelButton.gameObject.SetActive(false);
         }
 
         public void SetMode()
         {
-            _inputManager.UI.cancelButton.gameObject.SetActive(true);
-
             _inputManager.StartCoroutine(InputSkill(skillComp));
         }
         
@@ -48,6 +45,7 @@ namespace PlayerInput
                 // NOTE : 커맨드 생성
                 _inputManager.agent.CreateSkillCommand(skill);
             }
+            // 스킬 입력이 종료되면 기본 입력 모드로 변경
             _inputManager.SetInputMode();
             yield break;
         }
@@ -117,6 +115,10 @@ namespace PlayerInput
                 }
             };
             // TODO : list 기물 시각화
+            foreach (Tile tile in list)
+            {
+                tile.ApplyHighlight(Tile.HighLightType.Move);
+            }
 
             //TODO : 취소버튼 설정하기
             _inputManager.OnObjectClicked.AddListener(click);
@@ -124,6 +126,10 @@ namespace PlayerInput
             _inputManager.OnObjectClicked.RemoveListener(click);
 
             // TODO : 시각화 제거
+            foreach (Tile tile in list)
+            {
+                tile.RemoveHighlight(Tile.HighLightType.Move);
+            }
             if (isCanceled)
             {
                 callback?.Invoke(false);

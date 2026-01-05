@@ -1085,7 +1085,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1806376061}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -1248,7 +1249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1148867006}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -2006,7 +2008,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 761613648}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -2169,7 +2172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2031060813}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -2243,7 +2247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 321835277}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -2317,7 +2322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1414047501}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -2570,7 +2576,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 517370587}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -3093,7 +3100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 240281419}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -3607,7 +3615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1351978058}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -3756,7 +3765,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 838567582}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -5574,7 +5584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 846985618}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -5935,7 +5946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 224383578}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -6812,7 +6824,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 688338075}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -6886,7 +6899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1803551208}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -7228,7 +7242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 439587755}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -7302,7 +7317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 803283286}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -7446,7 +7462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1439742470}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -8011,7 +8028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 674371542}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -8085,7 +8103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 41428736}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -9133,6 +9152,7 @@ MonoBehaviour:
   shop: {fileID: 1259414733}
   entityFactory: {fileID: 2014071634}
   uiMapper: {fileID: 1536540712}
+  field: {fileID: 0}
 --- !u!1 &581063264
 GameObject:
   m_ObjectHideFlags: 0
@@ -9252,7 +9272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 685475675}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -9363,7 +9384,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1937840105}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -9662,7 +9684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 200890059}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -9974,7 +9997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1379160933}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -10048,7 +10072,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 527537317}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -11088,7 +11113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 361268245}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -11944,7 +11970,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1258732882}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -13223,7 +13250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1330331910}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -13599,7 +13627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1418904043}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -14053,7 +14082,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 871485817}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -14572,7 +14602,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1197852128}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -15073,7 +15104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 484724684}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -16152,7 +16184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1082995211}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -16226,7 +16259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1189830241}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -16300,7 +16334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 894357663}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -17523,7 +17558,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 415284879}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -17667,7 +17703,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 986035582}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -18097,7 +18134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1561442382}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -18629,7 +18667,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 242613725}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -19080,75 +19119,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3235099547804427383, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3235099547804427383, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3235099547804427383, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3235099547804427383, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3235099547804427383, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3235099547804427383, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 4575355857458717949, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4575355857458717949, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4575355857458717949, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4575355857458717949, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4575355857458717949, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 4575355857458717949, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 5035795022663713452, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035795022663713452, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035795022663713452, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5035795022663713452, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5035795022663713452, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5035795022663713452, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 7408671934697759797, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_Name
@@ -19160,51 +19199,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8599012418714853223, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8599012418714853223, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8599012418714853223, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8599012418714853223, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8599012418714853223, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8599012418714853223, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 8872901211251212843, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8872901211251212843, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8872901211251212843, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8872901211251212843, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8872901211251212843, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 320
       objectReference: {fileID: 0}
     - target: {fileID: 8872901211251212843, guid: da74d9377376cbe4b80ef811da223204, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19241,7 +19280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1936236181}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -19315,7 +19355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1612701447}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -19389,7 +19430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1526487765}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -19797,7 +19839,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2002784268}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -20050,7 +20093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 279719128}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -23819,7 +23863,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2048158241}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -24090,7 +24135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 707258984}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -24217,7 +24263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 237440688}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -24380,7 +24427,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 210788901}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -25910,7 +25958,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1667236052}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -26669,7 +26718,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 670370379}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -26743,7 +26793,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 53584085}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -28096,7 +28147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 766212992}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -28454,7 +28506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 743158666}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -28490,7 +28543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 656956555}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -28742,7 +28796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1689471356}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -29318,7 +29373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 221496623}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -29605,7 +29661,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1795105859}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -29768,7 +29825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1326441673}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -30253,7 +30311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1097048630}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -31283,7 +31342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2118727337}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -31598,7 +31658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1363913374}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -31805,7 +31866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1455140581}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -32038,7 +32100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1739402114}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -32556,7 +32619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1686138359}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -32949,7 +33013,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1978177807}
+  moveHighLightMat: {fileID: 0}
+  atkHighLightMat: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2

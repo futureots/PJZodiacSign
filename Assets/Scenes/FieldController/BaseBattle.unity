@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 477964637}
   - component: {fileID: 477964638}
+  - component: {fileID: 477964639}
   m_Layer: 0
   m_Name: PlayerAgent
   m_TagString: Untagged
@@ -158,16 +159,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477964636}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa59aea847f183c45a1bc758870af2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  actionCount: 0
+  agent: {fileID: 477964639}
   areaVisualizer: {fileID: 0}
-  entitySelecter: {fileID: 0}
-  tileSelecter: {fileID: 0}
-  skillSelecter: {fileID: 0}
+  entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
+  tileSelecter: {fileID: 6044037666520248651, guid: ac29f7d983f2bf44ab4f57429e81251a, type: 3}
+  skillSelecter: {fileID: 1953117145152640339, guid: d1e1357b679ff334b8e0a4f74a79f809, type: 3}
   turnEndButton: {fileID: 0}
   UI: {fileID: 0}
   cam: {fileID: 0}
@@ -182,6 +183,21 @@ MonoBehaviour:
   OnMouseMove:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &477964639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477964636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a41f1470c4698044ae2925df93ad5a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Agent
+  id: 0
+  actionCount: 0
+  entities: []
 --- !u!1 &807200184
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,9 +246,9 @@ MonoBehaviour:
   phases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
   - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}
-  localPlayer: {fileID: 477964638}
+  localPlayer: {fileID: 477964639}
   agents:
-  - {fileID: 1990503683}
+  - {fileID: 1990503684}
 --- !u!1001 &826401884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -300,6 +316,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1990503682}
   - component: {fileID: 1990503683}
+  - component: {fileID: 1990503685}
+  - component: {fileID: 1990503684}
   m_Layer: 0
   m_Name: AIAgent
   m_TagString: Untagged
@@ -329,13 +347,40 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990503681}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbfae69d9bdc56d41a5693269fe0440d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+--- !u!114 &1990503684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990503681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a41f1470c4698044ae2925df93ad5a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Agent
+  id: 1
   actionCount: 0
-  shopTable: {fileID: 0}
+  entities: []
+--- !u!114 &1990503685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990503681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6a97f4a4099664eaa2a24c9973f5ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillComponent
+  skillData: {fileID: 11400000, guid: d495d83769611524dad143f27ed26050, type: 2}
+  silenceCount: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

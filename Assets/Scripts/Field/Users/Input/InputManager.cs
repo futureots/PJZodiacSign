@@ -1,12 +1,9 @@
-using Battle.Phase;
-using DG.Tweening;
 using PlayerInput;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+
 
 
 public class InputManager : MonoBehaviour
@@ -20,27 +17,18 @@ public class InputManager : MonoBehaviour
 
     public Agent agent;
 
-    // 입력 표시기
-    public AreaVisualizer areaVisualizer;
-
     // 표시 오브젝트
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
+    public List<GameObject> visualizeObjects;
 
-    // UI 요소
-    [Header("UI Element")]
-    public Button turnEndButton;
-    public UIContainer UI;
-    [Header("Camera")]
-    public GameObject cam;
-    [SerializeField] Vector3 RepairCamPos;
-    [SerializeField] Vector3 BattleCamPos;
-
+    public TurnType curTurnType { get; private set; }
 
     protected void Awake()
     {
         inputActions = new GameInputActions();
+        visualizeObjects = new List<GameObject>();
     }
 
     private void Start()
@@ -53,11 +41,17 @@ public class InputManager : MonoBehaviour
 
         // 마우스 이동 시 이벤트 트리거
         inputActions.Gameplay.Point.performed += MoveMouse;
+
+        if (TryGetComponent<Agent>(out var agent))
+        {
+            Init(agent);
+        }
     }
 
     public void Init(Agent agent)
     {
         this.agent = agent;
+        Debug.Log(agent.fieldController);
         agent.fieldController.onTurnStarted += OnTurnChanged;
     }
 
@@ -119,16 +113,38 @@ public class InputManager : MonoBehaviour
     #endregion
 
     #region Turn
-
-    public TurnType curTurnType {  get; private set; }
+    
     public void OnTurnChanged(Turn curTurn)
     {
         curTurnType = curTurn.type;
-        SetInputMode();
+        
+        if (curTurn.agentID == agent.id)
+        {
+            Debug.Log("Player" + curTurnType.ToString());
+            SetInputMode();
+        }
+        else
+        {
+            ClearInputMode();
+        }
+    }
+
+    /// <summary>
+    /// 입력이 종료되면(턴 종료 X) 실행할 함수
+    /// </summary>
+    public void ClearInputMode()
+    {
+        curModeState?.RemoveMode();
+        curModeState = null;
     }
 
     public void SetInputMode()
     {
+        foreach (var obj in visualizeObjects)
+        {
+            Destroy(obj);
+        }
+        visualizeObjects.Clear();
         curModeState?.RemoveMode();
         switch (curTurnType)
         {

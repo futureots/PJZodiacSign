@@ -42,6 +42,12 @@ public class Field : MonoBehaviour
     [ContextMenuItem("DestroyField", "DestroyField")]
     public List<Row<Tile>> _tileList;
 
+    private void Awake()
+    {
+        DestroyField();
+        CreateField();
+    }
+
     #region Field
     /// <summary>
     /// 필드 생성

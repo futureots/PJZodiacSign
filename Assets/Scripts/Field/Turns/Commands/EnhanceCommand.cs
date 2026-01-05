@@ -10,6 +10,7 @@ public class EnhanceCommand : Command
     {
         this.baseEntity = baseEntity;
         this.subEntity = subEntity;
+        selecterObjects = new();
     }
 
     public override IEnumerator Execute(Action callback = null)

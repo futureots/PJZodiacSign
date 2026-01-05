@@ -12,6 +12,7 @@ public class MoveCommand : Command
         this.entity = entity;
         prevTile = entity.CurTile;
         this.tile = tile;
+        selecterObjects = new();
     }
 
     public override IEnumerator Execute(Action callback)

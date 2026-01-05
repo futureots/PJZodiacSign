@@ -9,6 +9,7 @@ public class SkillCommand : Command
     public SkillCommand(SkillComponent skill)
     {
         this._skill = skill;
+        selecterObjects = new();
     }
 
     public override IEnumerator Execute(Action callback)
