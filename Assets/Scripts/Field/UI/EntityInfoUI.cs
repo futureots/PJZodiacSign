@@ -64,7 +64,6 @@ public class EntityInfoUI : MonoBehaviour
         {
             powerText.gameObject.SetActive(true);
             _power = power;
-            Debug.Log("PowerComponent : " + power.Power);
             SetPowerText(power.Power);
             power.onPowerChanged += SetPowerText;
         }

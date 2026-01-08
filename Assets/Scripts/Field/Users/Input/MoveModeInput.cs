@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace PlayerInput
 {
-    public class MoveModeInput : IModeInput
+    public class MoveModeInput : IInputState
     {
 
         protected InputManager _inputManager;
@@ -144,10 +144,15 @@ namespace PlayerInput
             // 제자리 이동 불가능
             if (!_selectedEntity.CurTile.Equals(_selectedTile))
             {
+                var sel1 = GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+                var sel2 = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position, Quaternion.identity);
+                Action action = () =>
+                {
+                    GameObject.Destroy(sel1);
+                    GameObject.Destroy(sel2);
+                };
                 // 커맨드 생성
-                _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile);
-                _inputManager.visualizeObjects.Add(GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity));
-                _inputManager.visualizeObjects.Add(GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position, Quaternion.identity));
+                _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile, action);
             }
         }
     }

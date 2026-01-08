@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,33 +26,64 @@ public class Agent : MonoBehaviour
         this.fieldController = fieldController;
     }
 
-    public void CreateMoveCommand(Entity entity, Tile tile)
+    public void CreateMoveCommand(Entity entity, Tile tile, Action onDestroyed = null)
     {
         var cmd = new MoveCommand(entity, tile);
+        cmd.onDestroyed += onDestroyed;
+        // 해당 기물의 이동명령이 있으면 제거 후 추가
+        foreach (var command in commands)
+        {
+            if(command is MoveCommand mvCmd)
+            {
+                if(mvCmd.entity == entity)
+                {
+                    commands.Remove(command);
+                    command.Delete();
+                    break;
+                }
+            }
+        }
         commands.Add(cmd);
     }
 
-    public void CreateSkillCommand(SkillComponent skill)
+    public void CreateSkillCommand(SkillComponent skill, Action onDestroyed = null)
     {
         var cmd = new SkillCommand(skill);
+        cmd.onDestroyed += onDestroyed;
+        // 중복 커맨드 제거 후 추가
+        foreach (var command in commands)
+        {
+            if (command is SkillCommand skCmd)
+            {
+                if (skCmd._skill == skill)
+                {
+                    commands.Remove(command);
+                    command.Delete();
+                    break;
+                }
+            }
+        }
         commands.Add(cmd);
     }
 
-    public void CreateAttackCommand(Entity entity)
+    public void CreateAttackCommand(Entity entity, Action onDestroyed = null)
     {
         var cmd = new AttackCommand(entity);
+        cmd.onDestroyed += onDestroyed;
         commands.Add(cmd);
     }
 
-    public void CreateEnhanceCommand(Entity baseEntity, Entity subEntity)
+    public void CreateEnhanceCommand(Entity baseEntity, Entity subEntity, Action onDestroyed = null)
     {
         var cmd = new EnhanceCommand(baseEntity, subEntity);
+        cmd.onDestroyed += onDestroyed;
         commands.Add(cmd);
     }
 
-    public void CreateEndCommand()
+    public void CreateEndCommand(Action onDestroyed = null)
     {
         var cmd = new EndCommand();
+        cmd.onDestroyed += onDestroyed;
         commands.Add(cmd);
     }
 

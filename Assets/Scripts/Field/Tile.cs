@@ -94,12 +94,12 @@ public class Tile : MonoBehaviour
         switch (type)
         {
             case HighLightType.Move:
-                mats = tileRenderer.materials.ToList();
+                mats = tileRenderer.sharedMaterials.ToList();
                 mats.Add(moveHighLightMat);
                 tileRenderer.materials = mats.ToArray();
                 break;
             case HighLightType.Attack:
-                mats = planeRenderer.materials.ToList();
+                mats = planeRenderer.sharedMaterials.ToList();
                 mats.Add(atkHighLightMat);
                 planeRenderer.materials = mats.ToArray();
                 break;
@@ -111,12 +111,12 @@ public class Tile : MonoBehaviour
         switch (type)
         {
             case HighLightType.Move:
-                mats = tileRenderer.materials.ToList();
+                mats = tileRenderer.sharedMaterials.ToList();
                 mats.Remove(moveHighLightMat);
                 tileRenderer.materials = mats.ToArray();
                 break;
             case HighLightType.Attack:
-                mats = planeRenderer.materials.ToList();
+                mats = planeRenderer.sharedMaterials.ToList();
                 mats.Remove(atkHighLightMat);
                 planeRenderer.materials = mats.ToArray();
                 break;

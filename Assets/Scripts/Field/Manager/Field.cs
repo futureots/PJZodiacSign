@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -173,9 +171,8 @@ public class Field : MonoBehaviour
     /// <summary>
     /// 기준점에서 상대위치 타일 가져오기
     /// </summary>
-    public List<Tile> GetTiles(intVector2 origin, List<intVector2> vectors,  Func<Tile,bool> query = null)
+    public List<Tile> GetTiles(intVector2 origin, List<intVector2> vectors)
     {
-        query ??= _ => true;
         var list = new List<Tile>();
         foreach (var pos in vectors)
         {
@@ -183,16 +180,15 @@ public class Field : MonoBehaviour
             if (tile == null) continue; 
             list.Add(tile);
         }
-        return list.Where(query).ToList();
+        return list;
         
     }
 
     /// <summary>
     /// 기준점에서 해당 방향 타일 가져오기
     /// </summary>
-    public List<Tile> GetTiles(intVector2 origin, List<intVector2> directions, bool isPierce, Func<Tile, bool> query = null)
+    public List<Tile> GetTiles(intVector2 origin, List<intVector2> directions, bool isPierce)
     {
-        query ??= _ => true;
         var list = new List<Tile>();
         foreach (var direction in directions)
         {
@@ -211,9 +207,8 @@ public class Field : MonoBehaviour
                     break;
                 }
             }
-
         }
-        return list.Where(query).ToList();
+        return list;
     }
 
     /// <summary>

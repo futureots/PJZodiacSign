@@ -20,7 +20,7 @@ public class EnemyAI : MonoBehaviour , IInput
     public void Init(Agent agent)
     {
         this.agent = agent;
-        Debug.Log(agent.fieldController);
+        EditorLogger.Print(agent.fieldController);
         agent.fieldController.onTurnStarted += OnTurnChanged;
     }
 
@@ -31,13 +31,14 @@ public class EnemyAI : MonoBehaviour , IInput
         
         if(curTurn.agentID == agent.id)
         {
-            Debug.Log("AI "+ curTurnType.ToString());
+            EditorLogger.Print("AI "+ curTurnType.ToString());
             switch (curTurn.type)
             {
                 case TurnType.ACTION:
                     StartCoroutine(SetActionMode());
                     break;
                 case TurnType.ATTACK:
+                    AttackInput();
                     break;
                 case TurnType.REPAIR:
                     StartCoroutine(SetRepairMode());
@@ -46,7 +47,15 @@ public class EnemyAI : MonoBehaviour , IInput
         }
     }
 
-
+    public void AttackInput()
+    {
+        foreach (var entity in agent.entities)
+        {
+            agent.CreateAttackCommand(entity);
+        }
+        agent.CreateEndCommand();
+        agent.SendCommand();
+    }
 
     public IEnumerator SetRepairMode()
     {
@@ -54,7 +63,7 @@ public class EnemyAI : MonoBehaviour , IInput
         if (TryGetComponent<SkillComponent>(out var skill))
         {
             agent.CreateSkillCommand(skill);
-            Debug.Log("SkillAdd");
+            EditorLogger.Print("SkillAdd");
         }
         // 내 필드에 있는 기물을 메인 필드에 배치
         // var fieldTiles = Field.GetEmptyTiles(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
@@ -70,7 +79,7 @@ public class EnemyAI : MonoBehaviour , IInput
 
         agent.CreateEndCommand();
         agent.SendCommand();
-        Debug.Log("RepairEnd");
+        EditorLogger.Print("RepairEnd");
     }
 
     public IEnumerator SetActionMode()
@@ -96,7 +105,7 @@ public class EnemyAI : MonoBehaviour , IInput
             if (TryGetBestMove(checkEntity, field, values, out int value, out intVector2 pos))
             {
                 flag = true;
-                Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
+                EditorLogger.Print($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
                 // 같은 값일 경우 이후의 명령만 가짐
                 if (max < value || bestEntity == null)
                 {

@@ -1,4 +1,5 @@
 using PlayerInput;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +14,7 @@ public class InputManager : MonoBehaviour
 
     public GameInputActions inputActions { get; private set; }
 
-    public IModeInput curModeState { get; private set; }
+    public IInputState curModeState { get; private set; }
 
     public Agent agent;
 
@@ -21,14 +22,14 @@ public class InputManager : MonoBehaviour
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
-    public List<GameObject> visualizeObjects;
 
     public TurnType curTurnType { get; private set; }
+    public Action<IInputState> onModeChanged;
+    public Action onCanceled;
 
     protected void Awake()
     {
         inputActions = new GameInputActions();
-        visualizeObjects = new List<GameObject>();
     }
 
     private void Start()
@@ -51,7 +52,7 @@ public class InputManager : MonoBehaviour
     public void Init(Agent agent)
     {
         this.agent = agent;
-        Debug.Log(agent.fieldController);
+        EditorLogger.Print(agent.fieldController);
         agent.fieldController.onTurnStarted += OnTurnChanged;
     }
 
@@ -120,8 +121,16 @@ public class InputManager : MonoBehaviour
         
         if (curTurn.agentID == agent.id)
         {
-            Debug.Log("Player" + curTurnType.ToString());
-            SetInputMode();
+            EditorLogger.Print("Player" + curTurnType.ToString());
+            if(curTurn.type == TurnType.ATTACK)
+            {
+                AttackInput();
+            }
+            else
+            {
+                SetInputMode();
+            }
+                
         }
         else
         {
@@ -136,15 +145,11 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = null;
+        onModeChanged?.Invoke(curModeState);
     }
 
     public void SetInputMode()
     {
-        foreach (var obj in visualizeObjects)
-        {
-            Destroy(obj);
-        }
-        visualizeObjects.Clear();
         curModeState?.RemoveMode();
         switch (curTurnType)
         {
@@ -158,6 +163,7 @@ public class InputManager : MonoBehaviour
                 curModeState = new EmptyModeInput();
                 break;
         }
+        onModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
 
@@ -165,7 +171,18 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = new SkillModeInput(this, skill);
+        onModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
+    }
+
+    public void AttackInput()
+    {
+        foreach (var entity in agent.entities)
+        {
+            agent.CreateAttackCommand(entity);
+        }
+        agent.CreateEndCommand();
+        agent.SendCommand();
     }
 
     #endregion

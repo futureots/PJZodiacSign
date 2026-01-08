@@ -1,7 +1,7 @@
 
 namespace PlayerInput
 {
-    public class EmptyModeInput : IModeInput
+    public class EmptyModeInput : IInputState
     {
         public void RemoveMode()
         {
@@ -10,7 +10,6 @@ namespace PlayerInput
 
         public void SetMode()
         {
-            //Debug.Log("SetEmptyMode");
         }
     }
 }

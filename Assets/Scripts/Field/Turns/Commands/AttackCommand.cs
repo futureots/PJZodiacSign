@@ -8,12 +8,14 @@ public class AttackCommand : Command
     public AttackCommand(Entity entity)
     {
         this.entity = entity;
-        selecterObjects = new();
     }
 
     public override IEnumerator Execute(Action callback)
     {
         yield return entity.StartCoroutine(entity.Attack());
         callback?.Invoke();
+        Delete();
+        yield break;
     }
+
 }

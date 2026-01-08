@@ -96,7 +96,7 @@ public class GameManager : SingletonObject<GameManager>
     /// </summary>
     void ExitBattle ()
     {
-        Debug.Log("게임 종료");
+        EditorLogger.Print("게임 종료");
         // TODO: 게임 종료 처리 로직 추가
         if (currentStage != null)
         {

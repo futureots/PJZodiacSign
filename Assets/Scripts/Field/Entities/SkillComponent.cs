@@ -22,6 +22,7 @@ public class SkillComponent : MonoBehaviour
     {
         skillData = data;
         skillLogic = data.skillLogic.Clone();
+        skillLogic.SetSkillComponent(this);
     }
 
     // 스킬 사용이 가능한지 반환하는 함수

@@ -10,7 +10,6 @@ public class EnhanceCommand : Command
     {
         this.baseEntity = baseEntity;
         this.subEntity = subEntity;
-        selecterObjects = new();
     }
 
     public override IEnumerator Execute(Action callback = null)
@@ -18,8 +17,8 @@ public class EnhanceCommand : Command
 
         baseEntity.Level += 1;
         subEntity.CurTile.ClearOccupant();
-
         callback?.Invoke();
+        Delete();
         yield break;
     }
 }

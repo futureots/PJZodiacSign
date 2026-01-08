@@ -62,7 +62,7 @@ public class DataManager : Singleton<DataManager>
             var itemData = itemTable.SearchData(item);
             items.Add(itemData);
         }
-        Debug.Log(items.Count);
+        EditorLogger.Print(items.Count);
 
         AgentData player = new AgentData(playData.credit, handEntities, fieldEntities, items);
         data.Add(player);
@@ -155,8 +155,8 @@ public class DataManager : Singleton<DataManager>
         }
         string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
         File.WriteAllText(filePath, data);
-        Debug.Log(data);
-        Debug.Log("Save");
+        EditorLogger.Print(data);
+        EditorLogger.Print("Save");
     }
 
     /// <summary>
@@ -171,11 +171,11 @@ public class DataManager : Singleton<DataManager>
             if (File.Exists(filePath))
             {
                 json = File.ReadAllText(filePath);
-                Debug.Log(json);
+                EditorLogger.Print(json);
                 return true;
             }
         }
-        Debug.Log("NoExist");
+        EditorLogger.Print("NoExist");
         return false;
     }
 

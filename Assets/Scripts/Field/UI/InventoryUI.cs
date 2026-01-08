@@ -143,7 +143,7 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            Debug.Log(inventory.items[index]);
+            EditorLogger.Print(inventory.items[index]);
             var item = inventory.items[index];
             if (!infoPanel.gameObject.activeSelf)
             {
