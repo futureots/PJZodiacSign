@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "CustomArea", menuName = "Scriptable Objects/Area/CustomArea")]
 public class CustomArea : Area
 {

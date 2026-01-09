@@ -42,7 +42,6 @@ public class DebugSkillLogic : BaseSkillLogic
             yield break;
         }
 
-
         EditorLogger.Print("InputComplete");
         tiles = _tiles;
         callback?.Invoke(true);

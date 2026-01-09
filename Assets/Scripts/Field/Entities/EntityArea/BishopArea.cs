@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 [CreateAssetMenu(fileName ="BishopArea",menuName ="Scriptable Objects/Area/BishopArea")]
 public class BishopArea : Area
 {

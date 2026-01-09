@@ -238,16 +238,16 @@ public class Field : MonoBehaviour
     #endregion
 
     //점거 중인 오브젝트 가져오기
-    public List<GameObject> GetOccupiedObjects()
+    public List<Entity> GetEntities()
     {
-        List<GameObject> list = new();
+        List<Entity> list = new();
         foreach(var tile in tiles)
         {
             if (tile.isEmpty) continue;
             var occupiedObj = tile.occupiedObject;
-            if (occupiedObj != null)
+            if(TryGetComponent<Entity>(out var entity))
             {
-                list.Add(occupiedObj);
+                list.Add(entity);
             }
         }
         return list;

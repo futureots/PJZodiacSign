@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "RookArea", menuName = "Scriptable Objects/Area/RookArea")]
 public class RookArea : Area
 {

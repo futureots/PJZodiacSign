@@ -127,7 +127,6 @@ public class FieldController : MonoBehaviour
         {
             curCmd = commandList[0];
             commandList.RemoveAt(0);
-            EditorLogger.Print(commandList.Count + $"{curCmd}");
             Action callback = OnCommandExecuted;
             if (curCmd is EndCommand end)
             {

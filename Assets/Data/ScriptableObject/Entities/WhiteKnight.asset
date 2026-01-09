@@ -29,6 +29,6 @@ MonoBehaviour:
   bonusHp: 3
   bonusPower: 2
   skill: {fileID: 0}
-  energy: 0
+  energy: 1
   maxEnergy: 0
   hpPanelPosition: {x: 0, y: 3, z: 0}

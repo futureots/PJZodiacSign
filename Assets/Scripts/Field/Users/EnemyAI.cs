@@ -63,7 +63,6 @@ public class EnemyAI : MonoBehaviour , IInput
         if (TryGetComponent<SkillComponent>(out var skill))
         {
             agent.CreateSkillCommand(skill);
-            EditorLogger.Print("SkillAdd");
         }
         // 내 필드에 있는 기물을 메인 필드에 배치
         // var fieldTiles = Field.GetEmptyTiles(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
