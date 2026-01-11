@@ -7,53 +7,75 @@ public class Inventory : MonoBehaviour
     /// <summary>
     /// 유저가 들고 있는 아이템
     /// </summary>
-    public ItemComponent[] items { get; private set; }
+    public List<ItemComponent> items { get; private set; }
     public Action<int, ItemComponent> OnItemChanged;
     public int capacity;
     private void Awake()
     {
-        items = new ItemComponent[capacity];
-    }
-    private void Start()
-    {
+        items = new List<ItemComponent>();
     }
 
-    public bool AddItem(ItemComponent instance)
+    /// <summary>
+    /// 생성된 아이템 오브젝트를 인벤토리에 추가
+    /// </summary>
+    /// <param name="instance"></param>
+    /// <returns></returns>
+    public bool TryAddItem(ItemComponent instance)
     {
-        // 용량 개수 만큼 확인 및 빈 공간에 추가
-        if (CanAddItem(out int index))
+        for(int i = 0; i < items.Count; i++)
         {
-            items[index] = instance;
-            OnItemChanged?.Invoke(index, instance);
-            return true;
+            if(items[i] == null)
+            {
+                items[i] = instance;
+                OnItemChanged(i, instance);
+                instance.transform.SetParent(transform);
+                return true;
+            }
         }
-        
-        // 용량 부족
-        return false;
+        // 용량 초과
+        if (items.Count >= capacity)
+        {
+            return false;
+        }
+        items.Add(instance);
+        OnItemChanged(items.Count-1, instance);
+        instance.transform.SetParent(transform);
+        return true;
+
     }
     /// <summary>
     /// 인벤토리 아이템 제거
     /// </summary>
     /// <param name="index"></param>
-    public void RemoveItem(int index)
+    public void RemoveItem(ItemComponent item)
     {
-        if(items[index] != null)
+        for (int i = 0; i < items.Count; i++)
         {
-            items[index] = null;
-            OnItemChanged?.Invoke(index, null);
+            if (items[i] == item)
+            {
+                items[i] = null;
+                OnItemChanged(i, null);
+                Destroy(item.gameObject);
+                break;
+            }
         }
-        
     }
+
     public void SetItem(List<ItemData> list)
     {
-        // TODO : 풀링된 아이템 또는 직접 아이템 오브젝트를 불러와 인벤토리에 세팅
+        items.Clear();
         for (int i = 0; i < list.Count; i++)
         {
-            if (list[i] == null) continue;
-            
-            //var instance = list[i].CreateInstance();
-            //items[i] = instance;
-            //OnItemChanged?.Invoke(i, instance);
+            if (list[i] == null)
+            {
+                items.Add(null);
+                OnItemChanged?.Invoke(i, null);
+                continue;
+            }
+            // TODO : 아이템 오브젝트 생성 및 해당 리스트에 추가
+            ItemComponent obj = new();
+            items.Add(obj);
+            OnItemChanged?.Invoke(i, obj);
         }
     }
 
@@ -63,29 +85,12 @@ public class Inventory : MonoBehaviour
     /// <returns></returns>
     public List<ItemData> GetInventoryData()
     {
-        List<ItemData> list = new(capacity);
-        for(int i = 0; i < items.Length; i++)
+        List<ItemData> list = new List<ItemData>();
+        for(int i = 0; i < items.Count; i++)
         {
-            if( items[i] == null) continue;
-            list[i] = items[i].itemData;
+            if (items[i] == null) list.Add(null);
+            list.Add(items[i].itemData);
         }
         return list;
-    }
-
-    /// <summary>
-    /// 인벤토리에 공간이 있는지 확인
-    /// </summary>
-    /// <param name="index"></param>
-    /// <returns></returns>
-    bool CanAddItem(out int index)
-    {
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (items[i] != null) continue;
-            index = i;
-            return true;
-        }
-        index = -1;
-        return false;
     }
 }

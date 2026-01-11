@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ItemInfoUI : MonoBehaviour
 {
+    ItemComponent curItem;
     TextMeshProUGUI _text;
     public TextMeshProUGUI Text
     {
@@ -27,13 +28,17 @@ public class ItemInfoUI : MonoBehaviour
             return _rectTransform;
         }
     }
-    // Update is called once per frame
-    void Update()
+
+    public void SetPosition(Vector2 vec2)
     {
-        RectTransform.anchoredPosition = Input.mousePosition;
+        RectTransform.anchoredPosition = vec2;
     }
     public void SetInfo(ItemComponent item)
     {
-        Text.text = item.itemData.description;
+        if(curItem != item)
+        {
+            curItem = item;
+            Text.text = item.itemData.description;
+        }
     }
 }

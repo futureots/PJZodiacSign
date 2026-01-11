@@ -15,11 +15,13 @@ public enum PlayerTurn
     P8
 }
 
+[Flags]
 public enum TurnType
 {
-    ACTION,
-    ATTACK,
-    REPAIR
+    None = 0,
+    REPAIR = 1 << 0,
+    ACTION = 1 << 1,
+    ATTACK = 1 << 2
 }
 
 [Serializable]
@@ -32,12 +34,11 @@ public class Turn
     public List<string> actions; 
 }
 
-[Flags]
+
 public enum PhaseType
 {
-    None = 0,
-    Battle = 1 << 0,
-    Repair = 1 << 1
+    Battle,
+    Repair
 }
 
 [CreateAssetMenu(fileName = "Phase", menuName = "Scriptable Objects/PhaseData")]

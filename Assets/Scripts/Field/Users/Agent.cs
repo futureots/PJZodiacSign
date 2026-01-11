@@ -15,6 +15,7 @@ public class Agent : MonoBehaviour
     public List<Command> commands;
     // 보유중인 기물 리스트
     public List<Entity> entities;
+    public Inventory inventory;
 
     protected void Awake()
     {

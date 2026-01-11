@@ -10,6 +10,6 @@ public class ItemData : AbstractData
     /// <summary>
     /// 해당 아이템이 사용가능한 페이즈 타입
     /// </summary>
-    public PhaseType useType;
+    public TurnType useType;
 
 }

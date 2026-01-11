@@ -1,18 +1,30 @@
 using Battle.Phase;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemActionUI : MonoBehaviour
 {
-    [Header("Dependency")]
-    IPhaseManageService phaseManageService;
-
+    Inventory inventory;
+    ItemComponent curItem;
     public Button useBtn;
     public Button discardBtn;
-
-    public void Init(IPhaseManageService phaseManageService)
+    public Action<ItemComponent> onUseItem;
+    public void Init(Inventory _inventory)
     {
-        this.phaseManageService = phaseManageService;
+        inventory = _inventory;
+        discardBtn.onClick.AddListener(() => {
+            inventory.RemoveItem(curItem);
+            gameObject.SetActive(false);
+            curItem = null;
+            });
+        useBtn.onClick.AddListener(() =>
+        {
+            onUseItem?.Invoke(curItem);
+            gameObject.SetActive(false);
+            curItem = null;
+        });
+
     }
 
     /// <summary>
@@ -20,34 +32,18 @@ public class ItemActionUI : MonoBehaviour
     /// </summary>
     /// <param name="inventory"></param>
     /// <param name="index"></param>
-    public void SetItemAction(Inventory inventory, int index)
+    public void SetItemAction(ItemComponent item, TurnType curTurn)
     {
-        discardBtn.onClick.RemoveAllListeners();
-        discardBtn.onClick.AddListener(() => inventory.RemoveItem(index));
-        discardBtn.onClick.AddListener(() => gameObject.SetActive(false));
-
-        var item = inventory.items[index];
-
+        curItem = item;
         useBtn.gameObject.SetActive(true);
 
-        if (item.itemData.useType.HasFlag(phaseManageService.CurPhase))
+        if (item.itemData.useType.HasFlag(curTurn))
         {
             useBtn.interactable = true;
-
-            useBtn.onClick.RemoveAllListeners();
-            useBtn.onClick.AddListener(() =>
-            {
-                transform.root.GetComponent<InputManager>().SetInputMode(item);
-            });
-            useBtn.onClick.AddListener(() => gameObject.SetActive(false));
         }
         else
         {
             useBtn.interactable = false;
         }
-
     }
-
-
-
 }
