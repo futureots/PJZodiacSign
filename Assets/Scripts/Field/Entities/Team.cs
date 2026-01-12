@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Team : MonoBehaviour
+public class Team
 {
     /// <summary>
     /// 소속한 팀 번호

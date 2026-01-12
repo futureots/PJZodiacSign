@@ -16,6 +16,7 @@ public class EntityHpUI : MonoBehaviour
         
     }
 
+    // TODO: 컴포넌트 접근 및 구독 방식 개선
     public void SetEntity(Entity entity)
     {
         if(_entity != null)
@@ -23,7 +24,7 @@ public class EntityHpUI : MonoBehaviour
             _entity.onDead -= OnDead;
             _entity.health.onHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
-            _entity.onLevelChanged -= UpdateLevelText;
+            _entity.OnLevelChanged -= UpdateLevelText;
         }
         _entity = entity;
         
@@ -46,7 +47,7 @@ public class EntityHpUI : MonoBehaviour
         }
 
             UpdateLevelText(_entity.Level);
-        _entity.onLevelChanged += UpdateLevelText;
+        _entity.OnLevelChanged += UpdateLevelText;
 
         _entity.onDead += OnDead;
 
@@ -86,7 +87,7 @@ public class EntityHpUI : MonoBehaviour
             _entity.onDead -= OnDead;
             _entity.health.onHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
-            _entity.onLevelChanged -= UpdateLevelText;
+            _entity.OnLevelChanged -= UpdateLevelText;
         }
     }
 }

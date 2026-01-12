@@ -4,93 +4,88 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 [RequireComponent(typeof(PowerComponent))]
 [RequireComponent(typeof(HealthComponent))]
 public class Entity : Occupant, IDamageable, IAttackable
 {
-
-    Team _team;
-
-    /// <summary>기물의 팀 번호</summary>
-    public Team team
-    {
-        get
-        {
-            if (_team == null)
-            {
-                _team = GetComponent<Team>();
-            }
-            return _team;
-        }
-    }
-
     // 기물의 기본 데이터
     public EntityData baseData;
     
+    /// 기물의 팀 번호
+    public Team team
+    {
+        get;
+        private set;
+    }
+    
 
-    /// <summary>기물의 레벨</summary>
-    [SerializeField] int _level;
 
+    #region Status
+    
+    //Level of current Entity
+    [SerializeField] int level;
+    public Action<int, int> OnLevelChanged;
+        
     public int Level
     {
-        get { return _level; }
+        get => level;
         set
         {
-            int t = _level;
-            _level = value;
-            onLevelChanged?.Invoke(_level,t);
+            int before = level;
+            level = value;
+            OnLevelChanged?.Invoke(level,before);
             
         }
     }
-
-    public Action<int, int> onLevelChanged;
-
-    #region Status
-
+    
+    // Damagable Power and Health Component
     public PowerComponent power;
     public HealthComponent health;
     
-    #endregion
-
-    // 나중에 스탯 계산용 핸들러 추가하면서 빼기
-    public bool isProtected;
-
     public static Action<Entity> onEntityDead;
     public Action onDead;
+    
+    #endregion
 
-    public void Initialize(bool isReflect, Tile tile)
+    // TODO: 나중에 스탯 계산용 핸들러 추가하면서 빼기
+    public bool isProtected;
+
+    public void Init(bool isReflect, Tile tile)
     {
         this.IsReflect = isReflect;
         Move(tile, true);
     }
 
     /// <summary>
-    /// 기물 초기 스탯 세팅
+    /// Initialize Setting when Load
     /// </summary>
-    /// <param name="data">기물 데이터</param>
-    /// <param name="level">기물의 레벨</param>
+    /// <param name="data">Entity Data</param>
+    /// <param name="level">Initial Level</param>
     public void InitializeEntity(EntityData data, int level = 0)
     {
-        this.baseData = data;
-        this.Level = level;
+        baseData = data;
+        Level = level;      // NOTE: 초기화 시 레벨 변화 이벤트 발생중
 
-        //체력 분리
+        //Get Status Component
         health = GetComponent<HealthComponent>();
         health.Initialize(baseData.maxHp + baseData.bonusHp * level);
 
         power = GetComponent<PowerComponent>();
         power.Init(baseData.power + baseData.bonusPower * level);
-        onLevelChanged += UpdateEntity;
+        OnLevelChanged += UpdateEntity;
     }
 
-    void UpdateEntity(int cur, int prev)
+    /// Update Status with Level-Up
+    void UpdateEntity(int newLevel, int prevLevel)
     {
-        health.MaxHealth += baseData.bonusHp * (cur - prev);
-        health.CurHealth += baseData.bonusHp * (cur - prev);
-        power.Power += baseData.bonusPower * (cur - prev);
+        int upLevel = newLevel - prevLevel;
+        health.MaxHealth += baseData.bonusHp * upLevel;
+        health.CurHealth += baseData.bonusHp * upLevel;
+        power.Power += baseData.bonusPower * upLevel;
     }
 
+    #region Attack
+    
     public IEnumerator Attack()
     {
         var list = GetAttackArea();
@@ -110,6 +105,10 @@ public class Entity : Occupant, IDamageable, IAttackable
         }
         yield return null;
     }
+    
+    #endregion
+    
+    #region Health
 
     public void Damaged(int damage)
     {
@@ -119,6 +118,7 @@ public class Entity : Occupant, IDamageable, IAttackable
 
         health.CurHealth -= value;
     }
+    
     public void Dead()
     {
         onEntityDead?.Invoke(this);
@@ -132,8 +132,6 @@ public class Entity : Occupant, IDamageable, IAttackable
                 dissolve.PlayEffect(2f);
             }
         }
-        
-        
     }
 
     public void Healed(int amount)
@@ -141,7 +139,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         health.CurHealth += amount;
     }
 
-    public bool isZero()
+    public bool IsZero()
     {
         if (health.CurHealth > 0) return false;
         return true;
@@ -171,7 +169,9 @@ public class Entity : Occupant, IDamageable, IAttackable
         return true;
     }
 
-    #region Area
+    #endregion
+    
+    #region NoveArea
 
     /// <summary>
     /// 기물의 이동 영역 반환

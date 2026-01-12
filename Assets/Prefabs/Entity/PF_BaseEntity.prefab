@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 3566417656147733893}
   - component: {fileID: 4816393175813474959}
   - component: {fileID: 8424361762083353278}
+  - component: {fileID: 5612049225341460342}
+  - component: {fileID: 2622574719130853015}
+  - component: {fileID: 8407168606471272225}
   m_Layer: 0
   m_Name: PF_BaseEntity
   m_TagString: Untagged
@@ -112,3 +115,47 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 934055058611665189, guid: f87db26ab41ca0d4db501486f949f644, type: 3}
+--- !u!114 &5612049225341460342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533656769679605691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688cd81ed79862a46b77a84fa4364bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Entity
+  baseData: {fileID: 0}
+  _level: 0
+  power: {fileID: 0}
+  health: {fileID: 0}
+  isProtected: 0
+--- !u!114 &2622574719130853015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533656769679605691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7dfd49218944b4a8d3c966c622cfad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerComponent
+  _power: 0
+--- !u!114 &8407168606471272225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533656769679605691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae61c8adf371fe4c92e3bb48e14c3a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
+  _curHealth: 0
+  _maxHealth: 0
