@@ -6,6 +6,7 @@ public class Team : MonoBehaviour
     /// 소속한 팀 번호
     /// </summary>
     public int teamNumber;
+    
     /// <summary>
     /// 소속한 팀이 같은지 확인
     /// </summary>
