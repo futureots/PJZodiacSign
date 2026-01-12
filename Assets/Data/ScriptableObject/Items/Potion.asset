@@ -19,4 +19,4 @@ MonoBehaviour:
   discountPrice: 5
   description: "\uAE30\uBB3C\uC758 \uCCB4\uB825\uC744 \uC644\uC804\uD788 \uD68C\uBCF5\uC2DC\uD0A8\uB2E4."
   skillData: {fileID: 11400000, guid: ee4a2e6e369903b479831c99f1b6448d, type: 2}
-  useType: 1
+  useType: 2

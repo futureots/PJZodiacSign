@@ -25,7 +25,6 @@ public class InputManager : MonoBehaviour
 
     public TurnType curTurnType { get; private set; }
     public Action<IInputState> onModeChanged;
-    public Action onCanceled;
 
     protected void Awake()
     {

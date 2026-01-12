@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     
-    InputManager _inputManager;
     Inventory inventory;
-    public TurnType curTurn {  get; private set; }
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
 
@@ -24,22 +22,15 @@ public class InventoryUI : MonoBehaviour
 
     public void Init(InputManager input)
     {
-        _inputManager = input;
         inventory = input.agent.inventory;
-        _inputManager.agent.fieldController.onTurnStarted += OnTurnChanged;
+        actPanel.Init(input);
 
         // 인벤토리 데이터 불러와서 표시
         SetInventory();
 
-        actPanel.Init(inventory);
-
         inventory.OnItemChanged += UpdateInventory;
     }
 
-    void OnTurnChanged(Turn turn)
-    {
-        curTurn = turn.type;
-    } 
 
     private void Start()
     {
@@ -103,7 +94,7 @@ public class InventoryUI : MonoBehaviour
         {
             actPanel.gameObject.SetActive(true);
             actPanel.transform.position = itemSlots[index].transform.position;
-            actPanel.SetItemAction(item,curTurn);
+            actPanel.SetItemAction(item);
         }
     }
     void SetInfoUI(int index, Vector2 pos)

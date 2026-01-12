@@ -15,14 +15,15 @@ public enum PlayerTurn
     P8
 }
 
-[Flags]
+
 public enum TurnType
 {
-    None = 0,
     REPAIR = 1 << 0,
     ACTION = 1 << 1,
+    BOTH = REPAIR | ACTION,
     ATTACK = 1 << 2
 }
+
 
 [Serializable]
 public class Turn

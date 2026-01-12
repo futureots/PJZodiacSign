@@ -9,13 +9,13 @@ namespace PlayerInput
 {
     public class SkillModeInput : IInputState, IInput
     {
-        
-
         InputManager _inputManager;
 
         List<GameObject> selecters;
 
         SkillComponent skillComp;
+
+        public Action onCanceled;
         public SkillModeInput(InputManager input, SkillComponent skill)
         {
             _inputManager = input;
@@ -94,11 +94,11 @@ namespace PlayerInput
             // TODO : list 기물 시각화
 
             Action action = () => isCanceled = true;
-            _inputManager.onCanceled += action;
+            onCanceled += action;
             _inputManager.OnObjectClicked.AddListener(click);
             yield return new WaitUntil(()=>  { return isCanceled || count>=maxCount; });
             _inputManager.OnObjectClicked.RemoveListener(click);
-            _inputManager.onCanceled -= action;
+            onCanceled -= action;
 
             // TODO : 시각화 제거
             if (isCanceled)
@@ -143,11 +143,11 @@ namespace PlayerInput
             }
 
             Action action = () => isCanceled = true;
-            _inputManager.onCanceled += action;
+            onCanceled += action;
             _inputManager.OnObjectClicked.AddListener(click);
             yield return new WaitUntil(() => { return isCanceled || count >= maxCount; });
             _inputManager.OnObjectClicked.RemoveListener(click);
-            _inputManager.onCanceled -= action;
+            onCanceled -= action;
 
             foreach (Tile tile in list)
             {
