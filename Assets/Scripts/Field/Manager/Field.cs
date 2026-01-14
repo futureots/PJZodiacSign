@@ -107,7 +107,7 @@ public class Field : MonoBehaviour
             if (tile.isEmpty) continue;
             // 타일에 존재하는 기물의 수가 1개 이상이면 마지막에 들어온 객체 제외하고 전부 삭제
             var obj = tile.occupiedObject.GetComponent<IDamageable>();
-            if (obj.isZero())
+            if (obj.IsZero())
             {
                 tile.UnsetOccupant();
                 obj.Dead();

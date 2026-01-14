@@ -20,6 +20,8 @@ public class SkillComponent : MonoBehaviour
     }
     public void Init(BaseSkillData data)
     {
+        if (!data) return;      // No Skill
+        
         skillData = data;
         skillLogic = data.skillLogic.Clone();
         skillLogic.SetSkillComponent(this);

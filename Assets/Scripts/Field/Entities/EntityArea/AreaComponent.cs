@@ -11,7 +11,9 @@ public class AreaComponent : MonoBehaviour
     }
 
     #region Attack
+    
     public int sealCount;
+    
     bool isSealed
     {
         get

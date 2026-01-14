@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// TODO: DEPRECATED
 public class HealthComponent : MonoBehaviour
 {
     [SerializeField] int _curHealth;
