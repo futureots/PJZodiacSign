@@ -4,11 +4,10 @@ using System.Collections;
 public class MoveCommand : Command
 {
     Tile prevTile;
-    Entity entity;
-    Tile tile;
-    public MoveCommand(Entity entity, Tile tile)
+    public readonly Entity entity;
+    public readonly Tile tile;
+    public MoveCommand(Entity entity, Tile tile, Action onDestroyed = null)
     {
-        selecterObjects = new();
         this.entity = entity;
         prevTile = entity.CurTile;
         this.tile = tile;
@@ -17,8 +16,9 @@ public class MoveCommand : Command
     public override IEnumerator Execute(Action callback)
     {
         var result = entity.Move(tile);
-        yield return null;
         callback?.Invoke();
+        Delete();
+        yield break;
     }
 
     public override string ToString()

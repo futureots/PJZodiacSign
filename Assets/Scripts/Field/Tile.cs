@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] Renderer tileRenderer;
-    List<Material> originMaterials;
-    List<Material> currentMaterials;
+    Renderer tileRenderer;
+    Renderer planeRenderer;
 
+    public Material moveHighLightMat;
+    public Material atkHighLightMat;
+    public enum HighLightType
+    {
+        Move,
+        Attack,
+    }
     /// <summary>
     /// 해당 타일이 존재하는 필드
     /// </summary>
@@ -22,14 +28,10 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        if (tileRenderer == null)
-        {
-            tileRenderer = GetComponentInChildren<Renderer>();
-        }
-        originMaterials = tileRenderer.materials.ToList();
-        currentMaterials = originMaterials;
-
+        tileRenderer = transform.GetChild(0).GetComponent<Renderer>();
+        planeRenderer = transform.GetChild(1).GetComponent<Renderer>();
     }
+
     /// <summary>
     /// 필드 설정
     /// </summary>
@@ -86,15 +88,39 @@ public class Tile : MonoBehaviour
     }
 
     
-    public void ApplyHighlight(Material material)
+    public void ApplyHighlight(HighLightType type)
     {
-        currentMaterials.Add(material);
-        tileRenderer.materials = currentMaterials.ToArray();
+        List<Material> mats = null;
+        switch (type)
+        {
+            case HighLightType.Move:
+                mats = tileRenderer.sharedMaterials.ToList();
+                mats.Add(moveHighLightMat);
+                tileRenderer.materials = mats.ToArray();
+                break;
+            case HighLightType.Attack:
+                mats = planeRenderer.sharedMaterials.ToList();
+                mats.Add(atkHighLightMat);
+                planeRenderer.materials = mats.ToArray();
+                break;
+        }
     }
-    public void RemoveHighlight(Material material)
+    public void RemoveHighlight(HighLightType type)
     {
-        currentMaterials.Remove(material);
-        tileRenderer.materials = currentMaterials.ToArray();
+        List<Material> mats = null;
+        switch (type)
+        {
+            case HighLightType.Move:
+                mats = tileRenderer.sharedMaterials.ToList();
+                mats.Remove(moveHighLightMat);
+                tileRenderer.materials = mats.ToArray();
+                break;
+            case HighLightType.Attack:
+                mats = planeRenderer.sharedMaterials.ToList();
+                mats.Remove(atkHighLightMat);
+                planeRenderer.materials = mats.ToArray();
+                break;
+        }
     }
 
 }

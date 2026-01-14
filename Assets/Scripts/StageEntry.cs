@@ -9,7 +9,7 @@ public class StageEntry : MonoBehaviour
     {
         if (!GameManager.Instance)
         {
-            Debug.Log("Missing GameManager");
+            EditorLogger.Print("Missing GameManager");
             return;
         }
         

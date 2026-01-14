@@ -7,15 +7,12 @@ public class PlayerDataUI : MonoBehaviour
 
     public TextMeshProUGUI credit;
     public TextMeshProUGUI level;
-    private void Awake()
-    {
-        agent = transform.root.GetComponent<Agent>();
-    }
 
-    private void Start()
+    public void Init(Agent agent)
     {
-        
-        //UpdateCredit(agent.Credit);
+        this.agent = agent;
+        //agent.onCreditChanged += UpdateCredit;
+        //GameManager.onNextLevel += UpdateLevel;
     }
 
 
@@ -29,15 +26,10 @@ public class PlayerDataUI : MonoBehaviour
         this.level.text = level.ToString();
     }
 
-    private void OnEnable()
-    {
-        // agent.onCreditChanged += UpdateCredit;
-        // GameManager.onNextLevel += UpdateLevel;
-        
-    }
+    
     private void OnDisable()
     {
-        agent.onCreditChanged -= UpdateCredit;
-        // GameManager.onNextLevel -= UpdateLevel;
+        //agent.onCreditChanged -= UpdateCredit;
+        //GameManager.onNextLevel -= UpdateLevel;
     }
 }

@@ -14,5 +14,8 @@ public class AttackCommand : Command
     {
         yield return entity.StartCoroutine(entity.Attack());
         callback?.Invoke();
+        Delete();
+        yield break;
     }
+
 }

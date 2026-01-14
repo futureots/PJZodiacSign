@@ -1,4 +1,4 @@
-
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +28,9 @@ public class FieldController : MonoBehaviour
 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
+    public event Action<Phase> onPhaseStarted;
+    public event Action<Turn> onTurnStarted;
+
     /// <summary>
     /// Phase Set and Reset Turn
     /// </summary>
@@ -51,6 +54,7 @@ public class FieldController : MonoBehaviour
 
         // Set Model
         stageManager.SetPhase(CurrentPhase);
+        onPhaseStarted?.Invoke(CurrentPhase);
         
         // Reset Turn
         SetTurn(0);
@@ -89,6 +93,7 @@ public class FieldController : MonoBehaviour
         
         // Set Model
         stageManager.SetTurn(CurrentTurn);
+        onTurnStarted?.Invoke(CurrentTurn);
     }
     
     #endregion
@@ -99,15 +104,41 @@ public class FieldController : MonoBehaviour
      */
     
     public List<Command> commandList;
+    Command curCmd;
+    bool isSequencing = false;
     protected CommandSystem commandSystem;    // Attach
     
+    public void ExecutedCommands()
+    {
+        if (!isSequencing)
+        {
+            isSequencing = true;
+            OnCommandExecuted();
+        }
+    }
+
     public virtual void SendCommands()
     {
         //TODO: field에 커맨드 전송 및 콜백 함수 설정
     }
     public virtual void OnCommandExecuted()
     {
-
+        if (commandList.Count > 0)
+        {
+            curCmd = commandList[0];
+            commandList.RemoveAt(0);
+            Action callback = OnCommandExecuted;
+            if (curCmd is EndCommand end)
+            {
+                callback += () => { SetTurn(); };
+            }
+            StartCoroutine(curCmd.Execute(callback));
+        }
+        else
+        {
+            isSequencing = false;
+            EditorLogger.Print("NoMore Command");
+        }
     }
     
     #endregion
@@ -134,12 +165,14 @@ public class FieldController : MonoBehaviour
         // Load Field
         stageManager = StageManager.Instance;
         stageManager.Init(data);
-        
+
         // TODO: 에이전트 생성 및 초기화
-        // localPlayer.SetData(data.player);
+        //localPlayer.SetData(data.player);
+        localPlayer.Init(this);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
         {
             // agents[i].SetData(data.agents[i]);
+            agents[i].Init(this);
         }
         commandSystem = new();
         commandList = new();

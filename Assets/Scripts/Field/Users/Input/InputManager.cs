@@ -1,45 +1,33 @@
-using Battle.Phase;
-using DG.Tweening;
 using PlayerInput;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 
-public class InputManager : Agent
+
+public class InputManager : MonoBehaviour
 {
-    IPhaseManageService phaseService;
 
     public Vector2 PointerPosition { get; private set; }
 
     public GameInputActions inputActions { get; private set; }
 
-    public IModeInput curModeState { get; private set; }
+    public IInputState curModeState { get; private set; }
 
-    // 입력 표시기
-    public AreaVisualizer areaVisualizer;
+    public Agent agent;
 
     // 표시 오브젝트
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
 
-    // UI 요소
-    [Header("UI Element")]
-    public Button turnEndButton;
-    public UIContainer UI;
-    [Header("Camera")]
-    public GameObject cam;
-    [SerializeField] Vector3 RepairCamPos;
-    [SerializeField] Vector3 BattleCamPos;
+    public TurnType curTurnType { get; private set; }
+    public Action<IInputState> onModeChanged;
 
-
-    protected new void Awake()
+    protected void Awake()
     {
-        base.Awake();
         inputActions = new GameInputActions();
     }
 
@@ -51,23 +39,36 @@ public class InputManager : Agent
         // 마우스 클릭 취소 시 이벤트 트리거
         inputActions.Gameplay.Click.canceled += CancelClick;
 
+        // 마우스 이동 시 이벤트 트리거
         inputActions.Gameplay.Point.performed += MoveMouse;
 
-        OnObjectClicked.AddListener(HandleClick);
-
-        //GameManager.onNextLevel += AddCredit;
+        if (TryGetComponent<Agent>(out var agent))
+        {
+            Init(agent);
+        }
     }
 
-    public void Init(IPhaseManageService phaseManageService)
+    public void Init(Agent agent)
     {
-        phaseService = phaseManageService;
+        this.agent = agent;
+        EditorLogger.Print(agent.fieldController);
+        agent.fieldController.onTurnStarted += OnTurnChanged;
     }
 
-    private void OnDestroy()
-    {
-        //GameManager.onNextLevel -= AddCredit;
-    }
     #region InputPackaging
+
+    /// <summary>
+    /// 오브젝트 클릭 시 이벤트
+    /// </summary>
+    public UnityEvent<GameObject> OnObjectClicked;
+    /// <summary>
+    /// 마우스 버튼 업
+    /// </summary>
+    public UnityEvent OnMouseUp;
+    /// <summary>
+    /// 마우스 이동 시 이벤트
+    /// </summary>
+    public UnityEvent<Vector2> OnMouseMove;
 
     /// <summary>
     /// 마우스 클릭 시작
@@ -111,148 +112,103 @@ public class InputManager : Agent
 
     #endregion
 
-    #region Phase
-
-    public override void SetRepairPhase(int level, Action call)
+    #region Turn
+    
+    public void OnTurnChanged(Turn curTurn)
     {
-        // TODO: 턴 매커니즘 controller 제거
-        // controller.SetResourceField(data.handEntities);
-        // controller.SetMainField(data.fieldEntities);
-
-        cam.transform.DOLocalMove(RepairCamPos,1f);
+        curTurnType = curTurn.type;
         
-
-        // controller.onCommandCreated += ExecuteCommand;
-
-        SetInputMode(PhaseType.Repair);
-        turnEndButton.interactable = true;
-        turnEndButton.onClick.AddListener(() =>
+        if (curTurn.agentID == agent.id)
         {
-            turnEndButton.onClick.RemoveAllListeners();
-            call?.Invoke();
-        });
-    }
-
-    public override void EndRepairPhase()
-    {
-        SetInputMode(PhaseType.None);
-        // controller.UpdateEntities();
-        // 기물 데이터는 저장 시 저장소 업데이트
-        // var (field, hand) = controller.GetFieldData();
-        // data.fieldEntities = field;
-        // data.handEntities = hand;
-        cam.transform.DOLocalMove(BattleCamPos, 1f);
-
-        // controller.onCommandCreated -= ExecuteCommand;
-
-        base.EndRepairPhase();
-    }
-    void ExecuteCommand(Command command)
-    {
-        Debug.Log("Command Execute");
-        command?.Execute();
-        SetInputMode(PhaseType.Repair);
-    }
-
-    public override void SetActionTurn(Action call)
-    {
-        SetInputMode(PhaseType.Battle);
-        Action<Command> bind = (x) =>
+            EditorLogger.Print("Player" + curTurnType.ToString());
+            if(curTurn.type == TurnType.ATTACK)
+            {
+                AttackInput();
+            }
+            else
+            {
+                SetInputMode();
+            }
+                
+        }
+        else
         {
-            SetInputMode(PhaseType.Battle);
-            turnEndButton.interactable = true;
-        };
-        // controller.onCommandCreated += bind;
-        turnEndButton.onClick.AddListener(() =>
-        {
-            SetInputMode(PhaseType.None);
-            // controller.onCommandCreated -= bind;
-            turnEndButton.onClick.RemoveAllListeners();
-            call?.Invoke();
-            turnEndButton.interactable = false;
-        });
-        turnEndButton.interactable = false;
+            ClearInputMode();
+        }
     }
-
-    void AddCredit(int level)
-    {
-        // 이자 및 고정값 추가(나중에 기물 가격과 비교해서 밸런싱)
-        Credit += Mathf.Min((int)(Credit * 0.1f), 50);
-        Credit += 50;
-    }
-    #endregion
-
-    #region InputMode
 
     /// <summary>
-    /// 입력 모드 설정(이동 입력, 스킬 입력)
+    /// 입력이 종료되면(턴 종료 X) 실행할 함수
     /// </summary>
-    public void SetInputMode(PhaseType mode)
+    public void ClearInputMode()
     {
         curModeState?.RemoveMode();
-        switch (mode)
+        curModeState = null;
+        onModeChanged?.Invoke(curModeState);
+    }
+
+    public void SetInputMode()
+    {
+        curModeState?.RemoveMode();
+        switch (curTurnType)
         {
-            case PhaseType.Battle:
+            case TurnType.ACTION:
                 curModeState = new MoveModeInput(this);
                 break;
-            case PhaseType.Repair:
+            case TurnType.REPAIR:
                 curModeState = new RepairModeInput(this);
                 break;
-            case PhaseType.None:
+            default:
                 curModeState = new EmptyModeInput();
                 break;
         }
+        onModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
-    
+
     public void SetInputMode(SkillComponent skill)
     {
         curModeState?.RemoveMode();
-
-        curModeState = new SkillModeInput(this, skill, phaseService);
+        curModeState = new SkillModeInput(this, skill);
+        onModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
+
+    public void AttackInput()
+    {
+        foreach (var entity in agent.entities)
+        {
+            agent.CreateAttackCommand(entity);
+        }
+        agent.CreateEndCommand();
+        agent.SendCommand();
+    }
+
     #endregion
 
-    #region ClickInfo
 
     /// <summary>
     /// 오브젝트가 기물이면 기물 정보 표시, 아니면 정보 패널 숨김
     /// </summary>
-    void HandleClick(GameObject obj)
-    {
-        if (obj == null)
-        {
-            UI.entityInfo.HidePanel();
-            return;
-        }
-        var entity = obj.GetComponent<Entity>();
-        if (entity != null)
-        {
-            UI.entityInfo.ShowPanel(entity);
-        }
-        else
-        {
-            UI.entityInfo.HidePanel();
-        }
+    //void HandleClick(GameObject obj)
+    //{
+    //    if (obj == null)
+    //    {
+    //        UI.entityInfo.HidePanel();
+    //        return;
+    //    }
+    //    var entity = obj.GetComponent<Entity>();
+    //    if (entity != null)
+    //    {
+    //        UI.entityInfo.ShowPanel(entity);
+    //    }
+    //    else
+    //    {
+    //        UI.entityInfo.HidePanel();
+    //    }
 
-    }
+    //}
 
-    /// <summary>
-    /// 오브젝트 클릭 시 이벤트
-    /// </summary>
-    public UnityEvent<GameObject> OnObjectClicked;
-    /// <summary>
-    /// 마우스 버튼 업
-    /// </summary>
-    public UnityEvent OnMouseUp;
-    /// <summary>
-    /// 마우스 이동 시 이벤트
-    /// </summary>
-    public UnityEvent<Vector2> OnMouseMove;
-
-
-    #endregion
     /// <summary>
     /// 가장 가까운 타일 반환
     /// </summary>

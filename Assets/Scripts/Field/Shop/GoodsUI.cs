@@ -25,7 +25,7 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
         price = data.normalPrice;
         priceText.text = price.ToString();
         icon.sprite = data.icon;
-        UpdateBuyBtn(customer.Credit);
+        //UpdateBuyBtn(customer.Credit);
     }
 
     /// <summary>
@@ -46,10 +46,10 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
 
     private void OnEnable()
     {
-        customer.onCreditChanged += UpdateBuyBtn;
+        //customer.onCreditChanged += UpdateBuyBtn;
     }
     private void OnDisable()
     {
-        customer.onCreditChanged -= UpdateBuyBtn;
+        //customer.onCreditChanged -= UpdateBuyBtn;
     }
 }

@@ -3,44 +3,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : Agent
+public class EnemyAI : MonoBehaviour , IInput
 {
-    public ShopTable shopTable;
+    Agent agent;
 
-    public override void SetActionTurn(Action call)
+    public TurnType curTurnType { get; private set; }
+
+    private void Start()
     {
-        this.RunWithCallback(SetActionMode(), call);
-    }
-    public override void SetRepairPhase(int level, Action call)
-    {
-        // 보유 크레딧으로 기물 랜덤 구매하기
-        Debug.Log("Enemy Credit : " + Credit);
-        int loopCount = 30;
-        for(int i=0;i<loopCount;i++)
+        if(TryGetComponent<Agent>(out var agent))
         {
-            if (shopTable.TryGetBuyableEntity(Credit, out var entity))
-            {
-                Credit -= entity.normalPrice;
-                data.handEntities.Add(new EntityLevelData(entity));
-            }
-            else break;
-            Credit--;
+            Init(agent);
         }
-        // controller.SetResourceField(data.handEntities);
-        // controller.SetMainField(data.fieldEntities);
-        this.RunWithCallback(SetRepairMode(), call);
-    }
-    public override void EndRepairPhase()
-    {
-        // controller.UpdateEntities();
-        base.EndRepairPhase();
     }
 
+    public void Init(Agent agent)
+    {
+        this.agent = agent;
+        EditorLogger.Print(agent.fieldController);
+        agent.fieldController.onTurnStarted += OnTurnChanged;
+    }
+
+    
+    public void OnTurnChanged(Turn curTurn)
+    {
+        curTurnType = curTurn.type;
+        
+        if(curTurn.agentID == agent.id)
+        {
+            EditorLogger.Print("AI "+ curTurnType.ToString());
+            switch (curTurn.type)
+            {
+                case TurnType.ACTION:
+                    StartCoroutine(SetActionMode());
+                    break;
+                case TurnType.ATTACK:
+                    AttackInput();
+                    break;
+                case TurnType.REPAIR:
+                    StartCoroutine(SetRepairMode());
+                    break;
+            }
+        }
+    }
+
+    public void AttackInput()
+    {
+        foreach (var entity in agent.entities)
+        {
+            agent.CreateAttackCommand(entity);
+        }
+        agent.CreateEndCommand();
+        agent.SendCommand();
+    }
 
     public IEnumerator SetRepairMode()
     {
         yield return null;
-
+        if (TryGetComponent<SkillComponent>(out var skill))
+        {
+            agent.CreateSkillCommand(skill);
+        }
         // 내 필드에 있는 기물을 메인 필드에 배치
         // var fieldTiles = Field.GetEmptyTiles(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
         // foreach (var entity in controller.resourceEntities)
@@ -52,87 +75,58 @@ public class EnemyAI : Agent
         //     entity.Move(tile);
         //     fieldTiles.Remove(tile);
         // }
-        
+
+        agent.CreateEndCommand();
+        agent.SendCommand();
+        EditorLogger.Print("RepairEnd");
     }
 
     public IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
-        // 스킬을 사용할 수 있을 경우 스킬을 우선적으로 사용(스킬의 입력값을 넣을 수 없으면 해당 기물 빼고 재 판별)
-        // if(TryGetActableSkills(out var list))
-        // {
-        //     int rand = UnityEngine.Random.Range(0, list.Count);
-        //     var skill = list[rand].GetSkillInstance();
-        //     skill.SetSkillInput(GameManager.Instance.field);
-        //     controller.CreateCommand(skill);
-        //     yield break;
-        // }
-        //
-        // // 스킬을 사용할 수 있는 기물이 없으면 이동한다.
-        //
-        // int max = 0;
-        // Entity bestEntity = null;
-        // intVector2 bestPos = new intVector2(-1,-1);
-        //
-        // bool flag = false;
-        // foreach (var checkEntity in controller.fieldEntities)
-        // {
-        //     // 필드 값 가져오기
-        //     int[,] field = GameManager.Instance.field.GetFieldState(checkEntity);
-        //
-        //     // 적의 공격범위 가져오기 및 예상 데미지 계산
-        //     var values = GameManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
-        //
-        //     // 가장 좋은 위치의 행동 가져오기
-        //     if(TryGetBestMove(checkEntity,field, values,out int value, out intVector2 pos))
-        //     {
-        //         flag = true;
-        //         Debug.Log($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
-        //         // 같은 값일 경우 이후의 명령만 가짐
-        //         if (max < value || bestEntity == null)
-        //         {
-        //             max = value;
-        //             bestEntity = checkEntity;
-        //             bestPos = pos;
-        //         }
-        //     }
-        // }
-        // if (flag)
-        // {
-        //     controller.CreateCommand(bestEntity, GameManager.Instance.field.GetTile(bestPos));
-        // }
-        // else
-        // {
-        //     // 이에 대한 조치 요망 => 행동하지 않고 턴을 넘겨야함.
-        //     Debug.Log("행동 불가능!");
-        // }
+        // TODO : 스킬을 사용할 수 있으면 스킬을 사용한다.
+
+        int max = 0;
+        Entity bestEntity = null;
+        intVector2 bestPos = new intVector2(-1, -1);
+        
+        bool flag = false;
+        foreach (var checkEntity in agent.entities)
+        {
+
+            // 필드 값 가져오기
+            int[,] field = StageManager.Instance.field.GetFieldState(checkEntity);
+
+            // 적의 공격범위 가져오기 및 예상 데미지 계산
+            var values = StageManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
+
+            // 가장 좋은 위치의 행동 가져오기
+            if (TryGetBestMove(checkEntity, field, values, out int value, out intVector2 pos))
+            {
+                flag = true;
+                EditorLogger.Print($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
+                // 같은 값일 경우 이후의 명령만 가짐
+                if (max < value || bestEntity == null)
+                {
+                    max = value;
+                    bestEntity = checkEntity;
+                    bestPos = pos;
+                }
+            }
+        }
+        if (flag)
+        {
+            agent.CreateMoveCommand(bestEntity, StageManager.Instance.field.GetTile(bestPos));
+        }
+        if (TryGetComponent<SkillComponent>(out var skill))
+        {
+            agent.CreateSkillCommand(skill);
+        }
+        agent.CreateEndCommand();
+        agent.SendCommand();
     }
 
-    /// <summary>
-    /// 스킬 사용이 가능한 기물이 있는지 확인하는 함수
-    /// </summary>
-    /// <returns>스킬 사용이 가능함</returns>
-    bool TryGetActableSkills(out List<SkillComponent> Entities)
-    {
-        
-        Entities = new List<SkillComponent>();
-        // foreach (var item in controller.fieldEntities)
-        // {
-        //     if(item.TryGetComponent<SkillComponent>(out var skill))
-        //     {
-        //         // 스킬 사용이 가능한지 확인하는 조건문
-        //         /*if (false)
-        //         {
-        //             if (skill.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
-        //             {
-        //                 Entities.Add(skill);
-        //             }
-        //         }*/
-        //     }
-        // }
-        if (Entities.Count > 0) return true;
-        return false;
-    }
+
 
     bool TryGetBestMove(
         Entity entity,
@@ -161,16 +155,16 @@ public class EnemyAI : Agent
                 if (field[item.y, item.x] != 0 || tile.fieldPos == item) continue;
                 // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
                 var damage = tileValues[item.y, item.x];
-                if (damage + entity.CurHealth <= 0) damage -= 5;
+                if (damage + entity.health.CurHealth <= 0) damage -= 5;
 
                 // 공격 가능 체크
                 field[tile.fieldPos.y, tile.fieldPos.x] = 0;
                 var plusArea = area.GetAttackVector(field, item, entity.IsReflect);
-                field[tile.fieldPos.y, tile.fieldPos.x] = team.teamNumber;
+                field[tile.fieldPos.y, tile.fieldPos.x] = agent.id;
                 foreach (var plus in plusArea)
                 {
                     if (field[plus.y, plus.x] == 0) continue;
-                    if (field[plus.y, plus.x] == team.teamNumber) continue;
+                    if (field[plus.y, plus.x] == agent.id) continue;
                     tileValues[item.y, item.x] += power;
                 }
 
@@ -197,4 +191,28 @@ public class EnemyAI : Agent
         pos = valuablePos[UnityEngine.Random.Range(0, valuablePos.Count)];
         return true;
     }
+
+    public IEnumerator InputEntity(List<Entity> list, Action<Entity> input, Action<bool> callback, int count = -1)
+    {
+        var inputCount = Mathf.Min(list.Count, count);
+        for (int i = 0; i < inputCount; i++)
+        {
+            input?.Invoke(list[i]);
+        }
+        callback?.Invoke(true);
+        yield break;
+    }
+
+    public IEnumerator InputTile(List<Tile> list, Action<Tile> input, Action<bool> callback, int count = -1)
+    {
+        var inputCount = Mathf.Min(list.Count, count);
+        for (int i = 0; i < inputCount; i++)
+        {
+            input?.Invoke(list[i]);
+        }
+        callback?.Invoke(true);
+        yield break;
+    }
 }
+
+

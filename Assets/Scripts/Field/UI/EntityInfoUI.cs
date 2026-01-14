@@ -1,4 +1,3 @@
-using Battle.Phase;
 using PlayerInput;
 using TMPro;
 using UnityEngine;
@@ -6,8 +5,8 @@ using UnityEngine.UI;
 
 public class EntityInfoUI : MonoBehaviour
 {
-    IPhaseManageService _service;
     InputManager _inputManager;
+    int teamId;
 
     Entity selectedEntity;
     SkillComponent _skill;
@@ -24,27 +23,42 @@ public class EntityInfoUI : MonoBehaviour
     public SkillInfoUI skillInfo;
     public Button entitySkillBtn;
 
-
-    Team team;
     void Start()
     {
         InfoPanel.SetActive(false);
-        team = transform.root.GetComponent<Team>();
     }
 
-    public void Init(InputManager input,IPhaseManageService service)
+    public void Init(InputManager input)
     {
-        _service = service;
         _inputManager = input;
-        team = _inputManager.GetComponent<Team>();
+        teamId = _inputManager.agent.id;
+        input.OnObjectClicked.AddListener(OnObjectClick);
+        input.onModeChanged += SetSkillButton;
+        entitySkillBtn.onClick.AddListener(UseSkill);
     }
 
+    void OnObjectClick(GameObject obj)
+    {
+        if (obj.TryGetComponent<Entity>(out var entity))
+        {
+            ShowPanel(entity);
+        }
+        else
+        {
+            HidePanel();
+        }
+    }
+
+    /// <summary>
+    /// 기물의 정보 출력
+    /// </summary>
+    /// <param name="entity"></param>
     public void ShowPanel(Entity entity)
     {
         if (selectedEntity != null)
         {
-            selectedEntity.OnHealthChanged -= hpBar.SetGauge;
-            selectedEntity.OnLevelChanged -= UpdateLevelText;
+            selectedEntity.health.onHealthChanged -= hpBar.SetGauge;
+            selectedEntity.onLevelChanged -= SetLevelText;
 
             if (_power != null) _power.onPowerChanged -= SetPowerText;
             if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
@@ -53,18 +67,17 @@ public class EntityInfoUI : MonoBehaviour
         selectedEntity = entity;
         InfoPanel.SetActive(true);
         // 정보 표시
-        UpdateLevelText(selectedEntity.Level);
-        selectedEntity.OnLevelChanged += UpdateLevelText;
+        SetLevelText(selectedEntity.Level);
+        selectedEntity.onLevelChanged += SetLevelText;
 
-        hpBar.SetGauge(entity.CurHealth, entity.MaxHealth);
-        entity.OnHealthChanged += hpBar.SetGauge;
+        hpBar.SetGauge(entity.health.CurHealth, entity.health.MaxHealth);
+        entity.health.onHealthChanged += hpBar.SetGauge;
 
         // 공격력 표시
         if(entity.TryGetComponent<PowerComponent>(out var power))
         {
             powerText.gameObject.SetActive(true);
             _power = power;
-            Debug.Log("PowerComponent : " + power.Power);
             SetPowerText(power.Power);
             power.onPowerChanged += SetPowerText;
         }
@@ -79,6 +92,7 @@ public class EntityInfoUI : MonoBehaviour
             buffList.SetBuffUI(buffs);
         }
 
+        // 에너지 표시
         if(entity.TryGetComponent<EnergyComponent>(out var energy))
         {
             _energy = energy;
@@ -86,57 +100,59 @@ public class EntityInfoUI : MonoBehaviour
             _energy.onEnergyChanged += energyBar.SetGauge;
         }
 
-        // 스킬 및 마나 표시
+        // 스킬 표시
         if (entity.TryGetComponent<SkillComponent>(out var skill))
         {
             _skill = skill;
-
             skillInfo.SetSkillUI(_skill.skillData);
-
-            bool isSkillUsable = false;
-            entitySkillBtn.onClick.RemoveAllListeners();
-            // 스킬 버튼 활성화
-            if (_service.CurPhase == PhaseType.Battle && _inputManager.curModeState is MoveModeInput)
-            {
-                if (team.IsAlly(entity.team))
-                {
-                    if (_skill.skillData != null)
-                    {
-                        // 스킬의 조건을 만족했는지 확인하는 조건문
-                        if (_skill.IsUsable())
-                        {
-                            isSkillUsable = true;
-                        }
-                        entitySkillBtn.onClick.AddListener(() =>
-                        {
-                            // TODO : 스킬 입력 모드로 변경 및 입력에 필요한 값 전송
-                            _inputManager.SetInputMode(skill);
-                        });
-                    }
-                }
-
-            }
-            if (isSkillUsable)
-            {
-                entitySkillBtn.interactable = true;
-            }
-            else
-            {
-                entitySkillBtn.interactable = false;
-            }
+            SetSkillButton(_inputManager.curModeState);
+        }
+        else
+        {
+            entitySkillBtn.interactable = false;
         }
     }
-    public void UpdateLevelText(int level, int prevLevel = 0)
-    {
-        entityName.text = selectedEntity.baseData.productName + (level == 0 ? "" : $" + {level}");
-    }
-    public void HidePanel()
+    void HidePanel()
     {
         InfoPanel.SetActive(false);
     }
-
+    void SetLevelText(int level, int prevLevel = 0)
+    {
+        entityName.text = selectedEntity.baseData.productName + (level == 0 ? "" : $" + {level}");
+    }
     void SetPowerText(int value)
     {
         powerText.text = value.ToString();
+    }
+    void UseSkill()
+    {
+        if(_skill != null)
+            _inputManager.SetInputMode(_skill);
+    }
+    void SetSkillButton(IInputState state)
+    {
+        bool isUsable = false;
+        if (state is MoveModeInput)
+        {
+            if(selectedEntity != null)
+            {
+                if (selectedEntity.team.IsAlly(teamId))
+                {
+                    if (_skill.IsUsable())
+                    {
+                        isUsable = true;
+                    }
+                }
+            }
+        }
+        if (isUsable)
+        {
+            entitySkillBtn.interactable = true;
+        }
+        else
+        {
+            entitySkillBtn.interactable = false;
+        }
+
     }
 }

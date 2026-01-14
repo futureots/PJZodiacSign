@@ -1,5 +1,5 @@
 
-public interface IModeInput
+public interface IInputState
 {
     /// <summary>
     /// 해당 모드 세팅

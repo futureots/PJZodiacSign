@@ -16,21 +16,37 @@ public enum PlayerTurn
     P8
 }
 
+
+public enum TurnType
+{
+    REPAIR = 1 << 0,
+    ACTION = 1 << 1,
+    BOTH = REPAIR | ACTION,
+    ATTACK = 1 << 2
+}
+
+
 [Serializable]
 public class Turn
 {
     public int agentID;
-    public string type;
+    public TurnType type;
 
     // NOTE: 
     public List<string> actions; 
 }
 
 
+public enum PhaseType
+{
+    Battle,
+    Repair
+}
+
 [CreateAssetMenu(fileName = "Phase", menuName = "Scriptable Objects/PhaseData")]
 public class Phase : ScriptableObject
 {
-    public string phaseName;
+    public PhaseType phaseName;
     public bool isLoop;
     public List<Turn> turnList = new();
     

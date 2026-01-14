@@ -1,53 +1,54 @@
-using Battle.Phase;
+using PlayerInput;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemActionUI : MonoBehaviour
 {
-    [Header("Dependency")]
-    IPhaseManageService phaseManageService;
-
+    InputManager inputManager;
+    ItemComponent curItem;
     public Button useBtn;
     public Button discardBtn;
-
-    public void Init(IPhaseManageService phaseManageService)
+    public void Init(InputManager _inputManager)
     {
-        this.phaseManageService = phaseManageService;
+        inputManager = _inputManager;
+        var inventory = _inputManager.agent.inventory;
+        
+        _inputManager.onModeChanged += OnModeChange;
+        // 버리기 기능
+        discardBtn.onClick.AddListener(() => {
+            inventory.RemoveItem(curItem);
+            gameObject.SetActive(false);
+            curItem = null;
+            });
+        // 스킬 사용 기능
+        useBtn.onClick.AddListener(() =>
+        {
+            inputManager.SetInputMode(curItem);
+            gameObject.SetActive(false);
+            curItem = null;
+        });
+
     }
 
     /// <summary>
     /// 각 버튼의 상호작용 설정
     /// </summary>
-    /// <param name="inventory"></param>
-    /// <param name="index"></param>
-    public void SetItemAction(Inventory inventory, int index)
+    public void SetItemAction(ItemComponent item)
     {
-        discardBtn.onClick.RemoveAllListeners();
-        discardBtn.onClick.AddListener(() => inventory.RemoveItem(index));
-        discardBtn.onClick.AddListener(() => gameObject.SetActive(false));
-
-        var item = inventory.items[index];
-
-        useBtn.gameObject.SetActive(true);
-
-        if (item.itemData.useType.HasFlag(phaseManageService.CurPhase))
+        curItem = item;
+        OnModeChange(inputManager.curModeState);
+    }
+    // 스킬 사용 여부 판단
+    void OnModeChange(IInputState state)
+    {
+        if ((curItem.itemData.useType & inputManager.curTurnType) != 0 && inputManager.curModeState is MoveModeInput)
         {
             useBtn.interactable = true;
-
-            useBtn.onClick.RemoveAllListeners();
-            useBtn.onClick.AddListener(() =>
-            {
-                transform.root.GetComponent<InputManager>().SetInputMode(item);
-            });
-            useBtn.onClick.AddListener(() => gameObject.SetActive(false));
         }
         else
         {
             useBtn.interactable = false;
         }
-
     }
-
-
-
 }

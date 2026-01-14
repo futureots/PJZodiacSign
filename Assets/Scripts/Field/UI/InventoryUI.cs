@@ -1,4 +1,3 @@
-using Battle.Phase;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,69 +5,36 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    IPhaseManageService _phaseManageService;    // TODO: Phase 의존성 주입
-    InputManager _inputManager;
+    
+    Inventory inventory;
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
-    
-    #region Debugging
-    public void SetClosedPosition()
-    {
-        closedPosition = transform.localPosition;
-    }
-    public void SetOpenedPosition()
-    {
-        openedPosition = transform.localPosition;
-    }
-    public void SetInventorySlot()
-    {
-        itemSlots = new();
-        var slots = GetComponentsInChildren<ItemSlotUI>();
-        itemSlots.AddRange(slots);
-    }
-    #endregion
-
-    /// <summary>닫을 때 이동하는 포지션</summary>
-    [ContextMenuItem("SetClosePos", "SetClosedPosition")]
-    [SerializeField] Vector3 closedPosition;
-    /// <summary>열 때 이동하는 포지션</summary>
-    [ContextMenuItem("SetOpenPos", "SetOpenedPosition")]
-    [SerializeField] Vector3 openedPosition;
-
 
     [Header("오브젝트")]
     [SerializeField] ItemInfoUI infoPanel;
     [SerializeField] ItemActionUI actPanel;
+
     /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
     public Button popBtn;
 
-    public Inventory inventory;     // TODO: 로컬플레이어 의존성 주입
     [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
     [SerializeField] List<ItemSlotUI> itemSlots;
 
-    /// <summary> 아이템 데이터를 인스턴스로 전환 </summary>
-    [SerializeField] ItemTable itemTable;
-
-    public void Init(InputManager input, IPhaseManageService phaseManageService)
+    public void Init(InputManager input)
     {
-        _inputManager = input;
-        _phaseManageService = phaseManageService;
-        actPanel.Init(phaseManageService);
+        inventory = input.agent.inventory;
+        actPanel.Init(input);
+
+        // 인벤토리 데이터 불러와서 표시
+        SetInventory();
+
+        inventory.OnItemChanged += UpdateInventory;
     }
 
 
     private void Start()
     {
         ToggleInventory(false);
-
-        // 인벤토리 데이터 불러와서 표시
-        SetInventory();
-
-        // inventory.OnItemChanged += UpdateInventory;
-        _inputManager.OnObjectClicked.AddListener((x) =>
-        {
-            actPanel.gameObject.SetActive(false);
-        });
     }
     /// <summary>
     /// 보유 아이템 데이터를 인벤토리에 세팅
@@ -78,10 +44,9 @@ public class InventoryUI : MonoBehaviour
         for(int i=0;i< itemSlots.Count; i++)
         {
             var slot = itemSlots[i];
-            slot.SetSlotIndex(i);
-            slot.OnClick += OpenItemAction;
-            slot.OnMouseInOut += SetInfoUI;
-
+            slot.Init(i);
+            slot.onClick += OpenItemAction;
+            slot.onMouseMove += SetInfoUI;
         }
     }
 
@@ -124,16 +89,17 @@ public class InventoryUI : MonoBehaviour
 
     void OpenItemAction(int index)
     {
-        if (inventory.items[index] != null)
+        var item = inventory.items[index];
+        if (item != null)
         {
             actPanel.gameObject.SetActive(true);
             actPanel.transform.position = itemSlots[index].transform.position;
-            actPanel.SetItemAction(inventory, index);
+            actPanel.SetItemAction(item);
         }
     }
     void SetInfoUI(int index, Vector2 pos)
     {
-        if (index >= inventory.capacity || index < 0)
+        if(index >= inventory.items.Count || index < 0)
         {
             infoPanel.gameObject.SetActive(false);
         }
@@ -143,15 +109,38 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            Debug.Log(inventory.items[index]);
             var item = inventory.items[index];
-            if (!infoPanel.gameObject.activeSelf)
-            {
-                infoPanel.gameObject.SetActive(true);
-                infoPanel.SetInfo(item);
-            }
-            infoPanel.transform.localPosition = pos;
+            if(!infoPanel.gameObject.activeSelf) infoPanel.gameObject.SetActive(true);
+            infoPanel.SetInfo(item);
+            infoPanel.SetPosition(pos);
+            
         }
     }
 
+
+    #region Debugging
+
+    /// <summary>닫을 때 이동하는 포지션</summary>
+    [ContextMenuItem("SetClosePos", "SetClosedPosition")]
+    [SerializeField] Vector3 closedPosition;
+    /// <summary>열 때 이동하는 포지션</summary>
+    [ContextMenuItem("SetOpenPos", "SetOpenedPosition")]
+    [SerializeField] Vector3 openedPosition;
+
+
+    public void SetClosedPosition()
+    {
+        closedPosition = transform.localPosition;
+    }
+    public void SetOpenedPosition()
+    {
+        openedPosition = transform.localPosition;
+    }
+    public void SetInventorySlot()
+    {
+        itemSlots = new();
+        var slots = GetComponentsInChildren<ItemSlotUI>();
+        itemSlots.AddRange(slots);
+    }
+    #endregion
 }

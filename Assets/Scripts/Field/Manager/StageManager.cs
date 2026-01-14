@@ -10,6 +10,7 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private Shop shop;
     [SerializeField] private EntityFactory entityFactory;
     [SerializeField] private UIMapper uiMapper;
+    public Field field;
 
     /// <summary>
     /// Init Model with Data

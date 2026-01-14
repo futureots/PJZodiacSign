@@ -65,21 +65,13 @@ public struct intVector2
     {
         return HashCode.Combine(x, y);
     }
-    #region Encode & Decode
-    public int Encode()
-    {
-        return x  | (y << 10); // X를 상위 10비트, Y를 하위 10비트에 넣음
-    }
-
-    public static intVector2 Decode(int value)
-    {
-        int x = value & 0x3FF; // 하위 10비트 마스크
-        int y = value >> 10;
-        return new intVector2 (x, y);
-    }
 
     public static intVector2 Zero => new intVector2(0, 0);
-    #endregion
+
+    public override string ToString()
+    {
+        return $"( x = {x}, y = {y} )";
+    }
 }
 
 [Serializable]

@@ -36,7 +36,7 @@ public class BuffManager : MonoBehaviour
                 _buffList.Add(instance);
             }
         }
-        Debug.Log(BuffList.Count);
+        EditorLogger.Print(BuffList.Count);
     }
     /// <summary>
     /// 버프 업데이트

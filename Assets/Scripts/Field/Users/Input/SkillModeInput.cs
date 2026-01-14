@@ -1,4 +1,3 @@
-using Battle.Phase;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,18 +7,17 @@ using UnityEngine.Events;
 
 namespace PlayerInput
 {
-    public class SkillModeInput : IModeInput, IInput
+    public class SkillModeInput : IInputState, IInput
     {
-        IPhaseManageService phaseService;
-
         InputManager _inputManager;
 
         List<GameObject> selecters;
 
         SkillComponent skillComp;
-        public SkillModeInput(InputManager input, SkillComponent skill, IPhaseManageService phaseService)
+
+        public Action onCanceled;
+        public SkillModeInput(InputManager input, SkillComponent skill)
         {
-            this.phaseService = phaseService;
             _inputManager = input;
             skillComp = skill;
 
@@ -28,14 +26,10 @@ namespace PlayerInput
 
         public void RemoveMode()
         {
-
-            _inputManager.UI.cancelButton.gameObject.SetActive(false);
         }
 
         public void SetMode()
         {
-            _inputManager.UI.cancelButton.gameObject.SetActive(true);
-
             _inputManager.StartCoroutine(InputSkill(skillComp));
         }
         
@@ -45,12 +39,30 @@ namespace PlayerInput
             bool isCompleted = false;
             Action<bool> action = (x) => { isCompleted = x; };
             yield return skill.StartCoroutine(skill.skillLogic.InputSkill(this,action));
+            Action onDestroy = () =>
+            {
+                foreach (GameObject go in selecters)
+                {
+                    GameObject.Destroy(go);
+                }
+                selecters.Clear();
+            };
             // TODO : 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
             if (isCompleted)
             {
-                // TODO : 커맨드 생성
-                // _inputManager.controller.CreateCommand(skill, selecters.ToArray());
+                // NOTE : 커맨드 생성
+                _inputManager.agent.CreateSkillCommand(skill,onDestroy);
             }
+            else
+            {
+                foreach (GameObject go in selecters)
+                {
+                    GameObject.Destroy(go);
+                }
+                selecters.Clear();
+            }
+            // 스킬 입력이 종료되면 기본 입력 모드로 변경
+            _inputManager.SetInputMode();
             yield break;
         }
 
@@ -69,6 +81,7 @@ namespace PlayerInput
             int count = 0;
             UnityAction<GameObject> click = (x) =>
             {
+                if (!x) return;
                 if (x.TryGetComponent<Entity>(out var entity))
                 {
                     if (list.Contains(entity))
@@ -80,10 +93,12 @@ namespace PlayerInput
             };
             // TODO : list 기물 시각화
 
-            //TODO : 취소버튼 설정하기
+            Action action = () => isCanceled = true;
+            onCanceled += action;
             _inputManager.OnObjectClicked.AddListener(click);
             yield return new WaitUntil(()=>  { return isCanceled || count>=maxCount; });
             _inputManager.OnObjectClicked.RemoveListener(click);
+            onCanceled -= action;
 
             // TODO : 시각화 제거
             if (isCanceled)
@@ -109,23 +124,35 @@ namespace PlayerInput
             int count = 0;
             UnityAction<GameObject> click = (x) =>
             {
+                EditorLogger.Print("Click");
+                if (!x) return;
                 if (x.TryGetComponent<Tile>(out var tile))
                 {
                     if (list.Contains(tile))
                     {
                         input?.Invoke(tile);
                         count++;
+                        selecters.Add(GameObject.Instantiate(_inputManager.skillSelecter,tile.transform.position + Vector3.up*0.1f, Utils.QI));
                     }
                 }
             };
-            // TODO : list 기물 시각화
 
-            //TODO : 취소버튼 설정하기
+            foreach (Tile tile in list)
+            {
+                tile.ApplyHighlight(Tile.HighLightType.Move);
+            }
+
+            Action action = () => isCanceled = true;
+            onCanceled += action;
             _inputManager.OnObjectClicked.AddListener(click);
             yield return new WaitUntil(() => { return isCanceled || count >= maxCount; });
             _inputManager.OnObjectClicked.RemoveListener(click);
+            onCanceled -= action;
 
-            // TODO : 시각화 제거
+            foreach (Tile tile in list)
+            {
+                tile.RemoveHighlight(Tile.HighLightType.Move);
+            }
             if (isCanceled)
             {
                 callback?.Invoke(false);

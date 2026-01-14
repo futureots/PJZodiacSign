@@ -6,37 +6,27 @@ using UnityEngine;
 
 public abstract class Command
 {
-    public List<GameObject> selecterObjects;
+    public event Action onDestroyed;
+
     /// <summary>
     /// 커맨드 실행
     /// </summary>
     public virtual IEnumerator Execute(Action callback = null)
     {
-        yield return null;
-        DeleteObjects();
         callback?.Invoke();
+        Delete();
+        yield break;
     }
 
-    // 시각화에 사용된 오브젝트 삭제(다른데로 이전해야함)
-    public virtual void DeleteObjects()
+    public void Delete()
     {
-        //Debug.Log($"Selecter : {selecterObjects.Count}");
-        foreach (GameObject go in selecterObjects)
-        {
-            GameObject.Destroy(go);
-        }
-        selecterObjects.Clear();
+        onDestroyed?.Invoke();
     }
+
     public override string ToString()
     {
         return base.ToString();
     }
 
-    public virtual bool AddObjects(params GameObject[] list)
-    {
-        if (selecterObjects == null) return false;
-        selecterObjects.AddRange(list);
-        return true;
-    }
     
 }

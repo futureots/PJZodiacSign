@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "PawnMoveArea", menuName = "Scriptable Objects/Area/PawnMoveArea")]
 public class PawnMoveArea : Area
 {
