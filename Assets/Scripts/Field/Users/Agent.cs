@@ -5,9 +5,7 @@ using UnityEngine;
 public abstract class Agent : MonoBehaviour
 {
     public Team team { get; protected set; }
-
-    // 컨트롤러
-    public EntityController controller { get; protected set; }
+    
     public Inventory inventory { get; protected set; }
 
     int credit;
@@ -32,7 +30,6 @@ public abstract class Agent : MonoBehaviour
     protected void Awake()
     {
         team = GetComponent<Team>();
-        controller = GetComponent<EntityController>();
         inventory = GetComponent<Inventory>();
 
         commands = new Command[actionCount];
@@ -48,7 +45,7 @@ public abstract class Agent : MonoBehaviour
     /// </summary>
     public virtual void EndRepairPhase()
     {
-        controller.DisposeInstantField();
+        
     }
 
     /// <summary>
@@ -76,8 +73,7 @@ public abstract class Agent : MonoBehaviour
     /// <returns>입력한 커맨드</returns>
     public Command GetCommand()
     {
-        var cmd = controller.curCmd;
-        return cmd;
+        throw new NotImplementedException();
     }
 
 
@@ -114,15 +110,15 @@ public abstract class Agent : MonoBehaviour
         if (!CanPlaceOnResourceField()) return false;
 
         var entity = EntityFactory.CreateEntity(entityData);
-        controller.PlaceOnResourceField(entity);
 
         return true;
     }
     bool CanPlaceOnResourceField()
     {
-        var list = Field.GetEmptyTiles(controller.resourceField.GetTiles());
-        if (list.Count <= 0) return false;
-        return true;
+        // var list = Field.GetEmptyTiles(controller.resourceField.GetTiles());
+        // if (list.Count <= 0) return false;
+        // return true;
+        throw new NotImplementedException();
     }
     #endregion
 

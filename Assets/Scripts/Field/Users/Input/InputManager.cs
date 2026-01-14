@@ -115,13 +115,14 @@ public class InputManager : Agent
 
     public override void SetRepairPhase(int level, Action call)
     {
-        controller.SetResourceField(data.handEntities);
-        controller.SetMainField(data.fieldEntities);
+        // TODO: 턴 매커니즘 controller 제거
+        // controller.SetResourceField(data.handEntities);
+        // controller.SetMainField(data.fieldEntities);
 
         cam.transform.DOLocalMove(RepairCamPos,1f);
         
 
-        controller.onCommandCreated += ExecuteCommand;
+        // controller.onCommandCreated += ExecuteCommand;
 
         SetInputMode(PhaseType.Repair);
         turnEndButton.interactable = true;
@@ -135,14 +136,14 @@ public class InputManager : Agent
     public override void EndRepairPhase()
     {
         SetInputMode(PhaseType.None);
-        controller.UpdateEntities();
+        // controller.UpdateEntities();
         // 기물 데이터는 저장 시 저장소 업데이트
-        var (field, hand) = controller.GetFieldData();
-        data.fieldEntities = field;
-        data.handEntities = hand;
+        // var (field, hand) = controller.GetFieldData();
+        // data.fieldEntities = field;
+        // data.handEntities = hand;
         cam.transform.DOLocalMove(BattleCamPos, 1f);
 
-        controller.onCommandCreated -= ExecuteCommand;
+        // controller.onCommandCreated -= ExecuteCommand;
 
         base.EndRepairPhase();
     }
@@ -161,11 +162,11 @@ public class InputManager : Agent
             SetInputMode(PhaseType.Battle);
             turnEndButton.interactable = true;
         };
-        controller.onCommandCreated += bind;
+        // controller.onCommandCreated += bind;
         turnEndButton.onClick.AddListener(() =>
         {
             SetInputMode(PhaseType.None);
-            controller.onCommandCreated -= bind;
+            // controller.onCommandCreated -= bind;
             turnEndButton.onClick.RemoveAllListeners();
             call?.Invoke();
             turnEndButton.interactable = false;

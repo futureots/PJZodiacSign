@@ -77,7 +77,7 @@ namespace PlayerInput
                     var cmd = new MoveCommand(_selectedEntity, tile);
                     cmd.AddObjects(targetSelecter, targetTileSelecter);
                     
-                    _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
+                    // _inputManager.controller.CreateCommand(_selectedEntity, tile, targetSelecter, targetTileSelecter);
                 }
                 else
                 {

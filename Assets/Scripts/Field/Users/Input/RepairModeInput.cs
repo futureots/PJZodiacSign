@@ -58,7 +58,7 @@ namespace PlayerInput
             var team = _inputManager.team;
             if (!team.IsAlly(entity.team)) return;
 
-            if (!_inputManager.controller.resourceEntities.Contains(entity)) return;
+            // if (!_inputManager.controller.resourceEntities.Contains(entity)) return;
 
             _selectedEntity = entity;
 
@@ -68,7 +68,7 @@ namespace PlayerInput
             
             // 기물 이동영역 표시
             moveArea = new List<Tile>(); // GameManager.Instance.field.GetHalfTiles(_inputManager.controller.isReflect);
-            moveArea.AddRange(_inputManager.controller.resourceField.GetTiles());
+            // moveArea.AddRange(_inputManager.controller.resourceField.GetTiles());
 
             targetTileSelecter.SetActive(true);
             _inputManager.areaVisualizer.ShowMoveArea(moveArea);

@@ -49,7 +49,7 @@ namespace PlayerInput
             if (isCompleted)
             {
                 // TODO : 커맨드 생성
-                _inputManager.controller.CreateCommand(skill, selecters.ToArray());
+                // _inputManager.controller.CreateCommand(skill, selecters.ToArray());
             }
             yield break;
         }
