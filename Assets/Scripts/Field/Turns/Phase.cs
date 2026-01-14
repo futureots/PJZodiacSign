@@ -5,8 +5,9 @@ using UnityEngine;
 [Serializable]
 public enum PlayerTurn
 {
-    P1 = -1,
-    P2 = 0,
+    P0 = -1,
+    P1 = 0,
+    P2,
     P3,
     P4,
     P5,

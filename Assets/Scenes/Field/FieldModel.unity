@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1806376061}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -1248,7 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1148867006}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -2006,7 +2006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 761613648}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -2169,7 +2169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2031060813}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -2243,7 +2243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 321835277}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -2317,7 +2317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1414047501}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -2570,7 +2570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 517370587}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -3093,7 +3093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 240281419}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -3607,7 +3607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1351978058}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -3756,7 +3756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 838567582}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -5574,7 +5574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 846985618}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -5618,6 +5618,127 @@ Transform:
   - {fileID: 846985620}
   m_Father: {fileID: 391558641}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &290235197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290235198}
+  - component: {fileID: 290235201}
+  - component: {fileID: 290235200}
+  - component: {fileID: 290235199}
+  m_Layer: 5
+  m_Name: Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &290235198
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290235197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1141998434}
+  m_Father: {fileID: 1707382995}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -460.953, y: 525}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &290235199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290235197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 290235200}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &290235200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290235197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &290235201
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290235197}
+  m_CullTransparentMesh: 1
 --- !u!1 &299278990
 GameObject:
   m_ObjectHideFlags: 0
@@ -5935,7 +6056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 224383578}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -6812,7 +6933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 688338075}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -6886,7 +7007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1803551208}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -7228,7 +7349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 439587755}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -7302,7 +7423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 803283286}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -7446,7 +7567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1439742470}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -8011,7 +8132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 674371542}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -8085,7 +8206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 41428736}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -9252,7 +9373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 685475675}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -9363,7 +9484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1937840105}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -9662,7 +9783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 200890059}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -9974,7 +10095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1379160933}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -10048,7 +10169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 527537317}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -11088,7 +11209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 361268245}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -11944,7 +12065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1258732882}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -13223,7 +13344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1330331910}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -13599,7 +13720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1418904043}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -14053,7 +14174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 871485817}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -14572,7 +14693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1197852128}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -15073,7 +15194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 484724684}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -16152,7 +16273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1082995211}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -16226,7 +16347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1189830241}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -16300,7 +16421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 894357663}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -17523,7 +17644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 415284879}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -17637,6 +17758,142 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.3, y: 1, z: 2}
   m_Center: {x: -0.65, y: -0.5, z: 0}
+--- !u!1 &1141998433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1141998434}
+  - component: {fileID: 1141998436}
+  - component: {fileID: 1141998435}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1141998434
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141998433}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 290235198}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1141998435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141998433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Button
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 24
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1141998436
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141998433}
+  m_CullTransparentMesh: 1
 --- !u!1 &1142790258
 GameObject:
   m_ObjectHideFlags: 0
@@ -17667,7 +17924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 986035582}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -18097,7 +18354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1561442382}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -18629,7 +18886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 242613725}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -19241,7 +19498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1936236181}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -19315,7 +19572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1612701447}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -19389,7 +19646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1526487765}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -19797,7 +20054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2002784268}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -20050,7 +20307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 279719128}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -23819,7 +24076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2048158241}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -24090,7 +24347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 707258984}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 6
@@ -24217,7 +24474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 237440688}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -24380,7 +24637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 210788901}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -25910,7 +26167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1667236052}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -26632,6 +26889,7 @@ RectTransform:
   m_Children:
   - {fileID: 233994384}
   - {fileID: 25054850}
+  - {fileID: 290235198}
   m_Father: {fileID: 1959549464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -26669,7 +26927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 670370379}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 3
@@ -26743,7 +27001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 53584085}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -28096,7 +28354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 766212992}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -28454,7 +28712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 743158666}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -28490,7 +28748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 656956555}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 1
@@ -28742,7 +29000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1689471356}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -29318,7 +29576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 221496623}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -29605,7 +29863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1795105859}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -29768,7 +30026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1326441673}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2
@@ -30253,7 +30511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1097048630}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -31283,7 +31541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 2118727337}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 0
@@ -31598,7 +31856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1363913374}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -31805,7 +32063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1455140581}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 7
@@ -32038,7 +32296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1739402114}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 4
@@ -32556,7 +32814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1686138359}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 5
@@ -32949,7 +33207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 1978177807}
+  tileRenderer: {fileID: 0}
   field: {fileID: 391558642}
   fieldPos:
     x: 2

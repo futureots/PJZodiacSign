@@ -26,13 +26,13 @@ public class EnemyAI : Agent
             else break;
             Credit--;
         }
-        controller.SetResourceField(data.handEntities);
-        controller.SetMainField(data.fieldEntities);
+        // controller.SetResourceField(data.handEntities);
+        // controller.SetMainField(data.fieldEntities);
         this.RunWithCallback(SetRepairMode(), call);
     }
     public override void EndRepairPhase()
     {
-        controller.UpdateEntities();
+        // controller.UpdateEntities();
         base.EndRepairPhase();
     }
 
@@ -116,20 +116,20 @@ public class EnemyAI : Agent
     {
         
         Entities = new List<SkillComponent>();
-        foreach (var item in controller.fieldEntities)
-        {
-            if(item.TryGetComponent<SkillComponent>(out var skill))
-            {
-                // 스킬 사용이 가능한지 확인하는 조건문
-                /*if (false)
-                {
-                    if (skill.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
-                    {
-                        Entities.Add(skill);
-                    }
-                }*/
-            }
-        }
+        // foreach (var item in controller.fieldEntities)
+        // {
+        //     if(item.TryGetComponent<SkillComponent>(out var skill))
+        //     {
+        //         // 스킬 사용이 가능한지 확인하는 조건문
+        //         /*if (false)
+        //         {
+        //             if (skill.GetSkillInstance().CanSkillInput(GameManager.Instance.field))
+        //             {
+        //                 Entities.Add(skill);
+        //             }
+        //         }*/
+        //     }
+        // }
         if (Entities.Count > 0) return true;
         return false;
     }
@@ -161,7 +161,7 @@ public class EnemyAI : Agent
                 if (field[item.y, item.x] != 0 || tile.fieldPos == item) continue;
                 // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
                 var damage = tileValues[item.y, item.x];
-                if (damage + entity.health.CurHealth <= 0) damage -= 5;
+                if (damage + entity.CurHealth <= 0) damage -= 5;
 
                 // 공격 가능 체크
                 field[tile.fieldPos.y, tile.fieldPos.x] = 0;

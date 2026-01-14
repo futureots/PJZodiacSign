@@ -6,9 +6,10 @@ using UnityEngine;
 public class EntityData : AbstractData
 {
     [Header("GameObject")]
-    public GameObject baseEntityPrefab;
-    public GameObject basicAttackEffect;
-    public GameObject dissolveEffect;
+    public Entity prefab;
+    public GameObject basicAttackEffect;        // TODO: Effect Pool로 별도 처리
+    public GameObject dissolveEffect;           // 접근은 Effect ID나 기타 객체로 처리
+    
     [Header("Area")]
     public List<Area> moveArea;
     public List<Area> attackArea;
@@ -18,15 +19,13 @@ public class EntityData : AbstractData
     public int power;
 
     [Header("BonusStatus")]
-    public int bonusHp;
-    public int bonusPower;
+    public int hpMultiplier;
+    public int powerMultiplier;
 
     [Header("Skill")]
     public BaseSkillData skill;
-    public bool energy;
     public int maxEnergy;
 
     [Header("ObjectValue")]
     public Vector3 hpPanelPosition;
-
 }
