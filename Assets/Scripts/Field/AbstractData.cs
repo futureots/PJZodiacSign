@@ -7,5 +7,4 @@ public class AbstractData : ScriptableObject
     public string productName;
     public Sprite icon;
     public int normalPrice;
-    public int discountPrice;
 }

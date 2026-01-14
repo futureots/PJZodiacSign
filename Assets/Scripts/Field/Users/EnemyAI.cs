@@ -161,7 +161,7 @@ public class EnemyAI : Agent
                 if (field[item.y, item.x] != 0 || tile.fieldPos == item) continue;
                 // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
                 var damage = tileValues[item.y, item.x];
-                if (damage + entity.health.CurHealth <= 0) damage -= 5;
+                if (damage + entity.CurHealth <= 0) damage -= 5;
 
                 // 공격 가능 체크
                 field[tile.fieldPos.y, tile.fieldPos.x] = 0;

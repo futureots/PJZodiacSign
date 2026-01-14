@@ -2,34 +2,30 @@ using UnityEngine;
 
 public class EntityFactory : MonoBehaviour
 {
-    public static Entity CreateEntity(EntityData data, int level=0)
+    // TODO: Pooling 용 함수
+
+
+    /// <summary>
+    /// Request for New Entity
+    /// </summary>
+    /// <param name="data">Entity Data to make</param>
+    /// <param name="level">Init with level</param>
+    /// <param name="tile">position for new Entity</param>
+    /// <returns>Entity Object to Get</returns>
+    public static Entity RequestEntity(EntityData data, int level = 0, Tile tile = null)
     {
-        var instance = Instantiate(data.baseEntityPrefab);
-        var entity = instance.AddComponent<Entity>();
-        // 스탯 정의
+        var entity = Instantiate(data.prefab);
+        
+        // 기초 스탯 적용
         entity.name = data.id;
-        entity.InitializeEntity(data, level);
-        
-        instance.AddComponent<BuffManager>();
+        entity.Init(data, level);
 
-        // 범위 정의
-        var area = instance.AddComponent<AreaComponent>();
-        area.SetArea(data.moveArea, data.attackArea);
+        // Move to Initial Tile
+        if (!tile)
+        {
+            entity.Move(tile, true);
+        }
 
-        // 마나 정의
-        if (data.energy)
-        {
-            var energy = instance.AddComponent<EnergyComponent>();
-            energy.Initialize(data.maxEnergy);
-        }
-        
-        // 스킬 정의
-        if (data.skill)
-        {
-            // TODO : 스킬 데이터에 맞는 스킬 컴포넌트 추가
-            //var skill = instance.AddComponent<SkillComponent>();
-            //skill.SetupSkill(data.skill);
-        }
         return entity;
     }
 }

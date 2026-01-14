@@ -1,6 +1,14 @@
 
+using System;
+
 public interface IDamageable
 {
+    public int CurHealth { get; set; }
+    
+    public int MaxHealth { get; set; }
+    
+    public event Action<int, int> OnHealthChanged;
+    
     /// <summary>
     /// damage만큼 피해를 입는다.
     /// </summary>
@@ -23,5 +31,4 @@ public interface IDamageable
     /// 사망 시 호출
     /// </summary>
     public void Dead();
-    
 }

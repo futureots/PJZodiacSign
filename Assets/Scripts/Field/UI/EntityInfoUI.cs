@@ -43,7 +43,7 @@ public class EntityInfoUI : MonoBehaviour
     {
         if (selectedEntity != null)
         {
-            selectedEntity.health.onHealthChanged -= hpBar.SetGauge;
+            selectedEntity.OnHealthChanged -= hpBar.SetGauge;
             selectedEntity.OnLevelChanged -= UpdateLevelText;
 
             if (_power != null) _power.onPowerChanged -= SetPowerText;
@@ -56,8 +56,8 @@ public class EntityInfoUI : MonoBehaviour
         UpdateLevelText(selectedEntity.Level);
         selectedEntity.OnLevelChanged += UpdateLevelText;
 
-        hpBar.SetGauge(entity.health.CurHealth, entity.health.MaxHealth);
-        entity.health.onHealthChanged += hpBar.SetGauge;
+        hpBar.SetGauge(entity.CurHealth, entity.MaxHealth);
+        entity.OnHealthChanged += hpBar.SetGauge;
 
         // 공격력 표시
         if(entity.TryGetComponent<PowerComponent>(out var power))

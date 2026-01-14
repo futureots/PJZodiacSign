@@ -22,7 +22,7 @@ public class EntityHpUI : MonoBehaviour
         if(_entity != null)
         {
             _entity.onDead -= OnDead;
-            _entity.health.onHealthChanged -= hpBar.SetGauge;
+            _entity.OnHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
             _entity.OnLevelChanged -= UpdateLevelText;
         }
@@ -32,8 +32,8 @@ public class EntityHpUI : MonoBehaviour
         transform.SetParent(entity.transform);
         transform.localPosition = Vector3.zero + entity.baseData.hpPanelPosition;
 
-        hpBar.SetGauge(_entity.health.CurHealth, _entity.health.MaxHealth);
-        _entity.health.onHealthChanged += hpBar.SetGauge;
+        hpBar.SetGauge(_entity.CurHealth, _entity.MaxHealth);
+        _entity.OnHealthChanged += hpBar.SetGauge;
 
         if(entity.TryGetComponent<EnergyComponent>(out var component))
         {
@@ -85,7 +85,7 @@ public class EntityHpUI : MonoBehaviour
         if (_entity != null)
         {
             _entity.onDead -= OnDead;
-            _entity.health.onHealthChanged -= hpBar.SetGauge;
+            _entity.OnHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
             _entity.OnLevelChanged -= UpdateLevelText;
         }

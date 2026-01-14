@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// TODO: DEPRECATED
 public class PowerComponent : MonoBehaviour
 {
     /// <summary>공격력</summary>

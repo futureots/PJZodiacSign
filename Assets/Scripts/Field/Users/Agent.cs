@@ -109,7 +109,7 @@ public abstract class Agent : MonoBehaviour
     {
         if (!CanPlaceOnResourceField()) return false;
 
-        var entity = EntityFactory.CreateEntity(entityData);
+        var entity = EntityFactory.RequestEntity(entityData);
 
         return true;
     }
