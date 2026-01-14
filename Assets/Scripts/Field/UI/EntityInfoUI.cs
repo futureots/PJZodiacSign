@@ -11,7 +11,6 @@ public class EntityInfoUI : MonoBehaviour
     Entity selectedEntity;
     SkillComponent _skill;
     EnergyComponent _energy;
-    PowerComponent _power;
 
     [Header("정보 UI")]
     public GameObject InfoPanel;
@@ -57,47 +56,37 @@ public class EntityInfoUI : MonoBehaviour
     {
         if (selectedEntity != null)
         {
-            selectedEntity.health.onHealthChanged -= hpBar.SetGauge;
-            selectedEntity.onLevelChanged -= SetLevelText;
+            selectedEntity.OnHealthChanged -= hpBar.SetGauge;
+            selectedEntity.OnLevelChanged -= SetLevelText;
 
-            if (_power != null) _power.onPowerChanged -= SetPowerText;
-            if(_energy !=null) _energy.onEnergyChanged -= energyBar.SetGauge;
+            entity.OnPowerChanged -= SetPowerText;
+            if(_energy !=null) _energy.OnEnergyChanged -= energyBar.SetGauge;
         }
 
         selectedEntity = entity;
         InfoPanel.SetActive(true);
         // 정보 표시
         SetLevelText(selectedEntity.Level);
-        selectedEntity.onLevelChanged += SetLevelText;
+        selectedEntity.OnLevelChanged += SetLevelText;
 
-        hpBar.SetGauge(entity.health.CurHealth, entity.health.MaxHealth);
-        entity.health.onHealthChanged += hpBar.SetGauge;
+        hpBar.SetGauge(entity.CurHealth, entity.MaxHealth);
+        entity.OnHealthChanged += hpBar.SetGauge;
 
         // 공격력 표시
-        if(entity.TryGetComponent<PowerComponent>(out var power))
-        {
-            powerText.gameObject.SetActive(true);
-            _power = power;
-            SetPowerText(power.Power);
-            power.onPowerChanged += SetPowerText;
-        }
-        else
-        {
-            powerText.gameObject.SetActive(false);
-        }
+        powerText.gameObject.SetActive(true);
+        SetPowerText(entity.Power);
+        entity.OnPowerChanged += SetPowerText;
 
         // 버프 표시
         if (entity.TryGetComponent<BuffManager>(out var buffs))
         {
             buffList.SetBuffUI(buffs);
         }
-
-        // 에너지 표시
-        if(entity.TryGetComponent<EnergyComponent>(out var energy))
+        if (entity.TryGetComponent<EnergyComponent>(out var energy))
         {
             _energy = energy;
             energyBar.SetGauge(_energy.CurEnergy, _energy.MaxEnergy);
-            _energy.onEnergyChanged += energyBar.SetGauge;
+            _energy.OnEnergyChanged += energyBar.SetGauge;
         }
 
         // 스킬 표시

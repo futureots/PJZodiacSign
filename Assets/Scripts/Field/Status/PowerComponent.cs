@@ -12,10 +12,10 @@ public class PowerComponent : MonoBehaviour
         set
         {
             _power = value;
-            onPowerChanged?.Invoke(_power);
+            OnPowerChanged?.Invoke(_power);
         }
     }
-    public Action<int> onPowerChanged;
+    public Action<int> OnPowerChanged;
 
     public void Init(int power)
     {

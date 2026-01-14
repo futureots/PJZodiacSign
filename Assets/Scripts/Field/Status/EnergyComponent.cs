@@ -10,7 +10,7 @@ public class EnergyComponent : MonoBehaviour
         set
         {
             _curEnergy = value;
-            onEnergyChanged?.Invoke(_curEnergy, MaxEnergy);
+            OnEnergyChanged?.Invoke(_curEnergy, MaxEnergy);
         }
     }
     /// <summary>스킬 비용</summary>
@@ -21,10 +21,10 @@ public class EnergyComponent : MonoBehaviour
         set
         {
             _maxEnergy = value;
-            onEnergyChanged?.Invoke(CurEnergy, _maxEnergy);
+            OnEnergyChanged?.Invoke(CurEnergy, _maxEnergy);
         }
     }
-    public Action<int, int> onEnergyChanged;
+    public Action<int, int> OnEnergyChanged;
 
     public void Initialize(int skillCost)
     {

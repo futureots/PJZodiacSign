@@ -54,7 +54,7 @@ public class S_HealArea : BaseSkillLogic
         {
             if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
             {
-                entity.health.CurHealth += owner.power.Power;
+                entity.CurHealth += owner.Power;
             }
         }
         owner = null;
