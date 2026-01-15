@@ -31,7 +31,7 @@ public class FieldController : MonoBehaviour
     public event Action<Phase> onPhaseStarted;
     public event Action<Turn> onTurnStarted;
 
-    
+
     /// <summary>
     /// Phase Set and Reset Turn
     /// </summary>
@@ -48,13 +48,15 @@ public class FieldController : MonoBehaviour
         // Invalid Phase Count
         if (index >= phases.Count)
         {
-            var data = Agent.LocalPlayer.getData();
-            //GameManager.Instance.ExitBattle(data,)
+            if (IsBattleEnd(out var winner))
+            {
+                var data = Agent.LocalPlayer.getData();
+                GameManager.Instance.ExitBattle(data, winner);
+            }
             return;
         }
         
         phaseIndex = index;
-        EditorLogger.Print($"CurPhase {index}");
         // Set Model
         stageManager.SetPhase(CurrentPhase);
         onPhaseStarted?.Invoke(CurrentPhase);
@@ -75,9 +77,7 @@ public class FieldController : MonoBehaviour
             // TODO : 페이즈의 종료조건 확인, 함수 따로 만들어서 확인
             if (IsBattleEnd(out var winner))
             {
-                var data = Agent.LocalPlayer.getData();
-                data.credit += 100;
-                GameManager.Instance.ExitBattle(data, PlayerID.P0);
+                SetPhase();
                 return;
             }
         }
@@ -192,8 +192,13 @@ public class FieldController : MonoBehaviour
      */
     public Agent localPlayer;
     public List<Agent> agents;
-    
+
     #endregion
+
+    [Header("Dependency")]
+    [SerializeField] InputManager inputManager;
+    [SerializeField] EnemyAI enemyAI;
+    [SerializeField] InputUIContainer inputUI;
 
     /// <summary>
     /// Initiate Controller
@@ -215,6 +220,10 @@ public class FieldController : MonoBehaviour
         {
             agents[i].Init(this,(PlayerID)(i), data.agents[i].credit);
         }
+        inputManager.Init(localPlayer);
+        // TODO : 여러개면 for문 내부에서 돌리기(AI도 여러개로 세팅)
+        enemyAI.Init(agents[0]);
+        inputUI.Init(inputManager);
         commandSystem = new();
         commandList = new();
         

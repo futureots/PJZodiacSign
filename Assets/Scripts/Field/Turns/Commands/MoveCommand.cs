@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 public sealed record MoveCommand(Entity Entity, Tile To, Tile From) : Command
 {
@@ -11,6 +12,7 @@ public sealed record MoveCommand(Entity Entity, Tile To, Tile From) : Command
     public override IEnumerator Execute(Action callback)
     {
         Entity.Move(To);
+        yield return new WaitForSeconds(1);
         callback?.Invoke();
         Delete();
         yield break;

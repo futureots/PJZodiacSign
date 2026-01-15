@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public class DataManager : Singleton<DataManager>
@@ -189,18 +190,18 @@ public class DataManager : Singleton<DataManager>
 [System.Serializable]
 public struct AgentData
 {
-    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)
+    public AgentData(int credit, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)
     {
         this.credit = credit;
 
-        if(hands == null) handEntities = new();
-        else this.handEntities = hands;
-        
-        if (fields== null) fieldEntities = new();
-        else this.fieldEntities = fields;
-        
-        if(items == null) this.items = new();
-        else this.items = items;
+        handEntities = new();
+        if(hands != null) this.handEntities = hands;
+
+        fieldEntities = new();
+        if (fields != null) this.fieldEntities = fields;
+
+        this.items = new();
+        if (items != null) this.items = items;
     }
 
     public int credit;

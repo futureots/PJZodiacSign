@@ -45,10 +45,12 @@ public class GameManager : SingletonObject<GameManager>
         agents.Add(enemy);
         return agents;
     }
-    public StageData CreateStageData(int Level,AgentData playerData)
+    public StageData CreateStageData(int level,AgentData playerData)
     {
-        var data = GetEnemyAgentData(Level);
-        StageData stageData = new StageData(data, shopTable, Level, playerData);
+
+        EditorLogger.Print($"{playerData.credit} : {playerData.handEntities} : {playerData.fieldEntities} : {playerData.items}");
+        var data = GetEnemyAgentData(level);
+        StageData stageData = new StageData(data, shopTable, level, playerData);
         return stageData;
     }
     #region BattleInit
@@ -59,6 +61,7 @@ public class GameManager : SingletonObject<GameManager>
     /// <param name="stageData">Stage data to Load</param>
     public void EnterBattle(StageData stageData)
     {
+        Level = stageData.level;
         StartCoroutine(LoadBattleScene(stageData));
     }
 
@@ -120,12 +123,16 @@ public class GameManager : SingletonObject<GameManager>
     /// </summary>
     public void ExitBattle (AgentData playerData, PlayerID winPlayer)
     {
-        EditorLogger.Print("게임 종료");
+        
         // TODO: 게임 종료 처리 로직 추가
         if(winPlayer == PlayerID.P0)
         {
-            Level += 1;
-            var stageData = CreateStageData(Level, playerData);
+            EditorLogger.Print($"{Level} 클리어!");
+            EditorLogger.Print($"{Level} 로드 중");
+            EditorLogger.Print($"{playerData.credit} 현재 보유 크레딧");
+            playerData.credit += 100;
+            EditorLogger.Print($"{playerData.credit} 크레딧");
+            var stageData = CreateStageData(Level+1, playerData);
             // TODO : 다음 레벨 테이블을 넣은 stagedata 생성
             EnterBattle(stageData);
         }

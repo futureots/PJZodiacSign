@@ -91,7 +91,11 @@ public class Inventory : MonoBehaviour
         for(int i = 0; i < items.Count; i++)
         {
             if (!items[i]) list.Add(null);
-            list.Add(items[i].itemData);
+            else
+            {
+                list.Add(items[i].itemData);
+            }
+                
         }
         return list;
     }

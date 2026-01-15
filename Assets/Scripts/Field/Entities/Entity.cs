@@ -124,7 +124,7 @@ public class Entity : Occupant, IDamageable, IAttackable
                 {
                     var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
                     effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(1.5f);
                 }
             }
         }

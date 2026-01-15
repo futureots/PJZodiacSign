@@ -28,7 +28,6 @@ public class Agent : MonoBehaviour
     public FieldController fieldController { get; protected set; }
     
 
-    public event Action OnInitialized;
     // 행동 포인트
     public int actionCount;
     // 설정한 커맨드 리스트
@@ -58,20 +57,8 @@ public class Agent : MonoBehaviour
     }
     public void Init(FieldController fieldController, PlayerID teamId, int credit)
     {
-        List<Command> InputCommands = new();
-
-        // 기믹 1
-        var ExecuteCommands = InputCommands.Select(cmd => cmd switch
-        {
-            AttackCommand attack => attack with { Multiplier = 2 },
-            MoveCommand move => null,
-
-            _ => cmd
-        }).ToList();
-        
         this.fieldController = fieldController;
         this.id = teamId;
-        OnInitialized?.Invoke();
         Credit = credit;
         fieldController.onPhaseStarted += (phase) =>
         {

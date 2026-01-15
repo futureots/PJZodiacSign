@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EntityInfoUI : MonoBehaviour
 {
-    InputManager _inputManager;
+    [SerializeField] InputManager inputManager;
     PlayerID id;
 
     Entity selectedEntity;
@@ -22,10 +22,7 @@ public class EntityInfoUI : MonoBehaviour
     public SkillInfoUI skillInfo;
     public Button entitySkillBtn;
 
-    private void Awake()
-    {
-        InputManager.OnInitialized += Init;
-    }
+
     void Start()
     {
         InfoPanel.SetActive(false);
@@ -33,8 +30,8 @@ public class EntityInfoUI : MonoBehaviour
 
     public void Init(InputManager input)
     {
-        _inputManager = input;
-        id = _inputManager.agent.id;
+        inputManager = input;
+        id = inputManager.agent.id;
         input.OnObjectClicked.AddListener(OnObjectClick);
         input.OnModeChanged += SetSkillButton;
         entitySkillBtn.onClick.AddListener(UseSkill);
@@ -99,7 +96,7 @@ public class EntityInfoUI : MonoBehaviour
         {
             _skill = skill;
             skillInfo.SetSkillUI(_skill.skillData);
-            SetSkillButton(_inputManager.curModeState);
+            SetSkillButton(inputManager.curModeState);
         }
         else
         {
@@ -121,7 +118,7 @@ public class EntityInfoUI : MonoBehaviour
     void UseSkill()
     {
         if(_skill != null)
-            _inputManager.SetInputMode(_skill);
+            inputManager.SetInputMode(_skill);
     }
     void SetSkillButton(IInputState state)
     {

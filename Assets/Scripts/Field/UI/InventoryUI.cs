@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    
+    [SerializeField] InputManager inputManager;
     Inventory inventory;
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
@@ -19,10 +19,7 @@ public class InventoryUI : MonoBehaviour
 
     [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
     [SerializeField] List<ItemSlotUI> itemSlots;
-    private void Awake()
-    {
-        InputManager.OnInitialized += Init;
-    }
+
     public void Init(InputManager input)
     {
         inventory = input.agent.inventory;

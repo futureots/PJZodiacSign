@@ -12,13 +12,11 @@ public class EnemyAI : MonoBehaviour , IInput
 
     private void Start()
     {
-        agent.OnInitialized += () => Init(agent);
     }
 
     public void Init(Agent agent)
     {
         this.agent = agent;
-        EditorLogger.Print(agent.fieldController);
         agent.fieldController.onTurnStarted += OnTurnChange;
     }
 
@@ -61,10 +59,6 @@ public class EnemyAI : MonoBehaviour , IInput
     public IEnumerator SetRepairMode()
     {
         yield return null;
-        if (TryGetComponent<SkillComponent>(out var skill))
-        {
-            agent.CreateSkillCommand(skill);
-        }
         // 내 필드에 있는 기물을 메인 필드에 배치
         var fieldTiles = Field.GetEmptyTiles(StageManager.Instance.field.GetHalfTiles(true));
         foreach (var entity in StageManager.Instance.agentField[agent.id].GetEntities())

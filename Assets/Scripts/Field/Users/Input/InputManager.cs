@@ -9,7 +9,6 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public static Action<InputManager> OnInitialized;
 
     public Vector2 PointerPosition { get; private set; }
 
@@ -43,7 +42,6 @@ public class InputManager : MonoBehaviour
         // 마우스 이동 시 이벤트 트리거
         inputActions.Gameplay.Point.performed += MoveMouse;
 
-        agent.OnInitialized += () => Init(agent);
     }
 
     public void Init(Agent agent)
@@ -51,7 +49,6 @@ public class InputManager : MonoBehaviour
         this.agent = agent;
         Agent.LocalPlayer = agent;
         agent.fieldController.onTurnStarted += OnTurnChange;
-        OnInitialized?.Invoke(this);
     }
 
     #region InputPackaging

@@ -4,17 +4,14 @@ using UnityEngine.UI;
 
 public class TurnUI : MonoBehaviour
 {
-    InputManager _inputManager;
+    [SerializeField] InputManager inputManager;
     public Button turnEndBtn;
 
-    private void Awake()
+
+    public void Init(InputManager input)
     {
-        InputManager.OnInitialized += Init;
-    }
-    public void Init(InputManager inputManager)
-    {
-        _inputManager = inputManager;
-        inputManager.OnModeChanged += OnModeChange;
+        this.inputManager = input;
+        input.OnModeChanged += OnModeChange;
         turnEndBtn.onClick.AddListener(TurnEnd);
     }
 
@@ -31,10 +28,10 @@ public class TurnUI : MonoBehaviour
     }
     void TurnEnd()
     {
-        _inputManager.ClearInputMode();
+        inputManager.ClearInputMode();
         turnEndBtn.interactable = false;
 
-        _inputManager.agent.CreateEndCommand();
-        _inputManager.agent.SubmitCommand();
+        inputManager.agent.CreateEndCommand();
+        inputManager.agent.SubmitCommand();
     }
 }

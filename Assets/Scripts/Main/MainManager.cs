@@ -40,14 +40,14 @@ namespace Main
                     return;
                 }
                 GameManager.Instance.SetModeData(levelTable, shopTable);
-                var data = GameManager.Instance.CreateStageData(1, new AgentData());
+                var data = GameManager.Instance.CreateStageData(1, new AgentData(100));
                 GameManager.Instance.EnterBattle(data);
             }
         }
 
         public void GiveUpGame()
         {
-            DataManager.Instance.ResetData("data");
+            DataManager.Instance.ResetData("Data");
             SceneManager.LoadScene(0);
         }
 

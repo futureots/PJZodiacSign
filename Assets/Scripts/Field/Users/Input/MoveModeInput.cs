@@ -57,7 +57,6 @@ namespace PlayerInput
 
             if (obj.TryGetComponent<Entity>(out var entity))
             {
-                EditorLogger.Print($"{entity.team.teamNumber} : {_inputManager.agent.id}");
                 // 기물이 이동 가능한지 확인
                 if (!entity.team.IsAlly(_inputManager.agent.id)) return;
                 _selectedEntity = entity;
