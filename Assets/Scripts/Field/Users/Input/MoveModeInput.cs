@@ -134,7 +134,7 @@ namespace PlayerInput
         /// 이동가능한 타일 리스트 반환
         /// </summary>
         /// <returns></returns>
-        public virtual List<Tile> GetMovableTiles()
+        protected virtual List<Tile> GetMovableTiles()
         {
             return _selectedEntity.GetMoveArea();
         }
@@ -142,21 +142,19 @@ namespace PlayerInput
         /// <summary>
         /// 입력된 데이터로 사용할 명령 입력
         /// </summary>
-        public virtual void DragAction()
+        protected virtual void DragAction()
         {
             // 제자리 이동 불가능
             if (!_selectedEntity.CurTile.Equals(_selectedTile) && _selectedTile)
             {
+                
+                var selectedEntity = GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+                var selectedTile = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position, Quaternion.identity);
 
-                var sel1 = GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
-                var sel2 = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position, Quaternion.identity);
-                Action action = () =>
-                {
-                    GameObject.Destroy(sel1);
-                    GameObject.Destroy(sel2);
-                };
                 // 커맨드 생성
-                _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile, action);
+                var command = _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile);
+                command.indicate.Add(selectedEntity);
+                command.indicate.Add(selectedTile);
             }
         }
     }

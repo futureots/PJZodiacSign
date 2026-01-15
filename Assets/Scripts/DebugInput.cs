@@ -50,7 +50,7 @@ public class DebugInput : MonoBehaviour
     public void TurnEnd()
     {
         inputManager.agent.CreateEndCommand();
-        inputManager.agent.SendCommand();
+        inputManager.agent.SubmitCommand();
         inputManager.ClearInputMode();
     }
 

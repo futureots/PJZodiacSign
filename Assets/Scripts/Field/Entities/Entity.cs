@@ -108,8 +108,10 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public event Action<int> OnPowerChanged;
 
-    public IEnumerator Attack()
+    public IEnumerator Attack(int multiplier = 100)
     {
+        int damage = Power * multiplier / IAttackable.Scale;
+        
         var list = GetAttackArea();
 
         foreach (var item in list)
@@ -121,13 +123,11 @@ public class Entity : Occupant, IDamageable, IAttackable
                 if (!team.IsAlly(entity.team))
                 {
                     var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
-                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target, Power);
+                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
                     yield return new WaitForSeconds(1);
                 }
             }
-
         }
-
         yield return null;
     }
 

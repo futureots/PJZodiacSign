@@ -39,20 +39,14 @@ namespace PlayerInput
             bool isCompleted = false;
             Action<bool> action = (x) => { isCompleted = x; };
             yield return skill.StartCoroutine(skill.skillLogic.InputSkill(this,action));
-            Action onDestroy = () =>
-            {
-                foreach (GameObject go in selecters)
-                {
-                    GameObject.Destroy(go);
-                }
-                selecters.Clear();
-            };
             EditorLogger.Print($"isCompleted : {isCompleted}");
             // TODO : 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
             if (isCompleted)
             {
                 // NOTE : 커맨드 생성
-                _inputManager.agent.CreateSkillCommand(skill,onDestroy);
+                var command = _inputManager.agent.CreateSkillCommand(skill);
+                
+                command.indicate.AddRange(selecters);
                 EditorLogger.Print("SkillCreated");
             }
             else

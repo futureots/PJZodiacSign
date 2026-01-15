@@ -35,6 +35,6 @@ public class TurnUI : MonoBehaviour
         turnEndBtn.interactable = false;
 
         _inputManager.agent.CreateEndCommand();
-        _inputManager.agent.SendCommand();
+        _inputManager.agent.SubmitCommand();
     }
 }

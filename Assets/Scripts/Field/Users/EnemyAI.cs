@@ -55,7 +55,7 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateAttackCommand(entity);
         }
         agent.CreateEndCommand();
-        agent.SendCommand();
+        agent.SubmitCommand();
     }
 
     public IEnumerator SetRepairMode()
@@ -78,7 +78,7 @@ public class EnemyAI : MonoBehaviour , IInput
         }
 
         agent.CreateEndCommand();
-        agent.SendCommand();
+        agent.SubmitCommand();
         EditorLogger.Print("RepairEnd");
     }
 
@@ -121,7 +121,7 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateMoveCommand(bestEntity, StageManager.Instance.field.GetTile(bestPos));
         }
         agent.CreateEndCommand();
-        agent.SendCommand();
+        agent.SubmitCommand();
     }
 
 

@@ -1,21 +1,12 @@
 using System;
 using System.Collections;
 
-public class AttackCommand : Command
+public sealed record AttackCommand(Entity Target, int Multiplier = 100) : Command
 {
-    public Entity entity;
-
-    public AttackCommand(Entity entity)
-    {
-        this.entity = entity;
-    }
-
     public override IEnumerator Execute(Action callback)
     {
-        yield return entity.StartCoroutine(entity.Attack());
+        yield return Target.StartCoroutine(Target.Attack(Multiplier));
         callback?.Invoke();
         Delete();
-        yield break;
     }
-
 }

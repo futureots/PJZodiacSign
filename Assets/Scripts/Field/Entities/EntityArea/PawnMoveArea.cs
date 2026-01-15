@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "PawnMoveArea", menuName = "Scriptable Objects/Area/PawnMoveArea")]

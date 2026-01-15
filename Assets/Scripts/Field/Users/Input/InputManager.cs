@@ -50,10 +50,8 @@ public class InputManager : MonoBehaviour
     {
         this.agent = agent;
         Agent.LocalPlayer = agent;
-        EditorLogger.Print(agent.fieldController);
         agent.fieldController.onTurnStarted += OnTurnChange;
         OnInitialized?.Invoke(this);
-        EditorLogger.Print("CallInputManagerInit");
     }
 
     #region InputPackaging
@@ -183,7 +181,7 @@ public class InputManager : MonoBehaviour
             agent.CreateAttackCommand(entity);
         }
         agent.CreateEndCommand();
-        agent.SendCommand();
+        agent.SubmitCommand();
     }
 
     #endregion
