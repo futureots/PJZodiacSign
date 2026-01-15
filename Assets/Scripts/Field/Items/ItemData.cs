@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ItemData", menuName = "Scriptable Objects/ItemData")]
 public class ItemData : AbstractData
 {
+    public ItemComponent prefab;
     public string description;
 
     public BaseSkillData skillData;

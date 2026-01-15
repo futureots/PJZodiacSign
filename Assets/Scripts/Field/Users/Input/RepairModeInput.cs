@@ -9,11 +9,18 @@ namespace PlayerInput
         public RepairModeInput(InputManager input) : base(input)
         {
         }
+        public override void SetMode()
+        {
+            base.SetMode();
 
+        }
         public override List<Tile> GetMovableTiles()
         {
             // 배치가 가능한 타일 리스트(리소스 필드 + 메인 필드에 배치 가능한 공간)
-            return base.GetMovableTiles();
+            var movableTiles = new List<Tile>();
+            movableTiles.AddRange(StageManager.Instance.agentField[_inputManager.agent.teamNum].GetTiles());
+            movableTiles.AddRange(StageManager.Instance.field.GetHalfTiles(_inputManager.agent.teamNum));
+            return movableTiles;
         }
 
         public override void DragAction()

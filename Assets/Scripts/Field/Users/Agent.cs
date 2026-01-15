@@ -5,16 +5,48 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    public int id;
+    // 플레이어 번호
+    public PlayerID id;
+    // 팀 번호
+    public int teamNum;
+
+    static Agent _localPlayer;
+    public static Agent LocalPlayer
+    {
+        get
+        {
+            return _localPlayer;
+        }
+        set
+        {
+            _localPlayer = value;
+            OnLocalPlayerChanged?.Invoke();
+        }
+    }
+    public static Action OnLocalPlayerChanged;
 
     public FieldController fieldController { get; protected set; }
 
+    public event Action OnInitialized;
     // 행동 포인트
     public int actionCount;
     // 설정한 커맨드 리스트
     public List<Command> commands;
-    // 보유중인 기물 리스트
-    public List<Entity> entities;
+    private int _credit;
+    public int Credit
+    {
+        get
+        {
+            return _credit;
+        }
+        set
+        {
+            _credit = value;
+            OnCreditChanged?.Invoke(Credit);
+        }
+    }
+    public event Action<int> OnCreditChanged;
+
     public Inventory inventory;
 
     protected void Awake()
@@ -22,9 +54,12 @@ public class Agent : MonoBehaviour
         commands = new();
     }
 
-    public void Init(FieldController fieldController)
+    public void Init(FieldController fieldController, int teamId, int credit)
     {
         this.fieldController = fieldController;
+        this.teamNum = teamId;
+        OnInitialized?.Invoke();
+        Credit = credit;
     }
 
     public void CreateMoveCommand(Entity entity, Tile tile, Action onDestroyed = null)
@@ -99,7 +134,7 @@ public class Agent : MonoBehaviour
         fieldController.ExecutedCommands();
     }
 
-    
-    
+
+    public AgentData getData() { return new AgentData(); }
 
 }

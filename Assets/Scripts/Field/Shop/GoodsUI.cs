@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class GoodsUI<T> : MonoBehaviour where T : AbstractData
 {
     [SerializeField] protected T data;
-    protected Agent customer;
     [SerializeField] protected Button buyBtn;
     [SerializeField] protected TextMeshProUGUI goodsName;
     [SerializeField] protected TextMeshProUGUI priceText;
@@ -18,21 +17,19 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     /// </summary>
     /// <param name="data"></param>
     /// <param name="customer"></param>
-    public virtual void SetGoods(T data, Agent customer)
+    public virtual void SetGoods(T data)
     {
-        this.customer = customer;
         goodsName.text = data.productName;
         price = data.normalPrice;
         priceText.text = price.ToString();
         icon.sprite = data.icon;
-        //UpdateBuyBtn(customer.Credit);
     }
 
     /// <summary>
     /// 소비자가 상품을 구매할 크레딧을 보유하고 있는지 확인
     /// </summary>
     /// <param name="credit"></param>
-    void UpdateBuyBtn(int credit)
+    public void UpdateBuyBtn(int credit)
     {
         if (credit < price)
         {

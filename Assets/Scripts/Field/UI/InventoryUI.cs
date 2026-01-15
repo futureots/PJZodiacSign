@@ -19,7 +19,10 @@ public class InventoryUI : MonoBehaviour
 
     [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
     [SerializeField] List<ItemSlotUI> itemSlots;
-
+    private void Awake()
+    {
+        InputManager.OnInitialized += Init;
+    }
     public void Init(InputManager input)
     {
         inventory = input.agent.inventory;

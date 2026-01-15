@@ -14,7 +14,7 @@ public class ItemActionUI : MonoBehaviour
         inputManager = _inputManager;
         var inventory = _inputManager.agent.inventory;
         
-        _inputManager.onModeChanged += OnModeChange;
+        _inputManager.OnModeChanged += OnModeChange;
         // 버리기 기능
         discardBtn.onClick.AddListener(() => {
             inventory.RemoveItem(curItem);
@@ -42,7 +42,11 @@ public class ItemActionUI : MonoBehaviour
     // 스킬 사용 여부 판단
     void OnModeChange(IInputState state)
     {
-        if ((curItem.itemData.useType & inputManager.curTurnType) != 0 && inputManager.curModeState is MoveModeInput)
+        if (!curItem)
+        {
+            useBtn.interactable = false;
+        }
+        else if ((curItem.itemData.useType & inputManager.curTurnType) != 0 && inputManager.curModeState is MoveModeInput)
         {
             useBtn.interactable = true;
         }
@@ -50,5 +54,6 @@ public class ItemActionUI : MonoBehaviour
         {
             useBtn.interactable = false;
         }
+
     }
 }

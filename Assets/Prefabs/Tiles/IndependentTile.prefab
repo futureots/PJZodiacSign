@@ -136,7 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 4683342118325975493}
+  moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
+  atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
   field: {fileID: 0}
   fieldPos:
     x: 0

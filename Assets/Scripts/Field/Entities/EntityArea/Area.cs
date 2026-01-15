@@ -5,11 +5,11 @@ using UnityEngine;
 
 public abstract class Area : ScriptableObject
 {
-    protected abstract List<intVector2> GetVector(int[,] tiles, intVector2 pos, bool isReflect);
+    protected abstract List<intVector2> GetVector(int[,] tiles, intVector2 pos, intVector2 direction);
 
-    public List<intVector2> GetVectors(int[,] tiles, intVector2 pos, bool isReflect)
+    public List<intVector2> GetVectors(int[,] tiles, intVector2 pos, intVector2 direction)
     {
-        var list = GetVector(tiles, pos, isReflect).Where(value => IsValidPos(tiles, value)).ToList();
+        var list = GetVector(tiles, pos, direction).Where(value => IsValidPos(tiles, value)).ToList();
         return list;
 
     }

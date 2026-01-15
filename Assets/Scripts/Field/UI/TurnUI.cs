@@ -7,10 +7,14 @@ public class TurnUI : MonoBehaviour
     InputManager _inputManager;
     public Button turnEndBtn;
 
+    private void Awake()
+    {
+        InputManager.OnInitialized += Init;
+    }
     public void Init(InputManager inputManager)
     {
         _inputManager = inputManager;
-        inputManager.onModeChanged += OnModeChange;
+        inputManager.OnModeChanged += OnModeChange;
         turnEndBtn.onClick.AddListener(TurnEnd);
     }
 

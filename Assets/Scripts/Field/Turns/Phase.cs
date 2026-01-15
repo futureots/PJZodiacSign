@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public enum PlayerTurn
+public enum PlayerID
 {
     P0 = -1,
     P1 = 0,
-    P2,
-    P3,
-    P4,
+    P2 = 1,
+    P3 = 2,
+    P4 = 3,
     P5,
     P6,
     P7,
@@ -29,7 +29,7 @@ public enum TurnType
 [Serializable]
 public class Turn
 {
-    public int agentID;
+    public PlayerID agentID;
     public TurnType type;
 
     // NOTE: 

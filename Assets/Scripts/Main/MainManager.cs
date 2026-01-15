@@ -1,12 +1,17 @@
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Debugging
+namespace Main
 {
     public class MainManager : MonoBehaviour
     {
         public GameObject startBtn;
         public GameObject giveUpBtn;
+
+
+        public LevelTable levelTable;
+        public ShopTable shopTable;
 
         private void Start()
         {
@@ -20,9 +25,25 @@ namespace Debugging
             }
         }
 
-        public void LoadScene()
+        public void StartGame()
         {
-            SceneManager.LoadScene(1);
+            if (DataManager.Instance.isModified)
+            {
+                GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
+                var data = GameManager.Instance.CreateStageData(DataManager.Instance.playData.stageLevel, DataManager.Instance.GetPlayerAgentData());
+                GameManager.Instance.EnterBattle(data);
+            }
+            else
+            {
+                if (!GameManager.Instance)
+                {
+                    EditorLogger.Print("Missing GameManager");
+                    return;
+                }
+                GameManager.Instance.SetModeData(levelTable, shopTable);
+                var data = GameManager.Instance.CreateStageData(1, new AgentData());
+                GameManager.Instance.EnterBattle(data);
+            }
         }
 
         public void GiveUpGame()

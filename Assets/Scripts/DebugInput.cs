@@ -17,7 +17,7 @@ public class DebugInput : MonoBehaviour
     void Start()
     {
         skillComp = GetComponent<SkillComponent>();
-        inputManager.onModeChanged += (state) =>
+        inputManager.OnModeChanged += (state) =>
         {
             if (state is MoveModeInput)
             {

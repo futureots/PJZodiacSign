@@ -399,12 +399,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopPanel: {fileID: 528285947572437199}
-  ShopToggle: {fileID: 7217119173687630702}
+  shopToggle: {fileID: 7217119173687630702}
   entityUI: {fileID: 5699706076091894260, guid: 81ed8dcffc0464a4bafd2e0bf45393d1, type: 3}
   itemUI: {fileID: 6130968895582846546, guid: d3e4e8f442abf274f81de9f44c01aad3, type: 3}
   entityShop: {fileID: 8763476463084477363}
   itemShop: {fileID: 7883611606063271622}
-  table: {fileID: 11400000, guid: fb5c5aaad7b089c47b837dd864309c21, type: 2}
 --- !u!1 &7217119173687630702
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &383151392008749856
 RectTransform:
   m_ObjectHideFlags: 0

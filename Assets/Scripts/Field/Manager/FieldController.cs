@@ -31,12 +31,14 @@ public class FieldController : MonoBehaviour
     public event Action<Phase> onPhaseStarted;
     public event Action<Turn> onTurnStarted;
 
+    
     /// <summary>
     /// Phase Set and Reset Turn
     /// </summary>
     /// <param name="index">Phase index for set (-1 for Next Phase)</param>
     public virtual void SetPhase(int index = -1)
     {
+        
         // Next Phase
         if (index == -1)
         {
@@ -46,12 +48,13 @@ public class FieldController : MonoBehaviour
         // Invalid Phase Count
         if (index >= phases.Count)
         {
-            Debug.LogError($"Invalid Phase index");
+            var data = Agent.LocalPlayer.getData();
+            //GameManager.Instance.ExitBattle(data,)
             return;
         }
         
         phaseIndex = index;
-
+        EditorLogger.Print($"CurPhase {index}");
         // Set Model
         stageManager.SetPhase(CurrentPhase);
         onPhaseStarted?.Invoke(CurrentPhase);
@@ -66,6 +69,12 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
+        // TODO : 페이즈의 종료조건 확인, 함수 따로 만들어서 확인
+        if (IsBattleEnd(out var winner))
+        {
+            
+        }
+
         // Next Turn
         if (index == -1)
         {
@@ -96,6 +105,11 @@ public class FieldController : MonoBehaviour
         onTurnStarted?.Invoke(CurrentTurn);
     }
     
+    public bool IsBattleEnd(out PlayerID winPlayer)
+    {
+        winPlayer = PlayerID.P0;
+        return false;
+    }
     #endregion
     
     #region Commands
@@ -166,13 +180,13 @@ public class FieldController : MonoBehaviour
         stageManager = StageManager.Instance;
         stageManager.Init(data);
 
+        
+
         // TODO: 에이전트 생성 및 초기화
-        //localPlayer.SetData(data.player);
-        localPlayer.Init(this);
+        localPlayer.Init(this,1,data.player.credit);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
         {
-            // agents[i].SetData(data.agents[i]);
-            agents[i].Init(this);
+            agents[i].Init(this,i+2, data.agents[i].credit);
         }
         commandSystem = new();
         commandList = new();

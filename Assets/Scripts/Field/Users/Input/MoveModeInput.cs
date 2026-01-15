@@ -20,6 +20,7 @@ namespace PlayerInput
         protected GameObject targetSelecter = null;
         protected GameObject targetTileSelecter = null;
 
+
         public MoveModeInput(InputManager input)
         {
             _inputManager = input;
@@ -36,7 +37,7 @@ namespace PlayerInput
             GameObject.Destroy(targetTileSelecter);
         }
 
-        public void SetMode()
+        public virtual void SetMode()
         {
             _inputManager.OnObjectClicked.AddListener(DragStart);
 
@@ -45,18 +46,20 @@ namespace PlayerInput
             targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter);
             targetSelecter.SetActive(false);
             targetTileSelecter.SetActive(false);
+
         }
 
 
         // 드래그 시작
         protected virtual void DragStart(GameObject obj)
         {
-            if (obj == null) return;
+            if (!obj) return;
 
             if (obj.TryGetComponent<Entity>(out var entity))
             {
+                EditorLogger.Print($"{entity.team.teamNumber} : {_inputManager.agent.teamNum}");
                 // 기물이 이동 가능한지 확인
-                if (!_inputManager.agent.entities.Contains(entity)) return;
+                if (!entity.team.IsAlly(_inputManager.agent.teamNum)) return;
                 _selectedEntity = entity;
                 targetSelecter.SetActive(true);
                 targetSelecter.transform.position = _selectedEntity.transform.position + Vector3.up * 0.1f;

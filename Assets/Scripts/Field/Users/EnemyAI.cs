@@ -1,31 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour , IInput
 {
-    Agent agent;
+    [SerializeField] Agent agent;
 
     public TurnType curTurnType { get; private set; }
 
     private void Start()
     {
-        if(TryGetComponent<Agent>(out var agent))
-        {
-            Init(agent);
-        }
+        agent.OnInitialized += () => Init(agent);
     }
 
     public void Init(Agent agent)
     {
         this.agent = agent;
         EditorLogger.Print(agent.fieldController);
-        agent.fieldController.onTurnStarted += OnTurnChanged;
+        agent.fieldController.onTurnStarted += OnTurnChange;
     }
 
     
-    public void OnTurnChanged(Turn curTurn)
+    public void OnTurnChange(Turn curTurn)
     {
         curTurnType = curTurn.type;
         
@@ -49,7 +47,8 @@ public class EnemyAI : MonoBehaviour , IInput
 
     public void AttackInput()
     {
-        foreach (var entity in agent.entities)
+        var list = StageManager.Instance.field.GetEntities().Where((entity)=> entity.team.IsAlly(agent.teamNum)).ToList();
+        foreach (var entity in list)
         {
             agent.CreateAttackCommand(entity);
         }
@@ -91,7 +90,8 @@ public class EnemyAI : MonoBehaviour , IInput
         intVector2 bestPos = new intVector2(-1, -1);
         
         bool flag = false;
-        foreach (var checkEntity in agent.entities)
+        var entities = StageManager.Instance.field.GetEntities().Where((e) => e.team.IsAlly(agent.teamNum)).ToList();
+        foreach (var checkEntity in entities)
         {
 
             // 필드 값 가져오기
@@ -118,10 +118,6 @@ public class EnemyAI : MonoBehaviour , IInput
         {
             agent.CreateMoveCommand(bestEntity, StageManager.Instance.field.GetTile(bestPos));
         }
-        if (TryGetComponent<SkillComponent>(out var skill))
-        {
-            agent.CreateSkillCommand(skill);
-        }
         agent.CreateEndCommand();
         agent.SendCommand();
     }
@@ -136,18 +132,15 @@ public class EnemyAI : MonoBehaviour , IInput
         out intVector2 pos)
     {
 
-        int power = 0;
-        if (entity.TryGetComponent<PowerComponent>(out var component))
-        {
-            power = component.Power;
-        }
+        int power = entity.Power;
+
         var tile = entity.CurTile;
         int max = tileValues[tile.fieldPos.y, tile.fieldPos.x];
 
         List<intVector2> valuablePos = new();
         if (entity.TryGetComponent<AreaComponent>(out var area))
         {
-            var list = area.GetMoveVector(field, tile.fieldPos, entity.IsReflect);
+            var list = area.GetMoveVector(field, tile.fieldPos, entity.direction);
 
             foreach (var item in list)
             {
@@ -159,12 +152,12 @@ public class EnemyAI : MonoBehaviour , IInput
 
                 // 공격 가능 체크
                 field[tile.fieldPos.y, tile.fieldPos.x] = 0;
-                var plusArea = area.GetAttackVector(field, item, entity.IsReflect);
-                field[tile.fieldPos.y, tile.fieldPos.x] = agent.id;
+                var plusArea = area.GetAttackVector(field, item, entity.direction);
+                field[tile.fieldPos.y, tile.fieldPos.x] = agent.teamNum;
                 foreach (var plus in plusArea)
                 {
                     if (field[plus.y, plus.x] == 0) continue;
-                    if (field[plus.y, plus.x] == agent.id) continue;
+                    if (field[plus.y, plus.x] == agent.teamNum) continue;
                     tileValues[item.y, item.x] += power;
                 }
 

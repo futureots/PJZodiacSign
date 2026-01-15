@@ -1,33 +1,56 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
 public class GameManager : SingletonObject<GameManager>
 {
-    private DataManager dataManager;
+    [SerializeField] private DataManager dataManager;
     [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
     private StageData currentStage = null;
+
+    public LevelTable levelTable;
+    public ShopTable shopTable;
+    public int Level { get; private set; }
     
     public override void Awake()
     {
         base.Awake();
-        // dataManager = this.GetOrAddComponent<DataManager>();     // TODO: 데이터 로드 로직 추가
-        // dataManager.LoadAllData();    
+        // TODO: 데이터 로드 로직 추가
+        dataManager.LoadAllData("Data");
         
         // TODO: Debug용 Mock 컨트롤러 추가 시 삭제
-        #if UNITY_EDITOR
-        currentStage = new();
-        FieldController fieldController = FindFirstObjectByType<FieldController>();
-        if (fieldController)
-        {
-            fieldController.Init(currentStage);
-        }
+        //#if UNITY_EDITOR
+        //currentStage = new();
+        //FieldController fieldController = FindFirstObjectByType<FieldController>();
+        //if (fieldController)
+        //{
+        //    fieldController.Init(currentStage);
+        //}
          
-        #endif
+        //#endif
     }
-
     
+    public void SetModeData(LevelTable levelTable, ShopTable shopTable)
+    {
+        this.levelTable = levelTable;
+        this.shopTable = shopTable;
+    }
+    public List<AgentData> GetEnemyAgentData(int level)
+    {
+        List<AgentData> agents = new List<AgentData>();
+        
+        AgentData enemy = levelTable.GetLevelData(level);
+        agents.Add(enemy);
+        return agents;
+    }
+    public StageData CreateStageData(int Level,AgentData playerData)
+    {
+        var data = GetEnemyAgentData(Level);
+        StageData stageData = new StageData(data, shopTable, Level, playerData);
+        return stageData;
+    }
     #region BattleInit
 
     /// <summary>
@@ -79,6 +102,7 @@ public class GameManager : SingletonObject<GameManager>
             yield break;
         }
         
+
         // Init FieldController
         fieldController.Init(stageData);
         
@@ -94,13 +118,20 @@ public class GameManager : SingletonObject<GameManager>
     /// <summary>
     /// Procedure when Battle End
     /// </summary>
-    void ExitBattle ()
+    public void ExitBattle (AgentData playerData, PlayerID winPlayer)
     {
         EditorLogger.Print("게임 종료");
         // TODO: 게임 종료 처리 로직 추가
-        if (currentStage != null)
+        if(winPlayer == PlayerID.P0)
         {
-            EnterBattle(currentStage);       // NOTE: 기본 씬 재로드
+            Level += 1;
+            var stageData = CreateStageData(Level, playerData);
+            // TODO : 다음 레벨 테이블을 넣은 stagedata 생성
+            EnterBattle(stageData);
+        }
+        else
+        {
+            // TODO : 패배 메인화면으로 이동
         }
     }
     

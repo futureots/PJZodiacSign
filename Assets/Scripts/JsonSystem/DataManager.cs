@@ -14,9 +14,11 @@ public class DataManager : Singleton<DataManager>
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
-    public LevelTable enemyData;
     public ItemTable itemTable;
     public EntityTable entityTable;
+
+    public LevelTable levelTable;
+    public ShopTable shopTable;
 
     /// <summary>
     /// 플레이어 데이터
@@ -25,14 +27,9 @@ public class DataManager : Singleton<DataManager>
 
     public bool isModified { get; private set; }
 
-    protected void Awake()
-    {
-        LoadAllData("data");
-    }
 
-    public AgentData[]  GetData()
+    public AgentData  GetPlayerAgentData()
     {
-        List<AgentData> data = new List<AgentData>();
 
         var handEntities = new List<EntityLevelData>();
         foreach (var item in playData.handEntities)
@@ -62,16 +59,11 @@ public class DataManager : Singleton<DataManager>
             var itemData = itemTable.SearchData(item);
             items.Add(itemData);
         }
-        EditorLogger.Print(items.Count);
 
         AgentData player = new AgentData(playData.credit, handEntities, fieldEntities, items);
-        data.Add(player);
-
-        AgentData enemy = enemyData.GetLevelData(playData.stageLevel);
-
-        data.Add(enemy);
-        return data.ToArray();
+        return player;
     }
+
     public void SetData(AgentData data, int stageLevel)
     {
         List<string> itemNames = new();
@@ -153,7 +145,7 @@ public class DataManager : Singleton<DataManager>
         {
             Directory.CreateDirectory(defaultPath);
         }
-        string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+        string filePath = Path.Combine(defaultPath,  defaultName + fileName + ".Json");
         File.WriteAllText(filePath, data);
         EditorLogger.Print(data);
         EditorLogger.Print("Save");
@@ -167,7 +159,7 @@ public class DataManager : Singleton<DataManager>
         json = null;
         if (Directory.Exists(defaultPath))
         {
-            string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+            string filePath = Path.Combine(defaultPath, defaultName + fileName + ".Json");
             if (File.Exists(filePath))
             {
                 json = File.ReadAllText(filePath);

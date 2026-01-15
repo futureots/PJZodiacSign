@@ -20,6 +20,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         private set;
     }
 
+    public intVector2 direction;
     #region Status
 
     // Level of current Entity
@@ -41,7 +42,7 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public Action onDead;
 
-    [SerializeField] private AreaComponent area;
+    [SerializeField] public AreaComponent area;
     
     [SerializeField] private EnergyComponent energy;
     
@@ -52,19 +53,24 @@ public class Entity : Occupant, IDamageable, IAttackable
     // TODO: 나중에 스탯 계산용 핸들러 추가하면서 빼기
     public bool isProtected;
 
+    private void Awake()
+    {
+        team = new();
+    }
+
     /// <summary>
     /// Initialize Setting when Load
     /// </summary>
     /// <param name="data">Entity Data</param>
     /// <param name="level">Initial Level</param>
-    public void Init(EntityData data, int level = 0)
+    public void Init(EntityData data, intVector2 direction, int level = 0)
     {
         baseData = data;
         Level = level; // NOTE: 초기화 시 레벨 변화 이벤트 발생중
-
+        this.direction = direction;
         //Get Status Component
         MaxHealth = baseData.maxHp + baseData.hpMultiplier * level;
-
+        CurHealth = MaxHealth;
         // Set Attack
         Power = baseData.power + baseData.powerMultiplier * level;
         OnLevelChanged += UpdateEntity;
@@ -208,7 +214,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         {
             var field = CurTile.field.GetFieldState(this);
 
-            var list = area.GetMoveVector(field, CurTile.fieldPos, IsReflect);
+            var list = area.GetMoveVector(field, CurTile.fieldPos, direction);
             var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
 
             tiles.Add(CurTile);
@@ -233,16 +239,9 @@ public class Entity : Occupant, IDamageable, IAttackable
         // IOccupant 인터페이스 사용해서 해당 함수도 AreaComponent로 빼기
         var field = tile.field.GetFieldState(this);
 
-        if (TryGetComponent<AreaComponent>(out var component))
-        {
-            var list = component.GetAttackVector(field, tile.fieldPos, IsReflect);
-            var tiles = tile.field.GetTiles(list);
-            return tiles;
-        }
-        else
-        {
-            return new List<Tile>();
-        }
+        var list = area.GetAttackVector(field, tile.fieldPos, direction);
+        var tiles = tile.field.GetTiles(list);
+        return tiles;
     }
 
     #endregion

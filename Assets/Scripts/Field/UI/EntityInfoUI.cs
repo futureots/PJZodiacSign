@@ -22,6 +22,10 @@ public class EntityInfoUI : MonoBehaviour
     public SkillInfoUI skillInfo;
     public Button entitySkillBtn;
 
+    private void Awake()
+    {
+        InputManager.OnInitialized += Init;
+    }
     void Start()
     {
         InfoPanel.SetActive(false);
@@ -30,14 +34,15 @@ public class EntityInfoUI : MonoBehaviour
     public void Init(InputManager input)
     {
         _inputManager = input;
-        teamId = _inputManager.agent.id;
+        teamId = _inputManager.agent.teamNum;
         input.OnObjectClicked.AddListener(OnObjectClick);
-        input.onModeChanged += SetSkillButton;
+        input.OnModeChanged += SetSkillButton;
         entitySkillBtn.onClick.AddListener(UseSkill);
     }
 
     void OnObjectClick(GameObject obj)
     {
+        if (!obj) return;
         if (obj.TryGetComponent<Entity>(out var entity))
         {
             ShowPanel(entity);

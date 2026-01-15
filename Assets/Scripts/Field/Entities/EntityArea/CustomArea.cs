@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 [System.Serializable]
@@ -7,14 +8,14 @@ public class CustomArea : Area
 {
 
     public List<intVector2> positions;
-    protected override List<intVector2> GetVector(int[,] tiles, intVector2 pos, bool isReflect)
+    protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, intVector2 direction)
     {
         var area = new List<intVector2>();
         
         foreach (var item in positions)
         {
-            var position = isReflect ? pos - item : pos + item;
-            area.Add(position);
+            var pos = curPos + item * direction;
+            area.Add(pos);
         }
         return area;
     }

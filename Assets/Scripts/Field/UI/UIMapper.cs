@@ -24,7 +24,7 @@ public struct UIMap
     public GameObject uiPanel;      // NOTE: UI Panel 추상 타입으로 개선
 }
 
-public class UIMapper : MonoBehaviour
+public class UIMapper : Singleton<UIMapper>
 {
     /**
      * Model UI 관리자
@@ -34,9 +34,10 @@ public class UIMapper : MonoBehaviour
     [SerializeField] private List<UIMap> uiMaps;
     private readonly Dictionary<UIType, GameObject> _container = new();
 
-    private void Awake()
+    private void Start()
     {
         RefreshDictionary();
+        
     }
 
     /// <summary>
@@ -73,4 +74,9 @@ public class UIMapper : MonoBehaviour
             map.uiPanel.SetActive(active);
         }
     }
+}
+
+public abstract class UI : MonoBehaviour
+{
+    public virtual void Init(InputManager input) { }
 }

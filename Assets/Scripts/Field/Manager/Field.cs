@@ -216,12 +216,12 @@ public class Field : MonoBehaviour
     /// </summary>
     /// <param name="isReflect">true = 적 측, false = 플레이어 측</param>
     /// <returns></returns>
-    public List<Tile> GetHalfTiles(bool isReflect)
+    public List<Tile> GetHalfTiles(int teamNum)
     {
         List<Tile> list = new List<Tile>();
         var start = 0;
         int end = row / 2;
-        if (isReflect)
+        if (teamNum>1)
         {
             start = end;
             end = row;
@@ -238,7 +238,7 @@ public class Field : MonoBehaviour
     #endregion
 
     //점거 중인 오브젝트 가져오기
-    public List<Entity> GetEntities()
+    public List<Entity> GetEntities(int teamNum = -1)
     {
         List<Entity> list = new();
         foreach(var tile in tiles)
@@ -247,7 +247,10 @@ public class Field : MonoBehaviour
             var occupiedObj = tile.occupiedObject;
             if(TryGetComponent<Entity>(out var entity))
             {
-                list.Add(entity);
+                if(teamNum == -1 || entity.team.IsAlly(teamNum))
+                {
+                    list.Add(entity);
+                }
             }
         }
         return list;
@@ -268,11 +271,14 @@ public class Field : MonoBehaviour
                 if (t.isEmpty) continue;
                 else
                 {
-                    var team = t.occupiedObject.GetComponent<Team>();
-                    if (team == null) field[i, j] = -1;
+                    if(t.occupiedObject.TryGetComponent<Entity>(out var entity))
+                    {
+                        var team = entity.team;
+                        field[i, j] = team.teamNumber;
+                    }
                     else
                     {
-                        field[i, j] = team.teamNumber;
+                        field[i, j] = -1;
                     }
                 }
             }
@@ -315,18 +321,14 @@ public class Field : MonoBehaviour
 
                 // 기물의 공격력 반환
                 int power = 0;
-                if(entity.TryGetComponent<PowerComponent>(out var component))
+                power = entity.Power;
+
+
+                foreach (var vec in entity.area.GetAttackVector(fieldInfo, new intVector2(j, i), entity.direction))
                 {
-                    power = component.Power;
+                    field[vec.y, vec.x] -= power;
                 }
 
-                if(entity.TryGetComponent<AreaComponent>(out var area))
-                {
-                    foreach (var vec in area.GetAttackVector(fieldInfo, new intVector2(j, i), entity.IsReflect))
-                    {
-                        field[vec.y, vec.x] -= power;
-                    }
-                }
                 fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = entityNum;
             }
         }

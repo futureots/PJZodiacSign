@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    public static Action<InputManager> OnInitialized;
 
     public Vector2 PointerPosition { get; private set; }
 
@@ -24,7 +25,7 @@ public class InputManager : MonoBehaviour
     public GameObject skillSelecter;
 
     public TurnType curTurnType { get; private set; }
-    public Action<IInputState> onModeChanged;
+    public Action<IInputState> OnModeChanged;
 
     protected void Awake()
     {
@@ -42,17 +43,17 @@ public class InputManager : MonoBehaviour
         // 마우스 이동 시 이벤트 트리거
         inputActions.Gameplay.Point.performed += MoveMouse;
 
-        if (TryGetComponent<Agent>(out var agent))
-        {
-            Init(agent);
-        }
+        agent.OnInitialized += () => Init(agent);
     }
 
     public void Init(Agent agent)
     {
         this.agent = agent;
+        Agent.LocalPlayer = agent;
         EditorLogger.Print(agent.fieldController);
-        agent.fieldController.onTurnStarted += OnTurnChanged;
+        agent.fieldController.onTurnStarted += OnTurnChange;
+        OnInitialized?.Invoke(this);
+        EditorLogger.Print("CallInputManagerInit");
     }
 
     #region InputPackaging
@@ -114,7 +115,7 @@ public class InputManager : MonoBehaviour
 
     #region Turn
     
-    public void OnTurnChanged(Turn curTurn)
+    public void OnTurnChange(Turn curTurn)
     {
         curTurnType = curTurn.type;
         
@@ -144,7 +145,7 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = null;
-        onModeChanged?.Invoke(curModeState);
+        OnModeChanged?.Invoke(curModeState);
     }
 
     public void SetInputMode()
@@ -162,7 +163,7 @@ public class InputManager : MonoBehaviour
                 curModeState = new EmptyModeInput();
                 break;
         }
-        onModeChanged?.Invoke(curModeState);
+        OnModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
 
@@ -170,13 +171,14 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = new SkillModeInput(this, skill);
-        onModeChanged?.Invoke(curModeState);
+        OnModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
 
     public void AttackInput()
     {
-        foreach (var entity in agent.entities)
+        var entities = StageManager.Instance.field.GetEntities(agent.teamNum);
+        foreach (var entity in entities)
         {
             agent.CreateAttackCommand(entity);
         }

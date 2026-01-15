@@ -48,7 +48,7 @@ public class S_ChargeArea : BaseSkillLogic
     {
         var pos = owner.CurTile.fieldPos;
         int[,] t = new int[8, 8];
-        var vectors = area.GetVectors(t, pos, owner.IsReflect);
+        var vectors = area.GetVectors(t, pos, owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         foreach (var tile in tiles)
         {
