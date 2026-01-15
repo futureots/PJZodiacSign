@@ -69,10 +69,17 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
-        // TODO : 페이즈의 종료조건 확인, 함수 따로 만들어서 확인
-        if (IsBattleEnd(out var winner))
+        stageManager.field.RemoveDeadEntities();
+        if (CurrentPhase.phaseName == PhaseType.Battle)
         {
-            
+            // TODO : 페이즈의 종료조건 확인, 함수 따로 만들어서 확인
+            if (IsBattleEnd(out var winner))
+            {
+                var data = Agent.LocalPlayer.getData();
+                data.credit += 100;
+                GameManager.Instance.ExitBattle(data, PlayerID.P0);
+                return;
+            }
         }
 
         // Next Turn
@@ -105,10 +112,32 @@ public class FieldController : MonoBehaviour
         onTurnStarted?.Invoke(CurrentTurn);
     }
     
-    public bool IsBattleEnd(out PlayerID winPlayer)
+    public bool IsBattleEnd(out PlayerID winTeam)
     {
-        winPlayer = PlayerID.P0;
-        return false;
+        List<PlayerID> surviveTeam = new List<PlayerID>();
+        foreach (var tile in stageManager.field.GetTiles())
+        {
+            if (tile.isEmpty) continue;
+            if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
+            {
+                if (entity.team.teamNumber == PlayerID.None) continue;
+                if (!surviveTeam.Contains(entity.team.teamNumber))
+                {
+                    surviveTeam.Add(entity.team.teamNumber);
+                }
+            }
+        }
+        EditorLogger.Print(surviveTeam.Count);
+        if(surviveTeam.Count == 1)
+        {
+            winTeam = surviveTeam[0];
+            return true;
+        }
+        else
+        {
+            winTeam = PlayerID.None;
+            return false;
+        }
     }
     #endregion
     
@@ -180,13 +209,11 @@ public class FieldController : MonoBehaviour
         stageManager = StageManager.Instance;
         stageManager.Init(data);
 
-        
-
         // TODO: 에이전트 생성 및 초기화
-        localPlayer.Init(this,1,data.player.credit);
+        localPlayer.Init(this,PlayerID.P0,data.player.credit);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
         {
-            agents[i].Init(this,i+2, data.agents[i].credit);
+            agents[i].Init(this,(PlayerID)(i), data.agents[i].credit);
         }
         commandSystem = new();
         commandList = new();

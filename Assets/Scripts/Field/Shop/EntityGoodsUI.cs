@@ -9,7 +9,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
         buyBtn.onClick.AddListener(() =>
         {
             var customer = Agent.LocalPlayer;
-            var teamNum = customer.teamNum;
+            var teamNum = customer.id;
             var tiles = Field.GetEmptyTiles(StageManager.Instance.agentField[teamNum].GetTiles());
             if(tiles.Count > 0)
             {

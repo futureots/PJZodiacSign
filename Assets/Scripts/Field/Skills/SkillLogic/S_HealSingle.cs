@@ -28,7 +28,9 @@ public class S_HealSingle : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
+        EditorLogger.Print(target.CurHealth);
         target.CurHealth = target.MaxHealth;
+        EditorLogger.Print(target.CurHealth);
         target = null;
         yield break;
     }

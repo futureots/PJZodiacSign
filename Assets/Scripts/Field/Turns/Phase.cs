@@ -5,6 +5,7 @@ using UnityEngine;
 [Serializable]
 public enum PlayerID
 {
+    None = -2,
     P0 = -1,
     P1 = 0,
     P2 = 1,

@@ -57,9 +57,9 @@ namespace PlayerInput
 
             if (obj.TryGetComponent<Entity>(out var entity))
             {
-                EditorLogger.Print($"{entity.team.teamNumber} : {_inputManager.agent.teamNum}");
+                EditorLogger.Print($"{entity.team.teamNumber} : {_inputManager.agent.id}");
                 // 기물이 이동 가능한지 확인
-                if (!entity.team.IsAlly(_inputManager.agent.teamNum)) return;
+                if (!entity.team.IsAlly(_inputManager.agent.id)) return;
                 _selectedEntity = entity;
                 targetSelecter.SetActive(true);
                 targetSelecter.transform.position = _selectedEntity.transform.position + Vector3.up * 0.1f;
@@ -145,8 +145,9 @@ namespace PlayerInput
         public virtual void DragAction()
         {
             // 제자리 이동 불가능
-            if (!_selectedEntity.CurTile.Equals(_selectedTile))
+            if (!_selectedEntity.CurTile.Equals(_selectedTile) && _selectedTile)
             {
+
                 var sel1 = GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
                 var sel2 = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position, Quaternion.identity);
                 Action action = () =>

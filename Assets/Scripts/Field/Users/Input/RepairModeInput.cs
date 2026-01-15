@@ -18,8 +18,8 @@ namespace PlayerInput
         {
             // 배치가 가능한 타일 리스트(리소스 필드 + 메인 필드에 배치 가능한 공간)
             var movableTiles = new List<Tile>();
-            movableTiles.AddRange(StageManager.Instance.agentField[_inputManager.agent.teamNum].GetTiles());
-            movableTiles.AddRange(StageManager.Instance.field.GetHalfTiles(_inputManager.agent.teamNum));
+            movableTiles.AddRange(StageManager.Instance.agentField[_inputManager.agent.id].GetTiles());
+            movableTiles.AddRange(StageManager.Instance.field.GetHalfTiles());
             return movableTiles;
         }
 

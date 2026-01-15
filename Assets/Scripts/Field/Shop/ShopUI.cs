@@ -26,6 +26,10 @@ public class ShopUI : MonoBehaviour
         shop.OnShopSet += SetShop;
         Agent.OnLocalPlayerChanged += SetAgent;
     }
+    private void OnDestroy()
+    {
+        Agent.OnLocalPlayerChanged -= SetAgent;
+    }
 
     void SetShop()
     {

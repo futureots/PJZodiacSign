@@ -47,7 +47,9 @@ public class EnemyAI : MonoBehaviour , IInput
 
     public void AttackInput()
     {
-        var list = StageManager.Instance.field.GetEntities().Where((entity)=> entity.team.IsAlly(agent.teamNum)).ToList();
+        var list = StageManager.Instance.field.GetEntities(agent.id);
+        EditorLogger.Print(list.Count);
+
         foreach (var entity in list)
         {
             agent.CreateAttackCommand(entity);
@@ -64,16 +66,16 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateSkillCommand(skill);
         }
         // 내 필드에 있는 기물을 메인 필드에 배치
-        // var fieldTiles = Field.GetEmptyTiles(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
-        // foreach (var entity in controller.resourceEntities)
-        // {
-        //     // 빈 타일 중 랜덤 위치 선택
-        //     Tile tile = fieldTiles[UnityEngine.Random.Range(0, fieldTiles.Count)];
-        //     
-        //     // 선택한 위치에 기물 이동
-        //     entity.Move(tile);
-        //     fieldTiles.Remove(tile);
-        // }
+        var fieldTiles = Field.GetEmptyTiles(StageManager.Instance.field.GetHalfTiles(true));
+        foreach (var entity in StageManager.Instance.agentField[agent.id].GetEntities())
+        {
+            // 빈 타일 중 랜덤 위치 선택
+            Tile tile = fieldTiles[UnityEngine.Random.Range(0, fieldTiles.Count)];
+
+            // 선택한 위치에 기물 이동
+            agent.CreateMoveCommand(entity, tile);
+            fieldTiles.Remove(tile);
+        }
 
         agent.CreateEndCommand();
         agent.SendCommand();
@@ -90,7 +92,7 @@ public class EnemyAI : MonoBehaviour , IInput
         intVector2 bestPos = new intVector2(-1, -1);
         
         bool flag = false;
-        var entities = StageManager.Instance.field.GetEntities().Where((e) => e.team.IsAlly(agent.teamNum)).ToList();
+        var entities = StageManager.Instance.field.GetEntities().Where((e) => e.team.IsAlly(agent.id)).ToList();
         foreach (var checkEntity in entities)
         {
 
@@ -145,19 +147,19 @@ public class EnemyAI : MonoBehaviour , IInput
             foreach (var item in list)
             {
                 // 이동할 수 없는 타일은 제외
-                if (field[item.y, item.x] != 0 || tile.fieldPos == item) continue;
+                if (field[item.y, item.x] != Field.EmptyTileIndex || tile.fieldPos == item) continue;
                 // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
                 var damage = tileValues[item.y, item.x];
-                if (damage + entity.CurHealth <= 0) damage -= 5;
+                //if (damage + entity.CurHealth <= 0) damage -= 5;
 
                 // 공격 가능 체크
-                field[tile.fieldPos.y, tile.fieldPos.x] = 0;
+                field[tile.fieldPos.y, tile.fieldPos.x] = Field.EmptyTileIndex;
                 var plusArea = area.GetAttackVector(field, item, entity.direction);
-                field[tile.fieldPos.y, tile.fieldPos.x] = agent.teamNum;
+                field[tile.fieldPos.y, tile.fieldPos.x] = (int)agent.id;
                 foreach (var plus in plusArea)
                 {
-                    if (field[plus.y, plus.x] == 0) continue;
-                    if (field[plus.y, plus.x] == agent.teamNum) continue;
+                    if (field[plus.y, plus.x] == Field.EmptyTileIndex) continue;
+                    if (field[plus.y, plus.x] == (int)agent.id) continue;
                     tileValues[item.y, item.x] += power;
                 }
 

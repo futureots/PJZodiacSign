@@ -47,11 +47,13 @@ namespace PlayerInput
                 }
                 selecters.Clear();
             };
+            EditorLogger.Print($"isCompleted : {isCompleted}");
             // TODO : 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
             if (isCompleted)
             {
                 // NOTE : 커맨드 생성
                 _inputManager.agent.CreateSkillCommand(skill,onDestroy);
+                EditorLogger.Print("SkillCreated");
             }
             else
             {

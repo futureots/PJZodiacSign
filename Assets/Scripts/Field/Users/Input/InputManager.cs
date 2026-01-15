@@ -177,7 +177,7 @@ public class InputManager : MonoBehaviour
 
     public void AttackInput()
     {
-        var entities = StageManager.Instance.field.GetEntities(agent.teamNum);
+        var entities = StageManager.Instance.field.GetEntities(agent.id);
         foreach (var entity in entities)
         {
             agent.CreateAttackCommand(entity);

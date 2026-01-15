@@ -14,11 +14,8 @@ public class Entity : Occupant, IDamageable, IAttackable
     public EntityData baseData;
 
     /// 기물의 팀 번호
-    public Team team
-    {
-        get;
-        private set;
-    }
+
+    public Team team;
 
     public intVector2 direction;
     #region Status
@@ -119,13 +116,16 @@ public class Entity : Occupant, IDamageable, IAttackable
         {
             if (item.isEmpty) continue;
             var target = item.occupiedObject;
-            var targetTeam = target.GetComponent<Team>();
-            if (!team.IsAlly(targetTeam))
+            if(target.TryGetComponent<Entity>(out var entity))
             {
-                var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
-                effect.GetComponent<BasicAttackEffect>()?.Initialize(target, Power);
-                //target.GetComponent<IDamageable>()?.Damaged(damage);
+                if (!team.IsAlly(entity.team))
+                {
+                    var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
+                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target, Power);
+                    yield return new WaitForSeconds(1);
+                }
             }
+
         }
 
         yield return null;
@@ -136,8 +136,31 @@ public class Entity : Occupant, IDamageable, IAttackable
     #region Health
 
     // TODO: Health 변경 로직
-    public int CurHealth { get; set; }
-    public int MaxHealth { get; set; }
+    private int _curHealth;
+    public int CurHealth { 
+        get
+        {
+            return _curHealth;
+        }
+        set
+        {
+            _curHealth = Math.Min(MaxHealth,value);
+            OnHealthChanged?.Invoke(_curHealth, _maxHealth);
+        }
+
+    }
+    private int _maxHealth;
+    public int MaxHealth { 
+        get
+        {
+            return _maxHealth;
+        }
+        set 
+        {
+            _maxHealth = value;
+            OnHealthChanged?.Invoke(_curHealth, _maxHealth);
+        }
+    }
     public event Action<int, int> OnHealthChanged;
 
     public void Damaged(int damage)
@@ -160,6 +183,7 @@ public class Entity : Occupant, IDamageable, IAttackable
             {
                 dissolve.Initialize(mesh.mesh, GetComponent<MeshRenderer>());
                 dissolve.PlayEffect(2f);
+                Destroy(gameObject, 2f);
             }
         }
     }

@@ -45,14 +45,13 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             Image.sprite = null;
             Image.color = Color.clear;
-            btn.interactable = false;
             return;
         }
         
         Image.sprite = item.itemData.icon;
         Image.color = Color.white;
-        btn.interactable = true;
 
+        item.OnDiscard += () => SetSlot(null);
     }
 
     void OnClick()

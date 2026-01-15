@@ -19,7 +19,7 @@ public class BishopArea : Area
                 var pos = curPos + vector * direction;
                 if (!IsValidPos(tiles, pos)) break;
                 list.Add(pos);
-                if (tiles[pos.y, pos.x] != 0)
+                if (tiles[pos.y, pos.x] != Field.EmptyTileIndex)
                 {
                     break;
                 }

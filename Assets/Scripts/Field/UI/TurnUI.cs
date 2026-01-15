@@ -31,9 +31,10 @@ public class TurnUI : MonoBehaviour
     }
     void TurnEnd()
     {
-        _inputManager.agent.CreateEndCommand();
-        _inputManager.agent.SendCommand();
         _inputManager.ClearInputMode();
         turnEndBtn.interactable = false;
+
+        _inputManager.agent.CreateEndCommand();
+        _inputManager.agent.SendCommand();
     }
 }

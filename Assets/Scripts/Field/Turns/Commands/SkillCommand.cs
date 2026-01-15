@@ -13,6 +13,7 @@ public class SkillCommand : Command
 
     public override IEnumerator Execute(Action callback)
     {
+        EditorLogger.Print("SkillCommandExecute");
         yield return _skill.StartCoroutine(_skill.ExecuteSkill());
         callback?.Invoke();
         Delete();

@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour
         items.Add(instance);
         OnItemChanged(items.Count-1, instance);
         instance.transform.SetParent(transform);
+        instance.OnDiscard += () => RemoveItem(instance);
         return true;
 
     }
@@ -72,10 +73,11 @@ public class Inventory : MonoBehaviour
                 OnItemChanged?.Invoke(i, null);
                 continue;
             }
-            // TODO : 아이템 오브젝트 생성 및 해당 리스트에 추가
-            ItemComponent obj = new();
-            items.Add(obj);
-            OnItemChanged?.Invoke(i, obj);
+            var item = ItemFactory.RequestItem(list[i]);
+            items.Add(item);
+            OnItemChanged?.Invoke(i, item);
+            item.transform.SetParent(transform);
+            item.OnDiscard += () => RemoveItem(item);
         }
     }
 
@@ -88,7 +90,7 @@ public class Inventory : MonoBehaviour
         List<ItemData> list = new List<ItemData>();
         for(int i = 0; i < items.Count; i++)
         {
-            if (items[i] == null) list.Add(null);
+            if (!items[i]) list.Add(null);
             list.Add(items[i].itemData);
         }
         return list;

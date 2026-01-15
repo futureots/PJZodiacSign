@@ -8,7 +8,6 @@ public class Agent : MonoBehaviour
     // 플레이어 번호
     public PlayerID id;
     // 팀 번호
-    public int teamNum;
 
     static Agent _localPlayer;
     public static Agent LocalPlayer
@@ -53,13 +52,32 @@ public class Agent : MonoBehaviour
     {
         commands = new();
     }
-
-    public void Init(FieldController fieldController, int teamId, int credit)
+    public void Init(FieldController fieldController, PlayerID teamId, int credit)
     {
         this.fieldController = fieldController;
-        this.teamNum = teamId;
+        this.id = teamId;
         OnInitialized?.Invoke();
         Credit = credit;
+        fieldController.onPhaseStarted += (phase) =>
+        {
+            if(phase.phaseName == PhaseType.Battle)
+            {
+                var _entityLevelData = new List<EntityLevelData>();
+                var list = StageManager.Instance.agentField[PlayerID.P0].GetEntities();
+                foreach (var entity in list)
+                {
+                    _entityLevelData.Add(new EntityLevelData(entity));
+                }
+                entityLevelData = _entityLevelData;
+                var _fieldEntityData = new Dictionary<intVector2, EntityLevelData>();
+                var fieldData = StageManager.Instance.field.GetEntities(id);
+                foreach (var entity in fieldData)
+                {
+                    _fieldEntityData.Add(entity.CurTile.fieldPos, new EntityLevelData(entity));
+                }
+                fieldEntityData = _fieldEntityData;
+            }
+        };
     }
 
     public void CreateMoveCommand(Entity entity, Tile tile, Action onDestroyed = null)
@@ -134,7 +152,11 @@ public class Agent : MonoBehaviour
         fieldController.ExecutedCommands();
     }
 
-
-    public AgentData getData() { return new AgentData(); }
+    List<EntityLevelData> entityLevelData;
+    Dictionary<intVector2,EntityLevelData> fieldEntityData;
+    public AgentData getData() {
+        var data = new AgentData(Credit,entityLevelData,fieldEntityData,inventory.GetInventoryData());
+        return data; 
+    }
 
 }

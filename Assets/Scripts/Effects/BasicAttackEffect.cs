@@ -26,7 +26,6 @@ public class BasicAttackEffect : MonoBehaviour
             other.GetComponent<IDamageable>()?.Damaged(damage);
             var hit = Instantiate(hitEffect, transform.position, Utils.QI);
             Destroy(hit, 1f);
-            Destroy(gameObject);
         }
     }
 }

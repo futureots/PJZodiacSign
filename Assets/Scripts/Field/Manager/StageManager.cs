@@ -14,7 +14,7 @@ public class StageManager : Singleton<StageManager>
     public Field field;
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
-    public Dictionary<int, Field> agentField;
+    public Dictionary<PlayerID, Field> agentField;
 
     /// <summary>
     /// Init Model with Data
@@ -24,20 +24,20 @@ public class StageManager : Singleton<StageManager>
     public void Init(StageData stageData)
     {
         shop.Init(stageData.shopTable);
-        agentField = new Dictionary<int, Field>();
+        agentField = new Dictionary<PlayerID, Field>();
         for (int i = 0; i < resourceFields.Count; i++)
         {
-            agentField.Add(i + 1, resourceFields[i]);
+            agentField.Add((PlayerID)(i-1), resourceFields[i]);
         }
 
         for (int i = 0; i < stageData.agents.Count; i++)
         {
-            SetAgentField(i+2, stageData.agents[i], new intVector2(-1, -1));
+            SetAgentField((PlayerID)(i), stageData.agents[i], new intVector2(-1, -1));
         }
-        SetAgentField(1, stageData.player, new intVector2(1, 1));
+        SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));
     }
 
-    void SetAgentField(int teamId, AgentData data, intVector2 direction)
+    void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)
     {
         var list = Field.GetEmptyTiles(agentField[teamId].GetTiles());
         foreach (var entityData in data.handEntities)

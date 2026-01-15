@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EntityInfoUI : MonoBehaviour
 {
     InputManager _inputManager;
-    int teamId;
+    PlayerID id;
 
     Entity selectedEntity;
     SkillComponent _skill;
@@ -34,7 +34,7 @@ public class EntityInfoUI : MonoBehaviour
     public void Init(InputManager input)
     {
         _inputManager = input;
-        teamId = _inputManager.agent.teamNum;
+        id = _inputManager.agent.id;
         input.OnObjectClicked.AddListener(OnObjectClick);
         input.OnModeChanged += SetSkillButton;
         entitySkillBtn.onClick.AddListener(UseSkill);
@@ -130,7 +130,7 @@ public class EntityInfoUI : MonoBehaviour
         {
             if(selectedEntity != null)
             {
-                if (selectedEntity.team.IsAlly(teamId))
+                if (selectedEntity.team.IsAlly(id))
                 {
                     if (_skill.IsUsable())
                     {

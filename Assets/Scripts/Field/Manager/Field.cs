@@ -105,7 +105,6 @@ public class Field : MonoBehaviour
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
-            // 타일에 존재하는 기물의 수가 1개 이상이면 마지막에 들어온 객체 제외하고 전부 삭제
             var obj = tile.occupiedObject.GetComponent<IDamageable>();
             if (obj.IsZero())
             {
@@ -214,14 +213,14 @@ public class Field : MonoBehaviour
     /// <summary>
     /// 맨 절반의 타일을 가져오기
     /// </summary>
-    /// <param name="isReflect">true = 적 측, false = 플레이어 측</param>
+    /// <param name="isForward">true = 적 측, false = 플레이어 측</param>
     /// <returns></returns>
-    public List<Tile> GetHalfTiles(int teamNum)
+    public List<Tile> GetHalfTiles(bool isForward= false)
     {
         List<Tile> list = new List<Tile>();
         var start = 0;
         int end = row / 2;
-        if (teamNum>1)
+        if (isForward)
         {
             start = end;
             end = row;
@@ -238,16 +237,16 @@ public class Field : MonoBehaviour
     #endregion
 
     //점거 중인 오브젝트 가져오기
-    public List<Entity> GetEntities(int teamNum = -1)
+    public List<Entity> GetEntities(PlayerID teamNum = PlayerID.None)
     {
         List<Entity> list = new();
         foreach(var tile in tiles)
         {
             if (tile.isEmpty) continue;
             var occupiedObj = tile.occupiedObject;
-            if(TryGetComponent<Entity>(out var entity))
+            if(occupiedObj.TryGetComponent<Entity>(out var entity))
             {
-                if(teamNum == -1 || entity.team.IsAlly(teamNum))
+                if(teamNum == PlayerID.None || entity.team.IsAlly(teamNum))
                 {
                     list.Add(entity);
                 }
@@ -256,10 +255,13 @@ public class Field : MonoBehaviour
         return list;
     }
 
+    public static readonly int EmptyTileIndex = -2;
+    public static readonly int NeutralIndex = -3;
+
     /// <summary>
     /// 현재 필드 상태 가져오기
     /// </summary>
-    /// <returns>필드 크기에 맞는 2차원 배열 반환 빈 타일은 0, 중립은 -1, 나머지는 팀 번호</returns>
+    /// <returns>필드 크기에 맞는 2차원 배열 반환 빈 타일은 -2, 중립은 -3, 나머지는 팀 번호</returns>
     public int[,] GetFieldState()
     {
         var field = new int[row, column];
@@ -268,17 +270,20 @@ public class Field : MonoBehaviour
             for (int j = 0; j < column; j++) 
             {
                 var t = tiles[i,j];
-                if (t.isEmpty) continue;
+                if (t.isEmpty)
+                {
+                    field[i,j] = EmptyTileIndex;
+                }
                 else
                 {
                     if(t.occupiedObject.TryGetComponent<Entity>(out var entity))
                     {
                         var team = entity.team;
-                        field[i, j] = team.teamNumber;
+                        field[i, j] = (int)team.teamNumber;
                     }
                     else
                     {
-                        field[i, j] = -1;
+                        field[i, j] = NeutralIndex;
                     }
                 }
             }
@@ -291,7 +296,7 @@ public class Field : MonoBehaviour
         var list = GetFieldState();
         if(occupant.CurTile.field == this)
         {
-            list[occupant.CurTile.fieldPos.y, occupant.CurTile.fieldPos.x] = 0;
+            list[occupant.CurTile.fieldPos.y, occupant.CurTile.fieldPos.x] = EmptyTileIndex;
         }
         return list;
     }
@@ -302,14 +307,14 @@ public class Field : MonoBehaviour
     /// <param name="fieldInfo">2차원 배열</param>
     /// <param name="teamNum">팀 번호</param>
     /// <returns>해당 팀의 상대(중립 포함)의 공격 범위, 데미지 반환</returns>
-    public int[,] CalculateEnemyThreat(int[,] fieldInfo, int teamNum = 0)
+    public int[,] CalculateEnemyThreat(int[,] fieldInfo, PlayerID teamNum = PlayerID.None)
     {
         var field = new int[row, column];
         for(int i = 0; i < row; i++)
         {
             for(int j = 0; j < column; j++)
             {
-                if (fieldInfo[i, j] == 0) continue;
+                if (fieldInfo[i, j] == EmptyTileIndex) continue;
 
                 var obj = tiles[i, j].occupiedObject;
                 var entity = obj.GetComponent<Entity>();
@@ -317,7 +322,7 @@ public class Field : MonoBehaviour
                 if (entity.team.teamNumber == teamNum) continue;
 
                 int entityNum = fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
-                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = 0;
+                fieldInfo[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = EmptyTileIndex;
 
                 // 기물의 공격력 반환
                 int power = 0;
