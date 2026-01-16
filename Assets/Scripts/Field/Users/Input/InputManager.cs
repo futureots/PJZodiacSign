@@ -178,7 +178,6 @@ public class InputManager : MonoBehaviour
             agent.CreateAttackCommand(entity);
         }
         agent.CreateEndCommand();
-        agent.SubmitCommand();
     }
 
     #endregion

@@ -16,4 +16,15 @@ public sealed record SkillCommand(SkillComponent Skill) : Command
         text += $"스킬사용";
         return text;
     }
+    public override bool IsOverlap(Command cmd)
+    {
+        if (cmd is SkillCommand skCmd)
+        {
+            if (skCmd.Skill == Skill)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

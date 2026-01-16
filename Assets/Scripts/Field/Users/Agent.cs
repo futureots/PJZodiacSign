@@ -30,8 +30,6 @@ public class Agent : MonoBehaviour
 
     // 행동 포인트
     public int actionCount;
-    // 설정한 커맨드 리스트
-    public List<Command> inputCommands;
     
     private int _credit;
     
@@ -51,10 +49,7 @@ public class Agent : MonoBehaviour
 
     public Inventory inventory;
 
-    protected void Awake()
-    {
-        inputCommands = new();
-    }
+    
     public void Init(FieldController fieldController, PlayerID teamId, int credit)
     {
         this.fieldController = fieldController;
@@ -82,78 +77,42 @@ public class Agent : MonoBehaviour
         };
     }
 
-    public Command CreateMoveCommand(Entity entity, Tile tile)
+    public Command CreateMoveCommand(Entity entity, Tile tile, bool isWarp = false)
     {
-        var cmd = new MoveCommand(entity, tile);
+        var cmd = new MoveCommand(entity, tile, isWarp);
         // 해당 기물의 이동명령이 있으면 제거 후 추가
-        foreach (var command in inputCommands)
-        {
-            if(command is MoveCommand mvCmd)
-            {
-                if(mvCmd.Entity == entity)
-                {
-                    inputCommands.Remove(command);
-                    command.Delete();
-                    break;
-                }
-            }
-        }
-        inputCommands.Add(cmd);
+        fieldController.ReceiveCommands(cmd);
         return cmd;
     }
 
     public Command CreateSkillCommand(SkillComponent skill)
     {
         var cmd = new SkillCommand(skill);
-        // 중복 커맨드 제거 후 추가
-        foreach (var command in inputCommands)
-        {
-            if (command is SkillCommand skCmd)
-            {
-                if (skCmd.Skill == skill)
-                {
-                    inputCommands.Remove(command);
-                    command.Delete();
-                    break;
-                }
-            }
-        }
-        inputCommands.Add(cmd);
+        fieldController.ReceiveCommands(cmd);
         return cmd;
     }
 
     public Command CreateAttackCommand(Entity entity)
     {
         var cmd = new AttackCommand(entity);
-        inputCommands.Add(cmd);
+        fieldController.ReceiveCommands(cmd);
         return cmd;
     }
 
     public Command CreateEnhanceCommand(Entity baseEntity, Entity subEntity)
     {
         var cmd = new EnhanceCommand(baseEntity, subEntity);
-        inputCommands.Add(cmd);
+        fieldController.ReceiveCommands(cmd);
         return cmd;
     }
 
     public Command CreateEndCommand()
     {
         var cmd = new EndCommand(fieldController);
-        inputCommands.Add(cmd);
+        fieldController.ReceiveCommands(cmd);
         return cmd;
     }
 
-
-    /// <summary>
-    /// FieldController에 커맨드 전송
-    /// </summary>
-    public void SubmitCommand()
-    {
-        // TODO : FieldController에 ReceiveCommand로 처리
-        fieldController.commandList.AddRange(inputCommands);
-        fieldController.ExecutedCommands();
-        inputCommands.Clear();
-    }
 
     List<EntityLevelData> entityLevelData;
     Dictionary<intVector2,EntityLevelData> fieldEntityData;

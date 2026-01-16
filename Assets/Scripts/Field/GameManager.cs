@@ -18,18 +18,8 @@ public class GameManager : SingletonObject<GameManager>
     {
         base.Awake();
         // TODO: 데이터 로드 로직 추가
-        dataManager.LoadAllData("Data");
+        dataManager.LoadAllData("PlayerData");
         
-        // TODO: Debug용 Mock 컨트롤러 추가 시 삭제
-        //#if UNITY_EDITOR
-        //currentStage = new();
-        //FieldController fieldController = FindFirstObjectByType<FieldController>();
-        //if (fieldController)
-        //{
-        //    fieldController.Init(currentStage);
-        //}
-         
-        //#endif
     }
     
     public void SetModeData(LevelTable levelTable, ShopTable shopTable)
@@ -47,8 +37,6 @@ public class GameManager : SingletonObject<GameManager>
     }
     public StageData CreateStageData(int level,AgentData playerData)
     {
-
-        EditorLogger.Print($"{playerData.credit} : {playerData.handEntities} : {playerData.fieldEntities} : {playerData.items}");
         var data = GetEnemyAgentData(level);
         StageData stageData = new StageData(data, shopTable, level, playerData);
         return stageData;
@@ -62,6 +50,8 @@ public class GameManager : SingletonObject<GameManager>
     public void EnterBattle(StageData stageData)
     {
         Level = stageData.level;
+        dataManager.SetData(stageData.player, Level);
+        dataManager.SaveAllData("PlayerData");
         StartCoroutine(LoadBattleScene(stageData));
     }
 
@@ -128,11 +118,12 @@ public class GameManager : SingletonObject<GameManager>
         if(winPlayer == PlayerID.P0)
         {
             EditorLogger.Print($"{Level} 클리어!");
-            EditorLogger.Print($"{Level} 로드 중");
-            EditorLogger.Print($"{playerData.credit} 현재 보유 크레딧");
+            
             playerData.credit += 100;
-            EditorLogger.Print($"{playerData.credit} 크레딧");
+            EditorLogger.Print($"{playerData.credit} 현재 크레딧");
+            EditorLogger.Print($"{Level + 1} 로드 중");
             var stageData = CreateStageData(Level+1, playerData);
+            
             // TODO : 다음 레벨 테이블을 넣은 stagedata 생성
             EnterBattle(stageData);
         }

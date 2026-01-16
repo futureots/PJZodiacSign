@@ -40,10 +40,10 @@ namespace PlayerInput
             Action<bool> action = (x) => { isCompleted = x; };
             yield return skill.StartCoroutine(skill.skillLogic.InputSkill(this,action));
             EditorLogger.Print($"isCompleted : {isCompleted}");
-            // TODO : 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
+            // 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
             if (isCompleted)
             {
-                // NOTE : 커맨드 생성
+                // 커맨드 생성
                 var command = _inputManager.agent.CreateSkillCommand(skill);
                 
                 command.indicate.AddRange(selecters);
@@ -87,7 +87,11 @@ namespace PlayerInput
                     }
                 }
             };
-            // TODO : list 기물 시각화
+            // list 기물 시각화
+            foreach (Entity entity in list)
+            {
+                entity.ApplyHighlight();
+            }
 
             Action action = () => isCanceled = true;
             onCanceled += action;
@@ -96,7 +100,12 @@ namespace PlayerInput
             _inputManager.OnObjectClicked.RemoveListener(click);
             onCanceled -= action;
 
-            // TODO : 시각화 제거
+            // 시각화 제거
+            foreach (Entity entity in list)
+            {
+                entity.RemoveHighlight();
+            }
+
             if (isCanceled)
             {
                 callback?.Invoke(false);

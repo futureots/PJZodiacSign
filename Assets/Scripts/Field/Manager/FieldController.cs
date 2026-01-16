@@ -72,15 +72,6 @@ public class FieldController : MonoBehaviour
     public virtual void SetTurn(int index = -1)
     {
         stageManager.field.RemoveDeadEntities();
-        if (CurrentPhase.phaseName == PhaseType.Battle)
-        {
-            // TODO : 페이즈의 종료조건 확인, 함수 따로 만들어서 확인
-            if (IsBattleEnd(out var winner))
-            {
-                SetPhase();
-                return;
-            }
-        }
 
         // Next Turn
         if (index == -1)
@@ -146,43 +137,49 @@ public class FieldController : MonoBehaviour
      * 
      */
     
-    public List<Command> commandList;
-    Command curCmd;
-    bool isSequencing = false;
+    public List<Command> inputCommands;
+    
     protected CommandSystem commandSystem;    // Attach
     
-    public void ExecutedCommands()
+    public void ReceiveCommands(Command cmd)
     {
-        if (!isSequencing)
+        for (int i = inputCommands.Count - 1; i >= 0; i--)
         {
-            isSequencing = true;
-            OnCommandExecuted();
+            if (cmd.IsOverlap(inputCommands[i]))
+            {
+                inputCommands[i].Delete();
+                inputCommands.RemoveAt(i);
+            }
+        }
+            
+        inputCommands.Add(cmd);
+
+        switch (CurrentPhase.phaseName)
+        {
+            case PhaseType.Repair:
+                SendCommands();
+                break;
+            case PhaseType.Battle:
+                if (cmd is EndCommand)
+                {
+                    SendCommands();
+                }
+                break;
         }
     }
 
+
     public virtual void SendCommands()
     {
-        //TODO: field에 커맨드 전송 및 콜백 함수 설정
-    }
-    public virtual void OnCommandExecuted()
-    {
-        if (commandList.Count > 0)
+        List<IExecute> ExecuteCommands = new List<IExecute>();
+        foreach(var cmd in inputCommands)
         {
-            curCmd = commandList[0];
-            commandList.RemoveAt(0);
-            Action callback = OnCommandExecuted;
-            if (curCmd is EndCommand end)
-            {
-                callback += () => { SetTurn(); };
-            }
-            StartCoroutine(curCmd.Execute(callback));
+            ExecuteCommands.Add(cmd);
         }
-        else
-        {
-            isSequencing = false;
-            EditorLogger.Print("NoMore Command");
-        }
+        stageManager.ReceiveCommands(ExecuteCommands);
+        inputCommands.Clear();
     }
+
     
     #endregion
     
@@ -225,7 +222,7 @@ public class FieldController : MonoBehaviour
         enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
         commandSystem = new();
-        commandList = new();
+        inputCommands = new();
         
         // TODO: 기믹 세팅
         SpecialRule = data.specialRule;

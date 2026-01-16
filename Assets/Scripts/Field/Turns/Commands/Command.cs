@@ -39,4 +39,8 @@ public record Command : IExecute
     {
         return $"{typeof(Command)}";
     }
+    public virtual bool IsOverlap(Command cmd)
+    {
+        return false;
+    }
 }

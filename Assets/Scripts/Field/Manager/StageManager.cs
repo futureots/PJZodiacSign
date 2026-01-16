@@ -1,5 +1,7 @@
 
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
@@ -73,6 +75,57 @@ public class StageManager : Singleton<StageManager>
     /// <param name="newTurn">new Turn Info</param>
     public void SetTurn(Turn newTurn)
     {
-        
+        if(newTurn.type == TurnType.ACTION)
+        {
+            foreach(var entity in field.GetEntities())
+            {
+                if (entity.team.IsAlly(newTurn.agentID))
+                {
+                    if(entity.TryGetComponent<EnergyComponent>(out var energy))
+                    {
+                        energy.CurEnergy += 1;
+                    }
+                    
+                }
+            }
+        }
     }
+
+    #region CommandLogic
+
+    IExecute curCmd;
+    bool isSequencing = false;
+    Queue<IExecute> commandList = new Queue<IExecute>();
+    public void ReceiveCommands(List<IExecute> commands)
+    {
+        foreach (var item in commands)
+        {
+            commandList.Enqueue(item);
+        }
+        ExecuteCommands();
+    }
+    public void ExecuteCommands()
+    {
+        if (!isSequencing)
+        {
+            isSequencing = true;
+            OnCommandExecuted();
+        }
+    }
+    public virtual void OnCommandExecuted()
+    {
+        EditorLogger.Print($"count : {commandList.Count}");
+        if (commandList.Count > 0)
+        {
+            curCmd = commandList.Dequeue();
+            Action callback = OnCommandExecuted;
+            StartCoroutine(curCmd.Execute(callback));
+        }
+        else
+        {
+            isSequencing = false;
+            EditorLogger.Print("NoMore Command");
+        }
+    }
+    #endregion
 }

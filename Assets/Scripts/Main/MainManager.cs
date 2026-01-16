@@ -47,7 +47,7 @@ namespace Main
 
         public void GiveUpGame()
         {
-            DataManager.Instance.ResetData("Data");
+            DataManager.Instance.ResetData("PlayerData");
             SceneManager.LoadScene(0);
         }
 

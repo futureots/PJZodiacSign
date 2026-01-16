@@ -7,8 +7,6 @@ public class Tile : MonoBehaviour
     Renderer tileRenderer;
     Renderer planeRenderer;
 
-    public Material moveHighLightMat;
-    public Material atkHighLightMat;
     public enum HighLightType
     {
         Move,
@@ -87,7 +85,10 @@ public class Tile : MonoBehaviour
         }
     }
 
-    
+    #region Indicator
+
+    public Material moveHighLightMat;
+    public Material atkHighLightMat;
     public void ApplyHighlight(HighLightType type)
     {
         List<Material> mats = null;
@@ -123,4 +124,5 @@ public class Tile : MonoBehaviour
         }
     }
 
+    #endregion
 }

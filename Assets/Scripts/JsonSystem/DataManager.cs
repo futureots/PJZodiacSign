@@ -8,8 +8,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class DataManager : Singleton<DataManager>
 {
-    [NonSerialized]
-    readonly string defaultName = "Player";
+    
     [NonSerialized]
     readonly string defaultPath = Application.dataPath + "/Data";
     /// <summary>
@@ -70,7 +69,8 @@ public class DataManager : Singleton<DataManager>
         List<string> itemNames = new();
         foreach (var item in data.items)
         {
-            itemNames.Add(item.id);
+            if(item) itemNames.Add(item.id);
+            else itemNames.Add(null);
         }
         playData.items = itemNames;
 
@@ -146,7 +146,7 @@ public class DataManager : Singleton<DataManager>
         {
             Directory.CreateDirectory(defaultPath);
         }
-        string filePath = Path.Combine(defaultPath,  defaultName + fileName + ".Json");
+        string filePath = Path.Combine(defaultPath,  fileName + ".Json");
         File.WriteAllText(filePath, data);
         EditorLogger.Print(data);
         EditorLogger.Print("Save");
@@ -160,7 +160,7 @@ public class DataManager : Singleton<DataManager>
         json = null;
         if (Directory.Exists(defaultPath))
         {
-            string filePath = Path.Combine(defaultPath, defaultName + fileName + ".Json");
+            string filePath = Path.Combine(defaultPath, fileName + ".Json");
             if (File.Exists(filePath))
             {
                 json = File.ReadAllText(filePath);
@@ -179,7 +179,7 @@ public class DataManager : Singleton<DataManager>
     {
         if (Directory.Exists(defaultPath))
         {
-            string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+            string filePath = Path.Combine(defaultPath, fileName + ".Json");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);

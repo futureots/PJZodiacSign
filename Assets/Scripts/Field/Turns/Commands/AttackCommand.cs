@@ -9,4 +9,5 @@ public sealed record AttackCommand(Entity Target, int Multiplier = 100) : Comman
         callback?.Invoke();
         Delete();
     }
+
 }

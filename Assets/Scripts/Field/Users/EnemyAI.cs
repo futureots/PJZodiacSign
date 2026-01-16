@@ -53,7 +53,6 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateAttackCommand(entity);
         }
         agent.CreateEndCommand();
-        agent.SubmitCommand();
     }
 
     public IEnumerator SetRepairMode()
@@ -67,12 +66,11 @@ public class EnemyAI : MonoBehaviour , IInput
             Tile tile = fieldTiles[UnityEngine.Random.Range(0, fieldTiles.Count)];
 
             // 선택한 위치에 기물 이동
-            agent.CreateMoveCommand(entity, tile);
+            agent.CreateMoveCommand(entity, tile,true);
             fieldTiles.Remove(tile);
         }
 
         agent.CreateEndCommand();
-        agent.SubmitCommand();
         EditorLogger.Print("RepairEnd");
     }
 
@@ -115,7 +113,6 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateMoveCommand(bestEntity, StageManager.Instance.field.GetTile(bestPos));
         }
         agent.CreateEndCommand();
-        agent.SubmitCommand();
     }
 
 

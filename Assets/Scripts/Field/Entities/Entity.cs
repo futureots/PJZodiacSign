@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Tile;
 
 [RequireComponent(typeof(SkillComponent))]
 [RequireComponent(typeof(EnergyComponent))]     // NOTE: Skill 내 Energy 스탯 종속 시 컴포넌트 병합
@@ -268,5 +269,18 @@ public class Entity : Occupant, IDamageable, IAttackable
         return tiles;
     }
 
+    #endregion
+
+    #region Indicator
+
+    [SerializeField] GameObject indicatorEffect;
+    public void ApplyHighlight()
+    {
+        indicatorEffect.SetActive(true);
+    }
+    public void RemoveHighlight()
+    {
+        indicatorEffect.SetActive(false);
+    }
     #endregion
 }

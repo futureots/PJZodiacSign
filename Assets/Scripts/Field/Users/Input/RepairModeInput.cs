@@ -46,8 +46,7 @@ namespace PlayerInput
             {
                 //커맨드 생성
                 var cmd = new MoveCommand(_selectedEntity, _selectedTile, _selectedEntity.CurTile);
-                _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile);
-                _inputManager.agent.SubmitCommand();
+                _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile, true);
             }
         }
 
