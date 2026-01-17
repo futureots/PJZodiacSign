@@ -71,7 +71,7 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
-        stageManager.field.RemoveDeadEntities();
+        
 
         // Next Turn
         if (index == -1)

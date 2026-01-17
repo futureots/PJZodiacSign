@@ -324,7 +324,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25054849}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -334,7 +334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 200, y: 140}
+  m_AnchoredPosition: {x: 190, y: 150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &25054851
@@ -4548,7 +4548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: 0}
+  m_AnchoredPosition: {x: -400, y: 0}
   m_SizeDelta: {x: 300, y: 900}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &233994386
@@ -34904,26 +34904,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopUI
       objectReference: {fileID: 0}
-    - target: {fileID: 6512557112812817031, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512557112812817031, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 4762873540042521381}
-    - target: {fileID: 6512557112812817031, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512557112812817031, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217119173687630702, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -35017,11 +34997,6 @@ RectTransform:
 --- !u!1 &4762873540042521380 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-  m_PrefabInstance: {fileID: 4762873540042521378}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4762873540042521381 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 528285947572437199, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
   m_PrefabInstance: {fileID: 4762873540042521378}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4762873540042521383 stripped

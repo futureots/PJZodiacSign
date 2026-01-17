@@ -42,9 +42,9 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     [SerializeField] public AreaComponent area;
     
-    [SerializeField] private EnergyComponent energy;
+    [SerializeField] public EnergyComponent energy;
     
-    [SerializeField] private SkillComponent skill;
+    [SerializeField] public SkillComponent skill;
 
     #endregion
 
@@ -115,21 +115,23 @@ public class Entity : Occupant, IDamageable, IAttackable
         
         var list = GetAttackArea();
 
+        bool isAttacked = false;
         foreach (var item in list)
         {
             if (item.isEmpty) continue;
             var target = item.occupiedObject;
-            if(target.TryGetComponent<Entity>(out var entity))
+            if (target.TryGetComponent<Entity>(out var entity))
             {
                 if (!team.IsAlly(entity.team))
                 {
                     var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
                     effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
-                    yield return new WaitForSeconds(1.5f);
+                    isAttacked = true;
                 }
             }
         }
-        yield return null;
+        if(isAttacked) yield return new WaitForSeconds(1.5f);
+        yield break;
     }
 
     #endregion

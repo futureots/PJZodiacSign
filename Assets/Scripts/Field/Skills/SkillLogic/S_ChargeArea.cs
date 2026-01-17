@@ -9,9 +9,10 @@ public class S_ChargeArea : BaseSkillLogic
     [SerializeField] Area area;
     Entity owner;
     public S_ChargeArea() { }
-    public void Init(Area _area)
+    public void Init(Area _area, int amount)
     {
         area = _area;
+        charge = amount;
     }
 
     public override IEnumerator InputSkill(IInput input, Action<bool> callback)
@@ -52,9 +53,13 @@ public class S_ChargeArea : BaseSkillLogic
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         foreach (var tile in tiles)
         {
-            if (tile.occupiedObject.TryGetComponent<EnergyComponent>(out var energy))
+            if (tile.isEmpty) continue;
+            if(tile.occupiedObject.TryGetComponent<Entity>(out var entity))
             {
-                energy.CurEnergy += charge;
+                if (entity.team.IsAlly(owner.team))
+                {
+                    entity.energy.CurEnergy += charge;
+                }
             }
         }
         owner = null;
@@ -63,7 +68,7 @@ public class S_ChargeArea : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_ChargeArea();
-        clone.Init(area);
+        clone.Init(area,charge);
         return clone;
     }
 }

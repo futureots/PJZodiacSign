@@ -20,4 +20,22 @@ MonoBehaviour:
       level: 0
     fieldPos:
       x: 0
+      y: 6
+  - entityData:
+      data: {fileID: 11400000, guid: 30f28ad064d449f47b120eee42b1b191, type: 2}
+      level: 0
+    fieldPos:
+      x: 7
+      y: 6
+  - entityData:
+      data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
+      level: 0
+    fieldPos:
+      x: 0
+      y: 7
+  - entityData:
+      data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
+      level: 0
+    fieldPos:
+      x: 7
       y: 7

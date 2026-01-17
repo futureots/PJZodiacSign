@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace PlayerInput
 {
@@ -76,6 +74,13 @@ namespace PlayerInput
                 {
                     move.ApplyHighlight(Tile.HighLightType.Move);
                 }
+
+                attackArea = _selectedEntity.GetAttackArea(_selectedTile);
+                foreach (var area in attackArea)
+                {
+                    area.ApplyHighlight(Tile.HighLightType.Attack);
+                }
+
 
                 _inputManager.OnMouseMove.AddListener(DragEntity);
                 _inputManager.OnMouseUp.AddListener(DragEnd);

@@ -12,24 +12,33 @@ public class S_Promotion : BaseSkillLogic
         isContinued = false;
         Entity _entity = null;
         Action<bool> conti = (flag) => { isContinued = flag; };
-        Action<Entity> action = (x) =>
+        if(component.TryGetComponent<Entity>(out var _owner))
         {
-            _entity = x;
-        };
-        yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-        if (!isContinued)
+            _entity = _owner;
+        }
+        else
         {
-            callback?.Invoke(false);
-            yield break;
+            Action<Entity> action = (x) =>
+            {
+                _entity = x;
+            };
+            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
+            if (!isContinued)
+            {
+                callback?.Invoke(false);
+                yield break;
+            }
+            
         }
         list.Remove(_entity);
+
 
         Entity _target = null;
         Action<Entity> action2 = (x) =>
         {
             _target = x;
         };
-        yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
+        yield return component.StartCoroutine(input.InputEntity(list, action2, conti, 1));
         if (!isContinued)
         {
             callback?.Invoke(false);
@@ -43,9 +52,18 @@ public class S_Promotion : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         var data = target.baseData;
-        // TODO : entity의 data를 변경하고 팩토리를 통해 새로 생성, entity의 레벨은 유지
-        target = null;
+        var dir = entity.direction;
+        var tile = entity.CurTile;
+        var level = entity.Level;
+        var team = entity.team.teamNumber;
+        entity.CurTile.UnsetOccupant();
+        entity.Dead();
         entity = null;
+        // TODO : entity의 data를 변경하고 팩토리를 통해 새로 생성, entity의 레벨은 유지
+        var promotion = EntityFactory.RequestEntity(target.baseData, dir, tile, level);
+        promotion.team.teamNumber = team;
+        target = null;
+        
         yield break;
     }
     public override BaseSkillLogic Clone()

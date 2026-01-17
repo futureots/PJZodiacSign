@@ -45,7 +45,6 @@ namespace PlayerInput
             {
                 // 커맨드 생성
                 var command = _inputManager.agent.CreateSkillCommand(skill);
-                
                 command.indicate.AddRange(selecters);
                 EditorLogger.Print("SkillCreated");
             }
