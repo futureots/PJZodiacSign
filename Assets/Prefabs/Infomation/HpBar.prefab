@@ -539,7 +539,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8241180114733501611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelObject: {fileID: 580893589879215749}
   levelText: {fileID: 1996878247143006933}
+  rectTransform: {fileID: 0}
   hpBar: {fileID: 2100415331520499679}
   energyBar: {fileID: 480393213476898684}
 --- !u!225 &161178785258931004
@@ -611,7 +612,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6994146020540589065}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

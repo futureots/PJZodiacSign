@@ -6,28 +6,29 @@ public class HpPanelManager : MonoBehaviour
     /**
      * 
      */
-    public GameObject hpBar;
+    public EntityHpUI hpBar;
 
     List<GameObject> hpBarList;
 
     private void Awake()
     {
         hpBarList = new List<GameObject>();
+        EntityFactory.OnEntityCreated += CreateHpBar;
     }
+
+
+
     /// <summary>
     ///  hp캔버스에 체력바 생성 후 오브젝트 지정
     /// </summary>
     public void CreateHpBar(Entity target)
     {
 
-        var obj = Instantiate(hpBar);
-        hpBarList.Add(obj);
+        var bar = Instantiate(hpBar,transform);
+        bar.gameObject.transform.localScale = Vector3.one;
+        hpBarList.Add(bar.gameObject);
 
-        var bar = obj.GetComponent<EntityHpUI>();
-        if (bar == null) return;
-
-        bar.SetEntity(target);
-        // bar.hpBar.gaugeBar.color = GameManager.Instance.teamColorTable.teamColors[target.team.teamNumber];
+        bar.SetEntity(target, ()=> hpBarList.Remove(bar.gameObject));
         
     }
 
@@ -38,5 +39,9 @@ public class HpPanelManager : MonoBehaviour
             Destroy(item);
         }
         hpBarList.Clear();
+    }
+    private void OnDestroy()
+    {
+        EntityFactory.OnEntityCreated -= CreateHpBar;
     }
 }

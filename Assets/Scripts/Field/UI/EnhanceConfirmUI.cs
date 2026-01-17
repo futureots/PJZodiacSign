@@ -2,62 +2,59 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using PlayerInput;
+using UnityEngine.Rendering.Universal;
 
 public class EnhanceConfirmUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    public GameObject dialogPanel;
-    public TextMeshProUGUI messageText;
+    [SerializeField] GameObject enhancePanel;
     public Button confirmButton;
     public Button cancelButton;
-    
-    private Action onConfirm;
-    private Action onCancel;
-    
-    private void Start()
+
+    InputManager inputManager;
+    public void Init(InputManager inputManager)
     {
-        // 버튼 이벤트 설정
+        this.inputManager = inputManager;
+        // 강화 Input 세팅
+        inputManager.OnModeChanged += OnModeChange;
+    }
+
+    private void Awake()
+    {
         confirmButton.onClick.AddListener(OnConfirm);
         cancelButton.onClick.AddListener(OnCancel);
-        
-        // 초기에는 숨김
-        HideDialog();
     }
-    
-    /// <summary>
-    /// 확인 다이얼로그를 표시합니다.
-    /// </summary>
-    /// <param name="message">표시할 메시지</param>
-    /// <param name="confirmCallback">확인 시 실행할 콜백</param>
-    /// <param name="cancelCallback">취소 시 실행할 콜백</param>
-    public void ShowDialog(string message, Action confirmCallback = null, Action cancelCallback = null)
+    void OnModeChange(IInputState state)
     {
-        messageText.text = message;
-        onConfirm = confirmCallback;
-        onCancel = cancelCallback;
-        
-        dialogPanel.SetActive(true);
+        if(state is RepairModeInput repair)
+        {
+            repair.OnEnhanceRequested += OnEnhanceRequest;
+        }
     }
-    
-    /// <summary>
-    /// 확인 다이얼로그를 숨깁니다.
-    /// </summary>
-    public void HideDialog()
+
+    Entity target, source;
+
+    void OnEnhanceRequest(Entity target, Entity source)
     {
-        dialogPanel.SetActive(false);
-        onConfirm = null;
-        onCancel = null;
+        this.target = target;
+        this.source = source;
+        enhancePanel.SetActive(true);
+        inputManager.ClearInputMode();
+        
     }
     
     private void OnConfirm()
     {
-        onConfirm?.Invoke();
-        HideDialog();
+        inputManager.agent.CreateEnhanceCommand(target, source);
+        enhancePanel.SetActive(false);
+        inputManager.SetInputMode();
+
     }
     
     private void OnCancel()
     {
-        onCancel?.Invoke();
-        HideDialog();
+        enhancePanel.SetActive(false);
+        inputManager.SetInputMode();
     }
 }

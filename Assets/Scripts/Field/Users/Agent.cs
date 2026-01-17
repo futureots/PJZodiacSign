@@ -55,26 +55,45 @@ public class Agent : MonoBehaviour
         this.fieldController = fieldController;
         this.id = teamId;
         Credit = credit;
-        fieldController.onPhaseStarted += (phase) =>
+        fieldController.onPhaseStarted += OnPhaseChange;
+        fieldController.OnTurnStarted += OnTurnChange;
+    }
+    void OnTurnChange(Turn turn)
+    {
+        if(turn.agentID == id)
         {
-            if(phase.phaseName == PhaseType.Battle)
+            switch (turn.type)
             {
-                var _entityLevelData = new List<EntityLevelData>();
-                var list = StageManager.Instance.agentField[PlayerID.P0].GetEntities();
-                foreach (var entity in list)
-                {
-                    _entityLevelData.Add(new EntityLevelData(entity));
-                }
-                entityLevelData = _entityLevelData;
-                var _fieldEntityData = new Dictionary<intVector2, EntityLevelData>();
-                var fieldData = StageManager.Instance.field.GetEntities(id);
-                foreach (var entity in fieldData)
-                {
-                    _fieldEntityData.Add(entity.CurTile.fieldPos, new EntityLevelData(entity));
-                }
-                fieldEntityData = _fieldEntityData;
+                case TurnType.ACTION:
+                    fieldController.capacity = actionCount;
+                    break;
+                case TurnType.ATTACK:
+                case TurnType.REPAIR:
+                    fieldController.capacity = -1;
+                    break;
             }
-        };
+        }
+    }
+
+    void OnPhaseChange(Phase phase)
+    {
+        if (phase.phaseName == PhaseType.Battle)
+        {
+            var _entityLevelData = new List<EntityLevelData>();
+            var list = StageManager.Instance.agentField[PlayerID.P0].GetEntities();
+            foreach (var entity in list)
+            {
+                _entityLevelData.Add(new EntityLevelData(entity));
+            }
+            entityLevelData = _entityLevelData;
+            var _fieldEntityData = new Dictionary<intVector2, EntityLevelData>();
+            var fieldData = StageManager.Instance.field.GetEntities(id);
+            foreach (var entity in fieldData)
+            {
+                _fieldEntityData.Add(entity.CurTile.fieldPos, new EntityLevelData(entity));
+            }
+            fieldEntityData = _fieldEntityData;
+        }
     }
 
     public Command CreateMoveCommand(Entity entity, Tile tile, bool isWarp = false)
@@ -99,9 +118,9 @@ public class Agent : MonoBehaviour
         return cmd;
     }
 
-    public Command CreateEnhanceCommand(Entity baseEntity, Entity subEntity)
+    public Command CreateEnhanceCommand(Entity target, Entity source)
     {
-        var cmd = new EnhanceCommand(baseEntity, subEntity);
+        var cmd = new EnhanceCommand(target, source);
         fieldController.ReceiveCommands(cmd);
         return cmd;
     }

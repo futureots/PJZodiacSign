@@ -25,7 +25,7 @@ public class Shop : MonoBehaviour
     /// <param name="isPremium"></param>
     public void SetShop(int level, bool isPremium = false)
     {
-        if (level % 5 == 0 || isPremium)
+        if (level % 5 == 1 || isPremium)
         {
             SetPremiumShop();
         }

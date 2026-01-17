@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class EntityFactory : MonoBehaviour
 {
     // TODO: Pooling 용 함수
 
-
+    public static Action<Entity> OnEntityCreated;
     /// <summary>
     /// Request for New Entity
     /// </summary>
@@ -26,6 +27,7 @@ public class EntityFactory : MonoBehaviour
             entity.Move(tile, true);
         }
         entity.transform.localScale = Vector3.one;
+        OnEntityCreated?.Invoke(entity);
         return entity;
     }
 }

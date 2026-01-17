@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EntityHpUI : MonoBehaviour
 {
@@ -8,16 +10,17 @@ public class EntityHpUI : MonoBehaviour
 
     public GameObject levelObject;
     public TextMeshProUGUI levelText;
+    public RectTransform rectTransform;
     
     public GaugeUI hpBar;
     public GaugeUI energyBar;
+
     private void Start()
     {
-        
+        rectTransform = GetComponent<RectTransform>();
     }
-
     // TODO: 컴포넌트 접근 및 구독 방식 개선
-    public void SetEntity(Entity entity)
+    public void SetEntity(Entity entity, Action OnDestroy = null)
     {
         if(_entity != null)
         {
@@ -27,10 +30,7 @@ public class EntityHpUI : MonoBehaviour
             _entity.OnLevelChanged -= UpdateLevelText;
         }
         _entity = entity;
-        
 
-        transform.SetParent(entity.transform);
-        transform.localPosition = Vector3.zero + entity.baseData.hpPanelPosition;
 
         hpBar.SetGauge(_entity.CurHealth, _entity.MaxHealth);
         _entity.OnHealthChanged += hpBar.SetGauge;
@@ -46,11 +46,14 @@ public class EntityHpUI : MonoBehaviour
             _energy = null;
         }
 
-            UpdateLevelText(_entity.Level);
+        UpdateLevelText(_entity.Level);
         _entity.OnLevelChanged += UpdateLevelText;
 
         _entity.onDead += OnDead;
+        _entity.onDead += OnDestroy;
 
+        _entity.team.OnTeamChanged += (team) => OnTeamChange();
+        Agent.OnLocalPlayerChanged += OnTeamChange;
 
     }
 
@@ -58,7 +61,12 @@ public class EntityHpUI : MonoBehaviour
     {
         if (_entity != null)
         {
-            transform.LookAt(transform.position + Camera.main.transform.forward);
+            //transform.LookAt(transform.position + Camera.main.transform.forward);
+            Vector3 worldPos = _entity.transform.position + Vector3.Scale(_entity.baseData.offset, _entity.transform.lossyScale);
+
+            // 2. 월드 좌표를 화면(Screen) 좌표로 변환
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+            rectTransform.position = screenPos;
         }
     }
     void UpdateLevelText(int level, int prev=0)
@@ -74,6 +82,21 @@ public class EntityHpUI : MonoBehaviour
         }
             
     }
+
+    void OnTeamChange()
+    {
+        if (!Agent.LocalPlayer) hpBar.gaugeBar.color = Color.red;
+        // TODO : 팀별로 체력바 색상 다르게 표시(다른 곳으로 이전 필요)
+        else if (_entity.team.IsAlly(Agent.LocalPlayer.id))
+        {
+            hpBar.gaugeBar.color = Color.green;
+        }
+        else
+        {
+            hpBar.gaugeBar.color = Color.red;
+        }
+    }
+    
     
     void OnDead()
     {
@@ -89,5 +112,6 @@ public class EntityHpUI : MonoBehaviour
             if(_energy !=null) _energy.OnEnergyChanged -= energyBar.SetGauge;
             _entity.OnLevelChanged -= UpdateLevelText;
         }
+        Agent.OnLocalPlayerChanged -= OnTeamChange;
     }
 }

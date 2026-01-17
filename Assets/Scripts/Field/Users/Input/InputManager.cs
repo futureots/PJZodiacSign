@@ -48,7 +48,7 @@ public class InputManager : MonoBehaviour
     {
         this.agent = agent;
         Agent.LocalPlayer = agent;
-        agent.fieldController.onTurnStarted += OnTurnChange;
+        agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 
     #region InputPackaging
@@ -110,7 +110,7 @@ public class InputManager : MonoBehaviour
 
     #region Turn
     
-    public void OnTurnChange(Turn curTurn)
+    void OnTurnChange(Turn curTurn)
     {
         curTurnType = curTurn.type;
         
@@ -181,29 +181,6 @@ public class InputManager : MonoBehaviour
     }
 
     #endregion
-
-
-    /// <summary>
-    /// 오브젝트가 기물이면 기물 정보 표시, 아니면 정보 패널 숨김
-    /// </summary>
-    //void HandleClick(GameObject obj)
-    //{
-    //    if (obj == null)
-    //    {
-    //        UI.entityInfo.HidePanel();
-    //        return;
-    //    }
-    //    var entity = obj.GetComponent<Entity>();
-    //    if (entity != null)
-    //    {
-    //        UI.entityInfo.ShowPanel(entity);
-    //    }
-    //    else
-    //    {
-    //        UI.entityInfo.HidePanel();
-    //    }
-
-    //}
 
     /// <summary>
     /// 가장 가까운 타일 반환

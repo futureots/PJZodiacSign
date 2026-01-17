@@ -17,7 +17,7 @@ public class EnemyAI : MonoBehaviour , IInput
     public void Init(Agent agent)
     {
         this.agent = agent;
-        agent.fieldController.onTurnStarted += OnTurnChange;
+        agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 
     

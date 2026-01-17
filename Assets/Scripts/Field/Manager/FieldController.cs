@@ -29,7 +29,7 @@ public class FieldController : MonoBehaviour
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
     public event Action<Phase> onPhaseStarted;
-    public event Action<Turn> onTurnStarted;
+    public event Action<Turn> OnTurnStarted;
 
 
     /// <summary>
@@ -100,7 +100,7 @@ public class FieldController : MonoBehaviour
         
         // Set Model
         stageManager.SetTurn(CurrentTurn);
-        onTurnStarted?.Invoke(CurrentTurn);
+        OnTurnStarted?.Invoke(CurrentTurn);
     }
     
     public bool IsBattleEnd(out PlayerID winTeam)
@@ -131,13 +131,15 @@ public class FieldController : MonoBehaviour
         }
     }
     #endregion
-    
+
     #region Commands
     /**
      * 
      */
-    
+
+    public int capacity;
     public List<Command> inputCommands;
+    public event Action<int> OnListUpdated;
     
     protected CommandSystem commandSystem;    // Attach
     
@@ -151,8 +153,19 @@ public class FieldController : MonoBehaviour
                 inputCommands.RemoveAt(i);
             }
         }
-            
+
         inputCommands.Add(cmd);
+        if(cmd is not EndCommand)
+        {
+            if (capacity == -1) { }
+            else if(inputCommands.Count > capacity)
+            {
+                var trashCmd = inputCommands[0];
+                inputCommands.RemoveAt(0);
+                trashCmd.Delete();
+            }
+        }
+        OnListUpdated?.Invoke(inputCommands.Count);
 
         switch (CurrentPhase.phaseName)
         {
@@ -178,6 +191,7 @@ public class FieldController : MonoBehaviour
         }
         stageManager.ReceiveCommands(ExecuteCommands);
         inputCommands.Clear();
+        OnListUpdated?.Invoke(inputCommands.Count);
     }
 
     
@@ -210,6 +224,7 @@ public class FieldController : MonoBehaviour
         // Load Field
         stageManager = StageManager.Instance;
         stageManager.Init(data);
+
 
         // TODO: 에이전트 생성 및 초기화
         localPlayer.Init(this,PlayerID.P0,data.player.credit);

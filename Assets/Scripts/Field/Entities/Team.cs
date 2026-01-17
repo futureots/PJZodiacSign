@@ -3,10 +3,21 @@ using System;
 [Serializable]
 public class Team
 {
+    private PlayerID _teamNumber;
     /// <summary>
     /// 소속한 팀 번호
     /// </summary>
-    public PlayerID teamNumber;
+    public PlayerID teamNumber
+    {
+        get { return _teamNumber; }
+        set
+        {
+            _teamNumber = value;
+            OnTeamChanged?.Invoke(_teamNumber);
+        }
+    }
+    public event Action<PlayerID> OnTeamChanged;
+
     
     /// <summary>
     /// 소속한 팀이 같은지 확인

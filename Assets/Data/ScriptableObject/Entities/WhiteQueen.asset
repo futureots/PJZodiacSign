@@ -31,4 +31,4 @@ MonoBehaviour:
   powerMultiplier: 0
   skill: {fileID: 11400000, guid: b303936343c02d24d946eb44160ece79, type: 2}
   maxEnergy: 4
-  hpPanelPosition: {x: 0, y: 3.5, z: 0}
+  offset: {x: 0, y: 3.5, z: 0}
