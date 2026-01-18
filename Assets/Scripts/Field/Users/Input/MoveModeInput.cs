@@ -160,7 +160,7 @@ namespace PlayerInput
             {
                 
                 var entityIndicator = GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
-                var tileIndicator = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position, Quaternion.identity);
+                var tileIndicator = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position + Vector3.up * 0.1f, Quaternion.identity);
 
                 // 커맨드 생성
                 var command = _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile);

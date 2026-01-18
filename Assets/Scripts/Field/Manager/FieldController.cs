@@ -50,8 +50,7 @@ public class FieldController : MonoBehaviour
         {
             if (IsBattleEnd(out var winner))
             {
-                var data = Agent.LocalPlayer.getData();
-                GameManager.Instance.ExitBattle(data, winner);
+                GameManager.Instance.ExitBattle(winner);
             }
             return;
         }

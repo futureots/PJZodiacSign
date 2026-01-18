@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -107,32 +108,42 @@ public class GameManager : SingletonObject<GameManager>
     #endregion
 
     #region BattleEnd
-    
+
+    public event Action<bool> OnGameEnded;
     /// <summary>
     /// Procedure when Battle End
     /// </summary>
-    public void ExitBattle (AgentData playerData, PlayerID winPlayer)
+    public void ExitBattle (PlayerID winPlayer)
     {
         
         // TODO: 게임 종료 처리 로직 추가
-        if(winPlayer == PlayerID.P0)
+        if (winPlayer == PlayerID.P0)
         {
-            EditorLogger.Print($"{Level} 클리어!");
-            
-            playerData.credit += 100;
-            EditorLogger.Print($"{playerData.credit} 현재 크레딧");
-            EditorLogger.Print($"{Level + 1} 로드 중");
-            var stageData = CreateStageData(Level+1, playerData);
-            
-            // TODO : 다음 레벨 테이블을 넣은 stagedata 생성
-            EnterBattle(stageData);
+            //OnGameEnded?.Invoke(true);
+            ContinueGame();
         }
         else
         {
-            // TODO : 패배 메인화면으로 이동
-            DataManager.Instance.ResetData("PlayerData");
-            SceneManager.LoadScene(0);
+            //OnGameEnded?.Invoke(false);
+            EndGame(true);
         }
+    }
+
+    public void ContinueGame()
+    {
+        var playerData = Agent.LocalPlayer.getData();
+        // 다음 레벨로 넘어가는 코드
+        playerData.credit += 100;
+        EditorLogger.Print($"{playerData.credit} 현재 크레딧");
+        EditorLogger.Print($"{Level + 1} 로드 중");
+        var stageData = CreateStageData(Level + 1, playerData);
+        EnterBattle(stageData);
+    }
+
+    public void EndGame(bool isDelete = false)
+    {
+        if(isDelete) DataManager.Instance.ResetData("PlayerData");
+        SceneManager.LoadScene(0);
     }
     
     #endregion
