@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Tile;
 
 [RequireComponent(typeof(SkillComponent))]
 [RequireComponent(typeof(EnergyComponent))]     // NOTE: Skill 내 Energy 스탯 종속 시 컴포넌트 병합
@@ -14,12 +15,10 @@ public class Entity : Occupant, IDamageable, IAttackable
     public EntityData baseData;
 
     /// 기물의 팀 번호
-    public Team team
-    {
-        get;
-        private set;
-    }
 
+    public Team team;
+
+    public intVector2 direction;
     #region Status
 
     // Level of current Entity
@@ -41,30 +40,35 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public Action onDead;
 
-    [SerializeField] private AreaComponent area;
+    [SerializeField] public AreaComponent area;
     
-    [SerializeField] private EnergyComponent energy;
+    [SerializeField] public EnergyComponent energy;
     
-    [SerializeField] private SkillComponent skill;
+    [SerializeField] public SkillComponent skill;
 
     #endregion
 
     // TODO: 나중에 스탯 계산용 핸들러 추가하면서 빼기
     public bool isProtected;
 
+    private void Awake()
+    {
+        team = new();
+    }
+
     /// <summary>
     /// Initialize Setting when Load
     /// </summary>
     /// <param name="data">Entity Data</param>
     /// <param name="level">Initial Level</param>
-    public void Init(EntityData data, int level = 0)
+    public void Init(EntityData data, intVector2 direction, int level = 0)
     {
         baseData = data;
         Level = level; // NOTE: 초기화 시 레벨 변화 이벤트 발생중
-
+        this.direction = direction;
         //Get Status Component
         MaxHealth = baseData.maxHp + baseData.hpMultiplier * level;
-
+        CurHealth = MaxHealth;
         // Set Attack
         Power = baseData.power + baseData.powerMultiplier * level;
         OnLevelChanged += UpdateEntity;
@@ -105,24 +109,29 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public event Action<int> OnPowerChanged;
 
-    public IEnumerator Attack()
+    public IEnumerator Attack(int multiplier = 100)
     {
+        int damage = Power * multiplier / IAttackable.Scale;
+        
         var list = GetAttackArea();
 
+        bool isAttacked = false;
         foreach (var item in list)
         {
             if (item.isEmpty) continue;
             var target = item.occupiedObject;
-            var targetTeam = target.GetComponent<Team>();
-            if (!team.IsAlly(targetTeam))
+            if (target.TryGetComponent<Entity>(out var entity))
             {
-                var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
-                effect.GetComponent<BasicAttackEffect>()?.Initialize(target, Power);
-                //target.GetComponent<IDamageable>()?.Damaged(damage);
+                if (!team.IsAlly(entity.team))
+                {
+                    var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
+                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
+                    isAttacked = true;
+                }
             }
         }
-
-        yield return null;
+        if(isAttacked) yield return new WaitForSeconds(1.5f);
+        yield break;
     }
 
     #endregion
@@ -130,8 +139,31 @@ public class Entity : Occupant, IDamageable, IAttackable
     #region Health
 
     // TODO: Health 변경 로직
-    public int CurHealth { get; set; }
-    public int MaxHealth { get; set; }
+    private int _curHealth;
+    public int CurHealth { 
+        get
+        {
+            return _curHealth;
+        }
+        set
+        {
+            _curHealth = Math.Min(MaxHealth,value);
+            OnHealthChanged?.Invoke(_curHealth, _maxHealth);
+        }
+
+    }
+    private int _maxHealth;
+    public int MaxHealth { 
+        get
+        {
+            return _maxHealth;
+        }
+        set 
+        {
+            _maxHealth = value;
+            OnHealthChanged?.Invoke(_curHealth, _maxHealth);
+        }
+    }
     public event Action<int, int> OnHealthChanged;
 
     public void Damaged(int damage)
@@ -154,6 +186,7 @@ public class Entity : Occupant, IDamageable, IAttackable
             {
                 dissolve.Initialize(mesh.mesh, GetComponent<MeshRenderer>());
                 dissolve.PlayEffect(2f);
+                Destroy(gameObject, 2f);
             }
         }
     }
@@ -208,7 +241,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         {
             var field = CurTile.field.GetFieldState(this);
 
-            var list = area.GetMoveVector(field, CurTile.fieldPos, IsReflect);
+            var list = area.GetMoveVector(field, CurTile.fieldPos, direction);
             var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
 
             tiles.Add(CurTile);
@@ -233,17 +266,23 @@ public class Entity : Occupant, IDamageable, IAttackable
         // IOccupant 인터페이스 사용해서 해당 함수도 AreaComponent로 빼기
         var field = tile.field.GetFieldState(this);
 
-        if (TryGetComponent<AreaComponent>(out var component))
-        {
-            var list = component.GetAttackVector(field, tile.fieldPos, IsReflect);
-            var tiles = tile.field.GetTiles(list);
-            return tiles;
-        }
-        else
-        {
-            return new List<Tile>();
-        }
+        var list = area.GetAttackVector(field, tile.fieldPos, direction);
+        var tiles = tile.field.GetTiles(list);
+        return tiles;
     }
 
+    #endregion
+
+    #region Indicator
+
+    [SerializeField] GameObject indicatorEffect;
+    public void ApplyHighlight()
+    {
+        indicatorEffect.SetActive(true);
+    }
+    public void RemoveHighlight()
+    {
+        indicatorEffect.SetActive(false);
+    }
     #endregion
 }

@@ -3,20 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public class DataManager : Singleton<DataManager>
 {
-    [NonSerialized]
-    readonly string defaultName = "Player";
+    
     [NonSerialized]
     readonly string defaultPath = Application.dataPath + "/Data";
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
-    public LevelTable enemyData;
     public ItemTable itemTable;
     public EntityTable entityTable;
+
+    public LevelTable levelTable;
+    public ShopTable shopTable;
 
     /// <summary>
     /// 플레이어 데이터
@@ -25,14 +27,9 @@ public class DataManager : Singleton<DataManager>
 
     public bool isModified { get; private set; }
 
-    protected void Awake()
-    {
-        LoadAllData("data");
-    }
 
-    public AgentData[]  GetData()
+    public AgentData  GetPlayerAgentData()
     {
-        List<AgentData> data = new List<AgentData>();
 
         var handEntities = new List<EntityLevelData>();
         foreach (var item in playData.handEntities)
@@ -62,22 +59,18 @@ public class DataManager : Singleton<DataManager>
             var itemData = itemTable.SearchData(item);
             items.Add(itemData);
         }
-        EditorLogger.Print(items.Count);
 
         AgentData player = new AgentData(playData.credit, handEntities, fieldEntities, items);
-        data.Add(player);
-
-        AgentData enemy = enemyData.GetLevelData(playData.stageLevel);
-
-        data.Add(enemy);
-        return data.ToArray();
+        return player;
     }
+
     public void SetData(AgentData data, int stageLevel)
     {
         List<string> itemNames = new();
         foreach (var item in data.items)
         {
-            itemNames.Add(item.id);
+            if(item) itemNames.Add(item.id);
+            else itemNames.Add(null);
         }
         playData.items = itemNames;
 
@@ -153,7 +146,7 @@ public class DataManager : Singleton<DataManager>
         {
             Directory.CreateDirectory(defaultPath);
         }
-        string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+        string filePath = Path.Combine(defaultPath,  fileName + ".Json");
         File.WriteAllText(filePath, data);
         EditorLogger.Print(data);
         EditorLogger.Print("Save");
@@ -167,7 +160,7 @@ public class DataManager : Singleton<DataManager>
         json = null;
         if (Directory.Exists(defaultPath))
         {
-            string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+            string filePath = Path.Combine(defaultPath, fileName + ".Json");
             if (File.Exists(filePath))
             {
                 json = File.ReadAllText(filePath);
@@ -186,7 +179,7 @@ public class DataManager : Singleton<DataManager>
     {
         if (Directory.Exists(defaultPath))
         {
-            string filePath = Path.Combine(defaultPath, fileName + defaultName + ".Json");
+            string filePath = Path.Combine(defaultPath, fileName + ".Json");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
@@ -197,18 +190,18 @@ public class DataManager : Singleton<DataManager>
 [System.Serializable]
 public struct AgentData
 {
-    public AgentData(int credit =0, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)
+    public AgentData(int credit, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)
     {
         this.credit = credit;
 
-        if(hands == null) handEntities = new();
-        else this.handEntities = hands;
-        
-        if (fields== null) fieldEntities = new();
-        else this.fieldEntities = fields;
-        
-        if(items == null) this.items = new();
-        else this.items = items;
+        handEntities = new();
+        if(hands != null) this.handEntities = hands;
+
+        fieldEntities = new();
+        if (fields != null) this.fieldEntities = fields;
+
+        this.items = new();
+        if (items != null) this.items = items;
     }
 
     public int credit;

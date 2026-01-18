@@ -27,5 +27,5 @@ public class EntityData : AbstractData
     public int maxEnergy;
 
     [Header("ObjectValue")]
-    public Vector3 hpPanelPosition;
+    public Vector3 offset;
 }

@@ -54,6 +54,11 @@ public struct intVector2
     {
         return new intVector2(left.x*right, left.y*right);
     }
+
+    public static intVector2 operator *(intVector2 left, intVector2 right)
+    {
+        return new intVector2(left.x*right.x, left.y*right.y);
+    }
     public override bool Equals(object obj)
     {
         return obj is intVector2 vector &&

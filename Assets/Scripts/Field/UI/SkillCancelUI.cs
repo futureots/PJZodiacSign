@@ -7,7 +7,7 @@ public class SkillCancelUI : MonoBehaviour
     public Button cancelBtn;
     public void Init(InputManager inputManager)
     {
-        inputManager.onModeChanged +=OnModeChange;
+        inputManager.OnModeChanged +=OnModeChange;
     }
 
     void OnModeChange(IInputState state)

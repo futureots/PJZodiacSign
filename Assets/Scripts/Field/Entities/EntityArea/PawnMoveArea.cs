@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PawnMoveArea", menuName = "Scriptable Objects/Area/PawnMoveArea")]
 public class PawnMoveArea : Area
 {
-    protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, bool isReflect)
+    protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, intVector2 direction)
     {
 
         List<intVector2> area = new();
@@ -13,9 +13,9 @@ public class PawnMoveArea : Area
         for (int i = 0; i < 2; i++)
         {
             vector += new intVector2(0, 1);
-            var pos = isReflect ? curPos - vector : curPos + vector;
+            var pos = curPos + vector * direction;
             if (!Field.IsPositionValid(tiles, pos)) break;
-            if (tiles[pos.y, pos.x] != 0)
+            if (tiles[pos.y, pos.x] != Field.EmptyTileIndex)
             {
                 break;
             }

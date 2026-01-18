@@ -1,114 +1,100 @@
-using Battle.Phase;
+
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class ShopUI : MonoBehaviour
 {
-    [Header("Dependency")]
-    InputManager customer;
-    IPhaseManageService phaseManageService;     // TODO: phase 의존성 주입
+    Agent agent;
+    Shop shop;
 
     public GameObject shopPanel;
-    [SerializeField] GameObject ShopToggle;
+    [SerializeField] GameObject shopToggle;
 
     [SerializeField] EntityGoodsUI entityUI;
     [SerializeField] ItemGoodsUI itemUI;
     [SerializeField] Transform entityShop;
     [SerializeField] Transform itemShop;
+    List<EntityGoodsUI> entityGoods;
+    List<ItemGoodsUI> itemGoods;
 
-    [SerializeField] ShopTable table;
-
-    List<ItemData> items;
-    List<EntityData> entities;
-
-    public void Init(InputManager inputManager,IPhaseManageService phaseManageService)
+    private void Awake()
     {
-        this.phaseManageService = phaseManageService;
-        customer = inputManager;
+        entityGoods = new List<EntityGoodsUI>();
+        itemGoods = new List<ItemGoodsUI>();
+        shop = StageManager.Instance.shop;
+        shop.OnShopSet += SetShop;
+        Agent.OnLocalPlayerChanged += SetAgent;
+    }
+    private void OnDestroy()
+    {
+        Agent.OnLocalPlayerChanged -= SetAgent;
     }
 
-    /// <summary>
-    /// 현재 레벨에 맞는 상점 세팅
-    /// </summary>
-    /// <param name="level"></param>
-    /// <param name="isPremium"></param>
-    public void SetShop(int level, bool isPremium = false)
+    void SetShop()
     {
-        if (level % 5 == 0 || isPremium)
+        SetShop(shop.entities, shop.items);
+    }
+    void SetAgent()
+    {
+        if (agent)
         {
-            SetPremiumShop();
+            agent.OnCreditChanged -= UpdateShop;
         }
-        else
+        agent = Agent.LocalPlayer;
+        agent.OnCreditChanged += UpdateShop;
+        UpdateShop(agent.Credit);
+    }
+    void UpdateShop(int credit)
+    {
+        foreach (EntityGoodsUI item in entityGoods)
         {
-            SetNormalShop();
+            item.UpdateBuyBtn(credit);
         }
-    }
-    void SetPremiumShop()
-    {
-        items = table.GetRandomItem(5);
-        entities = table.GetRandomEntity(8);
-        SetShop(entities, items);
-    }
-    void SetNormalShop()
-    {
-        items = table.GetRandomItem(2);
-        entities = table.GetRandomEntity(3);
-        SetShop(entities, items);
+        foreach (ItemGoodsUI item in itemGoods)
+        {
+            item.UpdateBuyBtn(credit);
+        }
     }
     void SetShop(List<EntityData> entityList, List<ItemData> itemList)
     {
         for (int i = 0; i < entityList.Count; i++)
         {
             EntityGoodsUI goodsUI;
-            if (entityShop.childCount > i)
+            if (entityGoods.Count > i)
             {
-                goodsUI = entityShop.GetChild(i).GetComponent<EntityGoodsUI>();
+                goodsUI = entityGoods[i];
             }
             else
             {
-                goodsUI = Instantiate(entityUI, entityShop).GetComponent<EntityGoodsUI>();
+                var goods = Instantiate(entityUI, entityShop);
+                entityGoods.Add(goods);
+                goodsUI = goods;
             }
             if (goodsUI != null)
             {
-                //goodsUI.SetGoods(entityList[i],customer);
+                goodsUI.SetGoods(entityList[i]);
             }
         }
-        for (int i = entityList.Count; i < entityShop.childCount; i++) entityShop.GetChild(i).gameObject.SetActive(false);
+        for (int i = entityList.Count; i < entityGoods.Count; i++) entityGoods[i].gameObject.SetActive(false);
         for (int i = 0; i < itemList.Count; i++)
         {
             ItemGoodsUI goodsUI;
-            if (itemShop.childCount > i)
+            if (itemGoods.Count > i)
             {
-                goodsUI = itemShop.GetChild(i).GetComponent<ItemGoodsUI>();
+                goodsUI = itemGoods[i];
             }
             else
             {
-                goodsUI = Instantiate(itemUI, itemShop).GetComponent<ItemGoodsUI>();
+                var goods = Instantiate(itemUI, itemShop);
+                itemGoods.Add(goods);
+                goodsUI = goods;
             }
             if (goodsUI != null)
             {
-                //goodsUI.SetGoods(itemList[i],customer);
+                goodsUI.SetGoods(itemList[i]);
             }
         }
-        for (int i = itemList.Count; i < itemShop.childCount; i++) itemShop.GetChild(i).gameObject.SetActive(false);
+        for (int i = itemList.Count; i < itemGoods.Count; i++) itemGoods[i].gameObject.SetActive(false);
     }
-    //void PhaseChange(IPhase curPhase, bool start)
-    //{
-    //    if (curPhase is RepairPhase phase)
-    //    {
-    //        // 페이즈 시작
-    //        if (start)
-    //        {
-    //            ShopToggle.SetActive(true);
-    //            SetShop(phase.Level);
-    //        }
-    //        // 페이즈 종료
-    //        else
-    //        {
-    //            shopPanel.SetActive(false);
-    //            ShopToggle.SetActive(false); 
-    //        }
-    //    }
-    //}
 }

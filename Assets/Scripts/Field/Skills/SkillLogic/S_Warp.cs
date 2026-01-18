@@ -55,6 +55,6 @@ public class S_Warp : BaseSkillLogic
     }
     public override BaseSkillLogic Clone()
     {
-        return new S_MoveAttack();
+        return new S_Warp();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    
+    [SerializeField] InputManager inputManager;
     Inventory inventory;
     /// <summary>현재 UI 표시 상태</summary>
     public bool isOpen { get; private set; } = false;
@@ -89,13 +89,17 @@ public class InventoryUI : MonoBehaviour
 
     void OpenItemAction(int index)
     {
-        var item = inventory.items[index];
-        if (item != null)
+        if (inventory.items.Count > index)
         {
-            actPanel.gameObject.SetActive(true);
-            actPanel.transform.position = itemSlots[index].transform.position;
-            actPanel.SetItemAction(item);
+            var item = inventory.items[index];
+            if (item != null)
+            {
+                actPanel.gameObject.SetActive(true);
+                actPanel.transform.position = itemSlots[index].transform.position;
+                actPanel.SetItemAction(item);
+            }
         }
+
     }
     void SetInfoUI(int index, Vector2 pos)
     {

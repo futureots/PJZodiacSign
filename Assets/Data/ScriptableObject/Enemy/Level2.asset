@@ -28,10 +28,10 @@ MonoBehaviour:
       level: 1
     fieldPos:
       x: 1
-      y: 0
+      y: 7
   - entityData:
       data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
       level: 1
     fieldPos:
       x: 6
-      y: 0
+      y: 7

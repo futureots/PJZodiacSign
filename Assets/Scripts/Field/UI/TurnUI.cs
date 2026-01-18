@@ -1,16 +1,19 @@
 using PlayerInput;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TurnUI : MonoBehaviour
 {
-    InputManager _inputManager;
-    public Button turnEndBtn;
+    [SerializeField] InputManager inputManager;
+    [SerializeField] Button turnEndBtn;
+    [SerializeField] TextMeshProUGUI text;
 
-    public void Init(InputManager inputManager)
+    public void Init(InputManager input)
     {
-        _inputManager = inputManager;
-        inputManager.onModeChanged += OnModeChange;
+        this.inputManager = input;
+        input.OnModeChanged += OnModeChange;
+        input.agent.fieldController.OnTurnStarted += OnTurnChange;
         turnEndBtn.onClick.AddListener(TurnEnd);
     }
 
@@ -27,9 +30,35 @@ public class TurnUI : MonoBehaviour
     }
     void TurnEnd()
     {
-        _inputManager.agent.CreateEndCommand();
-        _inputManager.agent.SendCommand();
-        _inputManager.ClearInputMode();
+        inputManager.ClearInputMode();
         turnEndBtn.interactable = false;
+
+        inputManager.agent.CreateEndCommand();
+    }
+
+    void OnTurnChange(Turn turn)
+    {
+        if(turn.agentID == inputManager.agent.id)
+        {
+            switch (turn.type)
+            {
+                case TurnType.REPAIR:
+                    text.text = "정비 종료";
+                    break;
+                case TurnType.ACTION:
+                    text.text = "행동 종료";
+                    break;
+                case TurnType.ATTACK:
+                    text.text = "공격 중";
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            text.text = "상대 턴";
+        }
+
     }
 }

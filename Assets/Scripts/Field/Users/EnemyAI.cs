@@ -1,31 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour , IInput
 {
-    Agent agent;
+    [SerializeField] Agent agent;
 
     public TurnType curTurnType { get; private set; }
 
     private void Start()
     {
-        if(TryGetComponent<Agent>(out var agent))
-        {
-            Init(agent);
-        }
     }
 
     public void Init(Agent agent)
     {
         this.agent = agent;
-        EditorLogger.Print(agent.fieldController);
-        agent.fieldController.onTurnStarted += OnTurnChanged;
+        agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 
     
-    public void OnTurnChanged(Turn curTurn)
+    public void OnTurnChange(Turn curTurn)
     {
         curTurnType = curTurn.type;
         
@@ -49,35 +45,32 @@ public class EnemyAI : MonoBehaviour , IInput
 
     public void AttackInput()
     {
-        foreach (var entity in agent.entities)
+        var list = StageManager.Instance.field.GetEntities(agent.id);
+        EditorLogger.Print(list.Count);
+
+        foreach (var entity in list)
         {
             agent.CreateAttackCommand(entity);
         }
         agent.CreateEndCommand();
-        agent.SendCommand();
     }
 
     public IEnumerator SetRepairMode()
     {
         yield return null;
-        if (TryGetComponent<SkillComponent>(out var skill))
-        {
-            agent.CreateSkillCommand(skill);
-        }
         // 내 필드에 있는 기물을 메인 필드에 배치
-        // var fieldTiles = Field.GetEmptyTiles(GameManager.Instance.field.GetHalfTiles(controller.isReflect));
-        // foreach (var entity in controller.resourceEntities)
-        // {
-        //     // 빈 타일 중 랜덤 위치 선택
-        //     Tile tile = fieldTiles[UnityEngine.Random.Range(0, fieldTiles.Count)];
-        //     
-        //     // 선택한 위치에 기물 이동
-        //     entity.Move(tile);
-        //     fieldTiles.Remove(tile);
-        // }
+        var fieldTiles = Field.GetEmptyTiles(StageManager.Instance.field.GetHalfTiles(true));
+        foreach (var entity in StageManager.Instance.agentField[agent.id].GetEntities())
+        {
+            // 빈 타일 중 랜덤 위치 선택
+            Tile tile = fieldTiles[UnityEngine.Random.Range(0, fieldTiles.Count)];
+
+            // 선택한 위치에 기물 이동
+            agent.CreateMoveCommand(entity, tile,true);
+            fieldTiles.Remove(tile);
+        }
 
         agent.CreateEndCommand();
-        agent.SendCommand();
         EditorLogger.Print("RepairEnd");
     }
 
@@ -91,7 +84,8 @@ public class EnemyAI : MonoBehaviour , IInput
         intVector2 bestPos = new intVector2(-1, -1);
         
         bool flag = false;
-        foreach (var checkEntity in agent.entities)
+        var entities = StageManager.Instance.field.GetEntities().Where((e) => e.team.IsAlly(agent.id)).ToList();
+        foreach (var checkEntity in entities)
         {
 
             // 필드 값 가져오기
@@ -118,12 +112,7 @@ public class EnemyAI : MonoBehaviour , IInput
         {
             agent.CreateMoveCommand(bestEntity, StageManager.Instance.field.GetTile(bestPos));
         }
-        if (TryGetComponent<SkillComponent>(out var skill))
-        {
-            agent.CreateSkillCommand(skill);
-        }
         agent.CreateEndCommand();
-        agent.SendCommand();
     }
 
 
@@ -136,35 +125,32 @@ public class EnemyAI : MonoBehaviour , IInput
         out intVector2 pos)
     {
 
-        int power = 0;
-        if (entity.TryGetComponent<PowerComponent>(out var component))
-        {
-            power = component.Power;
-        }
+        int power = entity.Power;
+
         var tile = entity.CurTile;
         int max = tileValues[tile.fieldPos.y, tile.fieldPos.x];
 
         List<intVector2> valuablePos = new();
         if (entity.TryGetComponent<AreaComponent>(out var area))
         {
-            var list = area.GetMoveVector(field, tile.fieldPos, entity.IsReflect);
+            var list = area.GetMoveVector(field, tile.fieldPos, entity.direction);
 
             foreach (var item in list)
             {
                 // 이동할 수 없는 타일은 제외
-                if (field[item.y, item.x] != 0 || tile.fieldPos == item) continue;
+                if (field[item.y, item.x] != Field.EmptyTileIndex || tile.fieldPos == item) continue;
                 // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
                 var damage = tileValues[item.y, item.x];
-                if (damage + entity.CurHealth <= 0) damage -= 5;
+                //if (damage + entity.CurHealth <= 0) damage -= 5;
 
                 // 공격 가능 체크
-                field[tile.fieldPos.y, tile.fieldPos.x] = 0;
-                var plusArea = area.GetAttackVector(field, item, entity.IsReflect);
-                field[tile.fieldPos.y, tile.fieldPos.x] = agent.id;
+                field[tile.fieldPos.y, tile.fieldPos.x] = Field.EmptyTileIndex;
+                var plusArea = area.GetAttackVector(field, item, entity.direction);
+                field[tile.fieldPos.y, tile.fieldPos.x] = (int)agent.id;
                 foreach (var plus in plusArea)
                 {
-                    if (field[plus.y, plus.x] == 0) continue;
-                    if (field[plus.y, plus.x] == agent.id) continue;
+                    if (field[plus.y, plus.x] == Field.EmptyTileIndex) continue;
+                    if (field[plus.y, plus.x] == (int)agent.id) continue;
                     tileValues[item.y, item.x] += power;
                 }
 

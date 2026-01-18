@@ -44,9 +44,14 @@ public class S_CheckMate : BaseSkillLogic
         var tiles = owner.GetAttackArea();
         foreach (var tile in tiles)
         {
+            if (tile.isEmpty) continue;
             if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
             {
-                entity.Damaged(damage);
+                if (!entity.team.IsAlly(owner.team))
+                {
+                    entity.Damaged(damage);
+                }
+                
             }
         }
         owner = null;
@@ -55,6 +60,7 @@ public class S_CheckMate : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_CheckMate();
+        clone.damage = damage;
         return clone;
     }
 }

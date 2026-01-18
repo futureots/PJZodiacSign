@@ -25,8 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
   maxHp: 14
   power: 3
-  hpMultiplier: 0
-  powerMultiplier: 0
-  skill: {fileID: 11400000, guid: 4157b8eacda450f499ba458fbc42723a, type: 2}
+  hpMultiplier: 3
+  powerMultiplier: 1
+  skill: {fileID: 11400000, guid: 66eea223f2dcd9740ba42b8a8be86767, type: 2}
   maxEnergy: 5
-  hpPanelPosition: {x: 0, y: 3.2, z: 0}
+  offset: {x: 0, y: 3, z: 0}

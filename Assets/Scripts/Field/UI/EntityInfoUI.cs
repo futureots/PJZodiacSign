@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class EntityInfoUI : MonoBehaviour
 {
-    InputManager _inputManager;
-    int teamId;
+    [SerializeField] InputManager inputManager;
+    PlayerID id;
 
     Entity selectedEntity;
     SkillComponent _skill;
@@ -22,6 +22,7 @@ public class EntityInfoUI : MonoBehaviour
     public SkillInfoUI skillInfo;
     public Button entitySkillBtn;
 
+
     void Start()
     {
         InfoPanel.SetActive(false);
@@ -29,15 +30,16 @@ public class EntityInfoUI : MonoBehaviour
 
     public void Init(InputManager input)
     {
-        _inputManager = input;
-        teamId = _inputManager.agent.id;
+        inputManager = input;
+        id = inputManager.agent.id;
         input.OnObjectClicked.AddListener(OnObjectClick);
-        input.onModeChanged += SetSkillButton;
+        input.OnModeChanged += SetSkillButton;
         entitySkillBtn.onClick.AddListener(UseSkill);
     }
 
     void OnObjectClick(GameObject obj)
     {
+        if (!obj) return;
         if (obj.TryGetComponent<Entity>(out var entity))
         {
             ShowPanel(entity);
@@ -94,7 +96,7 @@ public class EntityInfoUI : MonoBehaviour
         {
             _skill = skill;
             skillInfo.SetSkillUI(_skill.skillData);
-            SetSkillButton(_inputManager.curModeState);
+            SetSkillButton(inputManager.curModeState);
         }
         else
         {
@@ -116,7 +118,7 @@ public class EntityInfoUI : MonoBehaviour
     void UseSkill()
     {
         if(_skill != null)
-            _inputManager.SetInputMode(_skill);
+            inputManager.SetInputMode(_skill);
     }
     void SetSkillButton(IInputState state)
     {
@@ -125,7 +127,7 @@ public class EntityInfoUI : MonoBehaviour
         {
             if(selectedEntity != null)
             {
-                if (selectedEntity.team.IsAlly(teamId))
+                if (selectedEntity.team.IsAlly(id))
                 {
                     if (_skill.IsUsable())
                     {

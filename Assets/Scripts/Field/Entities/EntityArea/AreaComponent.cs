@@ -24,7 +24,7 @@ public class AreaComponent : MonoBehaviour
 
     public List<Area> attackArea;
 
-    public List<intVector2> GetAttackVector(int[,] field, intVector2 pos, bool isReflect)
+    public List<intVector2> GetAttackVector(int[,] field, intVector2 pos, intVector2 direction)
     {
         var list = new List<intVector2>();
         if (isSealed)
@@ -34,7 +34,7 @@ public class AreaComponent : MonoBehaviour
         
         foreach (var area in attackArea)
         {
-            var vectors = area.GetVectors(field, pos, isReflect);
+            var vectors = area.GetVectors(field, pos, direction);
             list.AddRange(vectors);
         }
         return list;
@@ -58,7 +58,7 @@ public class AreaComponent : MonoBehaviour
     /// 기물의 이동 가능 좌표를 반환
     /// </summary>
     /// <returns>이동 가능 좌표의 배열</returns>
-    public List<intVector2> GetMoveVector(int[,] field, intVector2 pos, bool isReflect)
+    public List<intVector2> GetMoveVector(int[,] field, intVector2 pos, intVector2 direction)
     {
         var list = new List<intVector2>();
         if (isRooted)
@@ -68,7 +68,7 @@ public class AreaComponent : MonoBehaviour
 
         foreach (var area in moveArea)
         {
-            var vectors = area.GetVectors(field, pos, isReflect);
+            var vectors = area.GetVectors(field, pos, direction);
             list.AddRange(vectors);
         }
         return list;

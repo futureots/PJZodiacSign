@@ -1,21 +1,26 @@
-using UnityEngine;
+
 
 public class EntityGoodsUI : GoodsUI<EntityData>
 {
-    public override void SetGoods(EntityData data, Agent customer)
+    public override void SetGoods(EntityData data)
     {
         buyBtn.onClick.RemoveAllListeners();
-        base.SetGoods(data, customer);
+        base.SetGoods(data);
         buyBtn.onClick.AddListener(() =>
         {
-            //if (customer.SummonEntity(data))
-            //{
-            //    customer.Credit -= price;
-            //}
-            //else
-            //{
-            //    Debug.Log("소환할 빈 공간이 없습니다!");
-            //}
+            var customer = Agent.LocalPlayer;
+            var teamNum = customer.id;
+            var tiles = Field.GetEmptyTiles(StageManager.Instance.agentField[teamNum].GetTiles());
+            if(tiles.Count > 0)
+            {
+                var entity = EntityFactory.RequestEntity(data, new intVector2(1, 1), tiles[0]);
+                entity.team.teamNumber = teamNum;
+                customer.Credit -= price;
+            }
+            else
+            {
+                EditorLogger.Print("소환할 빈 공간이 없습니다!");
+            }
         });
     }
 }

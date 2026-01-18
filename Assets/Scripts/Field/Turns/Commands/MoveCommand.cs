@@ -1,21 +1,30 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
-public class MoveCommand : Command
+public sealed record MoveCommand(Entity Entity, Tile To, Tile From, bool IsWarp) : Command
 {
-    Tile prevTile;
-    public readonly Entity entity;
-    public readonly Tile tile;
-    public MoveCommand(Entity entity, Tile tile, Action onDestroyed = null)
+    public MoveCommand(Entity entity, Tile To, bool IsWarp) : this(entity, To, entity.CurTile, IsWarp)
     {
-        this.entity = entity;
-        prevTile = entity.CurTile;
-        this.tile = tile;
+        
     }
-
+    
     public override IEnumerator Execute(Action callback)
     {
-        var result = entity.Move(tile);
+        if (IsWarp)
+        {
+            Entity.Move(To);
+        }
+        else
+        {
+            var list = Entity.GetMoveArea();
+            if (list.Contains(To))
+            {
+                Entity.Move(To);
+            }
+            
+        }
+        yield return new WaitForSeconds(1);
         callback?.Invoke();
         Delete();
         yield break;
@@ -23,12 +32,27 @@ public class MoveCommand : Command
 
     public override string ToString()
     {
-        var prevPos = prevTile.fieldPos;
+        var prevPos = From.fieldPos;
         var prevText = $"( {(char)((prevPos.x) + 'A')}, {prevPos.y + 1} )";
 
-        var pos = tile.fieldPos;
+        var pos = To.fieldPos;
         var posText = $"( {(char)((pos.x) + 'A')}, {pos.y + 1} )";
 
-        return $"{entity.baseData.productName} {prevText} 이 {posText}으로 이동";
+        return $"{Entity.baseData.productName} {prevText} 이 {posText}으로 이동";
+    }
+    public override bool IsOverlap(Command cmd)
+    {
+        if (cmd is MoveCommand mvCmd)
+        {
+            if (mvCmd.Entity == Entity)
+            {
+                return true;
+            }
+            else if (mvCmd.To == To)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

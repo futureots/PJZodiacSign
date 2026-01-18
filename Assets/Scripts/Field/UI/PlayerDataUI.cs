@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class PlayerDataUI : MonoBehaviour
 {
-    public Agent agent;
+    Agent agent;
 
     public TextMeshProUGUI credit;
     public TextMeshProUGUI level;
-
+    private void Awake()
+    {
+        level.gameObject.SetActive(false);
+    }
     public void Init(Agent agent)
     {
         this.agent = agent;
-        //agent.onCreditChanged += UpdateCredit;
-        //GameManager.onNextLevel += UpdateLevel;
+        agent.OnCreditChanged += UpdateCredit;
+        UpdateCredit(agent.Credit);
     }
 
 

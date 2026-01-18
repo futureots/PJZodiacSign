@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +19,7 @@ namespace PlayerInput
         protected GameObject targetSelecter = null;
         protected GameObject targetTileSelecter = null;
 
+
         public MoveModeInput(InputManager input)
         {
             _inputManager = input;
@@ -36,7 +36,7 @@ namespace PlayerInput
             GameObject.Destroy(targetTileSelecter);
         }
 
-        public void SetMode()
+        public virtual void SetMode()
         {
             _inputManager.OnObjectClicked.AddListener(DragStart);
 
@@ -45,22 +45,28 @@ namespace PlayerInput
             targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter);
             targetSelecter.SetActive(false);
             targetTileSelecter.SetActive(false);
+
         }
 
 
         // 드래그 시작
         protected virtual void DragStart(GameObject obj)
         {
-            if (obj == null) return;
+            if (!obj) return;
 
             if (obj.TryGetComponent<Entity>(out var entity))
             {
                 // 기물이 이동 가능한지 확인
-                if (!_inputManager.agent.entities.Contains(entity)) return;
+                if (!entity.team.IsAlly(_inputManager.agent.id)) return;
                 _selectedEntity = entity;
                 targetSelecter.SetActive(true);
                 targetSelecter.transform.position = _selectedEntity.transform.position + Vector3.up * 0.1f;
+
+                _selectedTile = entity.CurTile;
                 targetTileSelecter.SetActive(true);
+                targetTileSelecter.transform.position = _selectedTile.transform.position + Vector3.up * 0.1f;
+
+
 
                 // 기물 이동범위 표시
                 moveArea = GetMovableTiles(); // 수리 모드일때는 다른 방식으로 가져옴
@@ -68,6 +74,13 @@ namespace PlayerInput
                 {
                     move.ApplyHighlight(Tile.HighLightType.Move);
                 }
+
+                attackArea = _selectedEntity.GetAttackArea(_selectedTile);
+                foreach (var area in attackArea)
+                {
+                    area.ApplyHighlight(Tile.HighLightType.Attack);
+                }
+
 
                 _inputManager.OnMouseMove.AddListener(DragEntity);
                 _inputManager.OnMouseUp.AddListener(DragEnd);
@@ -102,6 +115,9 @@ namespace PlayerInput
         // 드래그 종료
         protected virtual void DragEnd()
         {
+            _inputManager.OnMouseMove.RemoveListener(DragEntity);
+            _inputManager.OnMouseUp.RemoveListener(DragEnd);
+
             // 엔티티 클리어
             if (_selectedEntity != null)
             {
@@ -114,24 +130,22 @@ namespace PlayerInput
                 {
                     move.RemoveHighlight(Tile.HighLightType.Move);
                 }
-
-                DragAction();
-
                 targetSelecter.SetActive(false);
                 targetTileSelecter.SetActive(false);
 
+                
+                DragAction();
                 _selectedEntity = null;
+                _selectedTile = null;
             }
-
-            _inputManager.OnMouseMove.RemoveListener(DragEntity);
-            _inputManager.OnMouseUp.RemoveListener(DragEnd);
+            
         }
 
         /// <summary>
         /// 이동가능한 타일 리스트 반환
         /// </summary>
         /// <returns></returns>
-        public virtual List<Tile> GetMovableTiles()
+        protected virtual List<Tile> GetMovableTiles()
         {
             return _selectedEntity.GetMoveArea();
         }
@@ -139,20 +153,19 @@ namespace PlayerInput
         /// <summary>
         /// 입력된 데이터로 사용할 명령 입력
         /// </summary>
-        public virtual void DragAction()
+        protected virtual void DragAction()
         {
             // 제자리 이동 불가능
-            if (!_selectedEntity.CurTile.Equals(_selectedTile))
+            if (!_selectedEntity.CurTile.Equals(_selectedTile) && _selectedTile)
             {
-                var sel1 = GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
-                var sel2 = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position, Quaternion.identity);
-                Action action = () =>
-                {
-                    GameObject.Destroy(sel1);
-                    GameObject.Destroy(sel2);
-                };
+                
+                var entityIndicator = GameObject.Instantiate(_inputManager.entitySelecter, _selectedEntity.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+                var tileIndicator = GameObject.Instantiate(_inputManager.tileSelecter, _selectedTile.transform.position + Vector3.up * 0.1f, Quaternion.identity);
+
                 // 커맨드 생성
-                _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile, action);
+                var command = _inputManager.agent.CreateMoveCommand(_selectedEntity, _selectedTile);
+                command.indicate.Add(entityIndicator);
+                command.indicate.Add(tileIndicator);
             }
         }
     }

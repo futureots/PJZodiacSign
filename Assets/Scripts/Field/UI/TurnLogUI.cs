@@ -1,10 +1,9 @@
-using Battle.Phase;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnLogUI : MonoBehaviour
 {
-    IPhaseManageService phaseManageService;
+    
     public int capacity;
     
     public TurnBlock turnBlock;
@@ -27,9 +26,9 @@ public class TurnLogUI : MonoBehaviour
         //BattlePhase.OnTurnStarted += CreateTurnLog;
     }
 
-    public void Init(IPhaseManageService phaseManageService)
+    public void Init()
     {
-        this.phaseManageService = phaseManageService;
+        
         //phaseManageService.onPhaseChanged += PhaseChange;
     }
 

@@ -379,6 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5388102083c247a4c957507e4582bf93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  dataManager: {fileID: 5654120099146704638}
   LoadingUI: {fileID: 5668448120180178822}
 --- !u!114 &5654120099146704638
 MonoBehaviour:
@@ -393,6 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataManager
   enemyData: {fileID: 0}
+  shopTable: {fileID: 0}
   itemTable: {fileID: 0}
   entityTable: {fileID: 0}
 --- !u!1 &8879300367767262415

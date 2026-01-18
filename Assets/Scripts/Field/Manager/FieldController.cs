@@ -29,7 +29,8 @@ public class FieldController : MonoBehaviour
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
     public event Action<Phase> onPhaseStarted;
-    public event Action<Turn> onTurnStarted;
+    public event Action<Turn> OnTurnStarted;
+
 
     /// <summary>
     /// Phase Set and Reset Turn
@@ -37,6 +38,7 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Phase index for set (-1 for Next Phase)</param>
     public virtual void SetPhase(int index = -1)
     {
+        
         // Next Phase
         if (index == -1)
         {
@@ -46,12 +48,14 @@ public class FieldController : MonoBehaviour
         // Invalid Phase Count
         if (index >= phases.Count)
         {
-            Debug.LogError($"Invalid Phase index");
+            if (IsBattleEnd(out var winner))
+            {
+                GameManager.Instance.ExitBattle(winner);
+            }
             return;
         }
         
         phaseIndex = index;
-
         // Set Model
         stageManager.SetPhase(CurrentPhase);
         onPhaseStarted?.Invoke(CurrentPhase);
@@ -66,6 +70,8 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
+        
+
         // Next Turn
         if (index == -1)
         {
@@ -93,53 +99,100 @@ public class FieldController : MonoBehaviour
         
         // Set Model
         stageManager.SetTurn(CurrentTurn);
-        onTurnStarted?.Invoke(CurrentTurn);
+        OnTurnStarted?.Invoke(CurrentTurn);
     }
     
+    public bool IsBattleEnd(out PlayerID winTeam)
+    {
+        List<PlayerID> surviveTeam = new List<PlayerID>();
+        foreach (var tile in stageManager.field.GetTiles())
+        {
+            if (tile.isEmpty) continue;
+            if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
+            {
+                if (entity.team.teamNumber == PlayerID.None) continue;
+                if (!surviveTeam.Contains(entity.team.teamNumber))
+                {
+                    surviveTeam.Add(entity.team.teamNumber);
+                }
+            }
+        }
+        EditorLogger.Print(surviveTeam.Count);
+        if(surviveTeam.Count == 1)
+        {
+            winTeam = surviveTeam[0];
+            return true;
+        }
+        else
+        {
+            winTeam = PlayerID.None;
+            return false;
+        }
+    }
     #endregion
-    
+
     #region Commands
     /**
      * 
      */
+
+    public int capacity;
+    public List<Command> inputCommands;
+    public event Action<int> OnListUpdated;
     
-    public List<Command> commandList;
-    Command curCmd;
-    bool isSequencing = false;
     protected CommandSystem commandSystem;    // Attach
     
-    public void ExecutedCommands()
+    public void ReceiveCommands(Command cmd)
     {
-        if (!isSequencing)
+        for (int i = inputCommands.Count - 1; i >= 0; i--)
         {
-            isSequencing = true;
-            OnCommandExecuted();
+            if (cmd.IsOverlap(inputCommands[i]))
+            {
+                inputCommands[i].Delete();
+                inputCommands.RemoveAt(i);
+            }
+        }
+
+        inputCommands.Add(cmd);
+        if(cmd is not EndCommand)
+        {
+            if (capacity == -1) { }
+            else if(inputCommands.Count > capacity)
+            {
+                var trashCmd = inputCommands[0];
+                inputCommands.RemoveAt(0);
+                trashCmd.Delete();
+            }
+        }
+        OnListUpdated?.Invoke(inputCommands.Count);
+
+        switch (CurrentPhase.phaseName)
+        {
+            case PhaseType.Repair:
+                SendCommands();
+                break;
+            case PhaseType.Battle:
+                if (cmd is EndCommand)
+                {
+                    SendCommands();
+                }
+                break;
         }
     }
 
+
     public virtual void SendCommands()
     {
-        //TODO: field에 커맨드 전송 및 콜백 함수 설정
-    }
-    public virtual void OnCommandExecuted()
-    {
-        if (commandList.Count > 0)
+        List<IExecute> ExecuteCommands = new List<IExecute>();
+        foreach(var cmd in inputCommands)
         {
-            curCmd = commandList[0];
-            commandList.RemoveAt(0);
-            Action callback = OnCommandExecuted;
-            if (curCmd is EndCommand end)
-            {
-                callback += () => { SetTurn(); };
-            }
-            StartCoroutine(curCmd.Execute(callback));
+            ExecuteCommands.Add(cmd);
         }
-        else
-        {
-            isSequencing = false;
-            EditorLogger.Print("NoMore Command");
-        }
+        stageManager.ReceiveCommands(ExecuteCommands);
+        inputCommands.Clear();
+        OnListUpdated?.Invoke(inputCommands.Count);
     }
+
     
     #endregion
     
@@ -149,8 +202,13 @@ public class FieldController : MonoBehaviour
      */
     public Agent localPlayer;
     public List<Agent> agents;
-    
+
     #endregion
+
+    [Header("Dependency")]
+    [SerializeField] InputManager inputManager;
+    [SerializeField] EnemyAI enemyAI;
+    [SerializeField] InputUIContainer inputUI;
 
     /// <summary>
     /// Initiate Controller
@@ -166,16 +224,19 @@ public class FieldController : MonoBehaviour
         stageManager = StageManager.Instance;
         stageManager.Init(data);
 
+
         // TODO: 에이전트 생성 및 초기화
-        //localPlayer.SetData(data.player);
-        localPlayer.Init(this);
+        localPlayer.Init(this,PlayerID.P0,data.player.credit);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
         {
-            // agents[i].SetData(data.agents[i]);
-            agents[i].Init(this);
+            agents[i].Init(this,(PlayerID)(i), data.agents[i].credit);
         }
+        inputManager.Init(localPlayer);
+        // TODO : 여러개면 for문 내부에서 돌리기(AI도 여러개로 세팅)
+        enemyAI.Init(agents[0]);
+        inputUI.Init(inputManager);
         commandSystem = new();
-        commandList = new();
+        inputCommands = new();
         
         // TODO: 기믹 세팅
         SpecialRule = data.specialRule;

@@ -12,6 +12,8 @@ public class ItemComponent : SkillComponent
     {
         this.itemData = itemData;
         skillData = itemData.skillData;
+        skillLogic = skillData.skillLogic.Clone();
+        skillLogic.SetSkillComponent(this);
     }
 
     public override bool IsUsable()
@@ -21,8 +23,7 @@ public class ItemComponent : SkillComponent
 
     public override IEnumerator ExecuteSkill()
     {
-        // TODO : 자식 클래스 내에 저장된 변수를 사용해 각 스킬의 로직을 코루틴으로 구현
-        yield return null;
+        yield return StartCoroutine(skillLogic.ExecuteSkill());
         Discard();
     }
 

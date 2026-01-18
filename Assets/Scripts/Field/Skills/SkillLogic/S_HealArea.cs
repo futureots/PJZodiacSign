@@ -5,8 +5,7 @@ using UnityEngine;
 [Serializable]
 public class S_HealArea : BaseSkillLogic
 {
-    [SerializeField]
-    Area area;
+    [SerializeField] Area area;
     Entity owner;
     public S_HealArea() { }
     public void Init(Area _area)
@@ -48,13 +47,18 @@ public class S_HealArea : BaseSkillLogic
     {
         var pos = owner.CurTile.fieldPos;
         int[,] t = new int[8, 8];
-        var vectors = area.GetVectors(t, pos, owner.IsReflect);
+        var vectors = area.GetVectors(t, pos, owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         foreach (var tile in tiles)
         {
+            if (tile.isEmpty) continue;
             if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
             {
-                entity.CurHealth += owner.Power;
+                if (entity.team.IsAlly(owner.team))
+                {
+                    entity.Healed(owner.Power);
+                }
+                
             }
         }
         owner = null;

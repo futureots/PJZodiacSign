@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
     public GameObject skillSelecter;
 
     public TurnType curTurnType { get; private set; }
-    public Action<IInputState> onModeChanged;
+    public Action<IInputState> OnModeChanged;
 
     protected void Awake()
     {
@@ -42,17 +42,13 @@ public class InputManager : MonoBehaviour
         // 마우스 이동 시 이벤트 트리거
         inputActions.Gameplay.Point.performed += MoveMouse;
 
-        if (TryGetComponent<Agent>(out var agent))
-        {
-            Init(agent);
-        }
     }
 
     public void Init(Agent agent)
     {
         this.agent = agent;
-        EditorLogger.Print(agent.fieldController);
-        agent.fieldController.onTurnStarted += OnTurnChanged;
+        Agent.LocalPlayer = agent;
+        agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 
     #region InputPackaging
@@ -114,7 +110,7 @@ public class InputManager : MonoBehaviour
 
     #region Turn
     
-    public void OnTurnChanged(Turn curTurn)
+    void OnTurnChange(Turn curTurn)
     {
         curTurnType = curTurn.type;
         
@@ -144,7 +140,7 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = null;
-        onModeChanged?.Invoke(curModeState);
+        OnModeChanged?.Invoke(curModeState);
     }
 
     public void SetInputMode()
@@ -162,7 +158,7 @@ public class InputManager : MonoBehaviour
                 curModeState = new EmptyModeInput();
                 break;
         }
-        onModeChanged?.Invoke(curModeState);
+        OnModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
 
@@ -170,44 +166,21 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = new SkillModeInput(this, skill);
-        onModeChanged?.Invoke(curModeState);
+        OnModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
 
     public void AttackInput()
     {
-        foreach (var entity in agent.entities)
+        var entities = StageManager.Instance.field.GetEntities(agent.id);
+        foreach (var entity in entities)
         {
             agent.CreateAttackCommand(entity);
         }
         agent.CreateEndCommand();
-        agent.SendCommand();
     }
 
     #endregion
-
-
-    /// <summary>
-    /// 오브젝트가 기물이면 기물 정보 표시, 아니면 정보 패널 숨김
-    /// </summary>
-    //void HandleClick(GameObject obj)
-    //{
-    //    if (obj == null)
-    //    {
-    //        UI.entityInfo.HidePanel();
-    //        return;
-    //    }
-    //    var entity = obj.GetComponent<Entity>();
-    //    if (entity != null)
-    //    {
-    //        UI.entityInfo.ShowPanel(entity);
-    //    }
-    //    else
-    //    {
-    //        UI.entityInfo.HidePanel();
-    //    }
-
-    //}
 
     /// <summary>
     /// 가장 가까운 타일 반환
