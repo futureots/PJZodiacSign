@@ -25,7 +25,7 @@ public class HpPanelManager : MonoBehaviour
     {
 
         var bar = Instantiate(hpBar,transform);
-        bar.gameObject.transform.localScale = Vector3.one;
+        bar.gameObject.transform.localScale = Vector3.one * 0.1f;
         hpBarList.Add(bar.gameObject);
 
         bar.SetEntity(target, ()=> hpBarList.Remove(bar.gameObject));

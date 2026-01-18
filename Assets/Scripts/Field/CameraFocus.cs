@@ -12,6 +12,7 @@ public class CameraFocus : MonoBehaviour
     /// </summary>
     public float rotateSpeed;
     public float zoomSpeed;
+
     private void Start()
     {
 
@@ -25,7 +26,7 @@ public class CameraFocus : MonoBehaviour
         {
             SetCameraHorizontal();
             SetCameraVertical();
-            SetCameraZoom();
+            //SetCameraZoom();
         }
         
     }
@@ -48,6 +49,7 @@ public class CameraFocus : MonoBehaviour
     void SetCameraZoom()
     {
         var scroll = Input.GetAxis("Mouse ScrollWheel");
-        camTransform.position -= camTransform.position.normalized * scroll * zoomSpeed * Time.deltaTime * 1000;
+        
+        camTransform.position -= camTransform.position.normalized * scroll * zoomSpeed * Time.deltaTime * 500;
     }
 }

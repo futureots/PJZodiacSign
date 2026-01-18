@@ -130,6 +130,8 @@ public class GameManager : SingletonObject<GameManager>
         else
         {
             // TODO : 패배 메인화면으로 이동
+            DataManager.Instance.ResetData("PlayerData");
+            SceneManager.LoadScene(0);
         }
     }
     

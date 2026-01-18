@@ -61,12 +61,11 @@ public class EntityHpUI : MonoBehaviour
     {
         if (_entity != null)
         {
-            //transform.LookAt(transform.position + Camera.main.transform.forward);
-            Vector3 worldPos = _entity.transform.position + Vector3.Scale(_entity.baseData.offset, _entity.transform.lossyScale);
+            transform.LookAt(transform.position + Camera.main.transform.forward);
 
-            // 2. 월드 좌표를 화면(Screen) 좌표로 변환
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-            rectTransform.position = screenPos;
+            Vector3 worldPos = _entity.transform.position + Vector3.Scale(_entity.baseData.offset, _entity.transform.lossyScale);
+            //Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+            rectTransform.position = worldPos;
         }
     }
     void UpdateLevelText(int level, int prev=0)
