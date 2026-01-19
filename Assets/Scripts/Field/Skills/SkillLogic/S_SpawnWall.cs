@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 
 [Serializable]
@@ -46,6 +47,7 @@ public class S_SpawnWall : BaseSkillLogic
         var obstacle = EntityFactory.RequestEntity(spawnData, intVector2.Zero, tile);
         obstacle.team.teamNumber = PlayerID.None;
         // TODO : 팩토리를 통해 장애물을 생성하고 tile에 생성
+        yield return new WaitForSeconds(0.5f);
         tile = null;
         yield break;
     }

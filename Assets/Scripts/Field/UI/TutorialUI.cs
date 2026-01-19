@@ -8,6 +8,7 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI description;
     [SerializeField, TextArea(3,5)] string repairDescription;
     [SerializeField, TextArea(3, 5)] string moveDescription;
+    [SerializeField, TextArea(3, 5)] string skillDescription;
     [SerializeField, TextArea(3, 5)] string defaultDescription;
 
     public void Init(InputManager inputManager)
@@ -22,6 +23,7 @@ public class TutorialUI : MonoBehaviour
         {
             RepairModeInput => repairDescription,
             MoveModeInput => moveDescription,
+            SkillModeInput => skillDescription,
             _ => defaultDescription
         };
         description.text = text;
