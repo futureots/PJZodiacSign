@@ -255,8 +255,8 @@ public class Field : MonoBehaviour
         return list;
     }
 
-    public static readonly int EmptyTileIndex = -2;
-    public static readonly int NeutralIndex = -3;
+    public static readonly int EmptyTileIndex = -3;
+    public static readonly int NeutralIndex = -2;
 
     /// <summary>
     /// 현재 필드 상태 가져오기
