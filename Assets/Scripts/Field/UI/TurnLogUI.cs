@@ -6,10 +6,10 @@ public class TurnLogUI : MonoBehaviour
     
     public int capacity;
     
-    public TurnBlock turnBlock;
+    public CommandBlock turnBlock;
     public LogBlock logBlock;
     public List<GameObject> blockList;
-    public TurnBlock curTurnBlock;
+    public CommandBlock curTurnBlock;
 
     [Header("UIElement")]
     [SerializeField] GameObject LogToggle;
