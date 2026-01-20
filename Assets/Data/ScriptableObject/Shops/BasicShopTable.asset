@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085ce90d38ea68844b048242b15f3e6e, type: 3}
+  m_Name: BasicShopTable
+  m_EditorClassIdentifier: 
+  itemList:
+  - data: {fileID: 11400000, guid: a29786851afb74448a567e800337ed9d, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 630a889e461c66e42a95888573a3b28b, type: 2}
+    weight: 1
+  entityList:
+  - data: {fileID: 11400000, guid: 30f28ad064d449f47b120eee42b1b191, type: 2}
+    weight: 8
+  - data: {fileID: 11400000, guid: 840fa1fe4952ad34b9f7694dde58f110, type: 2}
+    weight: 4
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    weight: 4
+  - data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
+    weight: 2
+  - data: {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 54a5fff0eb0334a4291770de80d881ef, type: 2}
+    weight: 1

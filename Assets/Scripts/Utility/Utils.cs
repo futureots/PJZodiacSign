@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Utils
@@ -21,13 +19,18 @@ public class Utils
     }
 
 }
-[System.Serializable]
+[Serializable]
 public struct intVector2
 {
     public intVector2(int x, int y)
     {
         this.x = x;
         this.y = y;
+    }
+    public intVector2(intVector2 vec)
+    {
+        this.x = vec.x;
+        this.y = vec.y;
     }
     public int x;
     public int y;
@@ -52,6 +55,10 @@ public struct intVector2
         return new intVector2(left.x*right, left.y*right);
     }
 
+    public static intVector2 operator *(intVector2 left, intVector2 right)
+    {
+        return new intVector2(left.x*right.x, left.y*right.y);
+    }
     public override bool Equals(object obj)
     {
         return obj is intVector2 vector &&
@@ -63,6 +70,22 @@ public struct intVector2
     {
         return HashCode.Combine(x, y);
     }
+
+    public static intVector2 Zero => new intVector2(0, 0);
+
+    public override string ToString()
+    {
+        return $"( x = {x}, y = {y} )";
+    }
 }
 
+[Serializable]
+public class Row<T>
+{
+    public Row()
+    {
+        list = new List<T>();
+    }
+    public List<T> list;
+}
 

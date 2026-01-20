@@ -1,36 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour                     //이 스크립트 상속하면 싱글톤 생성 완료
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour                     
 {
-    private static T instance=null;
-    public static T Instance                                                                                           //instance의 값이 손상되지 않게
+    private static T instance = null;
+    public static T Instance                                                                                           
     {
         get
         {
-            if (instance == null)
+            if (!instance)
             {
-                instance = (T)FindObjectOfType(typeof(T));
-                if(instance == null)
+                instance = (T)FindAnyObjectByType(typeof(T));
+                if (!instance)
                 {
                     GameObject obj = new GameObject(typeof(T).Name, typeof(T));
                     instance = obj.GetComponent<T>();
                 }
-
             }
             return instance;
         }
     }
-    private void Awake()
+}
+
+public class SingletonObject<T> : MonoBehaviour where T : MonoBehaviour                     
+{
+    private static T instance = null;
+    public static T Instance                                                                                           
     {
-        /*if(transform.parent !=null || transform.root != null)                                                             //싱글톤 오브젝트가 파괴되지 않도록 처리
+        get
         {
-            DontDestroyOnLoad(this.transform.root.gameObject);
+            if (!instance)
+            {
+                instance = (T)FindAnyObjectByType(typeof(T));
+                if (!instance)
+                {
+                    GameObject obj = new GameObject(typeof(T).Name, typeof(T));
+                    instance = obj.GetComponent<T>();
+                }
+            }
+            return instance;
         }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }*/
+    }
+
+    public virtual void Awake()
+    {
+        if (Instance != this) Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 }
