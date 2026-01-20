@@ -138,7 +138,7 @@ public class FieldController : MonoBehaviour
 
     public int capacity;
     public List<Command> inputCommands;
-    public event Action<int> OnListUpdated;
+    public event Action<List<Command>> OnListUpdated;
     
     protected CommandSystem commandSystem;    // Attach
     
@@ -164,7 +164,7 @@ public class FieldController : MonoBehaviour
                 trashCmd.Delete();
             }
         }
-        OnListUpdated?.Invoke(inputCommands.Count);
+        OnListUpdated?.Invoke(inputCommands);
 
         switch (CurrentPhase.phaseName)
         {
@@ -190,7 +190,15 @@ public class FieldController : MonoBehaviour
         }
         stageManager.ReceiveCommands(ExecuteCommands);
         inputCommands.Clear();
-        OnListUpdated?.Invoke(inputCommands.Count);
+        OnListUpdated?.Invoke(inputCommands);
+    }
+
+    public void DeleteCommand(int index)
+    {
+        if (index < 0 || index >= inputCommands.Count) return;
+        var cmd = inputCommands[index];
+        inputCommands.RemoveAt(index);
+        cmd?.Delete();
     }
 
     
