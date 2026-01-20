@@ -137,7 +137,7 @@ public class FieldController : MonoBehaviour
      */
 
     public int capacity;
-    public List<Command> inputCommands;
+    private List<Command> inputCommands;
     public event Action<List<Command>> OnListUpdated;
     
     protected CommandSystem commandSystem;    // Attach

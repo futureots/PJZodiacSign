@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class CommandBlock : MonoBehaviour
 {
@@ -18,14 +18,4 @@ public class CommandBlock : MonoBehaviour
         var text = command.ToString();
         description.text = text;
     }
-
-
-
-    
-
-    
-
-
-
 }
-

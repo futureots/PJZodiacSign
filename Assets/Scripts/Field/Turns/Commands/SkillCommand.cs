@@ -13,7 +13,7 @@ public sealed record SkillCommand(SkillComponent Skill) : Command
     public override string ToString()
     {
         string text = "";
-        text += $"스킬사용";
+        text += $"{Skill.skillData.skillName} 스킬 사용";
         return text;
     }
     public override bool IsOverlap(Command cmd)

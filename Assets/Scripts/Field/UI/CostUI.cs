@@ -8,6 +8,7 @@ public class CostUI : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] CommandBlock prefab;
+    [SerializeField] Transform container;
 
     List<CommandBlock> blocks= new();
     
@@ -18,9 +19,10 @@ public class CostUI : MonoBehaviour
         blocks.Clear();
         for (int i = 0; i < _inputManager.agent.actionCount; i++)
         {
-            var obj = Instantiate(prefab,transform);
+            var obj = Instantiate(prefab,container);
             obj.Init(i);
             blocks.Add(obj);
+            obj.gameObject.SetActive(false);
         }
     }
 

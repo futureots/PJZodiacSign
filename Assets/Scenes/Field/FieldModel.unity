@@ -4723,7 +4723,6 @@ GameObject:
   m_Component:
   - component: {fileID: 233994384}
   - component: {fileID: 233994386}
-  - component: {fileID: 233994387}
   m_Layer: 5
   m_Name: TurnLogUI
   m_TagString: Untagged
@@ -4759,26 +4758,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233994383}
   m_CullTransparentMesh: 1
---- !u!114 &233994387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 233994383}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85b1f41bf0348c48b1ee892c626e7c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capacity: 20
-  turnBlock: {fileID: 6746459635128084257, guid: 881cdd3070bec4146917edbf45fddfdf, type: 3}
-  logBlock: {fileID: 3727253429646636434, guid: 7c46d11034735aa4cb2f465912db1472, type: 3}
-  blockList: []
-  curTurnBlock: {fileID: 0}
-  LogToggle: {fileID: 25054849}
-  LogPanel: {fileID: 1522473567}
-  content: {fileID: 1966056778}
 --- !u!1 &234134358
 GameObject:
   m_ObjectHideFlags: 0
