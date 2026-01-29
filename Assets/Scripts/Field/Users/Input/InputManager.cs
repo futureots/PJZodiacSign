@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-
+using UnityEngine.UI;
 
 
 public class InputManager : MonoBehaviour
@@ -22,7 +23,7 @@ public class InputManager : MonoBehaviour
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
-
+    [SerializeField] GraphicRaycaster raycaster;
     public TurnType curTurnType { get; private set; }
     public Action<IInputState> OnModeChanged;
 
@@ -66,13 +67,29 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public UnityEvent<Vector2> OnMouseMove;
 
+
+    /// <summary>
+    /// 현재 마우스 위치가 UI 위에 있는지 확인
+    /// </summary>
+    /// <returns></returns>
+    bool IsOnUI()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = PointerPosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        if (results.Count > 0) return true;
+        return false;
+    }
+    
     /// <summary>
     /// 마우스 클릭 시작
     /// </summary>
     /// <param name="context"></param>
     void StartClick(InputAction.CallbackContext context)
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (IsOnUI()) return;
 
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 레이캐스트 기물, (타일) UI 표시 
