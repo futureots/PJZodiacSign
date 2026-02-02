@@ -39,7 +39,6 @@ namespace PlayerInput
         public virtual void SetMode()
         {
             _inputManager.OnObjectClicked.AddListener(DragStart);
-
             
             targetSelecter = GameObject.Instantiate(_inputManager.entitySelecter);
             targetTileSelecter = GameObject.Instantiate(_inputManager.tileSelecter);
@@ -52,6 +51,7 @@ namespace PlayerInput
         // 드래그 시작
         protected virtual void DragStart(GameObject obj)
         {
+            
             if (!obj) return;
 
             if (obj.TryGetComponent<Entity>(out var entity))

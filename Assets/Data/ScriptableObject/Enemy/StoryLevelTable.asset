@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: StoryLevelTable
   m_EditorClassIdentifier: 
   basicCredit: 50
+  basePhases:
+  - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
+  - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}
   data:
   - level: 1
     enemies: {fileID: 11400000, guid: 9ca63bfd3721eaa43a65bc6dcd1f1420, type: 2}

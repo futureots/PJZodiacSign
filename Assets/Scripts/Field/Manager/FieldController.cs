@@ -23,7 +23,7 @@ public class FieldController : MonoBehaviour
     private int turnIndex;
     
     [SerializeField] protected uint turnCount;       // turn Count in current Phase
-    [SerializeField] public List<Phase> phases;     
+    public List<Phase> phases;     
     public Phase CurrentPhase => phases[phaseIndex];
 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
@@ -248,6 +248,7 @@ public class FieldController : MonoBehaviour
         
         // TODO: 기믹 세팅
         SpecialRule = data.specialRule;
+        phases = data.phases;
         
         // Reset Phase
         turnCount = 0;

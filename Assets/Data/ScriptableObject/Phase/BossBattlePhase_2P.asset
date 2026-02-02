@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c02b50b7cafd45dcbab425db4ef0fec4, type: 3}
-  m_Name: BattlePhase_2P
+  m_Name: BossBattlePhase_2P
   m_EditorClassIdentifier: Assembly-CSharp::Phase
   phaseName: 0
   isLoop: 1
   turnList:
-  - agentID: -1
+  - agentID: 0
     type: 4
     actions: []
-  - agentID: -1
+  - agentID: 0
     type: 2
     actions: []
-  - agentID: 0
+  - agentID: -1
     type: 4
     actions: []
-  - agentID: 0
+  - agentID: -1
     type: 2
     actions: []
   useUIType: 159

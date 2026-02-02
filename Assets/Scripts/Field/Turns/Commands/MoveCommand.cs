@@ -53,6 +53,13 @@ public sealed record MoveCommand(Entity Entity, Tile To, Tile From, bool IsWarp)
                 return true;
             }
         }
+        else if (cmd is SkillCommand skCmd)
+        {
+            if (Entity.skill == skCmd.Skill)
+            {
+                return true;
+            }
+        }
         return false;
     }
 }

@@ -7,7 +7,7 @@ public class EnemyTable : ScriptableObject
     public int credit;
     public List<EntityLevelData> entities;
     public List<FieldEntityLevelData> fieldEntities;
-
+    public List<Phase> phases;
 
 
     public AgentData GetAgentData()

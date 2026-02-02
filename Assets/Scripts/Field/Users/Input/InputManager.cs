@@ -23,7 +23,6 @@ public class InputManager : MonoBehaviour
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
-    [SerializeField] GraphicRaycaster raycaster;
     public TurnType curTurnType { get; private set; }
     public Action<IInputState> OnModeChanged;
 
@@ -114,8 +113,6 @@ public class InputManager : MonoBehaviour
     /// <param name="context"></param>
     void MoveMouse(InputAction.CallbackContext context)
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
-
         PointerPosition = context.ReadValue<Vector2>();
         OnMouseMove?.Invoke(PointerPosition);
     }

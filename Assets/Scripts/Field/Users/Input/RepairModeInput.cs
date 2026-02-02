@@ -10,11 +10,7 @@ namespace PlayerInput
         public RepairModeInput(InputManager input) : base(input)
         {
         }
-        public override void SetMode()
-        {
-            base.SetMode();
-
-        }
+        
         protected override List<Tile> GetMovableTiles()
         {
             // 배치가 가능한 타일 리스트(리소스 필드 + 메인 필드에 배치 가능한 공간)

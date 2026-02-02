@@ -25,6 +25,13 @@ public sealed record SkillCommand(SkillComponent Skill) : Command
                 return true;
             }
         }
+        else if (cmd is MoveCommand mvCmd)
+        {
+            if (mvCmd.Entity.skill == Skill)
+            {
+                return true;
+            }
+        }
         return false;
     }
 }

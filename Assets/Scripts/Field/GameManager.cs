@@ -23,23 +23,29 @@ public class GameManager : SingletonObject<GameManager>
         
     }
     
+    /// <summary>
+    /// 해당 모드 세팅(튜토리얼, 일반 모드 등)
+    /// </summary>
+    /// <param name="levelTable"></param>
+    /// <param name="shopTable"></param>
     public void SetModeData(LevelTable levelTable, ShopTable shopTable)
     {
         this.levelTable = levelTable;
         this.shopTable = shopTable;
     }
-    public List<AgentData> GetEnemyAgentData(int level)
-    {
-        List<AgentData> agents = new List<AgentData>();
-        
-        AgentData enemy = levelTable.GetLevelData(level);
-        agents.Add(enemy);
-        return agents;
-    }
+
+    /// <summary>
+    /// level테이블에서 해당 레벨의 데이터를 생성 후 반환
+    /// </summary>
+    /// <param name="level"></param>
+    /// <param name="playerData"></param>
+    /// <returns></returns>
     public StageData CreateStageData(int level,AgentData playerData)
     {
-        var data = GetEnemyAgentData(level);
-        StageData stageData = new StageData(data, shopTable, level, playerData);
+        List<AgentData> agents = new List<AgentData>();
+        (AgentData enemy,List<Phase> phases) = levelTable.GetLevelData(level);
+        agents.Add(enemy);
+        StageData stageData = new StageData(agents, shopTable,phases, level, playerData);
         return stageData;
     }
     #region BattleInit
@@ -109,7 +115,7 @@ public class GameManager : SingletonObject<GameManager>
 
     #region BattleEnd
 
-    public event Action<bool> OnGameEnded;
+    //public event Action<bool> OnGameEnded;
     /// <summary>
     /// Procedure when Battle End
     /// </summary>
