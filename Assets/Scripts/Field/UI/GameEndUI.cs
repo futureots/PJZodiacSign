@@ -51,10 +51,10 @@ public class GameEndUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.OnGameEnded += OnGameEnd;
+        //GameManager.Instance.OnGameEnded += OnGameEnd;
     }
     private void OnDisable()
     {
-        GameManager.Instance.OnGameEnded -= OnGameEnd;
+        //GameManager.Instance.OnGameEnded -= OnGameEnd;
     }
 }

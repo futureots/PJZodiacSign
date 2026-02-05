@@ -23,7 +23,7 @@ public class FieldController : MonoBehaviour
     private int turnIndex;
     
     [SerializeField] protected uint turnCount;       // turn Count in current Phase
-    [SerializeField] public List<Phase> phases;     
+    public List<Phase> phases;     
     public Phase CurrentPhase => phases[phaseIndex];
 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
@@ -137,8 +137,8 @@ public class FieldController : MonoBehaviour
      */
 
     public int capacity;
-    public List<Command> inputCommands;
-    public event Action<int> OnListUpdated;
+    private List<Command> inputCommands;
+    public event Action<List<Command>> OnListUpdated;
     
     protected CommandSystem commandSystem;    // Attach
     
@@ -164,7 +164,7 @@ public class FieldController : MonoBehaviour
                 trashCmd.Delete();
             }
         }
-        OnListUpdated?.Invoke(inputCommands.Count);
+        OnListUpdated?.Invoke(inputCommands);
 
         switch (CurrentPhase.phaseName)
         {
@@ -190,7 +190,15 @@ public class FieldController : MonoBehaviour
         }
         stageManager.ReceiveCommands(ExecuteCommands);
         inputCommands.Clear();
-        OnListUpdated?.Invoke(inputCommands.Count);
+        OnListUpdated?.Invoke(inputCommands);
+    }
+
+    public void DeleteCommand(int index)
+    {
+        if (index < 0 || index >= inputCommands.Count) return;
+        var cmd = inputCommands[index];
+        inputCommands.RemoveAt(index);
+        cmd?.Delete();
     }
 
     
@@ -240,6 +248,7 @@ public class FieldController : MonoBehaviour
         
         // TODO: 기믹 세팅
         SpecialRule = data.specialRule;
+        phases = data.phases;
         
         // Reset Phase
         turnCount = 0;

@@ -111,7 +111,7 @@ public class StageManager : Singleton<StageManager>
             OnCommandExecuted();
         }
     }
-    public virtual void OnCommandExecuted()
+    public void OnCommandExecuted()
     {
         EditorLogger.Print($"count : {commandList.Count}");
         if (commandList.Count > 0)

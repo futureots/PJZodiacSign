@@ -38,7 +38,7 @@ public sealed record MoveCommand(Entity Entity, Tile To, Tile From, bool IsWarp)
         var pos = To.fieldPos;
         var posText = $"( {(char)((pos.x) + 'A')}, {pos.y + 1} )";
 
-        return $"{Entity.baseData.productName} {prevText} 이 {posText}으로 이동";
+        return $"{Entity.baseData.productName}{prevText} -> {posText} 이동";
     }
     public override bool IsOverlap(Command cmd)
     {
@@ -49,6 +49,13 @@ public sealed record MoveCommand(Entity Entity, Tile To, Tile From, bool IsWarp)
                 return true;
             }
             else if (mvCmd.To == To)
+            {
+                return true;
+            }
+        }
+        else if (cmd is SkillCommand skCmd)
+        {
+            if (Entity.skill == skCmd.Skill)
             {
                 return true;
             }

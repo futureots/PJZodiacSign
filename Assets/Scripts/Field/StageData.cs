@@ -7,12 +7,13 @@ public class StageData
     /**
      * 스테이지 1개 진행에 필요한 정보
      */
-    public StageData(List<AgentData> agents, ShopTable shop, int level = 1 , AgentData player = new())
+    public StageData(List<AgentData> agents, ShopTable shop,List<Phase> phases, int level = 1 , AgentData player = new())
     {
         this.agents = agents;
         this.shopTable = shop;
         this.level = level;
         this.player = player;
+        this.phases = phases;
     }
 
     public int level;
@@ -31,4 +32,5 @@ public class StageData
 
     // Special Rules
     public List<string> specialRule = new();
+    public List<Phase> phases = new();
 }
