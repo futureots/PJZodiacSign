@@ -52,7 +52,7 @@ public class Tile : MonoBehaviour
         if(isEmpty || ignoreOccupant)
         {
             Destroy(occupiedObject);
-
+            
             occupiedObject = obj;
             obj.transform.SetParent(transform);
             obj.transform.localPosition = Vector3.zero;

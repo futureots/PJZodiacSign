@@ -9,7 +9,7 @@ public sealed record MoveCommand(Entity Entity, Tile To, Tile From, bool IsWarp)
         
     }
     
-    public override IEnumerator Execute(Action callback)
+    public override IEnumerator Execute()
     {
         if (IsWarp)
         {
@@ -24,8 +24,7 @@ public sealed record MoveCommand(Entity Entity, Tile To, Tile From, bool IsWarp)
             }
             
         }
-        yield return new WaitForSeconds(1);
-        callback?.Invoke();
+        yield return new WaitForSeconds(0.5f);
         Delete();
         yield break;
     }

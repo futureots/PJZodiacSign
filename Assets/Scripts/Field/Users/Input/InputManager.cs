@@ -73,8 +73,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     bool IsOnUI()
     {
-        PointerEventData eventData = new PointerEventData(EventSystem.current);
-        eventData.position = PointerPosition;
+        PointerEventData eventData = new PointerEventData(EventSystem.current) { position = PointerPosition };
 
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);

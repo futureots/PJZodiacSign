@@ -272,7 +272,6 @@ public class Entity : Occupant, IDamageable, IAttackable
     }
 
     #endregion
-
     #region Indicator
 
     [SerializeField] GameObject indicatorEffect;
@@ -285,4 +284,5 @@ public class Entity : Occupant, IDamageable, IAttackable
         indicatorEffect.SetActive(false);
     }
     #endregion
+    
 }

@@ -31,6 +31,22 @@ public class Agent : MonoBehaviour
     // 행동 포인트
     public int actionCount;
     
+    private int _currentActionCount;
+
+    public int CurrentActionCount
+    {
+        get
+        {
+            return  _currentActionCount;
+        }
+        private set
+        {
+            _currentActionCount = value;
+            onActionCountChanged?.Invoke(_currentActionCount);
+        }
+    }
+    public event Action<int> onActionCountChanged;
+
     private int _credit;
     
     public int Credit
@@ -65,11 +81,11 @@ public class Agent : MonoBehaviour
             switch (turn.type)
             {
                 case TurnType.ACTION:
-                    fieldController.capacity = actionCount;
+                    CurrentActionCount = actionCount;
                     break;
                 case TurnType.ATTACK:
                 case TurnType.REPAIR:
-                    fieldController.capacity = -1;
+                    CurrentActionCount = -1;
                     break;
             }
         }
@@ -95,9 +111,10 @@ public class Agent : MonoBehaviour
             fieldEntityData = _fieldEntityData;
         }
     }
-
+    
     public Command CreateMoveCommand(Entity entity, Tile tile, bool isWarp = false)
     {
+        CurrentActionCount -= 1;
         var cmd = new MoveCommand(entity, tile, isWarp);
         // 해당 기물의 이동명령이 있으면 제거 후 추가
         fieldController.ReceiveCommands(cmd);
@@ -106,6 +123,7 @@ public class Agent : MonoBehaviour
 
     public Command CreateSkillCommand(SkillComponent skill)
     {
+        CurrentActionCount -= 1;
         var cmd = new SkillCommand(skill);
         fieldController.ReceiveCommands(cmd);
         return cmd;
@@ -113,6 +131,7 @@ public class Agent : MonoBehaviour
 
     public Command CreateAttackCommand(Entity entity)
     {
+        CurrentActionCount -= 1;
         var cmd = new AttackCommand(entity);
         fieldController.ReceiveCommands(cmd);
         return cmd;
@@ -120,6 +139,7 @@ public class Agent : MonoBehaviour
 
     public Command CreateEnhanceCommand(Entity target, Entity source)
     {
+        CurrentActionCount -= 1;
         var cmd = new EnhanceCommand(target, source);
         fieldController.ReceiveCommands(cmd);
         return cmd;

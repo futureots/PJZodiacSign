@@ -70,8 +70,6 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
-        
-
         // Next Turn
         if (index == -1)
         {
@@ -135,70 +133,26 @@ public class FieldController : MonoBehaviour
     /**
      * 
      */
-
-    public int capacity;
-    private List<Command> inputCommands;
-    public event Action<List<Command>> OnListUpdated;
     
     protected CommandSystem commandSystem;    // Attach
     
+    /// <summary>
+    /// 각 Agent에게서 실행할 command를 입력 받음.(모든 커맨드는 즉시 StageManager로 전송됨)
+    /// </summary>
+    /// <param name="cmd"></param>
     public void ReceiveCommands(Command cmd)
     {
-        for (int i = inputCommands.Count - 1; i >= 0; i--)
+        // 해당 커맨드에 대한 전처리 후 전송
+        stageManager.ReceiveCommand(cmd);
+        if (CurrentPhase.phaseName == PhaseType.Battle)
         {
-            if (cmd.IsOverlap(inputCommands[i]))
+            if (cmd is SkillCommand)
             {
-                inputCommands[i].Delete();
-                inputCommands.RemoveAt(i);
+                var checkCmd = new CheckCommand(this);
+                stageManager.ReceiveCommand(checkCmd);
             }
         }
-
-        inputCommands.Add(cmd);
-        if(cmd is not EndCommand)
-        {
-            if (capacity == -1) { }
-            else if(inputCommands.Count > capacity)
-            {
-                var trashCmd = inputCommands[0];
-                inputCommands.RemoveAt(0);
-                trashCmd.Delete();
-            }
-        }
-        OnListUpdated?.Invoke(inputCommands);
-
-        switch (CurrentPhase.phaseName)
-        {
-            case PhaseType.Repair:
-                SendCommands();
-                break;
-            case PhaseType.Battle:
-                if (cmd is EndCommand)
-                {
-                    SendCommands();
-                }
-                break;
-        }
-    }
-
-
-    public virtual void SendCommands()
-    {
-        List<IExecute> ExecuteCommands = new List<IExecute>();
-        foreach(var cmd in inputCommands)
-        {
-            ExecuteCommands.Add(cmd);
-        }
-        stageManager.ReceiveCommands(ExecuteCommands);
-        inputCommands.Clear();
-        OnListUpdated?.Invoke(inputCommands);
-    }
-
-    public void DeleteCommand(int index)
-    {
-        if (index < 0 || index >= inputCommands.Count) return;
-        var cmd = inputCommands[index];
-        inputCommands.RemoveAt(index);
-        cmd?.Delete();
+        
     }
 
     
@@ -244,7 +198,6 @@ public class FieldController : MonoBehaviour
         enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
         commandSystem = new();
-        inputCommands = new();
         
         // TODO: 기믹 세팅
         SpecialRule = data.specialRule;
