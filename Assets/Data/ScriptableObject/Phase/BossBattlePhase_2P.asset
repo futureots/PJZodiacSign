@@ -16,15 +16,15 @@ MonoBehaviour:
   isLoop: 1
   turnList:
   - agentID: 0
-    type: 4
+    type: 2
     actions: []
   - agentID: 0
-    type: 2
-    actions: []
-  - agentID: -1
     type: 4
     actions: []
   - agentID: -1
     type: 2
+    actions: []
+  - agentID: -1
+    type: 4
     actions: []
   useUIType: 159
