@@ -26,6 +26,8 @@ public class InputManager : MonoBehaviour
     public TurnType curTurnType { get; private set; }
     public Action<IInputState> OnModeChanged;
 
+    [SerializeField] private int maxEntityCount = 12;
+    public int  MaxEntityCount => maxEntityCount;
     protected void Awake()
     {
         inputActions = new GameInputActions();
@@ -130,15 +132,7 @@ public class InputManager : MonoBehaviour
         if (curTurn.agentID == agent.id)
         {
             EditorLogger.Print("Player" + curTurnType.ToString());
-            if(curTurn.type == TurnType.ATTACK)
-            {
-                AttackInput();
-            }
-            else
-            {
-                SetInputMode();
-            }
-                
+            SetInputMode();
         }
         else
         {
@@ -167,6 +161,9 @@ public class InputManager : MonoBehaviour
             case TurnType.REPAIR:
                 curModeState = new RepairModeInput(this);
                 break;
+            case TurnType.ATTACK:
+                curModeState = new AttackModeInput(this);
+                break;
             default:
                 curModeState = new EmptyModeInput();
                 break;
@@ -182,16 +179,7 @@ public class InputManager : MonoBehaviour
         OnModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
-
-    public void AttackInput()
-    {
-        var entities = StageManager.Instance.field.GetEntities(agent.id);
-        foreach (var entity in entities)
-        {
-            agent.CreateAttackCommand(entity);
-        }
-        agent.CreateEndCommand();
-    }
+    
 
     #endregion
 

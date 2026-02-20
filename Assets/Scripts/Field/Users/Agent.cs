@@ -45,6 +45,9 @@ public class Agent : MonoBehaviour
             onActionCountChanged?.Invoke(_currentActionCount);
         }
     }
+    
+    public List<Entity> actionAbleEntities=new List<Entity>();
+    
     public event Action<int> onActionCountChanged;
 
     private int _credit;
@@ -71,20 +74,27 @@ public class Agent : MonoBehaviour
         this.fieldController = fieldController;
         this.id = teamId;
         Credit = credit;
-        fieldController.onPhaseStarted += OnPhaseChange;
+        fieldController.OnPhaseStarted += OnPhaseChange;
         fieldController.OnTurnStarted += OnTurnChange;
+        
     }
     void OnTurnChange(Turn turn)
     {
         if(turn.agentID == id)
         {
+            
             switch (turn.type)
             {
                 case TurnType.ACTION:
                     CurrentActionCount = actionCount;
+                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
                     break;
                 case TurnType.ATTACK:
+                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
+                    CurrentActionCount = -1;
+                    break;
                 case TurnType.REPAIR:
+                    actionAbleEntities = StageManager.Instance.agentField[id].GetEntities(id);
                     CurrentActionCount = -1;
                     break;
             }

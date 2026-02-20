@@ -28,7 +28,7 @@ public class FieldController : MonoBehaviour
 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
-    public event Action<Phase> onPhaseStarted;
+    public event Action<Phase> OnPhaseStarted;
     public event Action<Turn> OnTurnStarted;
 
 
@@ -58,7 +58,7 @@ public class FieldController : MonoBehaviour
         phaseIndex = index;
         // Set Model
         stageManager.SetPhase(CurrentPhase);
-        onPhaseStarted?.Invoke(CurrentPhase);
+        OnPhaseStarted?.Invoke(CurrentPhase);
         
         // Reset Turn
         SetTurn(0);
@@ -191,7 +191,7 @@ public class FieldController : MonoBehaviour
         localPlayer.Init(this,PlayerID.P0,data.player.credit);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)
         {
-            agents[i].Init(this,(PlayerID)(i), data.agents[i].credit);
+            agents[i].Init(this,(PlayerID)i, data.agents[i].credit);
         }
         inputManager.Init(localPlayer);
         // TODO : 여러개면 for문 내부에서 돌리기(AI도 여러개로 세팅)

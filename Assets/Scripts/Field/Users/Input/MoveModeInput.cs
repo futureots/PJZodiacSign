@@ -62,6 +62,7 @@ namespace PlayerInput
 
             // 기물이 이동 가능한지 확인
             if (!entity.team.IsAlly(inputManager.agent.id)) return;
+            if (!inputManager.agent.actionAbleEntities.Contains(entity)) return;
             selectedEntity = entity;
             targetSelector.SetActive(true);
             targetSelector.transform.position = selectedEntity.transform.position + Vector3.up * 0.1f;
@@ -166,6 +167,7 @@ namespace PlayerInput
 
                 // 커맨드 생성
                 inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile);
+                inputManager.agent.actionAbleEntities.Remove(selectedEntity);
                 
                 EditorLogger.Print($"남은 행동력 {inputManager.agent.CurrentActionCount}");
                 // 더이상 행동할 수 없으면 자동으로 턴 종료

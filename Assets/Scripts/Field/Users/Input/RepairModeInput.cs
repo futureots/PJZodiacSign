@@ -6,7 +6,7 @@ namespace PlayerInput
 {
     public class RepairModeInput : MoveModeInput
     {
-        public Action<Entity, Entity> OnEnhanceRequested;
+        public Action<Entity, Entity> onEnhanceRequested;
         public RepairModeInput(InputManager input) : base(input)
         {
         }
@@ -23,7 +23,7 @@ namespace PlayerInput
         protected override void DragAction()
         {
             // 해당 타일로 이동
-            if (!selectedEntity.Move(selectedTile))
+            if (!selectedTile.isEmpty)
             {
                 if(selectedTile.occupiedObject.TryGetComponent<Entity>(out var target))
                 {
@@ -34,7 +34,7 @@ namespace PlayerInput
                         {
                             // 강화 확인 다이얼로그 표시
                             
-                            OnEnhanceRequested?.Invoke(target, selectedEntity);
+                            onEnhanceRequested?.Invoke(target, selectedEntity);
                             return;
                         }
                     }
@@ -42,8 +42,24 @@ namespace PlayerInput
             }
             else if (!selectedEntity.CurTile.Equals(selectedTile))
             {
-                //커맨드 생성
-                inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile, true);
+                // 기물이 리소스에서 메인 필드로 이동하는 경우
+                if (!selectedEntity.CurTile.field.Equals(selectedTile.field) && selectedTile.field.Equals(StageManager.Instance.field))
+                {
+                    var fieldEntities = StageManager.Instance.field.GetEntities(inputManager.agent.id);
+                    // 필드에 배치가 가능할 경우
+                    if (inputManager.MaxEntityCount > fieldEntities.Count)
+                    {
+                        //커맨드 생성
+                        inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile, true);
+                        // TODO : 배치 가능 수를 넘어섰다는 메세지 표시(전송)
+                    }
+                }
+                else
+                {
+                    //커맨드 생성
+                    inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile, true);
+                }
+                
             }
         }
 
