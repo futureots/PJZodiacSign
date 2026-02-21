@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour , IInput
 {
@@ -57,6 +57,28 @@ public class EnemyAI : MonoBehaviour , IInput
 
     public IEnumerator SetRepairMode()
     {
+        // 보유한 크레딧으로 상점을 통해 기물 구매
+        var emptyTiles = Field.GetEmptyTiles(StageManager.Instance.agentField[agent.id].GetTiles());
+        foreach (var emptyTile in emptyTiles)
+        {
+            var data = StageManager.Instance.shop.GetRandomEntity(agent.Credit);
+            if (!data) break;
+            agent.Credit -= data.normalPrice;
+            var entity = EntityFactory.RequestEntity(data, new intVector2(-1, -1), emptyTile);
+        }
+
+        // 남은 크레딧으로 기물 강화
+        foreach (var entity in StageManager.Instance.agentField[agent.id].GetEntities())
+        {
+            var mul = 1;
+            for (int i = 0; i < entity.Level; i++) mul *= 2;
+            if (mul * entity.baseData.normalPrice < agent.Credit)
+            {
+                agent.Credit -= mul * entity.baseData.normalPrice;
+                entity.Level += 1;
+            }
+        }
+        
         yield return null;
         // 내 필드에 있는 기물을 메인 필드에 배치
         var fieldTiles = Field.GetEmptyTiles(StageManager.Instance.field.GetHalfTiles(true));
@@ -77,41 +99,54 @@ public class EnemyAI : MonoBehaviour , IInput
     public IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
-        // TODO : 스킬을 사용할 수 있으면 스킬을 사용한다.
-
-        int max = 0;
-        Entity bestEntity = null;
-        intVector2 bestPos = new intVector2(-1, -1);
-        
-        bool flag = false;
-        var entities = StageManager.Instance.field.GetEntities().Where((e) => e.team.IsAlly(agent.id)).ToList();
-        foreach (var checkEntity in entities)
+        var flag = false;
+        Action<int> wait = i =>
         {
+            if (i == 0) flag = true;
+            else flag = false;
+        };
+        StageManager.Instance.isSequencing += wait;
+        
 
-            // 필드 값 가져오기
-            int[,] field = StageManager.Instance.field.GetFieldState(checkEntity);
-
-            // 적의 공격범위 가져오기 및 예상 데미지 계산
-            var values = StageManager.Instance.field.CalculateEnemyThreat(field, checkEntity.team.teamNumber);
-
-            // 가장 좋은 위치의 행동 가져오기
-            if (TryGetBestMove(checkEntity, field, values, out int value, out intVector2 pos))
+        for (int i = 0; i < agent.actionCount;i++) {
+            // TODO : 스킬을 사용할 수 있으면 스킬을 사용한다.
+            int max = -9999;
+            List<KeyValuePair<Entity, intVector2>> bestAct = new();
+            foreach (var checkEntity in agent.actionAbleEntities)
             {
-                flag = true;
-                EditorLogger.Print($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
-                // 같은 값일 경우 이후의 명령만 가짐
-                if (max < value || bestEntity == null)
+                // 필드 값 가져오기
+                int[,] field = StageManager.Instance.field.GetFieldState(checkEntity);
+
+                // 적의 공격범위 가져오기 및 예상 데미지 계산
+                var values = StageManager.Instance.field.CalculateEnemyThreat(field, agent.id);
+
+                // 가장 좋은 위치의 행동 가져오기
+                if (TryGetBestMove(checkEntity, field, values, out int value, out intVector2 pos))
                 {
-                    max = value;
-                    bestEntity = checkEntity;
-                    bestPos = pos;
+                    // 같은 값일 경우 리스트에 추가해서 랜덤 추출
+                    if (max < value)
+                    {
+                        EditorLogger.Print($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
+                        bestAct.Clear();
+                        max = value;
+                        bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
+                    }
+                    else if (max == value)
+                    {
+                        bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
+                    }
                 }
             }
+
+            if (bestAct.Count > 0)
+            {
+                var best = bestAct[Random.Range(0, bestAct.Count)];
+                agent.CreateMoveCommand(best.Key, StageManager.Instance.field.GetTile(best.Value));
+                agent.actionAbleEntities.Remove(best.Key);
+                yield return new WaitUntil(() => flag);
+            }
         }
-        if (flag)
-        {
-            agent.CreateMoveCommand(bestEntity, StageManager.Instance.field.GetTile(bestPos));
-        }
+        StageManager.Instance.isSequencing -= wait;
         agent.CreateEndCommand();
     }
 
@@ -124,58 +159,63 @@ public class EnemyAI : MonoBehaviour , IInput
         out int value,
         out intVector2 pos)
     {
+        // 이동할 가치가 있는지 판단
+        bool isWorthy = false;
 
         int power = entity.Power;
-
-        var tile = entity.CurTile;
-        int max = tileValues[tile.fieldPos.y, tile.fieldPos.x];
-
-        List<intVector2> valuablePos = new();
-        if (entity.TryGetComponent<AreaComponent>(out var area))
+        var area = entity.area;
+        
+        pos = entity.CurTile.fieldPos;
+        // TODO : 현재 타일의 이득값을 계산
+        var plusArea = area.GetAttackVector(field, pos, entity.direction);
+        field[pos.y, pos.x] = (int)agent.id;
+        foreach (var plus in plusArea)
         {
-            var list = area.GetMoveVector(field, tile.fieldPos, entity.direction);
+            if (field[plus.y, plus.x] == Field.EmptyTileIndex) continue;
+            if (field[plus.y, plus.x] == (int)agent.id) continue;
+            tileValues[pos.y, pos.x] += power + 1;
+        } 
+        value = tileValues[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
+        List<intVector2> valuablePos = new();
+        
+        var moveVectors = area.GetMoveVector(field, entity.CurTile.fieldPos, entity.direction);
+        // TODO : 이동 범위 타일의 이득값을 계산, 현재 타일보다 이득값이 클 경우 갱신
+        foreach (var moveVector in moveVectors)
+        {
+            // 이동할 수 없는 타일은 제외
+            if (field[moveVector.y, moveVector.x] != Field.EmptyTileIndex || entity.CurTile.fieldPos == moveVector) continue;
 
-            foreach (var item in list)
+            // 공격 가능 체크
+            field[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = Field.EmptyTileIndex;
+            plusArea = area.GetAttackVector(field, moveVector, entity.direction);
+            field[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = (int)agent.id;
+            foreach (var plus in plusArea)
             {
-                // 이동할 수 없는 타일은 제외
-                if (field[item.y, item.x] != Field.EmptyTileIndex || tile.fieldPos == item) continue;
-                // 죽음 위험 체크(이동 후 체력이 0 이하면 가중치 부여)
-                var damage = tileValues[item.y, item.x];
-                //if (damage + entity.CurHealth <= 0) damage -= 5;
+                if (field[plus.y, plus.x] == Field.EmptyTileIndex) continue;
+                if (field[plus.y, plus.x] == (int)agent.id) continue;
+                tileValues[moveVector.y, moveVector.x] += power + 1;
+            }
 
-                // 공격 가능 체크
-                field[tile.fieldPos.y, tile.fieldPos.x] = Field.EmptyTileIndex;
-                var plusArea = area.GetAttackVector(field, item, entity.direction);
-                field[tile.fieldPos.y, tile.fieldPos.x] = (int)agent.id;
-                foreach (var plus in plusArea)
-                {
-                    if (field[plus.y, plus.x] == Field.EmptyTileIndex) continue;
-                    if (field[plus.y, plus.x] == (int)agent.id) continue;
-                    tileValues[item.y, item.x] += power;
-                }
 
-                if (damage > max || valuablePos.Count == 0)
-                {
-                    valuablePos.Clear();
-                    max = damage;
-                    valuablePos.Add(item);
-                }
-                else if (damage == max)
-                {
-                    valuablePos.Add(item);
-                }
+            if (value < tileValues[moveVector.y, moveVector.x])
+            {
+                valuablePos.Clear();
+                value = tileValues[moveVector.y, moveVector.x];
+                isWorthy = true;
+                valuablePos.Add(moveVector);
+            }
+            else if (value == tileValues[moveVector.y, moveVector.x] && isWorthy)
+            {
+                valuablePos.Add(moveVector);
             }
         }
-        if (valuablePos.Count <= 0)
-        {
-            value = 0;
-            pos = intVector2.Zero;
 
-            return false;
+        if (isWorthy)
+        {
+            pos = valuablePos[Random.Range(0, valuablePos.Count)];
+            return true;
         }
-        value = max;
-        pos = valuablePos[UnityEngine.Random.Range(0, valuablePos.Count)];
-        return true;
+        return false;
     }
 
     public IEnumerator InputEntity(List<Entity> list, Action<Entity> input, Action<bool> callback, int count = -1)

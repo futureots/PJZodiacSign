@@ -44,4 +44,22 @@ public class Shop : MonoBehaviour
         items = table.GetRandomItem(2);
         entities = table.GetRandomEntity(3);
     }
+
+    /// <summary>
+    /// 크레딧으로 살 수 있는 기물 중 랜덤 1개를 택해서 반환한다.
+    /// </summary>
+    /// <param name="credit"></param>
+    /// <returns></returns>
+    public EntityData GetRandomEntity(int credit)
+    {
+        if (table.TryGetBuyableEntity(credit, out EntityData entityData))
+        {
+            return entityData;
+        }
+        else
+        {
+            return null;
+        }
+        
+    }
 }
