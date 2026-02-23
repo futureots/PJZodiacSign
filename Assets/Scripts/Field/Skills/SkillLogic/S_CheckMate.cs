@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -7,54 +8,42 @@ using UnityEngine;
 public class S_CheckMate : BaseSkillLogic
 {
     [SerializeField] int damage;
-    Entity owner;
+    private Entity _owner;
 
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        isContinued = false;
-        if (component.TryGetComponent<Entity>(out var _owner))
+        if (component.TryGetComponent<Entity>(out var owner))
         {
-            owner = _owner;
-            callback?.Invoke(true);
-            yield break;
+            _owner = owner;
+            return true;
         }
-        else
+        var list = StageManager.Instance.field.GetEntities();
+        var data = await input.InputEntity(list, 1);
+        if(data != null)
         {
-            var list = StageManager.Instance.field.GetEntities();
-            Entity _target = null;
-            Action<Entity> action = (x) =>
-            {
-                _target = x;
-            };
-            Action<bool> conti = (flag) => { isContinued = flag; };
-            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-            if (!isContinued)
-            {
-                callback?.Invoke(false);
-                yield break;
-            }
-            owner = _target;
-            callback?.Invoke(true);
+            _owner = data[0];
+            return true;
         }
+        
+        return false;
 
     }
-
     public override IEnumerator ExecuteSkill()
     {
-        var tiles = owner.GetAttackArea();
+        var tiles = _owner.GetAttackArea();
         foreach (var tile in tiles)
         {
             if (tile.isEmpty) continue;
             if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
             {
-                if (!entity.team.IsAlly(owner.team))
+                if (!entity.team.IsAlly(_owner.team))
                 {
                     entity.Damaged(damage);
                 }
                 
             }
         }
-        owner = null;
+        _owner = null;
         yield break;
     }
     public override BaseSkillLogic Clone()

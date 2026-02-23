@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 
@@ -5,33 +6,26 @@ using System.Collections;
 [Serializable]
 public class S_HealSingle : BaseSkillLogic
 {
-    Entity target;
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    private Entity _target;
+    public override async UniTask<bool> InputSkill(IInput input)
     {
         var list = StageManager.Instance.field.GetEntities();
-        isContinued = false;
-        Entity _target = null;
-        Action<Entity> action = (x) =>
+        var data = await input.InputEntity(list, 1);
+        if(data != null)
         {
-            _target = x;
-        };
-        Action<bool> conti = (flag) => { isContinued = flag; };
-        yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-        if (!isContinued)
-        {
-            callback?.Invoke(false);
-            yield break;
+            _target = data[0];
+            return true;
         }
-        target = _target;
-        callback?.Invoke(true);
+        
+        return false;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        EditorLogger.Print(target.CurHealth);
-        target.CurHealth = target.MaxHealth;
-        EditorLogger.Print(target.CurHealth);
-        target = null;
+        EditorLogger.Print(_target.CurHealth);
+        _target.CurHealth = _target.MaxHealth;
+        EditorLogger.Print(_target.CurHealth);
+        _target = null;
         yield break;
     }
     public override BaseSkillLogic Clone()

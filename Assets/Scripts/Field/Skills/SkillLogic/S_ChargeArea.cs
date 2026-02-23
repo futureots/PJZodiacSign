@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -15,34 +16,22 @@ public class S_ChargeArea : BaseSkillLogic
         charge = amount;
     }
 
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        isContinued = false;
         if (component.TryGetComponent<Entity>(out var _owner))
         {
             owner = _owner;
-            callback?.Invoke(true);
-            yield break;
+            return true;
         }
-        else
+        var list = StageManager.Instance.field.GetEntities();
+        var data = await input.InputEntity(list, 1);
+        if(data != null)
         {
-            var list = StageManager.Instance.field.GetEntities();
-            Entity _target = null;
-            Action<Entity> action = (x) =>
-            {
-                _target = x;
-            };
-            Action<bool> conti = (flag) => { isContinued = flag; };
-            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-            if (!isContinued)
-            {
-                callback?.Invoke(false);
-                yield break;
-            }
-            owner = _target;
-            callback?.Invoke(true);
+            owner = data[0];
+            return true;
         }
-
+        
+        return false;
     }
 
     public override IEnumerator ExecuteSkill()

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -217,27 +218,32 @@ public class EnemyAI : MonoBehaviour , IInput
         }
         return false;
     }
+    
 
-    public IEnumerator InputEntity(List<Entity> list, Action<Entity> input, Action<bool> callback, int count = -1)
+    public UniTask<List<Entity>> InputEntity(List<Entity> list, int count = -1)
     {
-        var inputCount = Mathf.Min(list.Count, count);
-        for (int i = 0; i < inputCount; i++)
+        if (list.Count <= 0) return new UniTask<List<Entity>>(null);
+        if(list.Count <= count) return new UniTask<List<Entity>>(list);
+        List<Entity> result = new();
+        for (int i = 0; i < count; i++)
         {
-            input?.Invoke(list[i]);
+            result.Add(list[i]);
         }
-        callback?.Invoke(true);
-        yield break;
+
+        return UniTask.FromResult(result);
     }
 
-    public IEnumerator InputTile(List<Tile> list, Action<Tile> input, Action<bool> callback, int count = -1)
+    public UniTask<List<Tile>> InputTile(List<Tile> list, int count = -1)
     {
-        var inputCount = Mathf.Min(list.Count, count);
-        for (int i = 0; i < inputCount; i++)
+        if (list.Count <= 0) return new UniTask<List<Tile>>(null);
+        if(list.Count <= count) return new UniTask<List<Tile>>(list);
+        List<Tile> result = new();
+        for (int i = 0; i < count; i++)
         {
-            input?.Invoke(list[i]);
+            result.Add(list[i]);
         }
-        callback?.Invoke(true);
-        yield break;
+
+        return UniTask.FromResult(result);
     }
 }
 

@@ -1,62 +1,50 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 
 [Serializable]
 public class S_MoveAttack : BaseSkillLogic
 {
-
-    Entity owner;
-    Tile tile;
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    private Entity _owner;
+    private Tile _tile;
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        isContinued = false;
-        Action<bool> conti = (flag) => { isContinued = flag; };
-        if (component.TryGetComponent<Entity>(out var _owner)){
-
-        }
+        var list = StageManager.Instance.field.GetEntities();
+        if(component.TryGetComponent<Entity>(out var owner)) { }
         else
         {
-            var list = StageManager.Instance.field.GetEntities();
-            _owner = null;
-            Action<Entity> action = (x) =>
+            var data = await input.InputEntity(list, 1);
+            if(data != null)
             {
-                _owner = x;
-            };
-            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-            if (!isContinued)
+                owner = data[0];
+            }
+            else
             {
-                callback?.Invoke(false);
-                yield break;
+                return false;
             }
         }
-
-        var tiles = _owner.GetMoveArea();
-        Tile _tile = null;
-        Action<Tile> action2 = (x) =>
+        
+        var tiles = owner.GetMoveArea();
+        var data2 = await input.InputTile(tiles, 1);
+        if (data2 == null) 
         {
-            _tile = x;
-        };
-        yield return component.StartCoroutine(input.InputTile(tiles, action2, conti, 1));
-        if (!isContinued)
-        {
-            callback?.Invoke(false);
-            yield break;
+            return false;
         }
-
-
-        owner = _owner;
-        tile = _tile;
-        callback?.Invoke(true);
-        yield break;
+        
+        _owner = owner;
+        _tile = data2[0];
+        
+        return true;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        owner.Move(tile);
-        yield return owner.StartCoroutine(owner.Attack());
+        yield return _owner.StartCoroutine(_owner.Attack());
+        _owner.Move(_tile);
+        
 
-        tile = null;
-        owner = null;
+        _tile = null;
+        _owner = null;
         yield break;
     }
     public override BaseSkillLogic Clone()
