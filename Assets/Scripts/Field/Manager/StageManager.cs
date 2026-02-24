@@ -10,9 +10,10 @@ public class StageManager : Singleton<StageManager>
      * - 필요 데이터 전달, 의존성 주입
      */
     [SerializeField] public Shop shop;
-    [SerializeField] private EntityFactory entityFactory;
+    private EntityFactory entityFactory => EntityFactory.Instance;
     [SerializeField] private UIMapper uiMapper;
     public Field field;
+    
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
     public Dictionary<PlayerID, Field> agentField;
@@ -24,7 +25,10 @@ public class StageManager : Singleton<StageManager>
     /// <remarks>Injected data by Controller</remarks>
     public void Init(StageData stageData)
     {
+        // Set Shop
         shop.Init(stageData.shopTable);
+        
+        // Create Agents
         agentField = new Dictionary<PlayerID, Field>();
         for (int i = 0; i < resourceFields.Count; i++)
         {
@@ -44,7 +48,7 @@ public class StageManager : Singleton<StageManager>
         foreach (var entityData in data.handEntities)
         {
             if (list.Count <= 0) break;
-            var entity = EntityFactory.RequestEntity(entityData.data, direction,list[0], entityData.level);
+            var entity = entityFactory.RequestEntity(entityData.data, direction,list[0], entityData.level);
             entity.team.teamNumber = teamId;
             list.RemoveAt(0);
         }
@@ -52,7 +56,7 @@ public class StageManager : Singleton<StageManager>
         {
             var tile = field.GetTile(entityData.Key);
             if (!tile) continue;
-            var entity = EntityFactory.RequestEntity(entityData.Value.data, direction, tile, entityData.Value.level);
+            var entity = entityFactory.RequestEntity(entityData.Value.data, direction, tile, entityData.Value.level);
             entity.team.teamNumber = teamId;
         }
     }

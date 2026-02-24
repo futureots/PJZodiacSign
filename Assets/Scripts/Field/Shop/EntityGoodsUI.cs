@@ -13,7 +13,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             var tiles = Field.GetEmptyTiles(StageManager.Instance.agentField[teamNum].GetTiles());
             if(tiles.Count > 0)
             {
-                var entity = EntityFactory.RequestEntity(data, new intVector2(1, 1), tiles[0]);
+                var entity = EntityFactory.Instance.RequestEntity(data, new intVector2(1, 1), tiles[0]);
                 entity.team.teamNumber = teamNum;
                 customer.Credit -= price;
             }

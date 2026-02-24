@@ -232,7 +232,6 @@ public class FieldController : MonoBehaviour
         stageManager = StageManager.Instance;
         stageManager.Init(data);
 
-
         // TODO: 에이전트 생성 및 초기화
         localPlayer.Init(this,PlayerID.P0,data.player.credit);
         for (int i = 0; i < agents.Count || i < data.agents.Count; i++)

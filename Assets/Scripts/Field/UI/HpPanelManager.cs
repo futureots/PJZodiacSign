@@ -13,7 +13,7 @@ public class HpPanelManager : MonoBehaviour
     private void Awake()
     {
         hpBarList = new List<GameObject>();
-        EntityFactory.OnEntityCreated += CreateHpBar;
+        EntityFactory.Instance.OnEntityCreated += CreateHpBar;
     }
 
 
@@ -42,6 +42,6 @@ public class HpPanelManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        EntityFactory.OnEntityCreated -= CreateHpBar;
+        EntityFactory.Instance.OnEntityCreated -= CreateHpBar;
     }
 }
