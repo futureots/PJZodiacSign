@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
@@ -25,21 +26,42 @@ public class StageManager : Singleton<StageManager>
     /// <remarks>Injected data by Controller</remarks>
     public void Init(StageData stageData)
     {
+        // Entity Pooling
+        // TODO: pooling 비동기로 예외
+        // Shop Entities
+        List<EntityData> entityList = stageData.shopTable.entityList.ConvertAll(x => x.data);
+        
+        // Agent Entities
+        List<AgentData> agentList = stageData.agents;
+        agentList.Add(stageData.player);
+        List<EntityLevelData> agentEntityList = agentList
+            .SelectMany(a => a.handEntities.Concat(a.fieldEntities.Values))
+            .ToList();
+        entityFactory.SetPool(entityList, agentEntityList);
+        
+        // TODO: Item Pooling
+        // List<ItemData> itemList = stageData.shopTable.itemList.ConvertAll(x => x.data);
+
+        
         // Set Shop
         shop.Init(stageData.shopTable);
         
         // Create Agents
+        // NOTE: Single Player 기준 -1부터 카운트
         agentField = new Dictionary<PlayerID, Field>();
         for (int i = 0; i < resourceFields.Count; i++)
         {
-            agentField.Add((PlayerID)(i-1), resourceFields[i]);
+            agentField.Add((PlayerID)(i - 1), resourceFields[i]);
         }
 
-        for (int i = 0; i < stageData.agents.Count; i++)
+        // TODO: stageData와 Field 내 최대 Agent 개수 조절 필요
+        // for (int i = 0; i < stageData.agents.Count; i++)
+        // NOTE: Single Player 기준 0부터 카운트
+        for (int i = 0; i < agentField.Count - 1; i++)
         {
             SetAgentField((PlayerID)(i), stageData.agents[i], new intVector2(-1, -1));
         }
-        SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));
+        SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));             // LocalPlayer
     }
 
     void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)
