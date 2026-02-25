@@ -38,7 +38,7 @@ public class S_CheckMate : BaseSkillLogic
             {
                 if (!entity.team.IsAlly(_owner.team))
                 {
-                    entity.Damaged(damage);
+                    entity.Damaged(_owner.energy.CurEnergy * damage);
                 }
                 
             }

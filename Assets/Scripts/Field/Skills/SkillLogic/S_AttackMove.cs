@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 
 [Serializable]
-public class S_MoveAttack : BaseSkillLogic
+public class S_AttackMove : BaseSkillLogic
 {
     private Entity _owner;
     private Tile _tile;
@@ -41,14 +41,12 @@ public class S_MoveAttack : BaseSkillLogic
     {
         yield return _owner.StartCoroutine(_owner.Attack());
         _owner.Move(_tile);
-        
 
         _tile = null;
         _owner = null;
-        yield break;
     }
     public override BaseSkillLogic Clone()
     {
-        return new S_MoveAttack();
+        return new S_AttackMove();
     }
 }
