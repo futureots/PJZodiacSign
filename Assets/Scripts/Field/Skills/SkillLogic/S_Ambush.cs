@@ -2,13 +2,17 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 
-
 [Serializable]
-public class S_HealSingle : BaseSkillLogic
+public class S_Ambush : BaseSkillLogic
 {
     private Entity _target;
     public override async UniTask<bool> InputSkill(IInput input)
     {
+        if (component.TryGetComponent<Entity>(out var target))
+        {
+            _target = target;
+            return true;
+        }
         var list = StageManager.Instance.field.GetEntities();
         var data = await input.InputEntity(list, 1);
         if(data != null)
@@ -22,14 +26,12 @@ public class S_HealSingle : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        EditorLogger.Print(_target.CurHealth);
-        _target.CurHealth = _target.MaxHealth;
-        EditorLogger.Print(_target.CurHealth);
+        yield return _target.StartCoroutine(_target.Attack());
+
         _target = null;
-        yield break;
     }
     public override BaseSkillLogic Clone()
     {
-        return new S_HealSingle();
+        return new S_Ambush();
     }
 }

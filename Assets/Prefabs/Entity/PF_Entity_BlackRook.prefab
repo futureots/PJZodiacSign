@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 881247787638198047, guid: 8f12347f703e9604ea440ac989e72335, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3273758831431891394, guid: 5c341452e2788a84b8d2e41d33fe0e9d, type: 3}
     - target: {fileID: 2533656769679605691, guid: 8f12347f703e9604ea440ac989e72335, type: 3}
       propertyPath: m_Name
       value: PF_Entity_BlackRook

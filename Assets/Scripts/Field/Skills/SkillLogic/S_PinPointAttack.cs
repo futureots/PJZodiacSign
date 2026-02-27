@@ -1,12 +1,20 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
+
 
 [Serializable]
-public class S_Promotion : BaseSkillLogic
+public class S_PinPointAttack : BaseSkillLogic
 {
+    [SerializeField] private BasicAttackEffect attackEffect;
     private Entity _entity;
     private Entity _target;
+
+    public void Init(BasicAttackEffect effect)
+    {
+        attackEffect =  effect;
+    }
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
@@ -43,20 +51,13 @@ public class S_Promotion : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        var data = _target.baseData;
-        var dir = _entity.direction;
-        var tile = _entity.CurTile;
-        var level = _entity.Level;
-        var team = _entity.team.teamNumber;
+        var damage = _entity.Power;
         
-        _entity.CurTile.UnsetOccupant();
-        _entity.Dead();
-        _entity = null;
+        var effect = GameObject.Instantiate(attackEffect, _entity.transform.position + Vector3.up * 7, Utils.QI);
+        effect?.Initialize(_target.gameObject, damage);
         
-        // TODO : entity의 data를 변경하고 팩토리를 통해 새로 생성, entity의 레벨은 유지
-        var promotion = EntityFactory.RequestEntity(_target.baseData, dir, tile, level);
-        promotion.team.teamNumber = team;
-
+        yield return new WaitForSeconds(1.5f);
+        
         _entity = null;
         _target = null;
         
@@ -64,6 +65,8 @@ public class S_Promotion : BaseSkillLogic
     }
     public override BaseSkillLogic Clone()
     {
-        return new S_Promotion();
+        var clone =  new S_PinPointAttack();
+        clone.Init(attackEffect);
+        return clone;
     }
 }
