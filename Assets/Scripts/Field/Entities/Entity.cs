@@ -24,6 +24,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     [SerializeField] int level;
     public Action<int, int> OnLevelChanged;
 
+    public bool isControllable = false;
     public int Level
     {
         get => level;

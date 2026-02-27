@@ -32,6 +32,8 @@ namespace PlayerInput
             inputManager.OnObjectClicked.RemoveListener(DragStart);
             Object.Destroy(targetSelector);
             Object.Destroy(targetTileSelector);
+            
+            inputManager.agent.actionAbleEntities.ForEach(x=>x.isControllable = false);
         }
 
         public virtual void SetMode()
@@ -47,6 +49,8 @@ namespace PlayerInput
             {
                 inputManager.agent.CreateEndCommand();
             }
+            // 이동 가능한 기물을 설정
+            inputManager.agent.actionAbleEntities.ForEach(x=>x.isControllable = true);
         }
         
         // 드래그 시작
@@ -62,7 +66,7 @@ namespace PlayerInput
 
             // 기물이 이동 가능한지 확인
             if (!entity.team.IsAlly(inputManager.agent.id)) return;
-            if (!inputManager.agent.actionAbleEntities.Contains(entity)) return;
+            if (!entity.isControllable) return;
             selectedEntity = entity;
             targetSelector.SetActive(true);
             targetSelector.transform.position = selectedEntity.transform.position + Vector3.up * 0.1f;
@@ -167,6 +171,7 @@ namespace PlayerInput
 
                 // 커맨드 생성
                 inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile);
+                selectedEntity.isControllable = false;
                 inputManager.agent.actionAbleEntities.Remove(selectedEntity);
                 
                 EditorLogger.Print($"남은 행동력 {inputManager.agent.CurrentActionCount}");

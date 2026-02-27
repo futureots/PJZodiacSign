@@ -17,8 +17,9 @@ public class EntityGoodsUI : GoodsUI<EntityData>
                 
                 // NOTE : 생성된 기물을 agent의 소유로 하도록 하는 함수가 필요한가?
                 entity.team.teamNumber = teamNum;
+                
                 customer.Credit -= price;
-                customer.actionAbleEntities.Add(entity);
+                entity.isControllable = true;
             }
             else
             {

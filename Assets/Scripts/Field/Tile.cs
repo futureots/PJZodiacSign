@@ -63,6 +63,10 @@ public class Tile : MonoBehaviour
             return false;
         }
     } 
+    
+    /// <summary>
+    /// 점거한 오브젝트 해제(제거가 필요할 경우 ClearOccupant 사용)
+    /// </summary>
     public void UnsetOccupant()
     {
         occupiedObject = null;
