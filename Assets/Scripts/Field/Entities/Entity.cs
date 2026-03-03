@@ -280,14 +280,14 @@ public class Entity : Occupant, IDamageable, IAttackable
     #endregion
     #region Indicator
 
-    [SerializeField] GameObject indicatorEffect;
+    [SerializeField] Outline indicatorEffect;
     public void ApplyHighlight()
     {
-        indicatorEffect.SetActive(true);
+        indicatorEffect.enabled = true;
     }
     public void RemoveHighlight()
     {
-        indicatorEffect.SetActive(false);
+        indicatorEffect.enabled = false;
     }
     #endregion
     

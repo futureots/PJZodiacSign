@@ -179,6 +179,7 @@ namespace PlayerInput
                 if (inputManager.agent.CurrentActionCount == 0)
                 {
                     inputManager.agent.CreateEndCommand();
+                    inputManager.ClearInputMode();
                 }
             }
         }
