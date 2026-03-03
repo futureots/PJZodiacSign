@@ -59,7 +59,7 @@ public class EnemyAI : MonoBehaviour , IInput
     public IEnumerator SetRepairMode()
     {
         // 보유한 크레딧으로 상점을 통해 기물 구매
-        var emptyTiles = Field.GetEmptyTiles(StageManager.Instance.agentField[agent.id].GetTiles());
+        var emptyTiles = StageManager.Instance.agentField[agent.id].GetTiles().GetEmptyTiles();
         foreach (var emptyTile in emptyTiles)
         {
             var data = StageManager.Instance.shop.GetRandomEntity(agent.Credit);
@@ -82,7 +82,7 @@ public class EnemyAI : MonoBehaviour , IInput
         
         yield return null;
         // 내 필드에 있는 기물을 메인 필드에 배치
-        var fieldTiles = Field.GetEmptyTiles(StageManager.Instance.field.GetHalfTiles(true));
+        var fieldTiles = StageManager.Instance.field.GetHalfTiles(true).GetEmptyTiles();
         foreach (var entity in StageManager.Instance.agentField[agent.id].GetEntities())
         {
             // 빈 타일 중 랜덤 위치 선택

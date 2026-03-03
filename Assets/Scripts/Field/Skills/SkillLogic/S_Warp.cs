@@ -26,7 +26,7 @@ public class S_Warp : BaseSkillLogic
             }
         }
         
-        var tiles = StageManager.Instance.field.GetTiles().Where(tile => tile.isEmpty).ToList();
+        var tiles = StageManager.Instance.field.GetTiles().Where(tile => tile.IsEmpty).ToList();
         var data2 = await input.InputTile(tiles, 1);
         if (data2 == null) 
         {

@@ -41,8 +41,8 @@ public class S_HealArea : BaseSkillLogic
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         foreach (var tile in tiles)
         {
-            if (tile.isEmpty) continue;
-            if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
+            if (tile.IsEmpty) continue;
+            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
             {
                 if (entity.team.IsAlly(_owner.team))
                 {

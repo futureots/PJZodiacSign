@@ -23,9 +23,9 @@ namespace PlayerInput
         protected override void DragAction()
         {
             // 해당 타일로 이동
-            if (!selectedTile.isEmpty)
+            if (!selectedTile.IsEmpty)
             {
-                if(selectedTile.occupiedObject.TryGetComponent<Entity>(out var target))
+                if(selectedTile.occupiedEntity.TryGetComponent<Entity>(out var target))
                 {
                     if (target != null)
                     {

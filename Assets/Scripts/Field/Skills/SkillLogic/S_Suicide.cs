@@ -7,7 +7,7 @@ using UnityEngine;
 public class S_Suicide : BaseSkillLogic
 {
     [SerializeField] private Area area;
-    private Entity _target;
+    private Entity _owner;
     
     public void Init(Area area)
     {
@@ -16,11 +16,16 @@ public class S_Suicide : BaseSkillLogic
     
     public override async UniTask<bool> InputSkill(IInput input)
     {
+        if (component.TryGetComponent<Entity>(out var entity))
+        {
+            _owner = entity;
+            return true;
+        }
         var list = StageManager.Instance.field.GetEntities();
         var data = await input.InputEntity(list, 1);
         if(data != null)
         {
-            _target = data[0];
+            _owner = data[0];
             return true;
         }
         
@@ -29,20 +34,22 @@ public class S_Suicide : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        var pos = _target.CurTile.fieldPos;
+        var pos = _owner.CurTile.fieldPos;
         int[,] t = new int[8, 8];
-        var vectors = area.GetVectors(t, pos, _target.direction);
+        var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
+        // TODO : 폭발 이펙트 재생
         foreach (var tile in tiles)
         {
-            if (tile.isEmpty) continue;
-            if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
+            if (tile.IsEmpty) continue;
+            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
             {
-                entity.Damaged(_target.Power);
+                entity.Damaged(_owner.Power*2);
             }
         }
-        _target = null;
-
+        _owner.Damaged(_owner.Power);
+        
+        _owner = null;
         yield return new WaitForSeconds(0.5f);
     }
 

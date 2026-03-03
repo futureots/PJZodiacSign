@@ -3,7 +3,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-
+/// <summary>
+/// 정밀사격 스킬 로직
+/// </summary>
 [Serializable]
 public class S_PinPointAttack : BaseSkillLogic
 {
@@ -36,9 +38,9 @@ public class S_PinPointAttack : BaseSkillLogic
                 return false;
             }
         }
-        list.Remove(entity);
         
-        var data2 = await input.InputEntity(list, 1);
+        var opponentList = StageManager.Instance.field.GetEntities(entity.team.teamNumber,false);
+        var data2 = await input.InputEntity(opponentList, 1);
         if (data2 == null) 
         {
             return false;
@@ -54,7 +56,12 @@ public class S_PinPointAttack : BaseSkillLogic
         var damage = _entity.Power;
         
         var effect = GameObject.Instantiate(attackEffect, _entity.transform.position + Vector3.up * 7, Utils.QI);
-        effect?.Initialize(_target.gameObject, damage);
+        void Hit()
+        {
+            _target.Damaged(damage);
+            _target.Defense -= 1;
+        }
+        effect?.Initialize(_target.gameObject, Hit);
         
         yield return new WaitForSeconds(1.5f);
         
@@ -63,6 +70,8 @@ public class S_PinPointAttack : BaseSkillLogic
         
         yield break;
     }
+
+    
     public override BaseSkillLogic Clone()
     {
         var clone =  new S_PinPointAttack();

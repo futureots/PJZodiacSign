@@ -14,7 +14,7 @@ public class PawnMoveArea : Area
         {
             vector += new intVector2(0, 1);
             var pos = curPos + vector * direction;
-            if (!Field.IsPositionValid(tiles, pos)) break;
+            if (tiles.IsValidPos(pos)) break;
             if (tiles[pos.y, pos.x] != Field.EmptyTileIndex)
             {
                 break;

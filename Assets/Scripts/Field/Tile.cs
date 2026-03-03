@@ -17,12 +17,12 @@ public class Tile : MonoBehaviour
     /// </summary>
     public Field field;
     public intVector2 fieldPos;
-    public GameObject occupiedObject;
+    public Entity occupiedEntity;
 
     /// <summary>
     /// 해당 타일의 점거 상태
     /// </summary>
-    public bool isEmpty => occupiedObject == null;
+    public bool IsEmpty => occupiedEntity == null;
 
     private void Awake()
     {
@@ -42,18 +42,23 @@ public class Tile : MonoBehaviour
         fieldPos.x = x;
         fieldPos.y = y;
     }
-    
+
     /// <summary>
     /// 타일 점거
     /// </summary>
-    /// <param name="e">타일을 점거한 오브젝트</param>
-    public bool SetOccupant(GameObject obj = null, bool ignoreOccupant= false)
+    /// <param name="obj"></param>
+    /// <param name="ignoreOccupant"></param>
+    public bool SetOccupant(Entity obj, bool ignoreOccupant= false)
     {
-        if(isEmpty || ignoreOccupant)
+        if(IsEmpty || ignoreOccupant)
         {
-            Destroy(occupiedObject);
+            if (!IsEmpty)
+            {
+                occupiedEntity.Dead();
+                UnsetOccupant();
+            }
             
-            occupiedObject = obj;
+            occupiedEntity = obj;
             obj.transform.SetParent(transform);
             obj.transform.localPosition = Vector3.zero;
             return true;
@@ -69,7 +74,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void UnsetOccupant()
     {
-        occupiedObject = null;
+        occupiedEntity = null;
     }
 
     /// <summary>
@@ -77,7 +82,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void ClearOccupant()
     {
-        var component = occupiedObject.GetComponent<IDamageable>();
+        var component = occupiedEntity.GetComponent<IDamageable>();
         UnsetOccupant();
         if (component != null)
         {
@@ -85,7 +90,7 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            Destroy(occupiedObject);
+            Destroy(occupiedEntity);
         }
     }
 

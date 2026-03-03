@@ -105,8 +105,8 @@ public class FieldController : MonoBehaviour
         List<PlayerID> surviveTeam = new List<PlayerID>();
         foreach (var tile in stageManager.field.GetTiles())
         {
-            if (tile.isEmpty) continue;
-            if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
+            if (tile.IsEmpty) continue;
+            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
             {
                 if (entity.team.teamNumber == PlayerID.None) continue;
                 if (!surviveTeam.Contains(entity.team.teamNumber))

@@ -85,11 +85,12 @@ namespace PlayerInput
             onCanceled += cancel;
             
             await UniTask.WaitUntil(() => isCanceled || selectedEntities.Count >= count);
-            if (isCanceled) return null;
             
             list.ForEach(e => e.RemoveHighlight());
             _inputManager.OnObjectClicked.RemoveListener(click);
             onCanceled -= cancel;
+            
+            if (isCanceled) return null;
             
             return selectedEntities;
         }

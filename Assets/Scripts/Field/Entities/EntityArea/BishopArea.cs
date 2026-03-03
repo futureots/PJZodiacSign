@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="BishopArea",menuName ="Scriptable Objects/Area/BishopArea")]
 public class BishopArea : Area
 {
+    [SerializeField] private bool isRepeat;
     
     protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, intVector2 direction)
     {
@@ -17,13 +18,13 @@ public class BishopArea : Area
             {
                 vector += directionList[i];
                 var pos = curPos + vector * direction;
-                if (!IsValidPos(tiles, pos)) break;
+                if (!tiles.IsValidPos(pos)) break;
                 list.Add(pos);
                 if (tiles[pos.y, pos.x] != Field.EmptyTileIndex)
                 {
                     break;
                 }
-                
+                if (!isRepeat) break;
             }
         }
 

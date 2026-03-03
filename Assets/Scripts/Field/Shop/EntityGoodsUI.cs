@@ -10,7 +10,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
         {
             var customer = Agent.LocalPlayer;
             var teamNum = customer.id;
-            var tiles = Field.GetEmptyTiles(StageManager.Instance.agentField[teamNum].GetTiles());
+            var tiles = StageManager.Instance.agentField[teamNum].GetTiles().GetEmptyTiles();
             if(tiles.Count > 0)
             {
                 var entity = EntityFactory.RequestEntity(data, new intVector2(1, 1), tiles[0]);

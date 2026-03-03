@@ -93,7 +93,7 @@ public class Field : MonoBehaviour
     {
         foreach (var tile in tiles)
         {
-            if (tile.isEmpty) continue;
+            if (tile.IsEmpty) continue;
             tile.ClearOccupant();
         }
     }
@@ -104,8 +104,8 @@ public class Field : MonoBehaviour
     {
         foreach (var tile in tiles)
         {
-            if (tile.isEmpty) continue;
-            var obj = tile.occupiedObject.GetComponent<IDamageable>();
+            if (tile.IsEmpty) continue;
+            var obj = tile.occupiedEntity.GetComponent<IDamageable>();
             if (obj.IsZero())
             {
                 tile.UnsetOccupant();
@@ -197,7 +197,7 @@ public class Field : MonoBehaviour
                 vector += direction;
                 var tile = GetTile(origin + vector);
                 if (tile == null) break;
-                if (tile.isEmpty || isPierce)
+                if (tile.IsEmpty || isPierce)
                 {
                     list.Add(tile);
                 }
@@ -236,17 +236,22 @@ public class Field : MonoBehaviour
     }
     #endregion
 
-    //점거 중인 오브젝트 가져오기
-    public List<Entity> GetEntities(PlayerID teamNum = PlayerID.None)
+    /// <summary>
+    /// 필드에 존재하는 기물 리스트를 반환
+    /// </summary>
+    /// <param name="teamNum">구분이 필요한 팀</param>
+    /// <param name="isEqual">true면 teamNum과 같은 팀이 반환, false면 다른 팀이 반환</param>
+    /// <returns></returns>
+    public List<Entity> GetEntities(PlayerID teamNum = PlayerID.None, bool isEqual = true)
     {
         List<Entity> list = new();
         foreach(var tile in tiles)
         {
-            if (tile.isEmpty) continue;
-            var occupiedObj = tile.occupiedObject;
+            if (tile.IsEmpty) continue;
+            var occupiedObj = tile.occupiedEntity;
             if(occupiedObj.TryGetComponent<Entity>(out var entity))
             {
-                if(teamNum == PlayerID.None || entity.team.IsAlly(teamNum))
+                if(teamNum == PlayerID.None || entity.team.IsAlly(teamNum) == isEqual)
                 {
                     list.Add(entity);
                 }
@@ -270,13 +275,13 @@ public class Field : MonoBehaviour
             for (int j = 0; j < column; j++) 
             {
                 var t = tiles[i,j];
-                if (t.isEmpty)
+                if (t.IsEmpty)
                 {
                     field[i,j] = EmptyTileIndex;
                 }
                 else
                 {
-                    if(t.occupiedObject.TryGetComponent<Entity>(out var entity))
+                    if(t.occupiedEntity.TryGetComponent<Entity>(out var entity))
                     {
                         var team = entity.team;
                         field[i, j] = (int)team.teamNumber;
@@ -316,7 +321,7 @@ public class Field : MonoBehaviour
             {
                 if (fieldInfo[i, j] == EmptyTileIndex) continue;
 
-                var obj = tiles[i, j].occupiedObject;
+                var obj = tiles[i, j].occupiedEntity;
                 var entity = obj.GetComponent<Entity>();
                 if (entity == null) continue;
                 if (entity.team.teamNumber == teamNum) continue;
@@ -339,36 +344,5 @@ public class Field : MonoBehaviour
         }
         return field;
     }
-
-    /// <summary>
-    /// 해당 Vector값이 이 필드에 존재하는 값인지 확인
-    /// </summary>
-    /// <param name="info">타일 2차원 배열</param>
-    /// <param name="pos">위치</param>
-    /// <returns>배열에 존재하면 true, 배열 밖 값이면 false 반환</returns>
-    public static bool IsPositionValid(int[,] info, intVector2 pos)
-    {
-        var height = info.GetLength(0);
-        var width = info.GetLength(1);
-
-        return pos.y >= 0 && pos.y < height && pos.x >= 0 && pos.x < width;
-    }
-
-    /// <summary>
-    /// 타일 리스트의 점거되지 않은 빈 타일 리스트 반환
-    /// </summary>
-    /// <param name="list"></param>
-    /// <returns></returns>
-    public static List<Tile> GetEmptyTiles(List<Tile> list)
-    {
-        var emptyTiles = new List<Tile>();
-        foreach (var tile in list)
-        {
-            if (tile.isEmpty)
-            {
-                emptyTiles.Add(tile);
-            }
-        }
-        return emptyTiles;
-    }
+    
 }

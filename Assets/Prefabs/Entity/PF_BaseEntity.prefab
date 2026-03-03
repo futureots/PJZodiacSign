@@ -95,6 +95,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &881247787638198047
 MeshCollider:
@@ -131,12 +132,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity
   baseData: {fileID: 0}
-  team:
-    teamNumber: 0
   direction:
     x: 0
     y: 0
   level: 0
+  isControllable: 0
   area: {fileID: -6197357392793127856}
   energy: {fileID: -2742825382044771463}
   skill: {fileID: 1608623362337060125}
@@ -315,3 +315,4 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0

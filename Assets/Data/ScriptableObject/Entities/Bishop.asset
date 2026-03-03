@@ -10,25 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
-  m_Name: WhiteQueen
+  m_Name: Bishop
   m_EditorClassIdentifier: 
-  id: WhiteQueen
-  productName: "\uD654\uC774\uD2B8\uD038"
-  icon: {fileID: 21300000, guid: 2b5e1f27bb41f3f408211c4643d8f247, type: 3}
-  normalPrice: 50
-  prefab: {fileID: 256251255046908608, guid: 5f6aa753d88fbe942ac9144265300f64, type: 3}
+  id: Bishop
+  productName: "\uBE44\uC20D"
+  icon: {fileID: 21300000, guid: 7d03dd3f645aa6f408a5ede41524af84, type: 3}
+  normalPrice: 20
+  prefab: {fileID: 4294135240769514293, guid: 112819e000f9eab4b93c1a80ccf6e69f, type: 3}
   basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
   dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
-  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
   attackArea:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
-  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
-  maxHp: 23
+  maxHp: 14
   power: 3
-  hpMultiplier: 4
-  powerMultiplier: 2
-  skill: {fileID: 11400000, guid: b303936343c02d24d946eb44160ece79, type: 2}
-  maxEnergy: 4
-  offset: {x: 0, y: 3.3, z: 0}
+  hpMultiplier: 3
+  powerMultiplier: 1
+  skill: {fileID: 11400000, guid: 66eea223f2dcd9740ba42b8a8be86767, type: 2}
+  maxEnergy: 5
+  offset: {x: 0, y: 3, z: 0}

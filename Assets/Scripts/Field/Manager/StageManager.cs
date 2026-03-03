@@ -40,7 +40,7 @@ public class StageManager : Singleton<StageManager>
 
     void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)
     {
-        var list = Field.GetEmptyTiles(agentField[teamId].GetTiles());
+        var list = agentField[teamId].GetTiles().GetEmptyTiles();
         foreach (var entityData in data.handEntities)
         {
             if (list.Count <= 0) break;
