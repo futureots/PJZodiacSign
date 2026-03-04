@@ -43,7 +43,7 @@ public class S_SpawnWall : BaseSkillLogic
     {
         EditorLogger.Print($"Spawn {spawnData.productName}");
         
-        var obstacle = EntityFactory.Instance.RequestEntity(spawnData, intVector2.Zero, tile);
+        var obstacle = EntityFactory.Instance.RequestEntity(spawnData, intVector2.Zero, _tile);
         // TODO : 팩토리를 통해 장애물을 생성하고 tile에 생성
         obstacle.team.teamNumber = _owner.team.teamNumber;
         yield return new WaitForSeconds(0.5f);
