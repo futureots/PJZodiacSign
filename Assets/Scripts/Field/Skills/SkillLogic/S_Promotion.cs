@@ -60,7 +60,7 @@ public class S_Promotion : BaseSkillLogic
         entity.Dead();
         entity = null;
         // TODO : entity의 data를 변경하고 팩토리를 통해 새로 생성, entity의 레벨은 유지
-        var promotion = EntityFactory.RequestEntity(target.baseData, dir, tile, level);
+        var promotion = EntityFactory.Instance.RequestEntity(target.baseData, dir, tile, level);
         promotion.team.teamNumber = team;
         target = null;
         

@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StageManager : Singleton<StageManager>
@@ -10,9 +11,10 @@ public class StageManager : Singleton<StageManager>
      * - 필요 데이터 전달, 의존성 주입
      */
     [SerializeField] public Shop shop;
-    [SerializeField] private EntityFactory entityFactory;
+    private EntityFactory entityFactory => EntityFactory.Instance;
     [SerializeField] private UIMapper uiMapper;
     public Field field;
+    
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
     public Dictionary<PlayerID, Field> agentField;
@@ -24,18 +26,42 @@ public class StageManager : Singleton<StageManager>
     /// <remarks>Injected data by Controller</remarks>
     public void Init(StageData stageData)
     {
+        // Entity Pooling
+        // TODO: pooling 비동기로 예외
+        // Shop Entities
+        List<EntityData> entityList = stageData.shopTable.entityList.ConvertAll(x => x.data);
+        
+        // Agent Entities
+        List<AgentData> agentList = stageData.agents;
+        agentList.Add(stageData.player);
+        List<EntityLevelData> agentEntityList = agentList
+            .SelectMany(a => a.handEntities.Concat(a.fieldEntities.Values))
+            .ToList();
+        entityFactory.SetPool(entityList, agentEntityList);
+        
+        // TODO: Item Pooling
+        // List<ItemData> itemList = stageData.shopTable.itemList.ConvertAll(x => x.data);
+
+        
+        // Set Shop
         shop.Init(stageData.shopTable);
+        
+        // Create Agents
+        // NOTE: Single Player 기준 -1부터 카운트
         agentField = new Dictionary<PlayerID, Field>();
         for (int i = 0; i < resourceFields.Count; i++)
         {
-            agentField.Add((PlayerID)(i-1), resourceFields[i]);
+            agentField.Add((PlayerID)(i - 1), resourceFields[i]);
         }
 
-        for (int i = 0; i < stageData.agents.Count; i++)
+        // TODO: stageData와 Field 내 최대 Agent 개수 조절 필요
+        // for (int i = 0; i < stageData.agents.Count; i++)
+        // NOTE: Single Player 기준 0부터 카운트
+        for (int i = 0; i < agentField.Count - 1; i++)
         {
             SetAgentField((PlayerID)(i), stageData.agents[i], new intVector2(-1, -1));
         }
-        SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));
+        SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));             // LocalPlayer
     }
 
     void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)
@@ -44,7 +70,7 @@ public class StageManager : Singleton<StageManager>
         foreach (var entityData in data.handEntities)
         {
             if (list.Count <= 0) break;
-            var entity = EntityFactory.RequestEntity(entityData.data, direction,list[0], entityData.level);
+            var entity = entityFactory.RequestEntity(entityData.data, direction,list[0], entityData.level);
             entity.team.teamNumber = teamId;
             list.RemoveAt(0);
         }
@@ -52,7 +78,7 @@ public class StageManager : Singleton<StageManager>
         {
             var tile = field.GetTile(entityData.Key);
             if (!tile) continue;
-            var entity = EntityFactory.RequestEntity(entityData.Value.data, direction, tile, entityData.Value.level);
+            var entity = entityFactory.RequestEntity(entityData.Value.data, direction, tile, entityData.Value.level);
             entity.team.teamNumber = teamId;
         }
     }
