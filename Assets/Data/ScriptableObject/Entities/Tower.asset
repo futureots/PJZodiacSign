@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
+  m_Name: Tower
+  m_EditorClassIdentifier: Assembly-CSharp::EntityData
+  id: Tower
+  productName: "\uD3EC\uD0D1"
+  icon: {fileID: 21300000, guid: ae8612789069f1e499e237f945c66b29, type: 3}
+  normalPrice: 35
+  prefab: {fileID: 5877927772879794965, guid: 4110ec686942aae409eeb85b319adc66, type: 3}
+  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
+  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
+  moveArea:
+  - {fileID: 11400000, guid: 983b0274a933f8346b26acb50c1a2566, type: 2}
+  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
+  attackArea:
+  - {fileID: 11400000, guid: 983b0274a933f8346b26acb50c1a2566, type: 2}
+  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
+  maxHp: 15
+  power: 4
+  hpMultiplier: 5
+  powerMultiplier: 1
+  skill: {fileID: 11400000, guid: 1918af00cfba8054ea826aa1e0e66b2b, type: 2}
+  maxEnergy: 6
+  offset: {x: 0, y: 3, z: 0}

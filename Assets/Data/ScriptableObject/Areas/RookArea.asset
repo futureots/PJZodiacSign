@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297a7cb28641084e8240d75ade86dba, type: 3}
   m_Name: RookArea
   m_EditorClassIdentifier: 
-  isContainOccupiedPos: 1
+  isRepeat: 1

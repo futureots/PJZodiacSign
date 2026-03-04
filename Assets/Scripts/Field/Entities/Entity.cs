@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static Tile;
 
 [RequireComponent(typeof(SkillComponent))]
 [RequireComponent(typeof(EnergyComponent))]     // NOTE: Skill 내 Energy 스탯 종속 시 컴포넌트 병합
@@ -25,6 +24,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     [SerializeField] int level;
     public Action<int, int> OnLevelChanged;
 
+    public bool isControllable = false;
     public int Level
     {
         get => level;
@@ -118,14 +118,14 @@ public class Entity : Occupant, IDamageable, IAttackable
         bool isAttacked = false;
         foreach (var item in list)
         {
-            if (item.isEmpty) continue;
-            var target = item.occupiedObject;
+            if (item.IsEmpty) continue;
+            var target = item.occupiedEntity;
             if (target.TryGetComponent<Entity>(out var entity))
             {
                 if (!team.IsAlly(entity.team))
                 {
                     var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
-                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
+                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target.gameObject, ()=> entity.Damaged(damage));
                     isAttacked = true;
                 }
             }
@@ -138,13 +138,29 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     #region Health
 
-    // TODO: Health 변경 로직
-    private int _curHealth;
-    public int CurHealth { 
-        get
+    
+    private int _defense;
+    
+    /// <summary>
+    /// 기물의 방어력(받는 피해를 감소 시킨다.)
+    /// </summary>
+    public int Defense { 
+        get => _defense;
+        set
         {
-            return _curHealth;
+            _defense = Math.Max(value,0);
+            OnDefenseChanged?.Invoke(_defense);
         }
+    }
+    public event Action<int> OnDefenseChanged;
+    
+    private int _curHealth;
+    
+    /// <summary>
+    /// 기물의 현재 체력
+    /// </summary>
+    public int CurHealth { 
+        get => _curHealth;
         set
         {
             _curHealth = Math.Min(MaxHealth,value);
@@ -154,10 +170,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     }
     private int _maxHealth;
     public int MaxHealth { 
-        get
-        {
-            return _maxHealth;
-        }
+        get => _maxHealth;
         set 
         {
             _maxHealth = value;
@@ -168,9 +181,7 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public void Damaged(int damage)
     {
-        var value = damage;
-        // 보호막 계산
-        if (isProtected) value /= 2;
+        var value = Math.Max(damage - _defense,0);
 
         CurHealth -= value;
     }
@@ -212,7 +223,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     {
         if (!ignoreOccupy)
         {
-            var isOccupied = !tile.isEmpty;
+            var isOccupied = !tile.IsEmpty;
             if (isOccupied) return false;
         }
 
@@ -221,7 +232,7 @@ public class Entity : Occupant, IDamageable, IAttackable
             CurTile.UnsetOccupant();
         }
 
-        tile.SetOccupant(gameObject, true);
+        tile.SetOccupant(this, true);
         CurTile = tile;
 
         return true;
@@ -237,19 +248,14 @@ public class Entity : Occupant, IDamageable, IAttackable
     /// <returns>기물이 이동가능한 타일들</returns>
     public List<Tile> GetMoveArea()
     {
-        if (TryGetComponent<AreaComponent>(out var area))
-        {
-            var field = CurTile.field.GetFieldState(this);
+        var field = CurTile.field.GetFieldState(this);
 
-            var list = area.GetMoveVector(field, CurTile.fieldPos, direction);
-            var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
+        var list = area.GetMoveVector(field, CurTile.fieldPos, direction);
+        var tiles = CurTile.field.GetTiles(list).GetEmptyTiles();
 
-            tiles.Add(CurTile);
+        tiles.Add(CurTile);
 
-            return tiles;
-        }
-
-        return new List<Tile>();
+        return tiles;
     }
 
     /// <summary>
@@ -272,17 +278,17 @@ public class Entity : Occupant, IDamageable, IAttackable
     }
 
     #endregion
-
     #region Indicator
 
-    [SerializeField] GameObject indicatorEffect;
+    [SerializeField] Outline indicatorEffect;
     public void ApplyHighlight()
     {
-        indicatorEffect.SetActive(true);
+        indicatorEffect.enabled = true;
     }
     public void RemoveHighlight()
     {
-        indicatorEffect.SetActive(false);
+        indicatorEffect.enabled = false;
     }
     #endregion
+    
 }

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -5,63 +6,52 @@ using UnityEngine;
 [Serializable]
 public class S_HealArea : BaseSkillLogic
 {
-    [SerializeField] Area area;
-    Entity owner;
+    [SerializeField] private Area area;
+    private Entity _owner;
     public S_HealArea() { }
-    public void Init(Area _area)
+    public void Init(Area area)
     {
-        area = _area;
+        this.area = area;
     }
 
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        isContinued = false;
-        if (component.TryGetComponent<Entity>(out var _owner))
+        if (component.TryGetComponent<Entity>(out var entity))
         {
-            owner = _owner;
-            callback?.Invoke(true);
-            yield break;
+            _owner = entity;
+            return true;
         }
-        else
+        var list = StageManager.Instance.field.GetEntities();
+        var data = await input.InputEntity(list, 1);
+        if(data != null)
         {
-            var list = StageManager.Instance.field.GetEntities();
-            Entity _target = null;
-            Action<Entity> action = (x) =>
-            {
-                _target = x;
-            };
-            Action<bool> conti = (flag) => { isContinued = flag; };
-            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-            if (!isContinued)
-            {
-                callback?.Invoke(false);
-                yield break;
-            }
-            owner = _target;
-            callback?.Invoke(true);
+            _owner = data[0];
+            return true;
         }
+        
+        return false;
 
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        var pos = owner.CurTile.fieldPos;
+        var pos = _owner.CurTile.fieldPos;
         int[,] t = new int[8, 8];
-        var vectors = area.GetVectors(t, pos, owner.direction);
+        var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         foreach (var tile in tiles)
         {
-            if (tile.isEmpty) continue;
-            if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
+            if (tile.IsEmpty) continue;
+            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
             {
-                if (entity.team.IsAlly(owner.team))
+                if (entity.team.IsAlly(_owner.team))
                 {
-                    entity.Healed(owner.Power);
+                    entity.Healed(_owner.Power);
                 }
                 
             }
         }
-        owner = null;
+        _owner = null;
         yield break;
     }
     public override BaseSkillLogic Clone()

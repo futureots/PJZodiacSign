@@ -1,34 +1,37 @@
-using System;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 
 public class RandomInput : IInput
 {
-    public IEnumerator InputEntity(List<Entity> list, Action<Entity> input, Action<bool> callback, int count = -1)
+    public UniTask<List<Entity>> InputEntity(List<Entity> list, int count = -1)
     {
-        int min = Math.Min(list.Count, count);
-        for (int i = 0; i < min; i++)
+        if (list.Count <= 0) return new UniTask<List<Entity>>(null);
+        if (list.Count <= count) return UniTask.FromResult(new List<Entity>(list));
+        List<Entity> result = new List<Entity>();
+        for (int i = 0; i < count; i++)
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
             var value = list[rand];
             list.RemoveAt(rand);
-            input?.Invoke(value);
+            result.Add(value);
         }
-        callback?.Invoke(true);
-        yield break;
-    }
 
-    public IEnumerator InputTile(List<Tile> list, Action<Tile> input, Action<bool> callback, int count = -1)
+        return UniTask.FromResult(result);
+    }
+    
+    public UniTask<List<Tile>> InputTile(List<Tile> list, int count = -1)
     {
-        int min = Math.Min(list.Count, count);
-        for (int i = 0; i < min; i++)
+        if (list.Count <= 0) return new UniTask<List<Tile>>(null);
+        if (list.Count <= count) return UniTask.FromResult(new List<Tile>(list));
+        List<Tile> result = new List<Tile>();
+        for (int i = 0; i < count; i++)
         {
             int rand = UnityEngine.Random.Range(0, list.Count);
             var value = list[rand];
             list.RemoveAt(rand);
-            input?.Invoke(value);
+            result.Add(value);
         }
-        callback?.Invoke(true);
-        yield break;
+
+        return UniTask.FromResult(result);
     }
 }

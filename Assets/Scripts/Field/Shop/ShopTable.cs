@@ -89,7 +89,7 @@ public class ShopTable : ScriptableObject
         return false;
     }
 }
-[System.Serializable]
+[Serializable]
 public struct DataSet<T> where T : AbstractData
 {
     public T data;

@@ -119,6 +119,7 @@ public class EntityInfoUI : MonoBehaviour
     {
         if(_skill != null)
             inputManager.SetInputMode(_skill);
+        HidePanel();
     }
     void SetSkillButton(IInputState state)
     {

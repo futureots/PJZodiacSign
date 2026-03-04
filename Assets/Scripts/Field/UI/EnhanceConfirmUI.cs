@@ -29,7 +29,7 @@ public class EnhanceConfirmUI : MonoBehaviour
     {
         if(state is RepairModeInput repair)
         {
-            repair.OnEnhanceRequested += OnEnhanceRequest;
+            repair.onEnhanceRequested += OnEnhanceRequest;
         }
     }
 

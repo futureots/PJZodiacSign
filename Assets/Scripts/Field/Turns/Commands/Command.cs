@@ -8,7 +8,9 @@ using Object = UnityEngine.Object;
 
 public interface IExecute
 {
-    public IEnumerator Execute(Action callback);
+    public IEnumerator Execute();
+    public void Delete();
+
 }
 
 public record Command : IExecute
@@ -20,9 +22,8 @@ public record Command : IExecute
 
     public List<GameObject> indicate = new();
     
-    public virtual IEnumerator Execute(Action callback = null)
+    public virtual IEnumerator Execute()
     {
-        callback?.Invoke();
         Delete();
         yield break;
     }

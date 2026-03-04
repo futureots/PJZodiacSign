@@ -1,68 +1,64 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 
 [Serializable]
 public class S_Promotion : BaseSkillLogic
 {
-    Entity entity;
-    Entity target;
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    private Entity _entity;
+    private Entity _target;
+
+    public override async UniTask<bool> InputSkill(IInput input)
     {
         var list = StageManager.Instance.field.GetEntities();
-        isContinued = false;
-        Entity _entity = null;
-        Action<bool> conti = (flag) => { isContinued = flag; };
-        if(component.TryGetComponent<Entity>(out var _owner))
+        Entity entity = null;
+        if(component.TryGetComponent<Entity>(out var owner))
         {
-            _entity = _owner;
+            entity = owner;
         }
         else
         {
-            Action<Entity> action = (x) =>
+            var data = await input.InputEntity(list, 1);
+            if(data != null)
             {
-                _entity = x;
-            };
-            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-            if (!isContinued)
-            {
-                callback?.Invoke(false);
-                yield break;
+                entity = data[0];
             }
-            
+            else
+            {
+                return false;
+            }
         }
-        list.Remove(_entity);
-
-
-        Entity _target = null;
-        Action<Entity> action2 = (x) =>
+        list.Remove(entity);
+        
+        var data2 = await input.InputEntity(list, 1);
+        if (data2 == null) 
         {
-            _target = x;
-        };
-        yield return component.StartCoroutine(input.InputEntity(list, action2, conti, 1));
-        if (!isContinued)
-        {
-            callback?.Invoke(false);
-            yield break;
+            return false;
         }
-        target = _target;
-        entity = _entity;
-        callback?.Invoke(true);
+        _entity =  entity;
+        _target = data2[0];
+        
+        return true;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        var data = target.baseData;
-        var dir = entity.direction;
-        var tile = entity.CurTile;
-        var level = entity.Level;
-        var team = entity.team.teamNumber;
-        entity.CurTile.UnsetOccupant();
-        entity.Dead();
-        entity = null;
+        var data = _target.baseData;
+        var dir = _entity.direction;
+        var tile = _entity.CurTile;
+        var level = _entity.Level;
+        var team = _entity.team.teamNumber;
+        
+        _entity.CurTile.UnsetOccupant();
+        _entity.Dead();
+        _entity = null;
+        
         // TODO : entity의 data를 변경하고 팩토리를 통해 새로 생성, entity의 레벨은 유지
         var promotion = EntityFactory.Instance.RequestEntity(target.baseData, dir, tile, level);
         promotion.team.teamNumber = team;
-        target = null;
+
+        _entity = null;
+        _target = null;
         
         yield break;
     }

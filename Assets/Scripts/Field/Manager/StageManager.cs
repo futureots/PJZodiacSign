@@ -1,5 +1,5 @@
-
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -66,7 +66,7 @@ public class StageManager : Singleton<StageManager>
 
     void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)
     {
-        var list = Field.GetEmptyTiles(agentField[teamId].GetTiles());
+        var list = agentField[teamId].GetTiles().GetEmptyTiles();
         foreach (var entityData in data.handEntities)
         {
             if (list.Count <= 0) break;
@@ -118,39 +118,73 @@ public class StageManager : Singleton<StageManager>
 
     #region CommandLogic
 
-    IExecute curCmd;
-    bool isSequencing = false;
-    Queue<IExecute> commandList = new Queue<IExecute>();
-    public void ReceiveCommands(List<IExecute> commands)
+    private int _count;
+    public int Count
     {
-        foreach (var item in commands)
+        get
         {
-            commandList.Enqueue(item);
+            return _count;
         }
-        ExecuteCommands();
-    }
-    public void ExecuteCommands()
-    {
-        if (!isSequencing)
+        set
         {
-            isSequencing = true;
-            OnCommandExecuted();
+            _count = value;
+            isSequencing?.Invoke(_count);
         }
     }
-    public void OnCommandExecuted()
+    public Action<int> isSequencing;
+    
+    Queue<IExecute> commandQueue = new Queue<IExecute>();
+    private bool _isWaiting;
+    
+    public void ReceiveCommand(IExecute command)
     {
-        EditorLogger.Print($"count : {commandList.Count}");
-        if (commandList.Count > 0)
+        if (_isWaiting)
         {
-            curCmd = commandList.Dequeue();
-            Action callback = OnCommandExecuted;
-            StartCoroutine(curCmd.Execute(callback));
+            commandQueue.Enqueue(command);
+            return;
+        }
+        if (command is CheckCommand cmd)
+        {
+            StartCoroutine(WaitForCommand(cmd));
         }
         else
         {
-            isSequencing = false;
-            EditorLogger.Print("NoMore Command");
+            ExecuteCommand(command);
         }
     }
+
+    void ExecuteCommand(IExecute command)
+    {
+        void Callback() => Count--;
+        Count++;
+        this.RunWithCallback(command.Execute(), Callback);
+    }
+
+    IEnumerator WaitForCommand(IExecute command)
+    {
+        _isWaiting = true;
+        yield return new WaitUntil(() => Count == 0);
+        _isWaiting = false;
+        yield return StartCoroutine(command.Execute());
+        
+
+        if (command is EndCommand)
+        {
+            foreach(var cmd in commandQueue) cmd.Delete();
+            commandQueue.Clear();
+        }
+        else
+        {
+            List<IExecute> commands = new List<IExecute>(commandQueue);
+            commandQueue.Clear();
+            foreach (var cmd in commands)
+            {
+                ReceiveCommand(cmd);
+            }
+            
+        }
+    }
+
+    
     #endregion
 }

@@ -31,6 +31,25 @@ public class Agent : MonoBehaviour
     // 행동 포인트
     public int actionCount;
     
+    private int _currentActionCount;
+
+    public int CurrentActionCount
+    {
+        get
+        {
+            return  _currentActionCount;
+        }
+        private set
+        {
+            _currentActionCount = value;
+            onActionCountChanged?.Invoke(_currentActionCount);
+        }
+    }
+    
+    public List<Entity> actionAbleEntities=new List<Entity>();
+    
+    public event Action<int> onActionCountChanged;
+
     private int _credit;
     
     public int Credit
@@ -55,21 +74,28 @@ public class Agent : MonoBehaviour
         this.fieldController = fieldController;
         this.id = teamId;
         Credit = credit;
-        fieldController.onPhaseStarted += OnPhaseChange;
+        fieldController.OnPhaseStarted += OnPhaseChange;
         fieldController.OnTurnStarted += OnTurnChange;
+        
     }
     void OnTurnChange(Turn turn)
     {
         if(turn.agentID == id)
         {
+            
             switch (turn.type)
             {
                 case TurnType.ACTION:
-                    fieldController.capacity = actionCount;
+                    CurrentActionCount = actionCount;
+                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
                     break;
                 case TurnType.ATTACK:
+                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
+                    CurrentActionCount = -1;
+                    break;
                 case TurnType.REPAIR:
-                    fieldController.capacity = -1;
+                    actionAbleEntities = StageManager.Instance.agentField[id].GetEntities(id);
+                    CurrentActionCount = -1;
                     break;
             }
         }
@@ -95,9 +121,10 @@ public class Agent : MonoBehaviour
             fieldEntityData = _fieldEntityData;
         }
     }
-
+    
     public Command CreateMoveCommand(Entity entity, Tile tile, bool isWarp = false)
     {
+        CurrentActionCount -= 1;
         var cmd = new MoveCommand(entity, tile, isWarp);
         // 해당 기물의 이동명령이 있으면 제거 후 추가
         fieldController.ReceiveCommands(cmd);
@@ -106,6 +133,7 @@ public class Agent : MonoBehaviour
 
     public Command CreateSkillCommand(SkillComponent skill)
     {
+        CurrentActionCount -= 1;
         var cmd = new SkillCommand(skill);
         fieldController.ReceiveCommands(cmd);
         return cmd;
@@ -113,6 +141,7 @@ public class Agent : MonoBehaviour
 
     public Command CreateAttackCommand(Entity entity)
     {
+        CurrentActionCount -= 1;
         var cmd = new AttackCommand(entity);
         fieldController.ReceiveCommands(cmd);
         return cmd;
@@ -120,6 +149,7 @@ public class Agent : MonoBehaviour
 
     public Command CreateEnhanceCommand(Entity target, Entity source)
     {
+        CurrentActionCount -= 1;
         var cmd = new EnhanceCommand(target, source);
         fieldController.ReceiveCommands(cmd);
         return cmd;

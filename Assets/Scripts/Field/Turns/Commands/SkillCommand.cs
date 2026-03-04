@@ -4,10 +4,9 @@ using System.Collections;
 
 public sealed record SkillCommand(SkillComponent Skill) : Command
 {
-    public override IEnumerator Execute(Action callback)
+    public override IEnumerator Execute()
     {
         yield return Skill.StartCoroutine(Skill.ExecuteSkill());
-        callback?.Invoke();
         Delete();
     }
     public override string ToString()
