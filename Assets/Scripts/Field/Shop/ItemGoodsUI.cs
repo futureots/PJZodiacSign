@@ -11,7 +11,7 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             var customer = Agent.LocalPlayer;
             if (customer.inventory.items.Count < customer.inventory.capacity)
             {
-                var item = ItemFactory.RequestItem(data);
+                var item = ItemFactory.Instance.RequestItem(data);
                 customer.inventory.TryAddItem(item);
                 customer.Credit -= price;
             }

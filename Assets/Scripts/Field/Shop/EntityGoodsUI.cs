@@ -13,9 +13,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             var tiles = StageManager.Instance.agentField[teamNum].GetTiles().GetEmptyTiles();
             if(tiles.Count > 0)
             {
-                var entity = EntityFactory.RequestEntity(data, new intVector2(1, 1), tiles[0]);
-                
-                // NOTE : 생성된 기물을 agent의 소유로 하도록 하는 함수가 필요한가?
+                var entity = EntityFactory.Instance.RequestEntity(data, new intVector2(1, 1), tiles[0]);
                 entity.team.teamNumber = teamNum;
                 
                 customer.Credit -= price;
