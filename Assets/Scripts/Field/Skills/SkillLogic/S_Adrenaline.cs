@@ -17,7 +17,7 @@ public class S_Adrenaline : BaseSkillLogic
         var entities = StageManager.Instance.field.GetEntities();
         foreach (var entity in entities)
         {
-            entity.Damaged(2);
+            entity.Defense -= 1;
             entity.Power += 1;
         }
         // TODO : 지진 이펙트 시간 기다리기
