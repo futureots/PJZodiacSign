@@ -25,4 +25,4 @@ MonoBehaviour:
       type: {class: S_Bombard, ns: , asm: Assembly-CSharp}
       data:
         area: {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
-        attackEffect: {fileID: 5036092967582373661, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
+        attackEffect: {fileID: 5036092967582373661, guid: 17e8acada434f9145a3fee7b652c159c, type: 3}

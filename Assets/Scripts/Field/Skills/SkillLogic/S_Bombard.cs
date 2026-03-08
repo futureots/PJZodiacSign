@@ -40,38 +40,36 @@ public class S_Bombard : BaseSkillLogic
         var tiles = _owner.GetAttackArea();
         var field = StageManager.Instance.field;
         int damage = _owner.Power;
+        var direction = _owner.direction;
+        var team = _owner.team;
         foreach (var tile in tiles)
         {
             if(tile.IsEmpty) continue;
             var target = tile.occupiedEntity;
             if (!target.team.IsAlly(_owner.team))
             {
+                
                 void Hit()
                 {
                     target.Damaged(damage);
+                    var splashTiles = field.GetTiles(area.GetVectors(field.GetFieldState(),tile.fieldPos,direction));
+                    foreach (var splashTile in splashTiles)
+                    {
+                        if(splashTile.IsEmpty) continue;
+                        if (!splashTile.occupiedEntity.team.IsAlly(team))
+                        {
+                            splashTile.occupiedEntity.Damaged(damage);
+                        }
+                    }
                 }
-                //TODO : 폭발 이펙트 재생
                 var effect = Object.Instantiate(attackEffect, _owner.transform.position + Vector3.up * 7, Utils.QI);
                 effect?.Initialize(target.gameObject, Hit);
-                // 포격 이펙트 내부에 광역 피해를 입히는 기능 추가
-                /*var splashTiles = field.GetTiles(area.GetVectors(field.GetFieldState(),tile.fieldPos,_owner.direction));
-            
-
-            
-                foreach (var splashTile in splashTiles)
-                {
-                    if(splashTile.IsEmpty) continue;
-                    if (!splashTile.occupiedEntity.team.IsAlly(_owner.team))
-                    {
-                        splashTile.occupiedEntity.Damaged(_owner.Power);
-                    }
-                }*/
             }
         }
         // TODO : 폭발 이펙트 끝날때까지 대기
+        yield return new WaitForSeconds(2f);
         
         _owner = null;
-        yield break;
     }
     public override BaseSkillLogic Clone()
     {

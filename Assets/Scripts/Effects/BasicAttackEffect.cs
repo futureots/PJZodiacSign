@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BasicAttackEffect : MonoBehaviour
 {
-    private GameObject _target;
-    private Action _onHit;
-    [SerializeField] private GameObject hitEffect;
+    protected GameObject _target;
+    protected Action _onHit;
+    [SerializeField] protected GameObject hitEffect;
     public float speed;
 
     /// <summary>
@@ -21,16 +21,16 @@ public class BasicAttackEffect : MonoBehaviour
         float time = (target.transform.position - transform.position).magnitude * speed;
         Sequence sequence = DOTween.Sequence().
             Append(transform.DOMove(target.transform.position + Vector3.up * 7, time).SetEase(Ease.Linear)).
-            AppendCallback(() => Destroy(gameObject));            // 도착 시 부딪히지 않아도 삭제
+            AppendCallback(HitAction);            // 도착 시 부딪히지 않아도 삭제
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void HitAction()
     {
-        if(other.gameObject == _target)
-        {
-            _onHit?.Invoke();
-            var hit = Instantiate(hitEffect, transform.position, Utils.QI);
-            Destroy(hit, 1f);
-        }
+        _onHit?.Invoke();
+        var hit = Instantiate(hitEffect, transform.position, Utils.QI);
+        hit.transform.localScale = Vector3.Scale(hit.transform.localScale, _target.transform.lossyScale);
+        Destroy(hit, 1f);
+        Destroy(gameObject);
     }
+    
 }
