@@ -6,9 +6,9 @@ using System.Collections;
 public class S_Earthquake : BaseSkillLogic
 {
     
-    public override async UniTask<bool> InputSkill(IInput input)
+    public override UniTask<bool> InputSkill(IInput input)
     {
-        return true;
+        return UniTask.FromResult(true);
     }
 
     public override IEnumerator ExecuteSkill()
