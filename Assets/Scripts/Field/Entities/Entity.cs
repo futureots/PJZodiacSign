@@ -124,7 +124,7 @@ public class Entity : Occupant, IDamageable, IAttackable
             {
                 if (!team.IsAlly(entity.team))
                 {
-                    var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
+                    var effect = EffectFactory.Instance.RequestEffect(baseData.basicAttackEffect.name, transform.position + Vector3.up * 7, transform.lossyScale);
                     effect.GetComponent<BasicAttackEffect>()?.Initialize(target.gameObject, ()=> entity.Damaged(damage));
                     isAttacked = true;
                 }

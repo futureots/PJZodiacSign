@@ -27,8 +27,7 @@ public class BasicAttackEffect : MonoBehaviour
     protected virtual void HitAction()
     {
         _onHit?.Invoke();
-        var hit = Instantiate(hitEffect, transform.position, Utils.QI);
-        hit.transform.localScale = Vector3.Scale(hit.transform.localScale, _target.transform.lossyScale);
+        var hit = EffectFactory.Instance.RequestEffect("HitEffect",transform.position,_target.transform.lossyScale);
         Destroy(hit, 1f);
         Destroy(gameObject);
     }

@@ -62,8 +62,13 @@ public class S_Bombard : BaseSkillLogic
                         }
                     }
                 }
-                var effect = Object.Instantiate(attackEffect, _owner.transform.position + Vector3.up * 7, Utils.QI);
-                effect?.Initialize(target.gameObject, Hit);
+
+                var effect = EffectFactory.Instance.RequestEffect("CannonBullet",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale);
+                if (effect.TryGetComponent(out BasicAttackEffect atkObj))
+                {
+                    atkObj.Initialize(target.gameObject, Hit);
+                }
+                
             }
         }
         // TODO : 폭발 이펙트 끝날때까지 대기

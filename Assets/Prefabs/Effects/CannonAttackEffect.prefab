@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4497479590124267281}
   - component: {fileID: 276211119744981425}
   m_Layer: 0
-  m_Name: CannonMissile
+  m_Name: CannonAttackEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
