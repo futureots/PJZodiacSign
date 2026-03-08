@@ -2,6 +2,8 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
 
+
+[System.Serializable]
 public class S_Castling : BaseSkillLogic
 {
     private Entity _entity;

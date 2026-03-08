@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public abstract class BaseSkillLogic
@@ -14,4 +15,5 @@ public abstract class BaseSkillLogic
     public virtual IEnumerator ExecuteSkill() { yield break; }
 
     public abstract BaseSkillLogic Clone();
+    
 }

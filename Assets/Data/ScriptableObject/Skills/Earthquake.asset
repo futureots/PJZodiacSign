@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d5c26893e2eca468ef1016e24ff5f2, type: 3}
+  m_Name: Earthquake
+  m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
+  skillIcon: {fileID: 21300000, guid: de7cfc4add8231642aa210c9512bfd55, type: 3}
+  skillName: "\uC9C0\uC9C4"
+  skillDescription: "\uD544\uB4DC\uC758 \uBAA8\uB4E0 \uAE30\uBB3C\uC5D0 \uCD5C\uB300
+    \uCCB4\uB825 \uBE44\uB840 \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
+  skillLogic:
+    rid: 598112531784663108
+  references:
+    version: 2
+    RefIds:
+    - rid: 598112531784663108
+      type: {class: S_Earthquake, ns: , asm: Assembly-CSharp}
+      data: 
