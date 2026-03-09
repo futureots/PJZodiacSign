@@ -49,6 +49,7 @@ public class S_Castling : BaseSkillLogic
         tile1.UnsetOccupant();
         tile2.UnsetOccupant();
         yield return null;
+        // TODO : 이동 코루틴으로 애니메이션 구현하기
         _target.Move(tile1);
         _entity.Move(tile2);
         

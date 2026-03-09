@@ -19,15 +19,15 @@ public class BasicAttackEffect : MonoBehaviour
         this._target = target;
         _onHit = action;
         float time = (target.transform.position - transform.position).magnitude * speed;
-        Sequence sequence = DOTween.Sequence().
-            Append(transform.DOMove(target.transform.position + Vector3.up * 7, time).SetEase(Ease.Linear)).
-            AppendCallback(HitAction);            // 도착 시 부딪히지 않아도 삭제
+        Sequence sequence = DOTween.Sequence()
+            .Append(transform.DOMove(target.transform.position + Vector3.up * 7, time).SetEase(Ease.Linear))
+            .AppendCallback(HitAction);
     }
 
     protected virtual void HitAction()
     {
         _onHit?.Invoke();
-        var hit = EffectFactory.Instance.RequestEffect("HitEffect",transform.position,_target.transform.lossyScale);
+        var hit = EffectFactory.Instance.RequestEffect(hitEffect.name,transform.position,_target.transform.lossyScale);
         Destroy(hit, 1f);
         Destroy(gameObject);
     }

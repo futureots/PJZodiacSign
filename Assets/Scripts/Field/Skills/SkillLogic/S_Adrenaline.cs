@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 
 [Serializable]
@@ -13,14 +14,16 @@ public class S_Adrenaline : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        //TODO : 지진 이펙트 재생
-        var entities = StageManager.Instance.field.GetEntities();
+        //TODO : 광화 이펙트 재생
+        var field = StageManager.Instance.field;
+        var effect = EffectFactory.Instance.RequestEffect("Aura", field.transform.position, Vector3.Scale(field.transform.lossyScale,new Vector3(8,1,8)));
+        var entities = field.GetEntities();
         foreach (var entity in entities)
         {
             entity.Defense -= 1;
             entity.Power += 1;
         }
-        // TODO : 지진 이펙트 시간 기다리기
+        // TODO : 광화 이펙트 대기
 
         yield break;
     }

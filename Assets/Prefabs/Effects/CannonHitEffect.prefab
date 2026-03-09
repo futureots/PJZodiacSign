@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8720472390337742757}
   - component: {fileID: 2847120227863386671}
   m_Layer: 0
-  m_Name: CannonExplodeEffect
+  m_Name: CannonHitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
