@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 
 [Serializable]
-public class S_Earthquake : BaseSkillLogic
+public class S_Lightning : BaseSkillLogic
 {
     
     public override UniTask<bool> InputSkill(IInput input)
@@ -13,19 +13,22 @@ public class S_Earthquake : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        //TODO : 지진 이펙트 재생
-        var entities = StageManager.Instance.field.GetEntities();
+        //TODO : 낙뢰 이펙트 재생
+        var field = StageManager.Instance.field;
+        EffectFactory.Instance.RequestEffect("ManaAura",field.transform.position,field.transform.lossyScale);
+        
+        var entities = field.GetEntities();
         foreach (var entity in entities)
         {
             entity.Damaged(entity.MaxHealth/4);
         }
-        // TODO : 지진 이펙트 시간 기다리기
+        // TODO : 낙뢰 이펙트 시간 기다리기
 
         yield break;
     }
 
     public override BaseSkillLogic Clone()
     {
-        return new S_Earthquake();
+        return new S_Lightning();
     }
 }

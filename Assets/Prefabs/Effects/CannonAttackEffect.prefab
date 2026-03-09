@@ -184,5 +184,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4506c4dc5bf515749afc442efe2418d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CannonAttackEffect
-  hitEffect: {fileID: 2435545242741253804, guid: fc075a09f61fc264386ec258aa83d3b6, type: 3}
+  hitEffect: {fileID: 8291806537716595489, guid: d92c047da59458b45ab8eb1c8ac4dc07, type: 3}
   speed: 0.015

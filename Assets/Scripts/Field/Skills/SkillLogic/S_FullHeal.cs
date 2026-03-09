@@ -8,7 +8,6 @@ using Object = System.Object;
 [Serializable]
 public class S_FullHeal : BaseSkillLogic
 {
-    [SerializeField] private GameObject healPrefab;
     private Entity _target;
     public override async UniTask<bool> InputSkill(IInput input)
     {
@@ -26,11 +25,11 @@ public class S_FullHeal : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         
-        _target.CurHealth = _target.MaxHealth;
-        var effect = UnityEngine.Object.Instantiate(healPrefab, _target.transform.position, Quaternion.identity);
-        UnityEngine.Object.Destroy(effect,1f);
         
-        yield return new WaitForSeconds(1f);
+        EffectFactory.Instance.RequestEffect("HealAura", _target.transform.position, _target.transform.lossyScale);
+        yield return new WaitForSeconds(0.1f);
+        _target.CurHealth = _target.MaxHealth;
+        yield return new WaitForSeconds(0.9f);
         
         _target = null;
         yield break;

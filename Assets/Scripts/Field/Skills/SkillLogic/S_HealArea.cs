@@ -8,7 +8,6 @@ public class S_HealArea : BaseSkillLogic
 {
     [SerializeField] private Area area;
     private Entity _owner;
-    public S_HealArea() { }
     public void Init(Area area)
     {
         this.area = area;
@@ -39,6 +38,10 @@ public class S_HealArea : BaseSkillLogic
         int[,] t = new int[8, 8];
         var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
+        
+        EffectFactory.Instance.RequestEffect("HealAura", _owner.transform.position, Vector3.Scale(_owner.transform.lossyScale,new Vector3(5,1,5)));
+        yield return new WaitForSeconds(0.1f);
+        
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
@@ -51,6 +54,9 @@ public class S_HealArea : BaseSkillLogic
                 
             }
         }
+        
+        yield return new WaitForSeconds(0.9f);
+        
         _owner = null;
         yield break;
     }

@@ -14,9 +14,11 @@ public class S_Adrenaline : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        //TODO : 광화 이펙트 재생
         var field = StageManager.Instance.field;
-        var effect = EffectFactory.Instance.RequestEffect("Aura", field.transform.position, Vector3.Scale(field.transform.lossyScale,new Vector3(8,1,8)));
+        
+        // 광화 이펙트 재생
+        EffectFactory.Instance.RequestEffect("PowerAura", field.transform.position, Vector3.Scale(field.transform.lossyScale,new Vector3(8,1,8)));
+        
         var entities = field.GetEntities();
         foreach (var entity in entities)
         {
@@ -25,6 +27,8 @@ public class S_Adrenaline : BaseSkillLogic
         }
         // TODO : 광화 이펙트 대기
 
+        yield return new WaitForSeconds(1f);
+        
         yield break;
     }
 

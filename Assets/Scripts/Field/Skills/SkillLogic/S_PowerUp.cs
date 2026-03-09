@@ -1,11 +1,17 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_PowerUp : BaseSkillLogic
 {
+    [SerializeField] private Area area;
     private Entity _owner;
+    public void Init(Area area)
+    {
+        this.area = area;
+    }
     
     public override async UniTask<bool> InputSkill(IInput input)
     {
@@ -28,7 +34,13 @@ public class S_PowerUp : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        var tiles = _owner.GetAttackArea();
+        var pos = _owner.CurTile.fieldPos;
+        int[,] t = new int[8, 8];
+        var vectors = area.GetVectors(t, pos, _owner.direction);
+        var tiles = StageManager.Instance.field.GetTiles(vectors);
+        
+        EffectFactory.Instance.RequestEffect("PowerAura", _owner.transform.position, Vector3.Scale(_owner.transform.lossyScale,new Vector3(5,1,5)));
+        
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
@@ -46,6 +58,7 @@ public class S_PowerUp : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_PowerUp();
+        clone.Init(area);
         return clone;
     }
 }

@@ -41,8 +41,10 @@ public class S_ChargeArea : BaseSkillLogic
         var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         
-        // TODO : 마나 아우라 이펙트 추가
-        var effect = EffectFactory.Instance.RequestEffect("ManaAura",_owner.transform.position,_owner.transform.lossyScale);
+        // Effect
+        EffectFactory.Instance.RequestEffect("ManaAura",_owner.transform.position,Vector3.Scale(_owner.transform.lossyScale,new Vector3(5,1,5)));
+        yield return new WaitForSeconds(0.1f);
+        
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
@@ -54,6 +56,7 @@ public class S_ChargeArea : BaseSkillLogic
                 }
             }
         }
+        yield return new WaitForSeconds(0.9f);
         _owner = null;
         yield break;
     }

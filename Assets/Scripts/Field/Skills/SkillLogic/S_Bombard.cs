@@ -63,7 +63,7 @@ public class S_Bombard : BaseSkillLogic
                     }
                 }
 
-                var effect = EffectFactory.Instance.RequestEffect("CannonAttackEffect",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale);
+                var effect = EffectFactory.Instance.RequestEffect("CannonAttackEffect",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale,5f);
                 if (effect.TryGetComponent(out BasicAttackEffect atkObj))
                 {
                     atkObj.Initialize(target.gameObject, Hit);
