@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_Lightning : BaseSkillLogic
@@ -15,16 +16,24 @@ public class S_Lightning : BaseSkillLogic
     {
         //TODO : 낙뢰 이펙트 재생
         var field = StageManager.Instance.field;
-        EffectFactory.Instance.RequestEffect("ManaAura",field.transform.position,field.transform.lossyScale);
+        EffectFactory.Instance.RequestEffect("ManaAura",field.transform.position,Vector3.Scale(field.transform.lossyScale,new Vector3(8,1,8)));
         
         var entities = field.GetEntities();
         foreach (var entity in entities)
         {
-            entity.Damaged(entity.MaxHealth/4);
+            component.StartCoroutine(LightningHit(entity));
         }
-        // TODO : 낙뢰 이펙트 시간 기다리기
+
+        yield return new WaitForSeconds(1.5f);
 
         yield break;
+    }
+
+    IEnumerator LightningHit(Entity entity)
+    {
+        EffectFactory.Instance.RequestEffect("LightningStrike",entity.transform.position,entity.transform.lossyScale);
+        yield return new WaitForSeconds(0.5f);
+        entity.Damaged(entity.MaxHealth/4);
     }
 
     public override BaseSkillLogic Clone()

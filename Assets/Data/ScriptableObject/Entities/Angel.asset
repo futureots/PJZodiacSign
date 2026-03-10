@@ -31,6 +31,6 @@ MonoBehaviour:
   power: 5
   hpMultiplier: 5
   powerMultiplier: 2
-  skill: {fileID: 11400000, guid: b303936343c02d24d946eb44160ece79, type: 2}
+  skill: {fileID: 11400000, guid: 51cca07ad6ae5ee4583f9643f02d9f60, type: 2}
   maxEnergy: 1
   offset: {x: 0, y: 3, z: 0}
