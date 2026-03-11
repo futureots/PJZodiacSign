@@ -258,7 +258,7 @@ MonoBehaviour:
     x: -1442
     y: -4078
     width: 9316
-    height: 6421
+    height: 6424
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -17176,7 +17176,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":1.5,"y":1.0,"z":1.0}'
+      m_SerializableObject: '{"x":3.0,"y":1.0,"z":1.0}'
     m_Space: -1
   m_Property:
     name: _Scale
@@ -17312,7 +17312,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":1.5,"y":1.0,"z":1.0}'
+      m_SerializableObject: '{"x":3.0,"y":1.0,"z":1.0}'
     m_Space: -1
   m_Property:
     name: _Scale
@@ -23993,7 +23993,7 @@ MonoBehaviour:
   - {fileID: 8926484042661616300}
   - {fileID: 8926484042661616301}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 8926484042661616299}
   m_MasterData:
@@ -24002,7 +24002,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.5,"y":0.0}'
+      m_SerializableObject: '{"x":0.0,"y":0.0}'
     m_Space: -1
   m_Property:
     name: _MainTexOffset
@@ -24686,7 +24686,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.5,"y":0.0}'
+      m_SerializableObject: '{"x":0.0,"y":0.0}'
     m_Space: -1
   m_Property:
     name: _MainTexOffset
