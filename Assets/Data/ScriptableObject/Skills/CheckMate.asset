@@ -24,4 +24,4 @@ MonoBehaviour:
     - rid: 2184884865547108421
       type: {class: S_CheckMate, ns: , asm: Assembly-CSharp}
       data:
-        damage: 10
+        modifier: 5

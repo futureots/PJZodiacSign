@@ -45,6 +45,8 @@ public class S_CheckMate : BaseSkillLogic
                 
             }
         }
+
+        yield return new WaitForSeconds(1.5f);
         _owner = null;
         yield break;
     }
