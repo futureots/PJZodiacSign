@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class S_Enhance : BaseSkillLogic
+public class S_Angel : BaseSkillLogic
 {
     private Entity _target;
     public override async UniTask<bool> InputSkill(IInput input)
@@ -28,12 +28,13 @@ public class S_Enhance : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         _target.Level += 1;
+        _target.energy.MaxEnergy += 1;
         yield return new WaitForSeconds(1f);
+        
         _target = null;
-        yield break;
     }
     public override BaseSkillLogic Clone()
     {
-        return new S_Enhance();
+        return new S_Angel();
     }
 }
