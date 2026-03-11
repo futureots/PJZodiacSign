@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_Promotion : BaseSkillLogic
@@ -10,7 +11,6 @@ public class S_Promotion : BaseSkillLogic
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
-        var list = StageManager.Instance.field.GetEntities();
         Entity entity = null;
         if(component.TryGetComponent<Entity>(out var owner))
         {
@@ -18,6 +18,7 @@ public class S_Promotion : BaseSkillLogic
         }
         else
         {
+            var list = StageManager.Instance.field.GetEntities();
             var data = await input.InputEntity(list, 1);
             if(data != null)
             {
@@ -28,9 +29,10 @@ public class S_Promotion : BaseSkillLogic
                 return false;
             }
         }
-        list.Remove(entity);
+        var teamList = StageManager.Instance.field.GetEntities(entity.team.teamNumber);
+        teamList.Remove(entity);
         
-        var data2 = await input.InputEntity(list, 1);
+        var data2 = await input.InputEntity(teamList, 1);
         if (data2 == null) 
         {
             return false;
@@ -53,10 +55,24 @@ public class S_Promotion : BaseSkillLogic
         _entity.Dead();
         _entity = null;
         
-        // TODO : entity의 data를 변경하고 팩토리를 통해 새로 생성, entity의 레벨은 유지
+        
         var promotion = EntityFactory.Instance.RequestEntity(_target.baseData, dir, tile, level);
         promotion.team.teamNumber = team;
+        
+        // 이펙트 재생
+        var levelUpEffect = EffectFactory.Instance.RequestEffect("LevelUp",promotion.transform.position, promotion.transform.lossyScale);
+        if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
+        {
+            if (promotion.TryGetComponent<MeshFilter>(out var mesh))
+            {
+                levelUp.Init(mesh.mesh);
+                levelUp.Play();
+            }
+        }
 
+        yield return new WaitForSeconds(1f);
+
+        
         _entity = null;
         _target = null;
         

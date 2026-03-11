@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_Overload : BaseSkillLogic
@@ -24,10 +25,22 @@ public class S_Overload : BaseSkillLogic
     }
 
     public override IEnumerator ExecuteSkill()
-    {
+    { 
         var result = _target.skill.skillLogic.InputSkill(new RandomInput());
         yield return result.ToCoroutine();
-
+        
+        // 이펙트 재생
+        var levelUpEffect = EffectFactory.Instance.RequestEffect("OverLoad",_target.transform.position, _target.transform.lossyScale);
+        if (levelUpEffect.TryGetComponent<GlowEffect>(out var overLoad))
+        {
+            if (_target.TryGetComponent<MeshFilter>(out var mesh))
+            {
+                overLoad.Init(mesh.mesh);
+                overLoad.Play();
+            }
+        }
+        yield return new WaitForSeconds(1f);
+        
         if (!result.GetAwaiter().GetResult()) yield break;
         
         yield return null;

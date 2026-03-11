@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(SkillComponent))]
 [RequireComponent(typeof(EnergyComponent))]     // NOTE: Skill 내 Energy 스탯 종속 시 컴포넌트 병합
@@ -91,6 +92,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         MaxHealth += baseData.hpMultiplier * upLevel;
         CurHealth += baseData.hpMultiplier * upLevel;
         Power += baseData.powerMultiplier * upLevel;
+        PlayEffect(EffectType.LevelUp);
     }
 
     #region Attack
@@ -124,7 +126,7 @@ public class Entity : Occupant, IDamageable, IAttackable
             {
                 if (!team.IsAlly(entity.team))
                 {
-                    var effect = EffectFactory.Instance.RequestEffect(baseData.basicAttackEffect.name, transform.position + Vector3.up * 7, transform.lossyScale,5f);
+                    var effect = EffectFactory.Instance.RequestEffect("AttackEffect", transform.position + Vector3.up * 7, transform.lossyScale,5f);
                     effect.GetComponent<BasicAttackEffect>()?.Initialize(target.gameObject, ()=> entity.Damaged(damage));
                     isAttacked = true;
                 }
@@ -190,16 +192,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     {
         onEntityDead?.Invoke(this);
         onDead?.Invoke();
-        var effect = Instantiate(baseData.dissolveEffect, transform);
-        if (effect.TryGetComponent<DissolveEffect>(out var dissolve))
-        {
-            if (TryGetComponent<MeshFilter>(out var mesh))
-            {
-                dissolve.Initialize(mesh.mesh, GetComponent<MeshRenderer>());
-                dissolve.PlayEffect(2f);
-                Destroy(gameObject, 2f);
-            }
-        }
+        PlayEffect(EffectType.Dissolve);
     }
 
     public void Healed(int amount)
@@ -278,6 +271,51 @@ public class Entity : Occupant, IDamageable, IAttackable
     }
 
     #endregion
+
+    #region Effect
+
+    public enum EffectType
+    {
+        LevelUp,
+        Dissolve
+    }
+
+    /// <summary>
+    /// 기물에 대한 이펙트 재생
+    /// </summary>
+    /// <param name="effectType"></param>
+    public void PlayEffect(EffectType effectType)
+    {
+        switch (effectType)
+        {
+            case EffectType.Dissolve:
+                var dissolveEffect = EffectFactory.Instance.RequestEffect("Dissolve", transform.position, transform.lossyScale,3f);
+                if (dissolveEffect.TryGetComponent<DissolveEffect>(out var dissolve))
+                {
+                    if (TryGetComponent<MeshFilter>(out var mesh) && TryGetComponent<MeshRenderer>(out var render))
+                    {
+                        dissolve.Initialize(mesh.mesh, render);
+                        dissolve.PlayEffect(2f);
+                    }
+                    Destroy(gameObject, 2f);
+                }
+                break;
+            case EffectType.LevelUp:
+                var levelUpEffect = EffectFactory.Instance.RequestEffect("LevelUp", transform.position, transform.lossyScale);
+                if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
+                {
+                    if (TryGetComponent<MeshFilter>(out var mesh))
+                    {
+                        levelUp.Init(mesh.mesh);
+                        levelUp.Play();
+                    }
+                }
+                break;
+        }
+    }
+
+    #endregion
+    
     #region Indicator
 
     [SerializeField] Outline indicatorEffect;
