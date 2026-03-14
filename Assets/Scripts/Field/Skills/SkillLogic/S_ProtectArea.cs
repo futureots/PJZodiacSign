@@ -6,20 +6,20 @@ using UnityEngine;
 [Serializable]
 public class S_ProtectArea : BaseSkillLogic
 {
-    private Entity _owner;
+    private Entity _target;
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
         if (component.TryGetComponent<Entity>(out var entity))
         {
-            _owner = entity;
+            _target = entity;
             return true;
         }
         var list = StageManager.Instance.field.GetEntities();
         var data = await input.InputEntity(list, 1);
         if(data != null)
         {
-            _owner = data[0];
+            _target = data[0];
             return true;
         }
         
@@ -29,21 +29,12 @@ public class S_ProtectArea : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        var tiles = _owner.GetMoveArea();
-        foreach (var tile in tiles)
-        {
-            if (tile.IsEmpty) continue;
-            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
-            {
-                if (entity.team.IsAlly(_owner.team))
-                {
-                    entity.Defense += 1;
-                }
-                
-            }
-        }
-        _owner = null;
-        yield break;
+        EffectFactory.Instance.RequestEffect("DefUpAura",_target.transform.position,_target.transform.lossyScale);
+        _target.Defense += 1;
+        
+        _target = null;
+        
+        yield return new WaitForSeconds(1f);
     }
     public override BaseSkillLogic Clone()
     {

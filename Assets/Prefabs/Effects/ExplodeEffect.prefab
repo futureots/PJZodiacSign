@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2435545242741253804, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_Name
-      value: CannonHitEffect
+      value: ExplodeEffect
       objectReference: {fileID: 0}
     - target: {fileID: 5169980460273892576, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5169980460273892576, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_LocalScale.y
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5169980460273892576, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5169980460273892576, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_LocalPosition.x

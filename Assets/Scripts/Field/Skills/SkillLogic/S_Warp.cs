@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Linq;
+using UnityEngine;
 
 
 [Serializable]
@@ -41,6 +43,8 @@ public class S_Warp : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
+        _owner.gameObject.transform.DOMove(_tile.transform.position,1f);
+        yield return new WaitForSeconds(1f);
         _owner.Move(_tile);
         _tile = null;
         _owner = null;

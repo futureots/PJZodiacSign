@@ -39,7 +39,7 @@ public class S_PowerUp : BaseSkillLogic
         var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         
-        EffectFactory.Instance.RequestEffect("PowerAura", _owner.transform.position, Vector3.Scale(_owner.transform.lossyScale,new Vector3(5,1,5)));
+        EffectFactory.Instance.RequestEffect("PowerAura", _owner.transform.position, _owner.transform.lossyScale*5);
         
         foreach (var tile in tiles)
         {

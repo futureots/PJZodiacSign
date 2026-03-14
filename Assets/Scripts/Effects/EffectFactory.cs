@@ -22,7 +22,7 @@ public class EffectFactory : Singleton<EffectFactory>
     public GameObject RequestEffect(string objName, Vector3 position, Vector3 scale, float time =2f)
     {
         GameObject obj = Instantiate(_dataDictionary[objName], position, Quaternion.identity);
-        obj.transform.localScale = Vector3.Scale(obj.transform.localScale, scale);
+        obj.transform.localScale = scale;
         Destroy(obj, time);
         return obj;
     }

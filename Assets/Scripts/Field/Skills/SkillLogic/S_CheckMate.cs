@@ -31,8 +31,8 @@ public class S_CheckMate : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         var tiles = _owner.GetAttackArea();
-        
-        EffectFactory.Instance.RequestEffect("ManaAura",_owner.transform.position,Vector3.Scale(_owner.transform.lossyScale,new Vector3(3,1,3)));
+
+        EffectFactory.Instance.RequestEffect("ManaAura", _owner.transform.position, _owner.transform.lossyScale * 3);
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;

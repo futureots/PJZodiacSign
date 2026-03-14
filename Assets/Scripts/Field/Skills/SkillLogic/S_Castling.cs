@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class S_Castling : BaseSkillLogic
 {
     private Entity _entity;
     private Entity _target;
+    private int _count = 0;
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
@@ -50,14 +52,24 @@ public class S_Castling : BaseSkillLogic
         tile2.UnsetOccupant();
         yield return null;
         // TODO : 이동 코루틴으로 애니메이션 구현하기
+        _target.gameObject.transform.DOMove(tile1.transform.position,1f);
+        _entity.gameObject.transform.DOMove(tile2.transform.position,1f);
+        yield return new WaitForSeconds(1f);
         _target.Move(tile1);
         _entity.Move(tile2);
         
+        _count++;
+        if (_count == 3)
+        {
+            _target.Defense += 1;
+            _count = 0;
+            EffectFactory.Instance.RequestEffect("DefUpAura",_target.transform.position,_target.transform.lossyScale);
+        }
+        
         _entity = null;
         _target = null;
-
+        
         yield return null;
-        yield break;
     }
 
     public override BaseSkillLogic Clone()
