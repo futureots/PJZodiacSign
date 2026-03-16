@@ -65,6 +65,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8720472390337742757, guid: 651e28ac99d21b1438b381587341561c, type: 3}
+      propertyPath: m_Asset
+      value: 
+      objectReference: {fileID: 8926484042661614526, guid: 14caec12a29e7774981223b4254fc815, type: 3}
+    - target: {fileID: 8720472390337742757, guid: 651e28ac99d21b1438b381587341561c, type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720472390337742757, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -102,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8720472390337742757, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Overridden
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8720472390337742757, guid: 651e28ac99d21b1438b381587341561c, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[1].m_Overridden
