@@ -8,13 +8,11 @@ using Object = UnityEngine.Object;
 public class S_Bombard : BaseSkillLogic
 {
     [SerializeField] private Area area;
-    [SerializeField] private BasicAttackEffect attackEffect;
     private Entity _owner;
 
-    public void Init(Area area, BasicAttackEffect attackEffect)
+    public void Init(Area area)
     {
         this.area = area;
-        this.attackEffect = attackEffect;
     }
     
     public override async UniTask<bool> InputSkill(IInput input)
@@ -79,7 +77,7 @@ public class S_Bombard : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_Bombard();
-        clone.Init(area,attackEffect);
+        clone.Init(area);
         return clone;
     }
 }

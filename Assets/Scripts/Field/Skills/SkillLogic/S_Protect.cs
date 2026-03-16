@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class S_ProtectArea : BaseSkillLogic
+public class S_Protect : BaseSkillLogic
 {
     private Entity _target;
 
@@ -38,7 +38,7 @@ public class S_ProtectArea : BaseSkillLogic
     }
     public override BaseSkillLogic Clone()
     {
-        var clone = new S_ProtectArea();
+        var clone = new S_Protect();
         return clone;
     }
 }

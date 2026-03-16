@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 6a17271386cc9124eaead6cccf08347b, type: 3}
   skillName: "\uC2B9\uCC9C"
-  skillDescription: "1\uB2E8\uACC4 \uAC15\uD654\uD569\uB2C8\uB2E4."
+  skillDescription: "1\uB2E8\uACC4 \uAC15\uD654\uD569\uB2C8\uB2E4. \uC0AC\uC6A9 \uC2DC
+    \uCD5C\uB300 \uB9C8\uB098\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   skillLogic:
-    rid: 598112592272556119
+    rid: 598112705246396483
   references:
     version: 2
     RefIds:
-    - rid: 598112592272556119
+    - rid: 598112705246396483
       type: {class: S_Angel, ns: , asm: Assembly-CSharp}
       data: 

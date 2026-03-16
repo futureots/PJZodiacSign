@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 1496937c4b3a2ce4fa97dde5031a5a2e, type: 3}
   skillName: "\uAD11\uD654"
-  skillDescription: "\uBAA8\uB4E0 \uAE30\uBB3C\uC758 \uBC1B\uB294 \uD53C\uD574\uB97C
-    1 \uC99D\uAC00\uC2DC\uD0A4\uACE0 \uACF5\uACA9\uB825\uC744 1 \uC99D\uAC00 \uC2DC\uD0A8\uB2E4."
+  skillDescription: "\uBAA8\uB4E0 \uAE30\uBB3C\uC758 \uACF5\uACA9\uB825\uACFC \uBC1B\uB294
+    \uD53C\uD574\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   skillLogic:
     rid: 598112531784663110
   references:
