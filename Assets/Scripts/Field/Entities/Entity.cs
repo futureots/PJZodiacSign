@@ -184,6 +184,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     public void Damaged(int damage)
     {
         var value = Math.Max(damage - _defense,0);
+        EffectFactory.Instance.RequestEffect("HitEffect",transform.position + Vector3.up * 7, transform.lossyScale*2f,1f);
 
         CurHealth -= value;
     }

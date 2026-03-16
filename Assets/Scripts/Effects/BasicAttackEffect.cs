@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class BasicAttackEffect : MonoBehaviour
 {
-    protected GameObject _target;
-    protected Action _onHit;
+    protected GameObject target;
+    protected Action onHit;
     [SerializeField] protected GameObject hitEffect;
     public float speed;
 
     /// <summary>
     /// target에 적중했을 때 action 실행
     /// </summary>
-    /// <param name="target">대상</param>
+    /// <param name="_target">대상</param>
     /// <param name="action">적중 시 실행할 함수</param>
-    public void Initialize(GameObject target, Action action)
+    public void Initialize(GameObject _target, Action action)
     {
-        this._target = target;
-        _onHit = action;
-        float time = (target.transform.position - transform.position).magnitude * speed;
+        this.target = _target;
+        onHit = action;
+        float time = (_target.transform.position - transform.position).magnitude * speed;
         Sequence sequence = DOTween.Sequence()
-            .Append(transform.DOMove(target.transform.position + Vector3.up * 7, time).SetEase(Ease.Linear))
+            .Append(transform.DOMove(_target.transform.position + Vector3.up * 7, time).SetEase(Ease.Linear))
             .AppendCallback(HitAction);
     }
 
     protected virtual void HitAction()
     {
-        _onHit?.Invoke();
-        EffectFactory.Instance.RequestEffect(hitEffect.name,transform.position,_target.transform.lossyScale,1f);
+        onHit?.Invoke();
         
         Destroy(gameObject);
     }
