@@ -11,7 +11,7 @@ public class EnemyTable : ScriptableObject
     public List<Phase> phases;
 
 
-    public AgentData GetAgentData()
+    public AgentData GetEnemyData()
     {
         Dictionary<intVector2,EntityLevelData> fields = new Dictionary<intVector2,EntityLevelData>();
         foreach (var entity in fieldEntities)

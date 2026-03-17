@@ -7,13 +7,10 @@ using Random = UnityEngine.Random;
 
 public class EnemyAI : MonoBehaviour , IInput
 {
-    [SerializeField] Agent agent;
+    protected Agent agent;
 
-    public TurnType curTurnType { get; private set; }
-
-    private void Start()
-    {
-    }
+    protected TurnType CurTurnType { get; private set; }
+    
 
     public void Init(Agent agent)
     {
@@ -21,14 +18,14 @@ public class EnemyAI : MonoBehaviour , IInput
         agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 
-    
-    public void OnTurnChange(Turn curTurn)
+
+    private void OnTurnChange(Turn curTurn)
     {
-        curTurnType = curTurn.type;
+        CurTurnType = curTurn.type;
         
         if(curTurn.agentID == agent.id)
         {
-            EditorLogger.Print("AI "+ curTurnType.ToString());
+            EditorLogger.Print("AI "+ CurTurnType.ToString());
             switch (curTurn.type)
             {
                 case TurnType.ACTION:
@@ -152,8 +149,8 @@ public class EnemyAI : MonoBehaviour , IInput
     }
 
 
-
-    bool TryGetBestMove(
+    
+    protected bool TryGetBestMove(
         Entity entity,
         int[,] field,
         int[,] tileValues,

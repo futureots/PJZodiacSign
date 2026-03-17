@@ -169,8 +169,9 @@ public class FieldController : MonoBehaviour
 
     [Header("Dependency")]
     [SerializeField] InputManager inputManager;
-    [SerializeField] EnemyAI enemyAI;
     [SerializeField] InputUIContainer inputUI;
+    private EnemyAI _enemyAI = null;
+    
 
     /// <summary>
     /// Initiate Controller
@@ -187,6 +188,7 @@ public class FieldController : MonoBehaviour
         stageManager.Init(data);
 
         // TODO: 에이전트 생성 및 초기화
+        _enemyAI = Instantiate(data.aiPrefab, transform);
         localPlayer.Init(this,PlayerID.P0,data.player.credit);
         for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
         {
@@ -194,7 +196,7 @@ public class FieldController : MonoBehaviour
         }
         inputManager.Init(localPlayer);
         // TODO : 여러개면 for문 내부에서 돌리기(AI도 여러개로 세팅)
-        enemyAI.Init(agents[0]);
+        _enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
         commandSystem = new();
         

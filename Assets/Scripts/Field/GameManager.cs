@@ -42,10 +42,10 @@ public class GameManager : SingletonObject<GameManager>
     /// <returns></returns>
     public StageData CreateStageData(int level,AgentData playerData)
     {
-        List<AgentData> agents = new List<AgentData>();
-        (AgentData enemy,List<Phase> phases) = levelTable.GetLevelData(level);
-        agents.Add(enemy);
-        StageData stageData = new StageData(agents, shopTable,phases, level, playerData);
+        List<AgentData> agents = new();
+        var data = levelTable.GetLevelData(level);
+        agents.Add(data.Item2);
+        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData);
         return stageData;
     }
     #region BattleInit
