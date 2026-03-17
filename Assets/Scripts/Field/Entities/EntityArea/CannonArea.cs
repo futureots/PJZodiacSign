@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "CannonMoveArea", menuName = "Scriptable Objects/Area/CannonMoveArea")]
-public class CannonMoveArea : Area
+[CreateAssetMenu(fileName = "CannonArea", menuName = "Scriptable Objects/Area/CannonArea")]
+public class CannonArea : Area
 {
 
     protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, intVector2 direction)
@@ -22,7 +22,11 @@ public class CannonMoveArea : Area
                 if (!tiles.IsValidPos(pos)) break;
                 if (tiles[pos.y, pos.x] != Field.EmptyTileIndex)
                 {
-                    if (isOverEntity) break;
+                    if (isOverEntity)
+                    {
+                        list.Add(pos);
+                        break;
+                    }
                     isOverEntity = true;
                     continue;
                 }
