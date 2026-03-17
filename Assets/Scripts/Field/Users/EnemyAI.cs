@@ -44,7 +44,7 @@ public class EnemyAI : MonoBehaviour , IInput
         }
     }
 
-    public void AttackInput()
+    private void AttackInput()
     {
         var list = StageManager.Instance.field.GetEntities(agent.id);
         EditorLogger.Print(list.Count);
@@ -56,7 +56,7 @@ public class EnemyAI : MonoBehaviour , IInput
         agent.CreateEndCommand();
     }
 
-    public IEnumerator SetRepairMode()
+    protected virtual IEnumerator SetRepairMode()
     {
         // 보유한 크레딧으로 상점을 통해 기물 구매
         var emptyTiles = StageManager.Instance.agentField[agent.id].GetTiles().GetEmptyTiles();
@@ -97,7 +97,7 @@ public class EnemyAI : MonoBehaviour , IInput
         EditorLogger.Print("RepairEnd");
     }
 
-    public IEnumerator SetActionMode()
+    protected virtual IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
         var flag = false;

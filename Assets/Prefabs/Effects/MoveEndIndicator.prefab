@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7652380723826810077}
   - component: {fileID: 2175807076351003732}
   m_Layer: 0
-  m_Name: DoubleCircle Select
+  m_Name: MoveEndIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
