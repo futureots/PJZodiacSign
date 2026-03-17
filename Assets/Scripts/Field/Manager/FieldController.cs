@@ -187,7 +187,7 @@ public class FieldController : MonoBehaviour
         stageManager = StageManager.Instance;
         stageManager.Init(data);
 
-        // TODO: 에이전트 생성 및 초기화
+        // 에이전트 생성 및 초기화
         _enemyAI = Instantiate(data.aiPrefab, transform);
         localPlayer.Init(this,PlayerID.P0,data.player.credit);
         for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
@@ -195,12 +195,11 @@ public class FieldController : MonoBehaviour
             agents[i].Init(this,(PlayerID)i, data.agents[i].credit);
         }
         inputManager.Init(localPlayer);
-        // TODO : 여러개면 for문 내부에서 돌리기(AI도 여러개로 세팅)
         _enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
-        commandSystem = new();
+        commandSystem = new CommandSystem();
         
-        // TODO: 기믹 세팅
+        // 기믹 세팅
         SpecialRule = data.specialRule;
         phases = data.phases;
         

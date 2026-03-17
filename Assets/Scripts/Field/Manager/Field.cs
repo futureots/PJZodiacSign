@@ -211,7 +211,7 @@ public class Field : MonoBehaviour
     }
 
     /// <summary>
-    /// 맨 절반의 타일을 가져오기
+    /// 필드 절반의 타일을 가져오기
     /// </summary>
     /// <param name="isForward">true = 적 측, false = 플레이어 측</param>
     /// <returns></returns>

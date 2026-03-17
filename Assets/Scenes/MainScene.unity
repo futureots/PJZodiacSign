@@ -30502,6 +30502,7 @@ MonoBehaviour:
     level: 0
     modelName: FieldModel
     controllerName: BaseBattle
+    aiPrefab: {fileID: 0}
     player:
       credit: 0
       handEntities: []
