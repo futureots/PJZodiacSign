@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyTable", menuName = "Scriptable Objects/EnemyTable")]
 public class EnemyTable : ScriptableObject
 {
+    public EnemyAI enemyAI;
     public int credit;
     public List<EntityLevelData> entities;
     public List<FieldEntityLevelData> fieldEntities;

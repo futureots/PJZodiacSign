@@ -6,6 +6,7 @@ public class LevelTable : ScriptableObject
 {
     public int basicCredit;
     [SerializeField] private List<Phase> basePhases;
+    [SerializeField] private EnemyAI baseAI;
     public List<LevelData> data;
 
     private Dictionary<int, EnemyTable> _levels;

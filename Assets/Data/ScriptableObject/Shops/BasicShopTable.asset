@@ -26,10 +26,6 @@ MonoBehaviour:
     weight: 4
   - data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
     weight: 2
-  - data: {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
-    weight: 1
-  - data: {fileID: 11400000, guid: 54a5fff0eb0334a4291770de80d881ef, type: 2}
-    weight: 1
   - data: {fileID: 11400000, guid: 17c55c89d18cf9748b9dd5a5d6efac05, type: 2}
     weight: 6
   - data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
@@ -40,5 +36,10 @@ MonoBehaviour:
     weight: 2
   - data: {fileID: 11400000, guid: 313700513dc11684997dae9f366d6242, type: 2}
     weight: 3
+  premiumEntityList:
+  - data: {fileID: 11400000, guid: 54a5fff0eb0334a4291770de80d881ef, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
+    weight: 1
   - data: {fileID: 11400000, guid: 26fbc5f6324bbd04787d8f6f4839cef8, type: 2}
     weight: 1

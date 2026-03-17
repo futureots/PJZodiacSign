@@ -11,7 +11,7 @@ public class Shop : MonoBehaviour
     public List<ItemData> items;
 
     public Action OnShopSet;
-    public void Init( ShopTable table)
+    public void Init(ShopTable table)
     {
         this.table = table;
         SetShop(GameManager.Instance.Level);
@@ -23,26 +23,25 @@ public class Shop : MonoBehaviour
     /// </summary>
     /// <param name="level"></param>
     /// <param name="isPremium"></param>
-    public void SetShop(int level, bool isPremium = false)
+    private void SetShop(int level, bool isPremium = false)
     {
-        if (level % 5 == 1 || isPremium)
+        if (level <= 1)
         {
-            SetPremiumShop();
+            //items = table.GetRandomItem(3);
+            entities = table.GetRandomEntity(5,ShopTable.ShopType.Normal);
+        }
+        else if ((level % 4 == 1) || isPremium)
+        {
+            items = table.GetRandomItem(5);
+            var list = table.GetRandomEntity(2, ShopTable.ShopType.Premium);
+            list.AddRange(table.GetRandomEntity(3,ShopTable.ShopType.Normal));
+            entities = list;
         }
         else
         {
-            SetNormalShop();
+            items = table.GetRandomItem(2);
+            entities = table.GetRandomEntity(3, ShopTable.ShopType.Normal);
         }
-    }
-    void SetPremiumShop()
-    {
-        items = table.GetRandomItem(5);
-        entities = table.GetRandomEntity(5);
-    }
-    void SetNormalShop()
-    {
-        items = table.GetRandomItem(2);
-        entities = table.GetRandomEntity(3);
     }
 
     /// <summary>

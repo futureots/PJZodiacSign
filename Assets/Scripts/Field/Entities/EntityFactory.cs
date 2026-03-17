@@ -78,7 +78,6 @@ public class EntityFactory : Singleton<EntityFactory>
         }
         entity.transform.localScale = Vector3.one;
         OnEntityCreated?.Invoke(entity);
-        
         return entity;
     }
 
