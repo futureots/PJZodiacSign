@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_FullCharge : BaseSkillLogic
@@ -21,9 +22,14 @@ public class S_FullCharge : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        EditorLogger.Print(_target.energy.CurEnergy);
+        
+        // Effect
+        EffectFactory.Instance.RequestEffect("ManaAura",_target.transform.position,_target.transform.lossyScale);
+        yield return new WaitForSeconds(0.1f);
+        
         _target.energy.CurEnergy = _target.energy.MaxEnergy;
-        EditorLogger.Print(_target.energy.CurEnergy);
+        yield return new WaitForSeconds(0.9f);
+        
         _target = null;
         yield break;
     }

@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_Enhance : BaseSkillLogic
@@ -27,6 +28,7 @@ public class S_Enhance : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         _target.Level += 1;
+        yield return new WaitForSeconds(1f);
         _target = null;
         yield break;
     }

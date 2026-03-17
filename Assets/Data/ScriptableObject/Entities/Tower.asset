@@ -17,8 +17,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: ae8612789069f1e499e237f945c66b29, type: 3}
   normalPrice: 35
   prefab: {fileID: 5877927772879794965, guid: 4110ec686942aae409eeb85b319adc66, type: 3}
-  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
-  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: 983b0274a933f8346b26acb50c1a2566, type: 2}
   - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
@@ -29,6 +27,6 @@ MonoBehaviour:
   power: 4
   hpMultiplier: 5
   powerMultiplier: 1
-  skill: {fileID: 11400000, guid: 1918af00cfba8054ea826aa1e0e66b2b, type: 2}
-  maxEnergy: 6
+  skill: {fileID: 11400000, guid: 944c0aa3c1448994790fd520d86d6c10, type: 2}
+  maxEnergy: 2
   offset: {x: 0, y: 3, z: 0}

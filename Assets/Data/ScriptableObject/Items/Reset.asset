@@ -20,4 +20,4 @@ MonoBehaviour:
   description: "\uC815\uBE44 \uD134\uB3D9\uC548 \uD574\uB2F9 \uAE30\uBB3C\uC744 \uC774\uB3D9
     \uAC00\uB2A5\uD558\uB3C4\uB85D \uD55C\uB2E4."
   skillData: {fileID: 11400000, guid: 25ab5317c349a7540909f814a98e173f, type: 2}
-  useType: 3
+  useType: 1

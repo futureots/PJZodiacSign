@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EffectFactory : Singleton<EffectFactory>
+{
+    public EffectTable dataTable;
+
+    private Dictionary<string, GameObject> _dataDictionary = new();
+
+    private void Start()
+    {
+        Initialize(dataTable);
+    }
+
+    public void Initialize(EffectTable table)
+    {
+        dataTable = table;
+        _dataDictionary = dataTable.GetTableDictionary();
+    }
+    
+    public GameObject RequestEffect(string objName, Vector3 position, Vector3 scale, float time =2f)
+    {
+        GameObject obj = Instantiate(_dataDictionary[objName], position, Quaternion.identity);
+        obj.transform.localScale = scale;
+        Destroy(obj, time);
+        return obj;
+    }
+}

@@ -1,27 +1,34 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 
 [Serializable]
 public class S_Adrenaline : BaseSkillLogic
 {
-    public override async UniTask<bool> InputSkill(IInput input)
+    public override UniTask<bool> InputSkill(IInput input)
     {
-        return true;
+        return UniTask.FromResult(true);
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        //TODO : 지진 이펙트 재생
-        var entities = StageManager.Instance.field.GetEntities();
+        var field = StageManager.Instance.field;
+        
+        // 광화 이펙트 재생
+        EffectFactory.Instance.RequestEffect("PowerAura", field.transform.position, field.transform.lossyScale*8);
+        
+        var entities = field.GetEntities();
         foreach (var entity in entities)
         {
-            entity.Damaged(2);
+            entity.Defense -= 1;
             entity.Power += 1;
         }
-        // TODO : 지진 이펙트 시간 기다리기
+        // TODO : 광화 이펙트 대기
 
+        yield return new WaitForSeconds(1f);
+        
         yield break;
     }
 

@@ -8,7 +8,7 @@ public class S_ChargeArea : BaseSkillLogic
 {
     [SerializeField] int charge;
     [SerializeField] Area area;
-    Entity owner;
+    private Entity _owner;
     public S_ChargeArea() { }
     public void Init(Area _area, int amount)
     {
@@ -18,16 +18,16 @@ public class S_ChargeArea : BaseSkillLogic
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
-        if (component.TryGetComponent<Entity>(out var _owner))
+        if (component.TryGetComponent<Entity>(out var owner))
         {
-            owner = _owner;
+            _owner = owner;
             return true;
         }
         var list = StageManager.Instance.field.GetEntities();
         var data = await input.InputEntity(list, 1);
         if(data != null)
         {
-            owner = data[0];
+            _owner = data[0];
             return true;
         }
         
@@ -36,22 +36,28 @@ public class S_ChargeArea : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        var pos = owner.CurTile.fieldPos;
+        var pos = _owner.CurTile.fieldPos;
         int[,] t = new int[8, 8];
-        var vectors = area.GetVectors(t, pos, owner.direction);
+        var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
+        
+        // Effect
+        EffectFactory.Instance.RequestEffect("ManaAura",_owner.transform.position,_owner.transform.lossyScale*5);
+        yield return new WaitForSeconds(0.1f);
+        
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
             if(tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
             {
-                if (entity.team.IsAlly(owner.team))
+                if (entity.team.IsAlly(_owner.team))
                 {
                     entity.energy.CurEnergy += charge;
                 }
             }
         }
-        owner = null;
+        yield return new WaitForSeconds(0.9f);
+        _owner = null;
         yield break;
     }
     public override BaseSkillLogic Clone()

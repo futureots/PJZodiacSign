@@ -39,15 +39,16 @@ public class S_Suicide : BaseSkillLogic
         var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         // TODO : 폭발 이펙트 재생
+        EffectFactory.Instance.RequestEffect("ExplodeEffect",_owner.transform.position,_owner.transform.lossyScale*5);
+        
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
-            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
-            {
-                entity.Damaged(_owner.Power*2);
-            }
+            tile.occupiedEntity.Damaged(_owner.Power*2);
         }
         _owner.Damaged(_owner.Power);
+        
+        yield return new WaitForSeconds(0.5f);
         
         _owner = null;
         yield return new WaitForSeconds(0.5f);

@@ -214,6 +214,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -297,6 +298,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &25054849
 GameObject:
@@ -601,6 +603,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &41428737
 MeshFilter:
@@ -759,6 +762,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &50479447
 MeshFilter:
@@ -848,6 +852,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &51692245
 MeshFilter:
@@ -921,6 +926,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &53584086
 MeshFilter:
@@ -979,7 +985,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &59033798
@@ -1100,6 +1106,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &78814399
 MeshFilter:
@@ -1143,7 +1150,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &80387036
@@ -1419,6 +1426,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1502,6 +1510,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &94500227
 GameObject:
@@ -1637,6 +1646,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &100745859
 MeshFilter:
@@ -1726,6 +1736,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &103035081
 MeshFilter:
@@ -1815,6 +1826,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &104592502
 MeshFilter:
@@ -1858,7 +1870,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &105278892
@@ -1979,6 +1991,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &113525479
 MeshFilter:
@@ -2022,7 +2035,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &114304239
@@ -2135,7 +2148,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!1 &116104398
@@ -2172,7 +2185,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &116104400
@@ -2247,7 +2260,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &118792457
@@ -2383,6 +2396,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2466,6 +2480,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &121022422
 GameObject:
@@ -2501,7 +2516,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &121022424
@@ -2622,6 +2637,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &125457491
 MeshFilter:
@@ -2711,6 +2727,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &134341963
 MeshFilter:
@@ -2800,6 +2817,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &148880374
 MeshFilter:
@@ -2889,6 +2907,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &149019991
 MeshFilter:
@@ -2995,7 +3014,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &153275683
@@ -3116,6 +3135,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &156372738
 MeshFilter:
@@ -3220,6 +3240,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3459,6 +3480,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3542,6 +3564,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &172124025
 GameObject:
@@ -3577,7 +3600,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &172124027
@@ -3720,6 +3743,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &194707031
 MeshFilter:
@@ -3763,7 +3787,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &199406751
@@ -3868,6 +3892,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &200890060
 MeshFilter:
@@ -3956,6 +3981,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &210788902
 MeshFilter:
@@ -4060,6 +4086,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &220319549
 MeshFilter:
@@ -4133,6 +4160,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &221496624
 MeshFilter:
@@ -4237,6 +4265,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &221968635
 MeshFilter:
@@ -4310,6 +4339,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &224383579
 MeshFilter:
@@ -4429,6 +4459,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4512,6 +4543,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &230971603
 GameObject:
@@ -4615,6 +4647,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &230971607
 MeshFilter:
@@ -4704,6 +4737,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &233659975
 MeshFilter:
@@ -4838,6 +4872,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &234134361
 MeshFilter:
@@ -4911,6 +4946,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &237440689
 MeshFilter:
@@ -4999,6 +5035,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &240281420
 MeshFilter:
@@ -5087,6 +5124,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &242613726
 MeshFilter:
@@ -5191,6 +5229,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &244043800
 MeshFilter:
@@ -5280,6 +5319,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &253433720
 MeshFilter:
@@ -5369,6 +5409,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &264096064
 MeshFilter:
@@ -5512,6 +5553,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &279719129
 MeshFilter:
@@ -5570,7 +5612,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &281373250
@@ -5691,6 +5733,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &299278993
 MeshFilter:
@@ -5764,6 +5807,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &321835278
 MeshFilter:
@@ -5822,7 +5866,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &329358981
@@ -5965,6 +6009,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &338487083
 MeshFilter:
@@ -6038,6 +6083,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &361268246
 MeshFilter:
@@ -6142,6 +6188,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &374100728
 MeshFilter:
@@ -6455,6 +6502,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &393516929
 MeshFilter:
@@ -6544,6 +6592,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &399783893
 MeshFilter:
@@ -6633,6 +6682,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &408192777
 MeshFilter:
@@ -6706,6 +6756,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &415284880
 MeshFilter:
@@ -6936,6 +6987,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &432052726
 MeshFilter:
@@ -7009,6 +7061,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &439587756
 MeshFilter:
@@ -7067,7 +7120,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &447902327
@@ -7142,7 +7195,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &448447934
@@ -7278,6 +7331,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -7361,6 +7415,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &451456737
 GameObject:
@@ -7442,6 +7497,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &451456740
 MeshFilter:
@@ -7485,7 +7541,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &452018048
@@ -7560,7 +7616,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &452928064
@@ -7703,6 +7759,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &456535382
 MeshFilter:
@@ -7893,7 +7950,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &466008932
@@ -8014,6 +8071,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &471598863
 MeshFilter:
@@ -8103,6 +8161,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &471836011
 MeshFilter:
@@ -8192,6 +8251,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &476427427
 MeshFilter:
@@ -8303,6 +8363,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &478603844
 MeshFilter:
@@ -8376,6 +8437,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &484724685
 MeshFilter:
@@ -8502,6 +8564,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &486677620
 MeshFilter:
@@ -8545,7 +8608,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &489856620
@@ -8620,7 +8683,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &489878967
@@ -8756,6 +8819,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8839,6 +8903,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &517370586
 GameObject:
@@ -8904,6 +8969,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &517370588
 MeshFilter:
@@ -9023,6 +9089,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -9106,6 +9173,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &525509356
 GameObject:
@@ -9141,7 +9209,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &525509358
@@ -9246,6 +9314,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &527537318
 MeshFilter:
@@ -9350,6 +9419,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &534662897
 MeshFilter:
@@ -9509,6 +9579,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &562985970
 MeshFilter:
@@ -9668,6 +9739,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &566840814
 MeshFilter:
@@ -9757,6 +9829,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &569118418
 MeshFilter:
@@ -9811,7 +9884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   shop: {fileID: 1259414733}
-  entityFactory: {fileID: 2014071634}
   uiMapper: {fileID: 1536540712}
   field: {fileID: 391558642}
   resourceFields:
@@ -9897,6 +9969,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &581063267
 MeshFilter:
@@ -9940,7 +10013,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &581255063
@@ -10015,7 +10088,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &583946411
@@ -10158,6 +10231,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &590230359
 MeshFilter:
@@ -10201,7 +10275,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &597314091
@@ -10443,6 +10517,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &615357211
 MeshFilter:
@@ -10486,7 +10561,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &625664382
@@ -10607,6 +10682,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &625769441
 MeshFilter:
@@ -10650,7 +10726,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &644102048
@@ -10725,7 +10801,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &651022768
@@ -10861,6 +10937,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10944,6 +11021,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &656956554
 GameObject:
@@ -11009,6 +11087,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &656956556
 MeshFilter:
@@ -11097,6 +11176,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &670370380
 MeshFilter:
@@ -11201,6 +11281,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &670429365
 MeshFilter:
@@ -11274,6 +11355,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &674371543
 MeshFilter:
@@ -11378,6 +11460,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &675569712
 MeshFilter:
@@ -11451,6 +11534,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &685475676
 MeshFilter:
@@ -11509,7 +11593,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &686362164
@@ -11614,6 +11698,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &688338076
 MeshFilter:
@@ -11788,6 +11873,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &704148762
 MeshFilter:
@@ -11861,6 +11947,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &707258985
 MeshFilter:
@@ -11980,6 +12067,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -12063,6 +12151,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &729719453
 GameObject:
@@ -12098,7 +12187,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &729719455
@@ -12218,6 +12307,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &743158667
 MeshFilter:
@@ -12291,6 +12381,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &761613649
 MeshFilter:
@@ -12395,6 +12486,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &763819623
 MeshFilter:
@@ -12468,6 +12560,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &766212993
 MeshFilter:
@@ -12572,6 +12665,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &768156679
 MeshFilter:
@@ -12661,6 +12755,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &771636764
 MeshFilter:
@@ -12750,6 +12845,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &776413255
 MeshFilter:
@@ -12839,6 +12935,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &783391189
 MeshFilter:
@@ -12848,6 +12945,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783391186}
   m_Mesh: {fileID: -7468696556528474963, guid: 5f3d1e7d04e77534381eafe92a4a24d8, type: 3}
+--- !u!1 &794235195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 794235197}
+  - component: {fileID: 794235196}
+  m_Layer: 0
+  m_Name: Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &794235196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794235195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 3e1ae940188574442bb574e142032bc7, type: 2}
+--- !u!4 &794235197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794235195}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -14.32716, y: -0, z: -1.87966}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &796702789
 GameObject:
   m_ObjectHideFlags: 0
@@ -12998,6 +13144,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &799773044
 MeshFilter:
@@ -13071,6 +13218,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &803283287
 MeshFilter:
@@ -13260,6 +13408,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -13343,6 +13492,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &822272311
 GameObject:
@@ -13378,7 +13528,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &822272313
@@ -13609,6 +13759,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &838567583
 MeshFilter:
@@ -13667,7 +13818,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &840057123
@@ -13772,6 +13923,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &846985619
 MeshFilter:
@@ -13830,7 +13982,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &862129510
@@ -13966,6 +14118,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -14049,6 +14202,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &871005606
 GameObject:
@@ -14145,6 +14299,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -14250,6 +14405,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &871485818
 MeshFilter:
@@ -14308,7 +14464,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &875485281
@@ -14429,6 +14585,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &879506702
 MeshFilter:
@@ -14533,6 +14690,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -14616,6 +14774,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &886342742
 GameObject:
@@ -14697,6 +14856,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &886342745
 MeshFilter:
@@ -14770,6 +14930,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &894357664
 MeshFilter:
@@ -14828,7 +14989,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &903253328
@@ -14949,6 +15110,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &905409803
 MeshFilter:
@@ -15038,6 +15200,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &910999255
 MeshFilter:
@@ -15127,6 +15290,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &915625067
 MeshFilter:
@@ -15231,6 +15395,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -15314,6 +15479,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &918309511
 GameObject:
@@ -15417,6 +15583,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &918309515
 MeshFilter:
@@ -15530,7 +15697,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &924681475
@@ -15666,6 +15833,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -15749,6 +15917,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &942310815
 GameObject:
@@ -15784,7 +15953,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &942310817
@@ -15920,6 +16089,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -16003,6 +16173,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &963359414
 GameObject:
@@ -16038,7 +16209,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &963359416
@@ -16174,6 +16345,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -16257,6 +16429,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &970740370
 GameObject:
@@ -16338,6 +16511,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &970740373
 MeshFilter:
@@ -16427,6 +16601,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &972114500
 MeshFilter:
@@ -16637,6 +16812,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &980364547
 MeshFilter:
@@ -16710,6 +16886,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &986035583
 MeshFilter:
@@ -16768,7 +16945,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &991592121
@@ -16843,7 +17020,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &992176032
@@ -16918,7 +17095,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &992479366
@@ -17119,7 +17296,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1010679729
@@ -17215,14 +17392,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017691948}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 10000
   m_Range: 1000
   m_SpotAngle: 83.11604
   m_InnerSpotAngle: 36.274033
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 0
     m_Resolution: -1
@@ -17448,7 +17625,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1033395591
@@ -17591,6 +17768,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1039844601
 MeshFilter:
@@ -17680,6 +17858,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1071820816
 MeshFilter:
@@ -17769,6 +17948,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1073391059
 MeshFilter:
@@ -17858,6 +18038,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1073977949
 MeshFilter:
@@ -17931,6 +18112,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1082995212
 MeshFilter:
@@ -18019,6 +18201,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1097048631
 MeshFilter:
@@ -18138,6 +18321,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -18221,6 +18405,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1103808119
 GameObject:
@@ -18372,6 +18557,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1109292203
 MeshFilter:
@@ -18469,7 +18655,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1135478044
@@ -18614,7 +18800,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1142790260
@@ -18735,6 +18921,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1144221891
 MeshFilter:
@@ -18808,6 +18995,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1148867007
 MeshFilter:
@@ -18927,6 +19115,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -19010,6 +19199,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1154251424
 GameObject:
@@ -19091,6 +19281,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1154251427
 MeshFilter:
@@ -19134,7 +19325,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1156945477
@@ -19255,6 +19446,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1175526145
 MeshFilter:
@@ -19429,6 +19621,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -19512,6 +19705,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1186934419
 GameObject:
@@ -19593,6 +19787,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1186934422
 MeshFilter:
@@ -19704,6 +19899,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1189127279
 MeshFilter:
@@ -19777,6 +19973,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1189830242
 MeshFilter:
@@ -19835,7 +20032,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1190989087
@@ -19971,6 +20168,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -20076,6 +20274,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1197852129
 MeshFilter:
@@ -20180,6 +20379,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1200838548
 MeshFilter:
@@ -20269,6 +20469,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1209435576
 MeshFilter:
@@ -20312,7 +20513,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1218332602
@@ -20387,7 +20588,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1223234945
@@ -20462,7 +20663,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1239778364
@@ -20583,6 +20784,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1248471791
 MeshFilter:
@@ -20656,6 +20858,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1258732883
 MeshFilter:
@@ -20829,6 +21032,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1281262870
 MeshFilter:
@@ -20872,7 +21076,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1288500175
@@ -21008,6 +21212,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -21091,6 +21296,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1310199317
 GameObject:
@@ -21126,7 +21332,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1310199319
@@ -21247,6 +21453,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1312580871
 MeshFilter:
@@ -21290,7 +21497,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1313816613
@@ -21411,6 +21618,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1316707231
 MeshFilter:
@@ -21570,6 +21778,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1324656716
 MeshFilter:
@@ -21643,6 +21852,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1326441674
 MeshFilter:
@@ -21801,6 +22011,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1330331911
 MeshFilter:
@@ -21920,6 +22131,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -22003,6 +22215,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1338239184
 GameObject:
@@ -22038,7 +22251,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1338239186
@@ -22143,6 +22356,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1351978059
 MeshFilter:
@@ -22317,6 +22531,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1360690162
 MeshFilter:
@@ -22390,6 +22605,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1363913375
 MeshFilter:
@@ -22494,6 +22710,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1370073884
 MeshFilter:
@@ -22567,6 +22784,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1379160934
 MeshFilter:
@@ -22695,7 +22913,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1380193600
@@ -22816,6 +23034,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1381016250
 MeshFilter:
@@ -23050,6 +23269,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1391382110
 MeshFilter:
@@ -23154,6 +23374,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -23237,6 +23458,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1401056988
 GameObject:
@@ -23333,6 +23555,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -23416,6 +23639,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1401544630
 GameObject:
@@ -23497,6 +23721,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1401544633
 MeshFilter:
@@ -23586,6 +23811,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1407254957
 MeshFilter:
@@ -23659,6 +23885,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1414047502
 MeshFilter:
@@ -23763,6 +23990,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1417350467
 MeshFilter:
@@ -23836,6 +24064,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1418904044
 MeshFilter:
@@ -23924,6 +24153,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1439742471
 MeshFilter:
@@ -24028,6 +24258,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1447559603
 MeshFilter:
@@ -24117,6 +24348,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1453504366
 MeshFilter:
@@ -24190,6 +24422,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1455140582
 MeshFilter:
@@ -24294,6 +24527,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1463433214
 MeshFilter:
@@ -24383,6 +24617,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1476920659
 MeshFilter:
@@ -24564,6 +24799,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1497370807
 MeshFilter:
@@ -24653,6 +24889,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1508008225
 MeshFilter:
@@ -24757,6 +24994,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -24840,6 +25078,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1519350101
 GameObject:
@@ -24945,7 +25184,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1521216877
@@ -25159,6 +25398,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1526487766
 MeshFilter:
@@ -25217,7 +25457,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1526848346
@@ -25345,7 +25585,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1537855274
@@ -25466,6 +25706,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1543114166
 MeshFilter:
@@ -25547,7 +25788,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!1 &1557412903
@@ -25584,7 +25825,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1557412905
@@ -25689,6 +25930,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1561442383
 MeshFilter:
@@ -25793,6 +26035,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1578991668
 MeshFilter:
@@ -25882,6 +26125,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1580072356
 MeshFilter:
@@ -25971,6 +26215,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1591291155
 MeshFilter:
@@ -26075,6 +26320,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -26158,6 +26404,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1595181892
 GameObject:
@@ -26261,6 +26508,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1595181896
 MeshFilter:
@@ -26350,6 +26598,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1600535873
 MeshFilter:
@@ -26439,6 +26688,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1604422916
 MeshFilter:
@@ -26543,6 +26793,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -26626,6 +26877,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1612701446
 GameObject:
@@ -26691,6 +26943,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1612701448
 MeshFilter:
@@ -26795,6 +27048,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1619248304
 MeshFilter:
@@ -26899,6 +27153,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -26982,6 +27237,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1624249811
 GameObject:
@@ -27063,6 +27319,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1624249814
 MeshFilter:
@@ -27152,6 +27409,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1650942895
 MeshFilter:
@@ -27195,7 +27453,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1658674446
@@ -27471,6 +27729,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -27576,6 +27835,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1667236053
 MeshFilter:
@@ -27680,6 +27940,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1670931043
 MeshFilter:
@@ -27723,7 +27984,7 @@ MonoBehaviour:
   fieldPos:
     x: 6
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1679726379
@@ -27828,6 +28089,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1686138360
 MeshFilter:
@@ -27932,6 +28194,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1689350761
 MeshFilter:
@@ -28005,6 +28268,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1689471357
 MeshFilter:
@@ -28166,7 +28430,7 @@ MonoBehaviour:
   fieldPos:
     x: 3
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1708905165
@@ -28241,7 +28505,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1712333022
@@ -28362,6 +28626,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1727198615
 MeshFilter:
@@ -28510,6 +28775,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1739402115
 MeshFilter:
@@ -28629,6 +28895,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -28712,6 +28979,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1748764169
 GameObject:
@@ -28793,6 +29061,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1748764172
 MeshFilter:
@@ -28882,6 +29151,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1751835072
 MeshFilter:
@@ -29024,6 +29294,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1760094519
 MeshFilter:
@@ -29128,6 +29399,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1772760597
 MeshFilter:
@@ -29287,6 +29559,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1780404798
 MeshFilter:
@@ -29446,6 +29719,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1782107895
 MeshFilter:
@@ -29589,6 +29863,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1795105860
 MeshFilter:
@@ -29693,6 +29968,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1797971621
 MeshFilter:
@@ -29736,7 +30012,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1800870675
@@ -29841,6 +30117,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1803551209
 MeshFilter:
@@ -29999,6 +30276,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1806376062
 MeshFilter:
@@ -30125,6 +30403,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1808030390
 MeshFilter:
@@ -30206,7 +30485,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 7
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!1 &1811151606
@@ -30243,7 +30522,7 @@ MonoBehaviour:
   fieldPos:
     x: 1
     y: 5
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1811151608
@@ -30364,6 +30643,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1815455070
 MeshFilter:
@@ -30453,6 +30733,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1818295982
 MeshFilter:
@@ -30496,7 +30777,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1821265374
@@ -30650,6 +30931,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1821894807
 MeshFilter:
@@ -30911,6 +31193,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1839519195
 MeshFilter:
@@ -30954,7 +31237,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1842198416
@@ -31029,7 +31312,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1858005094
@@ -31150,6 +31433,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1864161009
 MeshFilter:
@@ -31363,6 +31647,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1872455920
 MeshFilter:
@@ -31406,7 +31691,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 1
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1874480325
@@ -31549,6 +31834,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1875965226
 MeshFilter:
@@ -31638,6 +31924,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1888956420
 MeshFilter:
@@ -31749,6 +32036,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1894629100
 MeshFilter:
@@ -31792,7 +32080,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1900474262
@@ -31967,6 +32255,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1916268228
 MeshFilter:
@@ -32056,6 +32345,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1916743777
 MeshFilter:
@@ -32145,6 +32435,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1929070061
 MeshFilter:
@@ -32249,6 +32540,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -32332,6 +32624,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1935255000
 GameObject:
@@ -32367,7 +32660,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 6
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1935255002
@@ -32472,6 +32765,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1936236182
 MeshFilter:
@@ -32560,6 +32854,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1937840106
 MeshFilter:
@@ -32664,6 +32959,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1938319964
 MeshFilter:
@@ -32753,6 +33049,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1939954069
 MeshFilter:
@@ -33022,6 +33319,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1969396028
 MeshFilter:
@@ -33165,6 +33463,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1978177808
 MeshFilter:
@@ -33284,6 +33583,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -33359,7 +33659,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1979350190
@@ -33480,6 +33780,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1991167332
 MeshFilter:
@@ -33523,7 +33824,7 @@ MonoBehaviour:
   fieldPos:
     x: 0
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &1996568263
@@ -33628,6 +33929,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2002784269
 MeshFilter:
@@ -33686,7 +33988,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &2011620060
@@ -33737,6 +34039,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2014071633}
   - component: {fileID: 2014071634}
+  - component: {fileID: 2014071635}
   m_Layer: 0
   m_Name: EntityPool
   m_TagString: Untagged
@@ -33771,6 +34074,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99cb86733cb71f44b12448246cc3ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityFactory
+  poolCount: 5
+  maxPoolSize: 30
+--- !u!114 &2014071635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014071632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 024bdd667d15d0f4b8f19e5f8228dc76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectFactory
+  dataTable: {fileID: 11400000, guid: 6577a974329601f4dac08ea98d43e639, type: 2}
 --- !u!1 &2020103853
 GameObject:
   m_ObjectHideFlags: 0
@@ -33851,6 +34169,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2020103856
 MeshFilter:
@@ -33894,7 +34213,7 @@ MonoBehaviour:
   fieldPos:
     x: 7
     y: 2
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &2021704909
@@ -34085,6 +34404,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2026121115
 MeshFilter:
@@ -34128,7 +34448,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &2029627794
@@ -34233,6 +34553,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2031060814
 MeshFilter:
@@ -34291,7 +34612,7 @@ MonoBehaviour:
   fieldPos:
     x: 4
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &2037480997
@@ -34412,6 +34733,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2045204723
 MeshFilter:
@@ -34516,6 +34838,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -34599,6 +34922,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2048158240
 GameObject:
@@ -34664,6 +34988,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2048158242
 MeshFilter:
@@ -34722,7 +35047,7 @@ MonoBehaviour:
   fieldPos:
     x: 5
     y: 3
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &2061007785
@@ -35139,6 +35464,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -35260,6 +35586,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2076683065
 MeshFilter:
@@ -35373,7 +35700,7 @@ MonoBehaviour:
   fieldPos:
     x: 2
     y: 4
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
 --- !u!65 &2092989470
@@ -35478,6 +35805,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2118727338
 MeshFilter:
@@ -35582,6 +35910,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2129983814
 MeshFilter:
@@ -35686,6 +36015,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -35769,6 +36099,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &4762873540042521378
 PrefabInstance:
@@ -35899,3 +36230,4 @@ SceneRoots:
   - {fileID: 1536540711}
   - {fileID: 162747432}
   - {fileID: 1033003150}
+  - {fileID: 794235197}

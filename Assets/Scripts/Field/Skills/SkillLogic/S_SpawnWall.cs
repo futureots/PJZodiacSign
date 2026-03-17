@@ -44,8 +44,16 @@ public class S_SpawnWall : BaseSkillLogic
         EditorLogger.Print($"Spawn {spawnData.productName}");
         
         var obstacle = EntityFactory.Instance.RequestEntity(spawnData, intVector2.Zero, _tile);
-        // TODO : 팩토리를 통해 장애물을 생성하고 tile에 생성
         obstacle.team.teamNumber = _owner.team.teamNumber;
+        var levelUpEffect = EffectFactory.Instance.RequestEffect("LevelUp",obstacle.transform.position, obstacle.transform.lossyScale);
+        if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
+        {
+            if (obstacle.TryGetComponent<MeshFilter>(out var mesh))
+            {
+                levelUp.Init(mesh.mesh);
+                levelUp.Play();
+            }
+        }
         yield return new WaitForSeconds(0.5f);
         _tile = null;
         yield break;

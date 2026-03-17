@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec9e5b51adfc5a4bacc10ab2fd62e5c, type: 3}
+  m_Name: EnergyPotion
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  id: energyPotion
+  productName: "\uB9C8\uB098\uD3EC\uC158"
+  icon: {fileID: 21300000, guid: 54f32298af8c9a54d9d7a2b403c5cc87, type: 3}
+  normalPrice: 5
+  prefab: {fileID: 5108059015096857740, guid: 38636ab449d83d74591c3b599c04e122, type: 3}
+  description: "\uB300\uC0C1\uC758 \uB9C8\uB098\uB97C \uCD5C\uB300\uB85C \uCC44\uC6B4\uB2E4."
+  skillData: {fileID: 11400000, guid: a7a287b60bd4c514887e7a58af4eda0b, type: 2}
+  useType: 2

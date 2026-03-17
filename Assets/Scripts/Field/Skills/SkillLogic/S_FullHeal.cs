@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
+using Object = System.Object;
 
 
 [Serializable]
@@ -22,9 +24,13 @@ public class S_FullHeal : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        EditorLogger.Print(_target.CurHealth);
+        
+        
+        EffectFactory.Instance.RequestEffect("HealAura", _target.transform.position, _target.transform.lossyScale);
+        yield return new WaitForSeconds(0.1f);
         _target.CurHealth = _target.MaxHealth;
-        EditorLogger.Print(_target.CurHealth);
+        yield return new WaitForSeconds(0.9f);
+        
         _target = null;
         yield break;
     }

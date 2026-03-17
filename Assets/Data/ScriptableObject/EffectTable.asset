@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 031bb7c5dd6e1cf41b3a9c47fb361ef0, type: 3}
+  m_Name: EffectTable
+  m_EditorClassIdentifier: Assembly-CSharp::EffectTable
+  effectList:
+  - {fileID: 1807322953363699046, guid: 7736ea0a8aacff0459949ff60749b6f7, type: 3}
+  - {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
+  - {fileID: 2435545242741253804, guid: 651e28ac99d21b1438b381587341561c, type: 3}
+  - {fileID: 8291806537716595489, guid: d92c047da59458b45ab8eb1c8ac4dc07, type: 3}
+  - {fileID: 4115548549944661493, guid: 17e8acada434f9145a3fee7b652c159c, type: 3}
+  - {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
+  - {fileID: 5955912388844437177, guid: 5f188c93bc985bb4f957b890b2232d8b, type: 3}
+  - {fileID: 7404531964644689396, guid: d9259b0413b9d584fa09044f6e9f3f4d, type: 3}
+  - {fileID: 459880231066347816, guid: f9579a3da18f5a247aa9b316e2b4f636, type: 3}
+  - {fileID: 1370640892227950173, guid: 72dfa1bbe3268124b9b8371afb167937, type: 3}
+  - {fileID: 984481454129886734, guid: c5938b7b159d4254f8ffe2ca78c91ea7, type: 3}
+  - {fileID: 984481454129886734, guid: 5c5dc1dcb3fcd164d8ade9b4466cf9a0, type: 3}
+  - {fileID: 984481454129886734, guid: 94c24498aeaaf3b42845e94a563c57cd, type: 3}
+  - {fileID: 1696933418597147071, guid: 22bef3f1d9241644580121c753928d37, type: 3}
+  - {fileID: 695308242561709529, guid: 28359d9326d986a4a98691bcfe7ac0b5, type: 3}
+  - {fileID: 695308242561709529, guid: 066d9b5c556322e4c8ac32ab58e332ec, type: 3}

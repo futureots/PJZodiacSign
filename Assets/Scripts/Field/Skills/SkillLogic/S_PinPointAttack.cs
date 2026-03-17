@@ -10,7 +10,7 @@ using UnityEngine;
 public class S_PinPointAttack : BaseSkillLogic
 {
     [SerializeField] private BasicAttackEffect attackEffect;
-    private Entity _entity;
+    private Entity _owner;
     private Entity _target;
 
     public void Init(BasicAttackEffect effect)
@@ -45,7 +45,7 @@ public class S_PinPointAttack : BaseSkillLogic
         {
             return false;
         }
-        _entity =  entity;
+        _owner =  entity;
         _target = data2[0];
         
         return true;
@@ -53,22 +53,29 @@ public class S_PinPointAttack : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        var damage = _entity.Power;
-        
-        var effect = GameObject.Instantiate(attackEffect, _entity.transform.position + Vector3.up * 7, Utils.QI);
-        void Hit()
+        var damage = _owner.Power;
+
+
+        var target = _target;
+
+        var effect = EffectFactory.Instance.RequestEffect("AttackEffect",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale,5f);
+        if (effect.TryGetComponent(out BasicAttackEffect atkObj))
         {
-            _target.Damaged(damage);
-            _target.Defense -= 1;
+            atkObj.Initialize(target.gameObject, Hit);
         }
-        effect?.Initialize(_target.gameObject, Hit);
         
         yield return new WaitForSeconds(1.5f);
         
-        _entity = null;
+        _owner = null;
         _target = null;
         
         yield break;
+        
+        void Hit()
+        {
+            target.Damaged(damage);
+            target.Defense -= 1;
+        }
     }
 
     

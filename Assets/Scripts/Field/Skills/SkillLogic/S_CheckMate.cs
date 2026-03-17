@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class S_CheckMate : BaseSkillLogic
 {
-    [SerializeField] int damage;
+    [SerializeField] int modifier;
     private Entity _owner;
 
     public override async UniTask<bool> InputSkill(IInput input)
@@ -31,6 +31,8 @@ public class S_CheckMate : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         var tiles = _owner.GetAttackArea();
+
+        EffectFactory.Instance.RequestEffect("ManaAura", _owner.transform.position, _owner.transform.lossyScale * 3);
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
@@ -38,18 +40,28 @@ public class S_CheckMate : BaseSkillLogic
             {
                 if (!entity.team.IsAlly(_owner.team))
                 {
-                    entity.Damaged(_owner.energy.CurEnergy * damage);
+                    component.StartCoroutine(Hit(entity,_owner.energy.CurEnergy * modifier));
                 }
                 
             }
         }
+
+        yield return new WaitForSeconds(1.5f);
         _owner = null;
         yield break;
     }
+    
+    IEnumerator Hit(Entity entity, int damage)
+    {
+        EffectFactory.Instance.RequestEffect("LightningStrike",entity.transform.position,entity.transform.lossyScale);
+        yield return new WaitForSeconds(0.5f);
+        entity.Damaged(damage);
+    }
+    
     public override BaseSkillLogic Clone()
     {
         var clone = new S_CheckMate();
-        clone.damage = damage;
+        clone.modifier = modifier;
         return clone;
     }
 }
