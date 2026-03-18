@@ -7,6 +7,7 @@ public class ItemFactory : Singleton<ItemFactory>
     {
         ItemComponent item = Instantiate(data.prefab);
         item.Init(data);
+        EditorLogger.Print("Return Item");
         return item;
     }
 }

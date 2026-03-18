@@ -181,6 +181,7 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.actionAbleEntities.Remove(best.Key);
         }
         // 좋은 행동이 없을 경우 턴 종료
+        return;
     }
 
     protected async UniTask EnemySkillAction()
@@ -220,7 +221,7 @@ public class EnemyAI : MonoBehaviour , IInput
         var area = entity.area;
         
         pos = entity.CurTile.fieldPos;
-        // TODO : 현재 타일의 이득값을 계산
+        // 현재 타일의 이득값을 계산
         var plusArea = area.GetAttackVector(field, pos, entity.direction);
         field[pos.y, pos.x] = (int)agent.id;
         foreach (var plus in plusArea)

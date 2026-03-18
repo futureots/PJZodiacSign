@@ -31,6 +31,7 @@ public class S_Promotion : BaseSkillLogic
         }
         var teamList = StageManager.Instance.field.GetEntities(entity.team.teamNumber);
         teamList.Remove(entity);
+        teamList = teamList.FindAll(e=> e.baseData.id != entity.baseData.id);
         
         var data2 = await input.InputEntity(teamList, 1);
         if (data2 == null) 

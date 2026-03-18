@@ -57,8 +57,8 @@ public class S_Castling : BaseSkillLogic
         _target.gameObject.transform.DOMove(tile1.transform.position,0.5f);
         _entity.gameObject.transform.DOMove(tile2.transform.position,0.5f);
         yield return new WaitForSeconds(1f);
-        _target.Move(tile1);
         _entity.Move(tile2);
+        _target.Move(tile1);
         
         _count++;
         if (_count == 3)

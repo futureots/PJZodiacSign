@@ -74,6 +74,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void UnsetOccupant()
     {
+        occupiedEntity.CurTile = null;
         occupiedEntity = null;
     }
 
