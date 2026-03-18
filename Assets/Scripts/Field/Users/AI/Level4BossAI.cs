@@ -9,9 +9,9 @@ public class Level4BossAI : EnemyAI
 {
     protected override async UniTask EnemyAction()
     {
-        var list = agent.actionAbleEntities;
-        var bomber = list.FindAll(e => e.baseData.id == "Bomber");
+        var bomber = agent.actionAbleEntities.FindAll(e => e.baseData.id == "Bomber");
         var skillBomber = bomber.Find(entity => entity.energy.IsFull());
+        // 스킬 사용이 가능한 기물이 있는 경우
         if (skillBomber)
         {
             // 스킬 입력
@@ -20,10 +20,11 @@ public class Level4BossAI : EnemyAI
             {
                 // 스킬 실행
                 agent.CreateSkillCommand(skillBomber.skill);
+                return;
             }
         }
         // 이동 가능한 폭탄병이 있을 경우
-        else if(bomber.Count>0)
+        if(bomber.Count>0)
         {
             var moveBomber = bomber[Random.Range(0, bomber.Count)];
             // 폭탄병은 항상 앞으로 이동하기
@@ -32,6 +33,7 @@ public class Level4BossAI : EnemyAI
                 if ((tile.fieldPos.y - moveBomber.CurTile.fieldPos.y) * moveBomber.direction.y >= 0)
                 {
                     agent.CreateMoveCommand(moveBomber, tile);
+                    agent.actionAbleEntities.Remove(moveBomber);
                     return;
                 }
             }
@@ -49,8 +51,8 @@ public class Level4BossAI : EnemyAI
         {
             EnhanceEntity(entity);
         }
-        
 
         yield return null;
+        agent.CreateEndCommand();
     }
 }

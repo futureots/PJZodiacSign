@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cfbfe1756f0d0d4a9e1cabbd7e19ae6, type: 3}
-  m_Name: Level4Boss
+  m_Name: Level8Boss
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTable
   enemyAI: {fileID: 7163090442470572610, guid: 428b31be693d86d48bb0e655ae807616, type: 3}
   credit: 0

@@ -6,7 +6,7 @@ public class ItemGoodsUI : GoodsUI<ItemData>
     {
         buyBtn.onClick.RemoveAllListeners();
         base.SetGoods(data);
-        buyBtn.onClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+        buyBtn.onClick.AddListener(() =>
         {
             var customer = Agent.LocalPlayer;
             if (customer.inventory.items.Count < customer.inventory.capacity)
@@ -19,6 +19,6 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             {
                 Debug.Log("인벤토리에 빈 공간이 없습니다!");
             }
-        }));
+        });
     }
 }

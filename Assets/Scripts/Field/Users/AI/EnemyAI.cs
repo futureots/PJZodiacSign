@@ -126,9 +126,10 @@ public class EnemyAI : MonoBehaviour , IInput
     protected IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
-        var flag = false;
+        var flag = true;
         Action<int> wait = i =>
         {
+            //EditorLogger.Print(flag +" :: "+ i);
             if (i == 0) flag = true;
             else flag = false;
         };
@@ -143,21 +144,8 @@ public class EnemyAI : MonoBehaviour , IInput
         agent.CreateEndCommand();
     }
 
-    protected virtual async UniTask EnemyAction()
+    protected async UniTask EnemyMoveAction()
     {
-        // 스킬을 사용할 수 있으면 스킬을 사용한다.
-        var skillEntities = agent.actionAbleEntities.FindAll(entity => entity.energy.IsFull());
-        foreach (var entity in skillEntities)
-        {
-            // 스킬 입력 시도(실패 시 실제 입력X)
-            var result =  await entity.skill.skillLogic.InputSkill(this);
-            if (result)
-            {
-                // 스킬 실행
-                agent.CreateSkillCommand(entity.skill);
-                return;
-            }
-        }
         // 사용할 스킬이 없으면 이동
         int max = -9999;
         List<KeyValuePair<Entity, intVector2>> bestAct = new();
@@ -192,6 +180,29 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateMoveCommand(best.Key, StageManager.Instance.field.GetTile(best.Value));
             agent.actionAbleEntities.Remove(best.Key);
         }
+        // 좋은 행동이 없을 경우 턴 종료
+    }
+
+    protected async UniTask EnemySkillAction()
+    {
+        // 스킬을 사용할 수 있으면 스킬을 사용한다.
+        var skillEntities = agent.actionAbleEntities.FindAll(entity => entity.energy.IsFull());
+        foreach (var entity in skillEntities)
+        {
+            // 스킬 입력 시도(실패 시 실제 입력X)
+            var result =  await entity.skill.skillLogic.InputSkill(this);
+            if (result)
+            {
+                // 스킬 실행
+                agent.CreateSkillCommand(entity.skill);
+                return;
+            }
+        }
+    }
+    protected virtual async UniTask EnemyAction()
+    {
+        await EnemySkillAction();
+        await EnemyMoveAction();
     }
 
     

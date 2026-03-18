@@ -13,7 +13,7 @@ public class S_Castling : BaseSkillLogic
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
-        var list = StageManager.Instance.field.GetEntities();
+        var all = StageManager.Instance.field.GetEntities();
         Entity entity = null;
         if(component.TryGetComponent<Entity>(out var owner))
         {
@@ -21,7 +21,8 @@ public class S_Castling : BaseSkillLogic
         }
         else
         {
-            var data = await input.InputEntity(list, 1);
+            
+            var data = await input.InputEntity(all, 1);
             if(data != null)
             {
                 entity = data[0];
@@ -31,6 +32,7 @@ public class S_Castling : BaseSkillLogic
                 return false;
             }
         }
+        var list = all.FindAll(e=>e.team.IsAlly(entity.team));
         list.Remove(entity);
         
         var data2 = await input.InputEntity(list, 1);
@@ -52,8 +54,8 @@ public class S_Castling : BaseSkillLogic
         tile2.UnsetOccupant();
         yield return null;
         // TODO : 이동 코루틴으로 애니메이션 구현하기
-        _target.gameObject.transform.DOMove(tile1.transform.position,1f);
-        _entity.gameObject.transform.DOMove(tile2.transform.position,1f);
+        _target.gameObject.transform.DOMove(tile1.transform.position,0.5f);
+        _entity.gameObject.transform.DOMove(tile2.transform.position,0.5f);
         yield return new WaitForSeconds(1f);
         _target.Move(tile1);
         _entity.Move(tile2);
