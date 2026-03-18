@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -122,7 +123,7 @@ public class EnemyAI : MonoBehaviour , IInput
         }
     }
 
-    protected virtual IEnumerator SetActionMode()
+    protected IEnumerator SetActionMode()
     {
         yield return new WaitForSeconds(0.5f);
         var flag = false;
@@ -135,16 +136,29 @@ public class EnemyAI : MonoBehaviour , IInput
         
         for (int i = 0; i < agent.actionCount;i++)
         {
-            yield return StartCoroutine(EnemyAction());
+            yield return StartCoroutine(EnemyAction().ToCoroutine());
             yield return new WaitUntil(() => flag);
         }
         StageManager.Instance.isSequencing -= wait;
         agent.CreateEndCommand();
     }
 
-    protected virtual IEnumerator EnemyAction()
+    protected virtual async UniTask EnemyAction()
     {
-        // TODO : 스킬을 사용할 수 있으면 스킬을 사용한다.
+        // 스킬을 사용할 수 있으면 스킬을 사용한다.
+        var skillEntities = agent.actionAbleEntities.FindAll(entity => entity.energy.IsFull());
+        foreach (var entity in skillEntities)
+        {
+            // 스킬 입력 시도(실패 시 실제 입력X)
+            var result =  await entity.skill.skillLogic.InputSkill(this);
+            if (result)
+            {
+                // 스킬 실행
+                agent.CreateSkillCommand(entity.skill);
+                return;
+            }
+        }
+        // 사용할 스킬이 없으면 이동
         int max = -9999;
         List<KeyValuePair<Entity, intVector2>> bestAct = new();
         foreach (var checkEntity in agent.actionAbleEntities)
@@ -171,8 +185,6 @@ public class EnemyAI : MonoBehaviour , IInput
                     bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
                 }
             }
-
-            yield return null;
         }
         if (bestAct.Count > 0)
         {
@@ -180,8 +192,6 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateMoveCommand(best.Key, StageManager.Instance.field.GetTile(best.Value));
             agent.actionAbleEntities.Remove(best.Key);
         }
-
-        yield return null;
     }
 
     
