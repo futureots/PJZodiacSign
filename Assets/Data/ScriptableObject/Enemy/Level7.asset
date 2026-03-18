@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cfbfe1756f0d0d4a9e1cabbd7e19ae6, type: 3}
-  m_Name: Level3
+  m_Name: Level7
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTable
   enemyAI: {fileID: 9125116805115818127, guid: 2e7bc78073c02794aaac1c9b2fa071a2, type: 3}
-  credit: 360
+  credit: 840
   entities: []
   fieldEntities: []
   phases:

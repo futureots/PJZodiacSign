@@ -144,7 +144,7 @@ public class EnemyAI : MonoBehaviour , IInput
         agent.CreateEndCommand();
     }
 
-    protected async UniTask EnemyMoveAction()
+    protected UniTask EnemyMoveAction()
     {
         // 사용할 스킬이 없으면 이동
         int max = -9999;
@@ -180,8 +180,9 @@ public class EnemyAI : MonoBehaviour , IInput
             agent.CreateMoveCommand(best.Key, StageManager.Instance.field.GetTile(best.Value));
             agent.actionAbleEntities.Remove(best.Key);
         }
+        
         // 좋은 행동이 없을 경우 턴 종료
-        return;
+        return UniTask.CompletedTask;
     }
 
     protected async UniTask EnemySkillAction()

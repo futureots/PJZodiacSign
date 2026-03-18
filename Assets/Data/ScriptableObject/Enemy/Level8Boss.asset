@@ -14,8 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTable
   enemyAI: {fileID: 5334256925531628241, guid: 43187311a4c0cd04cbd785ffe8dde387, type: 3}
   credit: 0
-  entities: []
-  fieldEntities: []
+  entities:
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 1
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 1
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  - data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+    level: 2
+  fieldEntities:
+  - entityData:
+      data: {fileID: 11400000, guid: 26fbc5f6324bbd04787d8f6f4839cef8, type: 2}
+      level: 0
+    fieldPos:
+      x: 3
+      y: 6
+  - entityData:
+      data: {fileID: 11400000, guid: 26fbc5f6324bbd04787d8f6f4839cef8, type: 2}
+      level: 0
+    fieldPos:
+      x: 4
+      y: 6
   phases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
   - {fileID: 11400000, guid: ae921d25a60adcf4697ce649cd52ba17, type: 2}

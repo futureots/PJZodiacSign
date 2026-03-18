@@ -4420,6 +4420,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5574764471722646465, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9111966060674098166, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_Pivot.x
       value: 1
