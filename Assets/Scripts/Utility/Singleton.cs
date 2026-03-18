@@ -1,49 +1,84 @@
+using System;
 using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour                     
 {
+    /**
+     * Singleton Instance
+     * - If Exist, Return/Destroy dup.
+     * - If not Exist, Create New/Register
+     */
     private static T instance = null;
+    private static bool _isQuitting = false;
+    private static readonly object _lock = new();
+    
     public static T Instance                                                                                           
     {
         get
         {
-            if (!instance)
+            // 1. On Quitting
+            if (_isQuitting)
             {
-                instance = (T)FindAnyObjectByType(typeof(T));
+                return null;
+            }
+
+            // LOCK : Access Instance
+            lock (_lock)
+            {
                 if (!instance)
                 {
-                    GameObject obj = new GameObject(typeof(T).Name, typeof(T));
-                    instance = obj.GetComponent<T>();
+                    // Check Object Existance
+                    instance = (T)FindAnyObjectByType(typeof(T));
+                    
+                    // Create new Instance
+                    if (!instance)
+                    {
+                        GameObject obj = new(typeof(T).Name, typeof(T));
+                        instance = obj.GetComponent<T>();
+                    }
                 }
+
+                return instance;
             }
-            return instance;
+        }
+    }
+
+    protected virtual void Awake()
+    {
+        if (!instance)
+        {
+            instance = this as T;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    protected void OnApplicationQuit()
+    {
+        _isQuitting = true;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
         }
     }
 }
 
-public class SingletonObject<T> : MonoBehaviour where T : MonoBehaviour                     
+public class SingletonObject<T> : Singleton<T> where T : MonoBehaviour                     
 {
-    private static T instance = null;
-    public static T Instance                                                                                           
+    /**
+     * DDOL Singleton
+     */
+    
+    protected override void Awake()
     {
-        get
-        {
-            if (!instance)
-            {
-                instance = (T)FindAnyObjectByType(typeof(T));
-                if (!instance)
-                {
-                    GameObject obj = new GameObject(typeof(T).Name, typeof(T));
-                    instance = obj.GetComponent<T>();
-                }
-            }
-            return instance;
-        }
-    }
-
-    public virtual void Awake()
-    {
-        if (Instance != this) Destroy(gameObject);
+        base.Awake();
+        
         DontDestroyOnLoad(gameObject);
     }
 }
