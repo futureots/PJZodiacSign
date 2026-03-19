@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTable
   enemyAI: {fileID: 9125116805115818127, guid: 2e7bc78073c02794aaac1c9b2fa071a2, type: 3}
-  credit: 120
+  credit: 100
   entities: []
   fieldEntities: []
   phases:

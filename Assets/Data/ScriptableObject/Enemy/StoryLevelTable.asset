@@ -19,7 +19,7 @@ MonoBehaviour:
   baseAI: {fileID: 9125116805115818127, guid: 2e7bc78073c02794aaac1c9b2fa071a2, type: 3}
   data:
   - level: 1
-    enemies: {fileID: 11400000, guid: 6983d9233978b144091a86766871353c, type: 2}
+    enemies: {fileID: 11400000, guid: 151dedefa4d5d2f42a26f2fec58ba829, type: 2}
   - level: 2
     enemies: {fileID: 11400000, guid: 822d94e75836a034ea4a4af880305418, type: 2}
   - level: 3
@@ -27,4 +27,4 @@ MonoBehaviour:
   - level: 4
     enemies: {fileID: 11400000, guid: adb171f87a375244e8a04bedfa5f398f, type: 2}
   - level: 5
-    enemies: {fileID: 11400000, guid: 1a58c5375d60e3e4eb820ce4170652f9, type: 2}
+    enemies: {fileID: 11400000, guid: b0d5c1727a992264da3e85f0ca125c97, type: 2}
