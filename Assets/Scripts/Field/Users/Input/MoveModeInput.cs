@@ -44,7 +44,6 @@ namespace PlayerInput
             targetTileSelector = Object.Instantiate(inputManager.tileSelecter);
             targetSelector.SetActive(false);
             targetTileSelector.SetActive(false);
-            EditorLogger.Print($"현재 행동 수 : {inputManager.agent.CurrentActionCount}");
             if (inputManager.agent.CurrentActionCount == 0)
             {
                 inputManager.agent.CreateEndCommand();

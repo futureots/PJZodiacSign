@@ -45,7 +45,6 @@ public class EnemyAI : MonoBehaviour , IInput
     private void AttackInput()
     {
         var list = StageManager.Instance.field.GetEntities(agent.id);
-        EditorLogger.Print(list.Count);
 
         foreach (var entity in list)
         {
@@ -137,6 +136,7 @@ public class EnemyAI : MonoBehaviour , IInput
         
         for (int i = 0; i < agent.actionCount;i++)
         {
+            agent.actionAbleEntities = agent.actionAbleEntities.FindAll(entity => entity);
             yield return StartCoroutine(EnemyAction().ToCoroutine());
             yield return new WaitUntil(() => flag);
         }
@@ -163,7 +163,6 @@ public class EnemyAI : MonoBehaviour , IInput
                 // 같은 값일 경우 리스트에 추가해서 랜덤 추출
                 if (max < value)
                 {
-                    EditorLogger.Print($"Best Entity : {checkEntity.name} , BestPos : {pos} , Value : {value}");
                     bestAct.Clear();
                     max = value;
                     bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
@@ -185,7 +184,7 @@ public class EnemyAI : MonoBehaviour , IInput
         return UniTask.CompletedTask;
     }
 
-    protected async UniTask EnemySkillAction()
+    protected async UniTask<bool> EnemySkillAction()
     {
         // 스킬을 사용할 수 있으면 스킬을 사용한다.
         var skillEntities = agent.actionAbleEntities.FindAll(entity => entity.energy.IsFull());
@@ -197,14 +196,20 @@ public class EnemyAI : MonoBehaviour , IInput
             {
                 // 스킬 실행
                 agent.CreateSkillCommand(entity.skill);
-                return;
+                return true;
             }
         }
+
+        return false;
     }
     protected virtual async UniTask EnemyAction()
     {
-        await EnemySkillAction();
-        await EnemyMoveAction();
+        bool result= await EnemySkillAction();
+        if (!result)
+        {
+            await EnemyMoveAction();
+        }
+        
     }
 
     

@@ -5,28 +5,28 @@ using UnityEngine.UI;
 
 public class ItemActionUI : MonoBehaviour
 {
-    InputManager inputManager;
-    ItemComponent curItem;
+    private InputManager _inputManager;
+    private ItemComponent _curItem;
     public Button useBtn;
     public Button discardBtn;
-    public void Init(InputManager _inputManager)
+    public void Init(InputManager inputManager)
     {
-        inputManager = _inputManager;
-        var inventory = _inputManager.agent.inventory;
+        _inputManager = inputManager;
+        var inventory = inputManager.agent.inventory;
         
-        _inputManager.OnModeChanged += OnModeChange;
+        inputManager.OnModeChanged += OnModeChange;
         // 버리기 기능
         discardBtn.onClick.AddListener(() => {
-            inventory.RemoveItem(curItem);
+            inventory.RemoveItem(_curItem);
             gameObject.SetActive(false);
-            curItem = null;
+            _curItem = null;
             });
         // 스킬 사용 기능
         useBtn.onClick.AddListener(() =>
         {
-            inputManager.SetInputMode(curItem);
+            _inputManager.SetInputMode(_curItem);
             gameObject.SetActive(false);
-            curItem = null;
+            _curItem = null;
         });
 
     }
@@ -36,24 +36,36 @@ public class ItemActionUI : MonoBehaviour
     /// </summary>
     public void SetItemAction(ItemComponent item)
     {
-        curItem = item;
-        OnModeChange(inputManager.curModeState);
+        _curItem = item;
+        OnModeChange(_inputManager.curModeState);
     }
     // 스킬 사용 여부 판단
     void OnModeChange(IInputState state)
     {
-        if (!curItem)
+        EditorLogger.Print($"{_curItem} : curMode : {_inputManager.curModeState}");
+        if (_inputManager.curModeState is MoveModeInput)
         {
-            useBtn.interactable = false;
-        }
-        else if ((curItem.itemData.useType & inputManager.curTurnType) != 0 && inputManager.curModeState is MoveModeInput)
-        {
-            useBtn.interactable = true;
+            if (!_curItem)
+            {
+                useBtn.interactable = false;
+                discardBtn.interactable = false;
+            }
+            else if (_curItem.ItemData.useType.HasFlag(_inputManager.curTurnType) && _curItem.IsUsable())
+            {
+                useBtn.interactable = true;
+                discardBtn.interactable = true;
+            }
+            else
+            {
+                useBtn.interactable = false;
+                discardBtn.interactable = false;
+            }
+            
         }
         else
         {
             useBtn.interactable = false;
+            discardBtn.interactable = true;
         }
-
     }
 }
