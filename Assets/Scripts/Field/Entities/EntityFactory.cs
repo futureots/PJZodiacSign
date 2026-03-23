@@ -6,7 +6,8 @@ using UnityEngine.Pool;
 public class EntityFactory : Singleton<EntityFactory>
 {
     // Pool Map
-    [Header("Pool Config")]
+    [Header("Pool Config")] 
+    private Transform poolFolder;
     [SerializeField] private int poolCount = 5;
     [SerializeField] private int maxPoolSize = 30;
     
@@ -18,10 +19,16 @@ public class EntityFactory : Singleton<EntityFactory>
     /// <summary>
     /// Warm-up Pools for Entity
     /// </summary>
-    /// <param name="agentEntity"></param>
-    /// <param name="entity"></param>
+    /// <param name="entity">Entities for Pooling (Shop, Mimic, etc.)</param>
+    /// <param name="agentEntity">Entities for Agents (Pool One)</param>
     public void SetPool(IEnumerable<EntityData> entity, IEnumerable<EntityLevelData> agentEntity = null)
     {
+        // Make Pool Folder
+        if (!poolFolder)
+        {
+            poolFolder = new GameObject("EntityPool").transform;
+        }
+        
         // Check Count for Pool Queue
         Dictionary<EntityData, int> counts = new();
 
@@ -99,9 +106,9 @@ public class EntityFactory : Singleton<EntityFactory>
                 return e;
             },
             // Get Obj from Pool
-            actionOnGet: (e) => Get(e),
+            actionOnGet: Get,
             // Set to Pool
-            actionOnRelease: (e) => Release(e),
+            actionOnRelease: Release,
             // Destroy
             actionOnDestroy: (e) =>
             {
@@ -115,7 +122,7 @@ public class EntityFactory : Singleton<EntityFactory>
     // Create New Entity
     private Entity Create(EntityData data)
     {
-        var e = Instantiate(data.prefab);
+        var e = Instantiate(data.prefab, poolFolder);
         e.name = data.id;
         return e;
     }

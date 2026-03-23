@@ -42,6 +42,9 @@ public class HpPanelManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        EntityFactory.Instance.OnEntityCreated -= CreateHpBar;
+        if (EntityFactory.Instance)
+        {
+            EntityFactory.Instance.OnEntityCreated -= CreateHpBar;
+        }
     }
 }
