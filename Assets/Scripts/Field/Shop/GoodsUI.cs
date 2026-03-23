@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GoodsUI<T> : MonoBehaviour where T : AbstractData
 {
@@ -20,7 +22,7 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     public virtual void SetGoods(T data)
     {
         goodsName.text = data.productName;
-        price = data.normalPrice;
+        price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.7f, 1.3f));
         priceText.text = price.ToString();
         icon.sprite = data.icon;
     }

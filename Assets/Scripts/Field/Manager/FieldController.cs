@@ -50,7 +50,8 @@ public class FieldController : MonoBehaviour
         {
             if (IsBattleEnd(out var winner))
             {
-                GameManager.Instance.ExitBattle(winner);
+                stageManager.EndStage(winner);
+                //GameManager.Instance.ExitBattle(winner);
             }
             return;
         }
