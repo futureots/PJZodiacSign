@@ -5,30 +5,30 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] InputManager inputManager;
-    Inventory inventory;
+    private InputManager _inputManager;
+    private Inventory _inventory;
     /// <summary>현재 UI 표시 상태</summary>
-    public bool isOpen { get; private set; } = false;
+    private bool IsOpen { get; set; } = false;
 
     [Header("오브젝트")]
-    [SerializeField] ItemInfoUI infoPanel;
-    [SerializeField] ItemActionUI actPanel;
+    [SerializeField] private ItemInfoUI infoPanel;
+    [SerializeField] private ItemActionUI actPanel;
 
     /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
     public Button popBtn;
 
     [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
-    [SerializeField] List<ItemSlotUI> itemSlots;
+    [SerializeField] private List<ItemSlotUI> itemSlots;
 
     public void Init(InputManager input)
     {
-        inventory = input.agent.inventory;
+        _inventory = input.agent.inventory;
         actPanel.Init(input);
 
         // 인벤토리 데이터 불러와서 표시
         SetInventory();
 
-        inventory.OnItemChanged += UpdateInventory;
+        _inventory.OnItemChanged += UpdateInventory;
     }
 
 
@@ -64,8 +64,8 @@ public class InventoryUI : MonoBehaviour
     /// </summary>
     public void ToggleInventory()
     {
-        isOpen = !isOpen;
-        ToggleInventory(isOpen);
+        IsOpen = !IsOpen;
+        ToggleInventory(IsOpen);
     }
 
     /// <summary>
@@ -84,14 +84,14 @@ public class InventoryUI : MonoBehaviour
             infoPanel.gameObject.SetActive(false);
             actPanel.gameObject.SetActive(false);
         }
-        this.isOpen = isOpen;
+        this.IsOpen = isOpen;
     }
 
     void OpenItemAction(int index)
     {
-        if (inventory.items.Count > index)
+        if (_inventory.items.Count > index)
         {
-            var item = inventory.items[index];
+            var item = _inventory.items[index];
             if (item != null)
             {
                 actPanel.gameObject.SetActive(true);
@@ -103,17 +103,17 @@ public class InventoryUI : MonoBehaviour
     }
     void SetInfoUI(int index, Vector2 pos)
     {
-        if(index >= inventory.items.Count || index < 0)
+        if(index >= _inventory.items.Count || index < 0)
         {
             infoPanel.gameObject.SetActive(false);
         }
-        else if (inventory.items[index] == null)
+        else if (_inventory.items[index] == null)
         {
             infoPanel.gameObject.SetActive(false);
         }
         else
         {
-            var item = inventory.items[index];
+            var item = _inventory.items[index];
             if(!infoPanel.gameObject.activeSelf) infoPanel.gameObject.SetActive(true);
             infoPanel.SetInfo(item);
             infoPanel.SetPosition(pos);

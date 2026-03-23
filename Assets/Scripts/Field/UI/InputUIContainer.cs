@@ -21,6 +21,6 @@ public class InputUIContainer : MonoBehaviour
         skillCancelUI.Init(inputManager);
         costUI.Init(inputManager);
         tutorialUI.Init(inputManager);
-        stageEndUI.Init();
+        stageEndUI.Init(inputManager);
     }
 }

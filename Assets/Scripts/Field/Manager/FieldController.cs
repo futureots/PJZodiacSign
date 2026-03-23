@@ -51,7 +51,6 @@ public class FieldController : MonoBehaviour
             if (IsBattleEnd(out var winner))
             {
                 stageManager.EndStage(winner);
-                //GameManager.Instance.ExitBattle(winner);
             }
             return;
         }
@@ -103,7 +102,7 @@ public class FieldController : MonoBehaviour
     
     public bool IsBattleEnd(out PlayerID winTeam)
     {
-        List<PlayerID> surviveTeam = new List<PlayerID>();
+        List<PlayerID> surviveTeam = new();
         foreach (var tile in stageManager.field.GetTiles())
         {
             if (tile.IsEmpty) continue;

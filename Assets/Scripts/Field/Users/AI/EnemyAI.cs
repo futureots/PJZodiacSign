@@ -99,7 +99,7 @@ public class EnemyAI : MonoBehaviour , IInput
     /// <returns></returns>
     protected bool BuyEntity(Tile tile)
     {
-        var data = StageManager.Instance.shop.GetRandomEntity(agent.Credit);
+        var data = StageManager.Instance.shop.GetRandomEntity(agent.Credit,ShopTable.ShopType.Normal);
         if (!data) return false;
         agent.Credit -= data.normalPrice;
         var entity = EntityFactory.Instance.RequestEntity(data, new intVector2(-1, -1), tile);
