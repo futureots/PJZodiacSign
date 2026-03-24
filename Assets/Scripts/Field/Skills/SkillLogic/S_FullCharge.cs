@@ -24,7 +24,7 @@ public class S_FullCharge : BaseSkillLogic
     {
         
         // Effect
-        EffectFactory.Instance.RequestEffect("ManaAura",_target.transform.position,_target.transform.lossyScale);
+        EffectFactory.Instance.Request("ManaAura",_target.transform.position,_target.transform.lossyScale);
         yield return new WaitForSeconds(0.1f);
         
         _target.energy.CurEnergy = _target.energy.MaxEnergy;

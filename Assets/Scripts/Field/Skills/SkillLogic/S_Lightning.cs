@@ -16,7 +16,7 @@ public class S_Lightning : BaseSkillLogic
     {
         //TODO : 낙뢰 이펙트 재생
         var field = StageManager.Instance.field;
-        EffectFactory.Instance.RequestEffect("ManaAura",field.transform.position,Vector3.Scale(field.transform.lossyScale,new Vector3(8,1,8)));
+        EffectFactory.Instance.Request("ManaAura",field.transform.position,Vector3.Scale(field.transform.lossyScale,new Vector3(8,1,8)));
         
         var entities = field.GetEntities();
         foreach (var entity in entities)
@@ -31,7 +31,7 @@ public class S_Lightning : BaseSkillLogic
 
     IEnumerator LightningHit(Entity entity)
     {
-        EffectFactory.Instance.RequestEffect("LightningStrike",entity.transform.position,entity.transform.lossyScale);
+        EffectFactory.Instance.Request("LightningStrike",entity.transform.position,entity.transform.lossyScale);
         yield return new WaitForSeconds(0.5f);
         entity.Damaged(entity.MaxHealth/4);
     }

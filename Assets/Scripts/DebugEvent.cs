@@ -14,7 +14,7 @@ namespace DebugTool
         {
             #region DebugArea
 
-            //EntityFactory.RequestEntity(targetData as EntityData, 3);
+            //EntityFactory.Request(targetData as EntityData, 3);
 
             #endregion
         }

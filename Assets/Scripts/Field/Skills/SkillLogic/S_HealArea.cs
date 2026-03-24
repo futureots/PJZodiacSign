@@ -39,7 +39,7 @@ public class S_HealArea : BaseSkillLogic
         var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         
-        EffectFactory.Instance.RequestEffect("HealAura", _owner.transform.position, Vector3.Scale(_owner.transform.lossyScale,new Vector3(5,1,5)));
+        EffectFactory.Instance.Request("HealAura", _owner.transform.position, Vector3.Scale(_owner.transform.lossyScale,new Vector3(5,1,5)));
         yield return new WaitForSeconds(0.1f);
         
         foreach (var tile in tiles)

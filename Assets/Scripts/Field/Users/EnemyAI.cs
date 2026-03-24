@@ -65,7 +65,7 @@ public class EnemyAI : MonoBehaviour , IInput
             var data = StageManager.Instance.shop.GetRandomEntity(agent.Credit);
             if (!data) break;
             agent.Credit -= data.normalPrice;
-            var entity = EntityFactory.Instance.RequestEntity(data, new intVector2(-1, -1), emptyTile);
+            var entity = EntityFactory.Instance.Request(data, new intVector2(-1, -1), emptyTile);
         }
 
         // 남은 크레딧으로 기물 강화

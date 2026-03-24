@@ -15,6 +15,39 @@ public class EntityFactory : Singleton<EntityFactory>
     private Dictionary<Entity, EntityData> poolTicket = new();
     public event Action<Entity> OnEntityCreated;
 
+
+
+    /// <summary>
+    /// Request for New Entity from pool
+    /// </summary>
+    /// <param name="data">Entity Data to make</param>
+    /// <param name="level">Init with level</param>
+    /// <param name="direction">Direction for Entity init</param>
+    /// <param name="tile">position for new Entity</param>
+    /// <returns>Entity Object to Get</returns>
+    public Entity Request(EntityData data, intVector2 direction = new(), Tile tile = null, int level = 0)
+    {
+        // Data Check for Exception
+        if (!data) return null;
+        EnsurePool(data);
+        
+        // Get Entity from Pool
+        Entity entity = poolMap[data].Get();
+        entity.Init(data, direction, level);
+
+        // Move to Initial Tile
+        if (tile)
+        {
+            entity.Move(tile, true);
+            // entity.SetDirection(direction);
+        }
+        entity.transform.localScale = Vector3.one;
+        OnEntityCreated?.Invoke(entity);
+        
+        return entity;
+    }
+    
+    #region PoolConfig    
     
     /// <summary>
     /// Warm-up Pools for Entity
@@ -54,39 +87,9 @@ public class EntityFactory : Singleton<EntityFactory>
         // Create Pool and Fill
         foreach (var pair in counts)
         {
-            if (!poolMap.ContainsKey(pair.Key)) EnsurePool(pair.Key);
+            EnsurePool(pair.Key);
             Fill(pair.Key, pair.Value);
         }
-    }
-
-    /// <summary>
-    /// Request for New Entity from pool
-    /// </summary>
-    /// <param name="data">Entity Data to make</param>
-    /// <param name="level">Init with level</param>
-    /// <param name="direction">Direction for Entity init</param>
-    /// <param name="tile">position for new Entity</param>
-    /// <returns>Entity Object to Get</returns>
-    public Entity RequestEntity(EntityData data, intVector2 direction = new(), Tile tile = null, int level = 0)
-    {
-        // Data Check for Exception
-        if (!data) return null;
-        EnsurePool(data);
-        
-        // Get Entity from Pool
-        Entity entity = poolMap[data].Get();
-        entity.Init(data, direction, level);
-
-        // Move to Initial Tile
-        if (tile)
-        {
-            entity.Move(tile, true);
-            // entity.SetDirection(direction);
-        }
-        entity.transform.localScale = Vector3.one;
-        OnEntityCreated?.Invoke(entity);
-        
-        return entity;
     }
 
     /// <summary>
@@ -162,4 +165,6 @@ public class EntityFactory : Singleton<EntityFactory>
             poolMap[data].Release(entity);
         }
     }
+    
+    #endregion
 }

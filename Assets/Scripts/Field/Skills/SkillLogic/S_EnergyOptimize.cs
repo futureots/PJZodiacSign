@@ -27,7 +27,7 @@ public class S_EnergyOptimize : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        var levelUpEffect = EffectFactory.Instance.RequestEffect("OverLoad",_target.transform.position, _target.transform.lossyScale);
+        var levelUpEffect = EffectFactory.Instance.Request("OverLoad",_target.transform.position, _target.transform.lossyScale);
         if (levelUpEffect.TryGetComponent<GlowEffect>(out var overLoad))
         {
             if (_target.TryGetComponent<MeshFilter>(out var mesh))

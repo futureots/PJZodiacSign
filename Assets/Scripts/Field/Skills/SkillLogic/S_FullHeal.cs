@@ -26,7 +26,7 @@ public class S_FullHeal : BaseSkillLogic
     {
         
         
-        EffectFactory.Instance.RequestEffect("HealAura", _target.transform.position, _target.transform.lossyScale);
+        EffectFactory.Instance.Request("HealAura", _target.transform.position, _target.transform.lossyScale);
         yield return new WaitForSeconds(0.1f);
         _target.CurHealth = _target.MaxHealth;
         yield return new WaitForSeconds(0.9f);

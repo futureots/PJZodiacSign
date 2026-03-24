@@ -58,7 +58,7 @@ public class S_PinPointAttack : BaseSkillLogic
 
         var target = _target;
 
-        var effect = EffectFactory.Instance.RequestEffect("AttackEffect",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale,5f);
+        var effect = EffectFactory.Instance.Request("AttackEffect",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale,5f);
         if (effect.TryGetComponent(out BasicAttackEffect atkObj))
         {
             atkObj.Initialize(target.gameObject, Hit);
