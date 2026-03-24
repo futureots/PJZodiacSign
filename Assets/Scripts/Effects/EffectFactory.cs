@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -14,7 +15,6 @@ public class EffectFactory : Singleton<EffectFactory>
     [SerializeField] private int maxPoolCount = 10;
     
     private Dictionary<string, IObjectPool<GameObject>> poolMap = new();
-    private Dictionary<string, GameObject> poolTicket = new();
 
     private void Start()
     {
@@ -41,9 +41,20 @@ public class EffectFactory : Singleton<EffectFactory>
         // Set Effect
         obj.transform.position = position;
         obj.transform.localScale = scale;
-        // TODO: time초 후 반납 로직 적용
-        // Destroy(obj, time);
+        
+        // return after "time" sec.
+        StartCoroutine(ActEffect(objName, obj, time));
         return obj;
+    }
+
+    private IEnumerator ActEffect(string objName, GameObject obj, float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (obj != null && obj.activeSelf)
+        {
+            poolMap[objName].Release(obj);
+        }
     }
     
     #region PoolConfig
