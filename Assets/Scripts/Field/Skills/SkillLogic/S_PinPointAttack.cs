@@ -40,6 +40,7 @@ public class S_PinPointAttack : BaseSkillLogic
         }
         
         var opponentList = StageManager.Instance.field.GetEntities(entity.team.teamNumber,false);
+        opponentList.Sort((a, b) => a.CurHealth.CompareTo(b.CurHealth));
         var data2 = await input.InputEntity(opponentList, 1);
         if (data2 == null) 
         {

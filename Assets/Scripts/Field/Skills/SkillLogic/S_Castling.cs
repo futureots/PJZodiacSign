@@ -33,6 +33,7 @@ public class S_Castling : BaseSkillLogic
             }
         }
         var list = all.FindAll(e=>e.team.IsAlly(entity.team));
+        list.Sort((a, b) => a.CurHealth.CompareTo(b.CurHealth));
         list.Remove(entity);
         
         var data2 = await input.InputEntity(list, 1);

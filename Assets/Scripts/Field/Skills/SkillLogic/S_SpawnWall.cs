@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = System.Random;
 
 
 [Serializable]
@@ -28,6 +29,12 @@ public class S_SpawnWall : BaseSkillLogic
         }
         
         var tiles = owner.GetMoveArea();
+        
+        // AI 용 랜덤 값
+        var random = UnityEngine.Random.Range(0, tiles.Count);
+        (tiles[random], tiles[0]) = (tiles[0], tiles[random]);
+
+
         var data2 = await input.InputTile(tiles, 1);
         if (data2 == null) 
         {

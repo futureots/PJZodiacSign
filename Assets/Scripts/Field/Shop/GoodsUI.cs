@@ -22,7 +22,7 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     public virtual void SetGoods(T data)
     {
         goodsName.text = data.productName;
-        price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.7f, 1.3f));
+        price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.8f, 1.2f));
         priceText.text = price.ToString();
         icon.sprite = data.icon;
     }

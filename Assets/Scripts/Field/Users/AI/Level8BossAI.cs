@@ -30,8 +30,5 @@ public class Level8BossAI : EnemyAI
 
             await base.EnemyAction();
         }
-
-        
-        
     }
 }

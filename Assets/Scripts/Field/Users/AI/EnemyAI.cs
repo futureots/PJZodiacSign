@@ -26,7 +26,7 @@ public class EnemyAI : MonoBehaviour , IInput
         
         if(curTurn.agentID == agent.id)
         {
-            EditorLogger.Print("AI "+ CurTurnType.ToString());
+            EditorLogger.Print("AI "+ CurTurnType);
             switch (curTurn.type)
             {
                 case TurnType.ACTION:
@@ -55,11 +55,12 @@ public class EnemyAI : MonoBehaviour , IInput
 
     protected virtual IEnumerator SetRepairMode()
     {
-        // 보유한 크레딧으로 상점을 통해 기물 구매
+        // 보유한 크레딧으로 상점을 통해 기물 구매(8~32개 기물 구매)
         List<Tile> emptyTiles = StageManager.Instance.agentField[agent.id].GetTiles().GetEmptyTiles();
-        foreach (Tile emptyTile in emptyTiles)
+        int count = Random.Range(Math.Min(8,emptyTiles.Count),emptyTiles.Count);
+        for(int i=0;i<count;i++)
         {
-            if (!BuyEntity(emptyTile))
+            if (!BuyEntity(emptyTiles[i]))
             {
                 break;
             }
@@ -67,11 +68,16 @@ public class EnemyAI : MonoBehaviour , IInput
 
         yield return null;
 
-        // 남은 크레딧으로 기물 강화
-        foreach (var entity in StageManager.Instance.agentField[agent.id].GetEntities())
+        // 남은 크레딧으로 기물 강화(최대 50회 강화)
+        for(int i=0;i<50;i++)
         {
+            var entities = StageManager.Instance.agentField[agent.id].GetEntities().FindAll(e=> e.baseData.normalPrice*Math.Pow(2,e.Level)<=agent.Credit);
+            if (entities.Count <= 0) break;
+            
+            var entity = entities[Random.Range(0, entities.Count)];
             EnhanceEntity(entity);
         }
+        
         
         yield return null;
         
@@ -204,7 +210,13 @@ public class EnemyAI : MonoBehaviour , IInput
     }
     protected virtual async UniTask EnemyAction()
     {
-        bool result= await EnemySkillAction();
+        // true면 스킬 사용, false면 이동
+        var result = Random.Range(0,2)>0;
+        if (result)
+        {
+            result= await EnemySkillAction();
+        }
+        
         if (!result)
         {
             await EnemyMoveAction();
