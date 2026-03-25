@@ -35965,6 +35965,10 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 528285947572437199, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
       propertyPath: m_Name
       value: ShopUI

@@ -11,7 +11,6 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     [SerializeField] protected TextMeshProUGUI goodsName;
     [SerializeField] protected TextMeshProUGUI priceText;
     [SerializeField] protected Image icon;
-    [SerializeField] protected TextMeshProUGUI countText;
     protected int price;
 
     /// <summary>
