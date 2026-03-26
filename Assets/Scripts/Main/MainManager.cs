@@ -41,7 +41,7 @@ namespace Main
                     return;
                 }
                 GameManager.Instance.SetModeData(levelTable, shopTable);
-                var data = GameManager.Instance.CreateStageData(1, new AgentData(100));
+                var data = GameManager.Instance.CreateStageData(1, new AgentData(150));
                 GameManager.Instance.EnterBattle(data);
             }
         }

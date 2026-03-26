@@ -1,150 +1,93 @@
 using DG.Tweening;
+using PlayerInput;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] InputManager inputManager;
-    Inventory inventory;
+    private InputManager _inputManager;
+    private Inventory _inventory;
     /// <summary>현재 UI 표시 상태</summary>
-    public bool isOpen { get; private set; } = false;
+    private bool IsOpen { get; set; } = false;
 
     [Header("오브젝트")]
-    [SerializeField] ItemInfoUI infoPanel;
-    [SerializeField] ItemActionUI actPanel;
-
-    /// <summary> 열고 닫는 버튼 컴포넌트 </summary>
-    public Button popBtn;
-
-    [ContextMenuItem("SetInvenSlot", "SetInventorySlot")]
-    [SerializeField] List<ItemSlotUI> itemSlots;
+    [SerializeField] private ItemInfoUI infoPanel;
+    
+    [SerializeField] private List<ItemSlotUI> itemSlots;
 
     public void Init(InputManager input)
     {
-        inventory = input.agent.inventory;
-        actPanel.Init(input);
+        _inputManager = input;
+        _inventory = input.agent.inventory;
 
         // 인벤토리 데이터 불러와서 표시
         SetInventory();
 
-        inventory.OnItemChanged += UpdateInventory;
+        _inventory.OnItemChanged += UpdateInventory;
     }
-
-
-    private void Start()
-    {
-        ToggleInventory(false);
-    }
+    
     /// <summary>
     /// 보유 아이템 데이터를 인벤토리에 세팅
     /// </summary>
-    void SetInventory()
+    private void SetInventory()
     {
         for(int i=0;i< itemSlots.Count; i++)
         {
             var slot = itemSlots[i];
             slot.Init(i);
-            slot.onClick += OpenItemAction;
-            slot.onMouseMove += SetInfoUI;
+            slot.OnClick += UseItem;
+            slot.OnMouseMove += SetInfoUI;
         }
     }
 
     /// <summary>
     /// 인벤토리에 아이템 추가 시 UI에 동기화
     /// </summary>
+    /// <param name="index"></param>
     /// <param name="item"></param>
-    public void UpdateInventory(int index ,ItemComponent item)
+    private void UpdateInventory(int index ,ItemComponent item)
     {
         itemSlots[index].SetSlot(item);
     }
 
-    /// <summary>
-    /// Show/Hide InventoryUI
-    /// </summary>
-    public void ToggleInventory()
-    {
-        isOpen = !isOpen;
-        ToggleInventory(isOpen);
-    }
 
-    /// <summary>
-    /// Show/Hide InventoryUI
-    /// </summary>
-    /// <param name="isOpen">true : Open, false : Close</param>
-    void ToggleInventory(bool isOpen)
+    private void UseItem(int index)
     {
-        var panel = GetComponent<RectTransform>();
-        var pos = isOpen ? openedPosition : closedPosition;
-        var scaleX = isOpen ? 1 : -1;
-        popBtn.transform.localScale = new Vector3(scaleX, 1, 1);
-        panel.DOLocalMove(pos, 0.5f);
-        if (!isOpen)
+        if (_inventory.items.Count <= index)
         {
-            infoPanel.gameObject.SetActive(false);
-            actPanel.gameObject.SetActive(false);
+            return;
         }
-        this.isOpen = isOpen;
-    }
-
-    void OpenItemAction(int index)
-    {
-        if (inventory.items.Count > index)
+        ItemComponent item = _inventory.items[index];
+        if (!item)
         {
-            var item = inventory.items[index];
-            if (item != null)
-            {
-                actPanel.gameObject.SetActive(true);
-                actPanel.transform.position = itemSlots[index].transform.position;
-                actPanel.SetItemAction(item);
-            }
+            return;
+        }
+
+        if (_inputManager.curModeState is MoveModeInput && item.ItemData.useType.HasFlag(_inputManager.curTurnType) && item.IsUsable())
+        {
+            _inputManager.SetInputMode(item);
         }
 
     }
-    void SetInfoUI(int index, Vector2 pos)
+
+    private void SetInfoUI(int index, Vector2 pos)
     {
-        if(index >= inventory.items.Count || index < 0)
+        if(index >= _inventory.items.Count || index < 0)
         {
             infoPanel.gameObject.SetActive(false);
         }
-        else if (inventory.items[index] == null)
+        else if (_inventory.items[index] == null)
         {
             infoPanel.gameObject.SetActive(false);
         }
         else
         {
-            var item = inventory.items[index];
+            var item = _inventory.items[index];
             if(!infoPanel.gameObject.activeSelf) infoPanel.gameObject.SetActive(true);
             infoPanel.SetInfo(item);
             infoPanel.SetPosition(pos);
             
         }
     }
-
-
-    #region Debugging
-
-    /// <summary>닫을 때 이동하는 포지션</summary>
-    [ContextMenuItem("SetClosePos", "SetClosedPosition")]
-    [SerializeField] Vector3 closedPosition;
-    /// <summary>열 때 이동하는 포지션</summary>
-    [ContextMenuItem("SetOpenPos", "SetOpenedPosition")]
-    [SerializeField] Vector3 openedPosition;
-
-
-    public void SetClosedPosition()
-    {
-        closedPosition = transform.localPosition;
-    }
-    public void SetOpenedPosition()
-    {
-        openedPosition = transform.localPosition;
-    }
-    public void SetInventorySlot()
-    {
-        itemSlots = new();
-        var slots = GetComponentsInChildren<ItemSlotUI>();
-        itemSlots.AddRange(slots);
-    }
-    #endregion
 }

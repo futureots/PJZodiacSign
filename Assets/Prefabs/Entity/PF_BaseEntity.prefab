@@ -140,7 +140,6 @@ MonoBehaviour:
   area: {fileID: -6197357392793127856}
   energy: {fileID: -2742825382044771463}
   skill: {fileID: 1608623362337060125}
-  isProtected: 0
   indicatorEffect: {fileID: 749888015414341987}
 --- !u!114 &7199089154685334009
 MonoBehaviour:
@@ -212,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Outline
   outlineMode: 3
   outlineColor: {r: 0, g: 1, b: 0, a: 1}
-  outlineWidth: 10
+  outlineWidth: 4
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []

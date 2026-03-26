@@ -14,7 +14,7 @@ public class BasicAttackEffect : MonoBehaviour
     /// </summary>
     /// <param name="_target">대상</param>
     /// <param name="action">적중 시 실행할 함수</param>
-    public void Initialize(GameObject _target, Action action)
+    public virtual void Initialize(GameObject _target, Action action)
     {
         this.target = _target;
         onHit = action;

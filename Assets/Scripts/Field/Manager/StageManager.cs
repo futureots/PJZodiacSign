@@ -18,7 +18,13 @@ public class StageManager : Singleton<StageManager>
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
     public Dictionary<PlayerID, Field> agentField;
+    
+    public event Action<PlayerID> OnStageEnded;
 
+    public void EndStage(PlayerID winner)
+    {
+        OnStageEnded?.Invoke(winner);
+    }
     /// <summary>
     /// Init Model with Data
     /// </summary>

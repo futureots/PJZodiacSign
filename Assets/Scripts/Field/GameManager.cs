@@ -42,10 +42,10 @@ public class GameManager : SingletonObject<GameManager>
     /// <returns></returns>
     public StageData CreateStageData(int level,AgentData playerData)
     {
-        List<AgentData> agents = new List<AgentData>();
-        (AgentData enemy,List<Phase> phases) = levelTable.GetLevelData(level);
-        agents.Add(enemy);
-        StageData stageData = new StageData(agents, shopTable,phases, level, playerData);
+        List<AgentData> agents = new();
+        var data = levelTable.GetLevelData(level);
+        agents.Add(data.Item2);
+        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData);
         return stageData;
     }
     #region BattleInit
@@ -115,31 +115,10 @@ public class GameManager : SingletonObject<GameManager>
 
     #region BattleEnd
 
-    //public event Action<bool> OnGameEnded;
-    /// <summary>
-    /// Procedure when Battle End
-    /// </summary>
-    public void ExitBattle (PlayerID winPlayer)
-    {
-        
-        // TODO: 게임 종료 처리 로직 추가
-        if (winPlayer == PlayerID.P0)
-        {
-            //OnGameEnded?.Invoke(true);
-            ContinueGame();
-        }
-        else
-        {
-            //OnGameEnded?.Invoke(false);
-            EndGame(true);
-        }
-    }
-
     public void ContinueGame()
     {
         var playerData = Agent.LocalPlayer.getData();
         // 다음 레벨로 넘어가는 코드
-        playerData.credit += 100;
         EditorLogger.Print($"{playerData.credit} 현재 크레딧");
         EditorLogger.Print($"{Level + 1} 로드 중");
         var stageData = CreateStageData(Level + 1, playerData);

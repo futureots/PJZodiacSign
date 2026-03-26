@@ -4,13 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyTable", menuName = "Scriptable Objects/EnemyTable")]
 public class EnemyTable : ScriptableObject
 {
+    public EnemyAI enemyAI;
     public int credit;
     public List<EntityLevelData> entities;
     public List<FieldEntityLevelData> fieldEntities;
     public List<Phase> phases;
 
 
-    public AgentData GetAgentData()
+    public AgentData GetEnemyData()
     {
         Dictionary<intVector2,EntityLevelData> fields = new Dictionary<intVector2,EntityLevelData>();
         foreach (var entity in fieldEntities)
