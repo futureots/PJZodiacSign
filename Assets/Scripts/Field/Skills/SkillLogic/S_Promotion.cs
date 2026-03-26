@@ -58,11 +58,11 @@ public class S_Promotion : BaseSkillLogic
         _entity = null;
         
         
-        var promotion = EntityFactory.Instance.RequestEntity(_target.baseData, dir, tile, level);
+        var promotion = EntityFactory.Instance.Request(_target.baseData, dir, tile, level);
         promotion.team.teamNumber = team;
         
         // 이펙트 재생
-        var levelUpEffect = EffectFactory.Instance.RequestEffect("Change",promotion.transform.position, promotion.transform.lossyScale);
+        var levelUpEffect = EffectFactory.Instance.Request("Change",promotion.transform.position, promotion.transform.lossyScale);
         if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
         {
             if (promotion.TryGetComponent<MeshFilter>(out var mesh))

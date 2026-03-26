@@ -28,7 +28,7 @@ public class S_PowerDown : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        EffectFactory.Instance.RequestEffect("PowDownAura",_owner.transform.position,_owner.transform.lossyScale*3);
+        EffectFactory.Instance.Request("PowDownAura",_owner.transform.position,_owner.transform.lossyScale*3);
         var tiles = _owner.GetAttackArea();
         foreach (var tile in tiles)
         {

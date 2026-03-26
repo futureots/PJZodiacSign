@@ -66,7 +66,7 @@ public class S_Castling : BaseSkillLogic
         {
             _target.Defense += 1;
             _count = 0;
-            EffectFactory.Instance.RequestEffect("DefUpAura",_target.transform.position,_target.transform.lossyScale);
+            EffectFactory.Instance.Request("DefUpAura",_target.transform.position,_target.transform.lossyScale);
         }
         
         _entity = null;

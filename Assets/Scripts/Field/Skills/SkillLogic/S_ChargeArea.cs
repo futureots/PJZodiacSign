@@ -42,7 +42,7 @@ public class S_ChargeArea : BaseSkillLogic
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         
         // Effect
-        EffectFactory.Instance.RequestEffect("ManaAura",_owner.transform.position,_owner.transform.lossyScale*5);
+        EffectFactory.Instance.Request("ManaAura",_owner.transform.position,_owner.transform.lossyScale*5);
         yield return new WaitForSeconds(0.1f);
         
         foreach (var tile in tiles)

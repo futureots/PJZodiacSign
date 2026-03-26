@@ -15,7 +15,7 @@ public class GameManager : SingletonObject<GameManager>
     public ShopTable shopTable;
     public int Level { get; private set; }
     
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         // TODO: 데이터 로드 로직 추가

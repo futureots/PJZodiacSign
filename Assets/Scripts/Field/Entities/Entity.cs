@@ -122,7 +122,7 @@ public class Entity : Occupant, IDamageable, IAttackable
             {
                 if (!team.IsAlly(entity.team))
                 {
-                    var effect = EffectFactory.Instance.RequestEffect("AttackEffect", transform.position + Vector3.up * 7, transform.lossyScale,5f);
+                    var effect = EffectFactory.Instance.Request("AttackEffect", transform.position + Vector3.up * 7, transform.lossyScale,5f);
                     effect.GetComponent<BasicAttackEffect>()?.Initialize(target.gameObject, ()=> entity.Damaged(damage));
                     isAttacked = true;
                 }
@@ -179,7 +179,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     public void Damaged(int damage)
     {
         var value = Math.Max(damage - _defense,0);
-        EffectFactory.Instance.RequestEffect("HitEffect",transform.position + Vector3.up * 7, transform.lossyScale*2f,1f);
+        EffectFactory.Instance.Request("HitEffect",transform.position + Vector3.up * 7, transform.lossyScale*2f,1f);
 
         CurHealth -= value;
     }
@@ -285,7 +285,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         switch (effectType)
         {
             case EffectType.Dissolve:
-                var dissolveEffect = EffectFactory.Instance.RequestEffect("Dissolve", transform.position, transform.lossyScale,3f);
+                var dissolveEffect = EffectFactory.Instance.Request("Dissolve", transform.position, transform.lossyScale,3f);
                 if (dissolveEffect.TryGetComponent<DissolveEffect>(out var dissolve))
                 {
                     if (TryGetComponent<MeshFilter>(out var mesh) && TryGetComponent<MeshRenderer>(out var render))
@@ -297,7 +297,7 @@ public class Entity : Occupant, IDamageable, IAttackable
                 }
                 break;
             case EffectType.LevelUp:
-                var levelUpEffect = EffectFactory.Instance.RequestEffect("LevelUp", transform.position, transform.lossyScale);
+                var levelUpEffect = EffectFactory.Instance.Request("LevelUp", transform.position, transform.lossyScale);
                 if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
                 {
                     if (TryGetComponent<MeshFilter>(out var mesh))

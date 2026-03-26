@@ -50,9 +50,9 @@ public class S_SpawnWall : BaseSkillLogic
     {
         EditorLogger.Print($"Spawn {spawnData.productName}");
         
-        var obstacle = EntityFactory.Instance.RequestEntity(spawnData, intVector2.Zero, _tile);
+        var obstacle = EntityFactory.Instance.Request(spawnData, intVector2.Zero, _tile);
         obstacle.team.teamNumber = _owner.team.teamNumber;
-        var levelUpEffect = EffectFactory.Instance.RequestEffect("LevelUp",obstacle.transform.position, obstacle.transform.lossyScale);
+        var levelUpEffect = EffectFactory.Instance.Request("LevelUp",obstacle.transform.position, obstacle.transform.lossyScale);
         if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
         {
             if (obstacle.TryGetComponent<MeshFilter>(out var mesh))

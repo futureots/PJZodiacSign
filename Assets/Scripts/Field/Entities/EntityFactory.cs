@@ -6,7 +6,8 @@ using UnityEngine.Pool;
 public class EntityFactory : Singleton<EntityFactory>
 {
     // Pool Map
-    [Header("Pool Config")]
+    [Header("Pool Config")] 
+    private Transform poolFolder;
     [SerializeField] private int poolCount = 5;
     [SerializeField] private int maxPoolSize = 30;
     
@@ -14,14 +15,53 @@ public class EntityFactory : Singleton<EntityFactory>
     private Dictionary<Entity, EntityData> poolTicket = new();
     public event Action<Entity> OnEntityCreated;
 
+
+
+    /// <summary>
+    /// Request for New Entity from pool
+    /// </summary>
+    /// <param name="data">Entity Data to make</param>
+    /// <param name="level">Init with level</param>
+    /// <param name="direction">Direction for Entity init</param>
+    /// <param name="tile">position for new Entity</param>
+    /// <returns>Entity Object to Get</returns>
+    public Entity Request(EntityData data, intVector2 direction = new(), Tile tile = null, int level = 0)
+    {
+        // Data Check for Exception
+        if (!data) return null;
+        EnsurePool(data);
+        
+        // Get Entity from Pool
+        Entity entity = poolMap[data].Get();
+        entity.Init(data, direction, level);
+
+        // Move to Initial Tile
+        if (tile)
+        {
+            entity.Move(tile, true);
+            // entity.SetDirection(direction);
+        }
+        entity.transform.localScale = Vector3.one;
+        OnEntityCreated?.Invoke(entity);
+        
+        return entity;
+    }
+    
+    #region PoolConfig    
     
     /// <summary>
     /// Warm-up Pools for Entity
     /// </summary>
-    /// <param name="agentEntity"></param>
-    /// <param name="entity"></param>
+    /// <param name="entity">Entities for Pooling (Shop, Mimic, etc.)</param>
+    /// <param name="agentEntity">Entities for Agents (Pool One)</param>
     public void SetPool(IEnumerable<EntityData> entity, IEnumerable<EntityLevelData> agentEntity = null)
     {
+        // Make Pool Folder
+        if (!poolFolder)
+        {
+            poolFolder = new GameObject("EntityPool").transform;
+        }
+        
         // Check Count for Pool Queue
         Dictionary<EntityData, int> counts = new();
 
@@ -47,38 +87,9 @@ public class EntityFactory : Singleton<EntityFactory>
         // Create Pool and Fill
         foreach (var pair in counts)
         {
-            if (!poolMap.ContainsKey(pair.Key)) EnsurePool(pair.Key);
+            EnsurePool(pair.Key);
             Fill(pair.Key, pair.Value);
         }
-    }
-
-    /// <summary>
-    /// Request for New Entity from pool
-    /// </summary>
-    /// <param name="data">Entity Data to make</param>
-    /// <param name="level">Init with level</param>
-    /// <param name="direction">Direction for Entity init</param>
-    /// <param name="tile">position for new Entity</param>
-    /// <returns>Entity Object to Get</returns>
-    public Entity RequestEntity(EntityData data, intVector2 direction = new(), Tile tile = null, int level = 0)
-    {
-        // Data Check for Exception
-        if (!data) return null;
-        EnsurePool(data);
-        
-        // Get Entity from Pool
-        Entity entity = poolMap[data].Get();
-        entity.Init(data, direction, level);
-
-        // Move to Initial Tile
-        if (tile)
-        {
-            entity.Move(tile, true);
-            // entity.SetDirection(direction);
-        }
-        entity.transform.localScale = Vector3.one;
-        OnEntityCreated?.Invoke(entity);
-        return entity;
     }
 
     /// <summary>
@@ -98,9 +109,9 @@ public class EntityFactory : Singleton<EntityFactory>
                 return e;
             },
             // Get Obj from Pool
-            actionOnGet: (e) => Get(e),
+            actionOnGet: Get,
             // Set to Pool
-            actionOnRelease: (e) => Release(e),
+            actionOnRelease: Release,
             // Destroy
             actionOnDestroy: (e) =>
             {
@@ -114,7 +125,7 @@ public class EntityFactory : Singleton<EntityFactory>
     // Create New Entity
     private Entity Create(EntityData data)
     {
-        var e = Instantiate(data.prefab);
+        var e = Instantiate(data.prefab, poolFolder);
         e.name = data.id;
         return e;
     }
@@ -154,4 +165,6 @@ public class EntityFactory : Singleton<EntityFactory>
             poolMap[data].Release(entity);
         }
     }
+    
+    #endregion
 }
