@@ -39,7 +39,7 @@ public class S_Suicide : BaseSkillLogic
         var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         // TODO : 폭발 이펙트 재생
-        EffectFactory.Instance.RequestEffect("ExplodeEffect",_owner.transform.position,_owner.transform.lossyScale*5);
+        EffectFactory.Instance.Request("ExplodeEffect",_owner.transform.position,_owner.transform.lossyScale*5);
         
         foreach (var tile in tiles)
         {

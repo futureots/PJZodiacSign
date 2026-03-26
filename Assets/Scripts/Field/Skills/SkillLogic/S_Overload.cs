@@ -30,7 +30,7 @@ public class S_Overload : BaseSkillLogic
         yield return result.ToCoroutine();
         
         // 이펙트 재생
-        var levelUpEffect = EffectFactory.Instance.RequestEffect("OverLoad",_target.transform.position, _target.transform.lossyScale);
+        var levelUpEffect = EffectFactory.Instance.Request("OverLoad",_target.transform.position, _target.transform.lossyScale);
         if (levelUpEffect.TryGetComponent<GlowEffect>(out var overLoad))
         {
             if (_target.TryGetComponent<MeshFilter>(out var mesh))

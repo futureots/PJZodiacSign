@@ -32,7 +32,7 @@ public class S_CheckMate : BaseSkillLogic
     {
         var tiles = _owner.GetAttackArea();
 
-        EffectFactory.Instance.RequestEffect("ManaAura", _owner.transform.position, _owner.transform.lossyScale * 3);
+        EffectFactory.Instance.Request("ManaAura", _owner.transform.position, _owner.transform.lossyScale * 3);
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
@@ -53,7 +53,7 @@ public class S_CheckMate : BaseSkillLogic
     
     IEnumerator Hit(Entity entity, int damage)
     {
-        EffectFactory.Instance.RequestEffect("LightningStrike",entity.transform.position,entity.transform.lossyScale);
+        EffectFactory.Instance.Request("LightningStrike",entity.transform.position,entity.transform.lossyScale);
         yield return new WaitForSeconds(0.5f);
         entity.Damaged(damage);
     }

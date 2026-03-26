@@ -28,7 +28,7 @@ public class S_Decay : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        EffectFactory.Instance.RequestEffect("DefDownAura",_target.transform.position, _target.transform.lossyScale);
+        EffectFactory.Instance.Request("DefDownAura",_target.transform.position, _target.transform.lossyScale);
         _target.Defense -= 2;
 
         yield return new WaitForSeconds(1f);

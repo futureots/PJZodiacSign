@@ -70,7 +70,7 @@ public class StageManager : Singleton<StageManager>
         foreach (var entityData in data.handEntities)
         {
             if (list.Count <= 0) break;
-            var entity = entityFactory.RequestEntity(entityData.data, direction,list[0], entityData.level);
+            var entity = entityFactory.Request(entityData.data, direction,list[0], entityData.level);
             entity.team.teamNumber = teamId;
             list.RemoveAt(0);
         }
@@ -78,7 +78,7 @@ public class StageManager : Singleton<StageManager>
         {
             var tile = field.GetTile(entityData.Key);
             if (!tile) continue;
-            var entity = entityFactory.RequestEntity(entityData.Value.data, direction, tile, entityData.Value.level);
+            var entity = entityFactory.Request(entityData.Value.data, direction, tile, entityData.Value.level);
             entity.team.teamNumber = teamId;
         }
     }
