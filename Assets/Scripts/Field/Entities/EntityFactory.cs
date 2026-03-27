@@ -16,7 +16,6 @@ public class EntityFactory : Singleton<EntityFactory>
     public event Action<Entity> OnEntityCreated;
 
 
-
     /// <summary>
     /// Request for New Entity from pool
     /// </summary>
@@ -24,8 +23,9 @@ public class EntityFactory : Singleton<EntityFactory>
     /// <param name="level">Init with level</param>
     /// <param name="direction">Direction for Entity init</param>
     /// <param name="tile">position for new Entity</param>
+    /// <param name="team">entity's owner team</param>
     /// <returns>Entity Object to Get</returns>
-    public Entity Request(EntityData data, intVector2 direction = new(), Tile tile = null, int level = 0)
+    public Entity Request(EntityData data, intVector2 direction = new(), Tile tile = null, PlayerID team = PlayerID.None, int level = 0)
     {
         // Data Check for Exception
         if (!data) return null;
@@ -33,7 +33,7 @@ public class EntityFactory : Singleton<EntityFactory>
         
         // Get Entity from Pool
         Entity entity = poolMap[data].Get();
-        entity.Init(data, direction, level);
+        entity.Init(data, direction, level,team);
 
         // Move to Initial Tile
         if (tile)

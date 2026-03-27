@@ -54,10 +54,9 @@ public class S_Unicorn : BaseSkillLogic
             entity.CurTile.UnsetOccupant();
             entity.Dead();
             entity = null;
-        
-        
-            var promotion = EntityFactory.Instance.Request(_owner.baseData, dir, tile, level);
-            promotion.team.teamNumber = team;
+
+
+            var promotion = EntityFactory.Instance.Request(_owner.baseData, dir, tile, team, level);
         
             // 이펙트 재생
             var levelUpEffect = EffectFactory.Instance.Request("Change",promotion.transform.position, promotion.transform.lossyScale);

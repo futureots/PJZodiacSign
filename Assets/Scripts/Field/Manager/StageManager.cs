@@ -76,16 +76,14 @@ public class StageManager : Singleton<StageManager>
         foreach (var entityData in data.handEntities)
         {
             if (list.Count <= 0) break;
-            var entity = entityFactory.Request(entityData.data, direction,list[0], entityData.level);
-            entity.team.teamNumber = teamId;
+            var entity = entityFactory.Request(entityData.data, direction, list[0], teamId, entityData.level);
             list.RemoveAt(0);
         }
         foreach (var entityData in data.fieldEntities)
         {
             var tile = field.GetTile(entityData.Key);
             if (!tile) continue;
-            var entity = entityFactory.Request(entityData.Value.data, direction, tile, entityData.Value.level);
-            entity.team.teamNumber = teamId;
+            var entity = entityFactory.Request(entityData.Value.data, direction, tile, teamId, entityData.Value.level);
         }
     }
 

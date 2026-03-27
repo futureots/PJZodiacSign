@@ -107,8 +107,7 @@ public class EnemyAI : MonoBehaviour , IInput
         var data = StageManager.Instance.shop.GetRandomEntity(agent.Credit,ShopTable.ShopType.Normal);
         if (!data) return false;
         agent.Credit -= data.normalPrice;
-        var entity = EntityFactory.Instance.Request(data, new intVector2(-1, -1), tile);
-        entity.team.teamNumber = agent.id;
+        var entity = EntityFactory.Instance.Request(data, new intVector2(-1, -1), tile, agent.id);
         return true;
     }
 

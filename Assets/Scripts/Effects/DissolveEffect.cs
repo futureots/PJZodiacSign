@@ -19,7 +19,7 @@ public class DissolveEffect : MonoBehaviour
         {
             var color = materials[0].color;
             materials[0] = new Material(dissolveMat);
-            materials[0].color = color;
+            materials[0].SetColor("_BaseColor", color);
             renderer.materials = materials;
         }
     }
