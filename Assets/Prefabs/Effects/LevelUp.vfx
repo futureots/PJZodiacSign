@@ -80,7 +80,7 @@ MonoBehaviour:
     x: -849
     y: -1486
     width: 5195
-    height: 2646
+    height: 2649
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,7 +312,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614662}
   - {fileID: 8926484042661614681}
   dataType: 0
-  capacity: 1000
+  capacity: 1024
   stripCapacity: 1
   particlePerStripCount: 32
   needsComputeBounds: 0
@@ -3487,7 +3487,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615042}
   - {fileID: 8926484042661615044}
   dataType: 0
-  capacity: 1000
+  capacity: 1024
   stripCapacity: 1
   particlePerStripCount: 32
   needsComputeBounds: 0
@@ -7361,7 +7361,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615231}
   - {fileID: 8926484042661615233}
   dataType: 0
-  capacity: 1000
+  capacity: 1024
   stripCapacity: 1
   particlePerStripCount: 32
   needsComputeBounds: 0
@@ -9464,7 +9464,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615354}
   - {fileID: 8926484042661615380}
   dataType: 0
-  capacity: 10000
+  capacity: 1024
   stripCapacity: 1
   particlePerStripCount: 32
   needsComputeBounds: 0
