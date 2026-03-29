@@ -15,6 +15,7 @@ public class StageEndUI : MonoBehaviour
         _inputManager = inputManager;
         StageManager.Instance.OnStageEnded += id =>
         {
+            
             blindPanel.SetActive(true);
             panel.SetActive(true);
             if (id == Agent.LocalPlayer.id)

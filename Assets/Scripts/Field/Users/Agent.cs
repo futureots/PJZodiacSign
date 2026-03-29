@@ -69,11 +69,14 @@ public class Agent : MonoBehaviour
     public Inventory inventory;
 
     
-    public void Init(FieldController fieldController, PlayerID teamId, int credit)
+    public void Init(FieldController fieldController, PlayerID teamId, int credit, List<ItemData> items = null)
     {
+        
         this.fieldController = fieldController;
         this.id = teamId;
         Credit = credit;
+        if (items == null) items = new();
+        inventory.SetItem(items);
         fieldController.OnPhaseStarted += OnPhaseChange;
         fieldController.OnTurnStarted += OnTurnChange;
         

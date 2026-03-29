@@ -14,6 +14,7 @@ public class StageManager : Singleton<StageManager>
     private EntityFactory entityFactory => EntityFactory.Instance;
     [SerializeField] private UIMapper uiMapper;
     public Field field;
+    public Timer timer;
     
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
@@ -23,6 +24,10 @@ public class StageManager : Singleton<StageManager>
 
     public void EndStage(PlayerID winner)
     {
+        // 시간 저장
+        timer.Pause();
+        DataManager.Instance.playData.time = timer.GetTime();
+        
         OnStageEnded?.Invoke(winner);
     }
     /// <summary>
@@ -68,6 +73,8 @@ public class StageManager : Singleton<StageManager>
             SetAgentField((PlayerID)(i), stageData.agents[i], new intVector2(-1, -1));
         }
         SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));             // LocalPlayer
+
+        timer.Init(DataManager.Instance.playData.time);
     }
 
     void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)

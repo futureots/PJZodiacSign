@@ -9774,7 +9774,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1265144726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &573551415
@@ -9792,6 +9793,7 @@ MonoBehaviour:
   shop: {fileID: 1259414733}
   uiMapper: {fileID: 1536540712}
   field: {fileID: 391558642}
+  timer: {fileID: 1265144725}
   resourceFields:
   - {fileID: 1757318514}
   - {fileID: 1967319804}
@@ -21198,6 +21200,50 @@ MonoBehaviour:
   table: {fileID: 0}
   entities: []
   items: []
+--- !u!1 &1265144724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265144726}
+  - component: {fileID: 1265144725}
+  m_Layer: 0
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1265144725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265144724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 913b687706ea8314fbb4abedd1043040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Timer
+--- !u!4 &1265144726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265144724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 573551414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1288500173
 GameObject:
   m_ObjectHideFlags: 0
@@ -33817,7 +33863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99cb86733cb71f44b12448246cc3ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityFactory
-  poolFolder: {fileID: 0}
   poolCount: 5
   maxPoolSize: 30
 --- !u!114 &2014071635
@@ -33833,6 +33878,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectFactory
   dataTable: {fileID: 11400000, guid: 6577a974329601f4dac08ea98d43e639, type: 2}
+  poolCount: 1
+  maxPoolCount: 10
 --- !u!1 &2020103853
 GameObject:
   m_ObjectHideFlags: 0

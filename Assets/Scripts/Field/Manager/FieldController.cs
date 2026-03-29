@@ -183,19 +183,22 @@ public class FieldController : MonoBehaviour
          * - 에이전트 목록 확인 및 생성
          */
         
+        Agent.LocalPlayer = localPlayer;
+        
         // Load Field
         stageManager = StageManager.Instance;
         stageManager.Init(data);
 
+        
         // 에이전트 생성 및 초기화
         _enemyAI = Instantiate(data.aiPrefab, transform);
-        localPlayer.Init(this,PlayerID.P0,data.player.credit);
+        localPlayer.Init(this,PlayerID.P0,data.player.credit, data.player.items);
         for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
         {
             agents[i].Init(this,(PlayerID)i, data.agents[i].credit);
         }
-        inputManager.Init(localPlayer);
         _enemyAI.Init(agents[0]);
+        inputManager.Init(localPlayer);
         inputUI.Init(inputManager);
         commandSystem = new CommandSystem();
         

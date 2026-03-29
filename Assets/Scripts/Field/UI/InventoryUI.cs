@@ -25,6 +25,10 @@ public class InventoryUI : MonoBehaviour
         SetInventory();
 
         _inventory.OnItemChanged += UpdateInventory;
+        for (int i = 0; i < _inventory.items.Count; i++)
+        {
+            UpdateInventory(i, _inventory.items[i]);
+        }
     }
     
     /// <summary>
