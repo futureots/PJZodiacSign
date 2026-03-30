@@ -17,7 +17,7 @@ public class DissolveEffect : MonoBehaviour
         materials = renderer.materials;
         if (materials.Length > 0)
         {
-            var color = materials[0].color;
+            var color = materials[0].GetColor("_BaseColor");
             materials[0] = new Material(dissolveMat);
             materials[0].SetColor("_BaseColor", color);
             renderer.materials = materials;

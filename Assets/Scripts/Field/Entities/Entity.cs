@@ -203,6 +203,10 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public void Dead()
     {
+        if (TryGetComponent(out Collider collider))
+        {
+            collider.enabled = false;
+        }
         onEntityDead?.Invoke(this);
         onDead?.Invoke();
         PlayEffect(EffectType.Dissolve);
