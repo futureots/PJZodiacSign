@@ -7,18 +7,16 @@ public class EntityFactory : Singleton<EntityFactory>
 {
     // Pool Map
     [Header("Pool Config")] 
-    private Transform poolFolder;
+    private Transform _poolFolder;
     [SerializeField] private int poolCount = 5;
     [SerializeField] private int maxPoolSize = 30;
     
-    private Dictionary<EntityData, IObjectPool<Entity>> poolMap = new();
-    private Dictionary<Entity, EntityData> poolTicket = new();
+    private readonly Dictionary<EntityData, IObjectPool<Entity>> _poolMap = new();
+    private readonly Dictionary<Entity, EntityData> _poolTicket = new();
     public event Action<Entity> OnEntityCreated;
 
-
-
     /// <summary>
-    /// Request for New Entity from pool
+    /// Get New Entity
     /// </summary>
     /// <param name="data">Entity Data to make</param>
     /// <param name="level">Init with level</param>
@@ -32,7 +30,7 @@ public class EntityFactory : Singleton<EntityFactory>
         EnsurePool(data);
         
         // Get Entity from Pool
-        Entity entity = poolMap[data].Get();
+        Entity entity = _poolMap[data].Get();
         entity.Init(data, direction, level);
 
         // Move to Initial Tile
@@ -57,9 +55,10 @@ public class EntityFactory : Singleton<EntityFactory>
     public void SetPool(IEnumerable<EntityData> entity, IEnumerable<EntityLevelData> agentEntity = null)
     {
         // Make Pool Folder
-        if (!poolFolder)
+        if (!_poolFolder)
         {
-            poolFolder = new GameObject("EntityPool").transform;
+            _poolFolder = new GameObject("EntityPool").transform;
+            _poolFolder.SetParent(transform);
         }
         
         // Check Count for Pool Queue
@@ -98,14 +97,14 @@ public class EntityFactory : Singleton<EntityFactory>
     /// <param name="data">Entity Info for Pooling</param>
     private void EnsurePool(EntityData data)
     {
-        if (poolMap.ContainsKey(data)) return;
+        if (_poolMap.ContainsKey(data)) return;
 
-        poolMap[data] = new ObjectPool<Entity>(
+        _poolMap[data] = new ObjectPool<Entity>(
             // CREATION
             createFunc: () =>
             {
                 var e = Create(data);
-                poolTicket[e] = data;
+                _poolTicket[e] = data;
                 return e;
             },
             // Get Obj from Pool
@@ -125,7 +124,7 @@ public class EntityFactory : Singleton<EntityFactory>
     // Create New Entity
     private Entity Create(EntityData data)
     {
-        var e = Instantiate(data.prefab, poolFolder);
+        var e = Instantiate(data.prefab, _poolFolder);
         e.name = data.id;
         return e;
     }
@@ -145,7 +144,7 @@ public class EntityFactory : Singleton<EntityFactory>
     }
 
     /// <summary>
-    /// PreSet to pool
+    /// Preset to pool
     /// </summary>
     /// <param name="data">Entity info for Pooling</param>
     /// <param name="count">amount of Pooling</param>
@@ -157,12 +156,12 @@ public class EntityFactory : Singleton<EntityFactory>
         List<Entity> entities = new();
         for (int i = 0; i < count; i++)
         {
-            entities.Add(poolMap[data].Get());
+            entities.Add(_poolMap[data].Get());
         }
 
         foreach (var entity in entities)
         {
-            poolMap[data].Release(entity);
+            _poolMap[data].Release(entity);
         }
     }
     
