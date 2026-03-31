@@ -10,7 +10,7 @@ public class Agent : MonoBehaviour
     public PlayerID id;
     // 팀 번호
 
-    static Agent _localPlayer;
+    private static Agent _localPlayer;
     public static Agent LocalPlayer
     {
         get
@@ -73,7 +73,7 @@ public class Agent : MonoBehaviour
     {
         
         this.fieldController = fieldController;
-        this.id = teamId;
+        id = teamId;
         Credit = credit;
         if (items == null) items = new();
         inventory.SetItem(items);

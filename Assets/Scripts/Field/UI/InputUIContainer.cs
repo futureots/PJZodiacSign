@@ -16,7 +16,7 @@ public class InputUIContainer : MonoBehaviour
         inventoryUI.Init(inputManager);
         entityInfoUI.Init(inputManager);
         turnUI.Init(inputManager);
-        playerDataUI.Init(inputManager.agent);
+        playerDataUI.Init(inputManager);
         enhanceConfirmUI.Init(inputManager);
         skillCancelUI.Init(inputManager);
         costUI.Init(inputManager);

@@ -1981,7 +1981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3976117847002103734, guid: 5a7058348c8e21345bd255734c6df15b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 3976117847002103734, guid: 5a7058348c8e21345bd255734c6df15b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2034,10 +2034,6 @@ PrefabInstance:
     - target: {fileID: 4800351810970191853, guid: 5a7058348c8e21345bd255734c6df15b, type: 3}
       propertyPath: m_Name
       value: DataInfoUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5844356870587419905, guid: 5a7058348c8e21345bd255734c6df15b, type: 3}
-      propertyPath: m_Color.a
-      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
