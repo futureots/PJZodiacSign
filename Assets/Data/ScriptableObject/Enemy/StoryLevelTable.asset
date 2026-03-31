@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a03288ffe608546a776c46bd57dde8, type: 3}
   m_Name: StoryLevelTable
   m_EditorClassIdentifier: 
-  basicCredit: 100
+  basicCredit: 120
   basePhases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
   - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}
+  baseAI: {fileID: 9125116805115818127, guid: 2e7bc78073c02794aaac1c9b2fa071a2, type: 3}
   data:
   - level: 1
     enemies: {fileID: 11400000, guid: 9ca63bfd3721eaa43a65bc6dcd1f1420, type: 2}
@@ -24,6 +25,20 @@ MonoBehaviour:
   - level: 3
     enemies: {fileID: 11400000, guid: 6a8defd431758274d805dbde160ec76a, type: 2}
   - level: 4
-    enemies: {fileID: 11400000, guid: 4bb6ebf99ff4bbf4d8631fc6333896e8, type: 2}
+    enemies: {fileID: 11400000, guid: adb171f87a375244e8a04bedfa5f398f, type: 2}
   - level: 5
+    enemies: {fileID: 11400000, guid: b0d5c1727a992264da3e85f0ca125c97, type: 2}
+  - level: 6
+    enemies: {fileID: 11400000, guid: 4bb6ebf99ff4bbf4d8631fc6333896e8, type: 2}
+  - level: 7
+    enemies: {fileID: 11400000, guid: 019932cd15942a44dba89b319a3a2bc2, type: 2}
+  - level: 8
+    enemies: {fileID: 11400000, guid: d18eba933213e5d479db1c721de433b8, type: 2}
+  - level: 9
+    enemies: {fileID: 11400000, guid: 90b35d62d4322a648866de8989f23e61, type: 2}
+  - level: 10
     enemies: {fileID: 11400000, guid: 1a58c5375d60e3e4eb820ce4170652f9, type: 2}
+  - level: 11
+    enemies: {fileID: 11400000, guid: 38b36d0a67f26fc44a889be163ccb9be, type: 2}
+  - level: 12
+    enemies: {fileID: 11400000, guid: 151dedefa4d5d2f42a26f2fec58ba829, type: 2}

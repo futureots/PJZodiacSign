@@ -10,6 +10,7 @@ public class InputUIContainer : MonoBehaviour
     [SerializeField] SkillCancelUI skillCancelUI;
     [SerializeField] CostUI costUI;
     [SerializeField] TutorialUI tutorialUI;
+    [SerializeField] private StageEndUI stageEndUI;
     public void Init(InputManager inputManager)
     {
         inventoryUI.Init(inputManager);
@@ -20,5 +21,6 @@ public class InputUIContainer : MonoBehaviour
         skillCancelUI.Init(inputManager);
         costUI.Init(inputManager);
         tutorialUI.Init(inputManager);
+        stageEndUI.Init(inputManager);
     }
 }

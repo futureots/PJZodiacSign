@@ -49,7 +49,7 @@ public class SkillComponent : MonoBehaviour
     {
         // TODO : 자식 클래스 내에 저장된 변수를 사용해 각 스킬의 로직을 코루틴으로 구현
         
-        yield return StartCoroutine(skillLogic.ExecuteSkill());
+        yield return skillLogic.ExecuteSkill();
         if (TryGetComponent<EnergyComponent>(out var energy))
         {
             energy.CurEnergy = 0;

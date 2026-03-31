@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class ItemInfoUI : MonoBehaviour
 {
-    ItemComponent curItem;
-    TextMeshProUGUI _text;
-    public TextMeshProUGUI Text
+    private ItemComponent _curItem;
+    private TextMeshProUGUI _text;
+
+    private TextMeshProUGUI Text
     {
         get
         {
@@ -16,8 +17,10 @@ public class ItemInfoUI : MonoBehaviour
             return _text;
         }
     }
-    RectTransform _rectTransform;
-    RectTransform RectTransform
+
+    private RectTransform _rectTransform;
+
+    private RectTransform RectTransform
     {
         get
         {
@@ -31,14 +34,14 @@ public class ItemInfoUI : MonoBehaviour
 
     public void SetPosition(Vector2 vec2)
     {
-        RectTransform.anchoredPosition = vec2;
+        RectTransform.position = vec2;
     }
     public void SetInfo(ItemComponent item)
     {
-        if(curItem != item)
+        if(_curItem != item)
         {
-            curItem = item;
-            Text.text = item.itemData.description;
+            _curItem = item;
+            Text.text = item.ItemData.description;
         }
     }
 }

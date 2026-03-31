@@ -15,7 +15,6 @@ public class Entity : Occupant, IDamageable, IAttackable
     public EntityData baseData;
 
     /// 기물의 팀 번호
-
     public Team team;
 
     public intVector2 direction;
@@ -48,9 +47,6 @@ public class Entity : Occupant, IDamageable, IAttackable
     [SerializeField] public SkillComponent skill;
 
     #endregion
-
-    // TODO: 나중에 스탯 계산용 핸들러 추가하면서 빼기
-    public bool isProtected;
 
     private void Awake()
     {
@@ -139,7 +135,6 @@ public class Entity : Occupant, IDamageable, IAttackable
     #endregion
 
     #region Health
-
     
     private int _defense;
     

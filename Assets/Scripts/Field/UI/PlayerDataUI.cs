@@ -3,30 +3,35 @@ using UnityEngine;
 
 public class PlayerDataUI : MonoBehaviour
 {
-    Agent agent;
+    private Agent _agent;
 
-    public TextMeshProUGUI credit;
-    public TextMeshProUGUI level;
-    private void Awake()
-    {
-        level.gameObject.SetActive(false);
-    }
+    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI creditText;
+    public TextMeshProUGUI levelText;
+    
     public void Init(Agent agent)
     {
-        this.agent = agent;
+        _agent = agent;
         agent.OnCreditChanged += UpdateCredit;
         UpdateCredit(agent.Credit);
+        // TODO : level 표시, 현재 시간 표시(갱신 포함)
     }
 
 
     public void UpdateCredit(int credit)
     {
-        this.credit.text = credit.ToString();
+        creditText.text = credit.ToString();
     }
 
     public void UpdateLevel(int level)
     {
-        this.level.text = level.ToString();
+        levelText.text = level.ToString();
+    }
+
+    public void UpdateTime(int time)
+    {
+        // TODO : 초 값을 시간으로 변형 필요
+        timeText.text = time.ToString();
     }
 
     

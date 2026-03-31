@@ -7,8 +7,9 @@ public class StageData
     /**
      * 스테이지 1개 진행에 필요한 정보
      */
-    public StageData(List<AgentData> agents, ShopTable shop,List<Phase> phases, int level = 1 , AgentData player = new())
+    public StageData(EnemyAI aiPrefab,List<AgentData> agents, ShopTable shop,List<Phase> phases, int level = 1 , AgentData player = new())
     {
+        this.aiPrefab = aiPrefab;
         this.agents = agents;
         this.shopTable = shop;
         this.level = level;
@@ -19,11 +20,13 @@ public class StageData
     public int level;
 
 
+    
     // Stage Config
     public string modelName = SceneName.FieldModel.Default;
     public string controllerName = SceneName.FieldController.Default;
 
     // Player and Agents
+    public EnemyAI aiPrefab = null;
     public AgentData player = new AgentData();
     public List<AgentData> agents = new List<AgentData>();
 

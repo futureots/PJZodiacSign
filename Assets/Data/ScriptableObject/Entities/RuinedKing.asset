@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
+  m_Name: RuinedKing
+  m_EditorClassIdentifier: Assembly-CSharp::EntityData
+  id: RuinedKing
+  productName: "\uBAB0\uB77D\uD55C \uC655"
+  icon: {fileID: 21300000, guid: d46c9ba111b274d4c906685a3f86b6af, type: 3}
+  normalPrice: 99999
+  prefab: {fileID: 3545369894222747195, guid: 6fdbc0408713fb948962fa73d218d473, type: 3}
+  moveArea:
+  - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
+  attackArea:
+  - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
+  maxHp: 4
+  power: 0
+  hpMultiplier: 5
+  powerMultiplier: 1
+  skill: {fileID: 11400000, guid: 2140f7d66e17f5049bb40fcdd6ed746c, type: 2}
+  maxEnergy: 1
+  offset: {x: 0, y: 3, z: 0}

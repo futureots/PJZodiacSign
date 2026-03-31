@@ -1,6 +1,6 @@
-
 using System;
 using UnityEngine;
+
 
 public class ItemFactory : Singleton<ItemFactory>
 {
@@ -13,9 +13,7 @@ public class ItemFactory : Singleton<ItemFactory>
     /// <returns>Item Component</returns>
     public ItemComponent Request(ItemData data)
     {
-        var obj = new GameObject(data.name);
-        
-        var item = obj.AddComponent<ItemComponent>();
+        ItemComponent item = Instantiate(data.prefab);
         item.Init(data);
         
         return item;

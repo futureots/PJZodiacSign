@@ -50,7 +50,7 @@ public class FieldController : MonoBehaviour
         {
             if (IsBattleEnd(out var winner))
             {
-                GameManager.Instance.ExitBattle(winner);
+                stageManager.EndStage(winner);
             }
             return;
         }
@@ -102,7 +102,7 @@ public class FieldController : MonoBehaviour
     
     public bool IsBattleEnd(out PlayerID winTeam)
     {
-        List<PlayerID> surviveTeam = new List<PlayerID>();
+        List<PlayerID> surviveTeam = new();
         foreach (var tile in stageManager.field.GetTiles())
         {
             if (tile.IsEmpty) continue;
@@ -169,8 +169,9 @@ public class FieldController : MonoBehaviour
 
     [Header("Dependency")]
     [SerializeField] InputManager inputManager;
-    [SerializeField] EnemyAI enemyAI;
     [SerializeField] InputUIContainer inputUI;
+    private EnemyAI _enemyAI = null;
+    
 
     /// <summary>
     /// Initiate Controller
@@ -186,19 +187,19 @@ public class FieldController : MonoBehaviour
         stageManager = StageManager.Instance;
         stageManager.Init(data);
 
-        // TODO: 에이전트 생성 및 초기화
+        // 에이전트 생성 및 초기화
+        _enemyAI = Instantiate(data.aiPrefab, transform);
         localPlayer.Init(this,PlayerID.P0,data.player.credit);
         for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
         {
             agents[i].Init(this,(PlayerID)i, data.agents[i].credit);
         }
         inputManager.Init(localPlayer);
-        // TODO : 여러개면 for문 내부에서 돌리기(AI도 여러개로 세팅)
-        enemyAI.Init(agents[0]);
+        _enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
-        commandSystem = new();
+        commandSystem = new CommandSystem();
         
-        // TODO: 기믹 세팅
+        // 기믹 세팅
         SpecialRule = data.specialRule;
         phases = data.phases;
         

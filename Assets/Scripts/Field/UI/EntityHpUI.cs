@@ -49,8 +49,9 @@ public class EntityHpUI : MonoBehaviour
         UpdateLevelText(_entity.Level);
         _entity.OnLevelChanged += UpdateLevelText;
 
-        _entity.onDead += OnDead;
         _entity.onDead += OnDestroy;
+        _entity.onDead += OnDead;
+        
 
         _entity.team.OnTeamChanged += (team) => OnTeamChange();
         Agent.OnLocalPlayerChanged += OnTeamChange;
@@ -85,7 +86,7 @@ public class EntityHpUI : MonoBehaviour
     void OnTeamChange()
     {
         if (!Agent.LocalPlayer) hpBar.gaugeBar.color = Color.red;
-        // TODO : 팀별로 체력바 색상 다르게 표시(다른 곳으로 이전 필요)
+        // 팀별로 체력바 색상 다르게 표시(다른 곳으로 이전 필요)
         else if (_entity.team.IsAlly(Agent.LocalPlayer.id))
         {
             hpBar.gaugeBar.color = Color.green;

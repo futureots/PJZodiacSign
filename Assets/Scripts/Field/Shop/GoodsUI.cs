@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GoodsUI<T> : MonoBehaviour where T : AbstractData
 {
@@ -9,7 +11,6 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     [SerializeField] protected TextMeshProUGUI goodsName;
     [SerializeField] protected TextMeshProUGUI priceText;
     [SerializeField] protected Image icon;
-    [SerializeField] protected TextMeshProUGUI countText;
     protected int price;
 
     /// <summary>
@@ -20,7 +21,7 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     public virtual void SetGoods(T data)
     {
         goodsName.text = data.productName;
-        price = data.normalPrice;
+        price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.8f, 1.2f));
         priceText.text = price.ToString();
         icon.sprite = data.icon;
     }

@@ -17,13 +17,11 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 4fa547d91a8dd504d946232e6c38a36b, type: 3}
   normalPrice: 25
   prefab: {fileID: 8779073333520035586, guid: 6198444f12998cd46a1e663a018e7ac3, type: 3}
-  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
-  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: 6817dc0d2f9325344bd3fb7e10bc2b9c, type: 2}
   - {fileID: 11400000, guid: 1141ba78ed772d5438187fb57e80d381, type: 2}
   attackArea:
-  - {fileID: 11400000, guid: c832e14224b66f14e842f553456043a7, type: 2}
+  - {fileID: 11400000, guid: 6817dc0d2f9325344bd3fb7e10bc2b9c, type: 2}
   maxHp: 12
   power: 4
   hpMultiplier: 4

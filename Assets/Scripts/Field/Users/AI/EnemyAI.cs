@@ -1,0 +1,322 @@
+using Cysharp.Threading.Tasks;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class EnemyAI : MonoBehaviour , IInput
+{
+    protected Agent agent;
+
+    protected TurnType CurTurnType { get; private set; }
+    
+
+    public void Init(Agent agent)
+    {
+        this.agent = agent;
+        agent.fieldController.OnTurnStarted += OnTurnChange;
+    }
+
+
+    private void OnTurnChange(Turn curTurn)
+    {
+        CurTurnType = curTurn.type;
+        
+        if(curTurn.agentID == agent.id)
+        {
+            EditorLogger.Print("AI "+ CurTurnType);
+            switch (curTurn.type)
+            {
+                case TurnType.ACTION:
+                    StartCoroutine(SetActionMode());
+                    break;
+                case TurnType.ATTACK:
+                    AttackInput();
+                    break;
+                case TurnType.REPAIR:
+                    StartCoroutine(SetRepairMode());
+                    break;
+            }
+        }
+    }
+
+    private void AttackInput()
+    {
+        var list = StageManager.Instance.field.GetEntities(agent.id);
+
+        foreach (var entity in list)
+        {
+            agent.CreateAttackCommand(entity);
+        }
+        agent.CreateEndCommand();
+    }
+
+    protected virtual IEnumerator SetRepairMode()
+    {
+        // 보유한 크레딧으로 상점을 통해 기물 구매(8~32개 기물 구매)
+        List<Tile> emptyTiles = StageManager.Instance.agentField[agent.id].GetTiles().GetEmptyTiles();
+        int count = Random.Range(Math.Min(8,emptyTiles.Count),emptyTiles.Count);
+        for(int i=0;i<count;i++)
+        {
+            if (!BuyEntity(emptyTiles[i]))
+            {
+                break;
+            }
+        }
+
+        yield return null;
+
+        // 남은 크레딧으로 기물 강화(최대 50회 강화)
+        for(int i=0;i<50;i++)
+        {
+            var entities = StageManager.Instance.agentField[agent.id].GetEntities().FindAll(e=> e.baseData.normalPrice*Math.Pow(2,e.Level)<=agent.Credit);
+            if (entities.Count <= 0) break;
+            
+            var entity = entities[Random.Range(0, entities.Count)];
+            EnhanceEntity(entity);
+        }
+        
+        
+        yield return null;
+        
+        // 내 필드에 있는 기물을 메인 필드에 배치
+        var fieldTiles = StageManager.Instance.field.GetHalfTiles(true).GetEmptyTiles();
+        foreach (var entity in StageManager.Instance.agentField[agent.id].GetEntities())
+        {
+            // 빈 타일 중 랜덤 위치 선택
+            Tile tile = fieldTiles[Random.Range(0, fieldTiles.Count)];
+
+            // 선택한 위치에 기물 이동
+            agent.CreateMoveCommand(entity, tile,true);
+            fieldTiles.Remove(tile);
+        }
+
+        agent.CreateEndCommand();
+        EditorLogger.Print("RepairEnd");
+    }
+
+    /// <summary>
+    /// 구매가능한 기물 1개 구매
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <returns></returns>
+    protected bool BuyEntity(Tile tile)
+    {
+        var data = StageManager.Instance.shop.GetRandomEntity(agent.Credit,ShopTable.ShopType.Normal);
+        if (!data) return false;
+        agent.Credit -= data.normalPrice;
+        var entity = EntityFactory.Instance.Request(data, new intVector2(-1, -1), tile);
+        entity.team.teamNumber = agent.id;
+        return true;
+    }
+
+    /// <summary>
+    /// 강화 가능한 기물 1회 강화
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    protected void EnhanceEntity(Entity entity)
+    {
+        var mul = 1;
+        for (int i = 0; i < entity.Level; i++) mul *= 2;
+        if (mul * entity.baseData.normalPrice < agent.Credit)
+        {
+            agent.Credit -= mul * entity.baseData.normalPrice;
+            entity.Level += 1;
+        }
+    }
+
+    protected IEnumerator SetActionMode()
+    {
+        yield return new WaitForSeconds(0.5f);
+        var flag = true;
+        Action<int> wait = i =>
+        {
+            //EditorLogger.Print(flag +" :: "+ i);
+            if (i == 0) flag = true;
+            else flag = false;
+        };
+        StageManager.Instance.isSequencing += wait;
+        
+        for (int i = 0; i < agent.actionCount;i++)
+        {
+            agent.actionAbleEntities = agent.actionAbleEntities.FindAll(entity => entity);
+            yield return StartCoroutine(EnemyAction().ToCoroutine());
+            yield return new WaitUntil(() => flag);
+        }
+        StageManager.Instance.isSequencing -= wait;
+        agent.CreateEndCommand();
+    }
+
+    protected UniTask EnemyMoveAction()
+    {
+        // 사용할 스킬이 없으면 이동
+        int max = -9999;
+        List<KeyValuePair<Entity, intVector2>> bestAct = new();
+        foreach (var checkEntity in agent.actionAbleEntities)
+        {
+            // 필드 값 가져오기
+            int[,] field = StageManager.Instance.field.GetFieldState(checkEntity);
+
+            // 적의 공격범위 가져오기 및 예상 데미지 계산
+            var values = StageManager.Instance.field.CalculateEnemyThreat(field, agent.id);
+
+            // 가장 좋은 위치의 행동 가져오기
+            if (TryGetBestMove(checkEntity, field, values, out int value, out intVector2 pos))
+            {
+                // 같은 값일 경우 리스트에 추가해서 랜덤 추출
+                if (max < value)
+                {
+                    bestAct.Clear();
+                    max = value;
+                    bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
+                }
+                else if (max == value)
+                {
+                    bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
+                }
+            }
+        }
+        if (bestAct.Count > 0)
+        {
+            var best = bestAct[Random.Range(0, bestAct.Count)];
+            agent.CreateMoveCommand(best.Key, StageManager.Instance.field.GetTile(best.Value));
+            agent.actionAbleEntities.Remove(best.Key);
+        }
+        
+        // 좋은 행동이 없을 경우 턴 종료
+        return UniTask.CompletedTask;
+    }
+
+    protected async UniTask<bool> EnemySkillAction()
+    {
+        // 스킬을 사용할 수 있으면 스킬을 사용한다.
+        var skillEntities = agent.actionAbleEntities.FindAll(entity => entity.energy.IsFull());
+        foreach (var entity in skillEntities)
+        {
+            // 스킬 입력 시도(실패 시 실제 입력X)
+            var result =  await entity.skill.skillLogic.InputSkill(this);
+            if (result)
+            {
+                // 스킬 실행
+                agent.CreateSkillCommand(entity.skill);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    protected virtual async UniTask EnemyAction()
+    {
+        // true면 스킬 사용, false면 이동
+        var result = Random.Range(0,2)>0;
+        if (result)
+        {
+            result= await EnemySkillAction();
+        }
+        
+        if (!result)
+        {
+            await EnemyMoveAction();
+        }
+        
+    }
+
+    
+    protected bool TryGetBestMove(
+        Entity entity,
+        int[,] field,
+        int[,] tileValues,
+        out int value,
+        out intVector2 pos)
+    {
+        // 이동할 가치가 있는지 판단
+        bool isWorthy = false;
+
+        int power = entity.Power;
+        var area = entity.area;
+        
+        pos = entity.CurTile.fieldPos;
+        // 현재 타일의 이득값을 계산
+        var plusArea = area.GetAttackVector(field, pos, entity.direction);
+        field[pos.y, pos.x] = (int)agent.id;
+        foreach (var plus in plusArea)
+        {
+            if (field[plus.y, plus.x] == Field.EmptyTileIndex) continue;
+            if (field[plus.y, plus.x] == (int)agent.id) continue;
+            tileValues[pos.y, pos.x] += power + 1;
+        } 
+        value = tileValues[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
+        List<intVector2> valuablePos = new();
+        
+        var moveVectors = area.GetMoveVector(field, entity.CurTile.fieldPos, entity.direction);
+        // TODO : 이동 범위 타일의 이득값을 계산, 현재 타일보다 이득값이 클 경우 갱신
+        foreach (var moveVector in moveVectors)
+        {
+            // 이동할 수 없는 타일은 제외
+            if (field[moveVector.y, moveVector.x] != Field.EmptyTileIndex || entity.CurTile.fieldPos == moveVector) continue;
+
+            // 공격 가능 체크
+            field[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = Field.EmptyTileIndex;
+            plusArea = area.GetAttackVector(field, moveVector, entity.direction);
+            field[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] = (int)agent.id;
+            foreach (var plus in plusArea)
+            {
+                if (field[plus.y, plus.x] == Field.EmptyTileIndex) continue;
+                if (field[plus.y, plus.x] == (int)agent.id) continue;
+                tileValues[moveVector.y, moveVector.x] += power + 1;
+            }
+
+
+            if (value < tileValues[moveVector.y, moveVector.x])
+            {
+                valuablePos.Clear();
+                value = tileValues[moveVector.y, moveVector.x];
+                isWorthy = true;
+                valuablePos.Add(moveVector);
+            }
+            else if (value == tileValues[moveVector.y, moveVector.x] && isWorthy)
+            {
+                valuablePos.Add(moveVector);
+            }
+        }
+
+        if (isWorthy)
+        {
+            pos = valuablePos[Random.Range(0, valuablePos.Count)];
+            return true;
+        }
+        return false;
+    }
+    
+
+    public UniTask<List<Entity>> InputEntity(List<Entity> list, int count = -1)
+    {
+        if (list.Count <= 0) return new UniTask<List<Entity>>(null);
+        if(list.Count <= count) return new UniTask<List<Entity>>(list);
+        List<Entity> result = new();
+        for (int i = 0; i < count; i++)
+        {
+            result.Add(list[i]);
+        }
+
+        return UniTask.FromResult(result);
+    }
+
+    public UniTask<List<Tile>> InputTile(List<Tile> list, int count = -1)
+    {
+        if (list.Count <= 0) return new UniTask<List<Tile>>(null);
+        if(list.Count <= count) return new UniTask<List<Tile>>(list);
+        List<Tile> result = new();
+        for (int i = 0; i < count; i++)
+        {
+            result.Add(list[i]);
+        }
+
+        return UniTask.FromResult(result);
+    }
+}
+
+

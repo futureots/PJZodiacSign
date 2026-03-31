@@ -12,33 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfbfe1756f0d0d4a9e1cabbd7e19ae6, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTable
-  credit: 0
+  enemyAI: {fileID: 9125116805115818127, guid: 2e7bc78073c02794aaac1c9b2fa071a2, type: 3}
+  credit: 100
   entities: []
-  fieldEntities:
-  - entityData:
-      data: {fileID: 11400000, guid: 30f28ad064d449f47b120eee42b1b191, type: 2}
-      level: 0
-    fieldPos:
-      x: 0
-      y: 6
-  - entityData:
-      data: {fileID: 11400000, guid: 30f28ad064d449f47b120eee42b1b191, type: 2}
-      level: 0
-    fieldPos:
-      x: 7
-      y: 6
-  - entityData:
-      data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
-      level: 0
-    fieldPos:
-      x: 0
-      y: 7
-  - entityData:
-      data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
-      level: 0
-    fieldPos:
-      x: 7
-      y: 7
+  fieldEntities: []
   phases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
   - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}

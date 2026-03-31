@@ -6,12 +6,13 @@ public class LevelTable : ScriptableObject
 {
     public int basicCredit;
     [SerializeField] private List<Phase> basePhases;
+    [SerializeField] private EnemyAI baseAI;
     public List<LevelData> data;
 
     private Dictionary<int, EnemyTable> _levels;
 
-    
-    public Dictionary<int,EnemyTable> Levels
+
+    private Dictionary<int,EnemyTable> Levels
     {
         get
         {
@@ -32,15 +33,15 @@ public class LevelTable : ScriptableObject
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    public (AgentData,List<Phase>) GetLevelData(int level)
+    public (EnemyAI,AgentData,List<Phase>) GetLevelData(int level)
     {
-        if(Levels.TryGetValue(level,out var table))
+        if(Levels.TryGetValue(level,out EnemyTable table))
         {
-            return (table.GetAgentData(),table.phases);
+            return (table.enemyAI,table.GetEnemyData(),table.phases);
         }
         else
         {
-            return (new AgentData(level * basicCredit), basePhases);
+            return (baseAI,new AgentData(level * basicCredit), basePhases);
         }
         
     }
