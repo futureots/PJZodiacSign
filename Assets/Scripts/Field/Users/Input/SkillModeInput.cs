@@ -38,6 +38,16 @@ namespace PlayerInput
         async UniTaskVoid InputSkill(SkillComponent skill)
         {
             var task = await skill.skillLogic.InputSkill(this);
+            
+            // 스킬 입력이 종료되면 스킬이 종료될 때까지 대기 한 후 기본 입력 모드로 변경
+            var flag = true;
+            Action<int> wait = i =>
+            {
+                EditorLogger.Print(flag +" :: "+ i);
+                if (i == 0) flag = true;
+                else flag = false;
+            };
+            StageManager.Instance.isSequencing += wait;
             // 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
             if (task)
             {
@@ -54,7 +64,9 @@ namespace PlayerInput
                 }
                 selecters.Clear();
             }
-            // 스킬 입력이 종료되면 기본 입력 모드로 변경
+            await new WaitUntil(() => flag);
+            StageManager.Instance.isSequencing -= wait;
+            
             _inputManager.SetInputMode();
         }
 

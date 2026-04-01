@@ -10899,6 +10899,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657371584}
   m_Mesh: {fileID: 5395695993923681942, guid: 5f3d1e7d04e77534381eafe92a4a24d8, type: 3}
+--- !u!1 &657491122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657491124}
+  - component: {fileID: 657491123}
+  m_Layer: 0
+  m_Name: EffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &657491123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657491122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 024bdd667d15d0f4b8f19e5f8228dc76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectFactory
+  dataTable: {fileID: 11400000, guid: 6577a974329601f4dac08ea98d43e639, type: 2}
+  poolCount: 1
+  maxPoolCount: 10
+--- !u!4 &657491124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657491122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.01251, y: 0, z: 45.38299}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &658825887
 GameObject:
   m_ObjectHideFlags: 0
@@ -33828,7 +33875,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2014071633}
   - component: {fileID: 2014071634}
-  - component: {fileID: 2014071635}
   m_Layer: 0
   m_Name: EntityPool
   m_TagString: Untagged
@@ -33865,21 +33911,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityFactory
   poolCount: 5
   maxPoolSize: 30
---- !u!114 &2014071635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2014071632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 024bdd667d15d0f4b8f19e5f8228dc76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EffectFactory
-  dataTable: {fileID: 11400000, guid: 6577a974329601f4dac08ea98d43e639, type: 2}
-  poolCount: 1
-  maxPoolCount: 10
 --- !u!1 &2020103853
 GameObject:
   m_ObjectHideFlags: 0
@@ -36135,3 +36166,4 @@ SceneRoots:
   - {fileID: 162747432}
   - {fileID: 1033003150}
   - {fileID: 794235197}
+  - {fileID: 657491124}

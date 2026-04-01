@@ -75,7 +75,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         this.team.teamNumber = team;
         if (TryGetComponent<Renderer>(out var render))
         {
-            EditorLogger.Print(Agent.LocalPlayer);
+            //EditorLogger.Print(Agent.LocalPlayer);
             render.materials = team == Agent.LocalPlayer.id ? new []{white} : new []{black};
         }
         

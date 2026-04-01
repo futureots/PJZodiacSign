@@ -133,7 +133,7 @@ public class EnemyAI : MonoBehaviour , IInput
         var flag = true;
         Action<int> wait = i =>
         {
-            //EditorLogger.Print(flag +" :: "+ i);
+            EditorLogger.Print(flag +" :: "+ i);
             if (i == 0) flag = true;
             else flag = false;
         };
@@ -142,7 +142,7 @@ public class EnemyAI : MonoBehaviour , IInput
         for (int i = 0; i < agent.actionCount;i++)
         {
             agent.actionAbleEntities = agent.actionAbleEntities.FindAll(entity => entity);
-            yield return StartCoroutine(EnemyAction().ToCoroutine());
+            yield return EnemyAction().ToCoroutine();
             yield return new WaitUntil(() => flag);
         }
         StageManager.Instance.isSequencing -= wait;

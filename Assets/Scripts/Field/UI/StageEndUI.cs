@@ -9,21 +9,35 @@ public class StageEndUI : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button defeatButton;
+    [SerializeField] private Button endButton;
     [SerializeField] private TextMeshProUGUI title;
     public void Init(InputManager inputManager)
     {
         _inputManager = inputManager;
         StageManager.Instance.OnStageEnded += id =>
         {
-            
             blindPanel.SetActive(true);
             panel.SetActive(true);
             if (id == Agent.LocalPlayer.id)
             {
-                title.text = "클리어!";
-                // 승리 시에만 다음 버튼 활성화
-                continueButton.gameObject.SetActive(true);
+                if (GameManager.Instance.levelTable.endLevel > GameManager.Instance.Level)
+                {
+                    title.text = "클리어!";
+                    // 승리 시에만 다음 버튼 활성화
+                    continueButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    // TODO : 랭킹 서버 만들거면 여기서 데이터 보내기
+                    title.text = "루프 완료!";
+                    defeatButton.gameObject.SetActive(false);
+                    endButton.gameObject.SetActive(true);
+
+                }
+                
             }
+
+            
         };
     }
 
