@@ -20,7 +20,7 @@ public class EntityHpUI : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
     // TODO: 컴포넌트 접근 및 구독 방식 개선
-    public void SetEntity(Entity entity, Action OnDestroy = null)
+    public void Init(Entity entity, Action OnDestroy = null)
     {
         if(_entity != null)
         {
@@ -28,6 +28,7 @@ public class EntityHpUI : MonoBehaviour
             _entity.OnHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.OnEnergyChanged -= energyBar.SetGauge;
             _entity.OnLevelChanged -= UpdateLevelText;
+            _entity.OnControllableChanged -= UpdateMovableCount;
         }
         _entity = entity;
 
@@ -56,18 +57,31 @@ public class EntityHpUI : MonoBehaviour
         _entity.team.OnTeamChanged += (team) => OnTeamChange();
         Agent.OnLocalPlayerChanged += OnTeamChange;
 
+        _entity.OnControllableChanged += UpdateMovableCount;
+        UpdateMovableCount(_entity.IsControllable);
+        
+        
     }
 
     private void LateUpdate()
     {
         if (_entity != null)
         {
-            transform.LookAt(transform.position + Camera.main.transform.forward);
+            var forward = Camera.main.transform.forward;
+            transform.LookAt(transform.position + forward);
 
-            Vector3 worldPos = _entity.transform.position + Vector3.Scale(_entity.baseData.offset, _entity.transform.lossyScale);
+            forward.y = 0;
+            forward.Normalize();
+            
+            Vector3 worldPos = _entity.transform.position + forward*-5 + Vector3.up*2;
             //Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
             rectTransform.position = worldPos;
         }
+    }
+
+    void UpdateMovableCount(bool movable)
+    {
+        
     }
     void UpdateLevelText(int level, int prev=0)
     {
@@ -111,6 +125,7 @@ public class EntityHpUI : MonoBehaviour
             _entity.OnHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.OnEnergyChanged -= energyBar.SetGauge;
             _entity.OnLevelChanged -= UpdateLevelText;
+            _entity.OnControllableChanged -= UpdateMovableCount;
         }
         Agent.OnLocalPlayerChanged -= OnTeamChange;
     }

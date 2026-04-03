@@ -10,6 +10,7 @@ namespace Main
 
 
         public LevelTable levelTable;
+        public LevelTable tutorialTable;
         public ShopTable shopTable;
 
         private void Start()
@@ -44,6 +45,16 @@ namespace Main
                 var data = GameManager.Instance.CreateStageData(1, new AgentData(150));
                 GameManager.Instance.EnterBattle(data);
             }
+        }
+
+        public void StartTutorial()
+        {
+            GameManager.Instance.SetModeData(tutorialTable, shopTable);
+            var data = GameManager.Instance.CreateStageData(1, new AgentData(50));
+            // 데이터 세팅 및 상점 세팅(기본 기물 1개?, 아이템 1개 제공)
+            // 튜토리얼 : 기물 구매, 아이템 사용, 기물 배치, 기물 이동, 기물 스킬 사용, 전투 클리어
+            data.modelName = SceneName.FieldModel.Tutorial;
+            GameManager.Instance.EnterBattle(data);
         }
 
         public void GiveUpGame()

@@ -25,6 +25,19 @@ public class Entity : Occupant, IDamageable, IAttackable
     public Action<int, int> OnLevelChanged;
 
     public bool isControllable = false;
+
+    public bool IsControllable
+    {
+        get => isControllable;
+        set
+        {
+            isControllable = value;
+            OnControllableChanged?.Invoke(isControllable);
+        }
+    }
+
+    public Action<bool> OnControllableChanged;
+
     public int Level
     {
         get => level;

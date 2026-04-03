@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a03288ffe608546a776c46bd57dde8, type: 3}
+  m_Name: TutorialTable
+  m_EditorClassIdentifier: Assembly-CSharp::LevelTable
+  endLevel: 1
+  basicCredit: 0
+  basePhases: []
+  baseAI: {fileID: 9125116805115818127, guid: 2e7bc78073c02794aaac1c9b2fa071a2, type: 3}
+  data:
+  - level: 1
+    enemies: {fileID: 11400000, guid: bc948bb423d2ba049b29c10d7f01eb56, type: 2}

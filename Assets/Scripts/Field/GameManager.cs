@@ -58,7 +58,11 @@ public class GameManager : SingletonObject<GameManager>
     {
         Level = stageData.level;
         dataManager.SetData(stageData.player, Level);
-        dataManager.SaveAllData("PlayerData");
+        // 튜토리얼은 데이터를 저장하지 않음
+        if (stageData.modelName == SceneName.FieldModel.Default)
+        {
+            dataManager.SaveAllData("PlayerData");
+        }
         StartCoroutine(LoadBattleScene(stageData));
     }
 
