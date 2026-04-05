@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour
+public class InventoryUI : InputManagerUI
 {
     private InputManager _inputManager;
     private Inventory _inventory;
@@ -16,7 +16,7 @@ public class InventoryUI : MonoBehaviour
     
     [SerializeField] private List<ItemSlotUI> itemSlots;
 
-    public void Init(InputManager input)
+    public override void Init(InputManager input)
     {
         _inputManager = input;
         _inventory = input.agent.inventory;

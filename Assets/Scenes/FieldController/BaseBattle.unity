@@ -1336,15 +1336,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c65738054663f4aa5e40a94bb949b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputUIContainer
-  inventoryUI: {fileID: 874548636}
-  entityInfoUI: {fileID: 1210477990}
-  turnUI: {fileID: 104265739}
-  playerDataUI: {fileID: 131362133}
-  enhanceConfirmUI: {fileID: 1000554724}
-  skillCancelUI: {fileID: 678043373}
-  costUI: {fileID: 6859566367697434851}
-  tutorialUI: {fileID: 0}
-  stageEndUI: {fileID: 3634239737296617617}
+  uiList:
+  - {fileID: 874548636}
+  - {fileID: 1210477990}
+  - {fileID: 104265739}
+  - {fileID: 131362133}
+  - {fileID: 1000554724}
+  - {fileID: 678043373}
+  - {fileID: 6859566367697434851}
+  - {fileID: 3634239737296617617}
 --- !u!1 &1614304254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,5 +2380,5 @@ SceneRoots:
   - {fileID: 807200185}
   - {fileID: 477964637}
   - {fileID: 1990503682}
-  - {fileID: 1598466483}
   - {fileID: 1182249135}
+  - {fileID: 1598466483}

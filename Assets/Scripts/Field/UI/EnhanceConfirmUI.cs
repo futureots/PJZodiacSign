@@ -5,7 +5,7 @@ using System;
 using PlayerInput;
 using UnityEngine.Rendering.Universal;
 
-public class EnhanceConfirmUI : MonoBehaviour
+public class EnhanceConfirmUI : InputManagerUI
 {
     [Header("UI Elements")]
     [SerializeField] GameObject enhancePanel;
@@ -13,7 +13,7 @@ public class EnhanceConfirmUI : MonoBehaviour
     public Button cancelButton;
 
     InputManager inputManager;
-    public void Init(InputManager inputManager)
+    public override  void Init(InputManager inputManager)
     {
         this.inputManager = inputManager;
         // 강화 Input 세팅

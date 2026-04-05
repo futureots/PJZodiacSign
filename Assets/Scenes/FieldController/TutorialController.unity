@@ -151,6 +151,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff606c6d6a124b43b89d70715613766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &135727690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135727694}
+  - component: {fileID: 135727693}
+  - component: {fileID: 135727692}
+  - component: {fileID: 135727691}
+  m_Layer: 5
+  m_Name: TutorialCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &135727691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135727690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &135727692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135727690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 2560, y: 1440}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &135727693
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135727690}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 1
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 3
+  m_TargetDisplay: 0
+--- !u!224 &135727694
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135727690}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1128218235}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &188697851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,10 +1369,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1322,7 +1424,6 @@ RectTransform:
   - {fileID: 1130613936}
   - {fileID: 3380859872482427424}
   - {fileID: 1248117877}
-  - {fileID: 1128218235}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1342,14 +1443,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c65738054663f4aa5e40a94bb949b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputUIContainer
-  inventoryUI: {fileID: 874548636}
-  entityInfoUI: {fileID: 1210477990}
-  turnUI: {fileID: 104265739}
-  playerDataUI: {fileID: 131362133}
-  enhanceConfirmUI: {fileID: 1000554724}
-  skillCancelUI: {fileID: 678043373}
-  costUI: {fileID: 6859566367697434851}
-  stageEndUI: {fileID: 3634239737296617617}
+  uiList:
+  - {fileID: 874548636}
+  - {fileID: 1210477990}
+  - {fileID: 104265739}
+  - {fileID: 131362133}
+  - {fileID: 1000554724}
+  - {fileID: 678043373}
+  - {fileID: 6859566367697434851}
+  - {fileID: 3634239737296617617}
+  - {fileID: 2809810761811123407}
 --- !u!1 &1614304254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,8 +2137,16 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1598466483}
+    m_TransformParent: {fileID: 135727694}
     m_Modifications:
+    - target: {fileID: 1426439142804834906, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691128785132870760, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4930239986288736705, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_fontSize
       value: 50
@@ -2047,6 +2158,14 @@ PrefabInstance:
     - target: {fileID: 5574764471722646465, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880421149487134421, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9050277469721928576, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+      propertyPath: m_fontSize
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9111966060674098166, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_Pivot.x
@@ -2098,15 +2217,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9111966060674098166, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9111966060674098166, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9111966060674098166, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9111966060674098166, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2133,6 +2252,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+--- !u!114 &2809810761811123407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 269767513311591407, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+  m_PrefabInstance: {fileID: 2809810761811123406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b2198988f84b142a68be2a2a8b336d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialUI
 --- !u!224 &3380859872482427424 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5179411501550145323, guid: f2e0f2c3734128749911a880a780bc5c, type: 3}
@@ -2146,6 +2276,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1598466483}
     m_Modifications:
+    - target: {fileID: 1345295448184420653, guid: 342568f1df0599047a29731b74f73586, type: 3}
+      propertyPath: isTutorial
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2012972491149523005, guid: 342568f1df0599047a29731b74f73586, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2490,5 +2624,6 @@ SceneRoots:
   - {fileID: 807200185}
   - {fileID: 477964637}
   - {fileID: 1990503682}
-  - {fileID: 1598466483}
   - {fileID: 1182249135}
+  - {fileID: 1598466483}
+  - {fileID: 135727694}

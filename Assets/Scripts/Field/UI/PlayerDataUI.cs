@@ -2,7 +2,7 @@ using PlayerInput;
 using TMPro;
 using UnityEngine;
 
-public class PlayerDataUI : MonoBehaviour
+public class PlayerDataUI : InputManagerUI
 {
     private Agent _agent;
 
@@ -11,7 +11,7 @@ public class PlayerDataUI : MonoBehaviour
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI entityCountText;
     
-    public void Init(InputManager inputManager)
+    public  override void Init(InputManager inputManager)
     {
         _agent = inputManager.agent;
         

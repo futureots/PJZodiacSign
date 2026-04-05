@@ -2,8 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageEndUI : MonoBehaviour
+public class StageEndUI : InputManagerUI
 {
+    public bool isTutorial;
     InputManager _inputManager;
     [SerializeField] private GameObject blindPanel;
     [SerializeField] private GameObject panel;
@@ -11,7 +12,7 @@ public class StageEndUI : MonoBehaviour
     [SerializeField] private Button defeatButton;
     [SerializeField] private Button endButton;
     [SerializeField] private TextMeshProUGUI title;
-    public void Init(InputManager inputManager)
+    public override void Init(InputManager inputManager)
     {
         _inputManager = inputManager;
         StageManager.Instance.OnStageEnded += id =>
@@ -50,6 +51,6 @@ public class StageEndUI : MonoBehaviour
 
     public void DefeatGame()
     {
-        GameManager.Instance.EndGame(true);
+        GameManager.Instance.EndGame(!isTutorial);
     }
 }
