@@ -1892,37 +1892,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1354618362327276079, guid: 6860c849099fbfd408339337095348f4, type: 3}
-      propertyPath: m_fontSize
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 1354618362327276079, guid: 6860c849099fbfd408339337095348f4, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1755873774042566034, guid: 6860c849099fbfd408339337095348f4, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 1755873774042566034, guid: 6860c849099fbfd408339337095348f4, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -60
-      objectReference: {fileID: 0}
     - target: {fileID: 2099471004955012809, guid: 6860c849099fbfd408339337095348f4, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225531800425427101, guid: 6860c849099fbfd408339337095348f4, type: 3}
-      propertyPath: m_Color.b
-      value: 0.098039225
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225531800425427101, guid: 6860c849099fbfd408339337095348f4, type: 3}
-      propertyPath: m_Color.g
-      value: 0.098039225
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225531800425427101, guid: 6860c849099fbfd408339337095348f4, type: 3}
-      propertyPath: m_Color.r
-      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 2990865303183685605, guid: 6860c849099fbfd408339337095348f4, type: 3}
       propertyPath: m_Name

@@ -47,11 +47,8 @@ public class S_Suicide : BaseSkillLogic
             tile.occupiedEntity.Damaged(_owner.Power*2);
         }
         _owner.Damaged(_owner.Power);
-        
-        yield return new WaitForSeconds(0.5f);
-        
         _owner = null;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
     }
 
     public override BaseSkillLogic Clone()

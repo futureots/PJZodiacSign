@@ -73,7 +73,7 @@ public class EntityHpUI : MonoBehaviour
             forward.y = 0;
             forward.Normalize();
             
-            Vector3 worldPos = _entity.transform.position + forward*-5 + Vector3.up*2;
+            Vector3 worldPos = _entity.transform.position + Vector3.up*6 + Camera.main.transform.right*5;
             //Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
             rectTransform.position = worldPos;
         }
