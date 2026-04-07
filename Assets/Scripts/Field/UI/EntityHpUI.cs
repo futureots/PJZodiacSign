@@ -1,7 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine.UI;
 
 public class EntityHpUI : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class EntityHpUI : MonoBehaviour
     public GameObject levelObject;
     public TextMeshProUGUI levelText;
     public RectTransform rectTransform;
+    public Image movableImage;
     
     public GaugeUI hpBar;
     public GaugeUI energyBar;
@@ -59,8 +60,6 @@ public class EntityHpUI : MonoBehaviour
 
         _entity.OnControllableChanged += UpdateMovableCount;
         UpdateMovableCount(_entity.IsControllable);
-        
-        
     }
 
     private void LateUpdate()
@@ -79,9 +78,9 @@ public class EntityHpUI : MonoBehaviour
         }
     }
 
-    void UpdateMovableCount(bool movable)
+    private void UpdateMovableCount(bool movable)
     {
-        
+        movableImage.color = movable ? new Color(0, 0.5f, 0) : new Color(0,0,0);
     }
     void UpdateLevelText(int level, int prev=0)
     {
