@@ -142,8 +142,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD3EC\uAE30\uD55C\uB2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
-  m_sharedMaterial: {fileID: -7495407556492108228, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b11f60d828d3f64cbdb0870aa0c9246, type: 2}
+  m_sharedMaterial: {fileID: -1767981830774881458, guid: 3b11f60d828d3f64cbdb0870aa0c9246, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -429,7 +429,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC62C\uB77C\uAC04\uB2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b11f60d828d3f64cbdb0870aa0c9246, type: 2}
   m_sharedMaterial: {fileID: -7495407556492108228, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -496,7 +496,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2133435359814985734
@@ -918,7 +918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4988734661949287388
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1123,7 +1123,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD0C0\uC774\uD2C0\uB85C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b11f60d828d3f64cbdb0870aa0c9246, type: 2}
   m_sharedMaterial: {fileID: -7495407556492108228, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7986590558435379576
@@ -1252,6 +1252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77f0aa57a244b547a0c49914c446d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageEndUI
+  isTutorial: 0
   blindPanel: {fileID: 9028236555991770015}
   panel: {fileID: 3905071889499843638}
   continueButton: {fileID: 949939121433224657}
@@ -1325,8 +1326,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD328\uBC30..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
-  m_sharedMaterial: {fileID: -7495407556492108228, guid: 589340a849132284c8ba29a6b02ce120, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b11f60d828d3f64cbdb0870aa0c9246, type: 2}
+  m_sharedMaterial: {fileID: -1767981830774881458, guid: 3b11f60d828d3f64cbdb0870aa0c9246, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1350,7 +1351,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.05
+  m_fontSize: 59.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

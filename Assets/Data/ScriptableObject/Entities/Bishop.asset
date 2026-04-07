@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Bishop
   productName: "\uBE44\uC20D"
-  icon: {fileID: 21300000, guid: 7d03dd3f645aa6f408a5ede41524af84, type: 3}
+  icon: {fileID: 21300000, guid: 8acd1a21e6aab6643913ee413b7b588e, type: 3}
   normalPrice: 20
   prefab: {fileID: 4294135240769514293, guid: 112819e000f9eab4b93c1a80ccf6e69f, type: 3}
-  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
-  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
   attackArea:
