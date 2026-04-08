@@ -172,6 +172,7 @@ public class Agent : MonoBehaviour
             foreach (var entity in fieldEntities)
             {
                 _fieldEntityData.Add(entity.CurTile.fieldPos, new EntityLevelData(entity));
+                entity.onEntitySpawn += SetSpawnedByEntity;
             }
             fieldEntityData = _fieldEntityData;
         }
@@ -185,6 +186,14 @@ public class Agent : MonoBehaviour
     void RemoveOnResourceList(Entity entity)
     {
         resourceEntities.Remove(entity);
+    }
+
+    void SetSpawnedByEntity(Entity entity)
+    {
+        fieldEntities.Add(entity);
+        entity.IsControllable = true;
+        entity.onDead += RemoveOnFieldList;
+        entity.onEntitySpawn += SetSpawnedByEntity;
     }
     
     

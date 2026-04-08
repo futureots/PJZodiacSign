@@ -50,6 +50,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     }
     
     public Action<Entity> onDead;
+    public Action<Entity> onEntitySpawn;
 
     [SerializeField] public AreaComponent area;
     

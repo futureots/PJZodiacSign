@@ -57,7 +57,9 @@ public class S_Unicorn : BaseSkillLogic
 
 
             var promotion = EntityFactory.Instance.Request(_owner.baseData, dir, tile, team, level);
+            _owner.onEntitySpawn?.Invoke(promotion);
         
+            
             // 이펙트 재생
             var levelUpEffect = EffectFactory.Instance.Request("Change",promotion.transform.position, promotion.transform.lossyScale);
             if (levelUpEffect.TryGetComponent<GlowEffect>(out var change))
