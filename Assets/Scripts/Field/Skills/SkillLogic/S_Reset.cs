@@ -27,7 +27,7 @@ public class S_Reset : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         // 선택한 기물을 행동 가능으로 설정
-        _target.isControllable = true;
+        _target.IsControllable = true;
         
         _target = null;
         yield break;

@@ -52,7 +52,6 @@ public class StageManager : Singleton<StageManager>
         
         // TODO: Item Pooling
         // List<ItemData> itemList = stageData.shopTable.itemList.ConvertAll(x => x.data);
-
         
         // Set Shop
         shop.Init(stageData.shopTable);

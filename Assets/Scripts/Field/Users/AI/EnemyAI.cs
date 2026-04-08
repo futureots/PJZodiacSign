@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -141,7 +142,6 @@ public class EnemyAI : MonoBehaviour , IInput
         
         for (int i = 0; i < agent.actionCount;i++)
         {
-            agent.actionAbleEntities = agent.actionAbleEntities.FindAll(entity => entity);
             yield return EnemyAction().ToCoroutine();
             yield return new WaitUntil(() => flag);
         }
@@ -154,8 +154,9 @@ public class EnemyAI : MonoBehaviour , IInput
         // 사용할 스킬이 없으면 이동
         int max = -9999;
         List<KeyValuePair<Entity, intVector2>> bestAct = new();
-        foreach (var checkEntity in agent.actionAbleEntities)
+        foreach (var checkEntity in agent.fieldEntities)
         {
+            if (!checkEntity.IsControllable) continue;
             // 필드 값 가져오기
             int[,] field = StageManager.Instance.field.GetFieldState(checkEntity);
 
@@ -182,7 +183,7 @@ public class EnemyAI : MonoBehaviour , IInput
         {
             var best = bestAct[Random.Range(0, bestAct.Count)];
             agent.CreateMoveCommand(best.Key, StageManager.Instance.field.GetTile(best.Value));
-            agent.actionAbleEntities.Remove(best.Key);
+            best.Key.IsControllable = false;
         }
         
         // 좋은 행동이 없을 경우 턴 종료
@@ -192,7 +193,7 @@ public class EnemyAI : MonoBehaviour , IInput
     protected async UniTask<bool> EnemySkillAction()
     {
         // 스킬을 사용할 수 있으면 스킬을 사용한다.
-        var skillEntities = agent.actionAbleEntities.FindAll(entity => entity.energy.IsFull());
+        var skillEntities = agent.fieldEntities.FindAll(entity => entity.energy.IsFull());
         foreach (var entity in skillEntities)
         {
             // 스킬 입력 시도(실패 시 실제 입력X)

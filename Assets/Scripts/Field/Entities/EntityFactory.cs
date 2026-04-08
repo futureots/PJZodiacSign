@@ -39,7 +39,6 @@ public class EntityFactory : Singleton<EntityFactory>
         if (tile)
         {
             entity.Move(tile, true);
-            // entity.SetDirection(direction);
         }
         entity.transform.localScale = Vector3.one;
         OnEntityCreated?.Invoke(entity);

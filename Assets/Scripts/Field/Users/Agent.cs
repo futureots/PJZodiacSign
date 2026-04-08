@@ -47,7 +47,7 @@ public class Agent : MonoBehaviour
         }
     }
     
-    public List<Entity> actionAbleEntities=new List<Entity>();
+    //public List<Entity> actionAbleEntities=new List<Entity>();
     
     public event Action<int> onActionCountChanged;
 
@@ -94,7 +94,6 @@ public class Agent : MonoBehaviour
             if (list.Count <= 0) break;
             var entity = EntityFactory.Instance.Request(entityData.data, direction, list[0], teamId, entityData.level);
             // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
-            entity.onDead += () => resourceEntities.Remove(entity);
             list.RemoveAt(0);
             resourceEntities.Add(entity);
         }
@@ -106,13 +105,15 @@ public class Agent : MonoBehaviour
             if (!tile) continue;
             var entity = EntityFactory.Instance.Request(entityData.Value.data, direction, tile, teamId, entityData.Value.level);
             // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
-            entity.onDead += () => fieldEntities.Remove(entity);
             fieldEntities.Add(entity);
         }
     }
     
+    
     void OnTurnChange(Turn turn)
     {
+        fieldEntities.ForEach(entity => entity.IsControllable = false);
+        resourceEntities.ForEach(entity => entity.IsControllable = false);
         if(turn.agentID == id)
         {
             
@@ -120,14 +121,13 @@ public class Agent : MonoBehaviour
             {
                 case TurnType.ACTION:
                     CurrentActionCount = actionCount;
-                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
+                    fieldEntities.ForEach(entity => entity.IsControllable = true);
                     break;
                 case TurnType.ATTACK:
-                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
                     CurrentActionCount = -1;
                     break;
                 case TurnType.REPAIR:
-                    actionAbleEntities = StageManager.Instance.agentField[id].GetEntities(id);
+                    resourceEntities.ForEach(entity => entity.IsControllable = true);
                     CurrentActionCount = -1;
                     break;
             }
@@ -136,24 +136,57 @@ public class Agent : MonoBehaviour
 
     void OnPhaseChange(Phase phase)
     {
+        foreach (var entity in resourceEntities)
+        {
+            entity.onDead -= RemoveOnResourceList;
+        }
+        var resources = StageManager.Instance.agentField[id].GetEntities(id);
+        resourceEntities.Clear();
+        foreach (var resource in resources)
+        {
+            resourceEntities.Add(resource);
+            resource.onDead += RemoveOnResourceList;
+        }
+        
+        foreach (var entity in fieldEntities)
+        {
+            entity.onDead -= RemoveOnFieldList;
+        }
+        var fields =  StageManager.Instance.field.GetEntities(id);
+        fieldEntities.Clear();
+        foreach (var entity in fields)
+        {
+            fieldEntities.Add(entity);
+            entity.onDead += RemoveOnFieldList;
+        }
         if (phase.phaseName == PhaseType.Battle)
         {
             var _entityLevelData = new List<EntityLevelData>();
-            var list = StageManager.Instance.agentField[PlayerID.P0].GetEntities();
-            foreach (var entity in list)
+            foreach (var entity in resourceEntities)
             {
                 _entityLevelData.Add(new EntityLevelData(entity));
             }
             entityLevelData = _entityLevelData;
+            
             var _fieldEntityData = new Dictionary<intVector2, EntityLevelData>();
-            var fieldData = StageManager.Instance.field.GetEntities(id);
-            foreach (var entity in fieldData)
+            foreach (var entity in fieldEntities)
             {
                 _fieldEntityData.Add(entity.CurTile.fieldPos, new EntityLevelData(entity));
             }
             fieldEntityData = _fieldEntityData;
         }
     }
+
+    void RemoveOnFieldList(Entity entity)
+    {
+        fieldEntities.Remove(entity);
+    }
+
+    void RemoveOnResourceList(Entity entity)
+    {
+        resourceEntities.Remove(entity);
+    }
+    
     
     public Command CreateMoveCommand(Entity entity, Tile tile, bool isWarp = false)
     {

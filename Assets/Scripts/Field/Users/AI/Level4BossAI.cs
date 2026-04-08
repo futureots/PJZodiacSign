@@ -10,7 +10,7 @@ public class Level4BossAI : EnemyAI
 {
     protected override async UniTask EnemyAction()
     {
-        var bomber = agent.actionAbleEntities.FindAll(e => e.baseData.id == "Bomber");
+        var bomber = agent.fieldEntities.FindAll(e => e.baseData.id == "Bomber");
         List<Entity> skillBombers = bomber.FindAll(entity => entity.energy.IsFull());
         // 스킬 사용이 가능한 기물이 있는 경우
         if (skillBombers.Count>0)
@@ -39,7 +39,7 @@ public class Level4BossAI : EnemyAI
                 }
             }
             agent.CreateMoveCommand(moveBomber, frontList[Random.Range(0,frontList.Count)]);
-            agent.actionAbleEntities.Remove(moveBomber);
+            moveBomber.IsControllable = false;
             return;
         }
         await base.EnemyAction();

@@ -17,7 +17,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
                 var entity = EntityFactory.Instance.Request(data, new intVector2(1, 1), tiles[0], teamNum);
                 
                 customer.Credit -= price;
-                entity.isControllable = true;
+                entity.IsControllable = true;
             }
             else
             {

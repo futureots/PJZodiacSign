@@ -21,7 +21,7 @@ public class EntityHpUI : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
     // TODO: 컴포넌트 접근 및 구독 방식 개선
-    public void Init(Entity entity, Action OnDestroy = null)
+    public void Init(Entity entity, Action<Entity> OnDestroy = null)
     {
         if(_entity != null)
         {
@@ -111,7 +111,7 @@ public class EntityHpUI : MonoBehaviour
     }
     
     
-    void OnDead()
+    void OnDead(Entity entity)
     {
         Destroy(gameObject);
     }

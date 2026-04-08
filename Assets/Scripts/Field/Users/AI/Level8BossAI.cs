@@ -17,7 +17,7 @@ public class Level8BossAI : EnemyAI
         }
         else
         {
-            var skillUnicorns = agent.actionAbleEntities.FindAll(e=>e.baseData.id == "Unicorn" && e.energy.IsFull());
+            var skillUnicorns = agent.fieldEntities.FindAll(e=>e.baseData.id == "Unicorn" && e.energy.IsFull());
             var unicorn = skillUnicorns[Random.Range(0, skillUnicorns.Count())];
             // 스킬 입력
             var result = await unicorn.skill.skillLogic.InputSkill(this);

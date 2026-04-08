@@ -24,7 +24,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     [SerializeField] int level;
     public Action<int, int> OnLevelChanged;
 
-    public bool isControllable = false;
+    private bool isControllable = false;
 
     public bool IsControllable
     {
@@ -48,10 +48,8 @@ public class Entity : Occupant, IDamageable, IAttackable
             OnLevelChanged?.Invoke(level, before);
         }
     }
-
-    public static Action<Entity> onEntityDead;
-
-    public Action onDead;
+    
+    public Action<Entity> onDead;
 
     [SerializeField] public AreaComponent area;
     
@@ -220,8 +218,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         {
             collider.enabled = false;
         }
-        onEntityDead?.Invoke(this);
-        onDead?.Invoke();
+        onDead?.Invoke(this);
         PlayEffect(EffectType.Dissolve);
     }
 

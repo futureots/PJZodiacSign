@@ -28,7 +28,7 @@ public class HpPanelManager : MonoBehaviour
         bar.gameObject.transform.localScale = Vector3.one * 0.1f;
         hpBarList.Add(bar.gameObject);
 
-        bar.Init(target, ()=> hpBarList.Remove(bar.gameObject));
+        bar.Init(target, (entity)=> hpBarList.Remove(bar.gameObject));
         
     }
 
