@@ -192,10 +192,10 @@ public class FieldController : MonoBehaviour
         
         // 에이전트 생성 및 초기화
         _enemyAI = Instantiate(data.aiPrefab, transform);
-        localPlayer.Init(this,PlayerID.P0,data.player);
+        localPlayer.Init(this,PlayerID.P0,data.player,new intVector2(1,1));
         for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
         {
-            agents[i].Init(this,(PlayerID)i, data.agents[i]);
+            agents[i].Init(this,(PlayerID)i, data.agents[i], new intVector2(-1,-1));
         }
         _enemyAI.Init(agents[0]);
         inputManager.Init(localPlayer);

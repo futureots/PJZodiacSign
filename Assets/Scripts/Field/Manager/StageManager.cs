@@ -65,33 +65,7 @@ public class StageManager : Singleton<StageManager>
             agentField.Add((PlayerID)(i - 1), resourceFields[i]);
         }
 
-        // TODO: stageData와 Field 내 최대 Agent 개수 조절 필요
-        // for (int i = 0; i < stageData.agents.Count; i++)
-        // NOTE: Single Player 기준 0부터 카운트
-        for (int i = 0; i < agentField.Count - 1; i++)
-        {
-            SetAgentField((PlayerID)(i), stageData.agents[i], new intVector2(-1, -1));
-        }
-        SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));             // LocalPlayer
-
         timer.Init(DataManager.Instance.playData.time);
-    }
-
-    void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)
-    {
-        var list = agentField[teamId].GetTiles().GetEmptyTiles();
-        foreach (var entityData in data.handEntities)
-        {
-            if (list.Count <= 0) break;
-            var entity = entityFactory.Request(entityData.data, direction, list[0], teamId, entityData.level);
-            list.RemoveAt(0);
-        }
-        foreach (var entityData in data.fieldEntities)
-        {
-            var tile = field.GetTile(entityData.Key);
-            if (!tile) continue;
-            var entity = entityFactory.Request(entityData.Value.data, direction, tile, teamId, entityData.Value.level);
-        }
     }
 
     /// <summary>

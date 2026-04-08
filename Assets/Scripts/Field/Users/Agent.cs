@@ -9,6 +9,7 @@ public class Agent : MonoBehaviour
     // 플레이어 번호
     public PlayerID id;
     // 팀 번호
+    public intVector2 Direction { get; private set; }
 
     private static Agent _localPlayer;
     public static Agent LocalPlayer
@@ -71,9 +72,9 @@ public class Agent : MonoBehaviour
     public List<Entity> fieldEntities;
     public List<Entity> resourceEntities;
     
-    public void Init(FieldController fieldController, PlayerID teamId,AgentData data)
+    public void Init(FieldController fieldController, PlayerID teamId,AgentData data, intVector2 direction)
     {
-        
+        Direction = direction;
         this.fieldController = fieldController;
         id = teamId;
         Credit = data.credit;
@@ -81,8 +82,35 @@ public class Agent : MonoBehaviour
         inventory.SetItem(data.items);
         fieldController.OnPhaseStarted += OnPhaseChange;
         fieldController.OnTurnStarted += OnTurnChange;
-        
+
+        // 필드 기물 세팅
+        var field = StageManager.Instance.field;
+        var resourceField = StageManager.Instance.agentField[teamId];
+
+        resourceEntities = new();
+        var list = resourceField.GetTiles().GetEmptyTiles();
+        foreach (var entityData in data.handEntities)
+        {
+            if (list.Count <= 0) break;
+            var entity = EntityFactory.Instance.Request(entityData.data, direction, list[0], teamId, entityData.level);
+            // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
+            entity.onDead += () => resourceEntities.Remove(entity);
+            list.RemoveAt(0);
+            resourceEntities.Add(entity);
+        }
+
+        fieldEntities = new();
+        foreach (var entityData in data.fieldEntities)
+        {
+            var tile = field.GetTile(entityData.Key);
+            if (!tile) continue;
+            var entity = EntityFactory.Instance.Request(entityData.Value.data, direction, tile, teamId, entityData.Value.level);
+            // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
+            entity.onDead += () => fieldEntities.Remove(entity);
+            fieldEntities.Add(entity);
+        }
     }
+    
     void OnTurnChange(Turn turn)
     {
         if(turn.agentID == id)
