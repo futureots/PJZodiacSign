@@ -5,7 +5,8 @@ public class Timer : MonoBehaviour
 {
     public void Init(float time=0)
     {
-        _elapsedTime = time;
+        _startTime = time;
+        _elapsedTime = 0;
         _isPaused = false;
     }
 
@@ -14,13 +15,30 @@ public class Timer : MonoBehaviour
         _isPaused = true;
     }
 
+    /// <summary>
+    /// 시작 시간 + 걸린 시간 합 반환
+    /// </summary>
+    /// <returns></returns>
     public int GetTime()
+    {
+        return Mathf.FloorToInt(_lastDisplayedSecond);
+    }
+
+    /// <summary>
+    /// 현재 스테이지에서만 걸린 시간 반환
+    /// </summary>
+    /// <returns></returns>
+    public int GetElapsedTime()
     {
         return Mathf.FloorToInt(_elapsedTime);
     }
 
-    private bool _isPaused;
+    /// <summary> 시작 시간 </summary>
+	private float _startTime;
+    /// <summary> 현재 걸린 시간 </summary>
     private float _elapsedTime;
+    private bool _isPaused;
+    
     private int _lastDisplayedSecond = -1;
 
     public Action<int> onTimerUpdate;
@@ -31,7 +49,7 @@ public class Timer : MonoBehaviour
         
         _elapsedTime += Time.deltaTime;
         
-        int currentSecond = Mathf.FloorToInt(_elapsedTime);
+        int currentSecond = Mathf.FloorToInt(_elapsedTime+ _startTime);
         if (currentSecond != _lastDisplayedSecond)
         {
             onTimerUpdate?.Invoke(currentSecond);
