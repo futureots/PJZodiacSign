@@ -5,29 +5,28 @@ using System.IO;
 using UnityEngine;
 
 
-public static class DataManager
+public class DataManager : Singleton<DataManager>
 {
-    
     [NonSerialized]
-    static readonly string defaultPath = Application.dataPath + "/Data";
+    private readonly string defaultPath = Application.dataPath + "/Data";
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
-    public static ItemTable itemTable;
-    public static EntityTable entityTable;
+    public ItemTable itemTable;
+    public EntityTable entityTable;
 
-    public static LevelTable levelTable;
-    public static ShopTable shopTable;
+    public LevelTable levelTable;
+    public ShopTable shopTable;
 
     /// <summary>
     /// 플레이어 데이터
     /// </summary>
-    public static PlayData playData {  get; private set; }
+    public PlayData playData {  get; private set; }
 
-    public static bool isModified { get; private set; }
+    public bool isModified { get; private set; }
 
 
-    public static AgentData GetPlayerAgentData()
+    public AgentData GetPlayerAgentData()
     {
 
         var handEntities = new List<EntityLevelData>();
@@ -63,7 +62,7 @@ public static class DataManager
         return player;
     }
 
-    public static void SetData(AgentData data, int stageLevel)
+    public void SetData(AgentData data, int stageLevel)
     {
         List<string> itemNames = new();
         foreach (var item in data.items)
@@ -95,19 +94,19 @@ public static class DataManager
         playData.stageLevel = stageLevel;
     }
 
-    public static void ResetData(string fileName)
+    public void ResetData(string fileName)
     {
         DeleteData(fileName);
         LoadAllData(fileName);
     }
 
-    public static void SaveAllData(string fileName)
+    public void SaveAllData(string fileName)
     {
         var data = PlayData.SerializePlayerData(playData);
         SaveData(data, fileName);
     }
 
-    public static void LoadAllData(string fileName)
+    public  void LoadAllData(string fileName)
     {
         if(TryLoadData(fileName,out var json))
         {
@@ -121,7 +120,7 @@ public static class DataManager
         }
     }
 
-    private static EntityLevelData? ConvertData(string csv)
+    private EntityLevelData? ConvertData(string csv)
     {
         var list = csv.Split('+', 2);
         if (list.Length == 1)
@@ -138,7 +137,7 @@ public static class DataManager
     /// <summary>
     /// data를 fileName으로 된 json파일로 저장
     /// </summary>
-    public static void SaveData(string data,string fileName)
+    public void SaveData(string data,string fileName)
     {
         
         if (!Directory.Exists(defaultPath))
@@ -154,7 +153,7 @@ public static class DataManager
     /// <summary>
     /// 저장된 데이터가 존재하는지 확인 후 데이터 반환
     /// </summary>
-    public static bool TryLoadData(string fileName, out string json)
+    public bool TryLoadData(string fileName, out string json)
     {
         json = null;
         if (Directory.Exists(defaultPath))
@@ -174,7 +173,7 @@ public static class DataManager
     /// <summary>
     /// fileName으로 된 파일을 제거한다.
     /// </summary>
-    public static void DeleteData(string fileName)
+    public void DeleteData(string fileName)
     {
         if (Directory.Exists(defaultPath))
         {

@@ -1,11 +1,11 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using GlobalSceneManage;
 
 
-public class GameManager : SingletonObject<GameManager>
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
     private StageData currentStage = null;
@@ -18,7 +18,7 @@ public class GameManager : SingletonObject<GameManager>
     {
         base.Awake();
         // TODO: 데이터 로드 로직 추가
-        DataManager.LoadAllData("PlayerData");
+        DataManager.Instance.LoadAllData("PlayerData");
         
     }
     
@@ -56,42 +56,17 @@ public class GameManager : SingletonObject<GameManager>
     public void EnterBattle(StageData stageData)
     {
         Level = stageData.level;
-        DataManager.SetData(stageData.player, Level);
-        DataManager.SaveAllData("PlayerData");
-        StartCoroutine(LoadBattleScene(stageData));
+        DataManager.Instance.SetData(stageData.player, Level);
+        DataManager.Instance.SaveAllData("PlayerData");
+        StartCoroutine(StartBattle(stageData));
     }
 
     
     /// Model-Controller Scene async Load Routine
-    private IEnumerator LoadBattleScene(StageData stageData)
+    private IEnumerator StartBattle(StageData stageData)
     {
-        string modelName = stageData.modelName;
-        string controllerName = stageData.controllerName;
-        
-        // Set Loading UI
-        LoadingUI.SetActive(true);
-        
-        // Load Scenes
-        AsyncOperation modelOp = SceneManager.LoadSceneAsync(modelName, LoadSceneMode.Single);
-        if (modelOp == null) { 
-            Debug.LogError($"Failed to Load Model : {modelName}");
-            yield break;
-        }
-        
-        AsyncOperation controllerOp = SceneManager.LoadSceneAsync(controllerName, LoadSceneMode.Additive);
-        if (controllerOp == null) { 
-            Debug.LogError($"Failed to Load Controller : {controllerName}");
-            yield break;
-        }
-        controllerOp.allowSceneActivation = false;
-        
-        // Wait for Scene Load
-        yield return new WaitUntil(() => modelOp.progress >= 0.9f && controllerOp.progress >= 0.9f);
-        
-        // Start Loaded Scene
-        controllerOp.allowSceneActivation = true;
-        yield return new WaitUntil(() => modelOp.isDone && controllerOp.isDone);
-        yield return null;                 
+        // Load scenes
+        yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);              
         
         // Find FieldController in Controller Scene
         FieldController fieldController = FindFirstObjectByType<FieldController>();
@@ -125,8 +100,8 @@ public class GameManager : SingletonObject<GameManager>
 
     public void EndGame(bool isDelete = false)
     {
-        if(isDelete) DataManager.ResetData("PlayerData");
-        SceneManager.LoadScene(0);
+        if(isDelete) DataManager.Instance.ResetData("PlayerData");
+        StartCoroutine(SceneLoader.Instance.LoadMain());
     }
     
     #endregion

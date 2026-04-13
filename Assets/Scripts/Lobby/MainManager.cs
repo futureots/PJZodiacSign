@@ -1,5 +1,6 @@
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using GlobalSceneManage;
 
 namespace Main
 {
@@ -15,7 +16,7 @@ namespace Main
         private void Start()
         {
             Screen.SetResolution(1920, 1080, true);
-            if (DataManager.isModified)
+            if (DataManager.Instance.isModified)
             {
                 giveUpBtn.SetActive(true);
             }
@@ -27,10 +28,10 @@ namespace Main
 
         public void StartGame()
         {
-            if (DataManager.isModified)
+            if (DataManager.Instance.isModified)
             {
-                GameManager.Instance.SetModeData(DataManager.levelTable, DataManager.shopTable);
-                var data = GameManager.Instance.CreateStageData(DataManager.playData.stageLevel, DataManager.GetPlayerAgentData());
+                GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
+                var data = GameManager.Instance.CreateStageData(DataManager.Instance.playData.stageLevel, DataManager.Instance.GetPlayerAgentData());
                 GameManager.Instance.EnterBattle(data);
             }
             else
@@ -48,8 +49,8 @@ namespace Main
 
         public void GiveUpGame()
         {
-            DataManager.ResetData("PlayerData");
-            SceneManager.LoadScene(0);
+            DataManager.Instance.ResetData("PlayerData");
+            StartCoroutine(SceneLoader.Instance.LoadMain());
         }
 
         public void ExitGame()
