@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonObject<GameManager>
 {
-    [SerializeField] private DataManager dataManager;
     [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
     private StageData currentStage = null;
 
@@ -19,7 +18,7 @@ public class GameManager : SingletonObject<GameManager>
     {
         base.Awake();
         // TODO: 데이터 로드 로직 추가
-        dataManager.LoadAllData("PlayerData");
+        DataManager.LoadAllData("PlayerData");
         
     }
     
@@ -57,8 +56,8 @@ public class GameManager : SingletonObject<GameManager>
     public void EnterBattle(StageData stageData)
     {
         Level = stageData.level;
-        dataManager.SetData(stageData.player, Level);
-        dataManager.SaveAllData("PlayerData");
+        DataManager.SetData(stageData.player, Level);
+        DataManager.SaveAllData("PlayerData");
         StartCoroutine(LoadBattleScene(stageData));
     }
 
@@ -102,7 +101,6 @@ public class GameManager : SingletonObject<GameManager>
             yield break;
         }
         
-
         // Init FieldController
         fieldController.Init(stageData);
         
@@ -127,7 +125,7 @@ public class GameManager : SingletonObject<GameManager>
 
     public void EndGame(bool isDelete = false)
     {
-        if(isDelete) DataManager.Instance.ResetData("PlayerData");
+        if(isDelete) DataManager.ResetData("PlayerData");
         SceneManager.LoadScene(0);
     }
     

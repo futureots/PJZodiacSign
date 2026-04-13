@@ -15,7 +15,7 @@ namespace Main
         private void Start()
         {
             Screen.SetResolution(1920, 1080, true);
-            if (DataManager.Instance.isModified)
+            if (DataManager.isModified)
             {
                 giveUpBtn.SetActive(true);
             }
@@ -27,10 +27,10 @@ namespace Main
 
         public void StartGame()
         {
-            if (DataManager.Instance.isModified)
+            if (DataManager.isModified)
             {
-                GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
-                var data = GameManager.Instance.CreateStageData(DataManager.Instance.playData.stageLevel, DataManager.Instance.GetPlayerAgentData());
+                GameManager.Instance.SetModeData(DataManager.levelTable, DataManager.shopTable);
+                var data = GameManager.Instance.CreateStageData(DataManager.playData.stageLevel, DataManager.GetPlayerAgentData());
                 GameManager.Instance.EnterBattle(data);
             }
             else
@@ -48,7 +48,7 @@ namespace Main
 
         public void GiveUpGame()
         {
-            DataManager.Instance.ResetData("PlayerData");
+            DataManager.ResetData("PlayerData");
             SceneManager.LoadScene(0);
         }
 

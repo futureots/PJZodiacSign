@@ -18,17 +18,15 @@ public class StageData
     }
 
     public int level;
-
-
     
     // Stage Config
-    public string modelName = SceneName.FieldModel.Default;
-    public string controllerName = SceneName.FieldController.Default;
+    public string modelName = SceneManage.FieldModel.Default;
+    public string controllerName = SceneManage.FieldController.Default;
 
     // Player and Agents
     public EnemyAI aiPrefab = null;
     public AgentData player = new AgentData();
-    public List<AgentData> agents = new List<AgentData>();
+    public List<AgentData> agents = new();
 
     // Field System Data
     public ShopTable shopTable;
