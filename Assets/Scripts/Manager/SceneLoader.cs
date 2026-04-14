@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GlobalSceneManage
+namespace GlobalManage
 {
     public static class FieldModel
     {

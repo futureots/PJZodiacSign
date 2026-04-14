@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GlobalSceneManage;
+using GlobalManage;
 
 
 public class GameManager : Singleton<GameManager>

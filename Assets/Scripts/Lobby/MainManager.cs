@@ -1,6 +1,6 @@
 
 using UnityEngine;
-using GlobalSceneManage;
+using GlobalManage;
 
 namespace Main
 {
