@@ -15,6 +15,7 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private UIMapper uiMapper;
     public Field field;
     public Timer timer;
+    public int point;
     
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
@@ -27,6 +28,18 @@ public class StageManager : Singleton<StageManager>
         // 시간 저장
         timer.Pause();
         DataManager.Instance.playData.time = timer.GetTime();
+        if (winner == Agent.LocalPlayer.id)
+        {
+            // 스테이지 클리어 점수 제공
+            const float decayRate = 1000;
+            const int levelMultiplier = 10;
+            point = Mathf.RoundToInt(GameManager.Instance.Level * 1000 * Mathf.Exp(-timer.GetElapsedTime()/decayRate));
+            
+            // 살아있는 기물 수 + 강화단계 합
+            List<Entity> data = field.GetEntities(Agent.LocalPlayer.id);
+            data.ForEach(entity => point += (entity.Level + 1) * (entity.Level + 1) * levelMultiplier);
+            DataManager.Instance.playData.point += point;
+        }
         
         OnStageEnded?.Invoke(winner);
     }

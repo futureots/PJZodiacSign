@@ -34,6 +34,7 @@ public class PlayData
     public int stageLevel;
 
     public int time;
+    public int point;
 
     //파일에서 읽어올 때 호출됨
     public PlayData()
@@ -43,6 +44,7 @@ public class PlayData
         items = new();
         stageLevel = 1;
         time = 0;
+        point = 0;
         // 시작 크레딧
         credit = 100;
 
