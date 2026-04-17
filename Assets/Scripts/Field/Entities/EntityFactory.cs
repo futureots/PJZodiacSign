@@ -22,8 +22,9 @@ public class EntityFactory : Singleton<EntityFactory>
     /// <param name="level">Init with level</param>
     /// <param name="direction">Direction for Entity init</param>
     /// <param name="tile">position for new Entity</param>
+    /// <param name="team">entity's owner team</param>
     /// <returns>Entity Object to Get</returns>
-    public Entity Request(EntityData data, intVector2 direction = new(), Tile tile = null, int level = 0)
+    public Entity Request(EntityData data, intVector2 direction = new(), Tile tile = null, PlayerID team = PlayerID.None, int level = 0)
     {
         // Data Check for Exception
         if (!data) return null;
@@ -37,7 +38,6 @@ public class EntityFactory : Singleton<EntityFactory>
         if (tile)
         {
             entity.Move(tile, true);
-            // entity.SetDirection(direction);
         }
         entity.transform.localScale = Vector3.one;
         OnEntityCreated?.Invoke(entity);

@@ -33,10 +33,8 @@ public class PlayData
     // 현재 위치한 지역 아이디
     public int stageLevel;
 
-    public float time;
-
-    
-    public DateTime startTime;
+    public int time;
+    public int point;
 
     //파일에서 읽어올 때 호출됨
     public PlayData()
@@ -45,6 +43,8 @@ public class PlayData
         handEntities = new List<string>();
         items = new();
         stageLevel = 1;
+        time = 0;
+        point = 0;
         // 시작 크레딧
         credit = 100;
 
@@ -58,17 +58,7 @@ public class PlayData
         */
         #endregion
     }
-
-    public void Initialize()
-    {
-        startTime = DateTime.Now;
-    }
-    public void End()
-    {
-        var endTime = DateTime.Now;
-        var timeGap = endTime - startTime;
-        
-    }
+    
 
     static JsonSerializerSettings serializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
     public static string SerializePlayerData(PlayData data)

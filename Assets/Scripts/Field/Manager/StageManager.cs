@@ -14,6 +14,8 @@ public class StageManager : Singleton<StageManager>
     private EntityFactory entityFactory => EntityFactory.Instance;
     [SerializeField] private UIMapper uiMapper;
     public Field field;
+    public Timer timer;
+    public int point;
     
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
@@ -23,6 +25,22 @@ public class StageManager : Singleton<StageManager>
 
     public void EndStage(PlayerID winner)
     {
+        // 시간 저장
+        timer.Pause();
+        DataManager.Instance.playData.time = timer.GetTime();
+        if (winner == Agent.LocalPlayer.id)
+        {
+            // 스테이지 클리어 점수 제공
+            const float decayRate = 1000;
+            const int levelMultiplier = 10;
+            point = Mathf.RoundToInt(GameManager.Instance.Level * 1000 * Mathf.Exp(-timer.GetElapsedTime()/decayRate));
+            
+            // 살아있는 기물 수 + 강화단계 합
+            List<Entity> data = field.GetEntities(Agent.LocalPlayer.id);
+            data.ForEach(entity => point += (entity.Level + 1) * (entity.Level + 1) * levelMultiplier);
+            DataManager.Instance.playData.point += point;
+        }
+        
         OnStageEnded?.Invoke(winner);
     }
     /// <summary>
@@ -47,7 +65,6 @@ public class StageManager : Singleton<StageManager>
         
         // TODO: Item Pooling
         // List<ItemData> itemList = stageData.shopTable.itemList.ConvertAll(x => x.data);
-
         
         // Set Shop
         shop.Init(stageData.shopTable);
@@ -60,33 +77,7 @@ public class StageManager : Singleton<StageManager>
             agentField.Add((PlayerID)(i - 1), resourceFields[i]);
         }
 
-        // TODO: stageData와 Field 내 최대 Agent 개수 조절 필요
-        // for (int i = 0; i < stageData.agents.Count; i++)
-        // NOTE: Single Player 기준 0부터 카운트
-        for (int i = 0; i < agentField.Count - 1; i++)
-        {
-            SetAgentField((PlayerID)(i), stageData.agents[i], new intVector2(-1, -1));
-        }
-        SetAgentField(PlayerID.P0, stageData.player, new intVector2(1, 1));             // LocalPlayer
-    }
-
-    void SetAgentField(PlayerID teamId, AgentData data, intVector2 direction)
-    {
-        var list = agentField[teamId].GetTiles().GetEmptyTiles();
-        foreach (var entityData in data.handEntities)
-        {
-            if (list.Count <= 0) break;
-            var entity = entityFactory.Request(entityData.data, direction,list[0], entityData.level);
-            entity.team.teamNumber = teamId;
-            list.RemoveAt(0);
-        }
-        foreach (var entityData in data.fieldEntities)
-        {
-            var tile = field.GetTile(entityData.Key);
-            if (!tile) continue;
-            var entity = entityFactory.Request(entityData.Value.data, direction, tile, entityData.Value.level);
-            entity.team.teamNumber = teamId;
-        }
+        timer.Init(DataManager.Instance.playData.time);
     }
 
     /// <summary>

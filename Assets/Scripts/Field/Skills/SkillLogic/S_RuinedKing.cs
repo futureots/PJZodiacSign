@@ -50,8 +50,8 @@ public class S_RuinedKing : BaseSkillLogic
     {
         _count++;
         var entityData = _table.table[Random.Range(0, _table.table.Count)];
-        var entity = EntityFactory.Instance.Request(entityData, _owner.direction, _tile,_count/5);
-        entity.team.teamNumber = _owner.team.teamNumber;
+        var entity = EntityFactory.Instance.Request(entityData, _owner.direction, _tile, _owner.team.teamNumber, _count / 5);
+        _owner.onEntitySpawn?.Invoke(entity);
         var levelUpEffect = EffectFactory.Instance.Request("LevelUp",entity.transform.position, entity.transform.lossyScale);
         if (levelUpEffect.TryGetComponent<GlowEffect>(out var glow))
         {

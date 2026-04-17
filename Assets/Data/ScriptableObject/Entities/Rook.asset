@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Rook
   productName: "\uB8E9"
-  icon: {fileID: 21300000, guid: 8594eda5bcbfff046a1f1c4c793a03e5, type: 3}
+  icon: {fileID: 21300000, guid: 7295007a4f71b1d48a13b13b05491cd7, type: 3}
   normalPrice: 30
   prefab: {fileID: 8482699700186465063, guid: 6f7d9ff6e7f145f45a0d39ae6e4fd4c4, type: 3}
-  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
-  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
   attackArea:

@@ -9,7 +9,8 @@ public class ItemGoodsUI : GoodsUI<ItemData>
         buyBtn.onClick.AddListener(() =>
         {
             var customer = Agent.LocalPlayer;
-            if (customer.inventory.items.Count < customer.inventory.capacity)
+            var item = ItemFactory.Instance.RequestItem(data);
+            if (customer.inventory.TryAddItem(item))
             {
                 var item = ItemFactory.Instance.Request(data);
                 customer.inventory.TryAddItem(item);

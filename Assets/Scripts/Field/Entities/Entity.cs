@@ -24,7 +24,20 @@ public class Entity : Occupant, IDamageable, IAttackable
     [SerializeField] int level;
     public Action<int, int> OnLevelChanged;
 
-    public bool isControllable = false;
+    private bool isControllable = false;
+
+    public bool IsControllable
+    {
+        get => isControllable;
+        set
+        {
+            isControllable = value;
+            OnControllableChanged?.Invoke(isControllable);
+        }
+    }
+
+    public Action<bool> OnControllableChanged;
+
     public int Level
     {
         get => level;
@@ -35,10 +48,9 @@ public class Entity : Occupant, IDamageable, IAttackable
             OnLevelChanged?.Invoke(level, before);
         }
     }
-
-    public static Action<Entity> onEntityDead;
-
-    public Action onDead;
+    
+    public Action<Entity> onDead;
+    public Action<Entity> onEntitySpawn;
 
     [SerializeField] public AreaComponent area;
     
@@ -53,16 +65,33 @@ public class Entity : Occupant, IDamageable, IAttackable
         team = new();
     }
 
+    [SerializeField] Material white;
+    [SerializeField] Material black;
+
     /// <summary>
     /// Initialize Setting when Load
     /// </summary>
     /// <param name="data">Entity Data</param>
     /// <param name="level">Initial Level</param>
-    public void Init(EntityData data, intVector2 direction, int level = 0)
+    /// <param name="team"></param>
+    public void Init(EntityData data, intVector2 direction, int level = 0, PlayerID team =  PlayerID.None)
     {
         baseData = data;
         Level = level; // NOTE: 초기화 시 레벨 변화 이벤트 발생중
         this.direction = direction;
+        if (direction.y < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+
+        this.team.teamNumber = team;
+        if (TryGetComponent<Renderer>(out var render))
+        {
+            //EditorLogger.Print(Agent.LocalPlayer);
+            render.materials = team == Agent.LocalPlayer.id ? new []{white} : new []{black};
+        }
+        
+        
         //Get Status Component
         MaxHealth = baseData.maxHp + baseData.hpMultiplier * level;
         CurHealth = MaxHealth;
@@ -77,8 +106,8 @@ public class Entity : Occupant, IDamageable, IAttackable
         
         // Set Area
         area.SetArea(data.moveArea, data.attackArea);
-
-         IsReflect = false;
+        
+        IsReflect = false;
     }
 
     /// Update Status with Level-Up
@@ -186,8 +215,11 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public void Dead()
     {
-        onEntityDead?.Invoke(this);
-        onDead?.Invoke();
+        if (TryGetComponent(out Collider collider))
+        {
+            collider.enabled = false;
+        }
+        onDead?.Invoke(this);
         PlayEffect(EffectType.Dissolve);
     }
 

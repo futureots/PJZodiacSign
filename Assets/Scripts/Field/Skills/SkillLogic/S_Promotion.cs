@@ -54,12 +54,12 @@ public class S_Promotion : BaseSkillLogic
         var team = _entity.team.teamNumber;
         
         _entity.CurTile.UnsetOccupant();
+        
+        var promotion = EntityFactory.Instance.Request(_target.baseData, dir, tile, team, level);
+        _entity.onEntitySpawn?.Invoke(promotion);
+        
         _entity.Dead();
         _entity = null;
-        
-        
-        var promotion = EntityFactory.Instance.Request(_target.baseData, dir, tile, level);
-        promotion.team.teamNumber = team;
         
         // 이펙트 재생
         var levelUpEffect = EffectFactory.Instance.Request("Change",promotion.transform.position, promotion.transform.lossyScale);

@@ -9,8 +9,9 @@ public class Agent : MonoBehaviour
     // 플레이어 번호
     public PlayerID id;
     // 팀 번호
+    public intVector2 Direction { get; private set; }
 
-    static Agent _localPlayer;
+    private static Agent _localPlayer;
     public static Agent LocalPlayer
     {
         get
@@ -46,7 +47,7 @@ public class Agent : MonoBehaviour
         }
     }
     
-    public List<Entity> actionAbleEntities=new List<Entity>();
+    //public List<Entity> actionAbleEntities=new List<Entity>();
     
     public event Action<int> onActionCountChanged;
 
@@ -68,18 +69,51 @@ public class Agent : MonoBehaviour
 
     public Inventory inventory;
 
+    public List<Entity> fieldEntities;
+    public List<Entity> resourceEntities;
     
-    public void Init(FieldController fieldController, PlayerID teamId, int credit)
+    public void Init(FieldController fieldController, PlayerID teamId,AgentData data, intVector2 direction)
     {
+        Direction = direction;
         this.fieldController = fieldController;
-        this.id = teamId;
-        Credit = credit;
+        id = teamId;
+        Credit = data.credit;
+        if (data.items == null) data.items = new();
+        inventory.SetItem(data.items);
         fieldController.OnPhaseStarted += OnPhaseChange;
         fieldController.OnTurnStarted += OnTurnChange;
-        
+
+        // 필드 기물 세팅
+        var field = StageManager.Instance.field;
+        var resourceField = StageManager.Instance.agentField[teamId];
+
+        resourceEntities = new();
+        var list = resourceField.GetTiles().GetEmptyTiles();
+        foreach (var entityData in data.handEntities)
+        {
+            if (list.Count <= 0) break;
+            var entity = EntityFactory.Instance.Request(entityData.data, direction, list[0], teamId, entityData.level);
+            // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
+            list.RemoveAt(0);
+            resourceEntities.Add(entity);
+        }
+
+        fieldEntities = new();
+        foreach (var entityData in data.fieldEntities)
+        {
+            var tile = field.GetTile(entityData.Key);
+            if (!tile) continue;
+            var entity = EntityFactory.Instance.Request(entityData.Value.data, direction, tile, teamId, entityData.Value.level);
+            // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
+            fieldEntities.Add(entity);
+        }
     }
+    
+    
     void OnTurnChange(Turn turn)
     {
+        fieldEntities.ForEach(entity => entity.IsControllable = false);
+        resourceEntities.ForEach(entity => entity.IsControllable = false);
         if(turn.agentID == id)
         {
             
@@ -87,14 +121,13 @@ public class Agent : MonoBehaviour
             {
                 case TurnType.ACTION:
                     CurrentActionCount = actionCount;
-                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
+                    fieldEntities.ForEach(entity => entity.IsControllable = true);
                     break;
                 case TurnType.ATTACK:
-                    actionAbleEntities = StageManager.Instance.field.GetEntities(id);
                     CurrentActionCount = -1;
                     break;
                 case TurnType.REPAIR:
-                    actionAbleEntities = StageManager.Instance.agentField[id].GetEntities(id);
+                    resourceEntities.ForEach(entity => entity.IsControllable = true);
                     CurrentActionCount = -1;
                     break;
             }
@@ -103,24 +136,66 @@ public class Agent : MonoBehaviour
 
     void OnPhaseChange(Phase phase)
     {
+        foreach (var entity in resourceEntities)
+        {
+            entity.onDead -= RemoveOnResourceList;
+        }
+        var resources = StageManager.Instance.agentField[id].GetEntities(id);
+        resourceEntities.Clear();
+        foreach (var resource in resources)
+        {
+            resourceEntities.Add(resource);
+            resource.onDead += RemoveOnResourceList;
+        }
+        
+        foreach (var entity in fieldEntities)
+        {
+            entity.onDead -= RemoveOnFieldList;
+        }
+        var fields =  StageManager.Instance.field.GetEntities(id);
+        fieldEntities.Clear();
+        foreach (var entity in fields)
+        {
+            fieldEntities.Add(entity);
+            entity.onDead += RemoveOnFieldList;
+        }
         if (phase.phaseName == PhaseType.Battle)
         {
             var _entityLevelData = new List<EntityLevelData>();
-            var list = StageManager.Instance.agentField[PlayerID.P0].GetEntities();
-            foreach (var entity in list)
+            foreach (var entity in resourceEntities)
             {
                 _entityLevelData.Add(new EntityLevelData(entity));
             }
             entityLevelData = _entityLevelData;
+            
             var _fieldEntityData = new Dictionary<intVector2, EntityLevelData>();
-            var fieldData = StageManager.Instance.field.GetEntities(id);
-            foreach (var entity in fieldData)
+            foreach (var entity in fieldEntities)
             {
                 _fieldEntityData.Add(entity.CurTile.fieldPos, new EntityLevelData(entity));
+                entity.onEntitySpawn += SetSpawnedByEntity;
             }
             fieldEntityData = _fieldEntityData;
         }
     }
+
+    void RemoveOnFieldList(Entity entity)
+    {
+        fieldEntities.Remove(entity);
+    }
+
+    void RemoveOnResourceList(Entity entity)
+    {
+        resourceEntities.Remove(entity);
+    }
+
+    void SetSpawnedByEntity(Entity entity)
+    {
+        fieldEntities.Add(entity);
+        entity.IsControllable = true;
+        entity.onDead += RemoveOnFieldList;
+        entity.onEntitySpawn += SetSpawnedByEntity;
+    }
+    
     
     public Command CreateMoveCommand(Entity entity, Tile tile, bool isWarp = false)
     {

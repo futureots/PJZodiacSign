@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -10,6 +11,7 @@ public class ShopUI : MonoBehaviour
 
     public GameObject shopPanel;
     [SerializeField] GameObject shopToggle;
+    [SerializeField] private TextMeshProUGUI buttonText;
 
     [SerializeField] EntityGoodsUI entityUI;
     [SerializeField] ItemGoodsUI itemUI;
@@ -96,5 +98,19 @@ public class ShopUI : MonoBehaviour
             }
         }
         for (int i = itemList.Count; i < itemGoods.Count; i++) itemGoods[i].gameObject.SetActive(false);
+    }
+
+    public void ToggleButton(bool isOpen)
+    {
+        if (isOpen)
+        {
+            shopPanel.SetActive(true);
+            buttonText.text = "닫기";
+        }
+        else
+        {
+            shopPanel.SetActive(false);
+            buttonText.text = "상점";
+        }
     }
 }

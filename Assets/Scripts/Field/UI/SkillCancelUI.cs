@@ -2,10 +2,10 @@ using PlayerInput;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillCancelUI : MonoBehaviour
+public class SkillCancelUI : InputManagerUI
 {
     public Button cancelBtn;
-    public void Init(InputManager inputManager)
+    public  override void Init(InputManager inputManager)
     {
         inputManager.OnModeChanged +=OnModeChange;
     }

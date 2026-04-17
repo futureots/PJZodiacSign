@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityInfoUI : MonoBehaviour
+public class EntityInfoUI : InputManagerUI
 {
     [SerializeField] InputManager inputManager;
     PlayerID id;
@@ -28,7 +28,7 @@ public class EntityInfoUI : MonoBehaviour
         InfoPanel.SetActive(false);
     }
 
-    public void Init(InputManager input)
+    public  override void Init(InputManager input)
     {
         inputManager = input;
         id = inputManager.agent.id;
