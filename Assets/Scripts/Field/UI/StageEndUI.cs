@@ -1,3 +1,4 @@
+using GlobalManage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

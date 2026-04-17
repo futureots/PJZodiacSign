@@ -1,4 +1,5 @@
 
+using GlobalManage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class Shop : MonoBehaviour
     public void Init(ShopTable table)
     {
         this.table = table;
-        SetShop(GameManager.Instance.Level);
+        SetShop(GameManager.Instance.Level);        // TODO: Level 관련 GameManager 의존성 제거
         OnShopSet?.Invoke();
     }
 

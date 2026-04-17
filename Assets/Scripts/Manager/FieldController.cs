@@ -9,9 +9,55 @@ public class FieldController : MonoBehaviour
      * 페이즈-턴 운영
      * Agent 생성 및 필드 시스템과 Command 통신
      */
+    [Header("Stage Operate")]
     protected StageManager stageManager;
 
     protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
+    public event Action<string> OnBattleEnd;    // NOTE: 전투 종료 플래그 (단순 string)
+    
+    [Header("Dependency")]
+    [SerializeField] InputManager inputManager;
+    [SerializeField] InputUIContainer inputUI;
+    private EnemyAI _enemyAI = null;
+    
+    /// <summary>
+    /// Initiate Controller
+    /// </summary>
+    /// <remarks>Load Model and set Command, Special Rule, and Reset Phase</remarks>
+    public virtual void Init(StageData data)
+    {
+        /* 레벨 데이터로 씬 로드 준비
+         * - 에이전트 목록 확인 및 생성
+         */
+        
+        // Load Field
+        stageManager = StageManager.Instance;
+        if (!stageManager)
+        {
+            throw new Exception("StageManager not found");
+        }
+        stageManager.Init(data);
+
+        // Set Agents
+        _enemyAI = Instantiate(data.aiPrefab, transform);
+        localPlayer.Init(this,PlayerID.P0,data.player, new intVector2(1,1));
+        for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
+        {
+            agents[i].Init(this,(PlayerID)i, data.agents[i], new intVector2(-1,-1));
+        }
+        inputManager.Init(localPlayer);
+        _enemyAI.Init(agents[0]);
+        inputUI.Init(inputManager);
+        commandSystem = new CommandSystem();
+        
+        // Set Rules
+        SpecialRule = data.specialRule;
+        phases = data.phases;
+        
+        // Reset Phase
+        turnCount = 0;
+        SetPhase(0);
+    }
     
     #region PhaseManage
     /**
@@ -159,55 +205,11 @@ public class FieldController : MonoBehaviour
     #endregion
     
     #region Agents
-    /**
-     * 
-     */
+    
+    // TODO: Agent 운영
+    
     public Agent localPlayer;
     public List<Agent> agents;
 
     #endregion
-
-    [Header("Dependency")]
-    [SerializeField] InputManager inputManager;
-    [SerializeField] InputUIContainer inputUI;
-    private EnemyAI _enemyAI = null;
-    
-
-    /// <summary>
-    /// Initiate Controller
-    /// </summary>
-    /// <remarks>Load Model and set Command, Special Rule, and Reset Phase</remarks>
-    public virtual void Init(StageData data)
-    {
-        /* 레벨 데이터로 씬 로드 준비
-         * - 에이전트 목록 확인 및 생성
-         */
-        
-        Agent.LocalPlayer = localPlayer;
-        
-        // Load Field
-        stageManager = StageManager.Instance;
-        stageManager.Init(data);
-
-        
-        // 에이전트 생성 및 초기화
-        _enemyAI = Instantiate(data.aiPrefab, transform);
-        localPlayer.Init(this,PlayerID.P0,data.player,new intVector2(1,1));
-        for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
-        {
-            agents[i].Init(this,(PlayerID)i, data.agents[i], new intVector2(-1,-1));
-        }
-        _enemyAI.Init(agents[0]);
-        inputManager.Init(localPlayer);
-        inputUI.Init(inputManager);
-        commandSystem = new CommandSystem();
-        
-        // 기믹 세팅
-        SpecialRule = data.specialRule;
-        phases = data.phases;
-        
-        // Reset Phase
-        turnCount = 0;
-        SetPhase(0);
-    }
 }

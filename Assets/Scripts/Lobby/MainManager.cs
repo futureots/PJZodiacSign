@@ -1,5 +1,6 @@
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using GlobalManage;
 
 namespace Main
 {
@@ -16,14 +17,7 @@ namespace Main
         private void Start()
         {
             Screen.SetResolution(1920, 1080, true);
-            if (DataManager.Instance.isModified)
-            {
-                giveUpBtn.SetActive(true);
-            }
-            else
-            {
-                giveUpBtn.SetActive(false);
-            }
+            giveUpBtn.SetActive(/*DataManager.Instance.isModified*/ false);     // TODO: DataManager 로드 확인 필요
         }
 
         public void StartGame()
@@ -58,7 +52,7 @@ namespace Main
         public void GiveUpGame()
         {
             DataManager.Instance.ResetData("PlayerData");
-            SceneManager.LoadScene(0);
+            StartCoroutine(SceneLoader.Instance.LoadMain());
         }
 
         public void ExitGame()
