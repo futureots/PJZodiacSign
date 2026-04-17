@@ -76,7 +76,7 @@ namespace GlobalManage
             }
 
             // Reload Controller
-            // NOTE : Controller씬은 강제 리로드
+            // NOTE : 씬은 강제 리로드
             if (_controllerScene.isLoaded)
             {
                 yield return SceneManager.UnloadSceneAsync(_controllerScene);
