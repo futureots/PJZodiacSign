@@ -15,6 +15,7 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private UIMapper uiMapper;
     public Field field;
     public Timer timer;
+    public int level;
     public int point;
     
     // key = teamNum, value = ResourceField
@@ -33,7 +34,7 @@ public class StageManager : Singleton<StageManager>
             // 스테이지 클리어 점수 제공
             const float decayRate = 1000;
             const int levelMultiplier = 10;
-            point = Mathf.RoundToInt(GameManager.Instance.Level * 1000 * Mathf.Exp(-timer.GetElapsedTime()/decayRate));
+            point = Mathf.RoundToInt(level * 1000 * Mathf.Exp(-timer.GetElapsedTime()/decayRate));
             
             // 살아있는 기물 수 + 강화단계 합
             List<Entity> data = field.GetEntities(Agent.LocalPlayer.id);
@@ -50,6 +51,9 @@ public class StageManager : Singleton<StageManager>
     /// <remarks>Injected data by Controller</remarks>
     public void Init(StageData stageData)
     {
+        // Get Level
+        level = stageData.level;
+        
         // Entity Pooling
         // TODO: pooling 비동기로 예외
         // Shop Entities

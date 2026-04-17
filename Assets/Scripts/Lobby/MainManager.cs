@@ -45,7 +45,7 @@ namespace Main
         {
             GameManager.Instance.SetModeData(tutorialTable, shopTable);
             var data = GameManager.Instance.CreateStageData(1, new AgentData(9999));
-            data.controllerName = SceneName.FieldController.Tutorial;
+            data.controllerName = ControllerID.Tutorial;
             GameManager.Instance.EnterBattle(data);
         }
 

@@ -1,3 +1,4 @@
+using GlobalManage;
 using PlayerInput;
 using TMPro;
 using UnityEngine;
