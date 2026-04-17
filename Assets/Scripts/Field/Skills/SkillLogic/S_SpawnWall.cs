@@ -49,9 +49,8 @@ public class S_SpawnWall : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         EditorLogger.Print($"Spawn {spawnData.productName}");
-        
-        var obstacle = EntityFactory.Instance.Request(spawnData, intVector2.Zero, _tile);
-        obstacle.team.teamNumber = _owner.team.teamNumber;
+
+        var obstacle = EntityFactory.Instance.Request(spawnData, intVector2.Zero, _tile, _owner.team.teamNumber);
         var levelUpEffect = EffectFactory.Instance.Request("LevelUp",obstacle.transform.position, obstacle.transform.lossyScale);
         if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
         {

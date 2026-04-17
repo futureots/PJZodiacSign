@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,10 +7,10 @@ namespace GlobalManage
 {
 
 
-    public class GameManager : Singleton<GameManager>
-    {
+public class GameManager : Singleton<GameManager>
+{
         [Header("Base Data")]
-        [SerializeField] private GameObject LoadingUI; // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
+        [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
 
         public LevelTable levelTable;
         public ShopTable shopTable;
@@ -40,24 +39,24 @@ namespace GlobalManage
             this.shopTable = shopTable;
         }
 
-        /// <summary>
-        /// level테이블에서 해당 레벨의 데이터를 생성 후 반환
-        /// </summary>
-        /// <param name="level"></param>
-        /// <param name="playerData"></param>
-        /// <returns></returns>
-        public StageData CreateStageData(int level, AgentData playerData)
-        {
-            List<AgentData> agents = new();
-            var data = levelTable.GetLevelData(level);
-            agents.Add(data.Item2);
-            StageData stageData = new(data.Item1, agents, shopTable, data.Item3, level, playerData);
-            return stageData;
-        }
-
-        #endregion
-
-        #region BattleInit
+    /// <summary>
+    /// level테이블에서 해당 레벨의 데이터를 생성 후 반환
+    /// </summary>
+    /// <param name="level"></param>
+    /// <param name="playerData"></param>
+    /// <returns></returns>
+    public StageData CreateStageData(int level,AgentData playerData)
+    {
+        List<AgentData> agents = new();
+        var data = levelTable.GetLevelData(level);
+        agents.Add(data.Item2);
+        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData);
+        return stageData;
+    }
+    
+    #endregion
+    
+    #region BattleInit
 
         /// <summary>
         /// Enter Battle Scene
@@ -67,7 +66,13 @@ namespace GlobalManage
         {
             Level = stageData.level;
             DataManager.Instance.SetData(stageData.player, Level);
-            DataManager.Instance.SaveAllData("PlayerData");
+            
+            // 튜토리얼은 데이터를 저장하지 않음
+            if (stageData.modelName == SceneName.FieldModel.Default)
+            {
+                DataManager.Instance.SaveAllData("PlayerData");
+            }
+            
             StartCoroutine(StartBattle(stageData));
         }
 

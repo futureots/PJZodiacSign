@@ -1,22 +1,45 @@
+using PlayerInput;
 using TMPro;
 using UnityEngine;
 
-public class PlayerDataUI : MonoBehaviour
+public class PlayerDataUI : InputManagerUI
 {
     private Agent _agent;
 
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI creditText;
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI entityCountText;
     
-    public void Init(Agent agent)
+    public  override void Init(InputManager inputManager)
     {
-        _agent = agent;
-        agent.OnCreditChanged += UpdateCredit;
-        UpdateCredit(agent.Credit);
-        // TODO : level 표시, 현재 시간 표시(갱신 포함)
+        _agent = inputManager.agent;
+        
+        // 크레딧 갱신
+        _agent.OnCreditChanged += UpdateCredit;
+        UpdateCredit(_agent.Credit);
+        
+        // level 갱신
+        UpdateLevel(GameManager.Instance.Level);
+
+        // 시간 갱신
+        StageManager.Instance.timer.onTimerUpdate += UpdateTime;
+        UpdateTime(StageManager.Instance.timer.GetTime());
+        
+        // 배치 기물 수 갱신
+        inputManager.OnModeChanged += (state) =>
+        {
+            if (state is RepairModeInput repair)
+            {
+                repair.onEntityCountChanged += UpdateEntityCount;
+            }
+        };
     }
 
+    public void UpdateEntityCount(int count,int max)
+    {
+        entityCountText.text = $"{count}/{max}";
+    }
 
     public void UpdateCredit(int credit)
     {
@@ -31,13 +54,10 @@ public class PlayerDataUI : MonoBehaviour
     public void UpdateTime(int time)
     {
         // TODO : 초 값을 시간으로 변형 필요
-        timeText.text = time.ToString();
+        var second = time % 60;
+        var minute = time / 60;
+        
+        timeText.text = $"{minute:D2} : {second:D2}";
     }
-
     
-    private void OnDisable()
-    {
-        //agent.onCreditChanged -= UpdateCredit;
-        //GameManager.onNextLevel -= UpdateLevel;
-    }
 }

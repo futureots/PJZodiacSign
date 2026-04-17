@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 
 namespace PlayerInput
@@ -7,10 +8,37 @@ namespace PlayerInput
     public class RepairModeInput : MoveModeInput
     {
         public Action<Entity, Entity> onEnhanceRequested;
+
+        public const int MaxEntityCount = 12;
+
+        private int _curEntityCount;
+
+        public int CurEntityCount
+        {
+            get
+            {
+                return _curEntityCount;
+            }
+            private set
+            {
+                _curEntityCount = value;
+                onEntityCountChanged?.Invoke(_curEntityCount,MaxEntityCount);
+            }
+        }
+
+        public Action<int,int> onEntityCountChanged;
+
+
         public RepairModeInput(InputManager input) : base(input)
         {
         }
-        
+
+        public override void SetMode()
+        {
+            base.SetMode();
+            CurEntityCount = StageManager.Instance.field.GetEntities(inputManager.agent.id).Count;
+        }
+
         protected override List<Tile> GetMovableTiles()
         {
             // 배치가 가능한 타일 리스트(리소스 필드 + 메인 필드에 배치 가능한 공간)
@@ -51,13 +79,14 @@ namespace PlayerInput
                     {
                         //커맨드 생성
                         inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile, true);
-                        // TODO : 배치 가능 수를 넘어섰다는 메세지 표시(전송)
+                        CurEntityCount = StageManager.Instance.field.GetEntities(inputManager.agent.id).Count;
                     }
                 }
                 else
                 {
                     //커맨드 생성
                     inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile, true);
+                    CurEntityCount = StageManager.Instance.field.GetEntities(inputManager.agent.id).Count;
                 }
                 
             }

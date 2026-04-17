@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CostUI : MonoBehaviour
+public class CostUI : InputManagerUI
 {
     InputManager _inputManager;
     [SerializeField] GameObject panel;
     [SerializeField] TextMeshProUGUI text;
     
-    public void Init(InputManager inputManager)
+    public override void Init(InputManager inputManager)
     {
         _inputManager = inputManager;
         _inputManager.agent.fieldController.OnTurnStarted += OnTurnChange;

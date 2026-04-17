@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelTable", menuName = "Scriptable Objects/LevelTable")]
 public class LevelTable : ScriptableObject
 {
+    public int endLevel;
     public int basicCredit;
     [SerializeField] private List<Phase> basePhases;
     [SerializeField] private EnemyAI baseAI;

@@ -11,6 +11,7 @@ namespace Main
 
 
         public LevelTable levelTable;
+        public LevelTable tutorialTable;
         public ShopTable shopTable;
 
         private void Start()
@@ -38,6 +39,14 @@ namespace Main
                 var data = GameManager.Instance.CreateStageData(1, new AgentData(150));
                 GameManager.Instance.EnterBattle(data);
             }
+        }
+
+        public void StartTutorial()
+        {
+            GameManager.Instance.SetModeData(tutorialTable, shopTable);
+            var data = GameManager.Instance.CreateStageData(1, new AgentData(9999));
+            data.controllerName = SceneName.FieldController.Tutorial;
+            GameManager.Instance.EnterBattle(data);
         }
 
         public void GiveUpGame()

@@ -49,7 +49,6 @@ public class InputManager : MonoBehaviour
     public void Init(Agent agent)
     {
         this.agent = agent;
-        Agent.LocalPlayer = agent;
         agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 

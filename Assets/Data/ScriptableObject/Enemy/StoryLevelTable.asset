@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a03288ffe608546a776c46bd57dde8, type: 3}
   m_Name: StoryLevelTable
   m_EditorClassIdentifier: 
+  endLevel: 12
   basicCredit: 120
   basePhases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}

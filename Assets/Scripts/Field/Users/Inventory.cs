@@ -64,6 +64,7 @@ public class Inventory : MonoBehaviour
 
     public void SetItem(List<ItemData> list)
     {
+        
         items.Clear();
         for (int i = 0; i < list.Count; i++)
         {

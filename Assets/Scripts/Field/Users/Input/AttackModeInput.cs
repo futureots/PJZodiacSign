@@ -22,7 +22,7 @@ public class AttackModeInput : IInputState
     IEnumerator AttackInput()
     {
         yield return null;
-        foreach (var entity in _input.agent.actionAbleEntities)
+        foreach (var entity in _input.agent.fieldEntities)
         {
             _input.agent.CreateAttackCommand(entity);
         }

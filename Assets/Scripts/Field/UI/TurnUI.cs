@@ -3,13 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurnUI : MonoBehaviour
+public class TurnUI : InputManagerUI
 {
     [SerializeField] InputManager inputManager;
     [SerializeField] Button turnEndBtn;
     [SerializeField] TextMeshProUGUI text;
 
-    public void Init(InputManager input)
+    public  override void Init(InputManager input)
     {
         this.inputManager = input;
         input.OnModeChanged += OnModeChange;

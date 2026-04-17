@@ -5,7 +5,7 @@ public class Level12Boss : EnemyAI
     
     protected override async UniTask EnemyAction()
     {
-        var king = agent.actionAbleEntities.Find(e => e.baseData.id == "RuinedKing");
+        var king = agent.fieldEntities.Find(e => e.baseData.id == "RuinedKing");
         if (king)
         {
             if (king.energy.IsFull())

@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: King
   productName: "\uD0B9"
-  icon: {fileID: 21300000, guid: d46c9ba111b274d4c906685a3f86b6af, type: 3}
+  icon: {fileID: 21300000, guid: 4e8445dfe8ce01447a12e1abe240afcb, type: 3}
   normalPrice: 40
   prefab: {fileID: 3545369894222747195, guid: 6fdbc0408713fb948962fa73d218d473, type: 3}
-  basicAttackEffect: {fileID: 4115548549944661493, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
-  dissolveEffect: {fileID: 4251666745675396361, guid: 1ebba2b0d062ce24bbeaf8d1b2bac6f2, type: 3}
   moveArea:
   - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
   attackArea:

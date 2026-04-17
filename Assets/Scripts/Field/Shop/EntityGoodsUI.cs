@@ -13,11 +13,12 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             var tiles = StageManager.Instance.agentField[teamNum].GetTiles().GetEmptyTiles();
             if(tiles.Count > 0)
             {
-                var entity = EntityFactory.Instance.Request(data, new intVector2(1, 1), tiles[0]);
-                entity.team.teamNumber = teamNum;
+                EditorLogger.Print(teamNum);
+                var entity = EntityFactory.Instance.Request(data, new intVector2(1, 1), tiles[0], teamNum);
                 
                 customer.Credit -= price;
-                entity.isControllable = true;
+                
+                entity.IsControllable = true;
             }
             else
             {

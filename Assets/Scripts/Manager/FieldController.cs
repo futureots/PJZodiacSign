@@ -11,6 +11,7 @@ public class FieldController : MonoBehaviour
      */
     [Header("Stage Operate")]
     protected StageManager stageManager;
+
     protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
     public event Action<string> OnBattleEnd;    // NOTE: 전투 종료 플래그 (단순 string)
     
@@ -39,10 +40,10 @@ public class FieldController : MonoBehaviour
 
         // Set Agents
         _enemyAI = Instantiate(data.aiPrefab, transform);
-        localPlayer.Init(this,PlayerID.P0,data.player.credit);
+        localPlayer.Init(this,PlayerID.P0,data.player, new intVector2(1,1));
         for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
         {
-            agents[i].Init(this,(PlayerID)i, data.agents[i].credit);
+            agents[i].Init(this,(PlayerID)i, data.agents[i], new intVector2(-1,-1));
         }
         inputManager.Init(localPlayer);
         _enemyAI.Init(agents[0]);
