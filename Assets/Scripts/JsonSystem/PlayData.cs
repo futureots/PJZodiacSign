@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 /// </summary>
 public class PlayData
 {
-
     /// <summary>
     /// 필드에 배치한 플레이어 기물 정보
     /// </summary>

@@ -16,14 +16,7 @@ namespace Main
         private void Start()
         {
             Screen.SetResolution(1920, 1080, true);
-            if (DataManager.Instance.isModified)
-            {
-                giveUpBtn.SetActive(true);
-            }
-            else
-            {
-                giveUpBtn.SetActive(false);
-            }
+            giveUpBtn.SetActive(/*DataManager.Instance.isModified*/ false);     // TODO: DataManager 로드 확인 필요
         }
 
         public void StartGame()

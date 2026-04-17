@@ -1,108 +1,147 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GlobalManage;
 
-
-public class GameManager : Singleton<GameManager>
+namespace GlobalManage
 {
-    [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
-    private StageData currentStage = null;
 
-    public LevelTable levelTable;
-    public ShopTable shopTable;
-    public int Level { get; private set; }
-    
-    protected override void Awake()
-    {
-        base.Awake();
-        // TODO: 데이터 로드 로직 추가
-        DataManager.Instance.LoadAllData("PlayerData");
-        
-    }
-    
-    /// <summary>
-    /// 해당 모드 세팅(튜토리얼, 일반 모드 등)
-    /// </summary>
-    /// <param name="levelTable"></param>
-    /// <param name="shopTable"></param>
-    public void SetModeData(LevelTable levelTable, ShopTable shopTable)
-    {
-        this.levelTable = levelTable;
-        this.shopTable = shopTable;
-    }
 
-    /// <summary>
-    /// level테이블에서 해당 레벨의 데이터를 생성 후 반환
-    /// </summary>
-    /// <param name="level"></param>
-    /// <param name="playerData"></param>
-    /// <returns></returns>
-    public StageData CreateStageData(int level,AgentData playerData)
+    public class GameManager : Singleton<GameManager>
     {
-        List<AgentData> agents = new();
-        var data = levelTable.GetLevelData(level);
-        agents.Add(data.Item2);
-        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData);
-        return stageData;
-    }
-    #region BattleInit
+        [Header("Base Data")]
+        [SerializeField] private GameObject LoadingUI; // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
 
-    /// <summary>
-    /// Enter Battle Scene
-    /// </summary>
-    /// <param name="stageData">Stage data to Load</param>
-    public void EnterBattle(StageData stageData)
-    {
-        Level = stageData.level;
-        DataManager.Instance.SetData(stageData.player, Level);
-        DataManager.Instance.SaveAllData("PlayerData");
-        StartCoroutine(StartBattle(stageData));
-    }
+        public LevelTable levelTable;
+        public ShopTable shopTable;
 
-    
-    /// Model-Controller Scene async Load Routine
-    private IEnumerator StartBattle(StageData stageData)
-    {
-        // Load scenes
-        yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);              
-        
-        // Find FieldController in Controller Scene
-        FieldController fieldController = FindFirstObjectByType<FieldController>();
-        if (!fieldController)
+        [Header("Stage status")]
+        private StageData currentStage = null;
+
+        public int Level { get; private set; }
+
+        protected override void Awake()
         {
-            Debug.LogError($"Failed to Load Controller : {fieldController}");
-            yield break;
+            base.Awake();
+            DataManager.Instance.LoadAllData("PlayerData");
         }
-        
-        // Init FieldController
-        fieldController.Init(stageData);
-        
-        // Complete Loading
-        currentStage = stageData;
-        LoadingUI.SetActive(false);
+
+        #region Initiate
+
+        /// <summary>
+        /// 해당 모드 세팅(튜토리얼, 일반 모드 등)
+        /// </summary>
+        /// <param name="levelTable"></param>
+        /// <param name="shopTable"></param>
+        public void SetModeData(LevelTable levelTable, ShopTable shopTable)
+        {
+            this.levelTable = levelTable;
+            this.shopTable = shopTable;
+        }
+
+        /// <summary>
+        /// level테이블에서 해당 레벨의 데이터를 생성 후 반환
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="playerData"></param>
+        /// <returns></returns>
+        public StageData CreateStageData(int level, AgentData playerData)
+        {
+            List<AgentData> agents = new();
+            var data = levelTable.GetLevelData(level);
+            agents.Add(data.Item2);
+            StageData stageData = new(data.Item1, agents, shopTable, data.Item3, level, playerData);
+            return stageData;
+        }
+
+        #endregion
+
+        #region BattleInit
+
+        /// <summary>
+        /// Enter Battle Scene
+        /// </summary>
+        /// <param name="stageData">Stage data to Load</param>
+        public void EnterBattle(StageData stageData)
+        {
+            Level = stageData.level;
+            DataManager.Instance.SetData(stageData.player, Level);
+            DataManager.Instance.SaveAllData("PlayerData");
+            StartCoroutine(StartBattle(stageData));
+        }
+
+
+        /// <summary>
+        /// Load Scene and Init Controller
+        /// </summary>
+        /// <param name="stageData">Battle Stage Data</param>
+        private IEnumerator StartBattle(StageData stageData)
+        {
+            // Load scenes
+            LoadingUI.SetActive(true);
+            yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);
+
+            // Find FieldController in Controller Scene
+            FieldController controller = FindFirstObjectByType<FieldController>();
+            if (!controller)
+            {
+                EditorLogger.PrintError($"Failed to Load Controller : {controller}");
+                yield break;
+            }
+
+            // Init FieldController
+            try
+            {
+                controller.Init(stageData);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Load Failed, Return to Main
+                StartCoroutine(SceneLoader.Instance.LoadMain());
+            }
+
+            // Connect Battle End Event
+            // NOTE: 전투 종료 플래그에 따른 수행 세부 작업 필요
+            controller.OnBattleEnd += s =>
+            {
+                switch (s)
+                {
+                    case "CLEAR":
+                        ContinueGame();
+                        break;
+                    case "FAIL":
+                        EndGame();
+                        break;
+                }
+            };
+
+            // Complete Loading
+            currentStage = stageData;
+            LoadingUI.SetActive(false);
+        }
+
+        #endregion
+
+        #region BattleEnd
+
+        public void ContinueGame()
+        {
+            var playerData = Agent.LocalPlayer.getData();
+            // 다음 레벨로 넘어가는 코드
+            EditorLogger.Print($"{playerData.credit} 현재 크레딧");
+            EditorLogger.Print($"{Level + 1} 로드 중");
+            var stageData = CreateStageData(Level + 1, playerData);
+            EnterBattle(stageData);
+        }
+
+        public void EndGame(bool isDelete = false)
+        {
+            if (isDelete) DataManager.Instance.ResetData("PlayerData");
+            StartCoroutine(SceneLoader.Instance.LoadMain());
+        }
+
+        #endregion
     }
-
-    #endregion
-
-    #region BattleEnd
-
-    public void ContinueGame()
-    {
-        var playerData = Agent.LocalPlayer.getData();
-        // 다음 레벨로 넘어가는 코드
-        EditorLogger.Print($"{playerData.credit} 현재 크레딧");
-        EditorLogger.Print($"{Level + 1} 로드 중");
-        var stageData = CreateStageData(Level + 1, playerData);
-        EnterBattle(stageData);
-    }
-
-    public void EndGame(bool isDelete = false)
-    {
-        if(isDelete) DataManager.Instance.ResetData("PlayerData");
-        StartCoroutine(SceneLoader.Instance.LoadMain());
-    }
-    
-    #endregion
 }

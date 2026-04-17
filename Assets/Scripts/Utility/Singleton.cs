@@ -6,7 +6,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     /**
      * Singleton Instance
      * - If Exist, Return/Destroy dup.
-     * - If not Exist, Create New/Register
+     * - If not Exist, return Null
      */
     private static T instance = null;
     private static bool _isQuitting = false;
@@ -27,15 +27,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 if (!instance)
                 {
-                    // Check Object Existance
+                    // Check Object Exists
                     instance = (T)FindAnyObjectByType(typeof(T));
-                    
-                    // Create new Instance
-                    if (!instance)
-                    {
-                        GameObject obj = new(typeof(T).Name, typeof(T));
-                        instance = obj.GetComponent<T>();
-                    }
                 }
 
                 return instance;

@@ -4,92 +4,65 @@ using UnityEngine.SceneManagement;
 
 namespace GlobalManage
 {
-    public static class FieldModel
+    public static class ModelID
     {
         public const string Default = "FieldModel";
         public const string Main = "MainScene";
     }
 
-    public static class FieldController
+    public static class ControllerID
     {
         public const string Default = "BaseBattle";
     }
     
     public class SceneLoader : Singleton<SceneLoader>
     {
-        [SerializeField] private GameObject LoadingUI;
-        private Scene fieldScene;
-        private Scene controllerScene;
+        /**
+         * Scene Management System
+         * - Field + Controller Manage
+         * - Scene Load
+         */
         
-        #if UNITY_EDITOR
-        public void Start()
-        {
-            // Scene Entry Error
-            if (SceneManager.sceneCount > 2)
-            {
-                EditorLogger.PrintError($"Scene Load Exception: Odd Scene is Loaded");
-                return;
-            }
+        private Scene _fieldScene;
+        private Scene _controllerScene;
 
-            // System Scene Entry
-            if (SceneManager.sceneCount < 2)
-            {
-                StartCoroutine(LoadMain());
-                return;
-            }
-
-            // Main Scene Loader
-            if (SceneManager.GetSceneByName(FieldModel.Main).isLoaded)
-            {
-                fieldScene = SceneManager.GetSceneByName(FieldModel.Main);
-            }
-            else
-            {
-                EditorLogger.PrintError($"Scene Load Exception: Odd Scene is Loaded");
-            }
-            
-            EditorLogger.Print($"Current Field : {fieldScene.name}");
-        }
-        #endif
-
+        /// <summary>
+        /// Load Main Scene (ModelID.Main)
+        /// </summary>
         public IEnumerator LoadMain()
         {
-            // Set Load UI
-            LoadingUI.SetActive(true);
-            
             // Unload Scenes
-            if (controllerScene.isLoaded)
+            if (_controllerScene.isLoaded)
             {
-                yield return SceneManager.UnloadSceneAsync(controllerScene);
+                yield return SceneManager.UnloadSceneAsync(_controllerScene);
             }
-            if (fieldScene.isLoaded)
+            if (_fieldScene.isLoaded)
             {
-                yield return SceneManager.UnloadSceneAsync(fieldScene);
+                yield return SceneManager.UnloadSceneAsync(_fieldScene);
             }
             
             // Load Main Scene
-            yield return SceneManager.LoadSceneAsync(FieldModel.Main, LoadSceneMode.Additive);
+            yield return SceneManager.LoadSceneAsync(ModelID.Main, LoadSceneMode.Additive);
             
-            fieldScene = SceneManager.GetSceneByName(FieldModel.Main);
-            SceneManager.SetActiveScene(fieldScene);
-            
-            // Finish Load
-            LoadingUI.SetActive(false);
+            _fieldScene = SceneManager.GetSceneByName(ModelID.Main);
+            SceneManager.SetActiveScene(_fieldScene);
         }
 
+        /// <summary>
+        /// Load Battle Scene
+        /// </summary>
+        /// <param name="modelName">ModelID</param>
+        /// <param name="controllerName">FieldController</param>
         public IEnumerator LoadBattle(string modelName, string controllerName)
         {
-            // Set Load UI
-            LoadingUI.SetActive(true);
-
             AsyncOperation modelLoad = null;
             AsyncOperation controllerLoad = null;
             
             // Unload Model
-            if (fieldScene.isLoaded && modelName != fieldScene.name)
+            if (_fieldScene.isLoaded)
             {
-                EditorLogger.Print($"Unload Scene : {fieldScene.name} - {fieldScene.isLoaded}");
-                yield return SceneManager.UnloadSceneAsync(fieldScene);
+                EditorLogger.Print($"Unload Scene : {_fieldScene.name} - {_fieldScene.isLoaded}");
+                yield return SceneManager.UnloadSceneAsync(_fieldScene);
             }
             // Load New Model
             if (SceneManager.GetSceneByName(modelName).isLoaded == false)
@@ -104,9 +77,9 @@ namespace GlobalManage
 
             // Reload Controller
             // NOTE : Controller씬은 강제 리로드
-            if (controllerScene.isLoaded)
+            if (_controllerScene.isLoaded)
             {
-                yield return SceneManager.UnloadSceneAsync(controllerScene);
+                yield return SceneManager.UnloadSceneAsync(_controllerScene);
             }
             controllerLoad = SceneManager.LoadSceneAsync(controllerName, LoadSceneMode.Additive);
             if (controllerLoad == null)
@@ -132,11 +105,58 @@ namespace GlobalManage
                 (controllerLoad == null || controllerLoad.isDone));
 
             // refresh Scene
-            fieldScene = SceneManager.GetSceneByName(modelName);
-            controllerScene = SceneManager.GetSceneByName(controllerName);
+            _fieldScene = SceneManager.GetSceneByName(modelName);
+            _controllerScene = SceneManager.GetSceneByName(controllerName);
             
             // Set Active Scene for Model
-            SceneManager.SetActiveScene(fieldScene);
+            SceneManager.SetActiveScene(_fieldScene);
+        }
+        
+        
+        /// <summary>
+        /// Get Scene Reference and Refresh
+        /// 에디터 부트스트래핑 시 호출됩니다.
+        /// </summary>
+        public void RefreshCurrentSceneReferences()
+        {
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene s = SceneManager.GetSceneAt(i);
+                
+                switch (s.name)
+                {
+                    // 0. Except Self
+                    case "System":
+                        continue;
+                    // 1. Main
+                    case ModelID.Main:
+                        _fieldScene = s;
+                        EditorLogger.Print($"[SceneLoader] MainScene Detected: {_fieldScene.name}");
+                        break;
+                    // 2. Battle
+                    default:
+                    {
+                        if (s.name.Contains("Controller") || s.name == ControllerID.Default)
+                        {
+                            _controllerScene = s;
+                            EditorLogger.Print($"[SceneLoader] Controller Detected: {_controllerScene.name}");
+                        }
+                        // 3. 기타 모델 씬 인식
+                        else if (s.name.Contains("Model"))
+                        {
+                            _fieldScene = s;
+                            EditorLogger.Print($"[SceneLoader] Model Detected: {_fieldScene.name}");
+                        }
+
+                        break;
+                    }
+                }
+            }
+            
+            if (_fieldScene.IsValid())
+            {
+                SceneManager.SetActiveScene(_fieldScene);
+            }
         }
     }
 }

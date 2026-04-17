@@ -20,8 +20,8 @@ public class StageData
     public int level;
     
     // Stage Config
-    public string modelName = GlobalManage.FieldModel.Default;
-    public string controllerName = GlobalManage.FieldController.Default;
+    public string modelName = GlobalManage.ModelID.Default;
+    public string controllerName = GlobalManage.ControllerID.Default;
 
     // Player and Agents
     public EnemyAI aiPrefab = null;

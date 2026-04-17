@@ -30,11 +30,12 @@ public class StageEndUI : MonoBehaviour
     {
         var credit = _inputManager.agent.Credit;
         _inputManager.agent.Credit += 100 + Mathf.RoundToInt(credit*0.2f);
-        GameManager.Instance.ContinueGame();
+        
+        // TODO : Continue Game 작업?
     }
 
     public void DefeatGame()
     {
-        GameManager.Instance.EndGame(true);
+        // TODO : Defeat Game 작업?
     }
 }
