@@ -74,7 +74,7 @@ public class Inventory : MonoBehaviour
                 OnItemChanged?.Invoke(i, null);
                 continue;
             }
-            var item = ItemFactory.Instance.RequestItem(list[i]);
+            var item = ItemFactory.Instance.Request(list[i]);
             items.Add(item);
             OnItemChanged?.Invoke(i, item);
             item.transform.SetParent(transform);

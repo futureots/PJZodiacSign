@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-[System.Serializable]
+[Serializable]
 public class ItemComponent : SkillComponent
 {
     public ItemData ItemData { get; private set; }

@@ -33630,7 +33630,7 @@ GameObject:
   - component: {fileID: 2014071633}
   - component: {fileID: 2014071634}
   m_Layer: 0
-  m_Name: EntityPool
+  m_Name: Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33665,6 +33665,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityFactory
   poolCount: 5
   maxPoolSize: 30
+--- !u!114 &2014071635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014071632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 024bdd667d15d0f4b8f19e5f8228dc76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EffectFactory
+  dataTable: {fileID: 11400000, guid: 6577a974329601f4dac08ea98d43e639, type: 2}
+  poolCount: 1
+  maxPoolCount: 10
 --- !u!1 &2020103853
 GameObject:
   m_ObjectHideFlags: 0

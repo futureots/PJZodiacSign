@@ -12,6 +12,8 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             var item = ItemFactory.Instance.RequestItem(data);
             if (customer.inventory.TryAddItem(item))
             {
+                var item = ItemFactory.Instance.Request(data);
+                customer.inventory.TryAddItem(item);
                 customer.Credit -= price;
             }
             else

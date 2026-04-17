@@ -10,18 +10,19 @@ public class EffectFactory : Singleton<EffectFactory>
     private Dictionary<string, GameObject> _dataDictionary = new();
     
     // Pool Map
-    private Transform poolFolder;
+    private Transform _poolFolder;
     [SerializeField] private int poolCount = 1;
     [SerializeField] private int maxPoolCount = 10;
     
-    private Dictionary<string, IObjectPool<GameObject>> poolMap = new();
+    private readonly Dictionary<string, IObjectPool<GameObject>> _poolMap = new();
 
     private void Start()
     {
-        Initialize(dataTable);
+        Init(dataTable);
     }
-
-    private void Initialize(EffectTable table)
+    
+    /// Preset Table and Pool
+    private void Init(EffectTable table)
     {
         // Get Table
         dataTable = table;
@@ -31,12 +32,20 @@ public class EffectFactory : Singleton<EffectFactory>
         SetPool();
     }
     
+    /// <summary>
+    /// Get New Effect Object
+    /// </summary>
+    /// <param name="objName">Effect Name</param>
+    /// <param name="position">Invoke Position</param>
+    /// <param name="scale">Effect Size</param>
+    /// <param name="time">Duration</param>
+    /// <returns>Effect Object : GameObject</returns>
     public GameObject Request(string objName, Vector3 position, Vector3 scale, float time =2f)
     {
         EnsurePool(objName);
         
         // Get Effect from Pool
-        GameObject obj = poolMap[objName].Get();
+        GameObject obj = _poolMap[objName].Get();
         
         // Set Effect
         obj.transform.position = position;
@@ -46,14 +55,15 @@ public class EffectFactory : Singleton<EffectFactory>
         StartCoroutine(ActEffect(objName, obj, time));
         return obj;
     }
-
+    
+    /// Effect Action (duration
     private IEnumerator ActEffect(string objName, GameObject obj, float time)
     {
         yield return new WaitForSeconds(time);
 
-        if (obj != null && obj.activeSelf)
+        if (obj && obj.activeSelf)
         {
-            poolMap[objName].Release(obj);
+            _poolMap[objName].Release(obj);
         }
     }
     
@@ -62,17 +72,17 @@ public class EffectFactory : Singleton<EffectFactory>
     private void SetPool()
     {
         // Create Pool Folder
-        if (!poolFolder)
+        if (!_poolFolder)
         {
-            var newFolder = new GameObject("Pool");
+            var newFolder = new GameObject("EffectPool");
             newFolder.transform.SetParent(transform);
-            poolFolder = newFolder.transform;
+            _poolFolder = newFolder.transform;
         }
         
         // CreatePool
         foreach (var item in _dataDictionary)
         {
-            if (!poolMap.ContainsKey(item.Key))
+            if (!_poolMap.ContainsKey(item.Key))
             {
                 EnsurePool(item);
             }
@@ -82,19 +92,19 @@ public class EffectFactory : Singleton<EffectFactory>
 
     private void EnsurePool(string objName)
     {
-        if (!poolMap.ContainsKey(objName)) return;
+        if (!_poolMap.ContainsKey(objName)) return;
         KeyValuePair<string, GameObject> pair = new(objName, _dataDictionary[objName]);
         EnsurePool(pair);
     }
     
     private void EnsurePool(KeyValuePair<string, GameObject> data)
     {
-        if (poolMap.ContainsKey(data.Key)) return;
+        if (_poolMap.ContainsKey(data.Key)) return;
         
-        poolMap[data.Key] = new ObjectPool<GameObject>(
+        _poolMap[data.Key] = new ObjectPool<GameObject>(
             createFunc: () =>
             {
-                var go = Instantiate(data.Value, poolFolder);
+                var go = Instantiate(data.Value, _poolFolder);
                 go.name = data.Key;
                 return go;
             },
@@ -113,12 +123,12 @@ public class EffectFactory : Singleton<EffectFactory>
         List<GameObject> objects = new();
         for (int i = 0; i < count; i++)
         {
-            objects.Add(poolMap[key].Get());
+            objects.Add(_poolMap[key].Get());
         }
 
         foreach (var item in objects)
         {
-            poolMap[key].Release(item);
+            _poolMap[key].Release(item);
         }
     }
     
