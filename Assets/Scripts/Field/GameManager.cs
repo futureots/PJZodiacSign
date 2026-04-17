@@ -7,8 +7,8 @@ namespace GlobalManage
 {
 
 
-public class GameManager : Singleton<GameManager>
-{
+    public class GameManager : Singleton<GameManager>
+    {
         [Header("Base Data")]
         [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
 
@@ -68,7 +68,7 @@ public class GameManager : Singleton<GameManager>
             DataManager.Instance.SetData(stageData.player, Level);
             
             // 튜토리얼은 데이터를 저장하지 않음
-            if (stageData.modelName == SceneName.FieldModel.Default)
+            if (stageData.modelName == ModelID.Default)
             {
                 DataManager.Instance.SaveAllData("PlayerData");
             }
