@@ -9,11 +9,9 @@ public class ItemGoodsUI : GoodsUI<ItemData>
         buyBtn.onClick.AddListener(() =>
         {
             var customer = Agent.LocalPlayer;
-            var item = ItemFactory.Instance.RequestItem(data);
+            var item = ItemFactory.Instance.Request(data);
             if (customer.inventory.TryAddItem(item))
             {
-                var item = ItemFactory.Instance.Request(data);
-                customer.inventory.TryAddItem(item);
                 customer.Credit -= price;
             }
             else

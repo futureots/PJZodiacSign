@@ -32,7 +32,7 @@ public class EntityFactory : Singleton<EntityFactory>
         
         // Get Entity from Pool
         Entity entity = _poolMap[data].Get();
-        entity.Init(data, direction, level);
+        entity.Init(data, direction, level,team);
 
         // Move to Initial Tile
         if (tile)
