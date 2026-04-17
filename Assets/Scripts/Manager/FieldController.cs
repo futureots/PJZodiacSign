@@ -40,6 +40,7 @@ public class FieldController : MonoBehaviour
 
         // Set Agents
         _enemyAI = Instantiate(data.aiPrefab, transform);
+        Agent.LocalPlayer = localPlayer;
         localPlayer.Init(this,PlayerID.P0,data.player, new intVector2(1,1));
         for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
         {
