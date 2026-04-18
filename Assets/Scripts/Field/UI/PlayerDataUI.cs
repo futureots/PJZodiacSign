@@ -1,7 +1,5 @@
-using GlobalManage;
 using PlayerInput;
 using TMPro;
-using UnityEngine;
 
 public class PlayerDataUI : InputManagerUI
 {
@@ -21,7 +19,7 @@ public class PlayerDataUI : InputManagerUI
         UpdateCredit(_agent.Credit);
         
         // level 갱신
-        UpdateLevel(GameManager.Instance.Level);
+        UpdateLevel(StageManager.Instance.level);
 
         // 시간 갱신
         StageManager.Instance.timer.onTimerUpdate += UpdateTime;

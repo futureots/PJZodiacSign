@@ -80,8 +80,8 @@ public class StageManager : Singleton<StageManager>
         {
             agentField.Add((PlayerID)(i - 1), resourceFields[i]);
         }
-
-        timer.Init(DataManager.Instance.playData.time);
+        
+        timer.Init(stageData.time);
     }
 
     /// <summary>

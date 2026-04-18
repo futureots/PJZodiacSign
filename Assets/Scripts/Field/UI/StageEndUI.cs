@@ -26,7 +26,7 @@ public class StageEndUI : InputManagerUI
             
             if (id == Agent.LocalPlayer.id)
             {
-                if (GameManager.Instance.levelTable.endLevel > GameManager.Instance.Level)
+                if (GameManager.Instance.levelTable.endLevel > StageManager.Instance.level)
                 {
                     title.text = "클리어!";
                     // 승리 시에만 다음 버튼 활성화
@@ -79,13 +79,12 @@ public class StageEndUI : InputManagerUI
 
     public void ContinueGame()
     {
-        var credit = _inputManager.agent.Credit;
-        _inputManager.agent.Credit += 100 + Mathf.RoundToInt(credit*0.2f);
-        GameManager.Instance.ContinueGame();
+        _inputManager.agent.fieldController.ContinueGame();
     }
 
     public void DefeatGame()
     {
-        GameManager.Instance.EndGame(!isTutorial);
+        _inputManager.agent.fieldController.EndGame();
+        //GameManager.Instance.EndGame(!isTutorial);
     }
 }

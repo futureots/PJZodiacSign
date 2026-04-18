@@ -7,7 +7,7 @@ public class StageData
     /**
      * 스테이지 1개 진행에 필요한 정보
      */
-    public StageData(EnemyAI aiPrefab,List<AgentData> agents, ShopTable shop,List<Phase> phases, int level = 1 , AgentData player = new())
+    public StageData(EnemyAI aiPrefab,List<AgentData> agents, ShopTable shop,List<Phase> phases, int level = 1 , AgentData player = new(), int time =0)
     {
         this.aiPrefab = aiPrefab;
         this.agents = agents;
@@ -15,8 +15,10 @@ public class StageData
         this.level = level;
         this.player = player;
         this.phases = phases;
+        this.time = time;
     }
 
+    public int time;
     public int level;
     
     // Stage Config
