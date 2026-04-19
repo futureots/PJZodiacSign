@@ -7,7 +7,7 @@ public class StageData
     /**
      * 스테이지 1개 진행에 필요한 정보
      */
-    public StageData(EnemyAI aiPrefab,List<AgentData> agents, ShopTable shop,List<Phase> phases, int level = 1 , AgentData player = new(), int time =0)
+    public StageData(EnemyAI aiPrefab,List<AgentData> agents, ShopTable shop,List<Phase> phases, int level , AgentData player, int time, int lastLevel)
     {
         this.aiPrefab = aiPrefab;
         this.agents = agents;
@@ -16,10 +16,12 @@ public class StageData
         this.player = player;
         this.phases = phases;
         this.time = time;
+        isLastLevel = level == lastLevel;
     }
 
     public int time;
     public int level;
+    public bool isLastLevel;
     
     // Stage Config
     public string modelName = GlobalManage.ModelID.Default;

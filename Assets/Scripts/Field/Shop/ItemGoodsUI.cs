@@ -16,7 +16,7 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             }
             else
             {
-                Debug.Log("인벤토리에 빈 공간이 없습니다!");
+                EditorLogger.Print("인벤토리에 빈 공간이 없습니다!");
             }
         });
     }

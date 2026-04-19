@@ -99,7 +99,13 @@ public class ShopUI : MonoBehaviour
         }
         for (int i = itemList.Count; i < itemGoods.Count; i++) itemGoods[i].gameObject.SetActive(false);
     }
+    
+    
 
+    /// <summary>
+    /// 상점 열고 닫기
+    /// </summary>
+    /// <param name="isOpen"></param>
     public void ToggleButton(bool isOpen)
     {
         if (isOpen)

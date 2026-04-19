@@ -9794,6 +9794,8 @@ MonoBehaviour:
   uiMapper: {fileID: 1536540712}
   field: {fileID: 391558642}
   timer: {fileID: 1265144725}
+  level: 0
+  isLastLevel: 0
   point: 0
   resourceFields:
   - {fileID: 1757318514}
@@ -20570,6 +20572,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200838545}
   m_Mesh: {fileID: 5395695993923681942, guid: 5f3d1e7d04e77534381eafe92a4a24d8, type: 3}
+--- !u!1 &1201546307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1201546309}
+  - component: {fileID: 1201546308}
+  m_Layer: 0
+  m_Name: ItemFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1201546308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201546307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da1bfcb49de483bb6e875122c3daca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemFactory
+--- !u!4 &1201546309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201546307}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.103, y: 14.93417, z: -15.06855}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1209435573
 GameObject:
   m_ObjectHideFlags: 0
@@ -35832,3 +35878,4 @@ SceneRoots:
   - {fileID: 1033003150}
   - {fileID: 794235197}
   - {fileID: 657491124}
+  - {fileID: 1201546309}

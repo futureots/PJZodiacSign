@@ -50,7 +50,7 @@ namespace GlobalManage
         List<AgentData> agents = new();
         var data = levelTable.GetLevelData(level);
         agents.Add(data.Item2);
-        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData,time);
+        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData,time, levelTable.endLevel);
         return stageData;
     }
     
@@ -68,7 +68,7 @@ namespace GlobalManage
             DataManager.Instance.SetData(stageData.player, Level);
             
             // 튜토리얼은 데이터를 저장하지 않음
-            if (stageData.modelName == ControllerID.Default)
+            if (stageData.controllerName == ControllerID.Default)
             {
                 DataManager.Instance.SaveAllData("PlayerData");
             }
