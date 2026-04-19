@@ -22,11 +22,11 @@ public class LogItem : MonoBehaviour
     }
 
     private IEnumerator AutoDisable() {
-        yield return new WaitForSeconds(1f); // 2초 대기
+        yield return new WaitForSeconds(0.5f); // 잠시 대기
         
         // 페이드 아웃 연출 (Optional)
         while (canvasGroup.alpha > 0) {
-            canvasGroup.alpha -= Time.deltaTime * 1f;
+            canvasGroup.alpha -= Time.deltaTime * 2f;
             yield return null;
         }
 
