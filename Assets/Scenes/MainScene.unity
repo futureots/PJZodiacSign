@@ -12146,7 +12146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   stageData:
+    time: 0
     level: 0
+    isLastLevel: 0
     modelName: FieldModel
     controllerName: BaseBattle
     aiPrefab: {fileID: 0}
@@ -30786,7 +30788,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   stageData:
+    time: 0
     level: 0
+    isLastLevel: 0
     modelName: FieldModel
     controllerName: BaseBattle
     aiPrefab: {fileID: 0}
