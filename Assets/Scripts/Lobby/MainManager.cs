@@ -17,7 +17,12 @@ namespace Main
         private void Start()
         {
             Screen.SetResolution(1920, 1080, true);
-            giveUpBtn.SetActive(/*DataManager.Instance.isModified*/ false);     // TODO: DataManager 로드 확인 필요
+            #if UNITY_EDITOR
+            giveUpBtn.SetActive(false);     // TODO: DataManager 로드 확인 필요
+            #else
+            giveUpBtn.SetActive(DataManager.Instance.isModified);     // TODO: DataManager 로드 확인 필요
+            #endif
+            
         }
 
         public void StartGame()
