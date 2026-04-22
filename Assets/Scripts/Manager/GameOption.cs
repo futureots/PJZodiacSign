@@ -175,12 +175,12 @@ namespace GlobalManage
             {
                 string json = File.ReadAllText(_savePath);
                 _currentSettings = JsonUtility.FromJson<GameSetting>(json);
-                ApplyAllSettings();
             }
             else
             {
                 _currentSettings = new GameSetting();
             }
+            ApplyAllSettings();
         }
 
         /// <summary>
