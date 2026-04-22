@@ -40,8 +40,8 @@ namespace GlobalManage
         {
             base.Awake();
             _savePath = Path.Combine(Application.persistentDataPath, "settings.json");
-            InitResolutions();
             LoadSettings();
+            InitResolutions();
         }
 
         public void ActiveOption(bool active)
@@ -66,16 +66,16 @@ namespace GlobalManage
                 float aspect = (float)res.width / res.height;
                 if (Mathf.Abs(aspect - 1.777f) < 0.1f)
                 {
-                    _resolutions.Add(res);
+                    _resolutions.Insert(0, res);
                 }
             }
             
             // Apply to UI
             foreach (var res in _resolutions)
             {
-                resolutionDropdown.options.Clear();
                 resolutionDropdown.options.Add(new TMP_Dropdown.OptionData(res.width + " x " + res.height));
             }
+            resolutionDropdown.value = _currentSettings.resolutionIndex;
         }
 
         /// <summary>
