@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 namespace GlobalManage
 {
@@ -20,6 +22,13 @@ namespace GlobalManage
     {
         [Header("Audio")]
         [SerializeField] private AudioMixer mainMixer;
+        
+        [Header("UI")]
+        [SerializeField] private Scrollbar masterBar;
+        [SerializeField] private Scrollbar bgmBar;
+        [SerializeField] private Scrollbar sfxBar;
+        [SerializeField] private Toggle fullScreenToggle;
+        [SerializeField] private TMP_Dropdown resolutionDropdown;
         
         [Header("Settings Data")]
         private GameSetting _currentSettings;
@@ -54,6 +63,13 @@ namespace GlobalManage
                     _resolutions.Add(res);
                 }
             }
+            
+            // Apply to UI
+            foreach (var res in _resolutions)
+            {
+                resolutionDropdown.options.Clear();
+                resolutionDropdown.options.Add(new TMP_Dropdown.OptionData(res.width + " x " + res.height));
+            }
         }
 
         /// <summary>
@@ -84,6 +100,11 @@ namespace GlobalManage
             
             _currentSettings.resolutionIndex = index;
             _currentSettings.isFullScreen = isFull;
+            
+            // Apply to UI
+            fullScreenToggle.isOn = _currentSettings.isFullScreen;
+            resolutionDropdown.value = index;
+            
             SaveSettings();
         }
         
@@ -110,17 +131,27 @@ namespace GlobalManage
 
             switch (parameterName)
             {
-                case "master": _currentSettings.masterVolume = value; break;
-                case "bgm": _currentSettings.bgmVolume = value; break;
-                case "sfx": _currentSettings.sfxVolume = value; break;
+                case "master": 
+                    _currentSettings.masterVolume = value; 
+                    masterBar.value = value;
+                    break;
+                case "bgm": 
+                    _currentSettings.bgmVolume = value; 
+                    bgmBar.value = value;
+                    break;
+                case "sfx": 
+                    _currentSettings.sfxVolume = value; 
+                    sfxBar.value = value;
+                    break;
             }
+            
             SaveSettings();
         }
         
         /// Wrapper for dynamic Event
         public void SetMasterVolume(float value) => SetVolume("master", value);
-        public void SetBGMVolume(float value) => SetVolume("BGM", value);
-        public void SetSFXVolume(float value) => SetVolume("SFX", value);
+        public void SetBGMVolume(float value) => SetVolume("bgm", value);
+        public void SetSFXVolume(float value) => SetVolume("sfx", value);
 
         #endregion
         
@@ -157,9 +188,10 @@ namespace GlobalManage
         /// </summary>
         private void ApplyAllSettings()
         {
-            SetVolume("Master", _currentSettings.masterVolume);
-            SetVolume("BGM", _currentSettings.bgmVolume);
-            SetVolume("SFX", _currentSettings.sfxVolume);
+            // Set Value
+            SetVolume("master", _currentSettings.masterVolume);
+            SetVolume("bgm", _currentSettings.bgmVolume);
+            SetVolume("sfx", _currentSettings.sfxVolume);
             
             if (_resolutions.Count > _currentSettings.resolutionIndex)
             {

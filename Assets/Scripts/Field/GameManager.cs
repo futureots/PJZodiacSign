@@ -5,8 +5,6 @@ using UnityEngine;
 
 namespace GlobalManage
 {
-
-
     public class GameManager : Singleton<GameManager>
     {
         [Header("Base Data")]
