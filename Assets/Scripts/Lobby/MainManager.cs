@@ -17,7 +17,12 @@ namespace Main
         private void Start()
         {
             Screen.SetResolution(1920, 1080, true);
-            giveUpBtn.SetActive(/*DataManager.Instance.isModified*/ false);     // TODO: DataManager 로드 확인 필요
+            #if UNITY_EDITOR
+            giveUpBtn.SetActive(false);     // TODO: DataManager 로드 확인 필요
+            #else
+            giveUpBtn.SetActive(DataManager.Instance.isModified);     // TODO: DataManager 로드 확인 필요
+            #endif
+            
         }
 
         public void StartGame()
@@ -25,7 +30,7 @@ namespace Main
             if (DataManager.Instance.isModified)
             {
                 GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
-                var data = GameManager.Instance.CreateStageData(DataManager.Instance.playData.stageLevel, DataManager.Instance.GetPlayerAgentData());
+                var data = GameManager.Instance.CreateStageData(DataManager.Instance.playData.stageLevel, DataManager.Instance.GetPlayerAgentData(),DataManager.Instance.playData.time);
                 GameManager.Instance.EnterBattle(data);
             }
             else
@@ -36,7 +41,7 @@ namespace Main
                     return;
                 }
                 GameManager.Instance.SetModeData(levelTable, shopTable);
-                var data = GameManager.Instance.CreateStageData(1, new AgentData(150));
+                var data = GameManager.Instance.CreateStageData(1, new AgentData(150),0);
                 GameManager.Instance.EnterBattle(data);
             }
         }
@@ -44,7 +49,7 @@ namespace Main
         public void StartTutorial()
         {
             GameManager.Instance.SetModeData(tutorialTable, shopTable);
-            var data = GameManager.Instance.CreateStageData(1, new AgentData(9999));
+            var data = GameManager.Instance.CreateStageData(1, new AgentData(9999),0);
             data.controllerName = ControllerID.Tutorial;
             GameManager.Instance.EnterBattle(data);
         }

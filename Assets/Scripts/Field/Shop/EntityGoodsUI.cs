@@ -1,8 +1,10 @@
 
 
+using UnityEngine;
+
 public class EntityGoodsUI : GoodsUI<EntityData>
 {
-    public override void SetGoods(EntityData data)
+    public override void SetGoods(EntityData data, LogSystem logSystem = null)
     {
         buyBtn.onClick.RemoveAllListeners();
         base.SetGoods(data);
@@ -22,6 +24,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             }
             else
             {
+                logSystem?.ShowLog("소환할 빈 공간이 없습니다!",LogType.Error);
                 EditorLogger.Print("소환할 빈 공간이 없습니다!");
             }
         });

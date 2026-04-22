@@ -1,3 +1,4 @@
+using GlobalManage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class FieldController : MonoBehaviour
     protected StageManager stageManager;
 
     protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
-    public event Action<string> OnBattleEnd;    // NOTE: 전투 종료 플래그 (단순 string)
+    public Action<string> OnBattleEnd;    // NOTE: 전투 종료 플래그 (단순 string)
     
     [Header("Dependency")]
     [SerializeField] InputManager inputManager;
@@ -173,6 +174,19 @@ public class FieldController : MonoBehaviour
             winTeam = PlayerID.None;
             return false;
         }
+    }
+
+    public virtual void EndGame()
+    {
+        // 패배 시 데이터 삭제 및 메인 화면으로 이동
+        OnBattleEnd?.Invoke("FAIL");
+    }
+
+    public virtual void ContinueGame()
+    {
+        var credit = localPlayer.Credit;
+        localPlayer.Credit += 100 + Mathf.RoundToInt(credit*0.2f);
+        OnBattleEnd?.Invoke("CLEAR");
     }
     #endregion
 

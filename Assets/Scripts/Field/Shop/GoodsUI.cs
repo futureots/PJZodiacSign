@@ -18,7 +18,7 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     /// </summary>
     /// <param name="data"></param>
     /// <param name="customer"></param>
-    public virtual void SetGoods(T data)
+    public virtual void SetGoods(T data, LogSystem logSystem = null)
     {
         goodsName.text = data.productName;
         price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.8f, 1.2f));

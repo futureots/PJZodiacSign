@@ -16,6 +16,7 @@ public class StageManager : Singleton<StageManager>
     public Field field;
     public Timer timer;
     public int level;
+    public bool isLastLevel;
     public int point;
     
     // key = teamNum, value = ResourceField
@@ -53,6 +54,7 @@ public class StageManager : Singleton<StageManager>
     {
         // Get Level
         level = stageData.level;
+        isLastLevel = stageData.isLastLevel;
         
         // Entity Pooling
         // TODO: pooling 비동기로 예외
@@ -80,8 +82,8 @@ public class StageManager : Singleton<StageManager>
         {
             agentField.Add((PlayerID)(i - 1), resourceFields[i]);
         }
-
-        timer.Init(DataManager.Instance.playData.time);
+        
+        timer.Init(stageData.time);
     }
 
     /// <summary>

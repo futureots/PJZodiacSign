@@ -45,12 +45,12 @@ namespace GlobalManage
     /// <param name="level"></param>
     /// <param name="playerData"></param>
     /// <returns></returns>
-    public StageData CreateStageData(int level,AgentData playerData)
+    public StageData CreateStageData(int level,AgentData playerData, int time)
     {
         List<AgentData> agents = new();
         var data = levelTable.GetLevelData(level);
         agents.Add(data.Item2);
-        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData);
+        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData,time, levelTable.endLevel);
         return stageData;
     }
     
@@ -68,7 +68,7 @@ namespace GlobalManage
             DataManager.Instance.SetData(stageData.player, Level);
             
             // 튜토리얼은 데이터를 저장하지 않음
-            if (stageData.modelName == ModelID.Default)
+            if (stageData.controllerName == ControllerID.Default)
             {
                 DataManager.Instance.SaveAllData("PlayerData");
             }
@@ -117,6 +117,9 @@ namespace GlobalManage
                         ContinueGame();
                         break;
                     case "FAIL":
+                        EndGame(true);
+                        break;
+                    case "End":
                         EndGame();
                         break;
                 }
@@ -137,7 +140,7 @@ namespace GlobalManage
             // 다음 레벨로 넘어가는 코드
             EditorLogger.Print($"{playerData.credit} 현재 크레딧");
             EditorLogger.Print($"{Level + 1} 로드 중");
-            var stageData = CreateStageData(Level + 1, playerData);
+            var stageData = CreateStageData(Level + 1, playerData,StageManager.Instance.timer.GetTime());
             EnterBattle(stageData);
         }
 

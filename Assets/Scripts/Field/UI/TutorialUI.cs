@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,13 +8,6 @@ public class TutorialUI : InputManagerUI
 
     public TutorialPanel repairTutorial;
     public TutorialPanel battleTutorial;
-    
-    
-    [SerializeField] TextMeshProUGUI description;
-    [SerializeField, TextArea(3,5)] string repairDescription;
-    [SerializeField, TextArea(3, 5)] string moveDescription;
-    [SerializeField, TextArea(3, 5)] string skillDescription;
-    [SerializeField, TextArea(3, 5)] string defaultDescription;
 
     public override void Init(InputManager inputManager)
     {
@@ -25,15 +19,20 @@ public class TutorialUI : InputManagerUI
     void OnPhaseChange(Phase phase)
     {
         EditorLogger.Print("OnPhaseChange");
-        // TODO : 정비 페이즈일 경우 정비 설명 UI 표시(전체 화면, 패널 외 상호작용 불가, 모든 패널 확인 시 비활성화)
-        if (phase.phaseName == PhaseType.Repair)
+        switch (phase.phaseName)
         {
-            repairTutorial.Init();
-        }
-        // TODO : 전투 페이즈일 경우 전투 설명 UI 표시(위와 동일)
-        else if (phase.phaseName == PhaseType.Battle)
-        {
-            battleTutorial.Init();
+            // TODO : 정비 페이즈일 경우 정비 설명 UI 표시(전체 화면, 패널 외 상호작용 불가, 모든 패널 확인 시 비활성화)
+            case PhaseType.Repair:
+                repairTutorial.gameObject.SetActive(true);
+                battleTutorial.gameObject.SetActive(false);
+                repairTutorial.Init();
+                break;
+            // TODO : 전투 페이즈일 경우 전투 설명 UI 표시(위와 동일)
+            case PhaseType.Battle:
+                repairTutorial.gameObject.SetActive(false);
+                battleTutorial.gameObject.SetActive(true);
+                battleTutorial.Init();
+                break;
         }
     }
 }
