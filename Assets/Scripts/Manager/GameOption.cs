@@ -24,6 +24,7 @@ namespace GlobalManage
         [SerializeField] private AudioMixer mainMixer;
         
         [Header("UI")]
+        [SerializeField] private GameObject OptionPanel;
         [SerializeField] private Scrollbar masterBar;
         [SerializeField] private Scrollbar bgmBar;
         [SerializeField] private Scrollbar sfxBar;
@@ -41,6 +42,11 @@ namespace GlobalManage
             _savePath = Path.Combine(Application.persistentDataPath, "settings.json");
             InitResolutions();
             LoadSettings();
+        }
+
+        public void ActiveOption(bool active)
+        {
+            OptionPanel.SetActive(active);
         }
 
         #region Resolution
