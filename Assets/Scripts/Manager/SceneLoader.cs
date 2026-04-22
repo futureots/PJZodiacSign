@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,6 +27,24 @@ namespace GlobalManage
         
         private Scene _fieldScene;
         private Scene _controllerScene;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            RefreshCurrentSceneReferences();
+        }
+
+        private void Start()
+        {
+            if (SceneManager.sceneCount != 1)
+            {
+                return;
+            }
+
+            // Runtime Entry to Main
+            EditorLogger.Print("Loading Main Scene");
+            StartCoroutine(LoadMain());
+        }
 
         /// <summary>
         /// Load Main Scene (ModelID.Main)
