@@ -14,7 +14,7 @@ namespace GlobalManage
     public static class ControllerID
     {
         public const string Default = "BaseBattle";
-        public const string Tutorial = "Tutorial";
+        public const string Tutorial = "TutorialController";
     }
     
     public class SceneLoader : Singleton<SceneLoader>

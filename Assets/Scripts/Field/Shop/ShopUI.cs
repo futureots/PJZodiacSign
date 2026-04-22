@@ -10,6 +10,7 @@ public class ShopUI : MonoBehaviour
     Shop shop;
 
     public GameObject shopPanel;
+    public LogSystem logSystem;
     [SerializeField] GameObject shopToggle;
     [SerializeField] private TextMeshProUGUI buttonText;
 
@@ -75,7 +76,7 @@ public class ShopUI : MonoBehaviour
             }
             if (goodsUI != null)
             {
-                goodsUI.SetGoods(entityList[i]);
+                goodsUI.SetGoods(entityList[i],logSystem);
             }
         }
         for (int i = entityList.Count; i < entityGoods.Count; i++) entityGoods[i].gameObject.SetActive(false);
@@ -94,12 +95,18 @@ public class ShopUI : MonoBehaviour
             }
             if (goodsUI != null)
             {
-                goodsUI.SetGoods(itemList[i]);
+                goodsUI.SetGoods(itemList[i],logSystem);
             }
         }
         for (int i = itemList.Count; i < itemGoods.Count; i++) itemGoods[i].gameObject.SetActive(false);
     }
+    
+    
 
+    /// <summary>
+    /// 상점 열고 닫기
+    /// </summary>
+    /// <param name="isOpen"></param>
     public void ToggleButton(bool isOpen)
     {
         if (isOpen)

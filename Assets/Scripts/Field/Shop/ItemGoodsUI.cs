@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ItemGoodsUI : GoodsUI<ItemData>
 {
-    public override void SetGoods(ItemData data)
+    public override void SetGoods(ItemData data,LogSystem log = null)
     {
         buyBtn.onClick.RemoveAllListeners();
         base.SetGoods(data);
@@ -16,7 +16,8 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             }
             else
             {
-                Debug.Log("인벤토리에 빈 공간이 없습니다!");
+                log?.ShowLog("인벤토리에 빈 공간이 없습니다!",LogType.Error);
+                EditorLogger.Print("인벤토리에 빈 공간이 없습니다!");
             }
         });
     }

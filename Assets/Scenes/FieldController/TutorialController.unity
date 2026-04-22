@@ -473,8 +473,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Agent
   id: -1
   actionCount: 3
-  actionAbleEntities: []
   inventory: {fileID: 477964640}
+  fieldEntities: []
+  resourceEntities: []
 --- !u!114 &477964640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,9 +622,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 807200184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e80384b67b0dfdb4a959d0af113da176, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e030225aa60a4549a1387de45074763, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FieldController
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialController
+  inputManager: {fileID: 477964638}
+  inputUI: {fileID: 1598466484}
   turnCount: 0
   phases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
@@ -631,8 +634,6 @@ MonoBehaviour:
   localPlayer: {fileID: 477964639}
   agents:
   - {fileID: 1990503684}
-  inputManager: {fileID: 477964638}
-  inputUI: {fileID: 1598466484}
 --- !u!1001 &874548635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1636,8 +1637,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Agent
   id: 0
   actionCount: 3
-  actionAbleEntities: []
   inventory: {fileID: 1990503685}
+  fieldEntities: []
+  resourceEntities: []
 --- !u!114 &1990503685
 MonoBehaviour:
   m_ObjectHideFlags: 0

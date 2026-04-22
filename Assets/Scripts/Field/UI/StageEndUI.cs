@@ -1,4 +1,3 @@
-using GlobalManage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,9 +23,9 @@ public class StageEndUI : InputManagerUI
             blindPanel.SetActive(true);
             panel.SetActive(true);
             
-            if (id == Agent.LocalPlayer.id)
+            if (id == Agent.LocalPlayer.id) // 승리 시
             {
-                if (GameManager.Instance.levelTable.endLevel > GameManager.Instance.Level)
+                if (!StageManager.Instance.isLastLevel)
                 {
                     title.text = "클리어!";
                     // 승리 시에만 다음 버튼 활성화
@@ -43,13 +42,14 @@ public class StageEndUI : InputManagerUI
                 }
                 
             }
-            else
+            else // 패배 시
             {
                 SetLoopValue();
             }
         };
     }
 
+    // 현재 스테이지 대한 정보만 출력
     void SetStageValue()
     {
         // 시간 표시
@@ -63,6 +63,7 @@ public class StageEndUI : InputManagerUI
         pointText.text = $"획득 점수 : {point}";
     }
 
+    // 전체 루프에 대한 정보 출력
     void SetLoopValue()
     {
         // 총 시간 표시
@@ -79,13 +80,12 @@ public class StageEndUI : InputManagerUI
 
     public void ContinueGame()
     {
-        var credit = _inputManager.agent.Credit;
-        _inputManager.agent.Credit += 100 + Mathf.RoundToInt(credit*0.2f);
-        GameManager.Instance.ContinueGame();
+        _inputManager.agent.fieldController.ContinueGame();
     }
 
     public void DefeatGame()
     {
-        GameManager.Instance.EndGame(!isTutorial);
+        _inputManager.agent.fieldController.EndGame();
+        //GameManager.Instance.EndGame(!isTutorial);
     }
 }
