@@ -18,11 +18,10 @@ namespace Main
         {
             Screen.SetResolution(1920, 1080, true);
             #if UNITY_EDITOR
-            giveUpBtn.SetActive(false);     // TODO: DataManager 로드 확인 필요
+            giveUpBtn.SetActive(DataManager.Instance && DataManager.Instance.isModified);
             #else
-            giveUpBtn.SetActive(DataManager.Instance.isModified);     // TODO: DataManager 로드 확인 필요
+            giveUpBtn.SetActive(DataManager.Instance.isModified);
             #endif
-            
         }
 
         public void StartGame()
@@ -57,7 +56,7 @@ namespace Main
         public void GiveUpGame()
         {
             DataManager.Instance.ResetData("PlayerData");
-            StartCoroutine(SceneLoader.Instance.LoadMain());
+            giveUpBtn.SetActive(false);
         }
 
         public void ExitGame()
