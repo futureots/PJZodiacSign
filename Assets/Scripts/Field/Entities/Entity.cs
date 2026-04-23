@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.VFX;
 
 [RequireComponent(typeof(SkillComponent))]
 [RequireComponent(typeof(EnergyComponent))]     // NOTE: Skill 내 Energy 스탯 종속 시 컴포넌트 병합
-[RequireComponent(typeof(BuffManager))]
 [RequireComponent(typeof(AreaComponent))]
 public class Entity : Occupant, IDamageable, IAttackable
 {
@@ -67,7 +64,6 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     [SerializeField] Material white;
     [SerializeField] Material black;
-
     /// <summary>
     /// Initialize Setting when Load
     /// </summary>

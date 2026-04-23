@@ -83,6 +83,7 @@ namespace GlobalManage
         {
             // Load scenes
             LoadingUI.SetActive(true);
+            EditorLogger.Print($"{stageData.modelName} : {stageData.controllerName}");
             yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);
 
             // Find FieldController in Controller Scene

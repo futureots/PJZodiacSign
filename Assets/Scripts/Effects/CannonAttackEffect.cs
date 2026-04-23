@@ -25,6 +25,7 @@ public class CannonAttackEffect : BasicAttackEffect
             .SetLoops(2, LoopType.Yoyo)).
             AppendCallback(HitAction);
 
+        audioSource?.Play();
     }
     protected override void HitAction()
     {
