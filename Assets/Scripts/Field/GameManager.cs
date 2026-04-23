@@ -8,7 +8,7 @@ namespace GlobalManage
     public class GameManager : Singleton<GameManager>
     {
         [Header("Base Data")]
-        [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
+        [SerializeField] private LoadingUI loadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
 
         public LevelTable levelTable;
         public ShopTable shopTable;
@@ -83,7 +83,9 @@ namespace GlobalManage
         private IEnumerator StartBattle(StageData stageData)
         {
             // Load scenes
-            LoadingUI.SetActive(true);
+            loadingUI.gameObject.SetActive(true);
+            yield return loadingUI.FadeIn(1f);
+            
             EditorLogger.Print($"{stageData.modelName} : {stageData.controllerName}");
             yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);
 
@@ -127,7 +129,9 @@ namespace GlobalManage
 
             // Complete Loading
             currentStage = stageData;
-            LoadingUI.SetActive(false);
+            
+            yield return loadingUI.FadeOut(1f);
+            loadingUI.gameObject.SetActive(false);
         }
 
         #endregion
