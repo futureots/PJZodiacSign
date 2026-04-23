@@ -1686,6 +1686,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4930239986288736705, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5574764471722646465, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_Name
       value: TutorialUI
