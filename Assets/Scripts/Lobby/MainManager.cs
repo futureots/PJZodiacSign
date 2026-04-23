@@ -28,8 +28,9 @@ namespace Main
         {
             if (DataManager.Instance.isModified)
             {
+                var dataManager = DataManager.Instance;
                 GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
-                var data = GameManager.Instance.CreateStageData(DataManager.Instance.playData.stageLevel, DataManager.Instance.GetPlayerAgentData(),DataManager.Instance.playData.time);
+                var data = GameManager.Instance.CreateStageData(dataManager.playData.stageLevel, dataManager.GetPlayerAgentData(),dataManager.playData.time,dataManager.playData.point);
                 GameManager.Instance.EnterBattle(data);
             }
             else
@@ -40,7 +41,7 @@ namespace Main
                     return;
                 }
                 GameManager.Instance.SetModeData(levelTable, shopTable);
-                var data = GameManager.Instance.CreateStageData(1, new AgentData(150),0);
+                var data = GameManager.Instance.CreateStageData(1, new AgentData(150),0,0);
                 GameManager.Instance.EnterBattle(data);
             }
         }
@@ -48,7 +49,7 @@ namespace Main
         public void StartTutorial()
         {
             GameManager.Instance.SetModeData(tutorialTable, shopTable);
-            var data = GameManager.Instance.CreateStageData(1, new AgentData(9999),0);
+            var data = GameManager.Instance.CreateStageData(1, new AgentData(9999),0,0);
             data.controllerName = ControllerID.Tutorial;
             GameManager.Instance.EnterBattle(data);
         }

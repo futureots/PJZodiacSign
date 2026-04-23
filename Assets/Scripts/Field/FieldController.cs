@@ -96,9 +96,10 @@ public class FieldController : MonoBehaviour
         // Invalid Phase Count
         if (index >= phases.Count)
         {
-            if (IsBattleEnd(out var winner))
+            if (IsBattleEnd(out PlayerID winner))
             {
-                stageManager.EndStage(winner);
+                EndStage(winner);
+                
             }
             return;
         }
@@ -174,6 +175,13 @@ public class FieldController : MonoBehaviour
             winTeam = PlayerID.None;
             return false;
         }
+    }
+
+    public virtual void EndStage(PlayerID winner)
+    {
+        stageManager.EndStage(winner);
+        DataManager.Instance.playData.time = stageManager.timer.GetTime();
+        DataManager.Instance.playData.point = stageManager.GetTotalPoint();
     }
 
     public virtual void EndGame()
