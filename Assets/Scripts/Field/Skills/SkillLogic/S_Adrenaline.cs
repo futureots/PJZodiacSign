@@ -17,7 +17,7 @@ public class S_Adrenaline : BaseSkillLogic
         var field = StageManager.Instance.field;
         
         // 광화 이펙트 재생
-        EffectFactory.Instance.Request("PowerAura", field.transform.position, field.transform.lossyScale*8);
+        EffectFactory.Instance.Request("PowUpAura", field.transform.position, field.transform.lossyScale*8);
         
         var entities = field.GetEntities();
         foreach (var entity in entities)

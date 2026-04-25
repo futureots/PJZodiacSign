@@ -4,23 +4,20 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class S_ChargeArea : BaseSkillLogic
+public class S_PowerUp : BaseSkillLogic
 {
-    [SerializeField] int charge;
-    [SerializeField] Area area;
+    [SerializeField] private Area area;
     private Entity _owner;
-    public S_ChargeArea() { }
-    public void Init(Area _area, int amount)
-    {
-        area = _area;
-        charge = amount;
-    }
 
+    public void Init(Area area)
+    {
+        this.area = area;
+    }
     public override async UniTask<bool> InputSkill(IInput input)
     {
-        if (component.TryGetComponent<Entity>(out var owner))
+        if (component.TryGetComponent<Entity>(out var entity))
         {
-            _owner = owner;
+            _owner = entity;
             return true;
         }
         var list = StageManager.Instance.field.GetEntities();
@@ -32,8 +29,9 @@ public class S_ChargeArea : BaseSkillLogic
         }
         
         return false;
-    }
 
+    }
+    
     public override IEnumerator ExecuteSkill()
     {
         var pos = _owner.CurTile.fieldPos;
@@ -41,29 +39,27 @@ public class S_ChargeArea : BaseSkillLogic
         var vectors = area.GetVectors(t, pos, _owner.direction);
         var tiles = StageManager.Instance.field.GetTiles(vectors);
         
-        // Effect
-        EffectFactory.Instance.Request("ManaAura",_owner.transform.position,_owner.transform.lossyScale*3);
-        yield return new WaitForSeconds(0.1f);
+        EffectFactory.Instance.Request("PowUpAura",_owner.transform.position,_owner.transform.lossyScale*5);
         
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
-            if(tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
+            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
             {
-                if (entity.team.IsAlly(_owner.team))
+                if (!entity.team.IsAlly(_owner.team))
                 {
-                    entity.energy.CurEnergy += charge;
+                    entity.Power += 1;
                 }
             }
         }
-        yield return new WaitForSeconds(0.9f);
         _owner = null;
         yield break;
     }
+
     public override BaseSkillLogic Clone()
     {
-        var clone = new S_ChargeArea();
-        clone.Init(area,charge);
+        var clone = new S_PowerUp();
+        clone.Init(area);
         return clone;
     }
 }

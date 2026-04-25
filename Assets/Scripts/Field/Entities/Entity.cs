@@ -169,7 +169,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         get => _defense;
         set
         {
-            _defense = Math.Max(value,0);
+            _defense = value;
             OnDefenseChanged?.Invoke(_defense);
         }
     }
