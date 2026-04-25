@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Queen
   productName: "\uD038"
   icon: {fileID: 21300000, guid: a4ffc96028c4dd147a5f8700d929c681, type: 3}
-  normalPrice: 50
+  normalPrice: 40
   prefab: {fileID: 256251255046908608, guid: 5f6aa753d88fbe942ac9144265300f64, type: 3}
   moveArea:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
@@ -23,10 +23,9 @@ MonoBehaviour:
   attackArea:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
   - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
-  maxHp: 23
-  power: 3
-  hpMultiplier: 4
-  powerMultiplier: 2
+  maxHp: 40
+  power: 7
+  hpMultiplier: 20
+  powerMultiplier: 3
   skill: {fileID: 11400000, guid: b303936343c02d24d946eb44160ece79, type: 2}
-  maxEnergy: 4
-  offset: {x: 0, y: 3.3, z: 0}
+  maxEnergy: 3
