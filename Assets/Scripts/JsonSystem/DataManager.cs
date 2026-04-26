@@ -96,6 +96,7 @@ public class DataManager : Singleton<DataManager>
 
     public void ResetData(string fileName)
     {
+        
         DeleteData(fileName);
         LoadAllData(fileName);
     }
@@ -183,7 +184,7 @@ public class DataManager : Singleton<DataManager>
         }
     }
 }
-[System.Serializable]
+[Serializable]
 public struct AgentData
 {
     public AgentData(int credit, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)

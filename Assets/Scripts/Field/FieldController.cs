@@ -191,7 +191,7 @@ public class FieldController : MonoBehaviour
 
     public virtual void ContinueGame()
     {
-        var credit = localPlayer.Credit;
+        var credit = Math.Min(localPlayer.Credit,200);
         localPlayer.Credit += 100 + Mathf.RoundToInt(credit*0.2f);
         OnBattleEnd?.Invoke("CLEAR");
     }

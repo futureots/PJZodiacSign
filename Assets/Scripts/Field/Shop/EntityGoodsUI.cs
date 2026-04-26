@@ -20,6 +20,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
                 customer.Credit -= price;
                 
                 entity.IsControllable = true;
+                EditorLogger.Print($"buy entity : {entity.baseData.id}");
             }
             else
             {

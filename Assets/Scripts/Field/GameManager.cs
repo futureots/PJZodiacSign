@@ -85,7 +85,6 @@ namespace GlobalManage
             loadingUI.gameObject.SetActive(true);
             yield return loadingUI.FadeIn(1f);
             
-            EditorLogger.Print($"{stageData.modelName} : {stageData.controllerName}");
             yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);
 
             // Find FieldController in Controller Scene
@@ -115,12 +114,15 @@ namespace GlobalManage
                 switch (s)
                 {
                     case "CLEAR":
+                        EditorLogger.Print($"승리{stageData.level} : {DataManager.Instance.playData}");
                         ContinueGame();
                         break;
                     case "FAIL":
+                        EditorLogger.Print($"패배{stageData.level} : {DataManager.Instance.playData}");
                         EndGame(true);
                         break;
                     case "End":
+                        EditorLogger.Print($"종료{stageData.level} : {DataManager.Instance.playData}");
                         EndGame();
                         break;
                 }

@@ -13,6 +13,7 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             if (customer.inventory.TryAddItem(item))
             {
                 customer.Credit -= price;
+                EditorLogger.Print($"buy item : {item.ItemData.id}");
             }
             else
             {
