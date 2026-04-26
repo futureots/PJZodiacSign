@@ -164,7 +164,6 @@ public class FieldController : MonoBehaviour
                 }
             }
         }
-        EditorLogger.Print(surviveTeam.Count);
         if(surviveTeam.Count == 1)
         {
             winTeam = surviveTeam[0];

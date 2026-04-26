@@ -68,7 +68,6 @@ namespace GlobalManage
             if (stageData.controllerName == ControllerID.Default)
             {
                 DataManager.Instance.SetData(stageData.player, Level);
-                EditorLogger.Print("SaveData");
                 DataManager.Instance.SaveAllData("PlayerData");
             }
             
@@ -142,8 +141,6 @@ namespace GlobalManage
         {
             var playerData = Agent.LocalPlayer.getData();
             // 다음 레벨로 넘어가는 코드
-            EditorLogger.Print($"{playerData.credit} 현재 크레딧");
-            EditorLogger.Print($"{Level + 1} 로드 중");
             var stageData = CreateStageData(Level + 1, playerData,StageManager.Instance.timer.GetTime(), StageManager.Instance.GetTotalPoint());
             EnterBattle(stageData);
         }
