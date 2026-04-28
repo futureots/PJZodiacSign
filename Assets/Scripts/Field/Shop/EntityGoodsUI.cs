@@ -15,17 +15,16 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             var tiles = StageManager.Instance.agentField[teamNum].GetTiles().GetEmptyTiles();
             if(tiles.Count > 0)
             {
-                EditorLogger.Print(teamNum);
                 var entity = EntityFactory.Instance.Request(data, new intVector2(1, 1), tiles[0], teamNum);
                 
                 customer.Credit -= price;
                 
                 entity.IsControllable = true;
+                EditorLogger.Print($"buy entity : {entity.baseData.id}");
             }
             else
             {
                 logSystem?.ShowLog("소환할 빈 공간이 없습니다!",LogType.Error);
-                EditorLogger.Print("소환할 빈 공간이 없습니다!");
             }
         });
     }

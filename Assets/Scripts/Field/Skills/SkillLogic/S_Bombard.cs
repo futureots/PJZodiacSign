@@ -50,13 +50,16 @@ public class S_Bombard : BaseSkillLogic
                 void Hit()
                 {
                     target.Damaged(damage);
+                    target.Defense -= 1;
                     var splashTiles = field.GetTiles(area.GetVectors(field.GetFieldState(),tile.fieldPos,direction));
                     foreach (var splashTile in splashTiles)
                     {
                         if(splashTile.IsEmpty) continue;
-                        if (!splashTile.occupiedEntity.team.IsAlly(team))
+                        var splashEntity = splashTile.occupiedEntity;
+                        if (!splashEntity.team.IsAlly(team))
                         {
-                            splashTile.occupiedEntity.Damaged(damage);
+                            splashEntity.Damaged(damage);
+                            splashEntity.Defense -= 1;
                         }
                     }
                 }

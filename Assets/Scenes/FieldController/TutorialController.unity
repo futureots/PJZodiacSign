@@ -1674,33 +1674,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 135727694}
     m_Modifications:
-    - target: {fileID: 1426439142804834906, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
-      propertyPath: m_fontSize
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3691128785132870760, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
-      propertyPath: m_fontSize
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4930239986288736705, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
-      propertyPath: m_fontSize
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 5574764471722646465, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_Name
       value: TutorialUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5574764471722646465, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5880421149487134421, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
-      propertyPath: m_fontSize
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 9050277469721928576, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
-      propertyPath: m_fontSize
-      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9111966060674098166, guid: 5c19d3cc3655ce4408263f8c7f532b68, type: 3}
       propertyPath: m_Pivot.x

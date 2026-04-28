@@ -7,7 +7,6 @@ public sealed record EndCommand(FieldController Controller) : CheckCommand(Contr
     {
         StageManager.Instance.field.RemoveDeadEntities();
         yield return new WaitForSeconds(0.1f);
-        EditorLogger.Print("EndCommand Execute");
         if(Controller.CurrentPhase.phaseName == PhaseType.Battle)
         {                
             if (Controller.IsBattleEnd(out var winner))

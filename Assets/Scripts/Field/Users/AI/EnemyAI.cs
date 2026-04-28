@@ -27,7 +27,6 @@ public class EnemyAI : MonoBehaviour , IInput
         
         if(curTurn.agentID == agent.id)
         {
-            EditorLogger.Print("AI "+ CurTurnType);
             switch (curTurn.type)
             {
                 case TurnType.ACTION:
@@ -95,7 +94,6 @@ public class EnemyAI : MonoBehaviour , IInput
         }
 
         agent.CreateEndCommand();
-        EditorLogger.Print("RepairEnd");
     }
 
     /// <summary>
@@ -134,7 +132,6 @@ public class EnemyAI : MonoBehaviour , IInput
         var flag = true;
         Action<int> wait = i =>
         {
-            EditorLogger.Print(flag +" :: "+ i);
             if (i == 0) flag = true;
             else flag = false;
         };

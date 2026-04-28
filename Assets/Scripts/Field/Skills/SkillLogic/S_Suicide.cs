@@ -44,9 +44,9 @@ public class S_Suicide : BaseSkillLogic
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
-            tile.occupiedEntity.Damaged(_owner.Power*2);
+            tile.occupiedEntity.Damaged(_owner.MaxHealth);
         }
-        _owner.Damaged(_owner.Power);
+        _owner.Damaged(_owner.CurHealth - 1);
         _owner = null;
         yield return new WaitForSeconds(1);
     }

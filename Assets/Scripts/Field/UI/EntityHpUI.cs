@@ -64,18 +64,26 @@ public class EntityHpUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_entity != null)
+        if (!_entity)
         {
-            var forward = Camera.main.transform.forward;
-            transform.LookAt(transform.position + forward);
-
-            forward.y = 0;
-            forward.Normalize();
-            
-            Vector3 worldPos = _entity.transform.position + Vector3.up*6 + Camera.main.transform.right*5;
-            //Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-            rectTransform.position = worldPos;
+            return;
         }
+
+        if (!Camera.main)
+        {
+            return;
+        }
+
+        var forward = Camera.main.transform.forward;
+        transform.LookAt(transform.position + forward);
+
+        forward.y = 0;
+        forward.Normalize();
+            
+        Vector3 worldPos = _entity.transform.position + Vector3.up*6 + Camera.main.transform.right*5;
+        rectTransform.position = worldPos;
+
+
     }
 
     private void UpdateMovableCount(bool movable)
