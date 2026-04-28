@@ -7,12 +7,10 @@ using UnityEngine;
 public class S_HealArea : BaseSkillLogic
 {
     [SerializeField] private Area area;
-    [SerializeField] private int multiplier = 1;
     private Entity _owner;
-    public void Init(Area area, int multiplier)
+    public void Init(Area area)
     {
         this.area = area;
-        this.multiplier = multiplier;
     }
 
     public override async UniTask<bool> InputSkill(IInput input)
@@ -51,7 +49,7 @@ public class S_HealArea : BaseSkillLogic
             {
                 if (entity.team.IsAlly(_owner.team))
                 {
-                    entity.Healed(_owner.Power*multiplier);
+                    entity.Healed(_owner.Power);
                 }
                 
             }
@@ -65,7 +63,7 @@ public class S_HealArea : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_HealArea();
-        clone.Init(area,multiplier);
+        clone.Init(area);
         return clone;
     }
 }

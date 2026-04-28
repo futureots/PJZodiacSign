@@ -73,7 +73,7 @@ public class StageEndUI : InputManagerUI
         timeText.text = $"플레이 시간 : {minute:D2} : {second:D2}";
             
         // 점수 표시
-        var point = StageManager.Instance.GetTotalPoint();
+        var point =  DataManager.Instance.playData.point;
         pointText.text = $"전체 점수 : {point}";
     }
     
@@ -86,5 +86,6 @@ public class StageEndUI : InputManagerUI
     public void DefeatGame()
     {
         _inputManager.agent.fieldController.EndGame();
+        //GameManager.Instance.EndGame(!isTutorial);
     }
 }

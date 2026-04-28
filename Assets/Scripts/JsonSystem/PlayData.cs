@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-[Serializable]
+
 /// <summary>
 /// 플레이어의 데이터 저장 클래스 json 저장 및 불러오기 가능
 /// </summary>

@@ -96,7 +96,6 @@ public class DataManager : Singleton<DataManager>
 
     public void ResetData(string fileName)
     {
-        
         DeleteData(fileName);
         LoadAllData(fileName);
     }
@@ -148,6 +147,7 @@ public class DataManager : Singleton<DataManager>
         string filePath = Path.Combine(defaultPath,  fileName + ".Json");
         File.WriteAllText(filePath, data);
         EditorLogger.Print(data);
+        EditorLogger.Print("Save");
     }
 
     /// <summary>
@@ -166,6 +166,7 @@ public class DataManager : Singleton<DataManager>
                 return true;
             }
         }
+        EditorLogger.Print("NoExist");
         return false;
     }
 
@@ -184,7 +185,7 @@ public class DataManager : Singleton<DataManager>
         }
     }
 }
-[Serializable]
+[System.Serializable]
 public struct AgentData
 {
     public AgentData(int credit, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)
