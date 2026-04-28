@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 namespace GlobalManage
 {
@@ -21,9 +23,16 @@ namespace GlobalManage
         [Header("Audio")]
         [SerializeField] private AudioMixer mainMixer;
         
+        [Header("UI")]
+        [SerializeField] private GameObject OptionPanel;
+        [SerializeField] private Scrollbar masterBar;
+        [SerializeField] private Scrollbar bgmBar;
+        [SerializeField] private Scrollbar sfxBar;
+        [SerializeField] private Toggle fullScreenToggle;
+        [SerializeField] private TMP_Dropdown resolutionDropdown;
+        
         [Header("Settings Data")]
         private GameSetting _currentSettings;
-        public GameSetting CurrentSettings => _currentSettings;
         private string _savePath;
         private List<Resolution> _resolutions = new();
 
@@ -33,6 +42,11 @@ namespace GlobalManage
             _savePath = Path.Combine(Application.persistentDataPath, "settings.json");
             LoadSettings();
             InitResolutions();
+        }
+
+        public void ActiveOption(bool active)
+        {
+            OptionPanel.SetActive(active);
         }
 
         #region Resolution
@@ -55,6 +69,13 @@ namespace GlobalManage
                     _resolutions.Insert(0, res);
                 }
             }
+            
+            // Apply to UI
+            foreach (var res in _resolutions)
+            {
+                resolutionDropdown.options.Add(new TMP_Dropdown.OptionData(res.width + " x " + res.height));
+            }
+            resolutionDropdown.value = _currentSettings.resolutionIndex;
         }
 
         /// <summary>
@@ -85,6 +106,11 @@ namespace GlobalManage
             
             _currentSettings.resolutionIndex = index;
             _currentSettings.isFullScreen = isFull;
+            
+            // Apply to UI
+            fullScreenToggle.isOn = _currentSettings.isFullScreen;
+            resolutionDropdown.value = index;
+            
             SaveSettings();
         }
         
@@ -113,12 +139,15 @@ namespace GlobalManage
             {
                 case "master": 
                     _currentSettings.masterVolume = value; 
+                    masterBar.value = value;
                     break;
                 case "bgm": 
                     _currentSettings.bgmVolume = value; 
+                    bgmBar.value = value;
                     break;
                 case "sfx": 
                     _currentSettings.sfxVolume = value; 
+                    sfxBar.value = value;
                     break;
             }
             
