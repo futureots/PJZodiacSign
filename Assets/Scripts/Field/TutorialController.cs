@@ -7,9 +7,4 @@ public class TutorialController : FieldController
         // 튜토리얼은 데이터 저장하지 않고 넘어감
         OnBattleEnd?.Invoke("End");
     }
-
-    public override void EndStage(PlayerID winner)
-    {
-        stageManager.EndStage(winner);
-    }
 }

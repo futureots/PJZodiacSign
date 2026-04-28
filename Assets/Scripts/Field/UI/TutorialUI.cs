@@ -18,6 +18,7 @@ public class TutorialUI : InputManagerUI
 
     void OnPhaseChange(Phase phase)
     {
+        EditorLogger.Print("OnPhaseChange");
         switch (phase.phaseName)
         {
             // TODO : 정비 페이즈일 경우 정비 설명 UI 표시(전체 화면, 패널 외 상호작용 불가, 모든 패널 확인 시 비활성화)

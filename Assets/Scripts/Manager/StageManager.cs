@@ -18,9 +18,6 @@ public class StageManager : Singleton<StageManager>
     public int level;
     public bool isLastLevel;
     public int point;
-    public int prevPoint;
-    public int GetTotalPoint() => point + prevPoint;
-    
     
     // key = teamNum, value = ResourceField
     [SerializeField] List<Field> resourceFields;
@@ -32,7 +29,7 @@ public class StageManager : Singleton<StageManager>
     {
         // 시간 저장
         timer.Pause();
-        
+        DataManager.Instance.playData.time = timer.GetTime();
         if (winner == Agent.LocalPlayer.id)
         {
             // 스테이지 클리어 점수 제공
@@ -43,11 +40,11 @@ public class StageManager : Singleton<StageManager>
             // 살아있는 기물 수 + 강화단계 합
             List<Entity> data = field.GetEntities(Agent.LocalPlayer.id);
             data.ForEach(entity => point += (entity.Level + 1) * (entity.Level + 1) * levelMultiplier);
+            DataManager.Instance.playData.point += point;
         }
         
         OnStageEnded?.Invoke(winner);
     }
-    
     /// <summary>
     /// Init Model with Data
     /// </summary>
@@ -58,7 +55,6 @@ public class StageManager : Singleton<StageManager>
         // Get Level
         level = stageData.level;
         isLastLevel = stageData.isLastLevel;
-        
         
         // Entity Pooling
         // TODO: pooling 비동기로 예외
@@ -88,7 +84,6 @@ public class StageManager : Singleton<StageManager>
         }
         
         timer.Init(stageData.time);
-        prevPoint = stageData.point;
     }
 
     /// <summary>

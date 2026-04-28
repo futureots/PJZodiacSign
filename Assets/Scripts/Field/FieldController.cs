@@ -96,10 +96,9 @@ public class FieldController : MonoBehaviour
         // Invalid Phase Count
         if (index >= phases.Count)
         {
-            if (IsBattleEnd(out PlayerID winner))
+            if (IsBattleEnd(out var winner))
             {
-                EndStage(winner);
-                
+                stageManager.EndStage(winner);
             }
             return;
         }
@@ -164,6 +163,7 @@ public class FieldController : MonoBehaviour
                 }
             }
         }
+        EditorLogger.Print(surviveTeam.Count);
         if(surviveTeam.Count == 1)
         {
             winTeam = surviveTeam[0];
@@ -176,13 +176,6 @@ public class FieldController : MonoBehaviour
         }
     }
 
-    public virtual void EndStage(PlayerID winner)
-    {
-        stageManager.EndStage(winner);
-        DataManager.Instance.playData.time = stageManager.timer.GetTime();
-        DataManager.Instance.playData.point = stageManager.GetTotalPoint();
-    }
-
     public virtual void EndGame()
     {
         // 패배 시 데이터 삭제 및 메인 화면으로 이동
@@ -191,7 +184,7 @@ public class FieldController : MonoBehaviour
 
     public virtual void ContinueGame()
     {
-        var credit = Math.Min(localPlayer.Credit,200);
+        var credit = localPlayer.Credit;
         localPlayer.Credit += 100 + Mathf.RoundToInt(credit*0.2f);
         OnBattleEnd?.Invoke("CLEAR");
     }

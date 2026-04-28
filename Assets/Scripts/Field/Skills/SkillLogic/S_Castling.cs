@@ -9,6 +9,7 @@ public class S_Castling : BaseSkillLogic
 {
     private Entity _entity;
     private Entity _target;
+    private int _count = 0;
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
@@ -60,8 +61,13 @@ public class S_Castling : BaseSkillLogic
         _entity.Move(tile2);
         _target.Move(tile1);
         
-        _target.Defense += 1;
-        EffectFactory.Instance.Request("DefUpAura",_target.transform.position,_target.transform.lossyScale);
+        _count++;
+        if (_count == 3)
+        {
+            _target.Defense += 1;
+            _count = 0;
+            EffectFactory.Instance.Request("DefUpAura",_target.transform.position,_target.transform.lossyScale);
+        }
         
         _entity = null;
         _target = null;

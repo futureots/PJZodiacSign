@@ -23,5 +23,7 @@ public class EntityData : AbstractData
     [Header("Skill")]
     public BaseSkillData skill;
     public int maxEnergy;
-    
+
+    [Header("ObjectValue")]
+    public Vector3 offset;
 }
