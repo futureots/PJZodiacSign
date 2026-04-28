@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -10,12 +11,14 @@ using UnityEngine;
 public class S_PinPointAttack : BaseSkillLogic
 {
     [SerializeField] private BasicAttackEffect attackEffect;
+    private int _count = 0;
     private Entity _owner;
-    private Entity _target;
+    private List<Entity> _targetList;
 
     public void Init(BasicAttackEffect effect)
     {
         attackEffect =  effect;
+        _count = 0;
     }
 
     public override async UniTask<bool> InputSkill(IInput input)
@@ -41,13 +44,13 @@ public class S_PinPointAttack : BaseSkillLogic
         
         var opponentList = StageManager.Instance.field.GetEntities(entity.team.teamNumber,false);
         opponentList.Sort((a, b) => a.CurHealth.CompareTo(b.CurHealth));
-        var data2 = await input.InputEntity(opponentList, 1);
+        var data2 = await input.InputEntity(opponentList, 1 + _count/2);
         if (data2 == null) 
         {
             return false;
         }
         _owner =  entity;
-        _target = data2[0];
+        _targetList = data2;
         
         return true;
     }
@@ -55,24 +58,27 @@ public class S_PinPointAttack : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         var damage = _owner.Power;
+        var targetList = _targetList;
+        _count++;
 
-
-        var target = _target;
-
-        var effect = EffectFactory.Instance.Request("AttackEffect",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale,5f);
-        if (effect.TryGetComponent(out BasicAttackEffect atkObj))
+        foreach (var entity in targetList)
         {
-            atkObj.Initialize(target.gameObject, Hit);
+            var curTarget = entity;
+            var effect = EffectFactory.Instance.Request("AttackEffect",_owner.transform.position + Vector3.up * 7,_owner.transform.lossyScale,5f);
+            if (effect.TryGetComponent(out BasicAttackEffect atkObj))
+            {
+                atkObj.Initialize(curTarget.gameObject, () => Hit(curTarget));
+            }
         }
         
         yield return new WaitForSeconds(1.5f);
         
         _owner = null;
-        _target = null;
+        _targetList.Clear();
         
         yield break;
         
-        void Hit()
+        void Hit(Entity target)
         {
             target.Damaged(damage);
             target.Defense -= 1;

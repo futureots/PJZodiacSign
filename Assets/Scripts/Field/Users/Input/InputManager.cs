@@ -130,7 +130,6 @@ public class InputManager : MonoBehaviour
         
         if (curTurn.agentID == agent.id)
         {
-            EditorLogger.Print("Player" + curTurnType.ToString());
             SetInputMode();
         }
         else

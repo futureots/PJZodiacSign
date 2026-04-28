@@ -30,7 +30,7 @@ public class S_Protect : BaseSkillLogic
     public override IEnumerator ExecuteSkill()
     {
         EffectFactory.Instance.Request("DefUpAura",_target.transform.position,_target.transform.lossyScale);
-        _target.Defense += 1;
+        _target.Defense += 2;
         
         _target = null;
         

@@ -13,11 +13,11 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             if (customer.inventory.TryAddItem(item))
             {
                 customer.Credit -= price;
+                EditorLogger.Print($"buy item : {item.ItemData.id}");
             }
             else
             {
                 log?.ShowLog("인벤토리에 빈 공간이 없습니다!",LogType.Error);
-                EditorLogger.Print("인벤토리에 빈 공간이 없습니다!");
             }
         });
     }

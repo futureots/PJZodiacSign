@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1054299481909447444}
   - component: {fileID: 881247787638198047}
   - component: {fileID: 5612049225341460342}
-  - component: {fileID: 7199089154685334009}
   - component: {fileID: -6197357392793127856}
   - component: {fileID: -2742825382044771463}
   - component: {fileID: 1608623362337060125}
@@ -136,25 +135,12 @@ MonoBehaviour:
     x: 0
     y: 0
   level: 0
-  isControllable: 0
   area: {fileID: -6197357392793127856}
   energy: {fileID: -2742825382044771463}
   skill: {fileID: 1608623362337060125}
   white: {fileID: 2100000, guid: 7d7a86252ff87c941b14acfc8f4fac79, type: 2}
   black: {fileID: 2100000, guid: f6467dd55ba8d89429387781d74dffb1, type: 2}
   indicatorEffect: {fileID: 749888015414341987}
---- !u!114 &7199089154685334009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2533656769679605691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efe9a40695c59864ca58f1586f84b43a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BuffManager
 --- !u!114 &-6197357392793127856
 MonoBehaviour:
   m_ObjectHideFlags: 0
