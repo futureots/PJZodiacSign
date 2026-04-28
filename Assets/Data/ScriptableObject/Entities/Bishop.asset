@@ -21,9 +21,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
   attackArea:
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
-  maxHp: 20
+  maxHp: 14
   power: 3
-  hpMultiplier: 12
+  hpMultiplier: 3
   powerMultiplier: 1
   skill: {fileID: 11400000, guid: 66eea223f2dcd9740ba42b8a8be86767, type: 2}
-  maxEnergy: 3
+  maxEnergy: 5
+  offset: {x: 0, y: 3, z: 0}

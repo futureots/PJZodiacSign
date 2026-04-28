@@ -8,7 +8,6 @@ public class BasicAttackEffect : MonoBehaviour
     protected Action onHit;
     [SerializeField] protected GameObject hitEffect;
     public float speed;
-    [SerializeField] protected AudioSource audioSource;
 
     /// <summary>
     /// target에 적중했을 때 action 실행
@@ -23,8 +22,6 @@ public class BasicAttackEffect : MonoBehaviour
         Sequence sequence = DOTween.Sequence()
             .Append(transform.DOMove(_target.transform.position + Vector3.up * 7, time).SetEase(Ease.Linear))
             .AppendCallback(HitAction);
-        
-        audioSource?.Play();
     }
 
     protected virtual void HitAction()

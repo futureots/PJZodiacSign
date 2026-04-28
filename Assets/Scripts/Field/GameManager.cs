@@ -8,7 +8,7 @@ namespace GlobalManage
     public class GameManager : Singleton<GameManager>
     {
         [Header("Base Data")]
-        [SerializeField] private LoadingUI loadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
+        [SerializeField] private GameObject LoadingUI;      // NOTE: Loading 애니메이션 연결 시 스크립트로 변경
 
         public LevelTable levelTable;
         public ShopTable shopTable;
@@ -43,12 +43,12 @@ namespace GlobalManage
     /// <param name="level"></param>
     /// <param name="playerData"></param>
     /// <returns></returns>
-    public StageData CreateStageData(int level,AgentData playerData, int time, int point)
+    public StageData CreateStageData(int level,AgentData playerData, int time)
     {
         List<AgentData> agents = new();
         var data = levelTable.GetLevelData(level);
         agents.Add(data.Item2);
-        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData,time,point, levelTable.endLevel);
+        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData,time, levelTable.endLevel);
         return stageData;
     }
     
@@ -63,11 +63,11 @@ namespace GlobalManage
         public void EnterBattle(StageData stageData)
         {
             Level = stageData.level;
+            DataManager.Instance.SetData(stageData.player, Level);
             
             // 튜토리얼은 데이터를 저장하지 않음
             if (stageData.controllerName == ControllerID.Default)
             {
-                DataManager.Instance.SetData(stageData.player, Level);
                 DataManager.Instance.SaveAllData("PlayerData");
             }
             
@@ -82,9 +82,7 @@ namespace GlobalManage
         private IEnumerator StartBattle(StageData stageData)
         {
             // Load scenes
-            loadingUI.gameObject.SetActive(true);
-            yield return loadingUI.FadeIn(1f);
-            
+            LoadingUI.SetActive(true);
             yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);
 
             // Find FieldController in Controller Scene
@@ -114,15 +112,12 @@ namespace GlobalManage
                 switch (s)
                 {
                     case "CLEAR":
-                        EditorLogger.Print($"승리{stageData.level} : {DataManager.Instance.playData}");
                         ContinueGame();
                         break;
                     case "FAIL":
-                        EditorLogger.Print($"패배{stageData.level} : {DataManager.Instance.playData}");
                         EndGame(true);
                         break;
                     case "End":
-                        EditorLogger.Print($"종료{stageData.level} : {DataManager.Instance.playData}");
                         EndGame();
                         break;
                 }
@@ -130,9 +125,7 @@ namespace GlobalManage
 
             // Complete Loading
             currentStage = stageData;
-            
-            yield return loadingUI.FadeOut(1f);
-            loadingUI.gameObject.SetActive(false);
+            LoadingUI.SetActive(false);
         }
 
         #endregion
@@ -143,7 +136,9 @@ namespace GlobalManage
         {
             var playerData = Agent.LocalPlayer.getData();
             // 다음 레벨로 넘어가는 코드
-            var stageData = CreateStageData(Level + 1, playerData,StageManager.Instance.timer.GetTime(), StageManager.Instance.GetTotalPoint());
+            EditorLogger.Print($"{playerData.credit} 현재 크레딧");
+            EditorLogger.Print($"{Level + 1} 로드 중");
+            var stageData = CreateStageData(Level + 1, playerData,StageManager.Instance.timer.GetTime());
             EnterBattle(stageData);
         }
 

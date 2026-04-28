@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TutorialPanel : MonoBehaviour
 {
-    [SerializeField] private Transform panelParent;
     public List<GameObject> panelList;
     public Button leftBtn;
     public Button rightBtn;
@@ -53,9 +52,9 @@ public class TutorialPanel : MonoBehaviour
     public void SetPanelList()
     {
         panelList.Clear();
-        for (int i = 0; i < panelParent.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            panelList.Add(panelParent.GetChild(i).gameObject);
+            panelList.Add(transform.GetChild(i).gameObject);
         }
     }
 }

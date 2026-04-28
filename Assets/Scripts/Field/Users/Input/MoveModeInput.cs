@@ -168,6 +168,7 @@ namespace PlayerInput
                 inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile);
                 selectedEntity.IsControllable = false;
                 
+                EditorLogger.Print($"남은 행동력 {inputManager.agent.CurrentActionCount}");
                 // 더이상 행동할 수 없으면 자동으로 턴 종료
                 if (inputManager.agent.CurrentActionCount == 0)
                 {

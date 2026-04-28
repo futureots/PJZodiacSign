@@ -43,6 +43,7 @@ namespace PlayerInput
             var flag = true;
             Action<int> wait = i =>
             {
+                EditorLogger.Print(flag +" :: "+ i);
                 if (i == 0) flag = true;
                 else flag = false;
             };
@@ -53,6 +54,7 @@ namespace PlayerInput
                 // 커맨드 생성
                 var command = _inputManager.agent.CreateSkillCommand(skill);
                 command.indicate.AddRange(selecters);
+                EditorLogger.Print("SkillCreated");
             }
             else
             {
