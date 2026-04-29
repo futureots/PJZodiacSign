@@ -11,14 +11,12 @@ using UnityEngine;
 public class S_PinPointAttack : BaseSkillLogic
 {
     [SerializeField] private BasicAttackEffect attackEffect;
-    private int _count = 0;
     private Entity _owner;
     private List<Entity> _targetList;
 
     public void Init(BasicAttackEffect effect)
     {
         attackEffect =  effect;
-        _count = 0;
     }
 
     public override async UniTask<bool> InputSkill(IInput input)
@@ -44,7 +42,7 @@ public class S_PinPointAttack : BaseSkillLogic
         
         var opponentList = StageManager.Instance.field.GetEntities(entity.team.teamNumber,false);
         opponentList.Sort((a, b) => a.CurHealth.CompareTo(b.CurHealth));
-        var data2 = await input.InputEntity(opponentList, 1 + _count/2);
+        var data2 = await input.InputEntity(opponentList, 1);
         if (data2 == null) 
         {
             return false;
@@ -59,7 +57,6 @@ public class S_PinPointAttack : BaseSkillLogic
     {
         var damage = _owner.Power;
         var targetList = _targetList;
-        _count++;
 
         foreach (var entity in targetList)
         {

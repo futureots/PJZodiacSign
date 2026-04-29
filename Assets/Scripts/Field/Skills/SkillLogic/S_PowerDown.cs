@@ -1,12 +1,18 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_PowerDown : BaseSkillLogic
 {
     private Entity _owner;
-    
+    [SerializeField] private Area area;
+
+    public void Init(Area area)
+    {
+        this.area = area;
+    }
     public override async UniTask<bool> InputSkill(IInput input)
     {
         if (component.TryGetComponent<Entity>(out var entity))
@@ -28,8 +34,13 @@ public class S_PowerDown : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
+        
+        var pos = _owner.CurTile.fieldPos;
+        int[,] t = new int[8, 8];
+        var vectors = area.GetVectors(t, pos, _owner.direction);
+        var tiles = StageManager.Instance.field.GetTiles(vectors);
+        
         EffectFactory.Instance.Request("PowDownAura",_owner.transform.position,_owner.transform.lossyScale*3);
-        var tiles = _owner.GetAttackArea();
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
@@ -47,6 +58,7 @@ public class S_PowerDown : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_PowerDown();
+        clone.Init(area);
         return clone;
     }
 }
