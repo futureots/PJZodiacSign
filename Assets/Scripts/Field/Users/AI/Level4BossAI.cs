@@ -37,6 +37,7 @@ public class Level4BossAI : EnemyAI
 
     public async UniTask<bool> MoveForwardAction(Entity entity)
     {
+        if (!entity.IsControllable) return false;
         var frontList = new List<Tile>();
         foreach (var tile in entity.GetMoveArea().GetEmptyTiles())
         {
