@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Level8BossAI : EnemyAI
 {
-    private int count = 0;
     protected override async UniTask EnemyAction()
     {
         // 우선 유니콘 먼저 확인

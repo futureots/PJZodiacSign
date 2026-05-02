@@ -179,6 +179,8 @@ public class EnemyAI : MonoBehaviour , IInput
     protected async UniTask<bool> EnemySkillAction(Entity entity)
     {
         if (!entity.energy.IsFull()) return false;
+
+        if (!entity.skill.skillLogic.IsValuable()) return false;
         
         // 스킬 입력 시도(실패 시 실제 입력X)
         var result =  await entity.skill.skillLogic.InputSkill(this);

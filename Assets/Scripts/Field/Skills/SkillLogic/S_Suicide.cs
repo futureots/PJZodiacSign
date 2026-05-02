@@ -32,6 +32,37 @@ public class S_Suicide : BaseSkillLogic
         return false;
     }
 
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var entity))
+        {
+            _owner = entity;
+            
+            var pos = _owner.CurTile.fieldPos;
+            int[,] t = new int[8, 8];
+            var vectors = area.GetVectors(t, pos, _owner.direction);
+            var tiles = StageManager.Instance.field.GetTiles(vectors);
+
+            int count = 0;
+            foreach (var tile in tiles)
+            {
+                if (tile.IsEmpty) continue;
+                if (tile.occupiedEntity.team.IsAlly(_owner.team))
+                {
+                    count -= 1;
+                }
+                else
+                {
+                    count += 1;
+                }
+            }
+
+            return count > 0;
+        }
+
+        return false;
+    }
+    
     public override IEnumerator ExecuteSkill()
     {
         var pos = _owner.CurTile.fieldPos;

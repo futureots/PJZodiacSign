@@ -9,7 +9,6 @@ public class S_ChargeArea : BaseSkillLogic
     [SerializeField] int charge;
     [SerializeField] Area area;
     private Entity _owner;
-    public S_ChargeArea() { }
     public void Init(Area _area, int amount)
     {
         area = _area;
@@ -34,6 +33,24 @@ public class S_ChargeArea : BaseSkillLogic
         return false;
     }
 
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var owner))
+        {
+            _owner = owner;
+            
+            var pos = _owner.CurTile.fieldPos;
+            int[,] t = new int[8, 8];
+            var vectors = area.GetVectors(t, pos, _owner.direction);
+            var tiles = StageManager.Instance.field.GetTiles(vectors);
+
+            // 아군이 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty && tile.occupiedEntity.team.IsAlly(_owner.team));
+        }
+
+        return false;
+    }
+
     public override IEnumerator ExecuteSkill()
     {
         var pos = _owner.CurTile.fieldPos;
@@ -48,12 +65,10 @@ public class S_ChargeArea : BaseSkillLogic
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
-            if(tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
+            if(tile.occupiedEntity.team.IsAlly(_owner.team))
             {
-                if (entity.team.IsAlly(_owner.team))
-                {
-                    entity.energy.CurEnergy += charge;
-                }
+                var entity = tile.occupiedEntity;
+                entity.energy.CurEnergy += charge;
             }
         }
         yield return new WaitForSeconds(0.9f);

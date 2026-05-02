@@ -34,6 +34,24 @@ public class S_HealArea : BaseSkillLogic
 
     }
 
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var owner))
+        {
+            _owner = owner;
+            
+            var pos = _owner.CurTile.fieldPos;
+            int[,] t = new int[8, 8];
+            var vectors = area.GetVectors(t, pos, _owner.direction);
+            var tiles = StageManager.Instance.field.GetTiles(vectors);
+
+            // 아군이 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty && tile.occupiedEntity.team.IsAlly(_owner.team));
+        }
+
+        return false;
+    }
+
     public override IEnumerator ExecuteSkill()
     {
         var pos = _owner.CurTile.fieldPos;
@@ -47,13 +65,10 @@ public class S_HealArea : BaseSkillLogic
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
-            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
+            if (tile.occupiedEntity.team.IsAlly(_owner.team))
             {
-                if (entity.team.IsAlly(_owner.team))
-                {
-                    entity.Healed(_owner.Power*multiplier);
-                }
-                
+                Entity entity = tile.occupiedEntity;
+                entity.Healed(_owner.Power*multiplier);
             }
         }
         

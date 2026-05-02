@@ -32,6 +32,23 @@ public class S_PowerDown : BaseSkillLogic
 
     }
 
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var entity))
+        {
+            _owner = entity;
+            var pos = _owner.CurTile.fieldPos;
+            int[,] t = new int[8, 8];
+            var vectors = area.GetVectors(t, pos, _owner.direction);
+            var tiles = StageManager.Instance.field.GetTiles(vectors);
+            
+            // 적이 1명이라도 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty && !tile.occupiedEntity.team.IsAlly(_owner.team));
+        }
+
+        return false;
+    }
+
     public override IEnumerator ExecuteSkill()
     {
         
