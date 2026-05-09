@@ -31,7 +31,25 @@ public class S_PowerUp : BaseSkillLogic
         return false;
 
     }
-    
+
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var entity))
+        {
+            _owner = entity;
+            
+            var pos = _owner.CurTile.fieldPos;
+            int[,] t = new int[8, 8];
+            var vectors = area.GetVectors(t, pos, _owner.direction);
+            var tiles = StageManager.Instance.field.GetTiles(vectors);
+            
+            // 범위내 아군이 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty &&  tile.occupiedEntity.team.IsAlly(_owner.team));
+        }
+
+        return false;
+    }
+
     public override IEnumerator ExecuteSkill()
     {
         var pos = _owner.CurTile.fieldPos;

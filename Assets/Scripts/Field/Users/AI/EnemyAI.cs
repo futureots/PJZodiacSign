@@ -146,79 +146,74 @@ public class EnemyAI : MonoBehaviour , IInput
         agent.CreateEndCommand();
     }
 
-    protected UniTask EnemyMoveAction()
+    protected async UniTask<bool> EnemyMoveAction(Entity entity)
     {
-        // 사용할 스킬이 없으면 이동
-        int max = -9999;
-        List<KeyValuePair<Entity, intVector2>> bestAct = new();
-        foreach (var checkEntity in agent.fieldEntities)
+        // 해당 기물을 가치가 가장 높은 위치로 이동
+
+        if (!entity.IsControllable) return false;
+        // 필드 값 가져오기
+        int[,] field = StageManager.Instance.field.GetFieldState(entity);
+
+        // 적의 공격범위 가져오기 및 예상 데미지 계산
+        var values = StageManager.Instance.field.CalculateEnemyThreat(field, agent.id);
+
+        // 가장 좋은 위치의 행동 가져오기
+        if (TryGetBestMove(entity, field, values, out int value, out intVector2 pos))
         {
-            if (!checkEntity.IsControllable) continue;
-            // 필드 값 가져오기
-            int[,] field = StageManager.Instance.field.GetFieldState(checkEntity);
-
-            // 적의 공격범위 가져오기 및 예상 데미지 계산
-            var values = StageManager.Instance.field.CalculateEnemyThreat(field, agent.id);
-
-            // 가장 좋은 위치의 행동 가져오기
-            if (TryGetBestMove(checkEntity, field, values, out int value, out intVector2 pos))
+            if (entity.CurTile.fieldPos == pos)
             {
-                // 같은 값일 경우 리스트에 추가해서 랜덤 추출
-                if (max < value)
-                {
-                    bestAct.Clear();
-                    max = value;
-                    bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
-                }
-                else if (max == value)
-                {
-                    bestAct.Add(new KeyValuePair<Entity, intVector2>(checkEntity, pos));
-                }
+                return false;
             }
-        }
-        if (bestAct.Count > 0)
-        {
-            var best = bestAct[Random.Range(0, bestAct.Count)];
-            agent.CreateMoveCommand(best.Key, StageManager.Instance.field.GetTile(best.Value));
-            best.Key.IsControllable = false;
-        }
-        
-        // 좋은 행동이 없을 경우 턴 종료
-        return UniTask.CompletedTask;
-    }
-
-    protected async UniTask<bool> EnemySkillAction()
-    {
-        // 스킬을 사용할 수 있으면 스킬을 사용한다.
-        var skillEntities = agent.fieldEntities.FindAll(entity => entity.energy.IsFull());
-        foreach (var entity in skillEntities)
-        {
-            // 스킬 입력 시도(실패 시 실제 입력X)
-            var result =  await entity.skill.skillLogic.InputSkill(this);
-            if (result)
+            else
             {
-                // 스킬 실행
-                agent.CreateSkillCommand(entity.skill);
+                agent.CreateMoveCommand(entity, StageManager.Instance.field.GetTile(pos));
+                entity.IsControllable = false;
                 return true;
             }
+        }
+        
+        // 좋은 행동이 없을 경우 다른 기물 찾아보기
+        return false;
+    }
+
+    protected async UniTask<bool> EnemySkillAction(Entity entity)
+    {
+        if (!entity.energy.IsFull()) return false;
+
+        if (!entity.skill.skillLogic.IsValuable()) return false;
+        
+        // 스킬 입력 시도(실패 시 실제 입력X)
+        var result =  await entity.skill.skillLogic.InputSkill(this);
+        if (result)
+        {
+            // 스킬 실행
+            agent.CreateSkillCommand(entity.skill);
+            return true;
         }
 
         return false;
     }
     protected virtual async UniTask EnemyAction()
     {
-        // true면 스킬 사용, false면 이동
-        var result = Random.Range(0,2)>0;
-        if (result)
+        // 랜덤 기물을 선택, 해당 기물의 스킬사용이 가능한지 확인, 되면 실행, 안되면 이동가능한지 확인, 되면 실행 안되면 해당 기물 빼고 리트라이
+        var list = new List<Entity>(agent.fieldEntities);
+        int count = list.Count;
+        for (int i = 0; i < count; i++)
         {
-            result= await EnemySkillAction();
+            if (list.Count < 0) break;
+            int rand = Random.Range(0, list.Count);
+            var selectEntity = list[rand];
+            // 선택한 기물 스킬 사용 시도
+            var result = await EnemySkillAction(selectEntity);
+            // 스킬 사용 성공 시 종료
+            if (result) return;
+            // 기물 이동 시도
+            result = await EnemyMoveAction(selectEntity);
+            // 이동 성공 시 종료
+            if (result) return;
+            // 행동할 불가 기물 제거 후 재시도
+            list.RemoveAt(rand);
         }
-        
-        if (!result)
-        {
-            await EnemyMoveAction();
-        }
-        
     }
 
     

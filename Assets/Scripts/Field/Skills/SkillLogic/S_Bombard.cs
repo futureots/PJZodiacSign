@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -30,6 +31,19 @@ public class S_Bombard : BaseSkillLogic
             return true;
         }
         
+        return false;
+    }
+
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var entity))
+        {
+            _owner = entity;
+            var tiles = _owner.GetAttackArea();
+            // 적이 1명이라도 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty);
+        }
+
         return false;
     }
 

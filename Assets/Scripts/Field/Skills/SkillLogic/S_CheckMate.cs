@@ -26,8 +26,22 @@ public class S_CheckMate : BaseSkillLogic
         }
         
         return false;
-
     }
+
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var owner))
+        {
+            _owner = owner;
+            var tiles = _owner.GetAttackArea();
+            
+            // 적이 1명이상 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty && !tile.occupiedEntity.team.IsAlly(_owner.team));
+        }
+
+        return false;
+    }
+
     public override IEnumerator ExecuteSkill()
     {
         var tiles = _owner.GetAttackArea();
@@ -36,13 +50,10 @@ public class S_CheckMate : BaseSkillLogic
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
-            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
+            if (tile.occupiedEntity.team.IsAlly(_owner.team))
             {
-                if (!entity.team.IsAlly(_owner.team))
-                {
-                    component.StartCoroutine(Hit(entity,_owner.energy.CurEnergy * modifier));
-                }
-                
+                Entity entity = tile.occupiedEntity;
+                component.StartCoroutine(Hit(entity,_owner.energy.CurEnergy * modifier));
             }
         }
 

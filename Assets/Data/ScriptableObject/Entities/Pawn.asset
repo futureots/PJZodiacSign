@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Pawn
   productName: "\uD3F0"
-  icon: {fileID: 21300000, guid: d0385e81792813d47941df5768214d4e, type: 3}
+  icon: {fileID: 21300000, guid: 701fc467daa3ca34d997533bef079d70, type: 3}
   normalPrice: 10
   prefab: {fileID: 5975918771777249837, guid: f64594ccf85539145999e61ab6f54d2a, type: 3}
   moveArea:

@@ -23,4 +23,5 @@ MonoBehaviour:
     RefIds:
     - rid: 598112408415502406
       type: {class: S_PowerDown, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        area: {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}

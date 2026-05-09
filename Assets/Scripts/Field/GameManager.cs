@@ -83,7 +83,7 @@ namespace GlobalManage
         {
             // Load scenes
             loadingUI.gameObject.SetActive(true);
-            yield return loadingUI.FadeIn(1f);
+            yield return loadingUI.FadeIn(0.2f);
             
             yield return SceneLoader.Instance.LoadBattle(stageData.modelName, stageData.controllerName);
 

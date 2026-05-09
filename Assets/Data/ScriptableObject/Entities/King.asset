@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: King
   productName: "\uD0B9"
-  icon: {fileID: 21300000, guid: 4e8445dfe8ce01447a12e1abe240afcb, type: 3}
+  icon: {fileID: 21300000, guid: 64f45d545385b9d4f8007b2879290fd9, type: 3}
   normalPrice: 40
   prefab: {fileID: 3545369894222747195, guid: 6fdbc0408713fb948962fa73d218d473, type: 3}
   moveArea:
