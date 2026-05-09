@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour
         items.Add(instance);
         OnItemChanged(items.Count-1, instance);
         instance.transform.SetParent(transform);
-        instance.OnDiscard += () => RemoveItem(instance);
+        instance.onDiscard += () => RemoveItem(instance);
         return true;
 
     }
@@ -64,6 +64,7 @@ public class Inventory : MonoBehaviour
 
     public void SetItem(List<ItemData> list)
     {
+        
         items.Clear();
         for (int i = 0; i < list.Count; i++)
         {
@@ -73,11 +74,11 @@ public class Inventory : MonoBehaviour
                 OnItemChanged?.Invoke(i, null);
                 continue;
             }
-            var item = ItemFactory.RequestItem(list[i]);
+            var item = ItemFactory.Instance.Request(list[i]);
             items.Add(item);
             OnItemChanged?.Invoke(i, item);
             item.transform.SetParent(transform);
-            item.OnDiscard += () => RemoveItem(item);
+            item.onDiscard += () => RemoveItem(item);
         }
     }
 
@@ -93,7 +94,7 @@ public class Inventory : MonoBehaviour
             if (!items[i]) list.Add(null);
             else
             {
-                list.Add(items[i].itemData);
+                list.Add(items[i].ItemData);
             }
                 
         }

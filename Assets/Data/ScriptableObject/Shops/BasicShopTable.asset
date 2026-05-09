@@ -13,7 +13,27 @@ MonoBehaviour:
   m_Name: BasicShopTable
   m_EditorClassIdentifier: 
   itemList:
+  - data: {fileID: 11400000, guid: bc25fc61240a1c340b98a0da46c7cfde, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: c370e1ebb6d87be4d9bdc20b1868235b, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 0d2d40f120968954faf9636a726a82e4, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 6ce1e677722d3214a91fb7e5971e3410, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 28f8afada22b1854282dcdb041adaede, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 89065906a5cc2404dbf79bc972f14b5c, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 64a30d89ce1dd914cac8df5024dc718a, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 0ca356e4d1c5f6340a5da5e7726d24f8, type: 2}
+    weight: 1
   - data: {fileID: 11400000, guid: a29786851afb74448a567e800337ed9d, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 8c9b5d542aa599f43968e993fa10772f, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 12e2fa5ded079b34aa69f30350fc1022, type: 2}
     weight: 1
   - data: {fileID: 11400000, guid: 630a889e461c66e42a95888573a3b28b, type: 2}
     weight: 1
@@ -26,7 +46,20 @@ MonoBehaviour:
     weight: 4
   - data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
     weight: 2
+  - data: {fileID: 11400000, guid: 17c55c89d18cf9748b9dd5a5d6efac05, type: 2}
+    weight: 6
+  - data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
+    weight: 3
+  - data: {fileID: 11400000, guid: 1ca8b7537cd27dc4bb44ac4065f7f7f6, type: 2}
+    weight: 4
+  - data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
+    weight: 2
+  - data: {fileID: 11400000, guid: 313700513dc11684997dae9f366d6242, type: 2}
+    weight: 3
+  premiumEntityList:
+  - data: {fileID: 11400000, guid: 54a5fff0eb0334a4291770de80d881ef, type: 2}
+    weight: 1
   - data: {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
     weight: 1
-  - data: {fileID: 11400000, guid: 54a5fff0eb0334a4291770de80d881ef, type: 2}
+  - data: {fileID: 11400000, guid: 26fbc5f6324bbd04787d8f6f4839cef8, type: 2}
     weight: 1

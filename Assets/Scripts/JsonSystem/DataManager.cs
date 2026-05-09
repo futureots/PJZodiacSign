@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 
 public class DataManager : Singleton<DataManager>
 {
-    
     [NonSerialized]
-    readonly string defaultPath = Application.dataPath + "/Data";
+    private readonly string defaultPath = Application.dataPath + "/Data";
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
@@ -28,7 +26,7 @@ public class DataManager : Singleton<DataManager>
     public bool isModified { get; private set; }
 
 
-    public AgentData  GetPlayerAgentData()
+    public AgentData GetPlayerAgentData()
     {
 
         var handEntities = new List<EntityLevelData>();
@@ -98,6 +96,7 @@ public class DataManager : Singleton<DataManager>
 
     public void ResetData(string fileName)
     {
+        
         DeleteData(fileName);
         LoadAllData(fileName);
     }
@@ -108,7 +107,7 @@ public class DataManager : Singleton<DataManager>
         SaveData(data, fileName);
     }
 
-    public void LoadAllData(string fileName)
+    public  void LoadAllData(string fileName)
     {
         if(TryLoadData(fileName,out var json))
         {
@@ -122,7 +121,7 @@ public class DataManager : Singleton<DataManager>
         }
     }
 
-    EntityLevelData? ConvertData(string csv)
+    private EntityLevelData? ConvertData(string csv)
     {
         var list = csv.Split('+', 2);
         if (list.Length == 1)
@@ -149,7 +148,6 @@ public class DataManager : Singleton<DataManager>
         string filePath = Path.Combine(defaultPath,  fileName + ".Json");
         File.WriteAllText(filePath, data);
         EditorLogger.Print(data);
-        EditorLogger.Print("Save");
     }
 
     /// <summary>
@@ -168,7 +166,6 @@ public class DataManager : Singleton<DataManager>
                 return true;
             }
         }
-        EditorLogger.Print("NoExist");
         return false;
     }
 
@@ -187,7 +184,7 @@ public class DataManager : Singleton<DataManager>
         }
     }
 }
-[System.Serializable]
+[Serializable]
 public struct AgentData
 {
     public AgentData(int credit, List<EntityLevelData> hands= null, Dictionary<intVector2, EntityLevelData> fields = null, List<ItemData> items = null)

@@ -1,36 +1,36 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CostUI : MonoBehaviour
+public class CostUI : InputManagerUI
 {
     InputManager _inputManager;
     [SerializeField] GameObject panel;
     [SerializeField] TextMeshProUGUI text;
     
-
-    public void Init(InputManager inputManager)
+    public override void Init(InputManager inputManager)
     {
         _inputManager = inputManager;
         _inputManager.agent.fieldController.OnTurnStarted += OnTurnChange;
-        _inputManager.agent.fieldController.OnListUpdated += OnListUpdate;
     }
 
     void OnTurnChange(Turn turn)
     {
-        panel.SetActive(false);
-        if (turn.agentID == _inputManager.agent.id)
+        if (turn.agentID == _inputManager.agent.id && turn.type == TurnType.ACTION)
         {
-            if(turn.type == TurnType.ACTION)
-            {
-                panel.SetActive(true);
-            }
+            panel.SetActive(true);
+            _inputManager.agent.onActionCountChanged += OnActionCountChange;
+            OnActionCountChange(_inputManager.agent.CurrentActionCount);
         }
+        else
+        {
+            panel.SetActive(false);
+            _inputManager.agent.onActionCountChanged -= OnActionCountChange;
+        }
+    }
 
-    } 
-
-    void OnListUpdate(int curCmdCount)
+    void OnActionCountChange(int actionCount)
     {
-        int count = _inputManager.agent.actionCount;
-        text.text =  Mathf.Max(count - curCmdCount,0) + " / " + count;
+        text.text = $"{actionCount}/{_inputManager.agent.actionCount}";
     }
 }

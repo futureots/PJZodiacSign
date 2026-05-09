@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RookArea", menuName = "Scriptable Objects/Area/RookArea")]
 public class RookArea : Area
 {
+    [SerializeField] private bool isRepeat;
 
     protected override List<intVector2> GetVector(int[,] tiles, intVector2 curPos, intVector2 direction)
     {
@@ -18,13 +19,13 @@ public class RookArea : Area
             {
                 vector += directionList[i];
                 var pos = curPos + vector * direction;
-                if (!IsValidPos(tiles, pos)) break;
+                if (!tiles.IsValidPos(pos)) break;
                 list.Add(pos);
                 if (tiles[pos.y, pos.x] != Field.EmptyTileIndex)
                 {
                     break;
                 }
-
+                if (!isRepeat) break;
             }
         }
 

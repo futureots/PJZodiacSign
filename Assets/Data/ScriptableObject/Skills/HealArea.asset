@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 4e3c49dc98f8a444ab28337dac1f094b, type: 3}
   skillName: "\uAE30\uB3C4"
-  skillDescription: "\uAC70\uB9AC 2 \uC774\uB0B4\uC758 \uC544\uAD70\uC744 \uD68C\uBCF5\uC2DC\uD0A8\uB2E4."
+  skillDescription: "\uAC70\uB9AC 2 \uC774\uB0B4 \uC544\uAD70\uC744 \uCE58\uC720\uD569\uB2C8\uB2E4."
   skillLogic:
     rid: 2184884855075766338
   references:
@@ -24,3 +24,4 @@ MonoBehaviour:
       type: {class: S_HealArea, ns: , asm: Assembly-CSharp}
       data:
         area: {fileID: 11400000, guid: e2464d85e733e464ab24ea397ba3375c, type: 2}
+        multiplier: 2

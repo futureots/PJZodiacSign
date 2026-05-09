@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d5c26893e2eca468ef1016e24ff5f2, type: 3}
+  m_Name: Suicide
+  m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
+  skillIcon: {fileID: 21300000, guid: 6f9ba8aab6a44524980f66569407511f, type: 3}
+  skillName: "\uC790\uD3ED"
+  skillDescription: "\uAC70\uB9AC 2 \uC774\uB0B4 \uBAA8\uB4E0 \uAE30\uBB3C\uC5D0
+    \uAC15\uB825\uD55C \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  skillLogic:
+    rid: 6116996125879697478
+  references:
+    version: 2
+    RefIds:
+    - rid: 6116996125879697478
+      type: {class: S_Suicide, ns: , asm: Assembly-CSharp}
+      data:
+        area: {fileID: 11400000, guid: e2464d85e733e464ab24ea397ba3375c, type: 2}

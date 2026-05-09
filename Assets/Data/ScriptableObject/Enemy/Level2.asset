@@ -12,26 +12,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfbfe1756f0d0d4a9e1cabbd7e19ae6, type: 3}
   m_Name: Level2
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTable
+  enemyAI: {fileID: 9125116805115818127, guid: 2e7bc78073c02794aaac1c9b2fa071a2, type: 3}
   credit: 0
-  entities:
-  - data: {fileID: 11400000, guid: 30f28ad064d449f47b120eee42b1b191, type: 2}
-    level: 0
-  - data: {fileID: 11400000, guid: 30f28ad064d449f47b120eee42b1b191, type: 2}
-    level: 0
-  - data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
-    level: 0
-  - data: {fileID: 11400000, guid: 476af0a04937714408bee189dc49f86d, type: 2}
-    level: 0
+  entities: []
   fieldEntities:
   - entityData:
-      data: {fileID: 11400000, guid: 840fa1fe4952ad34b9f7694dde58f110, type: 2}
-      level: 1
+      data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
+      level: 0
     fieldPos:
-      x: 1
+      x: 0
       y: 7
   - entityData:
-      data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
-      level: 1
+      data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
+      level: 0
     fieldPos:
-      x: 6
+      x: 0
+      y: 6
+  - entityData:
+      data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
+      level: 0
+    fieldPos:
+      x: 2
       y: 7
+  - entityData:
+      data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
+      level: 0
+    fieldPos:
+      x: 2
+      y: 6
+  - entityData:
+      data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
+      level: 0
+    fieldPos:
+      x: 5
+      y: 7
+  - entityData:
+      data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
+      level: 0
+    fieldPos:
+      x: 5
+      y: 6
+  - entityData:
+      data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
+      level: 0
+    fieldPos:
+      x: 7
+      y: 7
+  - entityData:
+      data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
+      level: 0
+    fieldPos:
+      x: 7
+      y: 6
+  phases:
+  - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
+  - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}

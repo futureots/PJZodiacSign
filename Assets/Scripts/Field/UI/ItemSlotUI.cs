@@ -5,35 +5,20 @@ using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
-    Button btn;
-    
-    int index;
-    Image image;
-    public Image Image
-    {
-        get
-        {
-            if(image == null)
-            {
-                image = transform.GetChild(0).GetComponent<Image>();
-            }
-            return image;
-        }
-    }
+    [SerializeField] private Button button;
+
+    private int _index;
+    [SerializeField] private Image image;
     /// <summary>
     /// 마우스가 들어올 때, 나갈 때 호출되는 함수
     /// </summary>
-    public event Action<int, Vector2> onMouseMove;
-    public event Action<int> onClick;
-
-    private void Awake()
-    {
-        btn = GetComponent<Button>();
-    }
+    public event Action<int, Vector2> OnMouseMove;
+    public event Action<int> OnClick;
+    
     public void Init(int index)
     {
-        this.index = index;
-        btn.onClick.AddListener(OnClick);
+        _index = index;
+        button.onClick.AddListener(Click);
     }
     /// <summary>
     /// 슬롯에 아이템 설정
@@ -41,35 +26,37 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     /// <param name="item"></param>
     public void SetSlot(ItemComponent item)
     {
-        if (item == null)
+        if (!item)
         {
-            Image.sprite = null;
-            Image.color = Color.clear;
+            image.sprite = null;
+            image.color = Color.clear;
+            //button.interactable = false;
             return;
         }
         
-        Image.sprite = item.itemData.icon;
-        Image.color = Color.white;
+        image.sprite = item.ItemData.icon;
+        image.color = Color.white;
+        //button.interactable = true;
 
-        item.OnDiscard += () => SetSlot(null);
+        item.onDiscard += () => SetSlot(null);
     }
 
-    void OnClick()
+    void Click()
     {
-        onClick?.Invoke(index);
+        OnClick?.Invoke(_index);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        onMouseMove?.Invoke(-1, eventData.position);
+        OnMouseMove?.Invoke(-1, transform.position);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        onMouseMove?.Invoke(index, eventData.position);
+        OnMouseMove?.Invoke(_index, transform.position);
     }
 
     public void OnPointerMove(PointerEventData eventData)
     {
-        onMouseMove?.Invoke(index, eventData.position);
+        //OnMouseMove?.Invoke(_index, eventData.position);
     }
 }

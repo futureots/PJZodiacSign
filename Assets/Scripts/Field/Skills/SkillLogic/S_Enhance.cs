@@ -1,34 +1,35 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_Enhance : BaseSkillLogic
 {
-    Entity target;
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    private Entity _target;
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        var list = StageManager.Instance.field.GetEntities();
-        isContinued = false;
-        Entity _target = null;
-        Action<Entity> action = (x) =>
+        if (component.TryGetComponent<Entity>(out var target))
         {
-            _target = x;
-        };
-        Action<bool> conti = (flag) => { isContinued = flag; };
-        yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-        if (!isContinued)
-        {
-            callback?.Invoke(false);
-            yield break;
+            _target = target;
+            return true;
         }
-        target = _target;
-        callback?.Invoke(true);
+        var list = StageManager.Instance.field.GetEntities();
+        var data = await input.InputEntity(list, 1);
+        if(data != null)
+        {
+            _target = data[0];
+            return true;
+        }
+        
+        return false;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        target.Level += 1;
-        target = null;
+        _target.Level += 1;
+        yield return new WaitForSeconds(1f);
+        _target = null;
         yield break;
     }
     public override BaseSkillLogic Clone()

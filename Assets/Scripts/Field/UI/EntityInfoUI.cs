@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityInfoUI : MonoBehaviour
+public class EntityInfoUI : InputManagerUI
 {
     [SerializeField] InputManager inputManager;
     PlayerID id;
@@ -18,7 +18,7 @@ public class EntityInfoUI : MonoBehaviour
     public GaugeUI hpBar;
     public GaugeUI energyBar;
     public TextMeshProUGUI powerText;
-    public BuffListUI buffList;
+    public TextMeshProUGUI defText;
     public SkillInfoUI skillInfo;
     public Button entitySkillBtn;
 
@@ -28,7 +28,7 @@ public class EntityInfoUI : MonoBehaviour
         InfoPanel.SetActive(false);
     }
 
-    public void Init(InputManager input)
+    public  override void Init(InputManager input)
     {
         inputManager = input;
         id = inputManager.agent.id;
@@ -75,15 +75,12 @@ public class EntityInfoUI : MonoBehaviour
         entity.OnHealthChanged += hpBar.SetGauge;
 
         // 공격력 표시
-        powerText.gameObject.SetActive(true);
         SetPowerText(entity.Power);
         entity.OnPowerChanged += SetPowerText;
-
-        // 버프 표시
-        if (entity.TryGetComponent<BuffManager>(out var buffs))
-        {
-            buffList.SetBuffUI(buffs);
-        }
+        
+        SetDefText(entity.Defense);
+        entity.OnDefenseChanged += SetDefText;
+        
         if (entity.TryGetComponent<EnergyComponent>(out var energy))
         {
             _energy = energy;
@@ -115,10 +112,15 @@ public class EntityInfoUI : MonoBehaviour
     {
         powerText.text = value.ToString();
     }
+    void SetDefText(int value)
+    {
+        defText.text = value.ToString();
+    }
     void UseSkill()
     {
         if(_skill != null)
             inputManager.SetInputMode(_skill);
+        HidePanel();
     }
     void SetSkillButton(IInputState state)
     {

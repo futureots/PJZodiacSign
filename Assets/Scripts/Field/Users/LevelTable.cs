@@ -4,50 +4,47 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelTable", menuName = "Scriptable Objects/LevelTable")]
 public class LevelTable : ScriptableObject
 {
+    public int endLevel;
     public int basicCredit;
+    [SerializeField] private List<Phase> basePhases;
+    [SerializeField] private EnemyAI baseAI;
     public List<LevelData> data;
 
-    Dictionary<int, EnemyTable> levels;
+    private Dictionary<int, EnemyTable> _levels;
 
-    public Dictionary<int,EnemyTable> Levels
+
+    private Dictionary<int,EnemyTable> Levels
     {
         get
         {
-            if(levels == null)
+            if(_levels == null)
             {
-                levels = new Dictionary<int, EnemyTable>();
+                _levels = new Dictionary<int, EnemyTable>();
                 foreach(var level in data)
                 {
-                    levels.Add(level.level, level.enemies);
+                    _levels.Add(level.level, level.enemies);
                 }
             }
-            return levels;
+            return _levels;
         }
     }
-
-    public AgentData GetLevelData(int level)
+    
+    /// <summary>
+    /// 해당 레벨의 레벨 테이블 반환(적 종류, 턴 구조 보유) 
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public (EnemyAI,AgentData,List<Phase>) GetLevelData(int level)
     {
-        if(Levels.TryGetValue(level,out var table))
+        if(Levels.TryGetValue(level,out EnemyTable table))
         {
-            return table.GetAgentData();
+            return (table.enemyAI,table.GetEnemyData(),table.phases);
         }
         else
         {
-            for(int i=level; i > 0; i--)
-            {
-                if (Levels.TryGetValue(i, out var t))
-                {
-                    var agentData = t.GetAgentData();
-                    agentData.credit += basicCredit * (level - i);
-                    return agentData;
-                }
-            }
+            return (baseAI,new AgentData(level * basicCredit), basePhases);
         }
-        return GetBasicData(level);
-    }
-    public AgentData GetBasicData(int level)
-    {
-        return new AgentData(level * basicCredit);
+        
     }
 
 }

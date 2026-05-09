@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d5c26893e2eca468ef1016e24ff5f2, type: 3}
+  m_Name: RuinedKingSkill
+  m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
+  skillIcon: {fileID: 21300000, guid: 9127bb7b525b8424fb967ef6627e220c, type: 3}
+  skillName: "\uC18C\uD658"
+  skillDescription: "\uAE30\uBB3C\uC744 \uC18C\uD658\uD55C\uB2E4. 5\uD68C\uB9C8\uB2E4
+    \uD574\uB2F9 \uAE30\uBB3C\uC774 \uAC15\uD654\uB41C\uB2E4."
+  skillLogic:
+    rid: 6734862101096431683
+  references:
+    version: 2
+    RefIds:
+    - rid: 6734862101096431683
+      type: {class: S_RuinedKing, ns: , asm: Assembly-CSharp}
+      data:
+        _table: {fileID: 11400000, guid: 8571e841e79f5624e9c0c25d14dd4279, type: 2}

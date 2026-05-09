@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static Tile;
 
 [RequireComponent(typeof(SkillComponent))]
 [RequireComponent(typeof(EnergyComponent))]     // NOTE: Skill 내 Energy 스탯 종속 시 컴포넌트 병합
-[RequireComponent(typeof(BuffManager))]
 [RequireComponent(typeof(AreaComponent))]
 public class Entity : Occupant, IDamageable, IAttackable
 {
@@ -15,7 +12,6 @@ public class Entity : Occupant, IDamageable, IAttackable
     public EntityData baseData;
 
     /// 기물의 팀 번호
-
     public Team team;
 
     public intVector2 direction;
@@ -24,6 +20,20 @@ public class Entity : Occupant, IDamageable, IAttackable
     // Level of current Entity
     [SerializeField] int level;
     public Action<int, int> OnLevelChanged;
+
+    private bool isControllable = false;
+
+    public bool IsControllable
+    {
+        get => isControllable;
+        set
+        {
+            isControllable = value;
+            OnControllableChanged?.Invoke(isControllable);
+        }
+    }
+
+    public Action<bool> OnControllableChanged;
 
     public int Level
     {
@@ -35,10 +45,9 @@ public class Entity : Occupant, IDamageable, IAttackable
             OnLevelChanged?.Invoke(level, before);
         }
     }
-
-    public static Action<Entity> onEntityDead;
-
-    public Action onDead;
+    
+    public Action<Entity> onDead;
+    public Action<Entity> onEntitySpawn;
 
     [SerializeField] public AreaComponent area;
     
@@ -48,24 +57,36 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     #endregion
 
-    // TODO: 나중에 스탯 계산용 핸들러 추가하면서 빼기
-    public bool isProtected;
-
     private void Awake()
     {
         team = new();
     }
 
+    [SerializeField] Material white;
+    [SerializeField] Material black;
     /// <summary>
     /// Initialize Setting when Load
     /// </summary>
     /// <param name="data">Entity Data</param>
     /// <param name="level">Initial Level</param>
-    public void Init(EntityData data, intVector2 direction, int level = 0)
+    /// <param name="team"></param>
+    public void Init(EntityData data, intVector2 direction, int level = 0, PlayerID team =  PlayerID.None)
     {
         baseData = data;
         Level = level; // NOTE: 초기화 시 레벨 변화 이벤트 발생중
         this.direction = direction;
+        if (direction.y < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+
+        this.team.teamNumber = team;
+        if (TryGetComponent<Renderer>(out var render))
+        {
+            render.materials = team == Agent.LocalPlayer.id ? new []{white} : new []{black};
+        }
+        
+        
         //Get Status Component
         MaxHealth = baseData.maxHp + baseData.hpMultiplier * level;
         CurHealth = MaxHealth;
@@ -80,8 +101,8 @@ public class Entity : Occupant, IDamageable, IAttackable
         
         // Set Area
         area.SetArea(data.moveArea, data.attackArea);
-
-         IsReflect = false;
+        
+        IsReflect = false;
     }
 
     /// Update Status with Level-Up
@@ -91,6 +112,7 @@ public class Entity : Occupant, IDamageable, IAttackable
         MaxHealth += baseData.hpMultiplier * upLevel;
         CurHealth += baseData.hpMultiplier * upLevel;
         Power += baseData.powerMultiplier * upLevel;
+        PlayEffect(EffectType.LevelUp);
     }
 
     #region Attack
@@ -118,14 +140,14 @@ public class Entity : Occupant, IDamageable, IAttackable
         bool isAttacked = false;
         foreach (var item in list)
         {
-            if (item.isEmpty) continue;
-            var target = item.occupiedObject;
+            if (item.IsEmpty) continue;
+            var target = item.occupiedEntity;
             if (target.TryGetComponent<Entity>(out var entity))
             {
                 if (!team.IsAlly(entity.team))
                 {
-                    var effect = Instantiate(baseData.basicAttackEffect, transform.position + Vector3.up * 7, Utils.QI);
-                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target, damage);
+                    var effect = EffectFactory.Instance.Request("AttackEffect", transform.position + Vector3.up * 7, transform.lossyScale,5f);
+                    effect.GetComponent<BasicAttackEffect>()?.Initialize(target.gameObject, ()=> entity.Damaged(damage));
                     isAttacked = true;
                 }
             }
@@ -137,14 +159,29 @@ public class Entity : Occupant, IDamageable, IAttackable
     #endregion
 
     #region Health
-
-    // TODO: Health 변경 로직
-    private int _curHealth;
-    public int CurHealth { 
-        get
+    
+    private int _defense;
+    
+    /// <summary>
+    /// 기물의 방어력(받는 피해를 감소 시킨다.)
+    /// </summary>
+    public int Defense { 
+        get => _defense;
+        set
         {
-            return _curHealth;
+            _defense = value;
+            OnDefenseChanged?.Invoke(_defense);
         }
+    }
+    public event Action<int> OnDefenseChanged;
+    
+    private int _curHealth;
+    
+    /// <summary>
+    /// 기물의 현재 체력
+    /// </summary>
+    public int CurHealth { 
+        get => _curHealth;
         set
         {
             _curHealth = Math.Min(MaxHealth,value);
@@ -154,10 +191,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     }
     private int _maxHealth;
     public int MaxHealth { 
-        get
-        {
-            return _maxHealth;
-        }
+        get => _maxHealth;
         set 
         {
             _maxHealth = value;
@@ -168,27 +202,20 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     public void Damaged(int damage)
     {
-        var value = damage;
-        // 보호막 계산
-        if (isProtected) value /= 2;
+        var value = Math.Max(damage - _defense,0);
+        EffectFactory.Instance.Request("HitEffect",transform.position + Vector3.up * 7, transform.lossyScale*2f,1f);
 
         CurHealth -= value;
     }
 
     public void Dead()
     {
-        onEntityDead?.Invoke(this);
-        onDead?.Invoke();
-        var effect = Instantiate(baseData.dissolveEffect, transform);
-        if (effect.TryGetComponent<DissolveEffect>(out var dissolve))
+        if (TryGetComponent(out Collider collider))
         {
-            if (TryGetComponent<MeshFilter>(out var mesh))
-            {
-                dissolve.Initialize(mesh.mesh, GetComponent<MeshRenderer>());
-                dissolve.PlayEffect(2f);
-                Destroy(gameObject, 2f);
-            }
+            collider.enabled = false;
         }
+        onDead?.Invoke(this);
+        PlayEffect(EffectType.Dissolve);
     }
 
     public void Healed(int amount)
@@ -212,7 +239,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     {
         if (!ignoreOccupy)
         {
-            var isOccupied = !tile.isEmpty;
+            var isOccupied = !tile.IsEmpty;
             if (isOccupied) return false;
         }
 
@@ -221,7 +248,7 @@ public class Entity : Occupant, IDamageable, IAttackable
             CurTile.UnsetOccupant();
         }
 
-        tile.SetOccupant(gameObject, true);
+        tile.SetOccupant(this, true);
         CurTile = tile;
 
         return true;
@@ -237,19 +264,14 @@ public class Entity : Occupant, IDamageable, IAttackable
     /// <returns>기물이 이동가능한 타일들</returns>
     public List<Tile> GetMoveArea()
     {
-        if (TryGetComponent<AreaComponent>(out var area))
-        {
-            var field = CurTile.field.GetFieldState(this);
+        var field = CurTile.field.GetFieldState(this);
 
-            var list = area.GetMoveVector(field, CurTile.fieldPos, direction);
-            var tiles = CurTile.field.GetTiles(list).Where(value => value.isEmpty).ToList();
+        var list = area.GetMoveVector(field, CurTile.fieldPos, direction);
+        var tiles = CurTile.field.GetTiles(list).GetEmptyTiles();
 
-            tiles.Add(CurTile);
+        tiles.Add(CurTile);
 
-            return tiles;
-        }
-
-        return new List<Tile>();
+        return tiles;
     }
 
     /// <summary>
@@ -273,16 +295,61 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     #endregion
 
+    #region Effect
+
+    public enum EffectType
+    {
+        LevelUp,
+        Dissolve
+    }
+
+    /// <summary>
+    /// 기물에 대한 이펙트 재생
+    /// </summary>
+    /// <param name="effectType"></param>
+    public void PlayEffect(EffectType effectType)
+    {
+        switch (effectType)
+        {
+            case EffectType.Dissolve:
+                var dissolveEffect = EffectFactory.Instance.Request("Dissolve", transform.position, transform.lossyScale,3f);
+                if (dissolveEffect.TryGetComponent<DissolveEffect>(out var dissolve))
+                {
+                    if (TryGetComponent<MeshFilter>(out var mesh) && TryGetComponent<MeshRenderer>(out var render))
+                    {
+                        dissolve.Initialize(mesh.mesh, render);
+                        dissolve.PlayEffect(2f);
+                    }
+                    Destroy(gameObject, 2f);
+                }
+                break;
+            case EffectType.LevelUp:
+                var levelUpEffect = EffectFactory.Instance.Request("LevelUp", transform.position, transform.lossyScale);
+                if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
+                {
+                    if (TryGetComponent<MeshFilter>(out var mesh))
+                    {
+                        levelUp.Init(mesh.mesh);
+                        levelUp.Play();
+                    }
+                }
+                break;
+        }
+    }
+
+    #endregion
+    
     #region Indicator
 
-    [SerializeField] GameObject indicatorEffect;
+    [SerializeField] Outline indicatorEffect;
     public void ApplyHighlight()
     {
-        indicatorEffect.SetActive(true);
+        indicatorEffect.enabled = true;
     }
     public void RemoveHighlight()
     {
-        indicatorEffect.SetActive(false);
+        indicatorEffect.enabled = false;
     }
     #endregion
+    
 }

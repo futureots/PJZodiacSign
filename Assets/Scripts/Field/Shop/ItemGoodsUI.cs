@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class ItemGoodsUI : GoodsUI<ItemData>
 {
-    public override void SetGoods(ItemData data)
+    public override void SetGoods(ItemData data,LogSystem log = null)
     {
         buyBtn.onClick.RemoveAllListeners();
         base.SetGoods(data);
-        buyBtn.onClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+        buyBtn.onClick.AddListener(() =>
         {
             var customer = Agent.LocalPlayer;
-            if (customer.inventory.items.Count < customer.inventory.capacity)
+            var item = ItemFactory.Instance.Request(data);
+            if (customer.inventory.TryAddItem(item))
             {
-                var item = ItemFactory.RequestItem(data);
-                customer.inventory.TryAddItem(item);
                 customer.Credit -= price;
+                EditorLogger.Print($"buy item : {item.ItemData.id}");
             }
             else
             {
-                Debug.Log("인벤토리에 빈 공간이 없습니다!");
+                log?.ShowLog("인벤토리에 빈 공간이 없습니다!",LogType.Error);
             }
-        }));
+        });
     }
 }

@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-
+using UnityEngine.UI;
 
 
 public class InputManager : MonoBehaviour
@@ -22,10 +23,11 @@ public class InputManager : MonoBehaviour
     public GameObject entitySelecter;
     public GameObject tileSelecter;
     public GameObject skillSelecter;
-
     public TurnType curTurnType { get; private set; }
     public Action<IInputState> OnModeChanged;
 
+    [SerializeField] private int maxEntityCount = 12;
+    public int  MaxEntityCount => maxEntityCount;
     protected void Awake()
     {
         inputActions = new GameInputActions();
@@ -47,7 +49,6 @@ public class InputManager : MonoBehaviour
     public void Init(Agent agent)
     {
         this.agent = agent;
-        Agent.LocalPlayer = agent;
         agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 
@@ -66,13 +67,28 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public UnityEvent<Vector2> OnMouseMove;
 
+
+    /// <summary>
+    /// 현재 마우스 위치가 UI 위에 있는지 확인
+    /// </summary>
+    /// <returns></returns>
+    bool IsOnUI()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current) { position = PointerPosition };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        if (results.Count > 0) return true;
+        return false;
+    }
+    
     /// <summary>
     /// 마우스 클릭 시작
     /// </summary>
     /// <param name="context"></param>
     void StartClick(InputAction.CallbackContext context)
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (IsOnUI()) return;
 
         Ray ray = Camera.main.ScreenPointToRay(PointerPosition);
         // 레이캐스트 기물, (타일) UI 표시 
@@ -97,8 +113,6 @@ public class InputManager : MonoBehaviour
     /// <param name="context"></param>
     void MoveMouse(InputAction.CallbackContext context)
     {
-        //if (EventSystem.current.IsPointerOverGameObject()) return;
-
         PointerPosition = context.ReadValue<Vector2>();
         OnMouseMove?.Invoke(PointerPosition);
     }
@@ -116,16 +130,7 @@ public class InputManager : MonoBehaviour
         
         if (curTurn.agentID == agent.id)
         {
-            EditorLogger.Print("Player" + curTurnType.ToString());
-            if(curTurn.type == TurnType.ATTACK)
-            {
-                AttackInput();
-            }
-            else
-            {
-                SetInputMode();
-            }
-                
+            SetInputMode();
         }
         else
         {
@@ -154,6 +159,9 @@ public class InputManager : MonoBehaviour
             case TurnType.REPAIR:
                 curModeState = new RepairModeInput(this);
                 break;
+            case TurnType.ATTACK:
+                curModeState = new AttackModeInput(this);
+                break;
             default:
                 curModeState = new EmptyModeInput();
                 break;
@@ -169,16 +177,7 @@ public class InputManager : MonoBehaviour
         OnModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
-
-    public void AttackInput()
-    {
-        var entities = StageManager.Instance.field.GetEntities(agent.id);
-        foreach (var entity in entities)
-        {
-            agent.CreateAttackCommand(entity);
-        }
-        agent.CreateEndCommand();
-    }
+    
 
     #endregion
 

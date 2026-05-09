@@ -1,54 +1,67 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 
 [Serializable]
 public class S_SpawnWall : BaseSkillLogic
 {
-    public EntityData spawnData;
-    Tile tile;
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    [SerializeField] EntityData spawnData;
+    private Entity _owner;
+    private Tile _tile;
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        isContinued = false;
-        Action<bool> conti = (flag) => { isContinued = flag; };
-        List<Tile> tiles;
-        if (component.TryGetComponent<Entity>(out var _owner))
-        {
-            tiles = _owner.GetAttackArea();
-        }
+        var list = StageManager.Instance.field.GetEntities();
+        if(component.TryGetComponent<Entity>(out var owner)) { }
         else
         {
-            tiles = Field.GetEmptyTiles(StageManager.Instance.field.GetTiles());
+            var data = await input.InputEntity(list, 1);
+            if(data != null)
+            {
+                owner = data[0];
+            }
+            else
+            {
+                return false;
+            }
         }
-
         
-        Tile _tile = null;
-        Action<Tile> action2 = (x) =>
-        {
-            _tile = x;
-        };
-        yield return component.StartCoroutine(input.InputTile(tiles, action2, conti, 1));
-        if (!isContinued)
-        {
-            callback?.Invoke(false);
-            yield break;
-        }
+        var tiles = owner.GetMoveArea();
+        
+        // AI 용 랜덤 값
+        var random = UnityEngine.Random.Range(0, tiles.Count);
+        (tiles[random], tiles[0]) = (tiles[0], tiles[random]);
 
-        tile = _tile;
-        callback?.Invoke(true);
-        yield break;
+
+        var data2 = await input.InputTile(tiles, 1);
+        if (data2 == null) 
+        {
+            return false;
+        }
+        _owner = owner;
+        _tile = data2[0];
+        
+        return true;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        EditorLogger.Print($"Spawn {spawnData.productName}");
-        var obstacle = EntityFactory.RequestEntity(spawnData, intVector2.Zero, tile);
-        obstacle.team.teamNumber = PlayerID.None;
-        // TODO : 팩토리를 통해 장애물을 생성하고 tile에 생성
+        
+
+        var obstacle = EntityFactory.Instance.Request(spawnData, intVector2.Zero, _tile, _owner.team.teamNumber);
+        var levelUpEffect = EffectFactory.Instance.Request("LevelUp",obstacle.transform.position, obstacle.transform.lossyScale);
+        if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
+        {
+            if (obstacle.TryGetComponent<MeshFilter>(out var mesh))
+            {
+                levelUp.Init(mesh.mesh);
+                levelUp.Play();
+            }
+        }
         yield return new WaitForSeconds(0.5f);
-        tile = null;
+        _tile = null;
         yield break;
     }
     public override BaseSkillLogic Clone()

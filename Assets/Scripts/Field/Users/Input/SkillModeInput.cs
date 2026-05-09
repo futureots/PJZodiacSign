@@ -1,17 +1,19 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Object = UnityEngine.Object;
 
 
 namespace PlayerInput
 {
     public class SkillModeInput : IInputState, IInput
     {
-        InputManager _inputManager;
+        readonly InputManager _inputManager;
 
-        List<GameObject> selecters;
+        private List<GameObject> selecters;
 
         SkillComponent skillComp;
 
@@ -30,140 +32,113 @@ namespace PlayerInput
 
         public void SetMode()
         {
-            _inputManager.StartCoroutine(InputSkill(skillComp));
+            _ = InputSkill(skillComp);
         }
-        
-        // 스킬 입력 및 커맨드 생성 코루틴
-        public IEnumerator InputSkill(SkillComponent skill)
+
+        async UniTaskVoid InputSkill(SkillComponent skill)
         {
-            bool isCompleted = false;
-            Action<bool> action = (x) => { isCompleted = x; };
-            yield return skill.StartCoroutine(skill.skillLogic.InputSkill(this,action));
-            EditorLogger.Print($"isCompleted : {isCompleted}");
+            var task = await skill.skillLogic.InputSkill(this);
+            
+            // 스킬 입력이 종료되면 스킬이 종료될 때까지 대기 한 후 기본 입력 모드로 변경
+            var flag = true;
+            Action<int> wait = i =>
+            {
+                if (i == 0) flag = true;
+                else flag = false;
+            };
+            StageManager.Instance.isSequencing += wait;
             // 정상 완료 시 커맨드 생성 및 스킬 입력 모드 종료
-            if (isCompleted)
+            if (task)
             {
                 // 커맨드 생성
                 var command = _inputManager.agent.CreateSkillCommand(skill);
                 command.indicate.AddRange(selecters);
-                EditorLogger.Print("SkillCreated");
             }
             else
             {
                 foreach (GameObject go in selecters)
                 {
-                    GameObject.Destroy(go);
+                    Object.Destroy(go);
                 }
                 selecters.Clear();
             }
-            // 스킬 입력이 종료되면 기본 입력 모드로 변경
+            await new WaitUntil(() => flag);
+            StageManager.Instance.isSequencing -= wait;
+            
             _inputManager.SetInputMode();
-            yield break;
         }
 
-        public IEnumerator InputEntity(List<Entity> list, Action<Entity> input, Action<bool> callback, int maxCount = -1)
+        public async UniTask<List<Entity>> InputEntity(List<Entity> list, int count = -1)
         {
+            if (list.Count <= 0) return null;
+            if (list.Count <= count) return new List<Entity>(list);
+            
+            var selectedEntities = new List<Entity>();
             bool isCanceled = false;
-            if (list.Count <= maxCount)
+
+            UnityAction<GameObject> click = (obj) =>
             {
-                foreach (Entity entity in list)
+                if (obj && obj.TryGetComponent<Entity>(out var entity))
                 {
-                    input?.Invoke(entity);
-                }
-                callback?.Invoke(true);
-                yield break;
-            }
-            int count = 0;
-            UnityAction<GameObject> click = (x) =>
-            {
-                if (!x) return;
-                if (x.TryGetComponent<Entity>(out var entity))
-                {
-                    if (list.Contains(entity))
+                    if (list.Contains(entity) && !selectedEntities.Contains(entity))
                     {
-                        input?.Invoke(entity);
-                        count++;
+                        selectedEntities.Add(entity);
+                        entity.RemoveHighlight();
+                        selecters.Add(Object.Instantiate(_inputManager.skillSelecter,entity.CurTile.transform.position + Vector3.up*0.1f, Utils.QI));
                     }
                 }
             };
-            // list 기물 시각화
-            foreach (Entity entity in list)
-            {
-                entity.ApplyHighlight();
-            }
-
-            Action action = () => isCanceled = true;
-            onCanceled += action;
+            Action cancel = () => isCanceled = true;
+            
+            list.ForEach(e => e.ApplyHighlight());
             _inputManager.OnObjectClicked.AddListener(click);
-            yield return new WaitUntil(()=>  { return isCanceled || count>=maxCount; });
+            onCanceled += cancel;
+            
+            await UniTask.WaitUntil(() => isCanceled || selectedEntities.Count >= count);
+            
+            list.ForEach(e => e.RemoveHighlight());
             _inputManager.OnObjectClicked.RemoveListener(click);
-            onCanceled -= action;
-
-            // 시각화 제거
-            foreach (Entity entity in list)
-            {
-                entity.RemoveHighlight();
-            }
-
-            if (isCanceled)
-            {
-                callback?.Invoke(false);
-                yield break;
-            }
-            callback?.Invoke(true);
+            onCanceled -= cancel;
+            
+            if (isCanceled) return null;
+            
+            return selectedEntities;
         }
 
-        public IEnumerator InputTile(List<Tile> list, Action<Tile> input, Action<bool> callback, int maxCount = -1)
+        public async UniTask<List<Tile>> InputTile(List<Tile> list, int maxCount = -1)
         {
+            if (list.Count <= 0) return null;
+            if (list.Count <= maxCount) return new List<Tile>(list);
+            
+            var selectedTiles = new List<Tile>();
             bool isCanceled = false;
-            if (list.Count <= maxCount)
+
+            UnityAction<GameObject> click = (obj) =>
             {
-                foreach (Tile tile in list)
+                if (obj && obj.TryGetComponent<Tile>(out var tile))
                 {
-                    input?.Invoke(tile);
-                }
-                callback?.Invoke(true);
-                yield break;
-            }
-            int count = 0;
-            UnityAction<GameObject> click = (x) =>
-            {
-                EditorLogger.Print("Click");
-                if (!x) return;
-                if (x.TryGetComponent<Tile>(out var tile))
-                {
-                    if (list.Contains(tile))
+                    if (list.Contains(tile) && !selectedTiles.Contains(tile))
                     {
-                        input?.Invoke(tile);
-                        count++;
-                        selecters.Add(GameObject.Instantiate(_inputManager.skillSelecter,tile.transform.position + Vector3.up*0.1f, Utils.QI));
+                        selectedTiles.Add(tile);
+                        tile.RemoveHighlight(Tile.HighLightType.Move);
+                        selecters.Add(Object.Instantiate(_inputManager.skillSelecter,tile.transform.position + Vector3.up*0.1f, Utils.QI));
                     }
                 }
             };
-
-            foreach (Tile tile in list)
-            {
-                tile.ApplyHighlight(Tile.HighLightType.Move);
-            }
-
-            Action action = () => isCanceled = true;
-            onCanceled += action;
+            Action cancel = () => isCanceled = true;
+            
+            list.ForEach(e => e.ApplyHighlight(Tile.HighLightType.Move));
             _inputManager.OnObjectClicked.AddListener(click);
-            yield return new WaitUntil(() => { return isCanceled || count >= maxCount; });
+            onCanceled += cancel;
+            
+            await UniTask.WaitUntil(() => isCanceled || selectedTiles.Count >= maxCount);
+            if (isCanceled) return null;
+            
+            list.ForEach(e => e.RemoveHighlight(Tile.HighLightType.Move));
             _inputManager.OnObjectClicked.RemoveListener(click);
-            onCanceled -= action;
-
-            foreach (Tile tile in list)
-            {
-                tile.RemoveHighlight(Tile.HighLightType.Move);
-            }
-            if (isCanceled)
-            {
-                callback?.Invoke(false);
-                yield break;
-            }
-            callback?.Invoke(true);
+            onCanceled -= cancel;
+            
+            return selectedTiles;
         }
-
     }
 }

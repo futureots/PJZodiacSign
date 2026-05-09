@@ -1,30 +1,36 @@
 using System;
 using System.Collections;
 
-[System.Serializable]
+[Serializable]
 public class ItemComponent : SkillComponent
 {
-    public ItemData itemData { get; private set; }
+    public ItemData ItemData { get; private set; }
 
-    public Action OnDiscard;
+    public Action onDiscard;
 
+    private bool _isUsed;
     public void Init(ItemData itemData)
     {
-        this.itemData = itemData;
+        this.ItemData = itemData;
         skillData = itemData.skillData;
         skillLogic = skillData.skillLogic.Clone();
         skillLogic.SetSkillComponent(this);
+        _isUsed = false;
     }
 
+    
     public override bool IsUsable()
     {
-        return true;
+        return !_isUsed;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        yield return StartCoroutine(skillLogic.ExecuteSkill());
+        _isUsed = true;
+        yield return skillLogic.ExecuteSkill();
+        
         Discard();
+        
     }
 
     /// <summary>
@@ -32,7 +38,7 @@ public class ItemComponent : SkillComponent
     /// </summary>
     public void Discard()
     {
-        OnDiscard?.Invoke();
+        onDiscard?.Invoke();
     }
 
 

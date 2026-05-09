@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7296cafdbff8e6d428f1a1012f18a736, type: 3}
   m_Name: BishopArea
   m_EditorClassIdentifier: 
-  isContainOccupiedPos: 1
+  isRepeat: 1

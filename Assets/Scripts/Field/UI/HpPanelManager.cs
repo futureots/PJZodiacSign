@@ -13,7 +13,7 @@ public class HpPanelManager : MonoBehaviour
     private void Awake()
     {
         hpBarList = new List<GameObject>();
-        EntityFactory.OnEntityCreated += CreateHpBar;
+        EntityFactory.Instance.OnEntityCreated += CreateHpBar;
     }
 
 
@@ -28,7 +28,7 @@ public class HpPanelManager : MonoBehaviour
         bar.gameObject.transform.localScale = Vector3.one * 0.1f;
         hpBarList.Add(bar.gameObject);
 
-        bar.SetEntity(target, ()=> hpBarList.Remove(bar.gameObject));
+        bar.Init(target, (entity)=> hpBarList.Remove(bar.gameObject));
         
     }
 
@@ -42,6 +42,9 @@ public class HpPanelManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        EntityFactory.OnEntityCreated -= CreateHpBar;
+        if (EntityFactory.Instance)
+        {
+            EntityFactory.Instance.OnEntityCreated -= CreateHpBar;
+        }
     }
 }

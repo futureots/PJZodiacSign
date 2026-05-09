@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -6,61 +7,72 @@ using UnityEngine;
 [Serializable]
 public class S_CheckMate : BaseSkillLogic
 {
-    [SerializeField] int damage;
-    Entity owner;
+    [SerializeField] int modifier;
+    private Entity _owner;
 
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        isContinued = false;
-        if (component.TryGetComponent<Entity>(out var _owner))
+        if (component.TryGetComponent<Entity>(out var owner))
         {
-            owner = _owner;
-            callback?.Invoke(true);
-            yield break;
+            _owner = owner;
+            return true;
         }
-        else
+        var list = StageManager.Instance.field.GetEntities();
+        var data = await input.InputEntity(list, 1);
+        if(data != null)
         {
-            var list = StageManager.Instance.field.GetEntities();
-            Entity _target = null;
-            Action<Entity> action = (x) =>
-            {
-                _target = x;
-            };
-            Action<bool> conti = (flag) => { isContinued = flag; };
-            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-            if (!isContinued)
-            {
-                callback?.Invoke(false);
-                yield break;
-            }
-            owner = _target;
-            callback?.Invoke(true);
+            _owner = data[0];
+            return true;
+        }
+        
+        return false;
+    }
+
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var owner))
+        {
+            _owner = owner;
+            var tiles = _owner.GetAttackArea();
+            
+            // 적이 1명이상 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty && !tile.occupiedEntity.team.IsAlly(_owner.team));
         }
 
+        return false;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        var tiles = owner.GetAttackArea();
+        var tiles = _owner.GetAttackArea();
+
+        EffectFactory.Instance.Request("ManaAura", _owner.transform.position, _owner.transform.lossyScale * 3);
         foreach (var tile in tiles)
         {
-            if (tile.isEmpty) continue;
-            if (tile.occupiedObject.TryGetComponent<Entity>(out var entity))
+            if (tile.IsEmpty) continue;
+            if (tile.occupiedEntity.team.IsAlly(_owner.team))
             {
-                if (!entity.team.IsAlly(owner.team))
-                {
-                    entity.Damaged(damage);
-                }
-                
+                Entity entity = tile.occupiedEntity;
+                component.StartCoroutine(Hit(entity,_owner.energy.CurEnergy * modifier));
             }
         }
-        owner = null;
+
+        yield return new WaitForSeconds(1.5f);
+        _owner = null;
         yield break;
     }
+    
+    IEnumerator Hit(Entity entity, int damage)
+    {
+        EffectFactory.Instance.Request("LightningStrike",entity.transform.position,entity.transform.lossyScale);
+        yield return new WaitForSeconds(0.5f);
+        entity.Damaged(damage);
+    }
+    
     public override BaseSkillLogic Clone()
     {
         var clone = new S_CheckMate();
-        clone.damage = damage;
+        clone.modifier = modifier;
         return clone;
     }
 }

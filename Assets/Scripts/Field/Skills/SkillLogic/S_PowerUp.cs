@@ -1,0 +1,83 @@
+using Cysharp.Threading.Tasks;
+using System;
+using System.Collections;
+using UnityEngine;
+
+[Serializable]
+public class S_PowerUp : BaseSkillLogic
+{
+    [SerializeField] private Area area;
+    private Entity _owner;
+
+    public void Init(Area area)
+    {
+        this.area = area;
+    }
+    public override async UniTask<bool> InputSkill(IInput input)
+    {
+        if (component.TryGetComponent<Entity>(out var entity))
+        {
+            _owner = entity;
+            return true;
+        }
+        var list = StageManager.Instance.field.GetEntities();
+        var data = await input.InputEntity(list, 1);
+        if(data != null)
+        {
+            _owner = data[0];
+            return true;
+        }
+        
+        return false;
+
+    }
+
+    public override bool IsValuable()
+    {
+        if (component.TryGetComponent<Entity>(out var entity))
+        {
+            _owner = entity;
+            
+            var pos = _owner.CurTile.fieldPos;
+            int[,] t = new int[8, 8];
+            var vectors = area.GetVectors(t, pos, _owner.direction);
+            var tiles = StageManager.Instance.field.GetTiles(vectors);
+            
+            // 범위내 아군이 있으면 사용
+            return tiles.Exists(tile => !tile.IsEmpty &&  tile.occupiedEntity.team.IsAlly(_owner.team));
+        }
+
+        return false;
+    }
+
+    public override IEnumerator ExecuteSkill()
+    {
+        var pos = _owner.CurTile.fieldPos;
+        int[,] t = new int[8, 8];
+        var vectors = area.GetVectors(t, pos, _owner.direction);
+        var tiles = StageManager.Instance.field.GetTiles(vectors);
+        
+        EffectFactory.Instance.Request("PowUpAura",_owner.transform.position,_owner.transform.lossyScale*5);
+        
+        foreach (var tile in tiles)
+        {
+            if (tile.IsEmpty) continue;
+            if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
+            {
+                if (!entity.team.IsAlly(_owner.team))
+                {
+                    entity.Power += 1;
+                }
+            }
+        }
+        _owner = null;
+        yield break;
+    }
+
+    public override BaseSkillLogic Clone()
+    {
+        var clone = new S_PowerUp();
+        clone.Init(area);
+        return clone;
+    }
+}

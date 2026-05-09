@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ChargeArea
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 213a7b64eaee46e4b89efefe49d383de, type: 3}
-  skillName: "\uCDA9\uC804"
-  skillDescription: "\uAC70\uB9AC 2 \uC774\uB0B4\uC758 \uC544\uAD70\uC758 \uC5D0\uB108\uC9C0\uB97C
-    2 \uD68C\uBCF5\uC2DC\uD0A8\uB2E4."
+  skillName: "\uC804\uD22C\uC758 \uD568\uC131"
+  skillDescription: "\uAC70\uB9AC 1 \uC774\uB0B4 \uC544\uAD70\uC758 \uB9C8\uB098\uB97C
+    2 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   skillLogic:
     rid: 2184884865547108420
   references:
@@ -25,4 +25,4 @@ MonoBehaviour:
       type: {class: S_ChargeArea, ns: , asm: Assembly-CSharp}
       data:
         charge: 2
-        area: {fileID: 11400000, guid: e2464d85e733e464ab24ea397ba3375c, type: 2}
+        area: {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}

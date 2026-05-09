@@ -1,68 +1,82 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
+using UnityEngine;
 
 [Serializable]
 public class S_Promotion : BaseSkillLogic
 {
-    Entity entity;
-    Entity target;
-    public override IEnumerator InputSkill(IInput input, Action<bool> callback)
+    private Entity _entity;
+    private Entity _target;
+
+    public override async UniTask<bool> InputSkill(IInput input)
     {
-        var list = StageManager.Instance.field.GetEntities();
-        isContinued = false;
-        Entity _entity = null;
-        Action<bool> conti = (flag) => { isContinued = flag; };
-        if(component.TryGetComponent<Entity>(out var _owner))
+        Entity entity = null;
+        if(component.TryGetComponent<Entity>(out var owner))
         {
-            _entity = _owner;
+            entity = owner;
         }
         else
         {
-            Action<Entity> action = (x) =>
+            var list = StageManager.Instance.field.GetEntities();
+            var data = await input.InputEntity(list, 1);
+            if(data != null)
             {
-                _entity = x;
-            };
-            yield return component.StartCoroutine(input.InputEntity(list, action, conti, 1));
-            if (!isContinued)
-            {
-                callback?.Invoke(false);
-                yield break;
+                entity = data[0];
             }
-            
+            else
+            {
+                return false;
+            }
         }
-        list.Remove(_entity);
-
-
-        Entity _target = null;
-        Action<Entity> action2 = (x) =>
+        var teamList = StageManager.Instance.field.GetEntities(entity.team.teamNumber);
+        teamList.Remove(entity);
+        teamList = teamList.FindAll(e=> e.baseData.id != entity.baseData.id);
+        teamList.Sort((a, b) => b.baseData.normalPrice.CompareTo(a.baseData.normalPrice));
+        
+        var data2 = await input.InputEntity(teamList, 1);
+        if (data2 == null) 
         {
-            _target = x;
-        };
-        yield return component.StartCoroutine(input.InputEntity(list, action2, conti, 1));
-        if (!isContinued)
-        {
-            callback?.Invoke(false);
-            yield break;
+            return false;
         }
-        target = _target;
-        entity = _entity;
-        callback?.Invoke(true);
+        _entity =  entity;
+        _target = data2[0];
+        
+        return true;
     }
 
     public override IEnumerator ExecuteSkill()
     {
-        var data = target.baseData;
-        var dir = entity.direction;
-        var tile = entity.CurTile;
-        var level = entity.Level;
-        var team = entity.team.teamNumber;
-        entity.CurTile.UnsetOccupant();
-        entity.Dead();
-        entity = null;
-        // TODO : entity의 data를 변경하고 팩토리를 통해 새로 생성, entity의 레벨은 유지
-        var promotion = EntityFactory.RequestEntity(target.baseData, dir, tile, level);
-        promotion.team.teamNumber = team;
-        target = null;
+        var data = _target.baseData;
+        var dir = _entity.direction;
+        var tile = _entity.CurTile;
+        var level = _entity.Level;
+        var team = _entity.team.teamNumber;
+        
+        _entity.CurTile.UnsetOccupant();
+        
+        var promotion = EntityFactory.Instance.Request(_target.baseData, dir, tile, team, level);
+        _entity.onEntitySpawn?.Invoke(promotion);
+        
+        _entity.Dead();
+        _entity = null;
+        
+        // 이펙트 재생
+        var levelUpEffect = EffectFactory.Instance.Request("Change",promotion.transform.position, promotion.transform.lossyScale);
+        if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
+        {
+            if (promotion.TryGetComponent<MeshFilter>(out var mesh))
+            {
+                levelUp.Init(mesh.mesh);
+                levelUp.Play();
+            }
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        
+        _entity = null;
+        _target = null;
         
         yield break;
     }

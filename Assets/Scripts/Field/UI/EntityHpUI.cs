@@ -1,7 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine.UI;
 
 public class EntityHpUI : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class EntityHpUI : MonoBehaviour
     public GameObject levelObject;
     public TextMeshProUGUI levelText;
     public RectTransform rectTransform;
+    public Image movableImage;
     
     public GaugeUI hpBar;
     public GaugeUI energyBar;
@@ -20,7 +21,7 @@ public class EntityHpUI : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
     // TODO: 컴포넌트 접근 및 구독 방식 개선
-    public void SetEntity(Entity entity, Action OnDestroy = null)
+    public void Init(Entity entity, Action<Entity> OnDestroy = null)
     {
         if(_entity != null)
         {
@@ -28,6 +29,7 @@ public class EntityHpUI : MonoBehaviour
             _entity.OnHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.OnEnergyChanged -= energyBar.SetGauge;
             _entity.OnLevelChanged -= UpdateLevelText;
+            _entity.OnControllableChanged -= UpdateMovableCount;
         }
         _entity = entity;
 
@@ -49,24 +51,44 @@ public class EntityHpUI : MonoBehaviour
         UpdateLevelText(_entity.Level);
         _entity.OnLevelChanged += UpdateLevelText;
 
-        _entity.onDead += OnDead;
         _entity.onDead += OnDestroy;
+        _entity.onDead += OnDead;
+        
 
         _entity.team.OnTeamChanged += (team) => OnTeamChange();
         Agent.OnLocalPlayerChanged += OnTeamChange;
 
+        _entity.OnControllableChanged += UpdateMovableCount;
+        UpdateMovableCount(_entity.IsControllable);
     }
 
     private void LateUpdate()
     {
-        if (_entity != null)
+        if (!_entity)
         {
-            transform.LookAt(transform.position + Camera.main.transform.forward);
-
-            Vector3 worldPos = _entity.transform.position + Vector3.Scale(_entity.baseData.offset, _entity.transform.lossyScale);
-            //Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-            rectTransform.position = worldPos;
+            return;
         }
+
+        if (!Camera.main)
+        {
+            return;
+        }
+
+        var forward = Camera.main.transform.forward;
+        transform.LookAt(transform.position + forward);
+
+        forward.y = 0;
+        forward.Normalize();
+            
+        Vector3 worldPos = _entity.transform.position + Vector3.up*6 + Camera.main.transform.right*5;
+        rectTransform.position = worldPos;
+
+
+    }
+
+    private void UpdateMovableCount(bool movable)
+    {
+        movableImage.color = movable ? new Color(0, 0.5f, 0) : new Color(0,0,0);
     }
     void UpdateLevelText(int level, int prev=0)
     {
@@ -85,7 +107,7 @@ public class EntityHpUI : MonoBehaviour
     void OnTeamChange()
     {
         if (!Agent.LocalPlayer) hpBar.gaugeBar.color = Color.red;
-        // TODO : 팀별로 체력바 색상 다르게 표시(다른 곳으로 이전 필요)
+        // 팀별로 체력바 색상 다르게 표시(다른 곳으로 이전 필요)
         else if (_entity.team.IsAlly(Agent.LocalPlayer.id))
         {
             hpBar.gaugeBar.color = Color.green;
@@ -97,7 +119,7 @@ public class EntityHpUI : MonoBehaviour
     }
     
     
-    void OnDead()
+    void OnDead(Entity entity)
     {
         Destroy(gameObject);
     }
@@ -110,6 +132,7 @@ public class EntityHpUI : MonoBehaviour
             _entity.OnHealthChanged -= hpBar.SetGauge;
             if(_energy !=null) _energy.OnEnergyChanged -= energyBar.SetGauge;
             _entity.OnLevelChanged -= UpdateLevelText;
+            _entity.OnControllableChanged -= UpdateMovableCount;
         }
         Agent.OnLocalPlayerChanged -= OnTeamChange;
     }

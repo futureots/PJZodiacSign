@@ -18,13 +18,13 @@ MonoBehaviour:
   - agentID: -1
     type: 2
     actions: []
-  - agentID: 0
+  - agentID: -1
     type: 4
     actions: []
   - agentID: 0
     type: 2
     actions: []
-  - agentID: -1
+  - agentID: 0
     type: 4
     actions: []
   useUIType: 159

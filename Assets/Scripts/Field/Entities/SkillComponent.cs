@@ -7,13 +7,6 @@ public class SkillComponent : MonoBehaviour
     public BaseSkillData skillData;
     public BaseSkillLogic skillLogic;
     public int silenceCount;
-    bool isSilenced
-    {
-        get
-        {
-            return silenceCount > 0;
-        }
-    }
     private void Awake()
     {
         Init(skillData);
@@ -32,12 +25,9 @@ public class SkillComponent : MonoBehaviour
     /// </summary>
     public virtual bool IsUsable()
     {
-        if (!isSilenced)
+        if (TryGetComponent<EnergyComponent>(out var energy))
         {
-            if (TryGetComponent<EnergyComponent>(out var energy))
-            {
-                return energy.CurEnergy >= energy.MaxEnergy;
-            }
+            return energy.CurEnergy >= energy.MaxEnergy;
         }
         return false;
     }
@@ -49,7 +39,7 @@ public class SkillComponent : MonoBehaviour
     {
         // TODO : 자식 클래스 내에 저장된 변수를 사용해 각 스킬의 로직을 코루틴으로 구현
         
-        yield return StartCoroutine(skillLogic.ExecuteSkill());
+        yield return skillLogic.ExecuteSkill();
         if (TryGetComponent<EnergyComponent>(out var energy))
         {
             energy.CurEnergy = 0;

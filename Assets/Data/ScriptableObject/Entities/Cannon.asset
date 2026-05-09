@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e9226f974b3c3419a44228ea748570, type: 3}
+  m_Name: Cannon
+  m_EditorClassIdentifier: Assembly-CSharp::EntityData
+  id: Cannon
+  productName: "\uB300\uD3EC"
+  icon: {fileID: 21300000, guid: 403ba270d176ad14c81f2c155d54a69d, type: 3}
+  normalPrice: 25
+  prefab: {fileID: 8779073333520035586, guid: 6198444f12998cd46a1e663a018e7ac3, type: 3}
+  moveArea:
+  - {fileID: 11400000, guid: 6817dc0d2f9325344bd3fb7e10bc2b9c, type: 2}
+  - {fileID: 11400000, guid: 1141ba78ed772d5438187fb57e80d381, type: 2}
+  attackArea:
+  - {fileID: 11400000, guid: 6817dc0d2f9325344bd3fb7e10bc2b9c, type: 2}
+  maxHp: 23
+  power: 5
+  hpMultiplier: 15
+  powerMultiplier: 1
+  skill: {fileID: 11400000, guid: ceefbb30b31ca354a8ee0668fe0ac7ee, type: 2}
+  maxEnergy: 4

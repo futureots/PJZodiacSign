@@ -36,4 +36,5 @@ public class EnergyComponent : MonoBehaviour
     {
         CurEnergy = Mathf.Min(CurEnergy + 1, MaxEnergy);
     }
+    public bool IsFull() => _curEnergy >= MaxEnergy;
 }
