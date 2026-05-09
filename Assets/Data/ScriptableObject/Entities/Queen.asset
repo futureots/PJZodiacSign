@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Queen
   productName: "\uD038"
-  icon: {fileID: 21300000, guid: a4ffc96028c4dd147a5f8700d929c681, type: 3}
+  icon: {fileID: 21300000, guid: 41bf04038c1507a4381ca49031483a06, type: 3}
   normalPrice: 40
   prefab: {fileID: 256251255046908608, guid: 5f6aa753d88fbe942ac9144265300f64, type: 3}
   moveArea:

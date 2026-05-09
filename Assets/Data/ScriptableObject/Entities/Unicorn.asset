@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   id: Unicorn
   productName: "\uC720\uB2C8\uCF58"
-  icon: {fileID: 21300000, guid: 96abe9144609545419e18f668c98e5b3, type: 3}
+  icon: {fileID: 21300000, guid: 529a476a6c030c242a13f01c022e652c, type: 3}
   normalPrice: 40
   prefab: {fileID: 8655514726363934378, guid: 0198560b55cccff459d77e3d5a7a6970, type: 3}
   moveArea:

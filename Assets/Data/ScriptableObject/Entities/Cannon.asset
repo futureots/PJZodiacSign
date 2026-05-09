@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   id: Cannon
   productName: "\uB300\uD3EC"
-  icon: {fileID: 21300000, guid: 4fa547d91a8dd504d946232e6c38a36b, type: 3}
+  icon: {fileID: 21300000, guid: 403ba270d176ad14c81f2c155d54a69d, type: 3}
   normalPrice: 25
   prefab: {fileID: 8779073333520035586, guid: 6198444f12998cd46a1e663a018e7ac3, type: 3}
   moveArea:
