@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
+public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Button button;
 
@@ -30,13 +30,13 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             image.sprite = null;
             image.color = Color.clear;
-            //button.interactable = false;
+            button.interactable = false;
             return;
         }
         
         image.sprite = item.ItemData.icon;
         image.color = Color.white;
-        //button.interactable = true;
+        button.interactable = true;
 
         item.onDiscard += () => SetSlot(null);
     }
@@ -53,10 +53,5 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         OnMouseMove?.Invoke(_index, transform.position);
-    }
-
-    public void OnPointerMove(PointerEventData eventData)
-    {
-        //OnMouseMove?.Invoke(_index, eventData.position);
     }
 }
