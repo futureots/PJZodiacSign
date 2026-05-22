@@ -21,7 +21,7 @@ namespace GlobalManage
         protected override void Awake()
         {
             base.Awake();
-            DataManager.Instance.LoadAllData("PlayerData");
+            
         }
 
         #region Initiate
