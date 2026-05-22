@@ -200,7 +200,7 @@ public class EnemyAI : MonoBehaviour , IInput
         int count = list.Count;
         for (int i = 0; i < count; i++)
         {
-            if (list.Count < 0) break;
+            if (list.Count <= 0) break;
             int rand = Random.Range(0, list.Count);
             var selectEntity = list[rand];
             // 선택한 기물 스킬 사용 시도
