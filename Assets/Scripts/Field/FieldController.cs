@@ -2,6 +2,7 @@ using GlobalManage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FieldController : MonoBehaviour
 {
@@ -232,6 +233,24 @@ public class FieldController : MonoBehaviour
     
     public Agent localPlayer;
     public List<Agent> agents;
+
+    #endregion
+    
+    #region Debug
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            if (Input.GetKey(KeyCode.Alpha2))
+            {
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    EndStage(Agent.LocalPlayer.id);
+                }
+            }
+        }
+    }
 
     #endregion
 }

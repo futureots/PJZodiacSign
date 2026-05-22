@@ -240,7 +240,7 @@ public class EnemyAI : MonoBehaviour , IInput
             if (field[plus.y, plus.x] == (int)agent.id) continue;
             tileValues[pos.y, pos.x] += power + 1;
         } 
-        value = tileValues[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
+        value = tileValues[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] - 1;
         List<intVector2> valuablePos = new();
         
         var moveVectors = area.GetMoveVector(field, entity.CurTile.fieldPos, entity.direction);

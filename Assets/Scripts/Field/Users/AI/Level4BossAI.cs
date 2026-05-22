@@ -46,6 +46,7 @@ public class Level4BossAI : EnemyAI
                 frontList.Add(tile);
             }
         }
+        if(frontList.Count <= 0) return false;
         agent.CreateMoveCommand(entity, frontList[Random.Range(0,frontList.Count)]);
         entity.IsControllable = false;
         return true;
