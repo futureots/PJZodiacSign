@@ -60,34 +60,53 @@ namespace PlayerInput
             }
 
             // 기물이 이동 가능한지 확인
-            if (!entity.team.IsAlly(inputManager.agent.id)) return;
-            if (!entity.IsControllable) return;
-            selectedEntity = entity;
-            targetSelector.SetActive(true);
-            targetSelector.transform.position = selectedEntity.transform.position + Vector3.up * 0.1f;
-
-            selectedTile = entity.CurTile;
-            targetTileSelector.SetActive(true);
-            targetTileSelector.transform.position = selectedTile.transform.position + Vector3.up * 0.1f;
-
-
-
-            // 기물 이동범위 표시
-            moveArea = GetMovableTiles(); // 수리 모드일때는 다른 방식으로 가져옴
-            foreach (Tile move in moveArea)
+            if (!entity.team.IsAlly(inputManager.agent.id))// 적군일 경우
             {
-                move.ApplyHighlight(Tile.HighLightType.Move);
-            }
+                // 적의 이동 범위와 공격범위를 표시 손을 떼면 위치에 상관없이 해당 기물의 이동 범위와 공격범위 비활성화
+                selectedEntity = entity;
+                // 기물 이동범위 표시
+                moveArea = selectedEntity.GetMoveArea(); 
+                foreach (Tile move in moveArea)
+                {
+                    move.ApplyHighlight(Tile.HighLightType.OppositeMove);
+                }
 
-            attackArea = selectedEntity.GetAttackArea(selectedTile);
-            foreach (Tile area in attackArea)
+                attackArea = selectedEntity.GetAttackArea();
+                foreach (Tile area in attackArea)
+                {
+                    area.ApplyHighlight(Tile.HighLightType.OppositeAttack);
+                }
+                inputManager.OnMouseUp.AddListener(DragEnd);
+            }
+            else
             {
-                area.ApplyHighlight(Tile.HighLightType.Attack);
+                // 아군일 경우
+                if (!entity.IsControllable) return;
+                selectedEntity = entity;
+                targetSelector.SetActive(true);
+                targetSelector.transform.position = selectedEntity.transform.position + Vector3.up * 0.1f;
+
+                selectedTile = entity.CurTile;
+                targetTileSelector.SetActive(true);
+                targetTileSelector.transform.position = selectedTile.transform.position + Vector3.up * 0.1f;
+
+                // 기물 이동범위 표시
+                moveArea = GetMovableTiles(); // 수리 모드일때는 다른 방식으로 가져옴
+                foreach (Tile move in moveArea)
+                {
+                    move.ApplyHighlight(Tile.HighLightType.Move);
+                }
+
+                attackArea = selectedEntity.GetAttackArea(selectedTile);
+                foreach (Tile area in attackArea)
+                {
+                    area.ApplyHighlight(Tile.HighLightType.Attack);
+                }
+
+
+                inputManager.OnMouseMove.AddListener(DragEntity);
+                inputManager.OnMouseUp.AddListener(DragEnd);
             }
-
-
-            inputManager.OnMouseMove.AddListener(DragEntity);
-            inputManager.OnMouseUp.AddListener(DragEnd);
         }
 
         // 드래그 중
@@ -122,28 +141,43 @@ namespace PlayerInput
             inputManager.OnMouseUp.RemoveListener(DragEnd);
 
             // 엔티티 클리어
-            if (selectedEntity == null)
+            if (!selectedEntity)
             {
                 return;
             }
 
-            // 가장 가까운 타일(선택한 타일)
-            foreach (var area in attackArea)
+            if (!selectedEntity.team.IsAlly(inputManager.agent.id))
             {
-                area.RemoveHighlight(Tile.HighLightType.Attack);
+                foreach (var area in attackArea)
+                {
+                    area.RemoveHighlight(Tile.HighLightType.OppositeAttack);
+                }
+                foreach (var move in moveArea)
+                {
+                    move.RemoveHighlight(Tile.HighLightType.OppositeMove);
+                }
+
+                selectedEntity = null;
             }
-            foreach (var move in moveArea)
+            else
             {
-                move.RemoveHighlight(Tile.HighLightType.Move);
-            }
-            targetSelector.SetActive(false);
-            targetTileSelector.SetActive(false);
+                // 가장 가까운 타일(선택한 타일)
+                foreach (var area in attackArea)
+                {
+                    area.RemoveHighlight(Tile.HighLightType.Attack);
+                }
+                foreach (var move in moveArea)
+                {
+                    move.RemoveHighlight(Tile.HighLightType.Move);
+                }
+                targetSelector.SetActive(false);
+                targetTileSelector.SetActive(false);
 
                 
-            DragAction();
-            selectedEntity = null;
-            selectedTile = null;
-
+                DragAction();
+                selectedEntity = null;
+                selectedTile = null;
+            }
         }
 
         /// <summary>

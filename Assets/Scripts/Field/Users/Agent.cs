@@ -127,6 +127,7 @@ public class Agent : MonoBehaviour
                     CurrentActionCount = -1;
                     break;
                 case TurnType.REPAIR:
+                    fieldEntities.ForEach(entity => entity.IsControllable = true);
                     resourceEntities.ForEach(entity => entity.IsControllable = true);
                     CurrentActionCount = -1;
                     break;

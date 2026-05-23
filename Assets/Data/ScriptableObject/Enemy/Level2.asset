@@ -18,51 +18,27 @@ MonoBehaviour:
   fieldEntities:
   - entityData:
       data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
-      level: 0
+      level: 1
     fieldPos:
-      x: 0
+      x: 1
       y: 7
   - entityData:
       data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
-      level: 0
+      level: 1
     fieldPos:
-      x: 0
+      x: 1
       y: 6
   - entityData:
       data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
-      level: 0
+      level: 1
     fieldPos:
-      x: 2
+      x: 6
       y: 7
   - entityData:
       data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
-      level: 0
+      level: 1
     fieldPos:
-      x: 2
-      y: 6
-  - entityData:
-      data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
-      level: 0
-    fieldPos:
-      x: 5
-      y: 7
-  - entityData:
-      data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
-      level: 0
-    fieldPos:
-      x: 5
-      y: 6
-  - entityData:
-      data: {fileID: 11400000, guid: 20cacc466afc3384ab82998fd8bf8a23, type: 2}
-      level: 0
-    fieldPos:
-      x: 7
-      y: 7
-  - entityData:
-      data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
-      level: 0
-    fieldPos:
-      x: 7
+      x: 6
       y: 6
   phases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}

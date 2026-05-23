@@ -21,13 +21,34 @@ public class TurnUI : InputManagerUI
     {
         if(state is MoveModeInput)
         {
-            turnEndBtn.interactable = true;
+            if (state is RepairModeInput repair)
+            {
+                repair.onEntityCountChanged += OnEntityCountChanged;
+            }
+            else
+            {
+                turnEndBtn.interactable = true;
+            }
+            
         }
         else
         {
             turnEndBtn.interactable = false;
         }
     }
+
+    private void OnEntityCountChanged(int cur, int max)
+    {
+        if (cur == 0)
+        {
+            turnEndBtn.interactable = false;
+        }
+        else
+        {
+            turnEndBtn.interactable = true;
+        }
+    }
+
     void TurnEnd()
     {
         inputManager.ClearInputMode();
