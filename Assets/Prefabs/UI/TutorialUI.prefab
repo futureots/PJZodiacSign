@@ -848,7 +848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6745023214103278884, guid: d601fe39c7b283e4f988a0a8e96cc50a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8574096232663522456, guid: d601fe39c7b283e4f988a0a8e96cc50a, type: 3}
       propertyPath: m_Sprite
@@ -1449,6 +1449,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6708944808223556998, guid: d601fe39c7b283e4f988a0a8e96cc50a, type: 3}
   m_PrefabInstance: {fileID: 6804168874573654387}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &285522738554657879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6745023214103278884, guid: d601fe39c7b283e4f988a0a8e96cc50a, type: 3}
+  m_PrefabInstance: {fileID: 6804168874573654387}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6947705081280365900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1694,7 +1699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6745023214103278884, guid: d601fe39c7b283e4f988a0a8e96cc50a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8574096232663522456, guid: d601fe39c7b283e4f988a0a8e96cc50a, type: 3}
       propertyPath: m_Sprite
@@ -1824,6 +1829,10 @@ PrefabInstance:
       value: RepairTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 5130230563777397245, guid: 05e1a776d21424146a57291a5a60fd5e, type: 3}
+      propertyPath: panelList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5130230563777397245, guid: 05e1a776d21424146a57291a5a60fd5e, type: 3}
       propertyPath: 'panelList.Array.data[0]'
       value: 
       objectReference: {fileID: 728945363186519500}
@@ -1834,9 +1843,13 @@ PrefabInstance:
     - target: {fileID: 5130230563777397245, guid: 05e1a776d21424146a57291a5a60fd5e, type: 3}
       propertyPath: 'panelList.Array.data[2]'
       value: 
-      objectReference: {fileID: 3991167727188265453}
+      objectReference: {fileID: 285522738554657879}
     - target: {fileID: 5130230563777397245, guid: 05e1a776d21424146a57291a5a60fd5e, type: 3}
       propertyPath: 'panelList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 3991167727188265453}
+    - target: {fileID: 5130230563777397245, guid: 05e1a776d21424146a57291a5a60fd5e, type: 3}
+      propertyPath: 'panelList.Array.data[4]'
       value: 
       objectReference: {fileID: 1910947530236660160}
     m_RemovedComponents: []
