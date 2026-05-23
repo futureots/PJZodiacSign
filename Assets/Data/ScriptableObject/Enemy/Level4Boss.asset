@@ -18,13 +18,13 @@ MonoBehaviour:
   fieldEntities:
   - entityData:
       data: {fileID: 11400000, guid: 17c55c89d18cf9748b9dd5a5d6efac05, type: 2}
-      level: 2
+      level: 1
     fieldPos:
       x: 1
       y: 4
   - entityData:
       data: {fileID: 11400000, guid: 17c55c89d18cf9748b9dd5a5d6efac05, type: 2}
-      level: 2
+      level: 1
     fieldPos:
       x: 6
       y: 4
