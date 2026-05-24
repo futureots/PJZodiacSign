@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 
-public class ShopUI : MonoBehaviour
+public class ShopUI : InputManagerUI
 {
     Agent agent;
     Shop shop;
@@ -34,6 +34,12 @@ public class ShopUI : MonoBehaviour
         Agent.OnLocalPlayerChanged -= SetAgent;
     }
 
+    
+    public override void Init(InputManager inputManager)
+    {
+        // TODO : agent.Localplayer말고 여기서 의존성 주입하기
+    }
+    
     void SetShop()
     {
         SetShop(shop.entities, shop.items);
@@ -120,4 +126,5 @@ public class ShopUI : MonoBehaviour
             buttonText.text = "상점";
         }
     }
+
 }

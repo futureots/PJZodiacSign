@@ -1011,6 +1011,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!1 &59033796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1050,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &59033798
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1213,6 +1217,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &80387036
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1843,6 +1849,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &105278892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2008,6 +2016,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &114304239
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2121,6 +2131,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!1 &116104398
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,6 +2170,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &116104400
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2233,6 +2247,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &118792457
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2489,6 +2505,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &121022424
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3014,6 +3032,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &153275683
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3575,6 +3595,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &172124027
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3762,6 +3784,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &199406751
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5632,6 +5656,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &281373250
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5976,6 +6002,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &329358981
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6978,6 +7006,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &447902327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7053,6 +7083,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &448447934
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7399,6 +7431,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &452018048
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7474,6 +7508,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &452928064
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7619,6 +7655,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &466008932
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8367,6 +8405,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &489856620
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8442,6 +8482,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &489878967
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8968,6 +9010,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &523369047
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9043,6 +9087,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &526496568
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9367,6 +9413,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &553495111
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9797,6 +9845,7 @@ MonoBehaviour:
   level: 0
   isLastLevel: 0
   point: 0
+  prevPoint: 0
   resourceFields:
   - {fileID: 1757318514}
   - {fileID: 1967319804}
@@ -9927,6 +9976,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &581255063
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10002,6 +10053,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &583946411
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10189,6 +10242,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &597314091
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10354,6 +10409,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &625664382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10429,6 +10486,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &644102048
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10504,6 +10563,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &651022768
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10986,6 +11047,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &658825889
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11620,6 +11683,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &686362164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11854,6 +11919,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &703691336
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12289,6 +12356,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &729719455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13630,6 +13699,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &822272313
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13795,6 +13866,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &833317500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13959,6 +14032,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &840057123
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14123,6 +14198,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &862129510
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14468,6 +14545,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &875485281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15105,6 +15184,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &898290223
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15180,6 +15261,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &903253328
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16000,6 +16083,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &924681475
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16346,6 +16431,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &942310817
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16602,6 +16689,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &964873331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17329,6 +17418,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &991592121
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17404,6 +17495,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &991663183
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17479,6 +17572,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &992176032
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17554,6 +17649,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &992479366
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17629,6 +17726,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &998458862
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17704,6 +17803,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1010679729
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19270,6 +19371,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1135478044
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19415,6 +19518,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1142790260
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19850,6 +19955,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1156945477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20355,6 +20462,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1190989087
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20743,6 +20852,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1218332602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20818,6 +20929,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1223234945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20893,6 +21006,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1239778364
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21238,6 +21353,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1288500175
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21494,6 +21611,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1310199319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21659,6 +21778,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1313816613
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22751,6 +22872,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1368572440
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23165,6 +23288,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1381223898
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25585,6 +25710,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1521216877
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25749,6 +25876,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1526848346
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25833,7 +25962,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIMapper
   uiMaps:
   - type: 32
-    uiPanel: {fileID: 4762873540042521380}
+    uiPanel: {fileID: 0}
 --- !u!1 &1537855272
 GameObject:
   m_ObjectHideFlags: 0
@@ -25871,6 +26000,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1537855274
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26036,6 +26167,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1549601752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26111,6 +26244,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1557412905
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27627,6 +27762,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1658674446
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28133,6 +28270,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1679726379
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28476,6 +28615,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1708905165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28551,6 +28692,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1712333022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30073,6 +30216,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1800870675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30434,6 +30579,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!1 &1811151606
 GameObject:
   m_ObjectHideFlags: 0
@@ -30471,6 +30618,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1811151608
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30726,6 +30875,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1821265374
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31174,6 +31325,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1858005094
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31553,6 +31706,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1874480325
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31830,6 +31985,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1900474262
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32410,6 +32567,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1935255002
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32924,8 +33083,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4762873540042521379}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1967319802
@@ -33299,6 +33457,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1978921500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33464,6 +33624,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1996568263
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33628,6 +33790,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2011620060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33839,6 +34003,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2021704909
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34074,6 +34240,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2029627794
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34238,6 +34406,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2037480997
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34763,6 +34933,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2061007785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35068,6 +35240,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 0}
   atkHighLightMat: {fileID: 0}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2092989470
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35434,6 +35608,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2119986451
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35743,125 +35919,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &4762873540042521378
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1959549464}
-    m_Modifications:
-    - target: {fileID: 81804333718402411, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_RenderMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 528285947572437199, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_Name
-      value: ShopUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
---- !u!224 &4762873540042521379 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8262208184901745037, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-  m_PrefabInstance: {fileID: 4762873540042521378}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4762873540042521380 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6015790146840599873, guid: 64d6be7831f337241a4add198776c0bc, type: 3}
-  m_PrefabInstance: {fileID: 4762873540042521378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
