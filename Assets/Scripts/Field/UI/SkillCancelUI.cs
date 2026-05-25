@@ -7,7 +7,7 @@ public class SkillCancelUI : InputManagerUI
     public Button cancelBtn;
     public  override void Init(InputManager inputManager)
     {
-        inputManager.OnModeChanged +=OnModeChange;
+        inputManager.onModeChanged +=OnModeChange;
     }
 
     void OnModeChange(IInputState state)

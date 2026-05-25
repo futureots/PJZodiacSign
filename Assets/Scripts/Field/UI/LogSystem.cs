@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogSystem : MonoBehaviour
+public class LogSystem : InputManagerUI
 {
     [Header("Settings")]
     public GameObject logPrefab;
@@ -10,15 +10,13 @@ public class LogSystem : MonoBehaviour
 
     private Queue<LogItem> logPool = new Queue<LogItem>();
 
-    private void Awake() {
-        InitializePool();
-    }
-
     // 1. 초기 풀 생성
-    private void InitializePool() {
+    public override void Init(InputManager inputmanager) {
         for (int i = 0; i < poolSize; i++) {
             CreateNewLogItem();
         }
+        
+        inputmanager.onMessageActivated += ShowLog;
     }
 
     private LogItem CreateNewLogItem() {

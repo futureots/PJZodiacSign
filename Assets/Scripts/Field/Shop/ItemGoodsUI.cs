@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class ItemGoodsUI : GoodsUI<ItemData>
 {
-    public override void SetGoods(ItemData data,LogSystem log = null)
+    public override void SetGoods(ItemData data,InputManager inputManager)
     {
         buyBtn.onClick.RemoveAllListeners();
         base.SetGoods(data);
         buyBtn.onClick.AddListener(() =>
         {
-            var customer = Agent.LocalPlayer;
+            var customer = inputManager.agent;
             var item = ItemFactory.Instance.Request(data);
             if (customer.inventory.TryAddItem(item))
             {
@@ -17,7 +17,7 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             }
             else
             {
-                log?.ShowLog("인벤토리에 빈 공간이 없습니다!",LogType.Error);
+                inputManager.onMessageActivated.Invoke("인벤토리에 빈 공간이 없습니다!",LogType.Error);
             }
         });
     }

@@ -17,8 +17,8 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     /// 해당 UI가 표시할 오브젝트 세팅
     /// </summary>
     /// <param name="data"></param>
-    /// <param name="customer"></param>
-    public virtual void SetGoods(T data, LogSystem logSystem = null)
+    /// <param name="inputManager"></param>
+    public virtual void SetGoods(T data, InputManager inputManager = null)
     {
         goodsName.text = data.productName;
         price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.8f, 1.2f));

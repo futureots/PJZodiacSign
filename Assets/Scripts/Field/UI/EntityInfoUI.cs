@@ -33,7 +33,7 @@ public class EntityInfoUI : InputManagerUI
         inputManager = input;
         id = inputManager.agent.id;
         input.OnObjectClicked.AddListener(OnObjectClick);
-        input.OnModeChanged += SetSkillButton;
+        input.onModeChanged += SetSkillButton;
         entitySkillBtn.onClick.AddListener(UseSkill);
     }
 

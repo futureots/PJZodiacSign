@@ -12,7 +12,7 @@ public class TurnUI : InputManagerUI
     public  override void Init(InputManager input)
     {
         this.inputManager = input;
-        input.OnModeChanged += OnModeChange;
+        input.onModeChanged += OnModeChange;
         input.agent.fieldController.OnTurnStarted += OnTurnChange;
         turnEndBtn.onClick.AddListener(TurnEnd);
     }

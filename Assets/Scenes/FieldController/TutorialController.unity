@@ -458,10 +458,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2203544399290231149, guid: d2dcf66ebb9b529439756f5b8a7aedcc, type: 3}
       propertyPath: uiList.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2203544399290231149, guid: d2dcf66ebb9b529439756f5b8a7aedcc, type: 3}
-      propertyPath: 'uiList.Array.data[9]'
+      propertyPath: 'uiList.Array.data[10]'
       value: 
       objectReference: {fileID: 2809810761811123407}
     m_RemovedComponents: []
@@ -525,6 +525,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 64568695432077279, guid: 3c42076b96cfa5c4ebf195bde3e420fa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.7321777
+      objectReference: {fileID: 0}
     - target: {fileID: 540719433622098951, guid: 3c42076b96cfa5c4ebf195bde3e420fa, type: 3}
       propertyPath: m_Name
       value: OptionUI

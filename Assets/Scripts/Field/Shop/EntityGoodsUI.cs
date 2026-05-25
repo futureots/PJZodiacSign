@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EntityGoodsUI : GoodsUI<EntityData>
 {
-    public override void SetGoods(EntityData data, LogSystem logSystem = null)
+    public override void SetGoods(EntityData data, InputManager inputManager)
     {
         buyBtn.onClick.RemoveAllListeners();
         base.SetGoods(data);
         buyBtn.onClick.AddListener(() =>
         {
-            var customer = Agent.LocalPlayer;
+            var customer = inputManager.agent;
             var teamNum = customer.id;
             var tiles = StageManager.Instance.agentField[teamNum].GetTiles().GetEmptyTiles();
             if(tiles.Count > 0)
@@ -24,7 +24,7 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             }
             else
             {
-                logSystem?.ShowLog("소환할 빈 공간이 없습니다!",LogType.Error);
+                inputManager.onMessageActivated.Invoke("소환할 빈 공간이 없습니다!",LogType.Error);
             }
         });
     }
