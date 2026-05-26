@@ -20,5 +20,6 @@ public class ItemGoodsUI : GoodsUI<ItemData>
                 inputManager.onMessageActivated.Invoke("인벤토리에 빈 공간이 없습니다!",LogType.Error);
             }
         });
+        
     }
 }

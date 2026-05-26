@@ -1,10 +1,11 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class GoodsUI<T> : MonoBehaviour where T : AbstractData
+public class GoodsUI<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler where T : AbstractData 
 {
     [SerializeField] protected T data;
     [SerializeField] protected Button buyBtn;
@@ -49,5 +50,17 @@ public class GoodsUI<T> : MonoBehaviour where T : AbstractData
     private void OnDisable()
     {
         //customer.onCreditChanged -= UpdateBuyBtn;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        EditorLogger.Print("OnPointerEnter");
+        // 설명 UI 활성화
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        EditorLogger.Print("OnPointerExit");
+        // 설명 UI 비활성화
     }
 }

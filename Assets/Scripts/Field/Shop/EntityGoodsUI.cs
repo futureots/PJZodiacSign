@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-public class EntityGoodsUI : GoodsUI<EntityData>
+public class EntityGoodsUI : GoodsUI<EntityData> 
 {
     public override void SetGoods(EntityData data, InputManager inputManager)
     {
