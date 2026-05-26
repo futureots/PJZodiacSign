@@ -14,6 +14,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] protected Image icon;
     protected int price;
 
+    public Action<bool, Vector2,string> onMouseOver;
     /// <summary>
     /// 해당 UI가 표시할 오브젝트 세팅
     /// </summary>
@@ -21,6 +22,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     /// <param name="inputManager"></param>
     public virtual void SetGoods(T data, InputManager inputManager = null)
     {
+        this.data = data;
         goodsName.text = data.productName;
         price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.8f, 1.2f));
         priceText.text = price.ToString();
@@ -55,12 +57,18 @@ public class GoodsUI<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         EditorLogger.Print("OnPointerEnter");
-        // 설명 UI 활성화
+        var des =  GetGoodsDescription();
+        onMouseOver?.Invoke(true, transform.position, des);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         EditorLogger.Print("OnPointerExit");
-        // 설명 UI 비활성화
+        onMouseOver?.Invoke(false, transform.position, null);
+    }
+
+    protected virtual string GetGoodsDescription()
+    {
+        return "";
     }
 }

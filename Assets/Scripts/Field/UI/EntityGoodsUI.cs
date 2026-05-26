@@ -28,4 +28,9 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             }
         });
     }
+
+    protected override string GetGoodsDescription()
+    {
+        return $"스킬 사용 시 \n{data.skill.skillDescription}";
+    }
 }

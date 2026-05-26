@@ -17,6 +17,7 @@ public class ShopUI : InputManagerUI
     [SerializeField] private ItemGoodsUI itemUI;
     [SerializeField] private Transform entityShop;
     [SerializeField] private Transform itemShop;
+    [SerializeField] private GoodsInfoUI goodsInfoUI;
     private List<EntityGoodsUI> _entityGoods;
     private List<ItemGoodsUI> _itemGoods;
 
@@ -28,6 +29,7 @@ public class ShopUI : InputManagerUI
     
     public override void Init(InputManager inputManager)
     {
+        goodsInfoUI.gameObject.SetActive(false);
         _inputManager = inputManager;
         _agent = _inputManager.agent;
         _agent.OnCreditChanged += UpdateShop;
@@ -73,6 +75,7 @@ public class ShopUI : InputManagerUI
             if (goodsUI != null)
             {
                 goodsUI.SetGoods(entityList[i],_inputManager);
+                goodsUI.onMouseOver += ShowGoodsInfoUI;
             }
         }
         for (int i = entityList.Count; i < _entityGoods.Count; i++) _entityGoods[i].gameObject.SetActive(false);
@@ -92,6 +95,7 @@ public class ShopUI : InputManagerUI
             if (goodsUI != null)
             {
                 goodsUI.SetGoods(itemList[i],_inputManager);
+                goodsUI.onMouseOver += ShowGoodsInfoUI;
             }
         }
         for (int i = itemList.Count; i < _itemGoods.Count; i++) _itemGoods[i].gameObject.SetActive(false);
@@ -115,4 +119,18 @@ public class ShopUI : InputManagerUI
         }
     }
 
+    void ShowGoodsInfoUI(bool isShowed, Vector2 pos,string message)
+    {
+        if (isShowed)
+        {
+            goodsInfoUI.gameObject.SetActive(true);
+            goodsInfoUI.transform.position = pos;
+            goodsInfoUI.SetText(message);
+        }
+        else
+        {
+            goodsInfoUI.gameObject.SetActive(false);
+        }
+    }
+    
 }

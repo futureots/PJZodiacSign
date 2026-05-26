@@ -22,4 +22,9 @@ public class ItemGoodsUI : GoodsUI<ItemData>
         });
         
     }
+
+    protected override string GetGoodsDescription()
+    {
+        return $"사용 시 \n{data.description}";
+    }
 }
