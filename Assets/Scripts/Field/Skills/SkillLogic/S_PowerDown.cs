@@ -7,12 +7,7 @@ using UnityEngine;
 public class S_PowerDown : BaseSkillLogic
 {
     private Entity _owner;
-    [SerializeField] private Area area;
-
-    public void Init(Area area)
-    {
-        this.area = area;
-    }
+    
     public override async UniTask<bool> InputSkill(IInput input)
     {
         if (component.TryGetComponent<Entity>(out var entity))
@@ -36,11 +31,7 @@ public class S_PowerDown : BaseSkillLogic
     {
         if (component.TryGetComponent<Entity>(out var entity))
         {
-            _owner = entity;
-            var pos = _owner.CurTile.fieldPos;
-            int[,] t = new int[8, 8];
-            var vectors = area.GetVectors(t, pos, _owner.direction);
-            var tiles = StageManager.Instance.field.GetTiles(vectors);
+            var tiles = entity.GetAttackArea();
             
             // 적이 1명이라도 있으면 사용
             return tiles.Exists(tile => !tile.IsEmpty && !tile.occupiedEntity.team.IsAlly(_owner.team));
@@ -51,11 +42,7 @@ public class S_PowerDown : BaseSkillLogic
 
     public override IEnumerator ExecuteSkill()
     {
-        
-        var pos = _owner.CurTile.fieldPos;
-        int[,] t = new int[8, 8];
-        var vectors = area.GetVectors(t, pos, _owner.direction);
-        var tiles = StageManager.Instance.field.GetTiles(vectors);
+        var tiles = _owner.GetAttackArea();
         
         EffectFactory.Instance.Request("PowDownAura",_owner.transform.position,_owner.transform.lossyScale*3);
         foreach (var tile in tiles)
@@ -75,7 +62,6 @@ public class S_PowerDown : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_PowerDown();
-        clone.Init(area);
         return clone;
     }
 }

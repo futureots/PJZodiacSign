@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class GoodsInfoUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI goodsInfoUI;
+    [SerializeField] private TextMeshProUGUI goodsDescription;
 
-    public void SetText(string text)
+    public void SetInfo(AbstractData data)
     {
-        goodsInfoUI.text = text;
+        if (data is EntityData entityData)
+        {
+            
+        }
+        else if (data is ItemData itemData)
+        {
+            
+        }
     }
 }

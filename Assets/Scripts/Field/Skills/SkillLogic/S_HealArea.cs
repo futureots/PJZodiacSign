@@ -4,9 +4,8 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class S_HealArea : BaseSkillLogic
+public class S_HealArea : AreaSkillLogic
 {
-    [SerializeField] private Area area;
     [SerializeField] private int multiplier = 1;
     private Entity _owner;
     public void Init(Area area, int multiplier)

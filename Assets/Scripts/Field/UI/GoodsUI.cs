@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class GoodsUI<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler where T : AbstractData 
+public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : AbstractData 
 {
     [SerializeField] protected T data;
     [SerializeField] protected Button buyBtn;
@@ -14,7 +14,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] protected Image icon;
     protected int price;
 
-    public Action<bool, Vector2,string> onMouseOver;
+    public Action<T> onMouseOver;
     /// <summary>
     /// 해당 UI가 표시할 오브젝트 세팅
     /// </summary>
@@ -45,30 +45,14 @@ public class GoodsUI<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
-    private void OnEnable()
-    {
-        //customer.onCreditChanged += UpdateBuyBtn;
-    }
-    private void OnDisable()
-    {
-        //customer.onCreditChanged -= UpdateBuyBtn;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        EditorLogger.Print("OnPointerEnter");
-        var des =  GetGoodsDescription();
-        onMouseOver?.Invoke(true, transform.position, des);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        EditorLogger.Print("OnPointerExit");
-        onMouseOver?.Invoke(false, transform.position, null);
-    }
-
     protected virtual string GetGoodsDescription()
     {
         return "";
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        EditorLogger.Print("OnPointerClick");
+        onMouseOver?.Invoke(data);
     }
 }

@@ -119,16 +119,30 @@ public class ShopUI : InputManagerUI
         }
     }
 
-    void ShowGoodsInfoUI(bool isShowed, Vector2 pos,string message)
+    private bool _isDescriptionShowed = false;
+    private AbstractData _currentDataCache;
+
+    void ShowGoodsInfoUI(AbstractData data)
     {
-        if (isShowed)
+        if (!_isDescriptionShowed)
         {
+            // 비활성화 상태인 경우 활성화
+            _isDescriptionShowed = true;
             goodsInfoUI.gameObject.SetActive(true);
-            goodsInfoUI.transform.position = pos;
-            goodsInfoUI.SetText(message);
+            
+            _currentDataCache = data;
+            // 데이터에 포함된 이동, 공격, 스킬 범위, 스킬 설명관련 세팅
+            goodsInfoUI.SetInfo(data);
+        }
+        else if (_currentDataCache != data)
+        {
+            // 다른 상품을 선택하면 활성화 상태 유지, 대신 선택한 상품의 정보로 변경
+            _currentDataCache = data;
+            goodsInfoUI.SetInfo(data);
         }
         else
         {
+            _isDescriptionShowed = false;
             goodsInfoUI.gameObject.SetActive(false);
         }
     }

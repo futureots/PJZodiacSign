@@ -28,7 +28,7 @@ public class S_SpawnWall : BaseSkillLogic
             }
         }
         
-        var tiles = owner.GetMoveArea().FindAll(tile => tile.IsEmpty);
+        var tiles = owner.GetMoveArea().GetEmptyTiles();
         
         // AI 용 랜덤 값
         var random = UnityEngine.Random.Range(0, tiles.Count);

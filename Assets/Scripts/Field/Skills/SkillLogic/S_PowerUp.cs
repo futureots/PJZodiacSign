@@ -4,9 +4,8 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class S_PowerUp : BaseSkillLogic
+public class S_PowerUp : AreaSkillLogic
 {
-    [SerializeField] private Area area;
     private Entity _owner;
 
     public void Init(Area area)
