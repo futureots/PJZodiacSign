@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: TowerAttackArea
   m_EditorClassIdentifier: Assembly-CSharp::CompositeArea
   areas:
-  - {fileID: 11400000, guid: 983b0274a933f8346b26acb50c1a2566, type: 2}
-  - {fileID: 11400000, guid: 1141ba78ed772d5438187fb57e80d381, type: 2}
   - {fileID: 11400000, guid: 14c6b2a741906954f878ea85cd55e6fa, type: 2}
   - {fileID: 11400000, guid: f264dcf4031e182498f8f07d9514b9f6, type: 2}
+  - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}

@@ -75,7 +75,7 @@ public class ShopUI : InputManagerUI
             if (goodsUI != null)
             {
                 goodsUI.SetGoods(entityList[i],_inputManager);
-                goodsUI.onMouseOver += ShowGoodsInfoUI;
+                goodsUI.onMouseClick += ShowGoodsInfoUI;
             }
         }
         for (int i = entityList.Count; i < _entityGoods.Count; i++) _entityGoods[i].gameObject.SetActive(false);
@@ -95,7 +95,7 @@ public class ShopUI : InputManagerUI
             if (goodsUI != null)
             {
                 goodsUI.SetGoods(itemList[i],_inputManager);
-                goodsUI.onMouseOver += ShowGoodsInfoUI;
+                goodsUI.onMouseClick += ShowGoodsInfoUI;
             }
         }
         for (int i = itemList.Count; i < _itemGoods.Count; i++) _itemGoods[i].gameObject.SetActive(false);
@@ -114,6 +114,10 @@ public class ShopUI : InputManagerUI
         }
         else
         {
+            _isDescriptionShowed = false;
+            _currentDataCache = null;
+            goodsInfoUI.gameObject.SetActive(false);
+            
             shopPanel.SetActive(false);
             buttonText.text = "상점";
         }
@@ -122,7 +126,7 @@ public class ShopUI : InputManagerUI
     private bool _isDescriptionShowed = false;
     private AbstractData _currentDataCache;
 
-    void ShowGoodsInfoUI(AbstractData data)
+    void ShowGoodsInfoUI(AbstractData data, Vector2 pos)
     {
         if (!_isDescriptionShowed)
         {
@@ -142,6 +146,7 @@ public class ShopUI : InputManagerUI
         }
         else
         {
+            _currentDataCache = null;
             _isDescriptionShowed = false;
             goodsInfoUI.gameObject.SetActive(false);
         }

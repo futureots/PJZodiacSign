@@ -14,7 +14,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : Abstract
     [SerializeField] protected Image icon;
     protected int price;
 
-    public Action<T> onMouseOver;
+    public Action<T,Vector2> onMouseClick;
     /// <summary>
     /// 해당 UI가 표시할 오브젝트 세팅
     /// </summary>
@@ -53,6 +53,6 @@ public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : Abstract
     public void OnPointerClick(PointerEventData eventData)
     {
         EditorLogger.Print("OnPointerClick");
-        onMouseOver?.Invoke(data);
+        onMouseClick?.Invoke(data, transform.position);
     }
 }

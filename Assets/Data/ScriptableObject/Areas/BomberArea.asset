@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7296cafdbff8e6d428f1a1012f18a736, type: 3}
-  m_Name: SmallBishopArea
+  m_Name: BomberArea
   m_EditorClassIdentifier: Assembly-CSharp::BishopArea
+  areaImage: {fileID: 21300000, guid: 2e43f0691f0d7404eae8d01381da65a0, type: 3}
   isRepeat: 0
