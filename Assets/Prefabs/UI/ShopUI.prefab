@@ -59,9 +59,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 1680357854942415471}
   - component: {fileID: 6627292577158743655}
   m_Layer: 5
-  m_Name: Image
+  m_Name: SkillImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,9 +350,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -425,9 +425,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 4294564026311368166}
   - component: {fileID: 5803872515069775657}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MoveImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -821,13 +821,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 79d8c451b3cbed342af6d1f6761fd302, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1724,6 +1724,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4281288408091892737}
+  - component: {fileID: 7436667149774802472}
   m_Layer: 5
   m_Name: AttackArea
   m_TagString: Untagged
@@ -1752,6 +1753,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7436667149774802472
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074738804939753907}
+  m_CullTransparentMesh: 1
 --- !u!1 &7217119173687630702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,9 +2136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2334,6 +2343,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoodsInfoUI
   goodsDescription: {fileID: 858941565869820621}
+  moveArea:
+    obj: {fileID: 8563767228383272957}
+    image: {fileID: 5803872515069775657}
+  attackArea:
+    obj: {fileID: 6074738804939753907}
+    image: {fileID: 5185992978179851434}
+  skillArea:
+    obj: {fileID: 2490269929360984035}
+    image: {fileID: 6627292577158743655}
 --- !u!1 &9204666491438542878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2346,7 +2364,7 @@ GameObject:
   - component: {fileID: 8354950560534188900}
   - component: {fileID: 5185992978179851434}
   m_Layer: 5
-  m_Name: Image
+  m_Name: AtkImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2393,13 +2411,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 40e40e71cca7ef0439a01fe2e0877a95, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac195565dfe302c43bdb2e2aba98ebbd, type: 3}
   m_Name: PawnMoveArea
   m_EditorClassIdentifier: 
+  areaImage: {fileID: 21300000, guid: 79d8c451b3cbed342af6d1f6761fd302, type: 3}
