@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 
-public class ShopUI : InputManagerUI
+public class ShopUI : InputManagerUI, IPointerClickHandler
 {
     private InputManager _inputManager;
     private Agent _agent;
@@ -134,13 +136,15 @@ public class ShopUI : InputManagerUI
             _isDescriptionShowed = true;
             goodsInfoUI.gameObject.SetActive(true);
             
-            _currentDataCache = data;
             // 데이터에 포함된 이동, 공격, 스킬 범위, 스킬 설명관련 세팅
+            goodsInfoUI.RectTransform.position = GetProperPos(pos);
+            _currentDataCache = data;
             goodsInfoUI.SetInfo(data);
         }
         else if (_currentDataCache != data)
         {
             // 다른 상품을 선택하면 활성화 상태 유지, 대신 선택한 상품의 정보로 변경
+            goodsInfoUI.RectTransform.position = GetProperPos(pos);
             _currentDataCache = data;
             goodsInfoUI.SetInfo(data);
         }
@@ -149,7 +153,34 @@ public class ShopUI : InputManagerUI
             _currentDataCache = null;
             _isDescriptionShowed = false;
             goodsInfoUI.gameObject.SetActive(false);
+            
         }
     }
-    
+
+    Vector2 GetProperPos(Vector2 pos)
+    {
+        float uiWidth = goodsInfoUI.RectTransform.rect.width;
+        float uiHeight = goodsInfoUI.RectTransform.rect.height;
+        var targetPos = pos;
+        // 화면 우측 이탈 방지
+        if (targetPos.x + uiWidth > Screen.width)
+        {
+            targetPos.x -= uiWidth;
+        }
+
+        // 화면 하단 이탈 방지
+        if (targetPos.y - uiHeight < 0)
+        {
+            targetPos.y += uiHeight;
+        }
+
+        return targetPos;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        _currentDataCache = null;
+        _isDescriptionShowed = false;
+        goodsInfoUI.gameObject.SetActive(false);
+    }
 }

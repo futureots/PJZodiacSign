@@ -53,6 +53,6 @@ public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : Abstract
     public void OnPointerClick(PointerEventData eventData)
     {
         EditorLogger.Print("OnPointerClick");
-        onMouseClick?.Invoke(data, transform.position);
+        onMouseClick?.Invoke(data, eventData.position);
     }
 }
