@@ -1,13 +1,18 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillInfoUI : MonoBehaviour
+public class SkillInfoUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image skillIcon;
     public TextMeshProUGUI skillTitle;
     public TextMeshProUGUI skillDescription;
-
+    
+    public AreaUIBlock skillArea;
+    private bool _hasArea;
+    
     /// <summary>
     /// 스킬 UI 설정
     /// </summary>
@@ -25,5 +30,26 @@ public class SkillInfoUI : MonoBehaviour
             skillTitle.text = skillData.skillName;
             skillDescription.text = skillData.skillDescription;
         }
+
+        if (skillData.skillLogic is AreaSkillLogic areaSkillLogic)
+        {
+            _hasArea = true;
+            skillArea.image.sprite = areaSkillLogic.Area.areaImage;
+        }
+        else
+        {
+            _hasArea = false;
+        }
+        skillArea.obj.SetActive(false);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        skillArea.obj.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        skillArea.obj.SetActive(false);
     }
 }
