@@ -40,6 +40,21 @@ public class ShopUI : InputManagerUI, IPointerClickHandler
         shop = StageManager.Instance.shop;
         shop.OnShopSet += SetShop;
         SetShop();
+        inputManager.agent.fieldController.OnPhaseStarted += PhaseStart;
+    }
+
+    void PhaseStart(Phase phase)
+    {
+        if (phase.phaseName == PhaseType.Battle)
+        {
+            shopPanel.SetActive(false);
+            shopToggle.SetActive(false);
+        }
+        else
+        {
+            shopPanel.SetActive(true);
+            shopToggle.SetActive(true);
+        }
     }
     
     void SetShop()

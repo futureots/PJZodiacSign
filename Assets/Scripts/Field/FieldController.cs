@@ -110,6 +110,7 @@ public class FieldController : MonoBehaviour
         OnPhaseStarted?.Invoke(CurrentPhase);
         
         // Reset Turn
+        turnCount = 0;
         SetTurn(0);
     }
 
@@ -119,6 +120,7 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
+        // TODO : 턴이 50이 넘어가면 정산 및 종료하는 기능 추가
         // Next Turn
         if (index == -1)
         {

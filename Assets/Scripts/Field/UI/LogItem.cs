@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LogItem : MonoBehaviour
 {
@@ -10,7 +9,7 @@ public class LogItem : MonoBehaviour
 
     private Coroutine disableCoroutine;
 
-    public void Setup(string message, Color color) {
+    public void Setup(string message, Color color, float disableTime = 0.5f) {
         // 기존에 돌고 있던 코루틴이 있다면 정지 (연타 시 오류 방지)
         if (disableCoroutine != null) StopCoroutine(disableCoroutine);
         
@@ -18,11 +17,11 @@ public class LogItem : MonoBehaviour
         messageText.color = color;
         
         canvasGroup.alpha = 1f; // 초기화
-        disableCoroutine = StartCoroutine(AutoDisable());
+        disableCoroutine = StartCoroutine(AutoDisable(disableTime));
     }
 
-    private IEnumerator AutoDisable() {
-        yield return new WaitForSeconds(0.5f); // 잠시 대기
+    private IEnumerator AutoDisable(float disableTime) {
+        yield return new WaitForSeconds(disableTime); // 잠시 대기
         
         // 페이드 아웃 연출 (Optional)
         while (canvasGroup.alpha > 0) {
