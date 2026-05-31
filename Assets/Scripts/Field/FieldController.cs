@@ -71,14 +71,14 @@ public class FieldController : MonoBehaviour
     private int phaseIndex;
     private int turnIndex;
     
-    [SerializeField] protected uint turnCount;       // turn Count in current Phase
+    [SerializeField] protected uint turnCount;       // loopCount
     public List<Phase> phases;     
     public Phase CurrentPhase => phases[phaseIndex];
 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
     public event Action<Phase> OnPhaseStarted;
-    public event Action<Turn> OnTurnStarted;
+    public event Action<Turn, uint> OnTurnStarted;
 
 
     /// <summary>
@@ -100,7 +100,6 @@ public class FieldController : MonoBehaviour
             if (IsBattleEnd(out PlayerID winner))
             {
                 EndStage(winner);
-                
             }
             return;
         }
@@ -133,6 +132,7 @@ public class FieldController : MonoBehaviour
             if (CurrentPhase.isLoop)
             {
                 index = 0;
+
             }
             else
             {
@@ -143,11 +143,14 @@ public class FieldController : MonoBehaviour
 
         // Set Turn
         turnIndex = index;
-        turnCount++;
+        if (index == 0)
+        {
+            turnCount++;
+        }
         
         // Set Model
         stageManager.SetTurn(CurrentTurn);
-        OnTurnStarted?.Invoke(CurrentTurn);
+        OnTurnStarted?.Invoke(CurrentTurn, turnCount);
     }
     
     public bool IsBattleEnd(out PlayerID winTeam)

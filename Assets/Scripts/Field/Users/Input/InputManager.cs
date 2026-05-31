@@ -126,7 +126,7 @@ public class InputManager : MonoBehaviour
 
     #region Turn
     
-    void OnTurnChange(Turn curTurn)
+    void OnTurnChange(Turn curTurn, uint count)
     {
         curTurnType = curTurn.type;
         

@@ -110,7 +110,7 @@ public class Agent : MonoBehaviour
     }
     
     
-    void OnTurnChange(Turn turn)
+    void OnTurnChange(Turn turn, uint count)
     {
         fieldEntities.ForEach(entity => entity.IsControllable = false);
         resourceEntities.ForEach(entity => entity.IsControllable = false);

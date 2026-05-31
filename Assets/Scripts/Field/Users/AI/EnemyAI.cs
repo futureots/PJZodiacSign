@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour , IInput
     }
 
 
-    private void OnTurnChange(Turn curTurn)
+    private void OnTurnChange(Turn curTurn, uint count)
     {
         CurTurnType = curTurn.type;
         

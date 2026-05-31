@@ -57,7 +57,7 @@ public class TurnUI : InputManagerUI
         inputManager.agent.CreateEndCommand();
     }
 
-    void OnTurnChange(Turn turn)
+    void OnTurnChange(Turn turn, uint count)
     {
         if(turn.agentID == inputManager.agent.id)
         {
