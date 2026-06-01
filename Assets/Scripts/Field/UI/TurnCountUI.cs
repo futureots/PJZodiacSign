@@ -14,18 +14,23 @@ public class TurnCountUI : InputManagerUI
     [SerializeField] private GameObject calcPanel;
     [SerializeField] private GameObject valuePrefab;
     [SerializeField] private Transform teamValueTransform;
-    [SerializeField] private int drawCount;
+    private int drawCount;
     
     // 50턴 시작 시 UI에서 계산 및 종료하기
     public override void Init(InputManager inputManager)
     {
         _inputManager = inputManager;
-        _inputManager.agent.fieldController.OnPhaseStarted += PhaseStart;
-        _inputManager.agent.fieldController.OnTurnStarted += TurnStart;
+        var fieldController = _inputManager.agent.fieldController;
+        fieldController.OnPhaseStarted += PhaseStart;
+        fieldController.OnTurnStarted += TurnStart;
+        fieldController.OnDraw += SetDraw;
+        drawCount = fieldController.TurnLimit;
         
         drawButton.gameObject.SetActive(false);
         turnPanel.SetActive(false);
         calcPanel.SetActive(false);
+        
+        
     }
 
     void PhaseStart(Phase phase)
@@ -36,9 +41,9 @@ public class TurnCountUI : InputManagerUI
     
     void TurnStart(Turn turn, uint count)
     {
-        turnCountText.text = $"{count}/{drawCount*2}";
+        turnCountText.text = $"{count}/{drawCount}";
         // 25턴 시작 시 활성화
-        if (count == drawCount)
+        if (count == drawCount/2)
         {
             drawButton.gameObject.SetActive(true);
         }
@@ -72,7 +77,9 @@ public class TurnCountUI : InputManagerUI
 
             yield return null;
         }
-        
+
+        yield return new WaitForSeconds(1f);
+        // TODO : 가운데 버튼을 활성화 하면서 승리인지 패배인지 표시, 해당 버튼 누르면 스테이지 종료 UI 표시
         // 승패 판별 후 종료 이벤트 실행 지금은 무조건 승리로 판별
         _inputManager.agent.fieldController.EndStage(Agent.LocalPlayer.id);
         

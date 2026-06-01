@@ -34,15 +34,15 @@ public class LevelTable : ScriptableObject
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    public (EnemyAI,AgentData,List<Phase>) GetLevelData(int level)
+    public (EnemyAI,AgentData,List<Phase>, int) GetLevelData(int level)
     {
         if(Levels.TryGetValue(level,out EnemyTable table))
         {
-            return (table.enemyAI,table.GetEnemyData(),table.phases);
+            return (table.enemyAI,table.GetEnemyData(),table.phases, table.turnLimit);
         }
         else
         {
-            return (baseAI,new AgentData(level * basicCredit), basePhases);
+            return (baseAI,new AgentData(level * basicCredit), basePhases, 50);
         }
         
     }

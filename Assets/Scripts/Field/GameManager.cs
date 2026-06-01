@@ -48,7 +48,7 @@ namespace GlobalManage
         List<AgentData> agents = new();
         var data = levelTable.GetLevelData(level);
         agents.Add(data.Item2);
-        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData,time,point, levelTable.endLevel);
+        StageData stageData = new(data.Item1,agents, shopTable,data.Item3, level, playerData,time,point, levelTable.endLevel,data.Item4);
         return stageData;
     }
     

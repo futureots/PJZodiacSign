@@ -31,7 +31,7 @@ public class FieldController : MonoBehaviour
         /* 레벨 데이터로 씬 로드 준비
          * - 에이전트 목록 확인 및 생성
          */
-        
+        TurnLimit = data.turnLimit;
         // Load Field
         stageManager = StageManager.Instance;
         if (!stageManager)
@@ -70,6 +70,7 @@ public class FieldController : MonoBehaviour
      */
     private int phaseIndex;
     private int turnIndex;
+    public int TurnLimit { get; private set; }
     
     [SerializeField] protected uint turnCount;       // loopCount
     public List<Phase> phases;     
@@ -79,6 +80,7 @@ public class FieldController : MonoBehaviour
     
     public event Action<Phase> OnPhaseStarted;
     public event Action<Turn, uint> OnTurnStarted;
+    public event Action OnDraw;
 
 
     /// <summary>
@@ -120,7 +122,13 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
-        // TODO : 턴이 50이 넘어가면 정산 및 종료하는 기능 추가
+        // TODO : 턴이 일정 값 이상 넘어가면 정산 및 종료하는 기능 추가
+        if (turnCount >= TurnLimit)
+        {
+            EditorLogger.Print("DrawGame");
+            OnDraw?.Invoke();
+            return;
+        }
         // Next Turn
         if (index == -1)
         {
