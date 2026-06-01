@@ -122,13 +122,6 @@ public class FieldController : MonoBehaviour
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
     {
-        // TODO : 턴이 일정 값 이상 넘어가면 정산 및 종료하는 기능 추가
-        if (turnCount >= TurnLimit)
-        {
-            EditorLogger.Print("DrawGame");
-            OnDraw?.Invoke();
-            return;
-        }
         // Next Turn
         if (index == -1)
         {
@@ -156,6 +149,13 @@ public class FieldController : MonoBehaviour
         if (index == 0)
         {
             turnCount++;
+        }
+        // TODO : 턴이 일정 값 이상 넘어가면 정산 및 종료하는 기능 추가
+        if (turnCount > TurnLimit)
+        {
+            EditorLogger.Print("DrawGame");
+            OnDraw?.Invoke();
+            return;
         }
         
         // Set Model
