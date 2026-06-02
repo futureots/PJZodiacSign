@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53475adccec6af741a1baccf76cf8d98, type: 3}
   m_Name: CannonMoveArea
   m_EditorClassIdentifier: Assembly-CSharp::CompositeArea
+  areaImage: {fileID: 21300000, guid: 3df56a96a4f997b4cb6b9665fb7ceeb2, type: 3}
   areas:
   - {fileID: 11400000, guid: 6817dc0d2f9325344bd3fb7e10bc2b9c, type: 2}
   - {fileID: 11400000, guid: 1141ba78ed772d5438187fb57e80d381, type: 2}

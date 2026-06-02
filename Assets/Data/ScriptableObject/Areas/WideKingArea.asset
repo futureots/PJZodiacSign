@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93935d2cfa343d4d9b19df7920fa059, type: 3}
   m_Name: WideKingArea
   m_EditorClassIdentifier: Assembly-CSharp::KingArea
+  areaImage: {fileID: 21300000, guid: c8cd8ab3c50472a4d9c97bb88a706c74, type: 3}
   size: 2

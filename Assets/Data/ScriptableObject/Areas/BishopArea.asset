@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7296cafdbff8e6d428f1a1012f18a736, type: 3}
   m_Name: BishopArea
   m_EditorClassIdentifier: 
-  areaImage: {fileID: 21300000, guid: ada7129c7ef90ab44bb3e51e6c151ddb, type: 3}
+  areaImage: {fileID: 21300000, guid: 7388e5ebb822b624593072ebc32d13a4, type: 3}
   isRepeat: 1

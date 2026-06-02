@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53475adccec6af741a1baccf76cf8d98, type: 3}
   m_Name: TowerMoveArea
   m_EditorClassIdentifier: Assembly-CSharp::CompositeArea
+  areaImage: {fileID: 21300000, guid: 9e7d3c5ee949185449b75242ddba11bd, type: 3}
   areas:
   - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
   - {fileID: 11400000, guid: f264dcf4031e182498f8f07d9514b9f6, type: 2}

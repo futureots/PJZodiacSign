@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53475adccec6af741a1baccf76cf8d98, type: 3}
   m_Name: AngelArea
   m_EditorClassIdentifier: Assembly-CSharp::CompositeArea
-  areaImage: {fileID: 21300000, guid: 8acd1a21e6aab6643913ee413b7b588e, type: 3}
+  areaImage: {fileID: 21300000, guid: f160cdcc9fb2331448ba19725770d5d6, type: 3}
   areas:
   - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
   - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
