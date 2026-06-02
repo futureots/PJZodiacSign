@@ -217,6 +217,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1611484231192298875, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611484231192298875, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2968997829862676719, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -238,6 +246,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2968997829862676719, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313555263955653990, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313555263955653990, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130449301051608115, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130449301051608115, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130449301051608115, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130449301051608115, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -373,6 +405,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialInputUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8900375119898504163, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8900375119898504163, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -467,7 +507,7 @@ Transform:
   m_GameObject: {fileID: 1182249134}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 0, z: -15}
+  m_LocalPosition: {x: 0, y: -13, z: -17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,11 +11,15 @@ public class TurnCountUI : InputManagerUI
     // 25턴 시작 시 버튼 활성화
     [SerializeField] private Button drawButton;
 
-    [SerializeField] private GameObject turnPanel;
+    [SerializeField] private CanvasGroup turnPanel;
     [SerializeField] private TextMeshProUGUI turnCountText;
     [SerializeField] private CalculateUI calcPanel;
+    [SerializeField] private AudioSource audioSource;
 
     private int drawCount;
+    private uint _prevCount;
+    public float fadeDuration = 0.1f;
+    public float displayDuration = 0.1f;
     
     // 50턴 시작 시 UI에서 계산 및 종료하기
     public override void Init(InputManager inputManager)
@@ -27,19 +32,29 @@ public class TurnCountUI : InputManagerUI
         drawCount = fieldController.TurnLimit;
         
         drawButton.gameObject.SetActive(false);
-        turnPanel.SetActive(false);
+        turnPanel.gameObject.SetActive(false);
         calcPanel.gameObject.SetActive(false);
     }
 
     void PhaseStart(Phase phase)
     {
-        if(phase.phaseName == PhaseType.Battle) turnPanel.SetActive(true);
-        else turnPanel.SetActive(false);
+        if(phase.phaseName == PhaseType.Battle) turnPanel.gameObject.SetActive(true);
+        else turnPanel.gameObject.SetActive(false);
     }
     
     void TurnStart(Turn turn, uint count)
     {
-        turnCountText.text = $"{count}/{drawCount}";
+        if (turnPanel.isActiveAndEnabled && _prevCount != count)
+        {
+            audioSource.Play();
+            _prevCount = count;
+            turnCountText.text = $"{count}/{drawCount}";
+            var fade = DOTween.Sequence()
+                .Append(turnPanel.DOFade(1f, fadeDuration).SetEase(Ease.OutCubic))
+                .AppendInterval(displayDuration)
+                .Append(turnPanel.DOFade(0f, fadeDuration).SetEase(Ease.InCubic));
+        }
+
         // 턴 시작 시 활성화
         if (count == drawCount/2)
         {

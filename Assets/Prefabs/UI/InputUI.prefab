@@ -612,6 +612,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurnCountUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5134097866923484005, guid: 682eacbf3068c9949889f10f693cc4f8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5134097866923484005, guid: 682eacbf3068c9949889f10f693cc4f8, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5539528658323637429, guid: 682eacbf3068c9949889f10f693cc4f8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
