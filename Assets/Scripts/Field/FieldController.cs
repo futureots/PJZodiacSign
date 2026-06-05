@@ -1,4 +1,3 @@
-using GlobalManage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,15 +9,14 @@ public class FieldController : MonoBehaviour
      * 페이즈-턴 운영
      * Agent 생성 및 필드 시스템과 Command 통신
      */
-    [Header("Stage Operate")]
+    
     protected StageManager stageManager;
 
-    protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
     public Action<string> OnBattleEnd;    // NOTE: 전투 종료 플래그 (단순 string)
     
     [Header("Dependency")]
-    [SerializeField] InputManager inputManager;
-    [SerializeField] InputUIContainer inputUI;
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private InputUIContainer inputUI;
     private EnemyAI _enemyAI = null;
     
     /// <summary>
@@ -50,13 +48,12 @@ public class FieldController : MonoBehaviour
         inputManager.Init(localPlayer);
         _enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
+        
+        // 커맨드 시스템 연결
         commandSystem = new CommandSystem();
         
-        // Set Rules
-        SpecialRule = data.specialRule;
-        phases = data.phases;
-        
         // Reset Phase
+        phases = data.phases;
         turnCount = 0;
         SetPhase(0);
     }
@@ -222,13 +219,11 @@ public class FieldController : MonoBehaviour
         }
         
     }
-
     
     #endregion
     
-    #region Agents
     
-    // TODO: Agent 운영
+    #region Agents
     
     public Agent localPlayer;
     public List<Agent> agents;

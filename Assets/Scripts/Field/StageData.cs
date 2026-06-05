@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Augment;
 
 [Serializable]
 public class StageData
@@ -30,6 +31,10 @@ public class StageData
     // Stage Config
     public string modelName = GlobalManage.ModelID.Default;
     public string controllerName = GlobalManage.ControllerID.Default;
+    
+    // Augment
+    public List<IAugmentEffect> Augments;
+    public bool addAugment;
 
     // Player and Agents
     public EnemyAI aiPrefab = null;
