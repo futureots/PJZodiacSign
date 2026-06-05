@@ -6,6 +6,7 @@ namespace Augment
          * Augment Effect Interface
          * - 실행 타이밍 별 동작 함수 정의
          */
+        AugmentType Type { get; }
 
         // 획득 시
         void OnActive();

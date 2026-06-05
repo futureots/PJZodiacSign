@@ -80,7 +80,7 @@ public class Agent : MonoBehaviour
         Credit = data.credit;
         if (data.items == null) data.items = new();
         inventory.SetItem(data.items);
-        fieldController.OnPhaseStarted += OnPhaseChange;
+        fieldController.OnPhaseStart += OnPhaseChange;
         fieldController.OnTurnStarted += OnTurnChange;
 
         // 필드 기물 세팅

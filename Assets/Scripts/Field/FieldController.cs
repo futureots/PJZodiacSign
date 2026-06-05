@@ -10,11 +10,8 @@ public class FieldController : MonoBehaviour
      * Agent 생성 및 필드 시스템과 Command 통신
      */
     
-    protected StageManager stageManager;
-
-    public Action<string> OnBattleEnd;    // NOTE: 전투 종료 플래그 (단순 string)
-    
     [Header("Dependency")]
+    protected StageManager stageManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private InputUIContainer inputUI;
     private EnemyAI _enemyAI = null;
@@ -48,70 +45,87 @@ public class FieldController : MonoBehaviour
         inputManager.Init(localPlayer);
         _enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
-        
         // 커맨드 시스템 연결
         commandSystem = new CommandSystem();
         
-        // Reset Phase
-        phases = data.phases;
-        turnCount = 0;
-        SetPhase(0);
+        // Set Phase Data
+        phaseData = data.phases;
+
+        // 전투 시작
+        StartLevel(data);
     }
     
-    #region PhaseManage
+    #region CycleManage
     /**
      * 페이즈 - 턴 관리 시스템
      * - 페이즈별로 턴 순회
      * - 페이즈 전환, 턴 전환 Event
      */
-    private int phaseIndex;
-    private int turnIndex;
-    
+    private int _phaseIndex;
+    private int _turnIndex;
     [SerializeField] protected uint turnCount;       // turn Count in current Phase
-    public List<Phase> phases;     
-    public Phase CurrentPhase => phases[phaseIndex];
-
-    public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
     
-    public event Action<Phase> OnPhaseStarted;
+    public List<Phase> phaseData;     
+    
+    public Phase CurrentPhase => phaseData[_phaseIndex];
+
+    public Turn CurrentTurn => CurrentPhase.turnList[_turnIndex];
+
+    public event Action<StageData> OnLevelStart;
+    public event Action<Phase> OnPhaseStart;
     public event Action<Turn> OnTurnStarted;
 
+    public Action<string> OnBattleEnd;
+    
+    public virtual void StartLevel(StageData data)
+    {
+        // 새 레벨 시작
+        OnLevelStart?.Invoke(data);
+        // TODO: 증강 매니저가 구독 후 data에 따라 증강 로딩 및 실행
+        // 증강 추가 자체를 하나의 증강으로 처리
+        
+        // NOTE: 게임 시작 전 행동
+        
+        // 페이즈 시작
+        SetPhase(0);
+    }
 
     /// <summary>
-    /// Phase Set and Reset Turn
+    /// Phase Start and Reset Turn
     /// </summary>
     /// <param name="index">Phase index for set (-1 for Next Phase)</param>
     public virtual void SetPhase(int index = -1)
     {
-        
         // Next Phase
         if (index == -1)
         {
-            index = phaseIndex + 1;
+            index = _phaseIndex + 1;
         }
         
-        // Invalid Phase Count
-        if (index >= phases.Count)
+        // Invalid Phase Count 
+        if (index >= phaseData.Count)
         {
+            // Check Battle End
             if (IsBattleEnd(out PlayerID winner))
             {
                 EndStage(winner);
-                
             }
             return;
         }
         
-        phaseIndex = index;
+        // Change Phase
+        _phaseIndex = index;
+        
         // Set Model
         stageManager.SetPhase(CurrentPhase);
-        OnPhaseStarted?.Invoke(CurrentPhase);
+        OnPhaseStart?.Invoke(CurrentPhase);
         
         // Reset Turn
         SetTurn(0);
     }
 
     /// <summary>
-    /// Turn Set
+    /// Turn Start
     /// </summary>
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
@@ -119,7 +133,7 @@ public class FieldController : MonoBehaviour
         // Next Turn
         if (index == -1)
         {
-            index = turnIndex + 1;
+            index = _turnIndex + 1;
         }
         
         // Invalid Phase Count
@@ -132,13 +146,13 @@ public class FieldController : MonoBehaviour
             }
             else
             {
-                SetPhase();         // NOTE: Move to Next Phase When all Turn Ends
+                SetPhase();         // Move to Next Phase When all Turn Ends
                 return;
             }
         }
 
         // Set Turn
-        turnIndex = index;
+        _turnIndex = index;
         turnCount++;
         
         // Set Model
@@ -149,6 +163,8 @@ public class FieldController : MonoBehaviour
     public bool IsBattleEnd(out PlayerID winTeam)
     {
         List<PlayerID> surviveTeam = new();
+        
+        // Get All Teams with Any Entity
         foreach (var tile in stageManager.field.GetTiles())
         {
             if (tile.IsEmpty) continue;
@@ -161,16 +177,17 @@ public class FieldController : MonoBehaviour
                 }
             }
         }
+        
+        // Check Win Team
         if(surviveTeam.Count == 1)
         {
             winTeam = surviveTeam[0];
             return true;
         }
-        else
-        {
-            winTeam = PlayerID.None;
-            return false;
-        }
+        
+        // Continue Battle
+        winTeam = PlayerID.None;
+        return false;
     }
 
     public virtual void EndStage(PlayerID winner)

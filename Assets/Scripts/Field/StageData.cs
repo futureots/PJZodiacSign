@@ -34,7 +34,6 @@ public class StageData
     
     // Augment
     public List<IAugmentEffect> Augments;
-    public bool addAugment;
 
     // Player and Agents
     public EnemyAI aiPrefab = null;
