@@ -14,17 +14,18 @@ namespace Augment
     
     public abstract class AugmentSO : ScriptableObject, IAugmentEffect
     {
+        // Augment Data
         public string effectName = "";
         public string description = "";
-        [SerializeField] private AugmentType _type = AugmentType.Neutral;
-        public AugmentType Type => _type;
+        [SerializeField] private AugmentType type = AugmentType.Neutral;
+        public AugmentType Type => type;
         
         public virtual void OnActive() { }
 
-        public virtual void OnLevelStart() { }
+        public virtual void OnLevelStart(StageData data) { }
 
-        public virtual void OnPhaseStart() { }
+        public virtual void OnPhaseStart(Phase data) { }
 
-        public virtual void OnTurnStart() { }
+        public virtual void OnTurnStart(Turn data) { }
     }
 }

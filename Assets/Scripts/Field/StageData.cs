@@ -17,7 +17,6 @@ public class StageData
         this.player = player;
         this.phases = phases;
         
-        
         this.time = time;
         this.point = point;
         isLastLevel = level == lastLevel;
@@ -31,6 +30,7 @@ public class StageData
     // Stage Config
     public string modelName = GlobalManage.ModelID.Default;
     public string controllerName = GlobalManage.ControllerID.Default;
+
     
     // Augment
     public List<IAugmentEffect> Augments;
@@ -40,10 +40,7 @@ public class StageData
     public AgentData player = new AgentData();
     public List<AgentData> agents = new();
 
-    // Field System Data
+    // Play Data
     public ShopTable shopTable;
-
-    // Special Rules
-    public List<string> specialRule = new();
     public List<Phase> phases = new();
 }

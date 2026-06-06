@@ -10,6 +10,6 @@ public class TutorialController : FieldController
 
     public override void EndStage(PlayerID winner)
     {
-        stageManager.EndStage(winner);
+        StageManager.EndStage(winner);
     }
 }

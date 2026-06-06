@@ -31,6 +31,10 @@ namespace Main
                 var dataManager = DataManager.Instance;
                 GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
                 var data = GameManager.Instance.CreateStageData(dataManager.playData.stageLevel, dataManager.GetPlayerAgentData(),dataManager.playData.time,dataManager.playData.point);
+                
+                // TODO: 모드 선택
+                data.controllerName = ControllerID.AddAugment;
+                
                 GameManager.Instance.EnterBattle(data);
             }
             else
@@ -42,6 +46,7 @@ namespace Main
                 }
                 GameManager.Instance.SetModeData(levelTable, shopTable);
                 var data = GameManager.Instance.CreateStageData(1, new AgentData(150),0,0);
+                
                 GameManager.Instance.EnterBattle(data);
             }
         }
