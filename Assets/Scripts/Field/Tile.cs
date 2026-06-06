@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour
     {
         Move,
         Attack,
+        OppositeMove,
+        OppositeAttack,
     }
     /// <summary>
     /// 해당 타일이 존재하는 필드
@@ -99,6 +101,9 @@ public class Tile : MonoBehaviour
 
     public Material moveHighLightMat;
     public Material atkHighLightMat;
+    public Material oppoMoveHighLightMat;
+    public Material oppoAtkHighLightMat;
+
     public void ApplyHighlight(HighLightType type)
     {
         List<Material> mats = null;
@@ -112,6 +117,16 @@ public class Tile : MonoBehaviour
             case HighLightType.Attack:
                 mats = planeRenderer.sharedMaterials.ToList();
                 mats.Add(atkHighLightMat);
+                planeRenderer.materials = mats.ToArray();
+                break;
+            case HighLightType.OppositeMove:
+                mats = tileRenderer.sharedMaterials.ToList();
+                mats.Add(oppoMoveHighLightMat);
+                tileRenderer.materials = mats.ToArray();
+                break;
+            case HighLightType.OppositeAttack:
+                mats = planeRenderer.sharedMaterials.ToList();
+                mats.Add(oppoAtkHighLightMat);
                 planeRenderer.materials = mats.ToArray();
                 break;
         }
@@ -129,6 +144,16 @@ public class Tile : MonoBehaviour
             case HighLightType.Attack:
                 mats = planeRenderer.sharedMaterials.ToList();
                 mats.Remove(atkHighLightMat);
+                planeRenderer.materials = mats.ToArray();
+                break;
+            case HighLightType.OppositeMove:
+                mats = tileRenderer.sharedMaterials.ToList();
+                mats.Remove(oppoMoveHighLightMat);
+                tileRenderer.materials = mats.ToArray();
+                break;
+            case HighLightType.OppositeAttack:
+                mats = planeRenderer.sharedMaterials.ToList();
+                mats.Remove(oppoAtkHighLightMat);
                 planeRenderer.materials = mats.ToArray();
                 break;
         }

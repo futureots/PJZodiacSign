@@ -104,6 +104,7 @@ public class DataManager : Singleton<DataManager>
     public void SaveAllData(string fileName)
     {
         var data = PlayData.SerializePlayerData(playData);
+        EditorLogger.Print(data);
         SaveData(data, fileName);
     }
 

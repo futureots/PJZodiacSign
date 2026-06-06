@@ -14,7 +14,7 @@ public class CostUI : InputManagerUI
         _inputManager.agent.fieldController.OnTurnStarted += OnTurnChange;
     }
 
-    void OnTurnChange(Turn turn)
+    void OnTurnChange(Turn turn, uint count)
     {
         if (turn.agentID == _inputManager.agent.id && turn.type == TurnType.ACTION)
         {

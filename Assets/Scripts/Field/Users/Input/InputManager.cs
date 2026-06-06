@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 
 public class InputManager : MonoBehaviour
@@ -24,7 +23,10 @@ public class InputManager : MonoBehaviour
     public GameObject tileSelecter;
     public GameObject skillSelecter;
     public TurnType curTurnType { get; private set; }
-    public Action<IInputState> OnModeChanged;
+    
+    public Action<IInputState> onModeChanged;
+
+    public Action<string, LogType> onMessageActivated; 
 
     [SerializeField] private int maxEntityCount = 12;
     public int  MaxEntityCount => maxEntityCount;
@@ -124,7 +126,7 @@ public class InputManager : MonoBehaviour
 
     #region Turn
     
-    void OnTurnChange(Turn curTurn)
+    void OnTurnChange(Turn curTurn, uint count)
     {
         curTurnType = curTurn.type;
         
@@ -145,7 +147,7 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = null;
-        OnModeChanged?.Invoke(curModeState);
+        onModeChanged?.Invoke(curModeState);
     }
 
     public void SetInputMode()
@@ -166,7 +168,7 @@ public class InputManager : MonoBehaviour
                 curModeState = new EmptyModeInput();
                 break;
         }
-        OnModeChanged?.Invoke(curModeState);
+        onModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
 
@@ -174,7 +176,7 @@ public class InputManager : MonoBehaviour
     {
         curModeState?.RemoveMode();
         curModeState = new SkillModeInput(this, skill);
-        OnModeChanged?.Invoke(curModeState);
+        onModeChanged?.Invoke(curModeState);
         curModeState.SetMode();
     }
     

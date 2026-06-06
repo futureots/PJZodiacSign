@@ -17,10 +17,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 64f45d545385b9d4f8007b2879290fd9, type: 3}
   normalPrice: 99999
   prefab: {fileID: 3545369894222747195, guid: 6fdbc0408713fb948962fa73d218d473, type: 3}
-  moveArea:
-  - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
-  attackArea:
-  - {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
+  moveArea: {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
+  attackArea: {fileID: 11400000, guid: b7711a709c19a62489ae351048b8f768, type: 2}
   maxHp: 4
   power: 0
   hpMultiplier: 5

@@ -26,7 +26,7 @@ public class PlayerDataUI : InputManagerUI
         UpdateTime(StageManager.Instance.timer.GetTime());
         
         // 배치 기물 수 갱신
-        inputManager.OnModeChanged += (state) =>
+        inputManager.onModeChanged += (state) =>
         {
             if (state is RepairModeInput repair)
             {

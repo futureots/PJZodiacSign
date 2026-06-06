@@ -256,7 +256,7 @@ public class Entity : Occupant, IDamageable, IAttackable
 
     #endregion
 
-    #region MoveArea
+    #region Area
 
     /// <summary>
     /// 기물의 이동 영역 반환

@@ -6,9 +6,8 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Serializable]
-public class S_Bombard : BaseSkillLogic
+public class S_Bombard : AreaSkillLogic
 {
-    [SerializeField] private Area area;
     private Entity _owner;
 
     public void Init(Area area)

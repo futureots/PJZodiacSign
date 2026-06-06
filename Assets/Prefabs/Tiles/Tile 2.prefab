@@ -88,6 +88,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2246169712480849857
 GameObject:
@@ -136,15 +137,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c287bc6b9d2a941a9ea233989bd7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileRenderer: {fileID: 7423387125376430301}
-  planeRenderer: {fileID: 4683342118325975493}
-  moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
-  atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
   field: {fileID: 0}
   fieldPos:
     x: 0
     y: 0
-  occupiedObject: {fileID: 0}
+  occupiedEntity: {fileID: 0}
+  moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
+  atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 2100000, guid: bcc177675533fe84ba55b6b3582a9265, type: 2}
+  oppoAtkHighLightMat: {fileID: 2100000, guid: acee01e06ccb2d14dbb714795920eb66, type: 2}
 --- !u!65 &8465199760712711516
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -253,4 +254,5 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}

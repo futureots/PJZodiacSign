@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 
@@ -80,6 +81,11 @@ namespace PlayerInput
                         //커맨드 생성
                         inputManager.agent.CreateMoveCommand(selectedEntity, selectedTile, true);
                         CurEntityCount = StageManager.Instance.field.GetEntities(inputManager.agent.id).Count;
+                    }
+                    else
+                    {
+                        EditorLogger.Print("더 이상 배치할 수 없습니다!");
+                        inputManager.onMessageActivated("더 이상 배치할 수 없습니다!", LogType.Error);
                     }
                 }
                 else

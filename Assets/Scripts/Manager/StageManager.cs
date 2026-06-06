@@ -12,7 +12,6 @@ public class StageManager : Singleton<StageManager>
      */
     [SerializeField] public Shop shop;
     private EntityFactory entityFactory => EntityFactory.Instance;
-    [SerializeField] private UIMapper uiMapper;
     public Field field;
     public Timer timer;
     public int level;
@@ -97,7 +96,6 @@ public class StageManager : Singleton<StageManager>
     /// <param name="newPhase">new Phase Info</param>
     public void SetPhase(Phase newPhase)
     {
-        uiMapper.SetUI(newPhase.useUIType);
 
         // TODO: 페이즈 설정
     }

@@ -15,10 +15,10 @@ public class Level4BossAI : EnemyAI
         int count = list.Count;
         for (int i = 0; i < count; i++)
         {
-            if (list.Count < 0) break;
+            if (list.Count <= 0) break;
             int rand = Random.Range(0, list.Count);
             var selectEntity = list[rand];
-            // 선택한 기물 스킬 사용 시도
+            // 선택한 기물 스킬 사용 시도6
             var result = await EnemySkillAction(selectEntity);
             // 스킬 사용 성공 시 종료
             if (result) return;
@@ -46,6 +46,7 @@ public class Level4BossAI : EnemyAI
                 frontList.Add(tile);
             }
         }
+        if(frontList.Count <= 0) return false;
         agent.CreateMoveCommand(entity, frontList[Random.Range(0,frontList.Count)]);
         entity.IsControllable = false;
         return true;

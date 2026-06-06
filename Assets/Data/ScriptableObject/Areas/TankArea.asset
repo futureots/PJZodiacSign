@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e0cb05b9a2d3f45b0ceb54c2aad33d, type: 3}
   m_Name: TankArea
   m_EditorClassIdentifier: Assembly-CSharp::CustomArea
+  areaImage: {fileID: 21300000, guid: 3b71449a46ac3b247b604179d185673f, type: 3}
   positions:
   - x: 2
     y: 2

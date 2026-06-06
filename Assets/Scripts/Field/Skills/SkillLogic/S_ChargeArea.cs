@@ -4,15 +4,14 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class S_ChargeArea : BaseSkillLogic
+public class S_ChargeArea : AreaSkillLogic
 {
-    [SerializeField] int charge;
-    [SerializeField] Area area;
+    [SerializeField] private int amount;
     private Entity _owner;
-    public void Init(Area _area, int amount)
+    public void Init(Area _area, int _amount)
     {
-        area = _area;
-        charge = amount;
+        base.area = _area;
+        this.amount = _amount;
     }
 
     public override async UniTask<bool> InputSkill(IInput input)
@@ -68,7 +67,7 @@ public class S_ChargeArea : BaseSkillLogic
             if(tile.occupiedEntity.team.IsAlly(_owner.team))
             {
                 var entity = tile.occupiedEntity;
-                entity.energy.CurEnergy += charge;
+                entity.energy.CurEnergy += amount;
             }
         }
         yield return new WaitForSeconds(0.9f);
@@ -78,7 +77,7 @@ public class S_ChargeArea : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone = new S_ChargeArea();
-        clone.Init(area,charge);
+        clone.Init(area,amount);
         return clone;
     }
 }

@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour , IInput
     }
 
 
-    private void OnTurnChange(Turn curTurn)
+    private void OnTurnChange(Turn curTurn, uint count)
     {
         CurTurnType = curTurn.type;
         
@@ -200,7 +200,7 @@ public class EnemyAI : MonoBehaviour , IInput
         int count = list.Count;
         for (int i = 0; i < count; i++)
         {
-            if (list.Count < 0) break;
+            if (list.Count <= 0) break;
             int rand = Random.Range(0, list.Count);
             var selectEntity = list[rand];
             // 선택한 기물 스킬 사용 시도
@@ -240,7 +240,7 @@ public class EnemyAI : MonoBehaviour , IInput
             if (field[plus.y, plus.x] == (int)agent.id) continue;
             tileValues[pos.y, pos.x] += power + 1;
         } 
-        value = tileValues[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x];
+        value = tileValues[entity.CurTile.fieldPos.y, entity.CurTile.fieldPos.x] - 1;
         List<intVector2> valuablePos = new();
         
         var moveVectors = area.GetMoveVector(field, entity.CurTile.fieldPos, entity.direction);

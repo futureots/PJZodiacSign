@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297a7cb28641084e8240d75ade86dba, type: 3}
   m_Name: RookArea
   m_EditorClassIdentifier: 
+  areaImage: {fileID: 21300000, guid: 5031487d0f224c247bd9159b3d3df5bc, type: 3}
   isRepeat: 1

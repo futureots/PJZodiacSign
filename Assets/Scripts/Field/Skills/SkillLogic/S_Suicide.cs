@@ -4,9 +4,8 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class S_Suicide : BaseSkillLogic
+public class S_Suicide : AreaSkillLogic
 {
-    [SerializeField] private Area area;
     private Entity _owner;
     
     public void Init(Area area)

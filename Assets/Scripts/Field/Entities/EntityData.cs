@@ -9,8 +9,8 @@ public class EntityData : AbstractData
     public Entity prefab;
     
     [Header("Area")]
-    public List<Area> moveArea;
-    public List<Area> attackArea;
+    public Area moveArea;
+    public Area attackArea;
 
     [Header("BaseStatus")]
     public int maxHp;
