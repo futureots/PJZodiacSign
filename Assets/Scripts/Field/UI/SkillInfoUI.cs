@@ -45,7 +45,11 @@ public class SkillInfoUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        skillArea.obj.SetActive(true);
+        if (_hasArea)
+        {
+            skillArea.obj.SetActive(true);
+        }
+        
     }
 
     public void OnPointerExit(PointerEventData eventData)
