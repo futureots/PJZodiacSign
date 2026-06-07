@@ -20,12 +20,27 @@ namespace Augment
         [SerializeField] private AugmentType type = AugmentType.Neutral;
         public AugmentType Type => type;
         
+        /// <summary>
+        /// 획득 즉시 실행
+        /// </summary>
         public virtual void OnActive() { }
 
+        /// <summary>
+        /// 레벨 시작시 실행
+        /// </summary>
+        /// <param name="data">스테이지 정보</param>
         public virtual void OnLevelStart(StageData data) { }
 
+        /// <summary>
+        /// 페이즈 시작시 실행
+        /// </summary>
+        /// <param name="data">페이즈 정보</param>
         public virtual void OnPhaseStart(Phase data) { }
 
+        /// <summary>
+        /// 턴 시작시 실행
+        /// </summary>
+        /// <param name="data">턴 정보</param>
         public virtual void OnTurnStart(Turn data) { }
     }
 }

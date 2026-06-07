@@ -36,6 +36,9 @@ namespace Augment
             }
         }
 
+        /// <summary>
+        /// 추가할 증강 선택
+        /// </summary>
         private void StartChoice()
         {
             // 보유 증강 제외
@@ -46,6 +49,10 @@ namespace Augment
             Add(choicePool[0]);
         }
 
+        /// <summary>
+        /// 증강 등록 및 실행
+        /// </summary>
+        /// <param name="augment"></param>
         private void Add(AugmentSO augment)
         {
             // Augment 등록
@@ -56,6 +63,7 @@ namespace Augment
             augment.OnActive();
         }
 
+        // 증강 이벤트 연결
         private void RegisterAugment(IAugmentEffect augment)
         {
             _controller.OnLevelStart += augment.OnLevelStart;
