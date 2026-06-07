@@ -65,7 +65,7 @@ namespace GlobalManage
             Level = stageData.level;
             
             // 튜토리얼은 데이터를 저장하지 않음
-            if (stageData.controllerName == ControllerID.Default)
+            if (stageData.controllerName != ControllerID.Tutorial)
             {
                 DataManager.Instance.SetData(stageData.player, Level);
                 DataManager.Instance.SaveAllData("PlayerData");
@@ -102,7 +102,7 @@ namespace GlobalManage
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                EditorLogger.PrintError(e);
                 // Load Failed, Return to Main
                 StartCoroutine(SceneLoader.Instance.LoadMain());
             }

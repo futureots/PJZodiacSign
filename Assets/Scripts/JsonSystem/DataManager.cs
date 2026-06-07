@@ -7,8 +7,9 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
+    // TODO: Release빌드에선 persistentDataPath로 개선 필요
     [NonSerialized]
-    private readonly string defaultPath = Application.dataPath + "/Data";
+    private readonly string defaultPath = Path.Join(Application.dataPath, "Data");
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
@@ -146,7 +147,7 @@ public class DataManager : Singleton<DataManager>
         {
             Directory.CreateDirectory(defaultPath);
         }
-        string filePath = Path.Combine(defaultPath,  fileName + ".Json");
+        string filePath = Path.Join(defaultPath,  $"{fileName}.Json");
         File.WriteAllText(filePath, data);
         EditorLogger.Print(data);
     }
@@ -159,7 +160,7 @@ public class DataManager : Singleton<DataManager>
         json = null;
         if (Directory.Exists(defaultPath))
         {
-            string filePath = Path.Combine(defaultPath, fileName + ".Json");
+            string filePath = Path.Join(defaultPath, $"{fileName}.Json");
             if (File.Exists(filePath))
             {
                 json = File.ReadAllText(filePath);
@@ -177,7 +178,7 @@ public class DataManager : Singleton<DataManager>
     {
         if (Directory.Exists(defaultPath))
         {
-            string filePath = Path.Combine(defaultPath, fileName + ".Json");
+            string filePath = Path.Join(defaultPath, $"{fileName}.Json");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);

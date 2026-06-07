@@ -15,6 +15,8 @@ namespace GlobalManage
     {
         public const string Default = "BaseBattle";
         public const string Tutorial = "TutorialController";
+        public const string Augmented = "AugmentDefault";
+        public const string AddAugment = "AugmentAdd";
     }
     
     public class SceneLoader : Singleton<SceneLoader>

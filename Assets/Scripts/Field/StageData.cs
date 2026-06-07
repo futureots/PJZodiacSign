@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Augment;
 
 [Serializable]
 public class StageData
@@ -15,7 +16,6 @@ public class StageData
         this.level = level;
         this.player = player;
         this.phases = phases;
-        
         
         this.time = time;
         this.point = point;
@@ -33,15 +33,16 @@ public class StageData
     public string modelName = GlobalManage.ModelID.Default;
     public string controllerName = GlobalManage.ControllerID.Default;
 
+    
+    // Augment
+    public List<IAugmentEffect> Augments;
+
     // Player and Agents
     public EnemyAI aiPrefab = null;
     public AgentData player = new AgentData();
     public List<AgentData> agents = new();
 
-    // Field System Data
+    // Play Data
     public ShopTable shopTable;
-
-    // Special Rules
-    public List<string> specialRule = new();
     public List<Phase> phases = new();
 }

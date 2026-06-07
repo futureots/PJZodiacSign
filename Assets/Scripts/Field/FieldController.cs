@@ -11,94 +11,123 @@ public class FieldController : MonoBehaviour
      * 페이즈-턴 운영
      * Agent 생성 및 필드 시스템과 Command 통신
      */
-    [Header("Stage Operate")]
-    protected StageManager stageManager;
-
-    protected List<string> SpecialRule;   // TODO: 특수 기믹 DTO로 변경
-    public Action<string> OnBattleEnd;    // NOTE: 전투 종료 플래그 (단순 string)
+    
+    [SerializeField] private StageData stageData;
     
     [Header("Dependency")]
-    [SerializeField] InputManager inputManager;
-    [SerializeField] InputUIContainer inputUI;
+    protected StageManager StageManager;
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private InputUIContainer inputUI;
     private EnemyAI _enemyAI = null;
+    
+    [Header("Agents")]
+    public Agent localPlayer;
+    public List<Agent> agents;
+    
+    [Header("Extra Rules")]
+    [SerializeField] private List<ExSystem> exSystems;
     
     /// <summary>
     /// Initiate Controller
     /// </summary>
     /// <remarks>Load Model and set Command, Special Rule, and Reset Phase</remarks>
-    public virtual void Init(StageData data)
+    public virtual void Init(StageData newData)
     {
         /* 레벨 데이터로 씬 로드 준비
          * - 에이전트 목록 확인 및 생성
+         * - 페이즈 데이터 주입
+         * - 특수 기믹 
          */
-        TurnLimit = data.turnLimit;
+         
+        stageData = newData;
+        TurnLimit = stageData.turnLimit;
+        
         // Load Field
-        stageManager = StageManager.Instance;
-        if (!stageManager)
+        try
         {
-            throw new Exception("StageManager not found");
+            StageManager = StageManager.Instance;
+            StageManager.Init(stageData);
         }
-        stageManager.Init(data);
-
-        // Set Agents
-        _enemyAI = Instantiate(data.aiPrefab, transform);
-        Agent.LocalPlayer = localPlayer;
-        localPlayer.Init(this,PlayerID.P0,data.player, new intVector2(1,1));
-        for (int i = 0; i < agents.Count && i < data.agents.Count; i++)
+        catch(Exception e)
         {
-            agents[i].Init(this,(PlayerID)i, data.agents[i], new intVector2(-1,-1));
+            EditorLogger.PrintError($"StageManager Not Found : {e.Message}");
+            GameManager.Instance.EndGame();
+        }
+
+        // Set Enemy
+        _enemyAI = Instantiate(stageData.aiPrefab, transform);
+        Agent.LocalPlayer = localPlayer;
+        localPlayer.Init(this,PlayerID.P0,stageData.player, new intVector2(1,1));
+        for (int i = 0; i < agents.Count && i < stageData.agents.Count; i++)
+        {
+            agents[i].Init(this,(PlayerID)i, stageData.agents[i], new intVector2(-1,-1));
         }
         inputManager.Init(localPlayer);
         _enemyAI.Init(agents[0]);
         inputUI.Init(inputManager);
-        commandSystem = new CommandSystem();
         
-        // Set Rules
-        SpecialRule = data.specialRule;
-        phases = data.phases;
-        
-        // Reset Phase
-        turnCount = 0;
-        SetPhase(0);
+        // Init Extra Trigger
+        foreach (ExSystem exSystem in exSystems)
+        {
+            exSystem.Init(this, stageData);
+        }
+
+        // 전투 시작
+        StartLevel(stageData);
     }
     
-    #region PhaseManage
+    #region CycleManage
     /**
      * 페이즈 - 턴 관리 시스템
      * - 페이즈별로 턴 순회
      * - 페이즈 전환, 턴 전환 Event
      */
+
     private int phaseIndex;
     private int turnIndex;
     public int TurnLimit { get; private set; }
-    
     [SerializeField] protected uint turnCount;       // loopCount
-    public List<Phase> phases;     
-    public Phase CurrentPhase => phases[phaseIndex];
-
+      
+    private List<Phase> PhaseData => stageData.phases;    
+    public Phase CurrentPhase => PhaseData[phaseIndex]; 
     public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
-    
+
+    // events
+    public event Action<StageData> OnLevelStarted;
     public event Action<Phase> OnPhaseStarted;
     public event Action<Turn, uint> OnTurnStarted;
+    
     public event Action OnDraw;
-
+    public Action<string> OnBattleEnd;
+    
+    public virtual void StartLevel(StageData data)
+    {
+        // 새 레벨 시작
+        OnLevelStarted?.Invoke(data);
+        // 증강 추가 자체를 하나의 증강으로 처리
+        
+        // NOTE: 게임 시작 전 행동
+        
+        // 페이즈 시작
+        SetPhase(0);
+    }
 
     /// <summary>
-    /// Phase Set and Reset Turn
+    /// Phase Start and Reset Turn
     /// </summary>
     /// <param name="index">Phase index for set (-1 for Next Phase)</param>
     public virtual void SetPhase(int index = -1)
     {
-        
         // Next Phase
         if (index == -1)
         {
             index = phaseIndex + 1;
         }
         
-        // Invalid Phase Count
-        if (index >= phases.Count)
+        // Invalid Phase Count 
+        if (index >= PhaseData.Count)
         {
+            // Check Battle End
             if (IsBattleEnd(out PlayerID winner))
             {
                 EndStage(winner);
@@ -106,9 +135,12 @@ public class FieldController : MonoBehaviour
             return;
         }
         
+        // Change Phase
         phaseIndex = index;
+        turnCount = 0;
+        
         // Set Model
-        stageManager.SetPhase(CurrentPhase);
+        StageManager.SetPhase(CurrentPhase);
         OnPhaseStarted?.Invoke(CurrentPhase);
         
         // Reset Turn
@@ -117,7 +149,7 @@ public class FieldController : MonoBehaviour
     }
 
     /// <summary>
-    /// Turn Set
+    /// Turn Start
     /// </summary>
     /// <param name="index">Turn index for Set, -1 for Next Turn</param>
     public virtual void SetTurn(int index = -1)
@@ -139,7 +171,7 @@ public class FieldController : MonoBehaviour
             }
             else
             {
-                SetPhase();         // NOTE: Move to Next Phase When all Turn Ends
+                SetPhase();         // Move to Next Phase When all Turn Ends
                 return;
             }
         }
@@ -159,14 +191,16 @@ public class FieldController : MonoBehaviour
         }
         
         // Set Model
-        stageManager.SetTurn(CurrentTurn);
+        StageManager.SetTurn(CurrentTurn);
         OnTurnStarted?.Invoke(CurrentTurn, turnCount);
     }
     
     public bool IsBattleEnd(out PlayerID winTeam)
     {
         List<PlayerID> surviveTeam = new();
-        foreach (var tile in stageManager.field.GetTiles())
+        
+        // Get All Teams with Any Entity
+        foreach (var tile in StageManager.field.GetTiles())
         {
             if (tile.IsEmpty) continue;
             if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
@@ -178,23 +212,24 @@ public class FieldController : MonoBehaviour
                 }
             }
         }
+        
+        // Check Win Team
         if(surviveTeam.Count == 1)
         {
             winTeam = surviveTeam[0];
             return true;
         }
-        else
-        {
-            winTeam = PlayerID.None;
-            return false;
-        }
+        
+        // Continue Battle
+        winTeam = PlayerID.None;
+        return false;
     }
 
     public virtual void EndStage(PlayerID winner)
     {
-        stageManager.EndStage(winner);
-        DataManager.Instance.playData.time = stageManager.timer.GetTime();
-        DataManager.Instance.playData.point = stageManager.GetTotalPoint();
+        StageManager.EndStage(winner);
+        DataManager.Instance.playData.time = StageManager.timer.GetTime();
+        DataManager.Instance.playData.point = StageManager.GetTotalPoint();
     }
 
     public virtual void EndGame()
@@ -211,12 +246,7 @@ public class FieldController : MonoBehaviour
     }
     #endregion
 
-    #region Commands
-    /**
-     * 
-     */
-    
-    protected CommandSystem commandSystem;    // Attach
+    #region AgentCommands
     
     /// <summary>
     /// 각 Agent에게서 실행할 command를 입력 받음.(모든 커맨드는 즉시 StageManager로 전송됨)
@@ -225,28 +255,18 @@ public class FieldController : MonoBehaviour
     public void ReceiveCommands(Command cmd)
     {
         // 해당 커맨드에 대한 전처리 후 전송
-        stageManager.ReceiveCommand(cmd);
+        StageManager.ReceiveCommand(cmd);
         if (CurrentPhase.phaseName == PhaseType.Battle)
         {
             if (cmd is SkillCommand)
             {
                 var checkCmd = new CheckCommand(this);
-                stageManager.ReceiveCommand(checkCmd);
+                StageManager.ReceiveCommand(checkCmd);
             }
         }
         
     }
-
     
-    #endregion
-    
-    #region Agents
-    
-    // TODO: Agent 운영
-    
-    public Agent localPlayer;
-    public List<Agent> agents;
-
     #endregion
     
     #region Debug
