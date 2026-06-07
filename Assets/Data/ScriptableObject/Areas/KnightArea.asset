@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e0cb05b9a2d3f45b0ceb54c2aad33d, type: 3}
   m_Name: KnightArea
   m_EditorClassIdentifier: 
+  areaImage: {fileID: 21300000, guid: 978a3260fb696984c859401bfdb10fc2, type: 3}
   positions:
   - x: 1
     y: 2

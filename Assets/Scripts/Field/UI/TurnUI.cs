@@ -12,7 +12,7 @@ public class TurnUI : InputManagerUI
     public  override void Init(InputManager input)
     {
         this.inputManager = input;
-        input.OnModeChanged += OnModeChange;
+        input.onModeChanged += OnModeChange;
         input.agent.fieldController.OnTurnStarted += OnTurnChange;
         turnEndBtn.onClick.AddListener(TurnEnd);
     }
@@ -21,13 +21,34 @@ public class TurnUI : InputManagerUI
     {
         if(state is MoveModeInput)
         {
-            turnEndBtn.interactable = true;
+            if (state is RepairModeInput repair)
+            {
+                repair.onEntityCountChanged += OnEntityCountChanged;
+            }
+            else
+            {
+                turnEndBtn.interactable = true;
+            }
+            
         }
         else
         {
             turnEndBtn.interactable = false;
         }
     }
+
+    private void OnEntityCountChanged(int cur, int max)
+    {
+        if (cur == 0)
+        {
+            turnEndBtn.interactable = false;
+        }
+        else
+        {
+            turnEndBtn.interactable = true;
+        }
+    }
+
     void TurnEnd()
     {
         inputManager.ClearInputMode();
@@ -36,7 +57,7 @@ public class TurnUI : InputManagerUI
         inputManager.agent.CreateEndCommand();
     }
 
-    void OnTurnChange(Turn turn)
+    void OnTurnChange(Turn turn, uint count)
     {
         if(turn.agentID == inputManager.agent.id)
         {

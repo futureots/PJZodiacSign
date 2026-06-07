@@ -17,12 +17,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 41bf04038c1507a4381ca49031483a06, type: 3}
   normalPrice: 40
   prefab: {fileID: 256251255046908608, guid: 5f6aa753d88fbe942ac9144265300f64, type: 3}
-  moveArea:
-  - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
-  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
-  attackArea:
-  - {fileID: 11400000, guid: 82c6382e277adda46bd7088dd48e2099, type: 2}
-  - {fileID: 11400000, guid: d9e32ce762d5d6a42923f3d8d8f83b2d, type: 2}
+  moveArea: {fileID: 11400000, guid: f6b9754cd0e79fc4a836e78b41cc8ac1, type: 2}
+  attackArea: {fileID: 11400000, guid: f6b9754cd0e79fc4a836e78b41cc8ac1, type: 2}
   maxHp: 40
   power: 7
   hpMultiplier: 20

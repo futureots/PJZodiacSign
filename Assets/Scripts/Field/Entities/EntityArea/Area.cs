@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class Area : ScriptableObject
 {
+    public Sprite areaImage;
+    
     protected abstract List<intVector2> GetVector(int[,] tiles, intVector2 pos, intVector2 direction);
 
     public List<intVector2> GetVectors(int[,] tiles, intVector2 pos, intVector2 direction)

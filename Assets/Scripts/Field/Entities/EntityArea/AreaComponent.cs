@@ -4,7 +4,7 @@ using UnityEngine;
 public class AreaComponent : MonoBehaviour
 {
 
-    public void SetArea(List<Area> moveArea, List<Area> attackArea)
+    public void SetArea(Area moveArea, Area attackArea)
     {
         this.moveArea = moveArea;
         this.attackArea = attackArea;
@@ -22,7 +22,7 @@ public class AreaComponent : MonoBehaviour
         }
     }
 
-    public List<Area> attackArea;
+    public Area attackArea;
 
     public List<intVector2> GetAttackVector(int[,] field, intVector2 pos, intVector2 direction)
     {
@@ -31,12 +31,8 @@ public class AreaComponent : MonoBehaviour
         {
             return list;
         }
-        
-        foreach (var area in attackArea)
-        {
-            var vectors = area.GetVectors(field, pos, direction);
-            list.AddRange(vectors);
-        }
+        var vectors = attackArea.GetVectors(field, pos, direction);
+        list.AddRange(vectors);
         return list;
     }
 
@@ -53,7 +49,7 @@ public class AreaComponent : MonoBehaviour
         }
     }
 
-    public List<Area> moveArea;
+    public Area moveArea;
     /// <summary>
     /// 기물의 이동 가능 좌표를 반환
     /// </summary>
@@ -65,12 +61,8 @@ public class AreaComponent : MonoBehaviour
         {
             return list;
         }
-
-        foreach (var area in moveArea)
-        {
-            var vectors = area.GetVectors(field, pos, direction);
-            list.AddRange(vectors);
-        }
+        var vectors = moveArea.GetVectors(field, pos, direction);
+        list.AddRange(vectors);
         return list;
     }
 

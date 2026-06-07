@@ -18,6 +18,8 @@ namespace PlayerInput
         SkillComponent skillComp;
 
         public Action onCanceled;
+
+        public Action<bool> onInputStarted;
         public SkillModeInput(InputManager input, SkillComponent skill)
         {
             _inputManager = input;
@@ -73,6 +75,9 @@ namespace PlayerInput
             if (list.Count <= 0) return null;
             if (list.Count <= count) return new List<Entity>(list);
             
+            // 직접 입력 시작
+            onInputStarted?.Invoke(true);
+            
             var selectedEntities = new List<Entity>();
             bool isCanceled = false;
 
@@ -100,15 +105,19 @@ namespace PlayerInput
             _inputManager.OnObjectClicked.RemoveListener(click);
             onCanceled -= cancel;
             
-            if (isCanceled) return null;
+            // 입력 완료
+            onInputStarted?.Invoke(false);
             
-            return selectedEntities;
+            return isCanceled ? null : selectedEntities;
         }
 
         public async UniTask<List<Tile>> InputTile(List<Tile> list, int maxCount = -1)
         {
             if (list.Count <= 0) return null;
             if (list.Count <= maxCount) return new List<Tile>(list);
+            
+            // 직접 입력 시작
+            onInputStarted?.Invoke(true);
             
             var selectedTiles = new List<Tile>();
             bool isCanceled = false;
@@ -132,13 +141,15 @@ namespace PlayerInput
             onCanceled += cancel;
             
             await UniTask.WaitUntil(() => isCanceled || selectedTiles.Count >= maxCount);
-            if (isCanceled) return null;
-            
+           
             list.ForEach(e => e.RemoveHighlight(Tile.HighLightType.Move));
             _inputManager.OnObjectClicked.RemoveListener(click);
             onCanceled -= cancel;
             
-            return selectedTiles;
+            // 입력 완료
+            onInputStarted?.Invoke(false);
+            
+            return isCanceled ? null : selectedTiles;
         }
     }
 }

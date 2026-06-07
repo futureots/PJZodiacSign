@@ -2,6 +2,7 @@ using GlobalManage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FieldController : MonoBehaviour
 {
@@ -37,8 +38,9 @@ public class FieldController : MonoBehaviour
          * - 페이즈 데이터 주입
          * - 특수 기믹 
          */
-        
+         
         stageData = newData;
+        TurnLimit = data.turnLimit;
         
         // Load Field
         try
@@ -80,21 +82,22 @@ public class FieldController : MonoBehaviour
      * - 페이즈별로 턴 순회
      * - 페이즈 전환, 턴 전환 Event
      */
-    
-    private int _phaseIndex;
-    private int _turnIndex;
-    [SerializeField] protected uint turnCount;       // turn Count in current Phase
 
-    private List<Phase> PhaseData => stageData.phases;     
-    
-    public Phase CurrentPhase => PhaseData[_phaseIndex];
-
+    private int phaseIndex;
+    private int turnIndex;
+    public int TurnLimit { get; private set; }
+    [SerializeField] protected uint turnCount;       // loopCount
+      
+    private List<Phase> PhaseData => stageData.phases;    
+    public Phase CurrentPhase => phases[phaseIndex]; 
     public Turn CurrentTurn => CurrentPhase.turnList[_turnIndex];
 
+    // events
     public event Action<StageData> OnLevelStart;
     public event Action<Phase> OnPhaseStart;
-    public event Action<Turn> OnTurnStarted;
-
+    public event Action<Turn> OnTurnStart;
+    
+    public event Action OnDraw;
     public Action<string> OnBattleEnd;
     
     public virtual void StartLevel(StageData data)
@@ -141,6 +144,7 @@ public class FieldController : MonoBehaviour
         OnPhaseStart?.Invoke(CurrentPhase);
         
         // Reset Turn
+        turnCount = 0;
         SetTurn(0);
     }
 
@@ -163,6 +167,7 @@ public class FieldController : MonoBehaviour
             if (CurrentPhase.isLoop)
             {
                 index = 0;
+
             }
             else
             {
@@ -172,12 +177,22 @@ public class FieldController : MonoBehaviour
         }
 
         // Set Turn
-        _turnIndex = index;
-        turnCount++;
+        turnIndex = index;
+        if (index == 0)
+        {
+            turnCount++;
+        }
+        // TODO : 턴이 일정 값 이상 넘어가면 정산 및 종료하는 기능 추가
+        if (turnCount > TurnLimit)
+        {
+            EditorLogger.Print("DrawGame");
+            OnDraw?.Invoke();
+            return;
+        }
         
         // Set Model
-        StageManager.SetTurn(CurrentTurn);
-        OnTurnStarted?.Invoke(CurrentTurn);
+        stageManager.SetTurn(CurrentTurn);
+        OnTurnStart?.Invoke(CurrentTurn);
     }
     
     public bool IsBattleEnd(out PlayerID winTeam)
@@ -226,7 +241,7 @@ public class FieldController : MonoBehaviour
     public virtual void ContinueGame()
     {
         var credit = Math.Min(localPlayer.Credit,200);
-        localPlayer.Credit += 100 + Mathf.RoundToInt(credit*0.2f);
+        localPlayer.Credit += 150 + Mathf.RoundToInt(credit*0.2f);
         OnBattleEnd?.Invoke("CLEAR");
     }
     #endregion
@@ -252,5 +267,23 @@ public class FieldController : MonoBehaviour
         
     }
     
+    #endregion
+    
+    #region Debug
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            if (Input.GetKey(KeyCode.Alpha2))
+            {
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    EndStage(Agent.LocalPlayer.id);
+                }
+            }
+        }
+    }
+
     #endregion
 }

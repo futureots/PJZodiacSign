@@ -10,15 +10,7 @@ public static class FieldUtils
     /// <returns></returns>
     public static List<Tile> GetEmptyTiles(this List<Tile> tiles)
     {
-        var emptyTiles = new List<Tile>();
-        foreach (var tile in tiles)
-        {
-            if (tile.IsEmpty)
-            {
-                emptyTiles.Add(tile);
-            }
-        }
-        return emptyTiles;
+        return tiles.FindAll(t => t.IsEmpty);
     }
     
     /// <summary>

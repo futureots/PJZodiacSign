@@ -17,7 +17,7 @@ public class EnhanceConfirmUI : InputManagerUI
     {
         this.inputManager = inputManager;
         // 강화 Input 세팅
-        inputManager.OnModeChanged += OnModeChange;
+        inputManager.onModeChanged += OnModeChange;
     }
 
     private void Awake()

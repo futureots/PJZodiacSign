@@ -10,14 +10,8 @@ using UnityEngine;
 [Serializable]
 public class S_PinPointAttack : BaseSkillLogic
 {
-    [SerializeField] private BasicAttackEffect attackEffect;
     private Entity _owner;
     private List<Entity> _targetList;
-
-    public void Init(BasicAttackEffect effect)
-    {
-        attackEffect =  effect;
-    }
 
     public override async UniTask<bool> InputSkill(IInput input)
     {
@@ -86,7 +80,6 @@ public class S_PinPointAttack : BaseSkillLogic
     public override BaseSkillLogic Clone()
     {
         var clone =  new S_PinPointAttack();
-        clone.Init(attackEffect);
         return clone;
     }
 }

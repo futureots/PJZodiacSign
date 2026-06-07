@@ -9,6 +9,7 @@ public class EnemyTable : ScriptableObject
     public List<EntityLevelData> entities;
     public List<FieldEntityLevelData> fieldEntities;
     public List<Phase> phases;
+    public int turnLimit;
 
 
     public AgentData GetEnemyData()

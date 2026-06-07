@@ -50,6 +50,4 @@ public class Phase : ScriptableObject
     public PhaseType phaseName;
     public bool isLoop;
     public List<Turn> turnList = new();
-    
-    public UIType useUIType;
 }
