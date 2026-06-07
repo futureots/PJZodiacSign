@@ -12,12 +12,12 @@ namespace Augment
         void OnActive();
 
         // 레벨 시작 시
-        void OnLevelStart(StageData data);
+        void OnLevelStarted(StageData data);
         
         // 페이즈 시작 시
-        void OnPhaseStart(Phase data);
+        void OnPhaseStarted(Phase data);
         
         // 턴 시작 시
-        void OnTurnStart(Turn data);
+        void OnTurnStarted(Turn data, uint turnCount);
     }
 }

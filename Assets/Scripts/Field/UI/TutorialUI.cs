@@ -13,7 +13,7 @@ public class TutorialUI : InputManagerUI
     {
         // TODO : 메인으로 이동하는 버튼 항시 표시(튜토리얼 스킵 버튼)
         _inputManager = inputManager;
-        _inputManager.agent.fieldController.OnPhaseStart += OnPhaseChange;
+        _inputManager.agent.fieldController.OnPhaseStarted += OnPhaseChange;
     }
 
     void OnPhaseChange(Phase phase)

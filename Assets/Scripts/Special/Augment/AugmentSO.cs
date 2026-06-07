@@ -29,18 +29,19 @@ namespace Augment
         /// 레벨 시작시 실행
         /// </summary>
         /// <param name="data">스테이지 정보</param>
-        public virtual void OnLevelStart(StageData data) { }
+        public virtual void OnLevelStarted(StageData data) { }
 
         /// <summary>
         /// 페이즈 시작시 실행
         /// </summary>
         /// <param name="data">페이즈 정보</param>
-        public virtual void OnPhaseStart(Phase data) { }
+        public virtual void OnPhaseStarted(Phase data) { }
 
         /// <summary>
         /// 턴 시작시 실행
         /// </summary>
         /// <param name="data">턴 정보</param>
-        public virtual void OnTurnStart(Turn data) { }
+        /// <param name="turnCount">현재 누적 턴 수</param>
+        public virtual void OnTurnStarted(Turn data, uint turnCount) { }
     }
 }

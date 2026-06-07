@@ -23,7 +23,7 @@ namespace Augment
             // 증강 추가 액션 연결
             if (augmentPool.Count > 0)
             {
-                controller.OnLevelStart += _ =>
+                controller.OnLevelStarted += _ =>
                 {
                     StartChoice();
                 };
@@ -66,9 +66,9 @@ namespace Augment
         // 증강 이벤트 연결
         private void RegisterAugment(IAugmentEffect augment)
         {
-            _controller.OnLevelStart += augment.OnLevelStart;
-            _controller.OnPhaseStart += augment.OnPhaseStart;
-            _controller.OnTurnStarted += augment.OnTurnStart;
+            _controller.OnLevelStarted += augment.OnLevelStarted;
+            _controller.OnPhaseStarted += augment.OnPhaseStarted;
+            _controller.OnTurnStarted += augment.OnTurnStarted;
         }
     }
 }

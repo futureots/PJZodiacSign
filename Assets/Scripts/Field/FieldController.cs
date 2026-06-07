@@ -40,7 +40,7 @@ public class FieldController : MonoBehaviour
          */
          
         stageData = newData;
-        TurnLimit = data.turnLimit;
+        TurnLimit = stageData.turnLimit;
         
         // Load Field
         try
@@ -89,13 +89,13 @@ public class FieldController : MonoBehaviour
     [SerializeField] protected uint turnCount;       // loopCount
       
     private List<Phase> PhaseData => stageData.phases;    
-    public Phase CurrentPhase => phases[phaseIndex]; 
-    public Turn CurrentTurn => CurrentPhase.turnList[_turnIndex];
+    public Phase CurrentPhase => PhaseData[phaseIndex]; 
+    public Turn CurrentTurn => CurrentPhase.turnList[turnIndex];
 
     // events
-    public event Action<StageData> OnLevelStart;
-    public event Action<Phase> OnPhaseStart;
-    public event Action<Turn> OnTurnStart;
+    public event Action<StageData> OnLevelStarted;
+    public event Action<Phase> OnPhaseStarted;
+    public event Action<Turn, uint> OnTurnStarted;
     
     public event Action OnDraw;
     public Action<string> OnBattleEnd;
@@ -103,7 +103,7 @@ public class FieldController : MonoBehaviour
     public virtual void StartLevel(StageData data)
     {
         // 새 레벨 시작
-        OnLevelStart?.Invoke(data);
+        OnLevelStarted?.Invoke(data);
         // 증강 추가 자체를 하나의 증강으로 처리
         
         // NOTE: 게임 시작 전 행동
@@ -121,7 +121,7 @@ public class FieldController : MonoBehaviour
         // Next Phase
         if (index == -1)
         {
-            index = _phaseIndex + 1;
+            index = phaseIndex + 1;
         }
         
         // Invalid Phase Count 
@@ -136,12 +136,12 @@ public class FieldController : MonoBehaviour
         }
         
         // Change Phase
-        _phaseIndex = index;
+        phaseIndex = index;
         turnCount = 0;
         
         // Set Model
         StageManager.SetPhase(CurrentPhase);
-        OnPhaseStart?.Invoke(CurrentPhase);
+        OnPhaseStarted?.Invoke(CurrentPhase);
         
         // Reset Turn
         turnCount = 0;
@@ -157,7 +157,7 @@ public class FieldController : MonoBehaviour
         // Next Turn
         if (index == -1)
         {
-            index = _turnIndex + 1;
+            index = turnIndex + 1;
         }
         
         // Invalid Phase Count
@@ -191,8 +191,8 @@ public class FieldController : MonoBehaviour
         }
         
         // Set Model
-        stageManager.SetTurn(CurrentTurn);
-        OnTurnStart?.Invoke(CurrentTurn);
+        StageManager.SetTurn(CurrentTurn);
+        OnTurnStarted?.Invoke(CurrentTurn, turnCount);
     }
     
     public bool IsBattleEnd(out PlayerID winTeam)

@@ -10,19 +10,19 @@ namespace Augment
             EditorLogger.Print("Debug Augment.OnActive()");
         }
 
-        public override void OnLevelStart(StageData data)
+        public override void OnLevelStarted(StageData data)
         {
-            EditorLogger.Print("Debug Augment.OnLevelStart()");
+            EditorLogger.Print("Debug Augment.OnLevelStarted()");
         }
 
-        public override void OnPhaseStart(Phase data)
+        public override void OnPhaseStarted(Phase data)
         {
-            EditorLogger.Print("Debug Augment.OnPhaseStart()");
+            EditorLogger.Print("Debug Augment.OnPhaseStarted()");
         }
 
-        public override void OnTurnStart(Turn data)
+        public override void OnTurnStarted(Turn data, uint turnCount)
         {
-            EditorLogger.Print("Debug Augment.OnTurnStart()");
+            EditorLogger.Print("Debug Augment.OnTurnStarted()");
         }
     }
 }
