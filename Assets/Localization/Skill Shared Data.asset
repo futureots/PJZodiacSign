@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Skill Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Skill
+  m_TableCollectionNameGuidString: ed09aecff3d70f744a512db65c736b6d
+  m_Entries:
+  - m_Id: 4322947112960
+    m_Key: Angel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112961
+    m_Key: Pawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112962
+    m_Key: Bomber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112963
+    m_Key: Archer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112964
+    m_Key: Knight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112965
+    m_Key: Bishop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112966
+    m_Key: Tank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112967
+    m_Key: Cannon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112968
+    m_Key: Rook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112969
+    m_Key: Tower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112970
+    m_Key: Unicorn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112971
+    m_Key: Queen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112972
+    m_Key: King
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4322947112973
+    m_Key: RuinedKing
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8267346862556315734
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267346862556315734
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1780895994706

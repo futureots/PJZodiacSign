@@ -18,23 +18,23 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 11453009920
+  - m_Id: 7917531632902144
     m_Localized: Start
     m_Metadata:
       m_Items: []
-  - m_Id: 4320425086976
+  - m_Id: 7917381321629696
     m_Localized: Tutorial
     m_Metadata:
       m_Items: []
-  - m_Id: 4368072380416
+  - m_Id: 7917381321629697
     m_Localized: Setting
     m_Metadata:
       m_Items: []
-  - m_Id: 4444266106880
+  - m_Id: 7917381321629698
     m_Localized: Quit
     m_Metadata:
       m_Items: []
-  - m_Id: 4624960917504
+  - m_Id: 7917381321629699
     m_Localized: Give Up
     m_Metadata:
       m_Items: []

@@ -15,23 +15,23 @@ MonoBehaviour:
   m_TableCollectionName: Localization
   m_TableCollectionNameGuidString: 55e2f5a028cec074793c2573f9c1a345
   m_Entries:
-  - m_Id: 11453009920
+  - m_Id: 7917531632902144
     m_Key: Start
     m_Metadata:
       m_Items: []
-  - m_Id: 4320425086976
+  - m_Id: 7917381321629696
     m_Key: Tutorial
     m_Metadata:
       m_Items: []
-  - m_Id: 4368072380416
+  - m_Id: 7917381321629697
     m_Key: Setting
     m_Metadata:
       m_Items: []
-  - m_Id: 4444266106880
+  - m_Id: 7917381321629698
     m_Key: Quit
     m_Metadata:
       m_Items: []
-  - m_Id: 4624960917504
+  - m_Id: 7917381321629699
     m_Key: Giveup
     m_Metadata:
       m_Items: []
