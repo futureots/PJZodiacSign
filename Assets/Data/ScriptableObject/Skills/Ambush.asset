@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: Ambush
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 3913229a660ff0f4e842bbb278a76672, type: 3}
-  skillName: "\uAE30\uC2B5"
-  skillDescription: "\uB300\uC0C1\uC774 \uC989\uC2DC \uACF5\uACA9\uD569\uB2C8\uB2E4."
+  skillName:
+    m_TableReference:
+      m_TableCollectionName: GUID:ed09aecff3d70f744a512db65c736b6d
+    m_TableEntryReference:
+      m_KeyId: 42724151988248
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  skillDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:9b7aa5fdd506c8342af5b2c105600032
+    m_TableEntryReference:
+      m_KeyId: 4644984524824
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   skillLogic:
     rid: 6116996122017267782
   references:

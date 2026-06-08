@@ -40,7 +40,7 @@ public class GoodsInfoUI : MonoBehaviour
                 skillArea.obj.SetActive(false);
             }
 
-            goodsDescription.text = entityData.skill.skillDescription;
+            goodsDescription.text = entityData.skill.SkillDescription;
         }
         else if (data is ItemData itemData)
         {
@@ -63,7 +63,7 @@ public class GoodsInfoUI : MonoBehaviour
                 areaGroup.SetActive(false);
                 RectTransform.sizeDelta = new Vector2(RectTransform.rect.width, 200);
             }
-            goodsDescription.text = itemData.skillData.skillDescription;
+            goodsDescription.text = itemData.skillData.SkillDescription;
         }
     }
 }

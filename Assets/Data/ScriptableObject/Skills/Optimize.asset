@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: Optimize
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 99bb95cd1d5a33244be1710d440a5d50, type: 3}
-  skillName: "\uCD5C\uC801\uD654"
-  skillDescription: "\uB300\uC0C1\uC758 \uCD5C\uB300 \uB9C8\uB098\uAC00 1 \uAC10\uC18C\uD569\uB2C8\uB2E4."
+  skillName:
+    m_TableReference:
+      m_TableCollectionName: GUID:ed09aecff3d70f744a512db65c736b6d
+    m_TableEntryReference:
+      m_KeyId: 42724151988246
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  skillDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:9b7aa5fdd506c8342af5b2c105600032
+    m_TableEntryReference:
+      m_KeyId: 4644984524822
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   skillLogic:
     rid: 598112531784663111
   references:

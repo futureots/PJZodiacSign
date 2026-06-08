@@ -18,48 +18,72 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 4322947112960
+  - m_Id: 42724151988224
     m_Localized: Ascension
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112961
+  - m_Id: 42724151988225
     m_Localized: Promotion
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112962
+  - m_Id: 42724151988226
     m_Localized: Self Destruct
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112963
+  - m_Id: 42724151988227
     m_Localized: Pinpoint Attack
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112965
+  - m_Id: 42724151988228
+    m_Localized: Battlecry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988229
     m_Localized: Pray
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112966
+  - m_Id: 42724151988230
     m_Localized: Disarm
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112968
+  - m_Id: 42724151988231
+    m_Localized: Bombard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988232
     m_Localized: Castling
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112969
+  - m_Id: 42724151988233
     m_Localized: Barriacde
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112970
+  - m_Id: 42724151988234
     m_Localized: Evolution
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112971
+  - m_Id: 42724151988235
     m_Localized: Encourge
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112972
+  - m_Id: 42724151988236
     m_Localized: CheckMate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988237
+    m_Localized: Region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988245
+    m_Localized: Overload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988247
+    m_Localized: Warp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988248
+    m_Localized: Ambush
     m_Metadata:
       m_Items: []
   references:

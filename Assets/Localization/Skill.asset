@@ -37,11 +37,11 @@ MonoBehaviour:
     - rid: 8267346862556315745
       type: {class: KeyColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: A
+        m_Column: G
     - rid: 8267346862556315746
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: G
+        m_Column: E
         m_LocaleIdentifier:
           m_Code: en
         m_IncludeComments: 0

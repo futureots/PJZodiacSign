@@ -15,104 +15,104 @@ MonoBehaviour:
   m_TableCollectionName: Skill_Description
   m_TableCollectionNameGuidString: 9b7aa5fdd506c8342af5b2c105600032
   m_Entries:
-  - m_Id: 207725465600
-    m_Key: Angel
+  - m_Id: 4644984524800
+    m_Key: Angel_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574464
-    m_Key: Pawn
+  - m_Id: 4644984524801
+    m_Key: Pawn_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574465
-    m_Key: Bomber
+  - m_Id: 4644984524802
+    m_Key: Bomber_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574466
-    m_Key: Archer
+  - m_Id: 4644984524803
+    m_Key: Archer_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574467
-    m_Key: Knight
+  - m_Id: 4644984524804
+    m_Key: Knight_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574468
-    m_Key: Bishop
+  - m_Id: 4644984524805
+    m_Key: Bishop_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574469
-    m_Key: Tank
+  - m_Id: 4644984524806
+    m_Key: Tank_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574470
-    m_Key: Cannon
+  - m_Id: 4644984524807
+    m_Key: Cannon_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574471
-    m_Key: Rook
+  - m_Id: 4644984524808
+    m_Key: Rook_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574472
-    m_Key: Tower
+  - m_Id: 4644984524809
+    m_Key: Tower_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574473
-    m_Key: Unicorn
+  - m_Id: 4644984524810
+    m_Key: Unicorn_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574474
-    m_Key: Queen
+  - m_Id: 4644984524811
+    m_Key: Queen_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574475
-    m_Key: King
+  - m_Id: 4644984524812
+    m_Key: King_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574476
-    m_Key: RuinedKing
+  - m_Id: 4644984524813
+    m_Key: RuinedKing_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574477
-    m_Key: Enhance
+  - m_Id: 4644984524814
+    m_Key: Enhance_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574478
-    m_Key: Lightning
+  - m_Id: 4644984524815
+    m_Key: Lightning_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574479
-    m_Key: Potion_Hp
+  - m_Id: 4644984524816
+    m_Key: Potion_Hp_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574480
-    m_Key: Potion_Mp
+  - m_Id: 4644984524817
+    m_Key: Potion_Mp_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574481
-    m_Key: Decay
+  - m_Id: 4644984524818
+    m_Key: Decay_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574482
-    m_Key: Protect
+  - m_Id: 4644984524819
+    m_Key: Protect_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574483
-    m_Key: Adrenaline
+  - m_Id: 4644984524820
+    m_Key: Adrenaline_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574484
-    m_Key: Overload
+  - m_Id: 4644984524821
+    m_Key: Overload_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574485
-    m_Key: Optimize
+  - m_Id: 4644984524822
+    m_Key: Optimize_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574486
-    m_Key: Warp
+  - m_Id: 4644984524823
+    m_Key: Warp_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 207792574487
-    m_Key: Ambush
+  - m_Id: 4644984524824
+    m_Key: Ambush_Desc
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -15,60 +15,104 @@ MonoBehaviour:
   m_TableCollectionName: Skill
   m_TableCollectionNameGuidString: ed09aecff3d70f744a512db65c736b6d
   m_Entries:
-  - m_Id: 4322947112960
-    m_Key: Angel
+  - m_Id: 42724151988224
+    m_Key: Angel_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112961
-    m_Key: Pawn
+  - m_Id: 42724151988225
+    m_Key: Pawn_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112962
-    m_Key: Bomber
+  - m_Id: 42724151988226
+    m_Key: Bomber_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112963
-    m_Key: Archer
+  - m_Id: 42724151988227
+    m_Key: Archer_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112964
-    m_Key: Knight
+  - m_Id: 42724151988228
+    m_Key: Knight_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112965
-    m_Key: Bishop
+  - m_Id: 42724151988229
+    m_Key: Bishop_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112966
-    m_Key: Tank
+  - m_Id: 42724151988230
+    m_Key: Tank_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112967
-    m_Key: Cannon
+  - m_Id: 42724151988231
+    m_Key: Cannon_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112968
-    m_Key: Rook
+  - m_Id: 42724151988232
+    m_Key: Rook_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112969
-    m_Key: Tower
+  - m_Id: 42724151988233
+    m_Key: Tower_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112970
-    m_Key: Unicorn
+  - m_Id: 42724151988234
+    m_Key: Unicorn_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112971
-    m_Key: Queen
+  - m_Id: 42724151988235
+    m_Key: Queen_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112972
-    m_Key: King
+  - m_Id: 42724151988236
+    m_Key: King_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 4322947112973
-    m_Key: RuinedKing
+  - m_Id: 42724151988237
+    m_Key: RuinedKing_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988238
+    m_Key: Enhance_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988239
+    m_Key: Lightning_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988240
+    m_Key: Potion_Hp_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988241
+    m_Key: Potion_Mp_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988242
+    m_Key: Decay_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988243
+    m_Key: Protect_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988244
+    m_Key: Adrenaline_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988245
+    m_Key: Overload_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988246
+    m_Key: Optimize_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988247
+    m_Key: Warp_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988248
+    m_Key: Ambush_Title
     m_Metadata:
       m_Items: []
   m_Metadata:
