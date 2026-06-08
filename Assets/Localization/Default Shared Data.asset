@@ -10,39 +10,63 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: Localization Shared Data
+  m_Name: Default Shared Data
   m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
-  m_TableCollectionName: Localization
-  m_TableCollectionNameGuidString: 55e2f5a028cec074793c2573f9c1a345
+  m_TableCollectionName: Default
+  m_TableCollectionNameGuidString: 65dfdb77fe567e14898dd8b34dd27dee
   m_Entries:
-  - m_Id: 7917531632902144
+  - m_Id: 119313731584
     m_Key: Start
     m_Metadata:
       m_Items: []
-  - m_Id: 7917381321629696
+  - m_Id: 119364063232
     m_Key: Tutorial
     m_Metadata:
       m_Items: []
-  - m_Id: 7917381321629697
+  - m_Id: 119364063233
     m_Key: Setting
     m_Metadata:
       m_Items: []
-  - m_Id: 7917381321629698
+  - m_Id: 119364063234
     m_Key: Quit
     m_Metadata:
       m_Items: []
-  - m_Id: 7917381321629699
+  - m_Id: 119364063235
     m_Key: Giveup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063236
+    m_Key: Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063237
+    m_Key: Screen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063238
+    m_Key: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063239
+    m_Key: FullScreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063240
+    m_Key: atkArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063241
+    m_Key: mvArea
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 8708231441559584792
+    rid: 6073993791482363982
   references:
     version: 2
     RefIds:
-    - rid: 8708231441559584792
+    - rid: 6073993791482363982
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1779008481203
+        m_CustomEpoch: 1780907223705

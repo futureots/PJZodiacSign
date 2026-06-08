@@ -1285,6 +1285,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &71358923
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1502,6 +1504,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &95691857
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2294,6 +2298,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &143060401
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2459,6 +2465,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &157151246
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2534,6 +2542,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &163006304
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2699,6 +2709,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &170971610
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3043,6 +3055,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &209424305
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3345,6 +3359,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &229958374
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3599,6 +3615,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &244076215
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3807,6 +3825,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &252822780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3972,6 +3992,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &254265569
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4047,6 +4069,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &255557004
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4229,6 +4253,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &272852453
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4638,6 +4664,7 @@ GameObject:
   - component: {fileID: 301187927}
   - component: {fileID: 301187929}
   - component: {fileID: 301187928}
+  - component: {fileID: 301187930}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -4687,7 +4714,7 @@ MonoBehaviour:
   m_text: Volume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
-  m_sharedMaterial: {fileID: -8643879927956328760, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
+  m_sharedMaterial: {fileID: -9131457691891128565, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4764,6 +4791,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301187926}
   m_CullTransparentMesh: 1
+--- !u!114 &301187930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301187926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063236
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 301187928}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &311810848
 GameObject:
   m_ObjectHideFlags: 0
@@ -5215,6 +5282,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &349547702
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5290,6 +5359,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &353643008
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5994,6 +6065,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &401298891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6870,6 +6943,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &466201696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7170,6 +7245,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &486429779
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7245,6 +7322,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &488910778
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7679,6 +7758,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &493419069
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8540,6 +8621,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &540804056
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8705,6 +8788,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &554478678
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9029,6 +9114,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &573372830
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9337,6 +9424,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &604569975
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9412,6 +9501,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &610364838
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10108,6 +10199,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &646253311
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11047,6 +11140,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &737519597
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11477,6 +11572,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &755233162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11646,6 +11743,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &766899429
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11695,6 +11794,7 @@ GameObject:
   - component: {fileID: 772460026}
   - component: {fileID: 772460028}
   - component: {fileID: 772460027}
+  - component: {fileID: 772460029}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -11746,7 +11846,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
-  m_sharedMaterial: {fileID: -8643879927956328760, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
+  m_sharedMaterial: {fileID: -9131457691891128565, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11823,6 +11923,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772460025}
   m_CullTransparentMesh: 1
+--- !u!114 &772460029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772460025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063237
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 772460027}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &778194664
 GameObject:
   m_ObjectHideFlags: 0
@@ -12249,6 +12389,7 @@ GameObject:
   - component: {fileID: 807360859}
   - component: {fileID: 807360861}
   - component: {fileID: 807360860}
+  - component: {fileID: 807360862}
   m_Layer: 5
   m_Name: OptionText
   m_TagString: Untagged
@@ -12375,6 +12516,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807360858}
   m_CullTransparentMesh: 1
+--- !u!114 &807360862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807360858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063233
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 807360860}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &810980302
 GameObject:
   m_ObjectHideFlags: 0
@@ -12683,6 +12864,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &815671417
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12758,6 +12941,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &826879761
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13029,6 +13214,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &851612413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13670,6 +13857,7 @@ GameObject:
   - component: {fileID: 886268518}
   - component: {fileID: 886268520}
   - component: {fileID: 886268519}
+  - component: {fileID: 886268521}
   m_Layer: 5
   m_Name: GiveText
   m_TagString: Untagged
@@ -13796,6 +13984,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886268517}
   m_CullTransparentMesh: 1
+--- !u!114 &886268521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886268517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063235
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 886268519}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &891592125
 GameObject:
   m_ObjectHideFlags: 0
@@ -13887,6 +14115,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &895793488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13982,6 +14212,7 @@ MonoBehaviour:
     level: 0
     point: 0
     isLastLevel: 0
+    turnLimit: 0
     modelName: FieldModel
     controllerName: BaseBattle
     aiPrefab: {fileID: 0}
@@ -14553,6 +14784,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &928659425
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15087,6 +15320,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &988011472
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17081,6 +17316,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1071654404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17734,6 +17971,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1111574176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18059,6 +18298,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1132945882
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18224,6 +18465,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1146777653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18343,6 +18586,7 @@ GameObject:
   - component: {fileID: 1151688325}
   - component: {fileID: 1151688327}
   - component: {fileID: 1151688326}
+  - component: {fileID: 1151688328}
   m_Layer: 5
   m_Name: TutText
   m_TagString: Untagged
@@ -18469,6 +18713,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151688324}
   m_CullTransparentMesh: 1
+--- !u!114 &1151688328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151688324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1151688326}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1157674292
 GameObject:
   m_ObjectHideFlags: 0
@@ -18506,6 +18790,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1157674294
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18581,6 +18867,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1158594012
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19723,6 +20011,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1223552460
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19906,6 +20196,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!1 &1236266257
 GameObject:
   m_ObjectHideFlags: 0
@@ -20427,6 +20719,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1250144462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21260,6 +21554,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1293527718
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21943,6 +22239,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1343836360
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22300,6 +22598,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1364096464
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22375,6 +22675,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1371884102
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22424,6 +22726,7 @@ GameObject:
   - component: {fileID: 1375285990}
   - component: {fileID: 1375285992}
   - component: {fileID: 1375285991}
+  - component: {fileID: 1375285993}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -22552,6 +22855,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1375285989}
   m_CullTransparentMesh: 1
+--- !u!114 &1375285993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375285989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063238
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1375285991}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1389316044
 GameObject:
   m_ObjectHideFlags: 0
@@ -23359,6 +23702,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1426242332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23702,6 +24047,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1444421239
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24116,6 +24463,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1481453482
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24532,6 +24881,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1494113862
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25014,7 +25365,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 355.19998, y: -360}
+  m_AnchoredPosition: {x: 355.2, y: -360}
   m_SizeDelta: {x: 710.4, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1511552110
@@ -25888,6 +26239,7 @@ GameObject:
   - component: {fileID: 1569782520}
   - component: {fileID: 1569782522}
   - component: {fileID: 1569782521}
+  - component: {fileID: 1569782523}
   m_Layer: 5
   m_Name: QuitText
   m_TagString: Untagged
@@ -26014,6 +26366,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569782519}
   m_CullTransparentMesh: 1
+--- !u!114 &1569782523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569782519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063234
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1569782521}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1573172039
 GameObject:
   m_ObjectHideFlags: 0
@@ -26121,6 +26513,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1575096844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26805,6 +27199,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1619712188
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26880,6 +27276,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1640269851
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27741,6 +28139,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1686366287
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28127,6 +28527,7 @@ GameObject:
   - component: {fileID: 1706929361}
   - component: {fileID: 1706929363}
   - component: {fileID: 1706929362}
+  - component: {fileID: 1706929364}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -28255,6 +28656,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706929360}
   m_CullTransparentMesh: 1
+--- !u!114 &1706929364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706929360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119364063239
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1706929362}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1717003535
 GameObject:
   m_ObjectHideFlags: 0
@@ -28563,6 +29004,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1727235271
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28612,6 +29055,7 @@ GameObject:
   - component: {fileID: 1745351740}
   - component: {fileID: 1745351742}
   - component: {fileID: 1745351741}
+  - component: {fileID: 1745351743}
   m_Layer: 5
   m_Name: StartText
   m_TagString: Untagged
@@ -28738,6 +29182,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745351739}
   m_CullTransparentMesh: 1
+--- !u!114 &1745351743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745351739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 119313731584
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1745351741}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1751478782
 GameObject:
   m_ObjectHideFlags: 0
@@ -29248,6 +29732,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1770009075
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29860,6 +30346,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1854199729
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31709,6 +32197,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1963938516
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32054,6 +32544,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &1993207710
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32380,6 +32872,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2000515160
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32610,6 +33104,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2008255767
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33714,6 +34210,8 @@ MonoBehaviour:
   occupiedEntity: {fileID: 0}
   moveHighLightMat: {fileID: 2100000, guid: 1da866f12abb77c46a1f29f1e51965a4, type: 2}
   atkHighLightMat: {fileID: 2100000, guid: 4a38f286aa81fe241bc18aa35d63ba78, type: 2}
+  oppoMoveHighLightMat: {fileID: 0}
+  oppoAtkHighLightMat: {fileID: 0}
 --- !u!65 &2063556238
 BoxCollider:
   m_ObjectHideFlags: 0
