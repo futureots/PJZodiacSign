@@ -31,8 +31,8 @@ MonoBehaviour:
         m_SheetId: 911866784
         m_Columns:
         - rid: 8267346862556315745
-        - rid: 8267346862556315746
         - rid: 8267346862556315747
+        - rid: 8267346862556315746
         m_RemoveMissingPulledKeys: 1
     - rid: 8267346862556315745
       type: {class: KeyColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
@@ -41,14 +41,14 @@ MonoBehaviour:
     - rid: 8267346862556315746
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: B
+        m_Column: G
         m_LocaleIdentifier:
           m_Code: en
         m_IncludeComments: 0
     - rid: 8267346862556315747
       type: {class: LocaleColumn, ns: UnityEditor.Localization.Plugins.Google.Columns, asm: Unity.Localization.Editor}
       data:
-        m_Column: C
+        m_Column: B
         m_LocaleIdentifier:
           m_Code: ko-KR
         m_IncludeComments: 0

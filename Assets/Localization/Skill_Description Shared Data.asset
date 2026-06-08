@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Skill_Description Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Skill_Description
+  m_TableCollectionNameGuidString: 9b7aa5fdd506c8342af5b2c105600032
+  m_Entries:
+  - m_Id: 207725465600
+    m_Key: Angel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574464
+    m_Key: Pawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574465
+    m_Key: Bomber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574466
+    m_Key: Archer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574467
+    m_Key: Knight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574468
+    m_Key: Bishop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574469
+    m_Key: Tank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574470
+    m_Key: Cannon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574471
+    m_Key: Rook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574472
+    m_Key: Tower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574473
+    m_Key: Unicorn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574474
+    m_Key: Queen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574475
+    m_Key: King
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574476
+    m_Key: RuinedKing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574477
+    m_Key: Enhance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574478
+    m_Key: Lightning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574479
+    m_Key: Potion_Hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574480
+    m_Key: Potion_Mp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574481
+    m_Key: Decay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574482
+    m_Key: Protect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574483
+    m_Key: Adrenaline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574484
+    m_Key: Overload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574485
+    m_Key: Optimize
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574486
+    m_Key: Warp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207792574487
+    m_Key: Ambush
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6073993791026495488
+  references:
+    version: 2
+    RefIds:
+    - rid: 6073993791026495488
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1780905092912
