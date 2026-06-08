@@ -86,6 +86,38 @@ MonoBehaviour:
     m_Localized: Ambush
     m_Metadata:
       m_Items: []
+  - m_Id: 42724151988238
+    m_Localized: Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988239
+    m_Localized: Lightning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988240
+    m_Localized: Healing Potion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988241
+    m_Localized: Mana Potion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988242
+    m_Localized: Corrode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988243
+    m_Localized: Protection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988244
+    m_Localized: Overdrive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42724151988246
+    m_Localized: Optimized
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
