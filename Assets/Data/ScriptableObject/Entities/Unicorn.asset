@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Unicorn
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   id: Unicorn
-  ProductName: 
   productName:
     m_TableReference:
       m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
     m_TableEntryReference:
-      m_KeyId: 123298320390
+      m_KeyId: 7103870078986
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

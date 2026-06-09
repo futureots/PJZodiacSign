@@ -13,20 +13,11 @@ MonoBehaviour:
   m_Name: FullHeal
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 4e3c49dc98f8a444ab28337dac1f094b, type: 3}
-  skillName:
+  skillCombinedData:
     m_TableReference:
       m_TableCollectionName: GUID:ed09aecff3d70f744a512db65c736b6d
     m_TableEntryReference:
-      m_KeyId: 42724151988240
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  skillDescription:
-    m_TableReference:
-      m_TableCollectionName: GUID:9b7aa5fdd506c8342af5b2c105600032
-    m_TableEntryReference:
-      m_KeyId: 4644984524816
+      m_KeyId: 321116038434828
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

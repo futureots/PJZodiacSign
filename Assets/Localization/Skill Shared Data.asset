@@ -15,104 +15,104 @@ MonoBehaviour:
   m_TableCollectionName: Skill
   m_TableCollectionNameGuidString: ed09aecff3d70f744a512db65c736b6d
   m_Entries:
-  - m_Id: 314652230094848
-    m_Key: Ascension_Title
+  - m_Id: 321116021657600
+    m_Key: SK_001
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037888
-    m_Key: Promotion_Title
+  - m_Id: 321116034240512
+    m_Key: SK_002
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037889
-    m_Key: Self Destruct_Title
+  - m_Id: 321116034240513
+    m_Key: SK_003
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037890
-    m_Key: Pinpoint Attack_Title
+  - m_Id: 321116034240514
+    m_Key: SK_004
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037891
-    m_Key: Battlecry_Title
+  - m_Id: 321116038434816
+    m_Key: SK_005
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037892
-    m_Key: Pray_Title
+  - m_Id: 321116038434817
+    m_Key: SK_006
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037893
-    m_Key: Disarm_Title
+  - m_Id: 321116038434818
+    m_Key: SK_007
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037894
-    m_Key: Bombard_Title
+  - m_Id: 321116038434819
+    m_Key: SK_008
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037895
-    m_Key: Castling_Title
+  - m_Id: 321116038434820
+    m_Key: SK_009
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037896
-    m_Key: Barriacde_Title
+  - m_Id: 321116038434821
+    m_Key: SK_010
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037897
-    m_Key: Evolution_Title
+  - m_Id: 321116038434822
+    m_Key: SK_011
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037898
-    m_Key: Encourge_Title
+  - m_Id: 321116038434823
+    m_Key: SK_012
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037899
-    m_Key: CheckMate_Title
+  - m_Id: 321116038434824
+    m_Key: SK_013
     m_Metadata:
       m_Items: []
-  - m_Id: 314652272037900
-    m_Key: Region_Title
+  - m_Id: 321116038434825
+    m_Key: SK_014
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988238
-    m_Key: Enhance_Title
+  - m_Id: 321116038434826
+    m_Key: SK_015
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988239
-    m_Key: Lightning_Title
+  - m_Id: 321116038434827
+    m_Key: SK_016
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988240
-    m_Key: Potion_Hp_Title
+  - m_Id: 321116038434828
+    m_Key: SK_017
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988241
-    m_Key: Potion_Mp_Title
+  - m_Id: 321116038434829
+    m_Key: SK_018
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988242
-    m_Key: Decay_Title
+  - m_Id: 321116038434830
+    m_Key: SK_019
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988243
-    m_Key: Protect_Title
+  - m_Id: 321116038434831
+    m_Key: SK_020
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988244
-    m_Key: Adrenaline_Title
+  - m_Id: 321116038434832
+    m_Key: SK_021
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988245
-    m_Key: Overload_Title
+  - m_Id: 321116038434833
+    m_Key: SK_022
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988246
-    m_Key: Optimize_Title
+  - m_Id: 321116038434834
+    m_Key: SK_023
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988247
-    m_Key: Warp_Title
+  - m_Id: 321116038434835
+    m_Key: SK_024
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988248
-    m_Key: Ambush_Title
+  - m_Id: 321116038434836
+    m_Key: SK_025
     m_Metadata:
       m_Items: []
   m_Metadata:

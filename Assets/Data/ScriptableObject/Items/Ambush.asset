@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Ambush
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: Ambush
-  ProductName: 
   productName:
     m_TableReference:
       m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
     m_TableEntryReference:
-      m_KeyId: 123298320404
+      m_KeyId: 7103870079000
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

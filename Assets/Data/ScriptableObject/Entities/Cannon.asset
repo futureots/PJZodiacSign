@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: Cannon
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   id: Cannon
-  ProductName: 
   productName:
     m_TableReference:
       m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
     m_TableEntryReference:
-      m_KeyId: 123298320387
+      m_KeyId: 7103870078983
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
