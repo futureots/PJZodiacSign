@@ -54,12 +54,112 @@ MonoBehaviour:
     m_Localized: FullScreen
     m_Metadata:
       m_Items: []
-  - m_Id: 119364063240
+  - m_Id: 294344471285760
+    m_Localized: Proceed with enhancement?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292976364818432
+    m_Localized: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278832844574720
+    m_Localized: Use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323582775296
+    m_Localized: End Prep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969600
+    m_Localized: End Turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969601
+    m_Localized: Attacking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969602
+    m_Localized: Opponent's Turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285557094027264
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650743783424
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650747977728
+    m_Localized: Material Judgment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650747977729
+    m_Localized: Are you sure you want to proceed to judgment?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288985098686464
+    m_Localized: Victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117660766208
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292160
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292161
+    m_Localized: Pieces
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292162
+    m_Localized: Items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292163
     m_Localized: AttackArea
     m_Metadata:
       m_Items: []
-  - m_Id: 119364063241
+  - m_Id: 292117715292164
     m_Localized: MoveArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292165
+    m_Localized: SkillArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296473315446784
+    m_Localized: Defeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287886368768
+    m_Localized: Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757376
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757377
+    m_Localized: Playtime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757378
+    m_Localized: Total Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299909981343744
+    m_Localized: Complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301256290013184
+    m_Localized: Next Floor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301256290013186
+    m_Localized: Main Menu
     m_Metadata:
       m_Items: []
   references:

@@ -1,6 +1,7 @@
 using PlayerInput;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class TurnUI : InputManagerUI
@@ -8,6 +9,11 @@ public class TurnUI : InputManagerUI
     [SerializeField] InputManager inputManager;
     [SerializeField] Button turnEndBtn;
     [SerializeField] TextMeshProUGUI text;
+
+    [SerializeField] private LocalizedString repairTurn;
+    [SerializeField] private LocalizedString actionTurn;
+    [SerializeField] private LocalizedString attackTurn;
+    [SerializeField] private LocalizedString opponentTurn;
 
     public  override void Init(InputManager input)
     {
@@ -64,13 +70,13 @@ public class TurnUI : InputManagerUI
             switch (turn.type)
             {
                 case TurnType.REPAIR:
-                    text.text = "정비 종료";
+                    text.text = repairTurn.GetLocalizedString();
                     break;
                 case TurnType.ACTION:
-                    text.text = "행동 종료";
+                    text.text = actionTurn.GetLocalizedString();
                     break;
                 case TurnType.ATTACK:
-                    text.text = "공격 중";
+                    text.text = attackTurn.GetLocalizedString();
                     break;
                 default:
                     break;
@@ -78,7 +84,7 @@ public class TurnUI : InputManagerUI
         }
         else
         {
-            text.text = "상대 턴";
+            text.text = opponentTurn.GetLocalizedString();
         }
 
     }

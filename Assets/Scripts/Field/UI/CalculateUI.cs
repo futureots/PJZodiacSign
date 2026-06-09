@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class CalculateUI : MonoBehaviour
@@ -18,6 +19,9 @@ public class CalculateUI : MonoBehaviour
     public Color red;
     public Color green;
     
+    [Header("Localization")]
+    [SerializeField] private LocalizedString victoryString;
+    [SerializeField] private LocalizedString defeatString;
 
     public IEnumerator Calculate(InputManager inputManager)
     {
@@ -56,7 +60,7 @@ public class CalculateUI : MonoBehaviour
         
         if (myValues.Sum(p => p.Value * p.Key.normalPrice) > opponentValues.Sum(p => p.Value * p.Key.normalPrice))
         {
-            resultText.text = $"승리";
+            resultText.text = victoryString.GetLocalizedString();
             endButton.colors = new ColorBlock()
             {
                 normalColor =  green,
@@ -70,7 +74,7 @@ public class CalculateUI : MonoBehaviour
         }
         else
         {
-            resultText.text = $"패배";
+            resultText.text = defeatString.GetLocalizedString();
             endButton.colors = new ColorBlock()
             {
                 normalColor =  red,

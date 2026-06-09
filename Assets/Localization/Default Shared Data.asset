@@ -51,12 +51,112 @@ MonoBehaviour:
     m_Key: FullScreen
     m_Metadata:
       m_Items: []
-  - m_Id: 119364063240
-    m_Key: atkArea
+  - m_Id: 278832844574720
+    m_Key: Use
     m_Metadata:
       m_Items: []
-  - m_Id: 119364063241
-    m_Key: mvArea
+  - m_Id: 284323582775296
+    m_Key: EndRepair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969600
+    m_Key: EndAction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969601
+    m_Key: Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969602
+    m_Key: OpponentTurn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650743783424
+    m_Key: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285557094027264
+    m_Key: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650747977728
+    m_Key: Draw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650747977729
+    m_Key: DrawCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288985098686464
+    m_Key: Victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296473315446784
+    m_Key: Defeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117660766208
+    m_Key: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292160
+    m_Key: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292161
+    m_Key: Piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292162
+    m_Key: Item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292163
+    m_Key: AtkArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292164
+    m_Key: MvArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292165
+    m_Key: SkArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292976364818432
+    m_Key: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 294344471285760
+    m_Key: EnhanceCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299909981343744
+    m_Key: GameEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287886368768
+    m_Key: StageTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757376
+    m_Key: StagePoint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757377
+    m_Key: TotalTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757378
+    m_Key: TotalPoint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301256290013184
+    m_Key: GoUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301256290013186
+    m_Key: MainMenu
     m_Metadata:
       m_Items: []
   m_Metadata:

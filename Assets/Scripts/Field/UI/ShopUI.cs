@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
+using UnityEngine.Localization;
+using UnityEngine.UI;
 
 
 public class ShopUI : InputManagerUI, IPointerClickHandler
@@ -12,7 +13,7 @@ public class ShopUI : InputManagerUI, IPointerClickHandler
     Shop shop;
 
     public GameObject shopPanel;
-    [SerializeField] GameObject shopToggle;
+    [SerializeField] Toggle shopToggle;
     [SerializeField] private TextMeshProUGUI buttonText;
 
     [SerializeField] private EntityGoodsUI entityUI;
@@ -22,6 +23,10 @@ public class ShopUI : InputManagerUI, IPointerClickHandler
     [SerializeField] private GoodsInfoUI goodsInfoUI;
     private List<EntityGoodsUI> _entityGoods;
     private List<ItemGoodsUI> _itemGoods;
+    
+    [Header("Localization")]
+    [SerializeField] private LocalizedString openString;
+    [SerializeField] private LocalizedString closeString;
 
     private void Awake()
     {
@@ -41,6 +46,9 @@ public class ShopUI : InputManagerUI, IPointerClickHandler
         shop.OnShopSet += SetShop;
         SetShop();
         inputManager.agent.fieldController.OnPhaseStarted += PhaseStart;
+        
+        ToggleButton(true);
+        shopToggle.isOn = true;
     }
 
     void PhaseStart(Phase phase)
@@ -48,12 +56,12 @@ public class ShopUI : InputManagerUI, IPointerClickHandler
         if (phase.phaseName == PhaseType.Battle)
         {
             shopPanel.SetActive(false);
-            shopToggle.SetActive(false);
+            shopToggle.gameObject.SetActive(false);
         }
         else
         {
             shopPanel.SetActive(true);
-            shopToggle.SetActive(true);
+            shopToggle.gameObject.SetActive(true);
         }
     }
     
@@ -127,7 +135,7 @@ public class ShopUI : InputManagerUI, IPointerClickHandler
         if (isOpen)
         {
             shopPanel.SetActive(true);
-            buttonText.text = "닫기";
+            buttonText.text = closeString.GetLocalizedString();
         }
         else
         {
@@ -136,7 +144,7 @@ public class ShopUI : InputManagerUI, IPointerClickHandler
             goodsInfoUI.gameObject.SetActive(false);
             
             shopPanel.SetActive(false);
-            buttonText.text = "상점";
+            buttonText.text = openString.GetLocalizedString();
         }
     }
 
