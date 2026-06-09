@@ -23,7 +23,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : Abstract
     public virtual void SetGoods(T data, InputManager inputManager = null)
     {
         this.data = data;
-        goodsName.text = data.productName;
+        goodsName.text = data.ProductName;
         price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.8f, 1.2f));
         priceText.text = price.ToString();
         icon.sprite = data.icon;

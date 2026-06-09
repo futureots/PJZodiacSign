@@ -13,11 +13,21 @@ MonoBehaviour:
   m_Name: Adrenaline
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: Adrenaline
-  productName: "\uC544\uB4DC\uB808\uB0A0\uB9B0"
+  ProductName: 
+  productName:
+    m_TableReference:
+      m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
+    m_TableEntryReference:
+      m_KeyId: 123298320400
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: ff885d2457ed2194885eb7115ae6f535, type: 3}
   normalPrice: 5
   prefab: {fileID: 5108059015096857740, guid: 38636ab449d83d74591c3b599c04e122, type: 3}
-  description: "\uBAA8\uB4E0 \uAE30\uBB3C\uC758 \uACF5\uACA9\uB825\uACFC \uBC1B\uB294
-    \uD53C\uD574\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   skillData: {fileID: 11400000, guid: d370983ab2b66684ead6fc1ea63f2d9c, type: 2}
   useType: 2
+  references:
+    version: 2
+    RefIds: []

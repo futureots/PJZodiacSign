@@ -106,7 +106,7 @@ public class EntityInfoUI : InputManagerUI
     }
     void SetLevelText(int level, int prevLevel = 0)
     {
-        entityName.text = selectedEntity.baseData.productName + (level == 0 ? "" : $" + {level}");
+        entityName.text = selectedEntity.baseData.ProductName + (level == 0 ? "" : $" + {level}");
     }
     void SetPowerText(int value)
     {

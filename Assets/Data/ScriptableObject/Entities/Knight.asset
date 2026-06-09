@@ -13,7 +13,16 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   id: Knight
-  productName: "\uB098\uC774\uD2B8"
+  ProductName: 
+  productName:
+    m_TableReference:
+      m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
+    m_TableEntryReference:
+      m_KeyId: 123298320384
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 18a6b9f8216645143a7fbc6aaf6b4b97, type: 3}
   normalPrice: 20
   prefab: {fileID: 372973084295966691, guid: 78442eb83edd2f8479aaee1cc6950a6d, type: 3}
@@ -25,3 +34,6 @@ MonoBehaviour:
   powerMultiplier: 2
   skill: {fileID: 11400000, guid: b303936343c02d24d946eb44160ece79, type: 2}
   maxEnergy: 4
+  references:
+    version: 2
+    RefIds: []
