@@ -15,60 +15,60 @@ MonoBehaviour:
   m_TableCollectionName: Skill_Description
   m_TableCollectionNameGuidString: 9b7aa5fdd506c8342af5b2c105600032
   m_Entries:
-  - m_Id: 4644984524800
-    m_Key: Angel_Desc
+  - m_Id: 276483698790400
+    m_Key: Ascension_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524801
-    m_Key: Pawn_Desc
+  - m_Id: 276483757510656
+    m_Key: Promotion_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524802
-    m_Key: Bomber_Desc
+  - m_Id: 276483757510657
+    m_Key: Self Destruct_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524803
-    m_Key: Archer_Desc
+  - m_Id: 276483757510658
+    m_Key: Pinpoint Attack_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524804
-    m_Key: Knight_Desc
+  - m_Id: 276483761704960
+    m_Key: Battlecry_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524805
-    m_Key: Bishop_Desc
+  - m_Id: 276483761704961
+    m_Key: Pray_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524806
-    m_Key: Tank_Desc
+  - m_Id: 276483761704962
+    m_Key: Disarm_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524807
-    m_Key: Cannon_Desc
+  - m_Id: 276483761704963
+    m_Key: Bombard_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524808
-    m_Key: Rook_Desc
+  - m_Id: 276483761704964
+    m_Key: Castling_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524809
-    m_Key: Tower_Desc
+  - m_Id: 276483761704965
+    m_Key: Barriacde_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524810
-    m_Key: Unicorn_Desc
+  - m_Id: 276483761704966
+    m_Key: Evolution_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524811
-    m_Key: Queen_Desc
+  - m_Id: 276483761704967
+    m_Key: Encourge_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524812
-    m_Key: King_Desc
+  - m_Id: 276483761704968
+    m_Key: CheckMate_Desc
     m_Metadata:
       m_Items: []
-  - m_Id: 4644984524813
-    m_Key: RuinedKing_Desc
+  - m_Id: 276483761704969
+    m_Key: Region_Desc
     m_Metadata:
       m_Items: []
   - m_Id: 4644984524814

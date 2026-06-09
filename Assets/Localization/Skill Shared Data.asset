@@ -15,60 +15,60 @@ MonoBehaviour:
   m_TableCollectionName: Skill
   m_TableCollectionNameGuidString: ed09aecff3d70f744a512db65c736b6d
   m_Entries:
-  - m_Id: 42724151988224
-    m_Key: Angel_Title
+  - m_Id: 314652230094848
+    m_Key: Ascension_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988225
-    m_Key: Pawn_Title
+  - m_Id: 314652272037888
+    m_Key: Promotion_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988226
-    m_Key: Bomber_Title
+  - m_Id: 314652272037889
+    m_Key: Self Destruct_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988227
-    m_Key: Archer_Title
+  - m_Id: 314652272037890
+    m_Key: Pinpoint Attack_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988228
-    m_Key: Knight_Title
+  - m_Id: 314652272037891
+    m_Key: Battlecry_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988229
-    m_Key: Bishop_Title
+  - m_Id: 314652272037892
+    m_Key: Pray_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988230
-    m_Key: Tank_Title
+  - m_Id: 314652272037893
+    m_Key: Disarm_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988231
-    m_Key: Cannon_Title
+  - m_Id: 314652272037894
+    m_Key: Bombard_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988232
-    m_Key: Rook_Title
+  - m_Id: 314652272037895
+    m_Key: Castling_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988233
-    m_Key: Tower_Title
+  - m_Id: 314652272037896
+    m_Key: Barriacde_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988234
-    m_Key: Unicorn_Title
+  - m_Id: 314652272037897
+    m_Key: Evolution_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988235
-    m_Key: Queen_Title
+  - m_Id: 314652272037898
+    m_Key: Encourge_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988236
-    m_Key: King_Title
+  - m_Id: 314652272037899
+    m_Key: CheckMate_Title
     m_Metadata:
       m_Items: []
-  - m_Id: 42724151988237
-    m_Key: RuinedKing_Title
+  - m_Id: 314652272037900
+    m_Key: Region_Title
     m_Metadata:
       m_Items: []
   - m_Id: 42724151988238

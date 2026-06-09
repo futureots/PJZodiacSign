@@ -18,71 +18,6 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 4644984524800
-    m_Localized: Increases own level by 1. Increases max Mana by 1.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524801
-    m_Localized: Select an ally piece. Transforms into that piece while retaining
-      own level.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524802
-    m_Localized: Deals damage equal to 2x current HP to all pieces within skill range.
-      Reduces own HP to 1.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524803
-    m_Localized: Select an enemy piece. Attacks it once and reduces its Defense by
-      1.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524804
-    m_Localized: Restores 2 Mana to all allies within skill range.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524805
-    m_Localized: Restores HP equal to 2x Attack Power to all allies within skill
-      range.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524806
-    m_Localized: Reduces the Attack Power of all enemies within attack range by 1.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524807
-    m_Localized: Attacks enemies within attack range. Deals identical damage and
-      reduces Defense by 1 for all enemies within skill range around the target.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524808
-    m_Localized: Select an ally piece. Increases its Defense by 1 and swaps positions
-      with it.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524809
-    m_Localized: Select a tile within movement range. Summons an obstacle at that
-      location.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524810
-    m_Localized: All ally Unicorns attack immediately. Transforms 1 ally Knight into
-      a Unicorn.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524811
-    m_Localized: Increases the Attack Power of all allies within skill range by 1.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524812
-    m_Localized: Deals damage equal to 5x spent Mana to enemies within attack range.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4644984524813
-    m_Localized: Select a tile within movement range to summon a random piece. After
-      5 casts, all subsequently summoned pieces have their level increased by 1.
-    m_Metadata:
-      m_Items: []
   - m_Id: 4644984524814
     m_Localized: (Preparation Phase Only) Select a piece to permanently increase
       its level by 1.
@@ -128,6 +63,71 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4644984524824
     m_Localized: Select a piece. Attacks immediately once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483698790400
+    m_Localized: Increases own level by 1. Increases max Mana by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483757510656
+    m_Localized: Select an ally piece. Transforms into that piece while retaining
+      own level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483757510657
+    m_Localized: Deals damage equal to 2x current HP to all pieces within skill range.
+      Reduces own HP to 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483757510658
+    m_Localized: Select an enemy piece. Attacks it once and reduces its Defense by
+      1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704960
+    m_Localized: Restores 2 Mana to all allies within skill range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704961
+    m_Localized: Restores HP equal to 2x Attack Power to all allies within skill
+      range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704962
+    m_Localized: Reduces the Attack Power of all enemies within attack range by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704963
+    m_Localized: Attacks enemies within attack range. Deals identical damage and
+      reduces Defense by 1 for all enemies within skill range around the target.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704964
+    m_Localized: Select an ally piece. Increases its Defense by 1 and swaps positions
+      with it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704965
+    m_Localized: Select a tile within movement range. Summons an obstacle at that
+      location.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704966
+    m_Localized: All ally Unicorns attack immediately. Transforms 1 ally Knight into
+      a Unicorn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704967
+    m_Localized: Increases the Attack Power of all allies within skill range by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704968
+    m_Localized: Deals damage equal to 5x spent Mana to enemies within attack range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276483761704969
+    m_Localized: Select a tile within movement range to summon a random piece. After
+      5 casts, all subsequently summoned pieces have their level increased by 1.
     m_Metadata:
       m_Items: []
   references:
