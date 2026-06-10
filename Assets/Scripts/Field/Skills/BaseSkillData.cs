@@ -7,11 +7,7 @@ public class BaseSkillData : ScriptableObject
     public Sprite skillIcon;
     [SerializeField] private LocalizedString skillCombinedData; 
 
-    // 미리 쪼개서 저장해둘 캐시 변수
-
-    // 외부 호출 시 어떤 연산도 없이 값만 즉시 반환 (속도 저하 0)
     public string SkillName { get; private set; } = "";
-
     public string SkillDescription { get; private set; } = "";
 
     // ScriptableObject가 로드될 때 이벤트 구독
