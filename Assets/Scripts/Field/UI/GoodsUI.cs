@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -12,6 +13,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : Abstract
     [SerializeField] protected TextMeshProUGUI goodsName;
     [SerializeField] protected TextMeshProUGUI priceText;
     [SerializeField] protected Image icon;
+    [SerializeField] protected LocalizedString logString;
     protected int price;
 
     public Action<T,Vector2> onMouseClick;

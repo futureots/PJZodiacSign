@@ -84,8 +84,7 @@ namespace PlayerInput
                     }
                     else
                     {
-                        EditorLogger.Print("더 이상 배치할 수 없습니다!");
-                        inputManager.onMessageActivated("더 이상 배치할 수 없습니다!", LogType.Error);
+                        inputManager.onMessageActivated(inputManager.logString.GetLocalizedString(), LogType.Error);
                     }
                 }
                 else

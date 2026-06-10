@@ -17,14 +17,9 @@ public class ItemGoodsUI : GoodsUI<ItemData>
             }
             else
             {
-                inputManager.onMessageActivated.Invoke("인벤토리에 빈 공간이 없습니다!",LogType.Error);
+                inputManager.onMessageActivated.Invoke(logString.GetLocalizedString(),LogType.Error);
             }
         });
         
-    }
-
-    protected override string GetGoodsDescription()
-    {
-        return $"사용 시 \n{data.description}";
     }
 }

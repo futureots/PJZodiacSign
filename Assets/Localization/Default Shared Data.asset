@@ -159,6 +159,18 @@ MonoBehaviour:
     m_Key: MainMenu
     m_Metadata:
       m_Items: []
+  - m_Id: 735853301665792
+    m_Key: Log_FullResource
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853368774656
+    m_Key: Log_FullInven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853368774657
+    m_Key: Log_FullField
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -111,7 +111,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 292117715292161
-    m_Localized: Pieces
+    m_Localized: Units
     m_Metadata:
       m_Items: []
   - m_Id: 292117715292162
@@ -160,6 +160,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 301256290013186
     m_Localized: Main Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853301665792
+    m_Localized: No space available to summon!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853368774656
+    m_Localized: No empty slots in Inventory!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853368774657
+    m_Localized: Cannot deploy any more units!
     m_Metadata:
       m_Items: []
   references:

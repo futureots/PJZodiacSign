@@ -169,6 +169,15 @@ MonoBehaviour:
   entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
   tileSelecter: {fileID: 6044037666520248651, guid: ac29f7d983f2bf44ab4f57429e81251a, type: 3}
   skillSelecter: {fileID: 1953117145152640339, guid: d1e1357b679ff334b8e0a4f74a79f809, type: 3}
+  logString:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 735853368774657
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   maxEntityCount: 12
   OnObjectClicked:
     m_PersistentCalls:
@@ -179,6 +188,9 @@ MonoBehaviour:
   OnMouseMove:
     m_PersistentCalls:
       m_Calls: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &477964639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,15 +485,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e030225aa60a4549a1387de45074763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialController
+  stageData:
+    time: 0
+    level: 0
+    point: 0
+    isLastLevel: 0
+    turnLimit: 0
+    modelName: 
+    controllerName: 
+    aiPrefab: {fileID: 0}
+    player:
+      credit: 0
+      handEntities: []
+      items: []
+    agents: []
+    shopTable: {fileID: 0}
+    phases: []
   inputManager: {fileID: 477964638}
   inputUI: {fileID: 666216596}
-  turnCount: 0
-  phases:
-  - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
-  - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}
   localPlayer: {fileID: 477964639}
   agents:
   - {fileID: 1990503684}
+  exSystems: []
+  turnCount: 0
 --- !u!1 &1182249134
 GameObject:
   m_ObjectHideFlags: 0

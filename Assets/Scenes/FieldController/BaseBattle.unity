@@ -169,6 +169,15 @@ MonoBehaviour:
   entitySelecter: {fileID: 1107157273978836427, guid: 4348b4404b86f1b4ebe7ab6f1aca7b45, type: 3}
   tileSelecter: {fileID: 6044037666520248651, guid: ac29f7d983f2bf44ab4f57429e81251a, type: 3}
   skillSelecter: {fileID: 1953117145152640339, guid: d1e1357b679ff334b8e0a4f74a79f809, type: 3}
+  logString:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 735853368774657
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   maxEntityCount: 12
   OnObjectClicked:
     m_PersistentCalls:
@@ -179,6 +188,9 @@ MonoBehaviour:
   OnMouseMove:
     m_PersistentCalls:
       m_Calls: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &477964639
 MonoBehaviour:
   m_ObjectHideFlags: 0

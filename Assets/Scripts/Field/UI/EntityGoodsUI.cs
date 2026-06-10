@@ -1,9 +1,8 @@
-
-
 using UnityEngine;
 
 public class EntityGoodsUI : GoodsUI<EntityData> 
 {
+    
     public override void SetGoods(EntityData data, InputManager inputManager)
     {
         buyBtn.onClick.RemoveAllListeners();
@@ -24,13 +23,8 @@ public class EntityGoodsUI : GoodsUI<EntityData>
             }
             else
             {
-                inputManager.onMessageActivated.Invoke("소환할 빈 공간이 없습니다!",LogType.Error);
+                inputManager.onMessageActivated.Invoke(logString.GetLocalizedString(),LogType.Error);
             }
         });
-    }
-
-    protected override string GetGoodsDescription()
-    {
-        return $"스킬 사용 시 \n{data.skill.SkillDescription}";
     }
 }
