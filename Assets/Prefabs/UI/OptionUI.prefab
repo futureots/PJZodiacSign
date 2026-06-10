@@ -582,6 +582,7 @@ MonoBehaviour:
   sfxBar: {fileID: 4622247999039962693}
   fullScreenToggle: {fileID: 6427268462307316897}
   resolutionDropdown: {fileID: 4678964397725128647}
+  languageDropdown: {fileID: 0}
   exitButton: {fileID: 4283391939399500099}
   quitButton: {fileID: 0}
 --- !u!1 &673727745467659373
@@ -1976,7 +1977,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31ddd5a621a426d4f99175d4ea0e7212, type: 2}
   m_sharedMaterial: {fileID: -8643879927956328760, guid: 99e98712eb71c79489e90b993e78adf5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2004,9 +2005,9 @@ MonoBehaviour:
   m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -2043,7 +2044,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3775760733898486763
@@ -2334,8 +2335,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31ddd5a621a426d4f99175d4ea0e7212, type: 2}
+  m_sharedMaterial: {fileID: 6485350852345651002, guid: 31ddd5a621a426d4f99175d4ea0e7212, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2363,8 +2364,8 @@ MonoBehaviour:
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 10
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -2923,6 +2924,7 @@ GameObject:
   - component: {fileID: 1267908691459631253}
   - component: {fileID: 8749640417800588295}
   - component: {fileID: 7100865665934183223}
+  - component: {fileID: 594438049568716978}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3049,6 +3051,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &594438049568716978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4981196136616110353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 301256290013186
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7100865665934183223}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5100059680111401542
 GameObject:
   m_ObjectHideFlags: 0
