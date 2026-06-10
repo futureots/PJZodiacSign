@@ -1,6 +1,9 @@
 using GlobalManage;
+using System.Collections;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class OptionEntry : MonoBehaviour
@@ -62,5 +65,13 @@ public class OptionEntry : MonoBehaviour
         masterBar.value = setting.masterVolume;
         bgmBar.value = setting.bgmVolume;
         sfxBar.value = setting.sfxVolume;
+    }
+
+    public IEnumerator ChangeLanguageCoroutine(int index)
+    {
+        yield return LocalizationSettings.InitializationOperation;
+        
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
+
     }
 }
