@@ -1,9 +1,6 @@
 using GlobalManage;
-using System.Collections;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class OptionEntry : MonoBehaviour
@@ -17,6 +14,7 @@ public class OptionEntry : MonoBehaviour
     [SerializeField] private Scrollbar sfxBar;
     [SerializeField] private Toggle fullScreenToggle;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
+    [SerializeField] private TMP_Dropdown languageDropdown;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button quitButton;
 
@@ -42,6 +40,8 @@ public class OptionEntry : MonoBehaviour
         fullScreenToggle?.onValueChanged.AddListener(delegate { GameOption.Instance.SetFullScreen(fullScreenToggle.isOn); });
         resolutionDropdown?.onValueChanged.AddListener(delegate { GameOption.Instance.SetResolution(resolutionDropdown.value); });
         
+        languageDropdown?.onValueChanged.AddListener(delegate { GameOption.Instance.SetLanguage(languageDropdown.value); });
+        
         exitButton?.onClick.AddListener(delegate { GameManager.Instance.EndGame(); });
         quitButton?.onClick.AddListener(Application.Quit);
     }
@@ -61,17 +61,15 @@ public class OptionEntry : MonoBehaviour
         resolutionDropdown.value = setting.resolutionIndex;
         fullScreenToggle.isOn = setting.isFullScreen;
         
+        // Language
+        if (languageDropdown != null)
+        {
+            languageDropdown.value = setting.languageIndex;
+        }
+
         // Volume
         masterBar.value = setting.masterVolume;
         bgmBar.value = setting.bgmVolume;
         sfxBar.value = setting.sfxVolume;
-    }
-
-    public IEnumerator ChangeLanguageCoroutine(int index)
-    {
-        yield return LocalizationSettings.InitializationOperation;
-        
-        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
-
     }
 }

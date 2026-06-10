@@ -17,7 +17,89 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 2f862b38179f89e479e5ab79b325af43, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 106497187840
+    m_Localized: "You can spend Credits in the Shop to purchase units and items.\nClick
+      on a unit or item icon to view its skill effects and range. \nClick the icon
+      again to dismiss the information."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106597851136
+    m_Localized: "Purchased units will appear in the staging area below the Shop,
+      \nwhile items will be stored in your Inventory on the left.\n You cannot buy
+      more units or items if their respective spaces are full."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106597851137
+    m_Localized: "Drag and drop units from the staging area to deploy them onto the
+      battlefield (they can only be placed on green tiles). \nUnits you can control
+      will have a green level indicator."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106597851138
+    m_Localized: "You can upgrade a unit by dragging and merging it with an identical
+      unit of the same level. \nAlternatively, you can use an Upgrade Item to enhance
+      a unit without consuming a duplicate."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045440
+    m_Localized: "There is a limit to the number of units you can deploy on the battlefield.
+      \nPlease keep this deployment cap in mind when building your team."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045441
+    m_Localized: "Select an enemy unit to inspect its attack and movement ranges.
+      \nThe attack range is indicated by red diagonal lines, \nand the movement range
+      is highlighted in blue."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045442
+    m_Localized: Once you have finished your preparations, click the "End Prep" button
+      to begin combat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045443
+    m_Localized: "At the start of each turn, you are granted 3 Action Points (AP).
+      \nMoving a unit, casting a skill, or using an item all cost 1 AP. \nYour turn
+      will end automatically when all AP is consumed, \nbut you can also choose to
+      end your turn manually before spending it all."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045444
+    m_Localized: "You can move deployed units by dragging and dropping them. \nA
+      unit's movement range is highlighted in green, and they can only be moved onto
+      these green tiles. \nWhen moving a unit, its expected attack range will be
+      indicated by orange diagonal lines."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045445
+    m_Localized: "Once a unit's Mana is full, it can cast its skill. \nYou can designate
+      a target by selecting a unit with a green outline or by clicking a green tile.
+      \nCasting a skill resets the unit's Mana to 0."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045446
+    m_Localized: "Click on an item in your Inventory to use it. \nTargets can be
+      designated in the same way as unit skills. \nUsing an item will consume it
+      from your Inventory."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045447
+    m_Localized: "Upon ending your turn, all of your units will execute one attack.
+      \nThe enemy's turn will then proceed in the exact same manner."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045448
+    m_Localized: "After a certain number of turns, the battle ends and the settlement
+      phase begins. \nVictory or defeat is determined by calculating the cost and
+      level of the units remaining on the battlefield. \nThe \"Settle\" button becomes
+      active after a few turns, allowing you to manually resolve the battle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106602045449
+    m_Localized: Move your units, utilize their skills, and defeat all enemies!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
