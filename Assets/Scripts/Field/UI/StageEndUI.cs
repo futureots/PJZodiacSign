@@ -76,7 +76,7 @@ public class StageEndUI : InputManagerUI
             
         // 점수 표시
         var point =  StageManager.Instance.point;
-        pointText.text = $"{stageTimeString.GetLocalizedString()} : {point}";
+        pointText.text = $"{stagePointString.GetLocalizedString()} : {point}";
     }
 
     // 전체 루프에 대한 정보 출력

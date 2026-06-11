@@ -90,10 +90,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 106602045448
-    m_Localized: "After a certain number of turns, the battle ends and the settlement
-      phase begins. \nVictory or defeat is determined by calculating the cost and
-      level of the units remaining on the battlefield. \nThe \"Settle\" button becomes
-      active after a few turns, allowing you to manually resolve the battle."
+    m_Localized: "After a certain number of turns, the battle ends and the judgement
+      begins. \nVictory or defeat is determined by calculating the cost and level
+      of the units remaining on the battlefield. \nThe \"Judgement\" button becomes
+      active after a few turns, allowing you to manually end the battle."
     m_Metadata:
       m_Items: []
   - m_Id: 106602045449

@@ -34,7 +34,9 @@ public class S_PowerDown : BaseSkillLogic
             var tiles = entity.GetAttackArea();
             
             // 적이 1명이라도 있으면 사용
-            return tiles.Exists(tile => !tile.IsEmpty && !tile.occupiedEntity.team.IsAlly(_owner.team));
+            return tiles.Exists(tile => tile &&
+                                        !tile.IsEmpty &&
+                                        !tile.occupiedEntity.team.IsAlly(entity.team));
         }
 
         return false;
