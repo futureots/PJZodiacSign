@@ -24,11 +24,12 @@ public class Inventory : MonoBehaviour
     {
         for(int i = 0; i < items.Count; i++)
         {
-            if(items[i] == null)
+            if(!items[i])
             {
                 items[i] = instance;
-                OnItemChanged(i, instance);
+                OnItemChanged?.Invoke(i, instance);
                 instance.transform.SetParent(transform);
+                instance.onDiscard += () => RemoveItem(instance);
                 return true;
             }
         }
@@ -38,7 +39,7 @@ public class Inventory : MonoBehaviour
             return false;
         }
         items.Add(instance);
-        OnItemChanged(items.Count-1, instance);
+        OnItemChanged?.Invoke(items.Count-1, instance);
         instance.transform.SetParent(transform);
         instance.onDiscard += () => RemoveItem(instance);
         return true;
@@ -55,7 +56,7 @@ public class Inventory : MonoBehaviour
             if (items[i] == item)
             {
                 items[i] = null;
-                OnItemChanged(i, null);
+                OnItemChanged?.Invoke(i, null);
                 Destroy(item.gameObject);
                 break;
             }
