@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Skill_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: ed09aecff3d70f744a512db65c736b6d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 321116021657600
+    m_Localized: Ascension|Increases own level by 1. Increases max Mana by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116034240512
+    m_Localized: Promotion|Select an ally piece. Transforms into that piece while
+      retaining own level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116034240513
+    m_Localized: Self Destruct|Deals damage equal to 2x current HP to all pieces
+      within skill range. Reduces own HP to 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116034240514
+    m_Localized: Pinpoint Attack|Select an enemy piece. Attacks it once and reduces
+      its Defense by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434816
+    m_Localized: Battlecry|Restores 2 Mana to all allies within skill range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434817
+    m_Localized: Pray|Restores HP equal to 2x Attack Power to all allies within skill
+      range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434818
+    m_Localized: Disarm|Reduces the Attack Power of all enemies within attack range
+      by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434819
+    m_Localized: Bombard|Attacks enemies within attack range. Deals identical damage
+      and reduces Defense by 1 for all enemies within skill range around the target.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434820
+    m_Localized: Castling|Select an ally piece. Increases its Defense by 1 and swaps
+      positions with it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434821
+    m_Localized: Barriacde|Select a tile within movement range. Summons an obstacle
+      at that location.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434822
+    m_Localized: Evolution|All ally Unicorns attack immediately. Transforms 1 ally
+      Knight into a Unicorn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434823
+    m_Localized: Encourge|Increases the Attack Power of all allies within skill range
+      by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434824
+    m_Localized: CheckMate|Deals damage equal to 5x spent Mana to enemies within
+      attack range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434825
+    m_Localized: Region|Select a tile within movement range to summon a random piece.
+      After 5 casts, all subsequently summoned pieces have their level increased
+      by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434826
+    m_Localized: Upgrade|(Preparation Phase Only) Select a piece to permanently increase
+      its level by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434827
+    m_Localized: Lightning|Deals damage equal to 25% of Max HP to all pieces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434828
+    m_Localized: Healing Potion|Select a piece. Fully restores its HP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434829
+    m_Localized: Mana Potion|Select a piece. Fully restores its Mana.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434830
+    m_Localized: Corrode|Select a piece. Reduces its Defense by 2.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434831
+    m_Localized: Protection|Select a piece. Increases its Defense by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434832
+    m_Localized: Overdrive|Reduces Defense of all pieces by 1. Increases their Attack
+      Power by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434833
+    m_Localized: Overload|Select a piece. Instantly triggers its skill. The skill
+      target is chosen at random.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434834
+    m_Localized: Optimized|Select a piece. Reduces its Max Mana by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434835
+    m_Localized: Warp|Select a piece. Select a tile. Moves the piece to that location.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434836
+    m_Localized: Ambush|Select a piece. Attacks immediately once.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

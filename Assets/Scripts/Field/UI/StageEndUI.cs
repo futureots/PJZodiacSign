@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class StageEndUI : InputManagerUI
 {
-    public bool isTutorial;
     InputManager _inputManager;
     [SerializeField] private GameObject blindPanel;
     [SerializeField] private GameObject panel;
@@ -14,6 +14,15 @@ public class StageEndUI : InputManagerUI
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI pointText;
+    
+    [Header("Localization")]
+    [SerializeField] private LocalizedString victoryString;
+    [SerializeField] private LocalizedString defeatString;
+    [SerializeField] private LocalizedString endString;
+    [SerializeField] private LocalizedString stageTimeString;
+    [SerializeField] private LocalizedString stagePointString;
+    [SerializeField] private LocalizedString totalTimeString;
+    [SerializeField] private LocalizedString totalPointString;
     
     public override void Init(InputManager inputManager)
     {
@@ -27,15 +36,18 @@ public class StageEndUI : InputManagerUI
             {
                 if (!StageManager.Instance.isLastLevel)
                 {
-                    title.text = "클리어!";
+                    title.text = $"{victoryString.GetLocalizedString()}!";
                     // 승리 시에만 다음 버튼 활성화
                     continueButton.gameObject.SetActive(true);
+                    defeatButton.gameObject.SetActive(true);
+                    endButton.gameObject.SetActive(false);
                     SetStageValue();
                 }
                 else
                 {
                     // TODO : 랭킹 서버 만들거면 여기서 데이터 보내기
-                    title.text = "루프 완료!";
+                    title.text = $"{endString.GetLocalizedString()}!";
+                    continueButton.gameObject.SetActive(false);
                     defeatButton.gameObject.SetActive(false);
                     endButton.gameObject.SetActive(true);
                     SetLoopValue();
@@ -44,6 +56,10 @@ public class StageEndUI : InputManagerUI
             }
             else // 패배 시
             {
+                title.text = $"{defeatString.GetLocalizedString()}...";
+                continueButton.gameObject.SetActive(false);
+                defeatButton.gameObject.SetActive(true);
+                endButton.gameObject.SetActive(false);
                 SetLoopValue();
             }
         };
@@ -56,11 +72,11 @@ public class StageEndUI : InputManagerUI
         var time = StageManager.Instance.timer.GetElapsedTime();
         var second = time % 60;
         var minute = time / 60;
-        timeText.text = $"걸린 시간 : {minute:D2} : {second:D2}";
+        timeText.text = $"{stageTimeString.GetLocalizedString()} : {minute:D2} : {second:D2}";
             
         // 점수 표시
         var point =  StageManager.Instance.point;
-        pointText.text = $"획득 점수 : {point}";
+        pointText.text = $"{stagePointString.GetLocalizedString()} : {point}";
     }
 
     // 전체 루프에 대한 정보 출력
@@ -70,11 +86,11 @@ public class StageEndUI : InputManagerUI
         var time = StageManager.Instance.timer.GetTime();
         var second = time % 60;
         var minute = time / 60;
-        timeText.text = $"플레이 시간 : {minute:D2} : {second:D2}";
+        timeText.text = $"{totalTimeString.GetLocalizedString()} : {minute:D2} : {second:D2}";
             
         // 점수 표시
         var point = StageManager.Instance.GetTotalPoint();
-        pointText.text = $"전체 점수 : {point}";
+        pointText.text = $"{totalPointString.GetLocalizedString()} : {point}";
     }
     
 

@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -12,6 +13,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : Abstract
     [SerializeField] protected TextMeshProUGUI goodsName;
     [SerializeField] protected TextMeshProUGUI priceText;
     [SerializeField] protected Image icon;
+    [SerializeField] protected LocalizedString logString;
     protected int price;
 
     public Action<T,Vector2> onMouseClick;
@@ -23,7 +25,7 @@ public class GoodsUI<T> : MonoBehaviour, IPointerClickHandler where T : Abstract
     public virtual void SetGoods(T data, InputManager inputManager = null)
     {
         this.data = data;
-        goodsName.text = data.productName;
+        goodsName.text = data.ProductName;
         price = Mathf.RoundToInt(data.normalPrice * Random.Range(0.8f, 1.2f));
         priceText.text = price.ToString();
         icon.sprite = data.icon;

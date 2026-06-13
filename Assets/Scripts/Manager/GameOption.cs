@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Localization.Settings;
 
 namespace GlobalManage
 {
@@ -11,6 +13,7 @@ namespace GlobalManage
     {
         public int resolutionIndex;
         public bool isFullScreen;
+        public int languageIndex;
         public float masterVolume = 1f;
         public float bgmVolume = 0.8f;
         public float sfxVolume = 0.8f;
@@ -176,6 +179,25 @@ namespace GlobalManage
             }
         }
 
-        #endregion 
+        #endregion
+        
+        #region Language
+
+        public void SetLanguage(int index)
+        {
+            StartCoroutine(ChangeLanguageCoroutine(index));
+        }
+        
+        IEnumerator ChangeLanguageCoroutine(int index)
+        {
+            yield return LocalizationSettings.InitializationOperation;
+        
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[index];
+            
+            _currentSettings.languageIndex = index;
+            SaveSettings();
+
+        }
+        #endregion
     }
 }

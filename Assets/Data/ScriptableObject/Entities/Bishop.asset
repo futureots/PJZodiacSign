@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: Bishop
   m_EditorClassIdentifier: 
   id: Bishop
-  productName: "\uBE44\uC20D"
+  productName:
+    m_TableReference:
+      m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
+    m_TableEntryReference:
+      m_KeyId: 7103870078981
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 163cd4010b090af4bbbddd123f60e618, type: 3}
   normalPrice: 20
   prefab: {fileID: 4294135240769514293, guid: 112819e000f9eab4b93c1a80ccf6e69f, type: 3}
@@ -25,3 +33,6 @@ MonoBehaviour:
   powerMultiplier: 1
   skill: {fileID: 11400000, guid: 66eea223f2dcd9740ba42b8a8be86767, type: 2}
   maxEnergy: 3
+  references:
+    version: 2
+    RefIds: []

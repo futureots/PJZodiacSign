@@ -37,7 +37,7 @@ public sealed record MoveCommand(Entity Entity, Tile To, Tile From, bool IsWarp)
         var pos = To.fieldPos;
         var posText = $"( {(char)((pos.x) + 'A')}, {pos.y + 1} )";
 
-        return $"{Entity.baseData.productName}{prevText} -> {posText} 이동";
+        return $"{Entity.baseData.ProductName}{prevText} -> {posText} 이동";
     }
     public override bool IsOverlap(Command cmd)
     {

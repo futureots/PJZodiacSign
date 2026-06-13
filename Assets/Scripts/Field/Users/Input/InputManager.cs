@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
 
 
 public class InputManager : MonoBehaviour
@@ -28,6 +29,7 @@ public class InputManager : MonoBehaviour
 
     public Action<string, LogType> onMessageActivated; 
 
+    public LocalizedString logString;
     [SerializeField] private int maxEntityCount = 12;
     public int  MaxEntityCount => maxEntityCount;
     protected void Awake()

@@ -13,10 +13,20 @@ MonoBehaviour:
   m_Name: Protect
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: Protect
-  productName: "\uBCF4\uD638"
+  productName:
+    m_TableReference:
+      m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
+    m_TableEntryReference:
+      m_KeyId: 7103870078995
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 95225b98114fcf245b8992aab7f4ea5e, type: 3}
   normalPrice: 5
   prefab: {fileID: 5108059015096857740, guid: 38636ab449d83d74591c3b599c04e122, type: 3}
-  description: "\uB300\uC0C1\uC758 \uBC1B\uB294 \uD53C\uD574\uAC00 1 \uAC10\uC18C\uD569\uB2C8\uB2E4."
   skillData: {fileID: 11400000, guid: 1918af00cfba8054ea826aa1e0e66b2b, type: 2}
   useType: 2
+  references:
+    version: 2
+    RefIds: []

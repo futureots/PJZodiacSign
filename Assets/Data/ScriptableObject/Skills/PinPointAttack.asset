@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: PinPointAttack
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: e20aa8671589f494fb5b1f00ecdc2dd4, type: 3}
-  skillName: "\uC9D1\uC911\uC0AC\uACA9"
-  skillDescription: "\uB300\uC0C1\uC5D0\uAC8C \uD53C\uD574\uB97C \uC785\uD788\uACE0
-    \uBC29\uC5B4\uB825\uC744 1 \uAC10\uC18C\uD569\uB2C8\uB2E4."
+  skillCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:ed09aecff3d70f744a512db65c736b6d
+    m_TableEntryReference:
+      m_KeyId: 321116034240514
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   skillLogic:
     rid: 598112408415502404
   references:
@@ -23,5 +29,4 @@ MonoBehaviour:
     RefIds:
     - rid: 598112408415502404
       type: {class: S_PinPointAttack, ns: , asm: Assembly-CSharp}
-      data:
-        attackEffect: {fileID: 5036092967582373661, guid: 984cb506a1f947644bf3ef3bf676daaa, type: 3}
+      data: 

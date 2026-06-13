@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: PowerUpArea
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: ff885d2457ed2194885eb7115ae6f535, type: 3}
-  skillName: "\uACA9\uB824"
-  skillDescription: "\uAC70\uB9AC 2 \uC774\uB0B4 \uC544\uAD70\uC758 \uACF5\uACA9\uB825\uC744
-    1 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
+  skillCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:ed09aecff3d70f744a512db65c736b6d
+    m_TableEntryReference:
+      m_KeyId: 321116038434823
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   skillLogic:
     rid: 3223045194270113863
   references:

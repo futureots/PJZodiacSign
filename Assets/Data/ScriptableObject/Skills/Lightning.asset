@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Lightning
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: de7cfc4add8231642aa210c9512bfd55, type: 3}
-  skillName: "\uB099\uB8B0"
-  skillDescription: "\uBAA8\uB4E0 \uAE30\uBB3C\uC774 \uCD5C\uB300\uCCB4\uB825 \uBE44\uB840
-    \uD53C\uD574\uB97C \uC785\uC2B5\uB2C8\uB2E4."
+  skillCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:ed09aecff3d70f744a512db65c736b6d
+    m_TableEntryReference:
+      m_KeyId: 321116038434827
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   skillLogic:
     rid: 598112546938683459
   references:

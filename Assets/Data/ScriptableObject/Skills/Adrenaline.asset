@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Adrenaline
   m_EditorClassIdentifier: Assembly-CSharp::BaseSkillData
   skillIcon: {fileID: 21300000, guid: 1496937c4b3a2ce4fa97dde5031a5a2e, type: 3}
-  skillName: "\uAD11\uD654"
-  skillDescription: "\uBAA8\uB4E0 \uAE30\uBB3C\uC758 \uACF5\uACA9\uB825\uACFC \uBC1B\uB294
-    \uD53C\uD574\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  skillCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:ed09aecff3d70f744a512db65c736b6d
+    m_TableEntryReference:
+      m_KeyId: 321116038434832
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   skillLogic:
     rid: 598112531784663110
   references:

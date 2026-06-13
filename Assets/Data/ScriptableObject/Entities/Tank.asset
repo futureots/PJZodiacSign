@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: Tank
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   id: Tank
-  productName: "\uC804\uCC28"
+  productName:
+    m_TableReference:
+      m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
+    m_TableEntryReference:
+      m_KeyId: 7103870078982
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: a99b6e0ff1b8b42449f9507165da4df6, type: 3}
   normalPrice: 25
   prefab: {fileID: 1273815800234509130, guid: 1db7226d2fa5fdd42bc25b0d762598ff, type: 3}
@@ -25,3 +33,6 @@ MonoBehaviour:
   powerMultiplier: 2
   skill: {fileID: 11400000, guid: 9b923e4a2c8dc9c459e720580feb7eab, type: 2}
   maxEnergy: 2
+  references:
+    version: 2
+    RefIds: []

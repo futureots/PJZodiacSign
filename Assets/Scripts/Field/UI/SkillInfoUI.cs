@@ -27,8 +27,8 @@ public class SkillInfoUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else
         {
             skillIcon.sprite = skillData.skillIcon;
-            skillTitle.text = skillData.skillName;
-            skillDescription.text = skillData.skillDescription;
+            skillTitle.text = skillData.SkillName;
+            skillDescription.text = skillData.SkillDescription;
         }
 
         if (skillData.skillLogic is AreaSkillLogic areaSkillLogic)

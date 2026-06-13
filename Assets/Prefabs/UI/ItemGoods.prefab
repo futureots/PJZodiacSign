@@ -195,3 +195,15 @@ MonoBehaviour:
   goodsName: {fileID: 128055517454374148}
   priceText: {fileID: 4505819088872722764}
   icon: {fileID: 403882793772321216}
+  logString:
+    m_TableReference:
+      m_TableCollectionName: GUID:65dfdb77fe567e14898dd8b34dd27dee
+    m_TableEntryReference:
+      m_KeyId: 735853368774656
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

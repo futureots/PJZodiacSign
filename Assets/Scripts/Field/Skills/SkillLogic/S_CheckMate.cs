@@ -50,7 +50,7 @@ public class S_CheckMate : BaseSkillLogic
         foreach (var tile in tiles)
         {
             if (tile.IsEmpty) continue;
-            if (tile.occupiedEntity.team.IsAlly(_owner.team))
+            if (!tile.occupiedEntity.team.IsAlly(_owner.team))
             {
                 Entity entity = tile.occupiedEntity;
                 component.StartCoroutine(Hit(entity,_owner.energy.CurEnergy * modifier));

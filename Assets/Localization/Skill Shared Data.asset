@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Skill Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Skill
+  m_TableCollectionNameGuidString: ed09aecff3d70f744a512db65c736b6d
+  m_Entries:
+  - m_Id: 321116021657600
+    m_Key: SK_001
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116034240512
+    m_Key: SK_002
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116034240513
+    m_Key: SK_003
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116034240514
+    m_Key: SK_004
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434816
+    m_Key: SK_005
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434817
+    m_Key: SK_006
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434818
+    m_Key: SK_007
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434819
+    m_Key: SK_008
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434820
+    m_Key: SK_009
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434821
+    m_Key: SK_010
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434822
+    m_Key: SK_011
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434823
+    m_Key: SK_012
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434824
+    m_Key: SK_013
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434825
+    m_Key: SK_014
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434826
+    m_Key: SK_015
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434827
+    m_Key: SK_016
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434828
+    m_Key: SK_017
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434829
+    m_Key: SK_018
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434830
+    m_Key: SK_019
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434831
+    m_Key: SK_020
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434832
+    m_Key: SK_021
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434833
+    m_Key: SK_022
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434834
+    m_Key: SK_023
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434835
+    m_Key: SK_024
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321116038434836
+    m_Key: SK_025
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8267346862556315734
+  references:
+    version: 2
+    RefIds:
+    - rid: 8267346862556315734
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1780895994706

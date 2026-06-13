@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemData : AbstractData
 {
     public ItemComponent prefab;
-    public string description;
+    public string description => skillData.SkillDescription;
 
     public BaseSkillData skillData;
 

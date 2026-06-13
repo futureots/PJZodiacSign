@@ -13,10 +13,20 @@ MonoBehaviour:
   m_Name: EnergyPotion
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   id: energyPotion
-  productName: "\uB9C8\uB098\uD3EC\uC158"
+  productName:
+    m_TableReference:
+      m_TableCollectionName: GUID:41e37f7561337c14ea0280db794bc325
+    m_TableEntryReference:
+      m_KeyId: 7103870078993
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   icon: {fileID: 21300000, guid: 54f32298af8c9a54d9d7a2b403c5cc87, type: 3}
   normalPrice: 5
   prefab: {fileID: 5108059015096857740, guid: 38636ab449d83d74591c3b599c04e122, type: 3}
-  description: "\uB300\uC0C1\uC758 \uB9C8\uB098\uB97C \uCD5C\uB300\uB85C \uCC44\uC6B4\uB2E4."
   skillData: {fileID: 11400000, guid: a7a287b60bd4c514887e7a58af4eda0b, type: 2}
   useType: 2
+  references:
+    version: 2
+    RefIds: []

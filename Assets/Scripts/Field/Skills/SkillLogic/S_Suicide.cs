@@ -78,7 +78,7 @@ public class S_Suicide : AreaSkillLogic
         }
         _owner.Damaged(_owner.CurHealth - 1);
         _owner = null;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
     }
 
     public override BaseSkillLogic Clone()

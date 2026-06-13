@@ -17,12 +17,12 @@ MonoBehaviour:
   entities: []
   fieldEntities:
   - entityData:
-      data: {fileID: 11400000, guid: f1bb39aa388daba49afa6c5005f53845, type: 2}
+      data: {fileID: 11400000, guid: 44ca3b5ad95a1d74d8a8c00b20740c5c, type: 2}
       level: 0
     fieldPos:
       x: 3
-      y: 6
+      y: 5
   phases:
   - {fileID: 11400000, guid: 237d0ac8b9b754dccaefc525dfd163f2, type: 2}
   - {fileID: 11400000, guid: e6b709ed2b7f94d33b75eb9969e61d35, type: 2}
-  turnLimit: 2
+  turnLimit: 10

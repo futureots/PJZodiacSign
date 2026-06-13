@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Default Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Default
+  m_TableCollectionNameGuidString: 65dfdb77fe567e14898dd8b34dd27dee
+  m_Entries:
+  - m_Id: 119313731584
+    m_Key: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063232
+    m_Key: Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063233
+    m_Key: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063234
+    m_Key: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063235
+    m_Key: Giveup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063236
+    m_Key: Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063237
+    m_Key: Screen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063238
+    m_Key: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 119364063239
+    m_Key: FullScreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278832844574720
+    m_Key: Use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323582775296
+    m_Key: EndRepair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969600
+    m_Key: EndAction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969601
+    m_Key: Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 284323586969602
+    m_Key: OpponentTurn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650743783424
+    m_Key: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 285557094027264
+    m_Key: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650747977728
+    m_Key: Draw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 287650747977729
+    m_Key: DrawCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 288985098686464
+    m_Key: Victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 296473315446784
+    m_Key: Defeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117660766208
+    m_Key: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292160
+    m_Key: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292161
+    m_Key: Piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292162
+    m_Key: Item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292163
+    m_Key: AtkArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292164
+    m_Key: MvArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292117715292165
+    m_Key: SkArea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 292976364818432
+    m_Key: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 294344471285760
+    m_Key: EnhanceCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299909981343744
+    m_Key: GameEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287886368768
+    m_Key: StageTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757376
+    m_Key: StagePoint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757377
+    m_Key: TotalTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 299287894757378
+    m_Key: TotalPoint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301256290013184
+    m_Key: GoUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301256290013186
+    m_Key: MainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853301665792
+    m_Key: Log_FullResource
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853368774656
+    m_Key: Log_FullInven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735853368774657
+    m_Key: Log_FullField
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6073993791482363982
+  references:
+    version: 2
+    RefIds:
+    - rid: 6073993791482363982
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1780907223705

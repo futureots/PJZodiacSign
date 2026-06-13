@@ -278,10 +278,7 @@ public class Entity : Occupant, IDamageable, IAttackable
     /// 기물의 공격 영역 반환
     /// </summary>
     /// <returns>기물이 공격할 수 있는 타일</returns>
-    public List<Tile> GetAttackArea()
-    {
-        return GetAttackArea(CurTile);
-    }
+    public List<Tile> GetAttackArea() => GetAttackArea(CurTile);
 
     public List<Tile> GetAttackArea(Tile tile)
     {
