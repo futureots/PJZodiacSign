@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,9 @@ namespace Augment
         
         [Header("Augments")]
         [SerializeField] private List<AugmentSO> augmentPool;
-        private List<IAugmentEffect> CurrentAugments => _stageData.Augments;
+        private List<AugmentSO> CurrentAugments => _stageData.augments;
+
+        public event Action<List<AugmentSO>> OnAugmentChanged;
         
         public override void Init(FieldController controller, StageData stageData)
         {
@@ -18,7 +21,7 @@ namespace Augment
             _stageData = stageData;
             
             // 증강 초기화 설정 (첫 진입)
-            _stageData.Augments ??= new List<IAugmentEffect>();
+            _stageData.augments ??= new List<AugmentSO>();
             
             // 증강 추가 액션 연결
             if (augmentPool.Count > 0)
@@ -34,6 +37,8 @@ namespace Augment
             {
                 RegisterAugment(augment);
             }
+            
+            OnAugmentChanged?.Invoke(CurrentAugments);
         }
 
         /// <summary>
@@ -58,6 +63,8 @@ namespace Augment
             // Augment 등록
             RegisterAugment(augment);
             CurrentAugments.Add(augment);
+            
+            OnAugmentChanged?.Invoke(CurrentAugments);
             
             // Augment 획득 이벤트 동작
             augment.OnActive();

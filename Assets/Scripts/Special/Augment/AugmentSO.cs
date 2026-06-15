@@ -1,20 +1,18 @@
-using System;
 using UnityEngine;
 
 namespace Augment
 {
-    [Flags]
     public enum AugmentType
     {
-        Add = 0,
-        Neutral = 1 << 0,
-        Positive = 1 << 1,
-        Negative = 1 << 2,
+        Neutral = 0,
+        Positive,
+        Negative,
     }
     
     public abstract class AugmentSO : ScriptableObject, IAugmentEffect
     {
         // Augment Data
+        public Sprite icon;
         public string effectName = "";
         public string description = "";
         [SerializeField] private AugmentType type = AugmentType.Neutral;
