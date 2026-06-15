@@ -32,10 +32,10 @@ public class StageData
     // Stage Config
     public string modelName = GlobalManage.ModelID.Default;
     public string controllerName = GlobalManage.ControllerID.Default;
-
     
     // Augment
-    public List<AugmentSO> augments;
+    public List<AugmentSO> currentAugment = new();
+    public List<AugmentSO> unselectedAugment = new();
 
     // Player and Agents
     public EnemyAI aiPrefab = null;

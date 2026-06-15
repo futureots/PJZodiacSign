@@ -2,7 +2,6 @@ using GlobalManage;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class FieldController : MonoBehaviour
 {
@@ -71,6 +70,8 @@ public class FieldController : MonoBehaviour
         {
             exSystem.Init(this, stageData);
         }
+        
+        // TODO: 전투 시작 전 상호작용 대기
 
         // 전투 시작
         StartLevel(stageData);

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 
@@ -105,6 +104,12 @@ public class Agent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 엔티티 새로 획득
+    /// </summary>
+    /// <param name="newEntity">획득할 엔티티 정보</param>
+    /// <param name="level">초기 레벨</param>
+    /// <remarks>리소스 필드로 할당</remarks>
     public void GetEntity(EntityData newEntity, int level = 0)
     {
         var resourceField = StageManager.Instance.agentField[id];
@@ -115,6 +120,13 @@ public class Agent : MonoBehaviour
         resourceEntities.Add(entity);
     }
 
+    /// <summary>
+    /// 엔티티 새로 배치
+    /// </summary>
+    /// <param name="newEntity">획득할 엔티티 정보</param>
+    /// <param name="tile">배치 위치</param>
+    /// <param name="level">초기 레벨</param>
+    /// <remarks>온필드에 바로 배치</remarks>
     public void DeployEntity(EntityData newEntity, intVector2 tile, int level = 0)
     {
         var fieldTile = StageManager.Instance.field.GetTile(tile);
