@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class Achievement : MonoBehaviour
+public class Achievement : InputManagerUI
 {
+    InputManager _inputManager;
     private void Start()
     {
         StageManager.Instance.OnStageEnded += StageEnd;
@@ -14,8 +15,14 @@ public class Achievement : MonoBehaviour
             string apiName = "Clear_Level_";
             var level = StageManager.Instance.level;
             apiName += level;
-            AchievementManager.Instance?.Acheieve(apiName);
+            var result = AchievementManager.Instance?.Achieve(apiName);
+            //_inputManager.onMessageActivated?.Invoke($"achieve : {apiName} {result}",LogType.Log);
         }
         
+    }
+
+    public override void Init(InputManager inputManager)
+    {
+        _inputManager = inputManager;
     }
 }

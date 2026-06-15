@@ -2,7 +2,7 @@ using Steamworks;
 
 public class AchievementManager : Singleton<AchievementManager>
 {
-    public void Acheieve(string apiName)
+    public bool Achieve(string apiName)
     {
         if (SteamManager.Initialized)
         {
@@ -10,9 +10,12 @@ public class AchievementManager : Singleton<AchievementManager>
 
             if (!isAchieved)
             {
-                SteamUserStats.SetAchievement(apiName);
+                var value = SteamUserStats.SetAchievement(apiName);
                 SteamUserStats.StoreStats();
+                return value;
             }
         }
+
+        return false;
     }
 }

@@ -4200,50 +4200,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 153275684}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &241472179
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 241472181}
-  - component: {fileID: 241472180}
-  m_Layer: 0
-  m_Name: Achievement
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &241472180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 241472179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c801a8b7484f4e46baeebb401c1d8f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Achievement
---- !u!4 &241472181
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 241472179}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -4.55687, z: 1.21124}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &242613724
 GameObject:
   m_ObjectHideFlags: 0
@@ -35899,4 +35855,3 @@ SceneRoots:
   - {fileID: 657491124}
   - {fileID: 1201546309}
   - {fileID: 2014071633}
-  - {fileID: 241472181}
