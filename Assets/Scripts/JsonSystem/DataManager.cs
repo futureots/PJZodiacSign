@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -99,7 +100,8 @@ public class DataManager : Singleton<DataManager>
     {
         
         DeleteData(fileName);
-        LoadAllData(fileName);
+        //LoadAllData(fileName);
+        LoadSteamCloudData(fileName);
     }
 
     public void SaveAllData(string fileName)
@@ -184,6 +186,34 @@ public class DataManager : Singleton<DataManager>
                 File.Delete(filePath);
             }
         }
+    }
+
+    public void LoadSteamCloudData(string fileName)
+    {
+        bool success = SteamRemoteStorage.FileExists(fileName);
+
+        if (success)
+        {
+            var size = SteamRemoteStorage.GetFileSize(fileName);
+            byte[] data = new byte[size];
+            var fileSize = SteamRemoteStorage.FileRead(fileName, data, size);
+            
+            string json = System.Text.Encoding.UTF8.GetString(data);
+            playData = PlayData.DeserializePlayerData(json);
+            isModified = true;
+        }
+        else
+        {
+            playData = new();
+            isModified = false;
+        }
+    }
+
+    public void SaveSteamCloudData(string fileName)
+    {
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(PlayData.SerializePlayerData(playData));
+        int size = data.Length;
+        bool success = SteamRemoteStorage.FileWrite(fileName, data, size);
     }
 }
 [Serializable]
