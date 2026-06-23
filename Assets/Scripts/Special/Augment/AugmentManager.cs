@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Augment
 
         public event Action<List<AugmentSO>> OnAugmentChanged;
         
-        public override void Init(FieldController controller, StageData stageData)
+        public override IEnumerator Init(FieldController controller, StageData stageData)
         {
             _controller = controller;
             _stageData = stageData;
@@ -48,6 +49,9 @@ namespace Augment
             }
             
             OnAugmentChanged?.Invoke(CurrentCurrentAugment);
+
+            // TODO: 증강 선택 코루틴 반환
+            return null;
         }
 
         /// <summary>

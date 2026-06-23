@@ -1,5 +1,6 @@
 using GlobalManage;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ public class FieldController : MonoBehaviour
     
     [Header("Extra Rules")]
     [SerializeField] private List<ExSystem> exSystems;
+
+    private readonly List<IEnumerator> preLoad = new();
     
     /// <summary>
     /// Initiate Controller
@@ -66,15 +69,15 @@ public class FieldController : MonoBehaviour
         inputUI.Init(inputManager);
         
         // Init Extra Trigger
+        preLoad.Clear();
         foreach (ExSystem exSystem in exSystems)
         {
-            exSystem.Init(this, stageData);
+            var preLoadCoroutine = exSystem.Init(this, stageData);
+            if (preLoadCoroutine != null) preLoad.Add(preLoadCoroutine);
         }
         
-        // TODO: 전투 시작 전 상호작용 대기
-
-        // 전투 시작
-        StartLevel(stageData);
+        // 상호작용 대기 후 전투 시작
+        this.RunWithCallback(preLoad, () => StartLevel(stageData));
     }
     
     #region CycleManage
