@@ -68,7 +68,8 @@ namespace GlobalManage
             if (stageData.controllerName != ControllerID.Tutorial)
             {
                 DataManager.Instance.SetData(stageData.player, Level);
-                DataManager.Instance.SaveAllData("PlayerData");
+                //DataManager.Instance.SaveAllData("PlayerData");
+                DataManager.Instance.SaveSteamCloudData("PlayerData");
             }
             
             StartCoroutine(StartBattle(stageData));
