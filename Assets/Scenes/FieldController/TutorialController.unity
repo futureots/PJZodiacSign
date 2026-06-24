@@ -426,7 +426,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4977893003929504043, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 363ca12342fbfe04bbb791f89892fe2e, type: 3}
@@ -493,6 +494,8 @@ MonoBehaviour:
     turnLimit: 0
     modelName: 
     controllerName: 
+    currentAugment: []
+    unselectedAugment: []
     aiPrefab: {fileID: 0}
     player:
       credit: 0
