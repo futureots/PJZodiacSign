@@ -1397,6 +1397,9 @@ MonoBehaviour:
   augmentPool:
   - {fileID: 11400000, guid: 9b227eda49f6ea34ebc609be3b8a2e3c, type: 2}
   - {fileID: 11400000, guid: b69a662a85cbdb94f8c279558eb5351b, type: 2}
+  - {fileID: 11400000, guid: 2bb8b7fc5954bdb43b9a962686fc6e24, type: 2}
+  - {fileID: 11400000, guid: 2a96a93c2bf894747baa87ac4c5bae7e, type: 2}
+  - {fileID: 11400000, guid: 003b100788f699248b16912de8354bcd, type: 2}
   selectCount: 3
   onSelecting: 0
 --- !u!4 &1678400075
