@@ -9,12 +9,14 @@ public class EnergyComponent : MonoBehaviour
         get { return _curEnergy; }
         set
         {
-            _curEnergy = value;
+            _curEnergy = Math.Min(value, _maxEnergy);
             OnEnergyChanged?.Invoke(_curEnergy, MaxEnergy);
         }
     }
+    
     /// <summary>스킬 비용</summary>
     [SerializeField] int _maxEnergy;
+    
     public int MaxEnergy
     {
         get { return _maxEnergy; }
