@@ -102,7 +102,7 @@ public class FieldController : MonoBehaviour
     public event Action<Turn, uint> OnTurnStarted;
     
     public event Action OnDraw;
-    public Action<string> OnBattleEnd;
+    public Action<string, StageData> OnBattleEnd;
     
     public virtual void StartLevel(StageData data)
     {
@@ -239,14 +239,14 @@ public class FieldController : MonoBehaviour
     public virtual void EndGame()
     {
         // 패배 시 데이터 삭제 및 메인 화면으로 이동
-        OnBattleEnd?.Invoke("FAIL");
+        OnBattleEnd?.Invoke("FAIL", stageData);
     }
 
     public virtual void ContinueGame()
     {
         var credit = Math.Min(localPlayer.Credit,200);
         localPlayer.Credit += 150 + Mathf.RoundToInt(credit*0.2f);
-        OnBattleEnd?.Invoke("CLEAR");
+        OnBattleEnd?.Invoke("CLEAR", stageData);
     }
     #endregion
 

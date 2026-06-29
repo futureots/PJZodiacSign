@@ -109,13 +109,13 @@ namespace GlobalManage
 
             // Connect Battle End Event
             // NOTE: 전투 종료 플래그에 따른 수행 세부 작업 필요
-            controller.OnBattleEnd += s =>
+            controller.OnBattleEnd += (string s, StageData lastData) => 
             {
                 switch (s)
                 {
                     case "CLEAR":
                         EditorLogger.Print($"승리{stageData.level} : {DataManager.Instance.playData}");
-                        ContinueGame();
+                        ContinueGame(lastData);
                         break;
                     case "FAIL":
                         EditorLogger.Print($"패배{stageData.level} : {DataManager.Instance.playData}");
@@ -139,10 +139,12 @@ namespace GlobalManage
 
         #region BattleEnd
 
-        public void ContinueGame()
+        public void ContinueGame(StageData lastStage)
         {
             var playerData = Agent.LocalPlayer.getData();
             // 다음 레벨로 넘어가는 코드
+            // TODO: 직전 데이터 기반 체크
+            // 증강 넘기기, 레벨 확인해서 
             var stageData = CreateStageData(Level + 1, playerData,StageManager.Instance.timer.GetTime(), StageManager.Instance.GetTotalPoint());
             EnterBattle(stageData);
         }
