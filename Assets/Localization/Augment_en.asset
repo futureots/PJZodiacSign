@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Augment_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 36be33be44745cb489995083f2c4026b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1605015900160
+    m_Localized: Reset|Remove all Pieces from the board and refund their cost in
+      credits. Then, double your current credits.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605099786240
+    m_Localized: Angel's Descent|Gain 1 Angel.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605099786241
+    m_Localized: Wisdom|Max Action Count increased by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605099786242
+    m_Localized: Alchemist|Instantly and at the start of each stage, gain a random
+      item.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605103980544
+    m_Localized: Energy Overflow|At the start of combat, restore all allies' Mana
+      to maximum.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605103980545
+    m_Localized: The Couple|Instantly gain 1 King and 1 Queen. At the start of each
+      turn, restore 1 Mana to a random King or Queen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605103980546
+    m_Localized: BattleCry|At the start of each turn, grant +1 Attack to a random
+      ally
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605103980547
+    m_Localized: Healing Aura|At the start of each turn, restore 1 HP to all allies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605103980548
+    m_Localized: Mystic Ground|At the start of each turn, restore 2 Mana to a random
+      ally.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605103980549
+    m_Localized: Blighted Ground|At the start of each turn, deal 1 damage to all
+      units, and 2 damage to enemies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1605103980550
+    m_Localized: Temporary Promotion|At the start of combat, increase the level of
+      3 random allies by 1 for the rest of the battle.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

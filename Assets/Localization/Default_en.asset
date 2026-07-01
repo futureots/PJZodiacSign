@@ -67,7 +67,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 284323582775296
-    m_Localized: End Prep
+    m_Localized: End Prep.
     m_Metadata:
       m_Items: []
   - m_Id: 284323586969600
@@ -172,6 +172,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 735853368774657
     m_Localized: Cannot deploy any more units!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8420720688697344
+    m_Localized: Choose an augment.
     m_Metadata:
       m_Items: []
   references:
