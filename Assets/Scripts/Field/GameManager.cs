@@ -25,6 +25,8 @@ namespace GlobalManage
         public int Level { get; private set; }
         
         public GameMode GameMode { get; private set; }
+
+        public List<int> AugmentLevel = new();
         
 
         #region Initiate
@@ -115,7 +117,6 @@ namespace GlobalManage
             }
 
             // Connect Battle End Event
-            // NOTE: 전투 종료 플래그에 따른 수행 세부 작업 필요
             controller.OnBattleEnd += (string s, StageData lastData) => 
             {
                 switch (s)
@@ -163,7 +164,7 @@ namespace GlobalManage
                     stageData.unselectedAugment = lastStage.unselectedAugment;
                     
                     // 컨트롤러 변경
-                    stageData.controllerName = stageData.level % 3 == 0 ? ControllerID.AddAugment : ControllerID.Augmented;
+                    stageData.controllerName = AugmentLevel.Contains(stageData.level) ? ControllerID.AddAugment : ControllerID.Augmented;
                     break;
                 
                 // 기본모드
