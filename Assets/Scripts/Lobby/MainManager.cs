@@ -17,7 +17,8 @@ namespace Main
         private void Awake()
         {
             // main씬 로드할 때마다 데이터를 불러와서 사용(매 레벨마다 데이터를 저장하기 떄문에 가장 최신 데이터를 불러올 수 있음)
-            DataManager.Instance.LoadAllData("PlayerData");
+            //DataManager.Instance.LoadAllData("PlayerData");
+            DataManager.Instance.LoadSteamCloudData("PlayerData");
         }
 
         private void Start()
