@@ -1,20 +1,27 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Augment
 {
-    [Flags]
     public enum AugmentType
     {
-        Add = 0,
-        Neutral = 1 << 0,
-        Positive = 1 << 1,
-        Negative = 1 << 2,
+        Neutral = 0,
+        Positive,
+        Negative,
     }
     
     public abstract class AugmentSO : ScriptableObject, IAugmentEffect
     {
+        // Augment 공용 색상
+        public static Dictionary<AugmentType, Color> Color = new()
+        {
+            [AugmentType.Neutral] = new Color(254, 254, 254),
+            [AugmentType.Positive] = new Color(33, 140, 33),
+            [AugmentType.Negative] = new Color(254, 63, 63)
+        };
+        
         // Augment Data
+        public Sprite icon;
         public string effectName = "";
         public string description = "";
         [SerializeField] private AugmentType type = AugmentType.Neutral;

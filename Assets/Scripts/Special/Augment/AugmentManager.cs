@@ -1,52 +1,89 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility;
 
 namespace Augment
 {
-    public class AugmentManager : ExSystem
+    public sealed class AugmentManager : ExSystem
     {
         private FieldController _controller;
         private StageData _stageData;
-        
+
         [Header("Augments")]
+        [SerializeField] private Transform selectUI;
         [SerializeField] private List<AugmentSO> augmentPool;
-        private List<IAugmentEffect> CurrentAugments => _stageData.Augments;
+        public int selectCount = 3;
+        [SerializeField] private bool onSelecting = false;
         
-        public override void Init(FieldController controller, StageData stageData)
+        private List<AugmentSO> CurrentAugment => _stageData.currentAugment;
+        private List<AugmentSO> IgnorePool
+        {
+            get
+            {
+                List<AugmentSO> temp = new(CurrentAugment);
+                temp.AddRange(_stageData.unselectedAugment);
+                return temp;
+            }
+        }
+
+        public event Action<List<AugmentSO>> OnAugmentChanged;
+        
+        public override IEnumerator Init(FieldController controller, StageData stageData)
         {
             _controller = controller;
             _stageData = stageData;
             
             // 증강 초기화 설정 (첫 진입)
-            _stageData.Augments ??= new List<IAugmentEffect>();
-            
-            // 증강 추가 액션 연결
-            if (augmentPool.Count > 0)
-            {
-                controller.OnLevelStarted += _ =>
-                {
-                    StartChoice();
-                };
-            }
+            _stageData.currentAugment ??= new List<AugmentSO>();
             
             // 기존 증강 등록
-            foreach (var augment in CurrentAugments)
+            foreach (var augment in CurrentAugment)
             {
                 RegisterAugment(augment);
             }
+            
+            OnAugmentChanged?.Invoke(CurrentAugment);
+            
+            bool isAugmentAdd = selectUI && augmentPool.Count > 0;
+            return isAugmentAdd ? StartChoice() : null;
         }
 
         /// <summary>
         /// 추가할 증강 선택
         /// </summary>
-        private void StartChoice()
+        private IEnumerator StartChoice()
         {
-            // 보유 증강 제외
-            List<AugmentSO> choicePool = augmentPool.FindAll(augment => !CurrentAugments.Contains(augment));
+            // 보유 증강 제외 선택 풀 생성
+            List<AugmentSO> choicePool = augmentPool.FindAll(augment => !IgnorePool.Contains(augment));
+            var selectPool = choicePool.GetRandomRange(selectCount);
             
-            // 선택 UI 추가 및 결정 로직 추가
-            // TODO: 현재는 첫 증강 즉시 적용
-            Add(choicePool[0]);
+            // 설정 패널 생성
+            var contentPanel = selectUI.GetChild(0);
+            AugmentInfoUI panelPrefab = contentPanel.GetChild(0).GetComponent<AugmentInfoUI>();
+            selectUI.gameObject.SetActive(true);
+            onSelecting = true;
+            
+            // 증강 패널 생성
+            foreach (var augment in selectPool)
+            {
+                var selectAugment = augment;
+                AugmentInfoUI newPanel = Instantiate(panelPrefab, contentPanel);
+                newPanel.Init(selectAugment);
+                newPanel.selectButton.onClick.AddListener(() =>
+                {
+                    onSelecting = false;
+                    Add(selectAugment);
+                });
+                newPanel.gameObject.SetActive(true);   
+            }
+            
+            //선택 대기
+            yield return new WaitUntil(() => !onSelecting);
+            
+            // 선택 종료 및 패널 해제
+            selectUI.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -57,7 +94,9 @@ namespace Augment
         {
             // Augment 등록
             RegisterAugment(augment);
-            CurrentAugments.Add(augment);
+            CurrentAugment.Add(augment);
+            
+            OnAugmentChanged?.Invoke(CurrentAugment);
             
             // Augment 획득 이벤트 동작
             augment.OnActive();

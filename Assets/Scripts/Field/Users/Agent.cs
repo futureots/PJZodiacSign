@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 
@@ -74,39 +73,67 @@ public class Agent : MonoBehaviour
     
     public void Init(FieldController fieldController, PlayerID teamId,AgentData data, intVector2 direction)
     {
+        // Get Data
         Direction = direction;
-        this.fieldController = fieldController;
         id = teamId;
         Credit = data.credit;
-        if (data.items == null) data.items = new();
-        inventory.SetItem(data.items);
+        
+        // Inject FieldController
+        this.fieldController = fieldController;
         fieldController.OnPhaseStarted += OnPhaseChange;
         fieldController.OnTurnStarted += OnTurnChange;
+        
+        // Inventory
+        if (data.items == null) data.items = new();
+        inventory.SetItem(data.items);
 
-        // 필드 기물 세팅
-        var field = StageManager.Instance.field;
-        var resourceField = StageManager.Instance.agentField[teamId];
-
+        // Resource Field
         resourceEntities = new();
-        var list = resourceField.GetTiles().GetEmptyTiles();
+        var list = StageManager.Instance.agentField[teamId].GetTiles().GetEmptyTiles();
         foreach (var entityData in data.handEntities)
         {
             if (list.Count <= 0) break;
-            var entity = EntityFactory.Instance.Request(entityData.data, direction, list[0], teamId, entityData.level);
-            // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
-            list.RemoveAt(0);
-            resourceEntities.Add(entity);
+            GetEntity(entityData.data, entityData.level);
         }
 
+        // On Field
         fieldEntities = new();
         foreach (var entityData in data.fieldEntities)
         {
-            var tile = field.GetTile(entityData.Key);
-            if (!tile) continue;
-            var entity = EntityFactory.Instance.Request(entityData.Value.data, direction, tile, teamId, entityData.Value.level);
-            // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
-            fieldEntities.Add(entity);
+            DeployEntity(entityData.Value.data, entityData.Key, entityData.Value.level);
         }
+    }
+
+    /// <summary>
+    /// 엔티티 새로 획득
+    /// </summary>
+    /// <param name="newEntity">획득할 엔티티 정보</param>
+    /// <param name="level">초기 레벨</param>
+    /// <remarks>리소스 필드로 할당</remarks>
+    public void GetEntity(EntityData newEntity, int level = 0)
+    {
+        var resourceField = StageManager.Instance.agentField[id];
+        var list = resourceField.GetTiles().GetEmptyTiles();
+        var entity = EntityFactory.Instance.Request(newEntity, Direction, list[0], id, level);
+
+        list.RemoveAt(0);
+        resourceEntities.Add(entity);
+    }
+
+    /// <summary>
+    /// 엔티티 새로 배치
+    /// </summary>
+    /// <param name="newEntity">획득할 엔티티 정보</param>
+    /// <param name="tile">배치 위치</param>
+    /// <param name="level">초기 레벨</param>
+    /// <remarks>온필드에 바로 배치</remarks>
+    public void DeployEntity(EntityData newEntity, intVector2 tile, int level = 0)
+    {
+        var fieldTile = StageManager.Instance.field.GetTile(tile);
+        if (!fieldTile) return;
+        var entity = EntityFactory.Instance.Request(newEntity, Direction, fieldTile, id, level);
+        // 기물 사망(강화) 시 리스트에서 제거(이후 페이즈 변화 시 리스트 갱신 및 액션 변경)
+        fieldEntities.Add(entity);
     }
     
     
