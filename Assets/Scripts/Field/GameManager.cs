@@ -5,6 +5,12 @@ using UnityEngine;
 
 namespace GlobalManage
 {
+    public enum GameMode
+    {
+        Basic,
+        Augment,
+    }
+    
     public class GameManager : Singleton<GameManager>
     {
         [Header("Base Data")]
@@ -17,12 +23,9 @@ namespace GlobalManage
         private StageData currentStage = null;
 
         public int Level { get; private set; }
-
-        protected override void Awake()
-        {
-            base.Awake();
-            
-        }
+        
+        public GameMode GameMode { get; private set; }
+        
 
         #region Initiate
 
@@ -70,6 +73,9 @@ namespace GlobalManage
                 DataManager.Instance.SetData(stageData.player, Level);
                 DataManager.Instance.SaveAllData("PlayerData");
             }
+            
+            // 게임모드 설정
+            GameMode = stageData.controllerName == ControllerID.AddAugment ? GameMode.Augment : GameMode.Basic;
             
             StartCoroutine(StartBattle(stageData));
         }
@@ -142,10 +148,30 @@ namespace GlobalManage
         public void ContinueGame(StageData lastStage)
         {
             var playerData = Agent.LocalPlayer.getData();
-            // 다음 레벨로 넘어가는 코드
-            // TODO: 직전 데이터 기반 체크
-            // 증강 넘기기, 레벨 확인해서 
+            
+            // 다음 레벨 스테이지 설계
             var stageData = CreateStageData(Level + 1, playerData,StageManager.Instance.timer.GetTime(), StageManager.Instance.GetTotalPoint());
+            
+            // 게임모드 확인
+            switch (GameMode)
+            {
+                // 증강모드
+                case GameMode.Augment:
+                    // 증강 데이터 이전
+                    stageData.currentAugment = lastStage.currentAugment;
+                    stageData.unselectedAugment = lastStage.unselectedAugment;
+                    
+                    // 컨트롤러 변경
+                    stageData.controllerName = stageData.level % 3 == 0 ? ControllerID.AddAugment : ControllerID.Augmented;
+                    break;
+                
+                // 기본모드
+                case GameMode.Basic:
+                default:
+                    break;
+            }
+            
+            // 증강 넘기기, 레벨 확인해서 
             EnterBattle(stageData);
         }
 
