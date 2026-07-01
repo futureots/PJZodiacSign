@@ -98,10 +98,13 @@ public class DataManager : Singleton<DataManager>
 
     public void ResetData(string fileName)
     {
-        
+        #if UNITY_EDITOR
         DeleteData(fileName);
-        //LoadAllData(fileName);
+        LoadAllData(fileName);
+        #else
+        DeleteSteamCloudData(fileName);
         LoadSteamCloudData(fileName);
+        #endif
     }
 
     public void SaveAllData(string fileName)
@@ -214,6 +217,11 @@ public class DataManager : Singleton<DataManager>
         byte[] data = System.Text.Encoding.UTF8.GetBytes(PlayData.SerializePlayerData(playData));
         int size = data.Length;
         bool success = SteamRemoteStorage.FileWrite(fileName, data, size);
+    }
+
+    public void DeleteSteamCloudData(string fileName)
+    {
+        SteamRemoteStorage.FileDelete(fileName);
     }
 }
 [Serializable]

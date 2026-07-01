@@ -24,6 +24,8 @@ namespace Augment
 
         public override void OnTurnStarted(Turn data, uint turnCount)
         {
+            if (data.agentID != Agent.LocalPlayer.id) return;
+            if (data.type != TurnType.ACTION) return;
             var agent = Agent.LocalPlayer;
             
             // 해당 entity 선택

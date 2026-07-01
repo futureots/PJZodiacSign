@@ -73,8 +73,11 @@ namespace GlobalManage
             if (stageData.controllerName != ControllerID.Tutorial)
             {
                 DataManager.Instance.SetData(stageData.player, Level);
-                //DataManager.Instance.SaveAllData("PlayerData");
+                #if UNITY_EDITOR
+                DataManager.Instance.SaveAllData("PlayerData");
+                #else
                 DataManager.Instance.SaveSteamCloudData("PlayerData");
+                #endif
             }
             
             // 게임모드 설정

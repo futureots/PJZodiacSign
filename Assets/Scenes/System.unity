@@ -433,7 +433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &138309334
 Transform:
   m_ObjectHideFlags: 0
@@ -2700,6 +2700,7 @@ MonoBehaviour:
   loadingUI: {fileID: 1957596246}
   levelTable: {fileID: 11400000, guid: 1b058f5e6ab5ea049bc8d920a2a49e02, type: 2}
   shopTable: {fileID: 11400000, guid: fb5c5aaad7b089c47b837dd864309c21, type: 2}
+  AugmentLevel: 020000000500000008000000
 --- !u!4 &1138561101
 Transform:
   m_ObjectHideFlags: 0
