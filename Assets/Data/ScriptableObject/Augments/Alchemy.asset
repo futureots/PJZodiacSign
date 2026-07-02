@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf16bac84671d54ab37a325532c077e, type: 3}
+  m_Name: Alchemy
+  m_EditorClassIdentifier: Assembly-CSharp::Augment.ItemAugment
+  icon: {fileID: 21300000, guid: da84f20f8bcee2e43956fcd33ce9674a, type: 3}
+  effectName: "\uC5F0\uAE08\uC220"
+  description: "\uB9E4 \uB808\uBCA8 \uC2DC\uC791 \uC2DC \uB79C\uB364\uD55C \uC544\uC774\uD15C\uC744
+    1\uAC1C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  type: 1
+  itemPool:
+  - {fileID: 11400000, guid: bc25fc61240a1c340b98a0da46c7cfde, type: 2}
+  - {fileID: 11400000, guid: c370e1ebb6d87be4d9bdc20b1868235b, type: 2}
+  - {fileID: 11400000, guid: 0d2d40f120968954faf9636a726a82e4, type: 2}
+  - {fileID: 11400000, guid: 6ce1e677722d3214a91fb7e5971e3410, type: 2}
+  - {fileID: 11400000, guid: 28f8afada22b1854282dcdb041adaede, type: 2}
+  - {fileID: 11400000, guid: 89065906a5cc2404dbf79bc972f14b5c, type: 2}
+  - {fileID: 11400000, guid: 64a30d89ce1dd914cac8df5024dc718a, type: 2}
+  - {fileID: 11400000, guid: 0ca356e4d1c5f6340a5da5e7726d24f8, type: 2}
+  - {fileID: 11400000, guid: a29786851afb74448a567e800337ed9d, type: 2}
+  - {fileID: 11400000, guid: 8c9b5d542aa599f43968e993fa10772f, type: 2}
+  - {fileID: 11400000, guid: 630a889e461c66e42a95888573a3b28b, type: 2}
+  countOnActive: 0
+  countEveryLevel: 1

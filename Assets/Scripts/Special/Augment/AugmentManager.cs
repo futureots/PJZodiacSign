@@ -18,15 +18,7 @@ namespace Augment
         [SerializeField] private bool onSelecting = false;
         
         private List<AugmentSO> CurrentAugment => _stageData.currentAugment;
-        private List<AugmentSO> IgnorePool
-        {
-            get
-            {
-                List<AugmentSO> temp = new(CurrentAugment);
-                temp.AddRange(_stageData.unselectedAugment);
-                return temp;
-            }
-        }
+        private List<AugmentSO> IgnorePool => _stageData.ignoreAugment;
 
         public event Action<List<AugmentSO>> OnAugmentChanged;
         
@@ -76,7 +68,10 @@ namespace Augment
                     onSelecting = false;
                     Add(selectAugment);
                 });
-                newPanel.gameObject.SetActive(true);   
+                newPanel.gameObject.SetActive(true);  
+                
+                // 제외 풀에 추가
+                IgnorePool.Add(augment);    
             }
             
             //선택 대기

@@ -41,9 +41,8 @@ namespace Main
                 var dataManager = DataManager.Instance;
                 GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
                 var data = GameManager.Instance.CreateStageData(dataManager.playData.stageLevel, dataManager.GetPlayerAgentData(),dataManager.playData.time,dataManager.playData.point);
-                
-                // TODO: 모드 선택
-                data.controllerName = ControllerID.AddAugment;
+
+                data.controllerName = ControllerID.Augmented;
                 
                 GameManager.Instance.EnterBattle(data);
             }

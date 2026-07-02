@@ -20,7 +20,7 @@ namespace GlobalManage
         public ShopTable shopTable;
 
         [Header("Stage status")]
-        private StageData currentStage = null;
+        [SerializeField] private StageData currentStage = null;
 
         public int Level { get; private set; }
         
@@ -81,7 +81,7 @@ namespace GlobalManage
             }
             
             // 게임모드 설정
-            GameMode = stageData.controllerName == ControllerID.AddAugment ? GameMode.Augment : GameMode.Basic;
+            GameMode = stageData.controllerName == ControllerID.Default ? GameMode.Basic : GameMode.Augment;
             
             StartCoroutine(StartBattle(stageData));
         }
@@ -125,15 +125,15 @@ namespace GlobalManage
                 switch (s)
                 {
                     case "CLEAR":
-                        EditorLogger.Print($"승리{stageData.level} : {DataManager.Instance.playData}");
+                        EditorLogger.Print($"승리 {stageData.level}");
                         ContinueGame(lastData);
                         break;
                     case "FAIL":
-                        EditorLogger.Print($"패배{stageData.level} : {DataManager.Instance.playData}");
+                        EditorLogger.Print($"패배 {stageData.level}");
                         EndGame(true);
                         break;
                     case "End":
-                        EditorLogger.Print($"종료{stageData.level} : {DataManager.Instance.playData}");
+                        EditorLogger.Print($"종료 {stageData.level}");
                         EndGame();
                         break;
                 }
@@ -164,7 +164,7 @@ namespace GlobalManage
                 case GameMode.Augment:
                     // 증강 데이터 이전
                     stageData.currentAugment = lastStage.currentAugment;
-                    stageData.unselectedAugment = lastStage.unselectedAugment;
+                    stageData.ignoreAugment = lastStage.ignoreAugment;
                     
                     // 컨트롤러 변경
                     stageData.controllerName = AugmentLevel.Contains(stageData.level) ? ControllerID.AddAugment : ControllerID.Augmented;

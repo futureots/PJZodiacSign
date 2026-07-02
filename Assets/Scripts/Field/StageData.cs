@@ -31,12 +31,11 @@ public class StageData
     
     // Stage Config
     public string modelName = GlobalManage.ModelID.Default;
-    // TODO: 테스트용 일괄 증강 획득
-    public string controllerName = GlobalManage.ControllerID.AddAugment;
+    public string controllerName = GlobalManage.ControllerID.Augmented;
     
     // Augment
     public List<AugmentSO> currentAugment = new();
-    public List<AugmentSO> unselectedAugment = new();
+    public List<AugmentSO> ignoreAugment = new();
 
     // Player and Agents
     public EnemyAI aiPrefab = null;

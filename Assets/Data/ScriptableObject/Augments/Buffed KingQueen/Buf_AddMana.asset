@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af0ea32d34714099b1aab3c584fbddf2, type: 3}
-  m_Name: Buff_HealArea
+  m_Name: Buf_AddMana
   m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
-  icon: {fileID: 21300000, guid: 96abe9144609545419e18f668c98e5b3, type: 3}
-  effectName: "\uD68C\uBCF5\uC9C0\uB300"
-  description: "\uB9E4 \uD134 \uC2DC\uC791 \uC2DC \uBAA8\uB4E0 \uC544\uAD70\uC758
-    \uCCB4\uB825\uC744 1 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  icon: {fileID: 21300000, guid: 213a7b64eaee46e4b89efefe49d383de, type: 3}
+  effectName: "\uB9E4 \uD134 \uC2DC\uC791 \uC2DC \uB9C8\uB098\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+  description: 
   type: 1
   count: 0
-  applyValue: 1
-  targetStat: 0
+  applyValueOnEveryPhase: 0
+  applyValueOnEveryTurn: 1
+  targetStat: 1
