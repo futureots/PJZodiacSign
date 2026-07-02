@@ -24,6 +24,7 @@ namespace Augment
 
         public override void OnPhaseStarted(Phase data)
         {
+            if (data.phaseName != PhaseType.Battle) return;
             var agent = Agent.LocalPlayer;
             
             // 해당 entity 선택
