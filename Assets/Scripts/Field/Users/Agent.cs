@@ -110,7 +110,7 @@ public class Agent : MonoBehaviour
     /// <param name="newEntity">획득할 엔티티 정보</param>
     /// <param name="level">초기 레벨</param>
     /// <remarks>리소스 필드로 할당</remarks>
-    public void GetEntity(EntityData newEntity, int level = 0)
+    public Entity GetEntity(EntityData newEntity, int level = 0)
     {
         var resourceField = StageManager.Instance.agentField[id];
         var list = resourceField.GetTiles().GetEmptyTiles();
@@ -118,6 +118,8 @@ public class Agent : MonoBehaviour
 
         list.RemoveAt(0);
         resourceEntities.Add(entity);
+
+        return entity;
     }
 
     /// <summary>

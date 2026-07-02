@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d568c2b77055ef4eafeba128db6592e, type: 3}
+  m_Name: Get_BuffedKingQueen
+  m_EditorClassIdentifier: Assembly-CSharp::Augment.GetBuffedEntityAugment
+  icon: {fileID: 21300000, guid: 4e8445dfe8ce01447a12e1abe240afcb, type: 3}
+  effectName: "\uBD80\uBD80 \uD55C \uC30D "
+  description: "\uC989\uC2DC \uD0B9\uACFC \uD038\uC744 1\uAC1C\uC529 \uD68D\uB4DD\uD569\uB2C8\uB2E4.
+    \uB9E4 \uD134 \uC2DC\uC791 \uC2DC \uB79C\uB364 \uD0B9 1\uAC1C\uC640 \uD038 1\uAC1C\uC758
+    \uB9C8\uB098\uAC00 \uCD94\uAC00\uB85C 1\uC99D\uAC00\uD569\uB2C8\uB2E4."
+  type: 1
+  getEntityAugment: {fileID: 11400000, guid: 014437d1b95fb804ca57a0f552145b58, type: 2}
+  buffAugment: {fileID: 11400000, guid: 5d40bc887de557941aacce9e9143ab5e, type: 2}

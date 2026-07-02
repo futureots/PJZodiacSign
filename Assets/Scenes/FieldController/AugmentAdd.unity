@@ -274,7 +274,7 @@ MonoBehaviour:
     modelName: 
     controllerName: 
     currentAugment: []
-    unselectedAugment: []
+    ignoreAugment: []
     aiPrefab: {fileID: 0}
     player:
       credit: 0
@@ -1399,8 +1399,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Augment.AugmentManager
   selectUI: {fileID: 867347898}
   augmentPool:
+  - {fileID: 11400000, guid: e2b24de16b47c05418b50d088eb8f235, type: 2}
   - {fileID: 11400000, guid: 9b227eda49f6ea34ebc609be3b8a2e3c, type: 2}
-  - {fileID: 11400000, guid: b69a662a85cbdb94f8c279558eb5351b, type: 2}
+  - {fileID: 11400000, guid: 1166d067858c6674aaca3ad5d40e0ab8, type: 2}
+  - {fileID: 11400000, guid: 52a39b1ecf8917d4c82b53ad4ee978eb, type: 2}
+  - {fileID: 11400000, guid: 20daafbb7583d674bb480a011b9facdd, type: 2}
+  - {fileID: 11400000, guid: 014437d1b95fb804ca57a0f552145b58, type: 2}
+  - {fileID: 11400000, guid: 5ddd5ef6cb627604c824059d3429fad2, type: 2}
+  - {fileID: 11400000, guid: 0d05701ff7a982f4f8280828378cfa04, type: 2}
+  - {fileID: 11400000, guid: f22758b3e4b50404d872ea4608307ea5, type: 2}
   - {fileID: 11400000, guid: 2bb8b7fc5954bdb43b9a962686fc6e24, type: 2}
   - {fileID: 11400000, guid: 2a96a93c2bf894747baa87ac4c5bae7e, type: 2}
   - {fileID: 11400000, guid: 003b100788f699248b16912de8354bcd, type: 2}
