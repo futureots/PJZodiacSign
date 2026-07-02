@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Augment
@@ -6,13 +7,17 @@ namespace Augment
     [CreateAssetMenu(fileName = "DebugAugment", menuName = "Augment/Get Entity")]
     public class GetEntityAugment: AugmentSO
     {
-        public EntityData newEntity;
+        public List<EntityData> newEntity;
+        public readonly List<Entity> addedEntity = new();
         
         public override void OnActive()
         {
             try
             {
-                Agent.LocalPlayer.GetEntity(newEntity);
+                foreach(var newEt in newEntity) 
+                {
+                    addedEntity.Add(Agent.LocalPlayer.GetEntity(newEt));
+                }
             }
             catch (Exception e)
             {

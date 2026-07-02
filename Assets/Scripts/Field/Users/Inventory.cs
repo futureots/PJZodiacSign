@@ -43,8 +43,8 @@ public class Inventory : MonoBehaviour
         instance.transform.SetParent(transform);
         instance.onDiscard += () => RemoveItem(instance);
         return true;
-
     }
+    
     /// <summary>
     /// 인벤토리 아이템 제거
     /// </summary>

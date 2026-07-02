@@ -12,5 +12,4 @@ public class ItemData : AbstractData
     /// 해당 아이템이 사용가능한 페이즈 타입
     /// </summary>
     public TurnType useType;
-
 }
