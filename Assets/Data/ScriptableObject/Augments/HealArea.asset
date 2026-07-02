@@ -13,11 +13,20 @@ MonoBehaviour:
   m_Name: HealArea
   m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
   icon: {fileID: 21300000, guid: 96abe9144609545419e18f668c98e5b3, type: 3}
-  effectName: "\uD68C\uBCF5\uC9C0\uB300"
-  description: "\uB9E4 \uD134 \uC2DC\uC791 \uC2DC \uBAA8\uB4E0 \uC544\uAD70\uC758
-    \uCCB4\uB825\uC744 1 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605103980547
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   count: 0
   applyValueOnEveryPhase: 0
   applyValueOnEveryTurn: 1
   targetStat: 0
+  references:
+    version: 2
+    RefIds: []

@@ -14,8 +14,8 @@ public class AugmentInfoUI : MonoBehaviour
     public void Init(AugmentSO augmentSO)
     {
         icon.sprite = augmentSO.icon;
-        nameText.text = augmentSO.effectName;
-        descriptionText.text = augmentSO.description;
+        nameText.text = augmentSO.EffectName;
+        descriptionText.text = augmentSO.Description;
 
         frame.color = AugmentSO.Color[augmentSO.Type];
     }

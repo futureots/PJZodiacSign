@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: GetCredit
   m_EditorClassIdentifier: Assembly-CSharp::Augment.GetCreditAugment
   icon: {fileID: 21300000, guid: 2e43f0691f0d7404eae8d01381da65a0, type: 3}
-  effectName: "\uC77C\uC2DC\uBD88"
-  description: "\uC989\uC2DC 50\uD06C\uB808\uB527\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4.
-    \uC774\uD6C4 \uB9E4 \uB808\uBCA8\uB9C8\uB2E4 10\uACE8\uB4DC\uC529 \uCD94\uAC00\uB85C
-    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 317407338369024
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   CreditOnActive: 50
   CreditEveryLevel: 10
+  references:
+    version: 2
+    RefIds: []

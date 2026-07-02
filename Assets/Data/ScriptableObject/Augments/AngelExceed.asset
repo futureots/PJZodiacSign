@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: AngelExceed
   m_EditorClassIdentifier: Assembly-CSharp::Augment.GetEntityAugment
   icon: {fileID: 21300000, guid: 96abe9144609545419e18f668c98e5b3, type: 3}
-  effectName: "\uCC9C\uC0AC \uAC15\uB9BC"
-  description: "\uC5D4\uC824(\uC544\uB9C8\uC874)\uC744 1\uAC1C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605099786240
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   newEntity:
   - {fileID: 11400000, guid: c8d796e345be8d94688796e645d0c96b, type: 2}
+  references:
+    version: 2
+    RefIds: []

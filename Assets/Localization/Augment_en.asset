@@ -48,7 +48,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1605103980546
     m_Localized: BattleCry|At the start of each turn, grant +1 Attack to a random
-      ally
+      2 allies
     m_Metadata:
       m_Items: []
   - m_Id: 1605103980547
@@ -56,7 +56,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1605103980548
-    m_Localized: Mystic Ground|At the start of each turn, restore 2 Mana to a random
+    m_Localized: Mystic Ground|At the start of each turn, restore 1 Mana to a random
       ally.
     m_Metadata:
       m_Items: []
@@ -68,6 +68,15 @@ MonoBehaviour:
   - m_Id: 1605103980550
     m_Localized: Temporary Promotion|At the start of combat, increase the level of
       3 random allies by 1 for the rest of the battle.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 317407338369024
+    m_Localized: Piggy Bank|Instantly gain 50 credits. Gain an additional 20 credits
+      at the start of each stage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 317407405477888
+    m_Localized: Treasure|Instantly gain 150 credits.
     m_Metadata:
       m_Items: []
   references:

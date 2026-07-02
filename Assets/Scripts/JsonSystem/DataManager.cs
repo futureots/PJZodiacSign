@@ -8,9 +8,7 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
-    // TODO: Release빌드에선 persistentDataPath로 개선 필요
-    [NonSerialized]
-    private readonly string defaultPath = Path.Join(Application.dataPath, "Data");
+    private string _defaultPath;
     /// <summary>
     /// 적 레벨 데이터
     /// </summary>
@@ -27,7 +25,13 @@ public class DataManager : Singleton<DataManager>
 
     public bool isModified { get; private set; }
 
-
+    protected override void Awake()
+    {
+        base.Awake();
+        _defaultPath = Path.Join(Application.persistentDataPath, "Data");
+    }
+    
+    
     public AgentData GetPlayerAgentData()
     {
 
@@ -98,13 +102,10 @@ public class DataManager : Singleton<DataManager>
 
     public void ResetData(string fileName)
     {
-        #if UNITY_EDITOR
-        DeleteData(fileName);
-        LoadAllData(fileName);
-        #else
+        //DeleteData(fileName);
+        //LoadAllData(fileName);
         DeleteSteamCloudData(fileName);
         LoadSteamCloudData(fileName);
-        #endif
     }
 
     public void SaveAllData(string fileName)
@@ -148,11 +149,11 @@ public class DataManager : Singleton<DataManager>
     public void SaveData(string data,string fileName)
     {
         
-        if (!Directory.Exists(defaultPath))
+        if (!Directory.Exists(_defaultPath))
         {
-            Directory.CreateDirectory(defaultPath);
+            Directory.CreateDirectory(_defaultPath);
         }
-        string filePath = Path.Join(defaultPath,  $"{fileName}.Json");
+        string filePath = Path.Join(_defaultPath,  $"{fileName}.Json");
         File.WriteAllText(filePath, data);
         EditorLogger.Print(data);
     }
@@ -163,9 +164,9 @@ public class DataManager : Singleton<DataManager>
     public bool TryLoadData(string fileName, out string json)
     {
         json = null;
-        if (Directory.Exists(defaultPath))
+        if (Directory.Exists(_defaultPath))
         {
-            string filePath = Path.Join(defaultPath, $"{fileName}.Json");
+            string filePath = Path.Join(_defaultPath, $"{fileName}.Json");
             if (File.Exists(filePath))
             {
                 json = File.ReadAllText(filePath);
@@ -181,9 +182,9 @@ public class DataManager : Singleton<DataManager>
     /// </summary>
     public void DeleteData(string fileName)
     {
-        if (Directory.Exists(defaultPath))
+        if (Directory.Exists(_defaultPath))
         {
-            string filePath = Path.Join(defaultPath, $"{fileName}.Json");
+            string filePath = Path.Join(_defaultPath, $"{fileName}.Json");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);

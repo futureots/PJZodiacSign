@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: Alchemy
   m_EditorClassIdentifier: Assembly-CSharp::Augment.ItemAugment
   icon: {fileID: 21300000, guid: da84f20f8bcee2e43956fcd33ce9674a, type: 3}
-  effectName: "\uC5F0\uAE08\uC220"
-  description: "\uB9E4 \uB808\uBCA8 \uC2DC\uC791 \uC2DC \uB79C\uB364\uD55C \uC544\uC774\uD15C\uC744
-    1\uAC1C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605099786242
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   itemPool:
   - {fileID: 11400000, guid: bc25fc61240a1c340b98a0da46c7cfde, type: 2}
   - {fileID: 11400000, guid: c370e1ebb6d87be4d9bdc20b1868235b, type: 2}
@@ -31,3 +37,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 630a889e461c66e42a95888573a3b28b, type: 2}
   countOnActive: 0
   countEveryLevel: 1
+  references:
+    version: 2
+    RefIds: []

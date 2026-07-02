@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: IQIncrease
   m_EditorClassIdentifier: Assembly-CSharp::Augment.ActCount
   icon: {fileID: 21300000, guid: bc4a2c6bdce59a94eb0d6bb7a135043e, type: 3}
-  effectName: "IQ \uC0C1\uC2B9"
-  description: "\uCD5C\uB300 \uD589\uB3D9 \uCE74\uC6B4\uD2B8\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4.
-    (\uCD5C\uB300 4) "
   type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605099786241
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   maxCount: 4
+  references:
+    version: 2
+    RefIds: []
