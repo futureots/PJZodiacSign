@@ -1,18 +1,20 @@
 using Augment;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AugmentUI : MonoBehaviour
 {
     private AugmentManager manager;
     public Transform iconContent;
-    private readonly List<(Image icon, AugmentSO data)> currentAugments = new();
+    private readonly List<AugmentTemplateUI> currentAugments = new();
     
     [Header("Icon Template")]
-    [SerializeField] private GameObject positiveTemplate;
-    [SerializeField] private GameObject negativeTemplate;
-    [SerializeField] private GameObject neutralTemplate;
+    [SerializeField] private AugmentTemplateUI augTemplate;
+    [SerializeField] private RectTransform descriptionPanel;
+    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private TMP_Text descriptionText;
+    
 
     private void Awake()
     {
@@ -28,24 +30,30 @@ public class AugmentUI : MonoBehaviour
         // 리스트 새로고침
         foreach (var argIcon in currentAugments)
         {
-            Destroy(argIcon.icon.gameObject);
+            Destroy(argIcon.gameObject);
         }
         currentAugments.Clear();
         
         // 새로 생성
         foreach (var augment in augments)
         {
-            var template = augment.Type switch
-            {
-                AugmentType.Positive => positiveTemplate,
-                AugmentType.Negative => negativeTemplate,
-                _ => neutralTemplate
-            };
-            
-            var newIcon = Instantiate(template, iconContent).GetComponent<Image>();
-            newIcon.gameObject.SetActive(true);
-            
-            currentAugments.Add((newIcon, augment));
+            var icon = Instantiate(augTemplate, iconContent);
+            icon.Init(augment);
+            icon.OnMouseHover += OnMouseHover;
+            currentAugments.Add(icon);
         }
+    }
+
+    void OnMouseHover(Vector2 pos, AugmentSO augment)
+    {
+        if (augment == null)
+        {
+            descriptionPanel.gameObject.SetActive(false);
+            return;
+        }
+        descriptionPanel.gameObject.SetActive(true);
+        descriptionPanel.position = pos;
+        descriptionText.text = augment.Description;
+        titleText.text = augment.EffectName;
     }
 }

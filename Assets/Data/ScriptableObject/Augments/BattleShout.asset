@@ -13,11 +13,20 @@ MonoBehaviour:
   m_Name: BattleShout
   m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
   icon: {fileID: 21300000, guid: f2c6f216748c23e48844cac363144790, type: 3}
-  effectName: "\uC804\uD22C\uC758 \uD568\uC131"
-  description: "\uB9E4 \uD134 \uC2DC\uC791 \uC2DC \uB79C\uB364 \uC544\uAD70\uC758
-    \uACF5\uACA9\uB825\uC774 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   type: 1
-  count: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605103980546
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  count: 2
   applyValueOnEveryPhase: 0
   applyValueOnEveryTurn: 1
   targetStat: 2
+  references:
+    version: 2
+    RefIds: []

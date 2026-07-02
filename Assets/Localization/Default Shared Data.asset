@@ -171,6 +171,10 @@ MonoBehaviour:
     m_Key: Log_FullField
     m_Metadata:
       m_Items: []
+  - m_Id: 8420720688697344
+    m_Key: ChooseAugment
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

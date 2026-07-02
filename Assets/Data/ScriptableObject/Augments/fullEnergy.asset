@@ -13,11 +13,20 @@ MonoBehaviour:
   m_Name: fullEnergy
   m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
   icon: {fileID: 21300000, guid: ff885d2457ed2194885eb7115ae6f535, type: 3}
-  effectName: "\uAE30\uC6B4 \uCDA9\uB9CC"
-  description: "\uC804\uD22C \uC2DC\uC791 \uC2DC \uBAA8\uB4E0 \uC544\uAD70\uC758
-    \uB9C8\uB098\uB97C \uCD5C\uB300\uB85C \uCC44\uC6C1\uB2C8\uB2E4."
   type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605103980544
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   count: 0
   applyValueOnEveryPhase: 99
   applyValueOnEveryTurn: 0
   targetStat: 1
+  references:
+    version: 2
+    RefIds: []

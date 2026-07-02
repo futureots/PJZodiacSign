@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: Restart
   m_EditorClassIdentifier: Assembly-CSharp::Augment.SellEntityAugment
   icon: {fileID: 21300000, guid: 2e43f0691f0d7404eae8d01381da65a0, type: 3}
-  effectName: "\uC7AC\uC2DC\uC791"
-  description: "\uBAA8\uB4E0 \uAE30\uBB3C\uC744 \uD310\uB9E4\uD558\uACE0 \uD604\uC7AC
-    \uAC00\uC9C4 \uD06C\uB808\uB527\uC744 2\uBC30\uB85C \uB9CC\uB4ED\uB2C8\uB2E4.
-    *\uAC01 \uAE30\uBB3C\uC758 \uD310\uB9E4 \uAC00\uACA9\uC740 \uAC15\uD654\uB2E8\uACC4\uC640
-    \uAD00\uB828 \uC5C6\uC2B5\uB2C8\uB2E4."
-  type: 0
+  type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605015900160
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   sellEntityCount: 0
   creditMultiplier: 2
+  references:
+    version: 2
+    RefIds: []

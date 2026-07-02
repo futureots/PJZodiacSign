@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: Treasure
   m_EditorClassIdentifier: Assembly-CSharp::Augment.GetCreditAugment
   icon: {fileID: 21300000, guid: d51bf16180dfdf3418a9d16a2d857e6b, type: 3}
-  effectName: "\uBCF4\uBB3C \uD68D\uB4DD"
-  description: "\uC989\uC2DC 60\uD06C\uB808\uB527\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   type: 1
-  CreditOnActive: 60
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 317407405477888
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  CreditOnActive: 100
   CreditEveryLevel: 0
+  references:
+    version: 2
+    RefIds: []
