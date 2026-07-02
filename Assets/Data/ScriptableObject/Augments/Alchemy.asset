@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Augment.ItemAugment
   icon: {fileID: 21300000, guid: da84f20f8bcee2e43956fcd33ce9674a, type: 3}
   effectName: "\uC5F0\uAE08\uC220"
-  description: "\uC989\uC2DC \uBC0F \uB9E4 \uB808\uBCA8 \uC2DC\uC791 \uC2DC \uB79C\uB364\uD55C
-    \uC544\uC774\uD15C\uC744 1\uAC1C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  description: "\uB9E4 \uB808\uBCA8 \uC2DC\uC791 \uC2DC \uB79C\uB364\uD55C \uC544\uC774\uD15C\uC744
+    1\uAC1C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   type: 1
   itemPool:
   - {fileID: 11400000, guid: bc25fc61240a1c340b98a0da46c7cfde, type: 2}
@@ -29,5 +29,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a29786851afb74448a567e800337ed9d, type: 2}
   - {fileID: 11400000, guid: 8c9b5d542aa599f43968e993fa10772f, type: 2}
   - {fileID: 11400000, guid: 630a889e461c66e42a95888573a3b28b, type: 2}
-  countOnActive: 1
+  countOnActive: 0
   countEveryLevel: 1

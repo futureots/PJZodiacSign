@@ -18,5 +18,6 @@ MonoBehaviour:
     \uB9C8\uB098\uAC00 2 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   type: 1
   count: 1
-  applyValue: 2
+  applyValueOnEveryPhase: 0
+  applyValueOnEveryTurn: 2
   targetStat: 1

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Augment.ActCount
   icon: {fileID: 21300000, guid: bc4a2c6bdce59a94eb0d6bb7a135043e, type: 3}
   effectName: "IQ \uC0C1\uC2B9"
-  description: 
+  description: "\uCD5C\uB300 \uD589\uB3D9 \uCE74\uC6B4\uD2B8\uAC00 1 \uC99D\uAC00\uD569\uB2C8\uB2E4.
+    (\uCD5C\uB300 4) "
   type: 1
   maxCount: 4

@@ -18,5 +18,6 @@ MonoBehaviour:
     \uACF5\uACA9\uB825\uC774 1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   type: 1
   count: 1
-  applyValue: 1
+  applyValueOnEveryPhase: 0
+  applyValueOnEveryTurn: 1
   targetStat: 2

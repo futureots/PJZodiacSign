@@ -27,7 +27,7 @@ namespace Augment
             var agent = Agent.LocalPlayer;
             
             // 해당 entity 선택
-            bool applyAllEntity = count == 0;
+            bool applyAllEntity = count <= 0;
 
             List<Entity> targetEntity;
             if (applyAllEntity)
@@ -55,7 +55,7 @@ namespace Augment
             var agent = Agent.LocalPlayer;
             
             // 해당 entity 선택
-            bool applyAllEntity = count == 0;
+            bool applyAllEntity = count <= 0;
 
             List<Entity> targetEntity;
             if (applyAllEntity)
@@ -99,8 +99,7 @@ namespace Augment
                         }
                         return;
                     case TargetStat.MP:
-                        var energy = entity.energy;
-                        energy.CurEnergy += applyValue;
+                        entity.energy.CurEnergy += applyValue;
                         return;
                     case TargetStat.ATK:
                         entity.Power += applyValue;
