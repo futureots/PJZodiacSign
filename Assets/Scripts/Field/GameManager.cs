@@ -9,6 +9,7 @@ namespace GlobalManage
     {
         Basic,
         Augment,
+        Tutorial
     }
     
     public class GameManager : Singleton<GameManager>
@@ -65,21 +66,28 @@ namespace GlobalManage
         /// Enter Battle Scene
         /// </summary>
         /// <param name="stageData">Stage data to Load</param>
-        public void EnterBattle(StageData stageData)
+        public void EnterBattle(StageData stageData, GameMode gameMode)
         {
             Level = stageData.level;
             
             // 튜토리얼은 데이터를 저장하지 않음
-            if (stageData.controllerName != ControllerID.Tutorial)
+            if (gameMode == GameMode.Tutorial)
             {
                 DataManager.Instance.SetData(stageData.player, Level);
                 //DataManager.Instance.SaveAllData("PlayerData");
                 DataManager.Instance.SaveSteamCloudData("PlayerData");
             }
-            
-            // 게임모드 설정
-            GameMode = stageData.controllerName == ControllerID.Default ? GameMode.Basic : GameMode.Augment;
-            
+        
+            // 모드에 따라 컨트롤러 확인
+            GameMode = gameMode;
+            stageData.controllerName = gameMode switch
+            {
+                GameMode.Augment => AugmentLevel.Contains(Level) ? ControllerID.AddAugment : ControllerID.Augmented,
+                GameMode.Tutorial => ControllerID.Tutorial,
+                GameMode.Basic => ControllerID.Default,
+                _ => ControllerID.Default
+            };
+
             StartCoroutine(StartBattle(stageData));
         }
 
@@ -142,11 +150,9 @@ namespace GlobalManage
             yield return loadingUI.FadeOut(1f);
             loadingUI.gameObject.SetActive(false);
         }
-
         #endregion
 
         #region BattleEnd
-
         public void ContinueGame(StageData lastStage)
         {
             var playerData = Agent.LocalPlayer.getData();
@@ -174,7 +180,7 @@ namespace GlobalManage
             }
             
             // 증강 넘기기, 레벨 확인해서 
-            EnterBattle(stageData);
+            EnterBattle(stageData, GameMode);
         }
 
         public void EndGame(bool isDelete = false)

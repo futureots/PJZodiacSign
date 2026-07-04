@@ -38,10 +38,8 @@ namespace Main
                 var dataManager = DataManager.Instance;
                 GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
                 var data = GameManager.Instance.CreateStageData(dataManager.playData.stageLevel, dataManager.GetPlayerAgentData(),dataManager.playData.time,dataManager.playData.point);
-
-                data.controllerName = ControllerID.Augmented;
                 
-                GameManager.Instance.EnterBattle(data);
+                GameManager.Instance.EnterBattle(data, GameMode.Augment);
             }
             else
             {
@@ -53,7 +51,7 @@ namespace Main
                 GameManager.Instance.SetModeData(levelTable, shopTable);
                 var data = GameManager.Instance.CreateStageData(1, new AgentData(150),0,0);
                 
-                GameManager.Instance.EnterBattle(data);
+                GameManager.Instance.EnterBattle(data, GameMode.Augment);
             }
         }
 
@@ -61,8 +59,7 @@ namespace Main
         {
             GameManager.Instance.SetModeData(tutorialTable, shopTable);
             var data = GameManager.Instance.CreateStageData(1, new AgentData(9999),0,0);
-            data.controllerName = ControllerID.Tutorial;
-            GameManager.Instance.EnterBattle(data);
+            GameManager.Instance.EnterBattle(data, GameMode.Tutorial);
         }
 
         public void GiveUpGame()
