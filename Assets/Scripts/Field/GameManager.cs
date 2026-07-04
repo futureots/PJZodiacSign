@@ -71,7 +71,7 @@ namespace GlobalManage
             Level = stageData.level;
             
             // 튜토리얼은 데이터를 저장하지 않음
-            if (gameMode == GameMode.Tutorial)
+            if (gameMode != GameMode.Tutorial)
             {
                 DataManager.Instance.SetData(stageData.player, Level);
                 //DataManager.Instance.SaveAllData("PlayerData");
