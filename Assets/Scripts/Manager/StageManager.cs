@@ -169,11 +169,14 @@ public class StageManager : Singleton<StageManager>
     IEnumerator WaitForCommand(IExecute command)
     {
         _isWaiting = true;
-        yield return new WaitUntil(() => Count == 0);
+        yield return new WaitUntil(() => Count <= 0);
         _isWaiting = false;
-        yield return StartCoroutine(command.Execute());
-        
+        if (command == null) yield break;
 
+        // 커맨드 실행
+        yield return StartCoroutine(command.Execute());        
+
+        // 종료 커맨드 여부 확인 및 정리
         if (command is EndCommand)
         {
             foreach(var cmd in commandQueue) cmd.Delete();
@@ -186,6 +189,8 @@ public class StageManager : Singleton<StageManager>
             foreach (var cmd in commands)
             {
                 ReceiveCommand(cmd);
+                
+                yield return null;      // 프레임 전환 (동일 프레임 무한루프 방지)
             }
             
         }
