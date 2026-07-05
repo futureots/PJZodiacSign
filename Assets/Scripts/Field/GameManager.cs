@@ -74,8 +74,12 @@ namespace GlobalManage
             if (gameMode != GameMode.Tutorial)
             {
                 DataManager.Instance.SetData(stageData.player, Level);
-                //DataManager.Instance.SaveAllData("PlayerData");
+                
+                #if UNITY_EDITOR
+                DataManager.Instance.SaveAllData("PlayerData");
+                #else
                 DataManager.Instance.SaveSteamCloudData("PlayerData");
+                #endif
             }
         
             // 모드에 따라 컨트롤러 확인

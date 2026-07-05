@@ -102,10 +102,13 @@ public class DataManager : Singleton<DataManager>
 
     public void ResetData(string fileName)
     {
-        //DeleteData(fileName);
-        //LoadAllData(fileName);
+        #if UNITY_EDITOR
+        DeleteData(fileName);
+        LoadAllData(fileName);
+        #else
         DeleteSteamCloudData(fileName);
         LoadSteamCloudData(fileName);
+        #endif
     }
 
     public void SaveAllData(string fileName)
