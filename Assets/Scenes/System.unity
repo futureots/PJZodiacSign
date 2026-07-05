@@ -2700,6 +2700,7 @@ MonoBehaviour:
   loadingUI: {fileID: 1957596246}
   levelTable: {fileID: 11400000, guid: 1b058f5e6ab5ea049bc8d920a2a49e02, type: 2}
   shopTable: {fileID: 11400000, guid: fb5c5aaad7b089c47b837dd864309c21, type: 2}
+  augmentTable: {fileID: 11400000, guid: e73566cb542044341a3d6f43d05e2310, type: 2}
   currentStage:
     time: 0
     level: 0
@@ -2718,7 +2719,7 @@ MonoBehaviour:
     agents: []
     shopTable: {fileID: 0}
     phases: []
-  AugmentLevel: 020000000500000008000000
+  AugmentLevel: 02000000060000000a000000
 --- !u!4 &1138561101
 Transform:
   m_ObjectHideFlags: 0
