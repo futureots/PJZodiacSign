@@ -24,7 +24,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   count: 0
-  applyValueOnEveryPhase: 99
+  applyValueOnEveryPhase: 4
   applyValueOnEveryTurn: 0
   targetStat: 1
   references:

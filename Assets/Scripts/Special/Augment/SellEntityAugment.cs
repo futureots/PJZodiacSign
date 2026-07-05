@@ -27,10 +27,8 @@ namespace Augment
             // 판매 및 제거
             foreach(var entity in sellPool)
             {
-                Agent.LocalPlayer.RemoveOnFieldList(entity);
-                Agent.LocalPlayer.RemoveOnResourceList(entity);
-
                 totalSellCredit += entity.baseData.normalPrice;
+                entity.Dead();
             }
 
             // 금액 추가

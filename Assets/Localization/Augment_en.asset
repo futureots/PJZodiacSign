@@ -42,8 +42,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1605103980545
-    m_Localized: The Couple|Instantly gain 1 King and 1 Queen. At the start of each
-      turn, restore 1 Mana to a random King or Queen.
+    m_Localized: The Couple|Instantly gain 1 King and 1 Queen.
     m_Metadata:
       m_Items: []
   - m_Id: 1605103980546
@@ -58,11 +57,6 @@ MonoBehaviour:
   - m_Id: 1605103980548
     m_Localized: Mystic Ground|At the start of each turn, restore 1 Mana to a random
       ally.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1605103980549
-    m_Localized: Blighted Ground|At the start of each turn, deal 1 damage to all
-      units, and 2 damage to enemies.
     m_Metadata:
       m_Items: []
   - m_Id: 1605103980550

@@ -19,6 +19,7 @@ namespace GlobalManage
 
         public LevelTable levelTable;
         public ShopTable shopTable;
+        public AugmentTable augmentTable;
 
         [Header("Stage status")]
         [SerializeField] private StageData currentStage = null;

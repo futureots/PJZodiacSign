@@ -98,16 +98,16 @@ namespace Augment
                         {
                             entity.Damaged(applyValue);
                         }
-                        return;
+                        break;
                     case TargetStat.MP:
                         entity.energy.CurEnergy += applyValue;
-                        return;
+                        break;
                     case TargetStat.ATK:
                         entity.Power += applyValue;
-                        return;
+                        break;
                     case TargetStat.Lvl:
                         entity.Level += applyValue;
-                        return;
+                        break;
                     default:
                         return;
                 }
