@@ -124,78 +124,82 @@ public class StageManager : Singleton<StageManager>
 
     #region CommandLogic
 
-    private int _count;
-    public int Count
-    {
-        get
+        private int _count;
+        public int Count
         {
-            return _count;
+            get { return _count; }
+            set
+            {
+                _count = value;
+                isSequencing?.Invoke(_count);
+            }
         }
-        set
-        {
-            _count = value;
-            isSequencing?.Invoke(_count);
-        }
-    }
-    public Action<int> isSequencing;
-    
-    Queue<IExecute> commandQueue = new Queue<IExecute>();
-    private bool _isWaiting;
-    
-    public void ReceiveCommand(IExecute command)
-    {
-        if (_isWaiting)
+        public Action<int> isSequencing;
+
+        Queue<IExecute> commandQueue = new Queue<IExecute>();
+
+    // 현재 큐를 처리하는 단일 루프가 실행 중인지 확인하는 플래그
+        private bool _isProcessing = false; 
+
+        public void ReceiveCommand(IExecute command)
         {
             commandQueue.Enqueue(command);
-            return;
-        }
-        if (command is CheckCommand cmd)
-        {
-            StartCoroutine(WaitForCommand(cmd));
-        }
-        else
-        {
-            ExecuteCommand(command);
-        }
-    }
-
-    void ExecuteCommand(IExecute command)
-    {
-        void Callback() => Count--;
-        Count++;
-        this.RunWithCallback(command.Execute(), Callback);
-    }
-
-    IEnumerator WaitForCommand(IExecute command)
-    {
-        _isWaiting = true;
-        yield return new WaitUntil(() => Count <= 0);
-        _isWaiting = false;
-        if (command == null) yield break;
-
-        // 커맨드 실행
-        yield return StartCoroutine(command.Execute());        
-
-        // 종료 커맨드 여부 확인 및 정리
-        if (command is EndCommand)
-        {
-            foreach(var cmd in commandQueue) cmd.Delete();
-            commandQueue.Clear();
-        }
-        else
-        {
-            List<IExecute> commands = new List<IExecute>(commandQueue);
-            commandQueue.Clear();
-            foreach (var cmd in commands)
+        
+            // 처리가 진행 중이 아닐 때만 단일 처리 코루틴을 시작합니다.
+            if (!_isProcessing)
             {
-                ReceiveCommand(cmd);
-                
-                yield return null;      // 프레임 전환 (동일 프레임 무한루프 방지)
+                StartCoroutine(ProcessQueueRoutine());
             }
-            
         }
-    }
 
-    
+    // 상호 재귀 없이 단일 루프로 모든 큐를 기획 의도대로 처리하는 핵심 코루틴
+        IEnumerator ProcessQueueRoutine()
+        {
+            _isProcessing = true;
+
+            // 큐에 커맨드가 존재하는 동안 루프를 계속 돕니다.
+            while (commandQueue.Count > 0)
+            {
+                IExecute nextCommand = commandQueue.Peek();
+
+                if (nextCommand is CheckCommand cmd)
+                {
+                    // 중요 커맨드: 큐에서 꺼낸 뒤 대기 로직 수행
+                    commandQueue.Dequeue();
+                
+                    // 1. 실행 중인 일반 커맨드(Count)가 0이 될 때까지 대기
+                    yield return new WaitUntil(() => Count == 0);
+                
+                    // 2. 중요 커맨드 실행 완료까지 대기
+                    yield return StartCoroutine(cmd.Execute());
+
+                    // 3. EndCommand 로직이 필요하다면 여기에 위치
+                    /*
+                    if (cmd is EndCommand)
+                    {
+                        foreach (var c in commandQueue) c.Delete();
+                        commandQueue.Clear();
+                    }
+                    */
+                }
+                else
+                {
+                    // 일반 커맨드: 큐에서 꺼낸 뒤 즉시 실행 (yield가 없으므로 프레임 소모 없이 동시 실행됨)
+                    IExecute normalCmd = commandQueue.Dequeue();
+                    ExecuteCommand(normalCmd);
+                }
+            }
+
+            // 큐가 완전히 비워지면 처리 상태를 해제합니다.
+            _isProcessing = false;
+        }
+
+        void ExecuteCommand(IExecute command)
+        {
+            void Callback() => Count--;
+            Count++;
+            this.RunWithCallback(command.Execute(), Callback);
+        }
+
     #endregion
 }
