@@ -9,7 +9,7 @@ public class EnergyComponent : MonoBehaviour
         get { return _curEnergy; }
         set
         {
-            _curEnergy = Math.Min(value, _maxEnergy);
+            _curEnergy = value;
             OnEnergyChanged?.Invoke(_curEnergy, MaxEnergy);
         }
     }

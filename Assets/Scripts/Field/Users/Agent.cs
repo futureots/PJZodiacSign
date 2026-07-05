@@ -210,14 +210,12 @@ public class Agent : MonoBehaviour
 
     public void RemoveOnFieldList(Entity entity)
     {
-        fieldEntities.Remove(entity);
-        Destroy(entity.gameObject);
+        entity.Dead();
     }
 
     public void RemoveOnResourceList(Entity entity)
     {
-        resourceEntities.Remove(entity);
-        Destroy(entity.gameObject);
+        entity.Dead();
     }
 
     void SetSpawnedByEntity(Entity entity)
