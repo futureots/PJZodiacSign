@@ -58,9 +58,6 @@ public class S_Promotion : BaseSkillLogic
         var promotion = EntityFactory.Instance.Request(_target.baseData, dir, tile, team, level);
         _entity.onEntitySpawn?.Invoke(promotion);
         
-        _entity.Dead();
-        _entity = null;
-        
         // 이펙트 재생
         var levelUpEffect = EffectFactory.Instance.Request("Change",promotion.transform.position, promotion.transform.lossyScale);
         if (levelUpEffect.TryGetComponent<GlowEffect>(out var levelUp))
@@ -71,13 +68,12 @@ public class S_Promotion : BaseSkillLogic
                 levelUp.Play();
             }
         }
-
+        
         yield return new WaitForSeconds(1f);
-
         
-        _entity = null;
         _target = null;
-        
+        _entity.Dead();
+        _entity = null;
         yield break;
     }
     public override BaseSkillLogic Clone()
