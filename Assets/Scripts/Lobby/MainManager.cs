@@ -42,6 +42,10 @@ namespace Main
                 GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
                 var data = GameManager.Instance.CreateStageData(dataManager.playData.stageLevel, dataManager.GetPlayerAgentData(),dataManager.playData.time,dataManager.playData.point);
                 
+                // 증강 데이터 연결
+                data.currentAugment = dataManager.playData.currentAugment;
+                data.ignoreAugment = dataManager.playData.ignoreAugment;
+
                 GameManager.Instance.EnterBattle(data, GameMode.Augment);
             }
             else

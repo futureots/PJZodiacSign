@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Augment;
 using Newtonsoft.Json;
 
 [Serializable]
@@ -27,6 +28,10 @@ public class PlayData
     /// 보유 재화
     /// </summary>
     public int credit;
+
+    // 증강 목록
+    public List<AugmentSO> currentAugment = new();
+    public List<AugmentSO> ignoreAugment = new();
 
 
     // 현재 위치한 지역 아이디
