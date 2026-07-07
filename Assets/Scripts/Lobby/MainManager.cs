@@ -41,7 +41,6 @@ namespace Main
                 var dataManager = DataManager.Instance;
                 GameManager.Instance.SetModeData(DataManager.Instance.levelTable, DataManager.Instance.shopTable);
                 var data = GameManager.Instance.CreateStageData(dataManager.playData.stageLevel, dataManager.GetPlayerAgentData(),dataManager.playData.time,dataManager.playData.point);
-                
                 GameManager.Instance.EnterBattle(data, GameMode.Augment);
             }
             else

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -11,6 +12,7 @@ namespace Augment
         Negative,
     }
     
+    [Serializable]
     public abstract class AugmentSO : ScriptableObject, IAugmentEffect
     {
         // Augment 공용 색상
@@ -23,6 +25,7 @@ namespace Augment
         
         // Augment Data
         public Sprite icon;
+        public string Id;
         public string EffectName { get; private set; } = "";
         public string Description { get; private set; }= "";
         [SerializeField] private AugmentType type = AugmentType.Neutral;

@@ -9,24 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af0ea32d34714099b1aab3c584fbddf2, type: 3}
-  m_Name: fullEnergy
-  m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
-  icon: {fileID: 21300000, guid: ff885d2457ed2194885eb7115ae6f535, type: 3}
+  m_Script: {fileID: 11500000, guid: b572ea9bc5a47164ebb39e150a53a95c, type: 3}
+  m_Name: Treasure
+  m_EditorClassIdentifier: Assembly-CSharp::Augment.GetCreditAugment
+  icon: {fileID: 21300000, guid: d51bf16180dfdf3418a9d16a2d857e6b, type: 3}
+  Id: A_013
   type: 1
   augmentCombinedData:
     m_TableReference:
       m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
     m_TableEntryReference:
-      m_KeyId: 1605103980544
+      m_KeyId: 317407405477888
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  count: 0
-  applyValueOnEveryPhase: 4
-  applyValueOnEveryTurn: 0
-  targetStat: 1
+  CreditOnActive: 150
+  CreditEveryLevel: 0
   references:
     version: 2
     RefIds: []

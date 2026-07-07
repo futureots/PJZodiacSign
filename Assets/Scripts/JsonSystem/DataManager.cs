@@ -1,8 +1,10 @@
+using Augment;
 using Newtonsoft.Json;
 using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 
@@ -17,6 +19,7 @@ public class DataManager : Singleton<DataManager>
 
     public LevelTable levelTable;
     public ShopTable shopTable;
+    public AugmentTable augmentTable;
 
     /// <summary>
     /// 플레이어 데이터
@@ -30,7 +33,16 @@ public class DataManager : Singleton<DataManager>
         base.Awake();
         _defaultPath = Path.Join(Application.persistentDataPath, "Data");
     }
-    
+
+    public List<AugmentSO> GetAugments(List<string> list)
+    {
+        return list.Select(GetAugment).ToList();
+    }
+
+    private AugmentSO GetAugment(string id)
+    {
+        return augmentTable.augmentList.FirstOrDefault(so => so.Id == id);
+    }
     
     public AgentData GetPlayerAgentData()
     {
@@ -149,7 +161,7 @@ public class DataManager : Singleton<DataManager>
     /// <summary>
     /// data를 fileName으로 된 json파일로 저장
     /// </summary>
-    public void SaveData(string data,string fileName)
+    public void SaveData(string data, string fileName)
     {
         
         if (!Directory.Exists(_defaultPath))

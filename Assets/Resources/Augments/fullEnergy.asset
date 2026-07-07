@@ -9,22 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e003431f05e54894095f8711f32a0add, type: 3}
-  m_Name: Restart
-  m_EditorClassIdentifier: Assembly-CSharp::Augment.SellEntityAugment
-  icon: {fileID: 21300000, guid: 2e43f0691f0d7404eae8d01381da65a0, type: 3}
+  m_Script: {fileID: 11500000, guid: af0ea32d34714099b1aab3c584fbddf2, type: 3}
+  m_Name: fullEnergy
+  m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
+  icon: {fileID: 21300000, guid: ff885d2457ed2194885eb7115ae6f535, type: 3}
+  Id: A_005
   type: 1
   augmentCombinedData:
     m_TableReference:
       m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
     m_TableEntryReference:
-      m_KeyId: 1605015900160
+      m_KeyId: 1605103980544
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  sellEntityCount: 0
-  creditMultiplier: 2
+  count: 0
+  applyValueOnEveryPhase: 4
+  applyValueOnEveryTurn: 0
+  targetStat: 1
   references:
     version: 2
     RefIds: []
