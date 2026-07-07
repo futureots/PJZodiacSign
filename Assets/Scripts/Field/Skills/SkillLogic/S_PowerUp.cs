@@ -63,7 +63,7 @@ public class S_PowerUp : AreaSkillLogic
             if (tile.IsEmpty) continue;
             if (tile.occupiedEntity.TryGetComponent<Entity>(out var entity))
             {
-                if (!entity.team.IsAlly(_owner.team))
+                if (entity.team.IsAlly(_owner.team))
                 {
                     entity.Power += 1;
                 }

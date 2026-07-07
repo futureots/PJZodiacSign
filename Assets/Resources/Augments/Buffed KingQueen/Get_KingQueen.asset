@@ -13,9 +13,20 @@ MonoBehaviour:
   m_Name: Get_KingQueen
   m_EditorClassIdentifier: Assembly-CSharp::Augment.GetEntityAugment
   icon: {fileID: 21300000, guid: 4e8445dfe8ce01447a12e1abe240afcb, type: 3}
-  effectName: "\uC989\uC2DC \uD0B9\uACFC \uD038\uC744 1\uAC1C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
-  description: 
+  Id: 
   type: 1
+  augmentCombinedData:
+    m_TableReference:
+      m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
+    m_TableEntryReference:
+      m_KeyId: 1605103980545
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   newEntity:
   - {fileID: 11400000, guid: 266271d9e5b56774c87cb01c9f5d0855, type: 2}
   - {fileID: 11400000, guid: 54a5fff0eb0334a4291770de80d881ef, type: 2}
+  references:
+    version: 2
+    RefIds: []
