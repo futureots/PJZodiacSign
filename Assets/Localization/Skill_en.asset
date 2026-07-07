@@ -83,7 +83,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 321116038434825
     m_Localized: Region|Select a tile within movement range to summon a random piece.
-      After 5 casts, all subsequently summoned pieces have their level increased
+      After 2 casts, all subsequently summoned pieces have their level increased
       by 1.
     m_Metadata:
       m_Items: []
@@ -123,7 +123,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 321116038434834
-    m_Localized: Optimized|Select a piece. Reduces its Max Mana by 1.
+    m_Localized: Optimized|Select a piece. Reduces its Max Mana by 1.(Cannot be reduced
+      below 1.)
     m_Metadata:
       m_Items: []
   - m_Id: 321116038434835

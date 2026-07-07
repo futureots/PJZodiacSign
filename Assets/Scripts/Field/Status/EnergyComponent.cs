@@ -15,14 +15,14 @@ public class EnergyComponent : MonoBehaviour
     }
     
     /// <summary>스킬 비용</summary>
-    [SerializeField] int _maxEnergy;
+    [SerializeField] private int _maxEnergy;
     
     public int MaxEnergy
     {
         get { return _maxEnergy; }
         set
         {
-            _maxEnergy = value;
+            _maxEnergy = Math.Max(value,1);
             OnEnergyChanged?.Invoke(CurEnergy, _maxEnergy);
         }
     }
@@ -30,7 +30,7 @@ public class EnergyComponent : MonoBehaviour
 
     public void Initialize(int skillCost)
     {
-        _maxEnergy = skillCost;
+        _maxEnergy = Math.Max(skillCost,1);
         _curEnergy = 0;
     }
 
