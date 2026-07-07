@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EmergencyPromote
   m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
   icon: {fileID: 21300000, guid: 36ff106f4f24cab46a37452d300f11d8, type: 3}
+  Id: A_011
   type: 1
   augmentCombinedData:
     m_TableReference:

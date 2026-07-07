@@ -51,21 +51,30 @@ namespace GlobalManage
             AsyncOperation modelLoad = null;
             AsyncOperation controllerLoad = null;
             
-            //현재 메모리에 'MainScene' 직접 검사
+            // 메인 씬 로드 확인 및 언로드
             Scene mainSceneCheck = SceneManager.GetSceneByName(ModelID.Main);
             if (mainSceneCheck.isLoaded)
             {
-                EditorLogger.Print($"[SceneLoader] Force Unloading Remaining MainScene.");
+                EditorLogger.Print($"[SceneLoader] Unloading MainScene.");
                 yield return SceneManager.UnloadSceneAsync(mainSceneCheck);
             }
 
-            // 기존 변수를 통한 언로드
+            // 기존 필드 모델 씬 언로드
             if (_fieldScene.isLoaded && _fieldScene.name != ModelID.Main) 
             {
                 yield return SceneManager.UnloadSceneAsync(_fieldScene);
             }
 
-            // 신규 모델 로드
+            // 기존 컨트롤러 씬 언로드
+            if (_controllerScene.isLoaded)
+            {
+                yield return SceneManager.UnloadSceneAsync(_controllerScene);
+            }
+
+            // 이전 씬 언로드 대기 (1 프레임)
+            yield return null; 
+
+            // 모델 씬 로드
             if (SceneManager.GetSceneByName(modelName).isLoaded == false)
             {
                 modelLoad = SceneManager.LoadSceneAsync(modelName, LoadSceneMode.Additive);
@@ -74,39 +83,33 @@ namespace GlobalManage
                     EditorLogger.PrintError($"Failed to Load Model : {modelName}");
                     yield break;
                 }
-                modelLoad.allowSceneActivation = false;
             }
 
-            // 컨트롤러 리로드
-            if (_controllerScene.isLoaded)
-            {
-                yield return SceneManager.UnloadSceneAsync(_controllerScene);
-            }
-            
+            // 컨트롤러 씬 로드
             controllerLoad = SceneManager.LoadSceneAsync(controllerName, LoadSceneMode.Additive);
             if (controllerLoad == null)
             {
                 EditorLogger.PrintError($"Failed to Load Controller : {controllerName}");
                 yield break;
             }
+            // 컨트롤러는 진입 타이밍 조율을 위해 0.9에서 대기
             controllerLoad.allowSceneActivation = false;
             
-            // '두 씬 중 하나라도 0.9 미만이라면' 계속 대기
-            while ((modelLoad is { progress: < 0.9f }) || (controllerLoad is { progress: < 0.9f }))
+            // 모델 씬 로드, 컨트롤러 씬이 프리로드 대기
+            while ((modelLoad is { isDone: false }) || (controllerLoad is { progress: < 0.9f }))
             {
                 yield return null;
-                // TODO: Loading UI Refresh
             }
             
-            // 씬 로드 완료 후 활성
-            if (modelLoad != null) modelLoad.allowSceneActivation = true;
+            // 컨트롤러 씬 활성화
             controllerLoad.allowSceneActivation = true;
             
+            // 로드 완료 대기
             yield return new WaitUntil(() => 
                 (modelLoad == null || modelLoad.isDone) && 
-                (controllerLoad == null || controllerLoad.isDone));
+                controllerLoad.isDone);
 
-            // 데이터 갱신
+            // 데이터 참조 갱신
             _fieldScene = SceneManager.GetSceneByName(modelName);
             _controllerScene = SceneManager.GetSceneByName(controllerName);
             

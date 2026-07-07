@@ -9,24 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af0ea32d34714099b1aab3c584fbddf2, type: 3}
-  m_Name: HealArea
-  m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
-  icon: {fileID: 21300000, guid: 96abe9144609545419e18f668c98e5b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d568c2b77055ef4eafeba128db6592e, type: 3}
+  m_Name: BuffedKingQueen
+  m_EditorClassIdentifier: Assembly-CSharp::Augment.GetBuffedEntityAugment
+  icon: {fileID: 21300000, guid: 4e8445dfe8ce01447a12e1abe240afcb, type: 3}
+  Id: A_006
   type: 1
   augmentCombinedData:
     m_TableReference:
       m_TableCollectionName: GUID:36be33be44745cb489995083f2c4026b
     m_TableEntryReference:
-      m_KeyId: 1605103980547
+      m_KeyId: 1605103980545
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  count: 0
-  applyValueOnEveryPhase: 0
-  applyValueOnEveryTurn: 1
-  targetStat: 0
+  getEntityAugment: {fileID: 11400000, guid: 014437d1b95fb804ca57a0f552145b58, type: 2}
+  buffAugment: {fileID: 11400000, guid: 5d40bc887de557941aacce9e9143ab5e, type: 2}
   references:
     version: 2
     RefIds: []

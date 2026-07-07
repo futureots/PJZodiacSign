@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Alchemy
   m_EditorClassIdentifier: Assembly-CSharp::Augment.ItemAugment
   icon: {fileID: 21300000, guid: da84f20f8bcee2e43956fcd33ce9674a, type: 3}
+  Id: A_004
   type: 1
   augmentCombinedData:
     m_TableReference:

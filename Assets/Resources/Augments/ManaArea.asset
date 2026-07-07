@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ManaArea
   m_EditorClassIdentifier: Assembly-CSharp::Augment.TurnBuffAugment
   icon: {fileID: 21300000, guid: 8fef4bbb630501a4aafaabdd9da48f64, type: 3}
+  Id: A_009
   type: 1
   augmentCombinedData:
     m_TableReference:

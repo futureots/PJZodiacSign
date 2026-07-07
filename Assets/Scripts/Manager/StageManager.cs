@@ -57,10 +57,7 @@ public class StageManager : Singleton<StageManager>
         // Get Level
         level = stageData.level;
         isLastLevel = stageData.isLastLevel;
-        
-        
-        // Entity Pooling
-        // TODO: pooling 비동기로 예외
+
         // Shop Entities
         List<EntityData> entityList = stageData.shopTable.entityList.ConvertAll(x => x.data);
         
@@ -79,7 +76,6 @@ public class StageManager : Singleton<StageManager>
         shop.Init(stageData.shopTable);
         
         // Create Agents
-        // NOTE: Single Player 기준 -1부터 카운트
         agentField = new Dictionary<PlayerID, Field>();
         for (int i = 0; i < resourceFields.Count; i++)
         {
@@ -96,7 +92,6 @@ public class StageManager : Singleton<StageManager>
     /// <param name="newPhase">new Phase Info</param>
     public void SetPhase(Phase newPhase)
     {
-
         // TODO: 페이즈 설정
     }
 

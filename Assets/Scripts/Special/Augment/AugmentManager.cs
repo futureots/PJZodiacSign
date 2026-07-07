@@ -17,8 +17,8 @@ namespace Augment
         public int selectCount = 3;
         [SerializeField] private bool onSelecting = false;
         
-        private List<AugmentSO> CurrentAugment => _stageData.currentAugment;
-        private List<AugmentSO> IgnorePool => _stageData.ignoreAugment;
+        private List<AugmentSO> CurrentAugment => DataManager.Instance.GetAugments(DataManager.Instance.playData.currentAugment);
+        private List<AugmentSO> IgnorePool => DataManager.Instance.GetAugments(DataManager.Instance.playData.ignoreAugment);
 
         public event Action<List<AugmentSO>> OnAugmentChanged;
         
@@ -26,9 +26,6 @@ namespace Augment
         {
             _controller = controller;
             _stageData = stageData;
-            
-            // 증강 초기화 설정 (첫 진입)
-            _stageData.currentAugment ??= new List<AugmentSO>();
             
             // 기존 증강 등록
             foreach (var augment in CurrentAugment)
@@ -71,7 +68,7 @@ namespace Augment
                 newPanel.gameObject.SetActive(true);  
                 
                 // 제외 풀에 추가
-                IgnorePool.Add(augment);    
+                DataManager.Instance.playData.ignoreAugment.Add(augment.Id);
             }
             
             //선택 대기
@@ -89,7 +86,7 @@ namespace Augment
         {
             // Augment 등록
             RegisterAugment(augment);
-            CurrentAugment.Add(augment);
+            DataManager.Instance.playData.currentAugment.Add(augment.Id);
             
             OnAugmentChanged?.Invoke(CurrentAugment);
             

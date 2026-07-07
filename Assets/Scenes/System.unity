@@ -891,6 +891,7 @@ MonoBehaviour:
   entityTable: {fileID: 11400000, guid: 4e886c3655091304182c830af0823e0e, type: 2}
   levelTable: {fileID: 11400000, guid: 1b058f5e6ab5ea049bc8d920a2a49e02, type: 2}
   shopTable: {fileID: 11400000, guid: fb5c5aaad7b089c47b837dd864309c21, type: 2}
+  augmentTable: {fileID: 11400000, guid: e73566cb542044341a3d6f43d05e2310, type: 2}
 --- !u!1 &319112743
 GameObject:
   m_ObjectHideFlags: 0

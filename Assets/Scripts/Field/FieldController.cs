@@ -108,9 +108,6 @@ public class FieldController : MonoBehaviour
     {
         // 새 레벨 시작
         OnLevelStarted?.Invoke(data);
-        // 증강 추가 자체를 하나의 증강으로 처리
-        
-        // NOTE: 게임 시작 전 행동
         
         // 페이즈 시작
         SetPhase(0);
@@ -186,7 +183,6 @@ public class FieldController : MonoBehaviour
         {
             turnCount++;
         }
-        // TODO : 턴이 일정 값 이상 넘어가면 정산 및 종료하는 기능 추가
         if (turnCount > TurnLimit)
         {
             EditorLogger.Print("DrawGame");

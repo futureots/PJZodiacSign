@@ -170,14 +170,9 @@ namespace GlobalManage
             {
                 // 증강모드
                 case GameMode.Augment:
-                    // 증강 데이터 이전
-                    stageData.currentAugment = lastStage.currentAugment;
-                    stageData.ignoreAugment = lastStage.ignoreAugment;
-                    
                     // 컨트롤러 변경
                     stageData.controllerName = AugmentLevel.Contains(stageData.level) ? ControllerID.AddAugment : ControllerID.Augmented;
                     break;
-                
                 // 기본모드
                 case GameMode.Basic:
                 default:
