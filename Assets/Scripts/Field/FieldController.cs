@@ -268,22 +268,4 @@ public class FieldController : MonoBehaviour
     }
     
     #endregion
-    
-    #region Debug
-
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            if (Input.GetKey(KeyCode.Alpha2))
-            {
-                if (Input.GetKeyDown(KeyCode.G))
-                {
-                    EndStage(Agent.LocalPlayer.id);
-                }
-            }
-        }
-    }
-
-    #endregion
 }
